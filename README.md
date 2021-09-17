@@ -6,6 +6,11 @@ Deployment of the GCP Guardrails Accelerator using Config Connector.
 - Config Controller (Beta, Only available in `us-central1`)
 - Install in standalone Kubernetes Cluster
 
+# Assumptions
+- Running commands from Cloud Shell
+- Initial user has Org Level Permissions.
+- User has billing user access and/or the ability to assign the billing user role to a Service Account.
+
 ## Create Folder and Project
 
 ```
@@ -44,6 +49,7 @@ gcloud beta billing projects link "${PROJECT_ID}" --billing-account "${BILLING_I
 ```
 gcloud services enable compute
 gcloud services enable container
+gcloud services enable cloudresourcemanager
 ```
 
 Set ENV Variables
@@ -233,4 +239,22 @@ Assume you have SSH access to this repo.
 
 ```
 kpt pkg get git@github.com:cartyc/gcp-sandbox.git/sandbox
+```
+
+Modify the `Setters.yaml` to match what is required for the current environment. Once the values are up to date run the `render` command to apply the changes
+```
+kpt fn render
+```
+
+### Apply the Configs
+
+First make sure we have access to the target cluster and are pointing to the correct namespace
+```
+gcloud container clusters get-credentials $CLUSTER --region $REGION
+kubens config-control
+```
+
+```
+kpt live init
+kpt live apply
 ```
