@@ -40,9 +40,10 @@ gcloud config set project $PROJECT_ID
 gcloud beta billing projects link "${PROJECT_ID}" --billing-account "${BILLING_ID}" --quiet 
 ```
 
-## Enable Services
+## Enable Required Services
 ```
-
+gcloud services enable compute
+gcloud services enable container
 ```
 
 Set ENV Variables
@@ -55,12 +56,6 @@ MASTER_IPV4=172.16.0.32/28
 AUTHORIZED_NETWORKS=0.0.0.0/32
 SA_NAME=kcc-primary
 SA_EMAIL=${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
-```
-
-Enable the required services
-```
-gcloud services enable compute
-gcloud services enable container
 ```
 
 ```
@@ -230,4 +225,12 @@ gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:$
     --role=roles/bigquery.dataEditor
 gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
     --role=roles/storage.admin
+```
+
+## Getting Up and Running
+
+Assume you have SSH access to this repo.
+
+```
+kpt pkg get git@github.com:cartyc/gcp-sandbox.git/sandbox
 ```
