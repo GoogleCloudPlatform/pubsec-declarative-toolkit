@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  allowed-regions: |
+    - northamerica-northeast1
+    - northamerica-northeast2
+  asset-viewer-group: asset-viewer@domain.com
+  audit-data-group: audit-data@domain.com
+  billing-data-group: billing-data@domain.com
+  billing-data-viewer-group: billing-data-viewer@domain.com
+  billing-id: ""
+  org-id: ""
+  auth-network: 0.0.0.0/32
+  branch: prod-env
+  cluster-description: dev-cluster
+  cluster-name: dev
+  project-id: project-id
+  region: northamerica-northeast1
+  region2: northamerica-northeast2
+  repo: application-repo
+  tags: |
+    - zonal
+    - demo
+  zone: northamerica-northeast1-a

@@ -1,0 +1,29 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  labels:
+    classification: protected-b
+  name: protected-b-workloads
+spec:
+  displayName: protected-b-workloads
+  organizationRef:
+    external: "" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  name: prob-dept
+  labels:
+    classification: protected-b
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+spec:
+  name: prob-dept-13215
+  folderRef:
+    name: protected-b-workloads
+    # billingAccountRef:
+    #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    #   external: "" # kpt-set: ${billing-id}
+  # billingAccountRef:
+  #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+  #   external: "" # kpt-set: ${billing-id}

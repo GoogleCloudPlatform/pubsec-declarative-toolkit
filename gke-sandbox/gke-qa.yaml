@@ -1,0 +1,197 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
+  name: dev # kpt-set: ${cluster-name}
+  namespace: config-control # kpt-set: ${namespace}
+  labels:
+    availability: medium
+    target-audience: production
+  annotations:
+    cnrm.cloud.google.com/remove-default-node-pool: "true"
+spec:
+  addonsConfig:
+    configConnectorConfig:
+      enabled: false
+    dnsCacheConfig:
+      enabled: true
+    networkPolicyConfig:
+      disabled: false
+  description: dev-cluster # kpt-set: ${cluster-description}
+  enableBinaryAuthorization: true
+  enableIntranodeVisibility: true
+  enableShieldedNodes: true
+  initialNodeCount: 1
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: clusterrange
+    servicesSecondaryRangeName: servicesrange
+  location: northamerica-northeast1-a # kpt-set: ${zone}
+  maintenancePolicy:
+    dailyMaintenanceWindow:
+      startTime: 01:00
+  masterAuthorizedNetworksConfig:
+    cidrBlocks:
+      - cidrBlock: 0.0.0.0/32 # kpt-set: ${auth-network}
+        displayName: private-net
+  networkPolicy:
+    enabled: true
+  networkRef:
+    name: dev-net # kpt-set: ${cluster-name}-net
+  networkingMode: VPC_NATIVE
+  notificationConfig:
+    pubsub:
+      enabled: true
+      topicRef:
+        name: dev-pubsub # kpt-set: ${cluster-name}-pubsub
+  podSecurityPolicyConfig:
+    enabled: false
+  privateClusterConfig:
+    enablePrivateEndpoint: false
+    enablePrivateNodes: true
+    masterIpv4CidrBlock: 172.16.0.0/28
+  subnetworkRef:
+    name: dev-subnet # kpt-set: ${cluster-name}-subnet
+  verticalPodAutoscaling:
+    enabled: true
+  workloadIdentityConfig:
+    # Workload Identity supports only a single namespace based on your project name.
+    # Replace ${PROJECT_ID?} below with your project ID.
+    identityNamespace: project-id.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
+---
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
+  name: dev-worker-pool-1 # kpt-set: ${cluster-name}-worker-pool-1
+  namespace: config-control # kpt-set: ${namespace}
+  labels:
+    cluster: dev # kpt-set: ${cluster-name}
+spec:
+  autoscaling:
+    maxNodeCount: 3
+    minNodeCount: 1
+  clusterRef:
+    name: dev # kpt-set: ${cluster-name}
+  initialNodeCount: 3
+  location: northamerica-northeast1-a # kpt-set: ${zone}
+  management:
+    autoRepair: true
+    autoUpgrade: true
+  nodeConfig:
+    metadata:
+      disable-legacy-endpoints: "true"
+    diskSizeGb: 100
+    diskType: pd-standard
+    imageType: COS_CONTAINERD
+    machineType: e2-standard-8
+    oauthScopes:
+      - "https://www.googleapis.com/auth/logging.write"
+      - "https://www.googleapis.com/auth/monitoring"
+    preemptible: true
+    tags: # kpt-set: ${tags}
+      - zonal
+      - demo
+---
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-pubsub
+  name: dev-pubsub # kpt-set: ${cluster-name}-pubsub
+  namespace: config-control # kpt-set: ${namespace}
+---
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubMembership
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-cluster
+  name: dev-hub # kpt-set: ${cluster-name}-hub
+  namespace: config-control # kpt-set: ${namespace}
+  labels:
+    label-one: value-one
+  annotations:
+    cnrm.cloud.google.com/project-id: "project-id" # kpt-set: ${project-id}
+spec:
+  description: dev # kpt-set: ${cluster-name}
+  endpoint:
+    gkeCluster:
+      resourceRef:
+        external: https://container.googleapis.com/v1/projects/project-id/locations/northamerica-northeast1-a/clusters/dev # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${zone}/clusters/${cluster-name}
+  location: global
+---
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubFeatureMembership
+metadata: # kpt-merge: ${NAMESPACE}/gkehub-${CLUSTER_NAME}
+  name: gkehub-dev # kpt-set: gkehub-${cluster-name}
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  configmanagement:
+    binauthz:
+      enabled: true
+    configSync:
+      git:
+        policyDir: ""
+        secretType: "ssh"
+        syncBranch: prod-env # kpt-set: ${branch}
+        syncRepo: application-repo # kpt-set: ${repo}
+        syncRev: "HEAD"
+        syncWaitSecs: "20"
+      sourceFormat: hierarchy
+    policyController:
+      auditIntervalSeconds: "20"
+      enabled: true
+      exemptableNamespaces:
+        - "config-management-system"
+      logDeniesEnabled: true
+      referentialRulesEnabled: true
+      templateLibraryInstalled: true
+    version: 1.8.2
+  featureRef:
+    name: gkehubfeature-acm
+  location: global
+  membershipRef:
+    name: dev-hub # kpt-set: ${cluster-name}-hub
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
+  name: dev-net # kpt-set: ${cluster-name}-net
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  autoCreateSubnetworks: false
+  routingMode: REGIONAL
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
+  name: dev-subnet # kpt-set: ${cluster-name}-subnet
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  ipCidrRange: 10.2.0.0/16
+  networkRef:
+    name: dev-net # kpt-set: ${cluster-name}-net
+  region: northamerica-northeast1 # kpt-set: ${region}
+  secondaryIpRange:
+    - ipCidrRange: 10.3.0.0/16
+      rangeName: servicesrange
+    - ipCidrRange: 10.4.0.0/16
+      rangeName: clusterrange
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata: # kpt-merge: ${NAMESPACE}/computerouternat-dep-forallsubnets
+  name: router-dev-net # kpt-set: router-${cluster-name}-net
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  description: example router description
+  networkRef:
+    name: dev-net # kpt-set: ${cluster-name}-net
+  region: northamerica-northeast1 # kpt-set: ${region}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouterNAT
+metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
+  name: nat-dev-net # kpt-set: nat-${cluster-name}-net
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  natIpAllocateOption: AUTO_ONLY
+  region: northamerica-northeast1 # kpt-set: ${region}
+  routerRef:
+    name: router-dev-net # kpt-set: router-${cluster-name}-net
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES

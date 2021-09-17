@@ -1,0 +1,87 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: resourcemanagerpolicy-sample-org
+spec:
+  constraint: "constraints/compute.disableSerialPortAccess"
+  listPolicy:
+    allow:
+      all: true
+      values: # kpt-set: ${allowed-regions}
+        - northamerica-northeast1
+        - northamerica-northeast2
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: disable-vpc-external-ipv6
+spec:
+  constraint: "constraints/compute.disableVpcExternalIpv6"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: require-shielded-vm
+spec:
+  constraint: "constraints/compute.requireShieldedVm"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: require-trusted-images
+spec:
+  constraint: "constraints/compute.trustedImageProjects"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-ip-forwarding
+spec:
+  constraint: "constraints/compute.vmCanIpForward"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}      
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-vm-external-access
+spec:
+  constraint: "constraints/compute.vmExternalIpAccess"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}          
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: disable-serviceaccount-key-creation
+spec:
+  constraint: "constraints/iam.disableServiceAccountKeyCreation"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "" # kpt-set: ${org-id}              

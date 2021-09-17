@@ -1,0 +1,55 @@
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature
+  name: anthos-configmanagement
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: anthosconfigmanagement.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: /gkehub
+  name: gkehub
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+  resourceID: gkehub.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: /container
+  name: container
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+spec:
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+  resourceID: container.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: /binaryauthorization
+  name: binaryauthorization
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: binaryauthorization.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature-2
+  name: secret-manager
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: secretmanager.googleapis.com

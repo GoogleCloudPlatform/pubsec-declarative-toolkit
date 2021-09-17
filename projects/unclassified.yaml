@@ -1,0 +1,29 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  labels:
+    classification: unclass
+  name: unclassified-workloads
+spec:
+  displayName: unclassified-workloads
+  organizationRef:
+    external: "" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  name: unclass-dept-513
+  labels:
+    classification: unclass
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+spec:
+  name: unclass-dept-512
+  folderRef:
+    name: unclassified-workloads
+    # billingAccountRef:
+    #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    #   external: "" # kpt-set: ${billing-id}
+  # billingAccountRef:
+  #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+  #   external: "" # kpt-set: ${billing-id}

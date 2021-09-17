@@ -1,0 +1,16 @@
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubFeature
+metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-acm
+  name: gkehubfeature-acm
+  namespace: config-control # kpt-set: ${namespace}
+  labels:
+    feature: acm
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  location: global
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+  # The resourceID must be "configmanagement" if you want to use Anthos config
+  # management feature.
+  resourceID: configmanagement

@@ -1,0 +1,30 @@
+apiVersion: binaryauthorization.cnrm.cloud.google.com/v1beta1
+kind: BinaryAuthorizationPolicy
+metadata: # kpt-merge: config-control/binauth-allowed-repos
+  name: binauth-allowed-repos
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  admissionWhitelistPatterns:
+    - namePattern: "gcr.io/google_containers/*"
+    - namePattern: "gcr.io/google-containers/*"
+    - namePattern: "k8s.gcr.io/*"
+    - namePattern: "gke.gcr.io/*"
+    - namePattern: "gcr.io/stackdriver-agents/*"
+    - namePattern: "gcr.io/google-samples/*"
+    - namePattern: "${region}-docker.pkg.dev/${project_id}/container-registry"
+  defaultAdmissionRule:
+    enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
+    evaluationMode: "ALWAYS_ALLOW"
+  globalPolicyEvaluationMode: ENABLE
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: config-control/binauth-service
+  name: binauth-service
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: binaryauthorization.googleapis.com
