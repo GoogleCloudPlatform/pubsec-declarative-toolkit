@@ -1,4 +1,4 @@
 
 steps:
 - name: 'gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.5'
-  args: ['fn', 'render']
+  args: ['fn', 'render', 'sandbox']
