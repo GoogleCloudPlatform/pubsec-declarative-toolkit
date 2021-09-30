@@ -10,8 +10,8 @@ data:
   audit-data-group: audit-data@domain.com
   billing-data-group: billing-data@domain.com
   billing-data-viewer-group: billing-data-viewer@domain.com
-  billing-id: ""
-  org-id: ""
+  billing-id: "1231231231"
+  org-id: "213123123"
   auth-network: 0.0.0.0/32
   branch: prod-env
   cluster-description: dev-cluster

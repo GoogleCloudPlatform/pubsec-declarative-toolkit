@@ -23,7 +23,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "" # kpt-set: ${org-id}
+    external: "213123123" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # BigQuery Audit Log User
@@ -36,7 +36,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "" # kpt-set: ${org-id}
+    external: "213123123" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -49,7 +49,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "" # kpt-set: ${org-id}
+    external: "213123123" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -62,7 +62,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "" # kpt-set: ${org-id}
+    external: "213123123" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Console Viewer
@@ -75,7 +75,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "" # kpt-set: ${org-id}
+    external: "213123123" # kpt-set: ${org-id}
   role: "roles/billing.viewer"
 ---
 # Asset Inventory Viewer
@@ -88,5 +88,5 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "" # kpt-set: ${org-id}
+    external: "213123123" # kpt-set: ${org-id}
   role: "roles/cloudasset.viewer"
