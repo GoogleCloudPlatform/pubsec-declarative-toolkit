@@ -64,8 +64,8 @@ SA_NAME=kcc-primary
 SA_EMAIL=${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 ```
 
+Create the network for the GKE Cluster
 ```
-gcloud compute network create
 gcloud compute networks create $NETWORK --subnet-mode custom
 ```
 
