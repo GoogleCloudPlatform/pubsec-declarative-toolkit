@@ -1,0 +1,11 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: k8s-viewer
+spec:
+  member: group:audit-data@domain.com # kpt-set: group:${audit-data-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: "1010101010101" # kpt-set: ${org-id}
+  role: roles/container.clusterViewer

@@ -5,9 +5,10 @@ metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature
   namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: anthosconfigmanagement.googleapis.com
+  projectRef:
+    name: prob-dept-312312
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -18,7 +19,7 @@ metadata: # kpt-merge: /gkehub
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
   projectRef:
-    external: project-id # kpt-set: ${project-id}
+    name: prob-dept-312312
   resourceID: gkehub.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -30,7 +31,7 @@ metadata: # kpt-merge: /container
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:
   projectRef:
-    external: project-id # kpt-set: ${project-id}
+    name: prob-dept-312312
   resourceID: container.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -38,10 +39,10 @@ kind: Service
 metadata: # kpt-merge: /binaryauthorization
   name: binaryauthorization
   namespace: config-control # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: binaryauthorization.googleapis.com
+  projectRef:
+    name: prob-dept-312312
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -50,6 +51,19 @@ metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature-2
   namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: secretmanager.googleapis.com
+  projectRef:
+    name: prob-dept-312312
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature-2
+  name: artifactregistry
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  resourceID: artifactregistry.googleapis.com
+  projectRef:
+    name: prob-dept-312312

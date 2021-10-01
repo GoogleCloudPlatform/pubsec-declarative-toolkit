@@ -7,12 +7,12 @@ metadata:
 spec:
   displayName: protected-b-workloads
   organizationRef:
-    external: "213123123" # kpt-set: ${org-id}
+    external: "1010101010101" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: prob-dept
+  name: prob-dept-312312
   labels:
     classification: protected-b
   annotations:
@@ -21,9 +21,6 @@ spec:
   name: prob-dept-13215
   folderRef:
     name: protected-b-workloads
-    # billingAccountRef:
-    #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    #   external: "" # kpt-set: ${billing-id}
-  # billingAccountRef:
-  #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-  #   external: "" # kpt-set: ${billing-id}
+  billingAccountRef:
+    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    external: "1010101010101" # kpt-set: ${billing-id}

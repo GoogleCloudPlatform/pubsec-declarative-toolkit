@@ -1,0 +1,32 @@
+apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
+kind: CloudBuildTrigger
+metadata:
+  name: breakglass-trigger
+  annotations:
+    cnrm.cloud.google.com/project-id: dpt-guardrails-3213213
+spec:
+  description: Cloud Build Trigger with a build template file. Builds the master branch of the referenced Cloud Source Repository.
+  disabled: false
+  triggerTemplate:
+    repoRef:
+      name: breakglass
+    dir: "team-a/service-b"
+    branchName: master
+  build:
+    step:
+      - name: gcr.io/cloud-builders/gcloud
+        env:
+          - ORG_ID=$_ORG_ID
+          - CB_SA_EMAIL=$_CB_SA_EMAIL
+          - SA_EMAIL=$_SA_EMAIL
+          - PROJECT_ID=$PROJECT_ID
+        args:
+          - breakglass.sh
+        entrypoint: bash
+---
+apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+kind: SourceRepoRepository
+metadata:
+  name: breakglass
+  annotations:
+    cnrm.cloud.google.com/project-id: dpt-guardrails-3213213

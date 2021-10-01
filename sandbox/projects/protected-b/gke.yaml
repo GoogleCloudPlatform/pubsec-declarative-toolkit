@@ -8,6 +8,7 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
     target-audience: production
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -29,8 +30,10 @@ spec:
     dailyMaintenanceWindow:
       startTime: 01:00
   masterAuthorizedNetworksConfig:
-    cidrBlocks:
-      - cidrBlock: 0.0.0.0/32 # kpt-set: ${auth-network}
+    cidrBlocks: # kpt-set: ${auth-network}
+      - cidrBlock: | # kpt-set: ${auth-network}
+          - cidrBlock: 0.0.0.0/32 # kpt-set: 0.0.0.0/32
+            displayName: private-net
         displayName: private-net
   networkPolicy:
     enabled: true
@@ -55,7 +58,7 @@ spec:
   workloadIdentityConfig:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: project-id.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
+    identityNamespace: protected-b-kpt-test.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
 ---
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
@@ -64,6 +67,8 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
   namespace: config-control # kpt-set: ${namespace}
   labels:
     cluster: dev # kpt-set: ${cluster-name}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}
 spec:
   autoscaling:
     maxNodeCount: 3
@@ -95,6 +100,8 @@ kind: PubSubTopic
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-pubsub
   name: dev-pubsub # kpt-set: ${cluster-name}-pubsub
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
 ---
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
@@ -104,13 +111,13 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-cluster
   labels:
     label-one: value-one
   annotations:
-    cnrm.cloud.google.com/project-id: "project-id" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}
 spec:
   description: dev # kpt-set: ${cluster-name}
   endpoint:
     gkeCluster:
       resourceRef:
-        external: https://container.googleapis.com/v1/projects/project-id/locations/northamerica-northeast1-a/clusters/dev # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${zone}/clusters/${cluster-name}
+        external: https://container.googleapis.com/v1/projects/protected-b-kpt-test/locations/northamerica-northeast1-a/clusters/dev # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${zone}/clusters/${cluster-name}
   location: global
 ---
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
@@ -118,6 +125,8 @@ kind: GKEHubFeatureMembership
 metadata: # kpt-merge: ${NAMESPACE}/gkehub-${CLUSTER_NAME}
   name: gkehub-dev # kpt-set: gkehub-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
 spec:
   configmanagement:
     binauthz:
@@ -146,13 +155,15 @@ spec:
   membershipRef:
     name: dev-hub # kpt-set: ${cluster-name}-hub
   projectRef:
-    external: project-id # kpt-set: ${project-id}
+    external: protected-b-kpt-test # kpt-set: ${project-id}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
   name: dev-net # kpt-set: ${cluster-name}-net
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
 spec:
   autoCreateSubnetworks: false
   routingMode: REGIONAL
@@ -162,6 +173,8 @@ kind: ComputeSubnetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
   name: dev-subnet # kpt-set: ${cluster-name}-subnet
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
 spec:
   ipCidrRange: 10.2.0.0/16
   networkRef:
@@ -178,6 +191,8 @@ kind: ComputeRouter
 metadata: # kpt-merge: ${NAMESPACE}/computerouternat-dep-forallsubnets
   name: router-dev-net # kpt-set: router-${cluster-name}-net
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
 spec:
   description: example router description
   networkRef:
@@ -189,6 +204,8 @@ kind: ComputeRouterNAT
 metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
   name: nat-dev-net # kpt-set: nat-${cluster-name}-net
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
 spec:
   natIpAllocateOption: AUTO_ONLY
   region: northamerica-northeast1 # kpt-set: ${region}

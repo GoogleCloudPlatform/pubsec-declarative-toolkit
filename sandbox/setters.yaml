@@ -8,15 +8,17 @@ data:
     - northamerica-northeast2
   asset-viewer-group: asset-viewer@domain.com
   audit-data-group: audit-data@domain.com
+  auth-network: | 
+    - cidrBlock: 0.0.0.0/32 # kpt-set: ${auth-network}
+      displayName: private-net
   billing-data-group: billing-data@domain.com
   billing-data-viewer-group: billing-data-viewer@domain.com
-  billing-id: "1231231231"
-  org-id: "213123123"
-  auth-network: 0.0.0.0/32
+  billing-id: "1010101010101"
   branch: prod-env
   cluster-description: dev-cluster
-  cluster-name: dev
-  project-id: project-id
+  cluster-name: dev 
+  org-id: "1010101010101"
+  project-id: protected-b-kpt-test
   region: northamerica-northeast1
   region2: northamerica-northeast2
   repo: application-repo
