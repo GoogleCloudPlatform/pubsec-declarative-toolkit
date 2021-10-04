@@ -7,20 +7,21 @@ metadata:
 spec:
   displayName: unclassified-workloads
   organizationRef:
-    external: "1010101010101" # kpt-set: ${org-id}
+    external: "10000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: unclass-dept-321321
+  name: unclass-dept
   labels:
     classification: unclass
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
 spec:
-  name: unclass-dept-512
+  name: unclass-dept
+  resourceID: unclass-dept-56131351543543
   folderRef:
     name: unclassified-workloads
   billingAccountRef:
     # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "1010101010101" # kpt-set: ${billing-id}
+    external: "10000" # kpt-set: ${billing-id}

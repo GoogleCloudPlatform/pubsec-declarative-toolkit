@@ -8,21 +8,28 @@ data:
     - northamerica-northeast2
   asset-viewer-group: asset-viewer@domain.com
   audit-data-group: audit-data@domain.com
-  auth-network: | 
-    - cidrBlock: 0.0.0.0/32 # kpt-set: ${auth-network}
-      displayName: private-net
   billing-data-group: billing-data@domain.com
   billing-data-viewer-group: billing-data-viewer@domain.com
-  billing-id: "1010101010101"
-  branch: prod-env
-  cluster-description: dev-cluster
-  cluster-name: dev 
-  org-id: "1010101010101"
+  billing-id: "10000"
+  org-id: "10000"
+  department-code: "goc"
   project-id: protected-b-kpt-test
   region: northamerica-northeast1
   region2: northamerica-northeast2
-  repo: application-repo
+
+  # Guardrails Project Values
+  guardrails-project-id: guardrails # Must be globally unique
+
+  # Sandbox Cluster Values
+  sandbox-project-id: sandbox # Must be globally unique
+  zone: northamerica-northeast1-a
+  cluster-description: dev-cluster
+  cluster-name: sandbox 
+  auth-network: | 
+    - cidrBlock: 0.0.0.0/32
+      displayName: private-net
   tags: |
     - zonal
-    - demo
-  zone: northamerica-northeast1-a
+    - sandbox
+  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
+  branch: prod-env

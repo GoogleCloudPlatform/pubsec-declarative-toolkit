@@ -3,7 +3,7 @@ kind: CloudBuildTrigger
 metadata:
   name: breakglass-trigger
   annotations:
-    cnrm.cloud.google.com/project-id: dpt-guardrails-3213213
+    cnrm.cloud.google.com/project-id: guardrails # kpt-set: ${guardrails-project-id}
 spec:
   description: Cloud Build Trigger with a build template file. Builds the master branch of the referenced Cloud Source Repository.
   disabled: false
@@ -29,4 +29,4 @@ kind: SourceRepoRepository
 metadata:
   name: breakglass
   annotations:
-    cnrm.cloud.google.com/project-id: dpt-guardrails-3213213
+    cnrm.cloud.google.com/project-id: guardrails # kpt-set: ${guardrails-project-id}

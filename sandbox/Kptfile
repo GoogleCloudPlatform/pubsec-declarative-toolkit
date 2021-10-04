@@ -11,9 +11,9 @@ pipeline:
   validators:
     - image: gcr.io/kpt-fn/kubeval:v0.1
       configMap:
-        strict: 'true'
-        ignore_missing_schemas: 'true'      
+        ignore_missing_schemas: "true"
+        strict: "true"
 inventory:
-  namespace: default
-  name: inventory-09128603
-  inventoryID: 129126e6a0671b5ee28bc65596a4c6c642b582d1-1632332856098175034
+  namespace: config-control
+  name: inventory-68772819
+  inventoryID: 0ad4c2cb167c66b4cba2722a7db3dbba9056f04e-1633372751664136059

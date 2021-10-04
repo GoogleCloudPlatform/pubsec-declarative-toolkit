@@ -12,7 +12,7 @@ spec:
         - northamerica-northeast2
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}
+    external: "10000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -24,7 +24,7 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}
+    external: "10000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -36,19 +36,7 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}
----
-apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: ResourceManagerPolicy
-metadata:
-  name: require-shielded-vm-false
-spec:
-  constraint: "constraints/compute.requireShieldedVm"
-  booleanPolicy:
-    enforced: false
-  projectRef:
-    # Replace "${ORG_ID?}" with the numeric ID for your organization
-    name: "1010101010101" # kpt-set: ${org-id}
+    external: "10000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -60,19 +48,7 @@ spec:
     values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}
----
-apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: ResourceManagerPolicy
-metadata:
-  name: restrict-ip-forwarding
-spec:
-  constraint: "constraints/compute.vmCanIpForward"
-  list:
-    values:
-  organizationRef:
-    # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}      
+    external: "10000" # kpt-set: ${org-id}   
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -84,7 +60,7 @@ spec:
     values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}          
+    external: "10000" # kpt-set: ${org-id}          
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -96,7 +72,7 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}              
+    external: "10000" # kpt-set: ${org-id}              
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -107,9 +83,7 @@ spec:
   listPolicy:
     allow:
       all: true
-      values: # kpt-set: ${allowed-regions}
-        - northamerica-northeast1
-        - northamerica-northeast2
+      values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "1010101010101" # kpt-set: ${org-id}       
+    external: "10000" # kpt-set: ${org-id}       

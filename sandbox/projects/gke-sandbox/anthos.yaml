@@ -6,11 +6,11 @@ metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-acm
   labels:
     feature: acm
   annotations:
-    cnrm.cloud.google.com/project-id: protected-b-kpt-test # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: sandbox # kpt-set: ${sandbox-project-id}
 spec:
   location: global
   projectRef:
-    external: protected-b-kpt-test # kpt-set: ${project-id}
+    name: sandbox # kpt-set: ${sandbox-project-id}
   # The resourceID must be "configmanagement" if you want to use Anthos config
   # management feature.
   resourceID: configmanagement

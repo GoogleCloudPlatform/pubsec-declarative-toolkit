@@ -7,5 +7,5 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: "1010101010101" # kpt-set: ${org-id}
+    name: "10000" # kpt-set: ${org-id}
   role: roles/container.clusterViewer

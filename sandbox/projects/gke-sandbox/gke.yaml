@@ -1,14 +1,14 @@
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
-  name: dev # kpt-set: ${cluster-name}
+  name: sandbox # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
   labels:
     availability: medium
-    target-audience: production
+    target-audience: sandbox
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -25,26 +25,29 @@ spec:
   ipAllocationPolicy:
     clusterSecondaryRangeName: clusterrange
     servicesSecondaryRangeName: servicesrange
-  location: northamerica-northeast1-a # kpt-set: ${zone}
+  location: northamerica-northeast1 # kpt-set: ${region}
   maintenancePolicy:
     dailyMaintenanceWindow:
       startTime: 01:00
   masterAuthorizedNetworksConfig:
     cidrBlocks: # kpt-set: ${auth-network}
-      - cidrBlock: | # kpt-set: ${auth-network}
-          - cidrBlock: 0.0.0.0/32 # kpt-set: 0.0.0.0/32
-            displayName: private-net
+      - cidrBlock: 0.0.0.0/32
         displayName: private-net
   networkPolicy:
     enabled: true
   networkRef:
-    name: dev-net # kpt-set: ${cluster-name}-net
+    name: sandbox-net # kpt-set: ${cluster-name}-net
   networkingMode: VPC_NATIVE
   notificationConfig:
     pubsub:
       enabled: true
       topicRef:
-        name: dev-pubsub # kpt-set: ${cluster-name}-pubsub
+        name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
+  resourceUsageExportConfig:
+    bigqueryDestination:
+      datasetId: gkemetering
+    enableNetworkEgressMetering: true
+    enableResourceConsumptionMetering: true
   podSecurityPolicyConfig:
     enabled: false
   privateClusterConfig:
@@ -52,31 +55,31 @@ spec:
     enablePrivateNodes: true
     masterIpv4CidrBlock: 172.16.0.0/28
   subnetworkRef:
-    name: dev-subnet # kpt-set: ${cluster-name}-subnet
+    name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
   verticalPodAutoscaling:
     enabled: true
   workloadIdentityConfig:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: protected-b-kpt-test.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
+    identityNamespace: sandbox.svc.id.goog # kpt-set: ${sandbox-project-id}.svc.id.goog
 ---
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerNodePool
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
-  name: dev-worker-pool-1 # kpt-set: ${cluster-name}-worker-pool-1
+  name: sandbox-worker-pool-1 # kpt-set: ${cluster-name}-worker-pool-1
   namespace: config-control # kpt-set: ${namespace}
   labels:
-    cluster: dev # kpt-set: ${cluster-name}
+    cluster: sandbox # kpt-set: ${cluster-name}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}
 spec:
   autoscaling:
     maxNodeCount: 3
     minNodeCount: 1
   clusterRef:
-    name: dev # kpt-set: ${cluster-name}
+    name: sandbox # kpt-set: ${cluster-name}
   initialNodeCount: 3
-  location: northamerica-northeast1-a # kpt-set: ${zone}
+  location: northamerica-northeast1 # kpt-set: ${region}
   management:
     autoRepair: true
     autoUpgrade: true
@@ -90,43 +93,57 @@ spec:
     oauthScopes:
       - "https://www.googleapis.com/auth/logging.write"
       - "https://www.googleapis.com/auth/monitoring"
-    preemptible: true
+    preemptible: false
     tags: # kpt-set: ${tags}
       - zonal
-      - demo
+      - sandbox
+---
+# GKE Metering BQ
+apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+kind: BigQueryDataset
+metadata:
+  annotations:
+    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}
+  name: gkemetering
+spec:
+  defaultTableExpirationMs: 3600000
+  description: "BigQuery Dataset Sample"
+  friendlyName: gke-metering-dataset
+  location: northamerica-northeast1 # kpt-set: ${region}
 ---
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-pubsub
-  name: dev-pubsub # kpt-set: ${cluster-name}-pubsub
+  name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}  
 ---
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-cluster
-  name: dev-hub # kpt-set: ${cluster-name}-hub
+  name: sandbox-hub # kpt-set: ${cluster-name}-hub
   namespace: config-control # kpt-set: ${namespace}
   labels:
     label-one: value-one
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}
 spec:
-  description: dev # kpt-set: ${cluster-name}
+  description: sandbox # kpt-set: ${cluster-name}
   endpoint:
     gkeCluster:
       resourceRef:
-        external: https://container.googleapis.com/v1/projects/protected-b-kpt-test/locations/northamerica-northeast1-a/clusters/dev # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${zone}/clusters/${cluster-name}
+        external: https://container.googleapis.com/v1/projects/sandbox/locations/northamerica-northeast1-a/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${zone}/clusters/${cluster-name}
   location: global
 ---
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeatureMembership
 metadata: # kpt-merge: ${NAMESPACE}/gkehub-${CLUSTER_NAME}
-  name: gkehub-dev # kpt-set: gkehub-${cluster-name}
+  name: gkehub-sandbox # kpt-set: gkehub-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}  
 spec:
   configmanagement:
     binauthz:
@@ -136,7 +153,7 @@ spec:
         policyDir: ""
         secretType: "ssh"
         syncBranch: prod-env # kpt-set: ${branch}
-        syncRepo: application-repo # kpt-set: ${repo}
+        syncRepo: https://github.com/cartyc/acm-test.git # kpt-set: ${repo}
         syncRev: "HEAD"
         syncWaitSecs: "20"
       sourceFormat: hierarchy
@@ -153,17 +170,17 @@ spec:
     name: gkehubfeature-acm
   location: global
   membershipRef:
-    name: dev-hub # kpt-set: ${cluster-name}-hub
+    name: sandbox-hub # kpt-set: ${cluster-name}-hub
   projectRef:
-    external: protected-b-kpt-test # kpt-set: ${project-id}
+    external: sandbox # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
-  name: dev-net # kpt-set: ${cluster-name}-net
+  name: sandbox-net # kpt-set: ${cluster-name}-net
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}  
 spec:
   autoCreateSubnetworks: false
   routingMode: REGIONAL
@@ -171,14 +188,14 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
-  name: dev-subnet # kpt-set: ${cluster-name}-subnet
+  name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}  
 spec:
   ipCidrRange: 10.2.0.0/16
   networkRef:
-    name: dev-net # kpt-set: ${cluster-name}-net
+    name: sandbox-net # kpt-set: ${cluster-name}-net
   region: northamerica-northeast1 # kpt-set: ${region}
   secondaryIpRange:
     - ipCidrRange: 10.3.0.0/16
@@ -189,26 +206,26 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata: # kpt-merge: ${NAMESPACE}/computerouternat-dep-forallsubnets
-  name: router-dev-net # kpt-set: router-${cluster-name}-net
+  name: router-sandbox-net # kpt-set: router-${cluster-name}-net
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}  
 spec:
   description: example router description
   networkRef:
-    name: dev-net # kpt-set: ${cluster-name}-net
+    name: sandbox-net # kpt-set: ${cluster-name}-net
   region: northamerica-northeast1 # kpt-set: ${region}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
-  name: nat-dev-net # kpt-set: nat-${cluster-name}-net
+  name: nat-sandbox-net # kpt-set: nat-${cluster-name}-net
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "protected-b-kpt-test" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox" # kpt-set: ${sandbox-project-id}  
 spec:
   natIpAllocateOption: AUTO_ONLY
   region: northamerica-northeast1 # kpt-set: ${region}
   routerRef:
-    name: router-dev-net # kpt-set: router-${cluster-name}-net
+    name: router-sandbox-net # kpt-set: router-${cluster-name}-net
   sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
