@@ -6,22 +6,28 @@ data:
   allowed-regions: |
     - northamerica-northeast1
     - northamerica-northeast2
-  asset-viewer-group: asset-viewer@domain.com
-  audit-data-group: audit-data@domain.com
-  billing-data-group: billing-data@domain.com
-  billing-data-viewer-group: billing-data-viewer@domain.com
-  billing-id: "10000"
-  org-id: "10000"
+  asset-viewer-group: email@domain.com
+  audit-data-group: email@domain.com
+  audit-data-viewer-group: email@domain.com 
+  billing-data-group: email@domain.com
+  billing-data-viewer-group: email@domain.com
+  billing-console-viewer-group: email@domain.com
+  billing-id: "0000000000"
+  org-id: "0000000000"
   department-code: "goc"
   project-id: protected-b-kpt-test
   region: northamerica-northeast1
   region2: northamerica-northeast2
+  # Protected B Project Values
+  projected-b-project-name: protected-b-00000
 
+  # Unclassified Project Values
+  unclassified-project-name: unclassified-00000
   # Guardrails Project Values
-  guardrails-project-id: guardrails # Must be globally unique
+  guardrails-project-id: guardrails-00000 # Must be globally unique
 
   # Sandbox Cluster Values
-  sandbox-project-id: sandbox # Must be globally unique
+  sandbox-project-id: sandbox-00000 # Must be globally unique
   zone: northamerica-northeast1-a
   cluster-description: dev-cluster
   cluster-name: sandbox 
@@ -33,3 +39,5 @@ data:
     - sandbox
   repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
   branch: prod-env
+  gke-admin: email@domain.com
+  gke-viewer: email@domain.com
