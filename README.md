@@ -47,9 +47,9 @@ gcloud beta billing projects link "${PROJECT_ID}" --billing-account "${BILLING_I
 
 ## Enable Required Services
 ```
-gcloud services enable compute
-gcloud services enable container
-gcloud services enable cloudresourcemanager
+gcloud services enable compute.googleapis.com
+gcloud services enable container.googleapis.com
+gcloud services enable cloudresourcemanager.googleapis.com
 ```
 
 Set ENV Variables
@@ -59,9 +59,18 @@ NETWORK=kcc-net
 SUBNETWORK=kcc-subnet
 REGION=northamerica-northeast1
 MASTER_IPV4=172.16.0.32/28
-AUTHORIZED_NETWORKS=0.0.0.0/32
+AUTHORIZED_NETWORKS=$(dig +short myip.opendns.com @resolver1.opendns.com)/32
 SA_NAME=kcc-primary
 SA_EMAIL=${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+```
+You can get the IP of the CloudShell instance by running the following command `dig +short myip.opendns.com @resolver1.opendns.com`. 
+
+If the CloudShell times out you will need to update the authorized network, you can do this by running the following `gcloud` command (replace $AUTHORIZED_NETWORK with the output from the dig command with a `/32` at the end).
+
+```
+gcloud container clusters update $CLUSTER \
+    --enable-master-authorized-networks \
+    --master-authorized-networks $AUTHORIZED_NETWORK
 ```
 
 Create the network for the GKE Cluster
