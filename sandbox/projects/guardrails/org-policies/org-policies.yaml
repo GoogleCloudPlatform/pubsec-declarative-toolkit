@@ -12,7 +12,7 @@ spec:
         - northamerica-northeast2
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -24,7 +24,7 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -36,7 +36,7 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -48,7 +48,7 @@ spec:
     values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}   
+    external: "0000000000" # kpt-set: ${org-id}   
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -60,7 +60,7 @@ spec:
     values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}          
+    external: "0000000000" # kpt-set: ${org-id}          
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -72,7 +72,7 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}              
+    external: "0000000000" # kpt-set: ${org-id}              
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -86,4 +86,4 @@ spec:
       values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}       
+    external: "0000000000" # kpt-set: ${org-id}       

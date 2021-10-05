@@ -7,7 +7,7 @@ spec:
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-      name: 10000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
+      name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
   filter: |
     resource.type="organization" AND
     logName: /logs/cloudaudit.googleapis.com%2Factivity OR
@@ -18,13 +18,13 @@ spec:
     logName: /logs/cloudaudit.googleapis.com%2Faccess_transparency
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
 metadata:
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: 10000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
+  name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
 spec:
@@ -43,7 +43,7 @@ spec:
       name: logginglogsink-org
   filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
   organizationRef:
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
@@ -58,15 +58,15 @@ metadata:
 spec:
   destination:
     bigQueryDatasetRef:
-      name: logginglogsinkdepfolder
+      name: logginglogsink
   filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
   organizationRef:
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata:
-  name: logginglogsinkdepfolder
+  name: logginglogsink
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
 spec:

@@ -7,5 +7,5 @@ metadata: # kpt-merge: /gkehub
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
   projectRef:
-    name: dpt-guardrails-3213213 # kpt-set: ${guardrails-project-id
+    name: dpt-guardrails
   resourceID: sourcerepo.googleapis.com

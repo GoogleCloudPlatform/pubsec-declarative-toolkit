@@ -19,11 +19,11 @@ kind: IAMPolicyMember
 metadata:
   name: bq-audit-data-viewer
 spec:
-  member: group:${var.audit_data_viewer} # kpt-set: group:${audit-data-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # BigQuery Audit Log User
@@ -32,11 +32,11 @@ kind: IAMPolicyMember
 metadata:
   name: bq-audit-data-user
 spec:
-  member: group:audit-data@domain.com # kpt-set: group:${audit-data-group}
+  member: group:email@domain.com # kpt-set: group:${audit-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -45,11 +45,11 @@ kind: IAMPolicyMember
 metadata:
   name: bq-billing-data-user
 spec:
-  member: group:billing-data@domain.com # kpt-set: group:${billing-data-group}
+  member: group:email@domain.com # kpt-set: group:${billing-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -58,11 +58,11 @@ kind: IAMPolicyMember
 metadata:
   name: bq-billing-data-viewer
 spec:
-  member: group:billing-data-viewer@domain.com # kpt-set: group:${billing-data-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Console Viewer
@@ -71,11 +71,11 @@ kind: IAMPolicyMember
 metadata:
   name: billing-console-viewer
 spec:
-  member: group:${billing_data_users} # kpt-set: group:${billing-console-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: "roles/billing.viewer"
 ---
 # Asset Inventory Viewer
@@ -84,9 +84,9 @@ kind: IAMPolicyMember
 metadata:
   name: asset-inventory-viewer
 spec:
-  member: group:asset-viewer@domain.com # kpt-set: group:${asset-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${asset-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "10000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: "roles/cloudasset.viewer"
