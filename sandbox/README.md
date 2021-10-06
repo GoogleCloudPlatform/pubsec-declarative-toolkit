@@ -3,10 +3,13 @@
 Deploys Sandbox ENV based off of the GoC's 30 Day Guardrails
 
 ## Org Policies
-- No External IPs
-- Trusted Images
-- No VPC Peering
-- Shielded Nodes
+- Restrict VM External Access
+- Require Trusted Images
+- Restrict VPC Peering
+- Require Shielded VMs
+- Resource Locations
+- Disable VPC External IPV6
+- Disable Service Account Key Creation
 
 ## Folder Structure
 - Guardrails
