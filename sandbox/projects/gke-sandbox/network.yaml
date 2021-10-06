@@ -1,0 +1,33 @@
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
+  name: sandbox-net # kpt-set: ${cluster-name}-net
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
+spec:
+  autoCreateSubnetworks: false
+  routingMode: REGIONAL
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
+  name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
+spec:
+  ipCidrRange: 10.2.0.0/16
+  networkRef:
+    name: sandbox-net # kpt-set: ${cluster-name}-net
+  region: northamerica-northeast1 # kpt-set: ${region}
+  logConfig:
+    aggregationInterval: INTERVAL_10_MIN
+    flowSampling: 0.5
+    metadata: INCLUDE_ALL_METADATA  
+  secondaryIpRange:
+    - ipCidrRange: 10.3.0.0/16
+      rangeName: servicesrange
+    - ipCidrRange: 10.4.0.0/16
+      rangeName: clusterrange
