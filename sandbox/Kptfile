@@ -13,7 +13,3 @@ pipeline:
       configMap:
         ignore_missing_schemas: "true"
         strict: "true"
-inventory:
-  namespace: config-control
-  name: inventory-68772819
-  inventoryID: 0ad4c2cb167c66b4cba2722a7db3dbba9056f04e-1633372751664136059
