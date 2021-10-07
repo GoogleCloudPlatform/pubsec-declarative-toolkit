@@ -1,6 +1,6 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: /gkehub
+metadata: # kpt-merge: breakglass-repo
   name: breakglass-repo
   namespace: config-control # kpt-set: ${namespace}
   annotations:
