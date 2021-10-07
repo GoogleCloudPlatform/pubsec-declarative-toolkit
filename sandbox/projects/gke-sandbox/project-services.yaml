@@ -12,7 +12,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: /gkehub
+metadata: # kpt-merge: ${NAMESPACE}/gkehub
   name: gkehub
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -24,7 +24,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: /anthos
+metadata: # kpt-merge: ${NAMESPACE}/anthos
   name: anthos
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -36,7 +36,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: /container
+metadata: # kpt-merge: ${NAMESPACE}/container
   name: container
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -48,7 +48,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: /binaryauthorization
+metadata: # kpt-merge: ${NAMESPACE}/binaryauthorization
   name: binaryauthorization
   namespace: config-control # kpt-set: ${namespace}
 spec:
@@ -82,7 +82,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: /gkehub
+metadata: # kpt-merge: ${NAMESPACE}/bigquery
   name: bigquery
   namespace: config-control # kpt-set: ${namespace}
   annotations:
