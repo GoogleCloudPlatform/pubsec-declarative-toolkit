@@ -9,27 +9,27 @@ data:
   allowed-regions: |
     - northamerica-northeast1
     - northamerica-northeast2
-  asset-viewer-group: email@domain.com
-  audit-data-group: email@domain.com
-  audit-data-viewer-group: email@domain.com 
-  billing-data-group: email@domain.com
-  billing-data-viewer-group: email@domain.com
-  billing-console-viewer-group: email@domain.com
-  billing-id: "0000000000"
-  org-id: "0000000000"
+  asset-viewer-group: ssc-broker@chriscarty.altostrat.com
+  audit-data-group: ssc-broker@chriscarty.altostrat.com
+  audit-data-viewer-group: ssc-broker@chriscarty.altostrat.com 
+  billing-data-group: ssc-broker@chriscarty.altostrat.com
+  billing-data-viewer-group: ssc-broker@chriscarty.altostrat.com
+  billing-console-viewer-group: ssc-broker@chriscarty.altostrat.com
+  billing-id: "011F2A-8F38DD-24870A"
+  org-id: "1020902403876"
   department-code: "goc"
   region: northamerica-northeast1
   region2: northamerica-northeast2
   ######
   # Protected B Project Values
   ######
-  projected-b-project-name: protected-b-00000
+  projected-b-project-name: protected-b-23123123
   ######
   # Unclassified Project Values
   ######
-  unclassified-project-name: unclassified-00000
+  unclassified-project-name: unclassified-23123123
   # Guardrails Project Values
-  guardrails-project-id: guardrails-00000 # Must be globally unique
+  guardrails-project-id: guardrails-23123123 # Must be globally unique
   ######
   # GKE Sandbox Network Values
   ######
@@ -47,22 +47,22 @@ data:
   ######
   # Sandbox Cluster Values
   ######
-  sandbox-project-id: sandbox-00000 # Must be globally unique
+  sandbox-project-id: sandbox-23123123 # Must be globally unique
   zone: northamerica-northeast1-a
   cluster-description: dev-cluster
   cluster-name: sandbox 
   auth-network: | 
-    - cidrBlock: 0.0.0.0/32
+    - cidrBlock: 35.237.129.190/32
       displayName: private-net
-  labels: |
-    - availability: test
-    - target-audience: test      
+  labels:
+    availability: test
+    target-audience: test      
   tags: |
     - regional
     - northamerica
     - sandbox
   repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
   branch: prod-env
-  gke-admin: email@domain.com
-  gke-viewer: email@domain.com
+  gke-admin: ssc-broker@chriscarty.altostrat.com
+  gke-viewer: ssc-broker@chriscarty.altostrat.com
   machineType: e2-standard-8
