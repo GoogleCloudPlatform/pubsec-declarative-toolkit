@@ -3,6 +3,9 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
+  ######
+  # General Settings Values
+  ######
   allowed-regions: |
     - northamerica-northeast1
     - northamerica-northeast2
@@ -18,15 +21,33 @@ data:
   project-id: protected-b-kpt-test
   region: northamerica-northeast1
   region2: northamerica-northeast2
+  ######
   # Protected B Project Values
+  ######
   projected-b-project-name: protected-b-00000
-
+  ######
   # Unclassified Project Values
+  ######
   unclassified-project-name: unclassified-00000
   # Guardrails Project Values
   guardrails-project-id: guardrails-00000 # Must be globally unique
-
+  ######
+  # GKE Sandbox Network Values
+  ######
+  routing-mode: REGIONAL # REGIONAL or GLOBAL
+  mtu: 1460 # Range can be between 1460 and 1500 bytes
+  subnet-cidr: 10.2.0.0/16
+  log-aggregation-interval: INTERVAL_5_SEC # Possible Values ["INTERVAL_5_SEC", "INTERVAL_30_SEC", "INTERVAL_1_MIN", "INTERVAL_5_MIN", "INTERVAL_10_MIN", "INTERVAL_15_MIN"]
+  flow-sampling: 0.5 # Value must be between 0 and 1
+  log-metadata: INCLUDE_ALL_METADATA # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
+  # log-metadatafields: | # Use if CUSTOM_METADATA is used for `log-metadata`
+  #   - test 
+  private-google-access: true
+  gke-services-cidr: 10.3.0.0/16
+  gke-pod-cidr: 10.4.0.0/16
+  ######
   # Sandbox Cluster Values
+  ######
   sandbox-project-id: sandbox-00000 # Must be globally unique
   zone: northamerica-northeast1-a
   cluster-description: dev-cluster

@@ -7,7 +7,8 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
 spec:
   autoCreateSubnetworks: false
-  routingMode: REGIONAL
+  routingMode: REGIONAL # kpt-set: ${routing-mode}
+  mtu: 1460 # kpt-set: ${mtu}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
@@ -17,18 +18,21 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
   annotations:
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
 spec:
-  ipCidrRange: 10.2.0.0/16
+  ipCidrRange: 10.2.0.0/16 # kpt-set: ${subnet-cidr}
   networkRef:
     name: sandbox-net # kpt-set: ${cluster-name}-net
   region: northamerica-northeast1 # kpt-set: ${region}
+  privateIpGoogleAccess: true # kpt-set: ${private-google-access}
   logConfig:
-    aggregationInterval: INTERVAL_10_MIN
-    flowSampling: 0.5
-    metadata: INCLUDE_ALL_METADATA
+    aggregationInterval: INTERVAL_10_MIN # kpt-set: ${log-aggreation-interval}
+    flowSampling: 0.5 # kpt-set: ${flow-sampling}
+    metadata: INCLUDE_ALL_METADATA # kpt-set: ${log-metadata}
+    metadataFields: # kpt-set: ${log-metadatafields}
+      - ""
   secondaryIpRange:
-    - ipCidrRange: 10.3.0.0/16
+    - ipCidrRange: 10.3.0.0/16 # kpt-set: ${gke-services-cidr}
       rangeName: servicesrange
-    - ipCidrRange: 10.4.0.0/16
+    - ipCidrRange: 10.4.0.0/16 # kpt-set: ${gke-pod-cidr}
       rangeName: clusterrange
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
@@ -56,4 +60,6 @@ spec:
   region: northamerica-northeast1 # kpt-set: ${region}
   routerRef:
     name: router-sandbox-net # kpt-set: router-${cluster-name}-net
-  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+  sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
+  subnetwork:
+    - sandbox-subnet
