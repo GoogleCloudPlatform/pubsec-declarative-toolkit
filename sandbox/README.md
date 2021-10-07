@@ -247,12 +247,20 @@ gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:$
 Assume you have SSH access to this repo.
 
 ```
-kpt pkg get git@github.com:cartyc/gcp-sandbox.git/sandbox
+kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/sandbox ./<folder>
 ```
 
 Modify the `Setters.yaml` to match what is required for the current environment. Once the values are up to date run the `render` command to apply the changes
 ```
 kpt fn render
+```
+
+Once the setters have changed you will want to initialize git in the directory and commit the changes so `kpt` can keep track of the difference between what is stored locally and what is in the upstream repository.
+
+```
+git init
+git add .
+git commit -m "updated setter values"
 ```
 
 ### Apply the Configs
