@@ -62,4 +62,7 @@ spec:
     name: router-sandbox-net # kpt-set: router-${cluster-name}-net
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
-    - sandbox-subnet
+  - subnetworkRef:
+      name: sandbox-subnet
+    sourceIpRangesToNat: ALL_IP_RANGES
+
