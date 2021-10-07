@@ -18,7 +18,6 @@ data:
   billing-id: "0000000000"
   org-id: "0000000000"
   department-code: "goc"
-  project-id: protected-b-kpt-test
   region: northamerica-northeast1
   region2: northamerica-northeast2
   ######
