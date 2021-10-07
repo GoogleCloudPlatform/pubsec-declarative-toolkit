@@ -20,4 +20,3 @@ spec:
   globalPolicyEvaluationMode: ENABLE
   projectRef:
     name: sandbox
-

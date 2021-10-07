@@ -34,10 +34,15 @@ data:
   auth-network: | 
     - cidrBlock: 0.0.0.0/32
       displayName: private-net
+  labels: |
+    - availability: test
+    - target-audience: test      
   tags: |
-    - zonal
+    - regional
+    - northamerica
     - sandbox
   repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
   branch: prod-env
   gke-admin: email@domain.com
   gke-viewer: email@domain.com
+  machineType: e2-standard-8

@@ -3,9 +3,9 @@ kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   name: sandbox # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
-  labels:
-    availability: medium
-    target-audience: sandbox
+  labels: # kpt-set: ${labels}
+    - availability: test
+    - target-audience: test
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
@@ -89,7 +89,7 @@ spec:
     diskSizeGb: 100
     diskType: pd-standard
     imageType: COS_CONTAINERD
-    machineType: e2-standard-8
+    machineType: e2-standard-8 # kpt-set: ${machineType}
     oauthScopes:
       - "https://www.googleapis.com/auth/logging.write"
       - "https://www.googleapis.com/auth/monitoring"
@@ -132,31 +132,4 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-pubsub
   name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
----
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeRouter
-metadata: # kpt-merge: ${NAMESPACE}/computerouternat-dep-forallsubnets
-  name: router-sandbox-net # kpt-set: router-${cluster-name}-net
-  namespace: config-control # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
-spec:
-  description: example router description
-  networkRef:
-    name: sandbox-net # kpt-set: ${cluster-name}-net
-  region: northamerica-northeast1 # kpt-set: ${region}
----
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeRouterNAT
-metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
-  name: nat-sandbox-net # kpt-set: nat-${cluster-name}-net
-  namespace: config-control # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
-spec:
-  natIpAllocateOption: AUTO_ONLY
-  region: northamerica-northeast1 # kpt-set: ${region}
-  routerRef:
-    name: router-sandbox-net # kpt-set: router-${cluster-name}-net
-  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
