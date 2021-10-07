@@ -1,6 +1,6 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature
+metadata: # kpt-merge: ${NAMESPACE}/anthos-configmanagement
   name: anthos-configmanagement
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -58,7 +58,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature-2
+metadata: # kpt-merge: ${NAMESPACE}/secret-manager
   name: secret-manager
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -70,7 +70,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-dep-acmfeature-2
+metadata: # kpt-merge: ${NAMESPACE}/artifactregistry
   name: artifactregistry
   namespace: config-control # kpt-set: ${namespace}
   annotations:
