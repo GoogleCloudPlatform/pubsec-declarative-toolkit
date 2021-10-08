@@ -102,7 +102,7 @@ fi
 
 # If project id is not provided, use the default with a random string. This can still cause collisions, random is only so random :)
 if [ -z "${PROJECT_ID}" ]; then
-    PROJECT_ID="gcp-sandbox-${RANDOM}"
+    PROJECT_ID="bootstrap-${RANDOM}"
 fi
 
 
