@@ -3,9 +3,6 @@ kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   name: sandbox # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
-  labels:
-    availability: test
-    target-audience: test
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
