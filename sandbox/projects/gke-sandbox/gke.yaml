@@ -3,7 +3,7 @@ kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   name: sandbox # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
-  labels: # kpt-set: ${labels}
+  labels:
     availability: test
     target-audience: test
   annotations:
