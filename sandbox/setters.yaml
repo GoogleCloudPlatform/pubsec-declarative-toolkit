@@ -55,7 +55,6 @@ data:
   auth-network: |
     - cidrBlock: 0.0.0.0/32
       displayName: private-net
-  # labels: "- availability: test\n- target-audience: test      \n"
   tags: |
     - regional
     - northamerica
