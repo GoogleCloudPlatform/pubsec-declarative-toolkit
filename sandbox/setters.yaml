@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: ConfigMap
-metadata:
+metadata: # kpt-merge: /setters
   name: setters
 data:
   ######
@@ -11,7 +11,7 @@ data:
     - northamerica-northeast2
   asset-viewer-group: email@domain.com
   audit-data-group: email@domain.com
-  audit-data-viewer-group: email@domain.com 
+  audit-data-viewer-group: email@domain.com
   billing-data-group: email@domain.com
   billing-data-viewer-group: email@domain.com
   billing-console-viewer-group: email@domain.com
@@ -41,6 +41,7 @@ data:
   log-metadata: INCLUDE_ALL_METADATA # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
   # log-metadatafields: | # Use if CUSTOM_METADATA is used for `log-metadata`
   #   - test 
+  acm-version: 1.9.0
   private-google-access: true
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
@@ -50,13 +51,10 @@ data:
   sandbox-project-id: sandbox-00000 # Must be globally unique
   zone: northamerica-northeast1-a
   cluster-description: dev-cluster
-  cluster-name: sandbox 
-  auth-network: | 
+  cluster-name: sandbox
+  auth-network: |
     - cidrBlock: 0.0.0.0/32
       displayName: private-net
-  labels: |
-    - availability: test
-    - target-audience: test      
   tags: |
     - regional
     - northamerica

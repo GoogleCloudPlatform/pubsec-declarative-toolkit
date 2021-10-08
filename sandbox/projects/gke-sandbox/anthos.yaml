@@ -62,9 +62,9 @@ spec:
       logDeniesEnabled: true
       referentialRulesEnabled: true
       templateLibraryInstalled: true
-    version: 1.9.0
+    version: 1.9.0 # kpt-set: ${acm-version}
   featureRef:
-    name: gkehubfeature-acm
+    name: anthos-config-management
   location: global
   membershipRef:
     name: sandbox-hub # kpt-set: ${cluster-name}-hub

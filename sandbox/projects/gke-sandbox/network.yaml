@@ -64,5 +64,6 @@ spec:
   subnetwork:
   - subnetworkRef:
       name: sandbox-subnet
-    sourceIpRangesToNat: ALL_IP_RANGES
+    sourceIpRangesToNat: 
+    - ALL_IP_RANGES
 
