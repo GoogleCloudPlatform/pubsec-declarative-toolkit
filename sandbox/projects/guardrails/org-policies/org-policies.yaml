@@ -2,8 +2,13 @@
 #
 # GCP Organization Policies
 # Org policies that correspond with a Guardrail will container a label indicating what Guardrails it helps in enforcing
+# https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 #########
+#
+# Constraint: constraints/gcp.resourceLocations
+# This list constraint defines the set of locations where location-based GCP resources can be created.
+#
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -22,6 +27,13 @@ spec:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
 ---
+#########
+#
+# Constraint: constraints/compute.disableVpcExternalIpv6
+# This boolean constraint, when set to True, disables the 
+# creation of or update to subnetworks with a stack_type of IPV4_IPV6 and ipv6_access_type of EXTERNAL.
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -36,6 +48,14 @@ spec:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
 ---
+#########
+#
+# Constraint: constraints/compute.requireShieldedVm
+# This boolean constraint, when set to True, requires that all new Compute Engine VM instances 
+# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled. 
+# Secure Boot can be disabled after creation, if desired. Existing running instances will continue to work as usual.
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -48,6 +68,13 @@ spec:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
 ---
+#########
+#
+# Constraint: constraints/compute.trustedImageProjects
+# This list constraint defines the set of projects that can be used for image storage and disk instantiation for Compute Engine.
+# https://cloud.google.com/compute/docs/images/restricting-image-access
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -60,6 +87,14 @@ spec:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}   
 ---
+#########
+#
+# Constraint: constraints/compute.vmExternalIpAccess
+# This list constraint defines the set of Compute Engine VM instances that are allowed to use external IP addresses.
+# The allowed/denied list of VM instances must be identified by the VM instance name,
+# in the form: projects/PROJECT_ID/zones/ZONE/instances/INSTANCE
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -74,6 +109,12 @@ spec:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}          
 ---
+#########
+#
+# Constraint: constraints/iam.disableServiceAccountKeyCreation
+# This boolean constraint disables the creation of service account external keys where this constraint is set to `True`.
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -86,6 +127,16 @@ spec:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}              
 ---
+#########
+#
+# Constraint: constraints/compute.restrictVpcPeering
+# This list constraint defines the set of VPC networks 
+# that are allowed to be peered with the VPC networks belonging to this project, folder, or organization.
+# The allowed/denied list of networks must be identified in the form: 
+# under:organizations/ORGANIZATION_ID, under:folders/FOLDER_ID, under:projects/PROJECT_ID, 
+# or projects/PROJECT_ID/global/networks/NETWORK_NAME.
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
