@@ -5,22 +5,39 @@ metadata: # kpt-merge: /setters
 data:
   ######
   # General Settings Values
+  #
+  # The following are Settings for the environment to bootstrap with
+  #
   ######
+  billing-id: "0000000000"
+  org-id: "0000000000"
+  department-code: "goc"
+  ######
+  # Guardrails Values
+  ######
+  #
+  # Required to be compliant with Guardrails 05 - Data Location
+  # This will prevent resources from being provisioned outside of the lists regions. 
+  # To be PBMM Compliant resources must be located in Canadian Regions
+  # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/05_Data-Location.md
+  #
   allowed-regions: |
     - northamerica-northeast1
     - northamerica-northeast2
+  # Required to be compliant with Guardrails 04 - Enterprise Monitoring
+  # Create role-based account to enable enterprise monitoring and visibility
+  # Emails used must be Already in Cloud Identity
+  # Users and roles will be created for the accociated emails
+  # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
+  #
+  ######
   asset-viewer-group: email@domain.com
   audit-data-group: email@domain.com
   audit-data-viewer-group: email@domain.com
   billing-data-group: email@domain.com
   billing-data-viewer-group: email@domain.com
   billing-console-viewer-group: email@domain.com
-  billing-id: "0000000000"
-  org-id: "0000000000"
-  department-code: "goc"
-  region: northamerica-northeast1
-  region2: northamerica-northeast2
-  ######
+  ####
   # Protected B Project Values
   ######
   projected-b-project-name: protected-b-00000
@@ -41,17 +58,24 @@ data:
   log-metadata: INCLUDE_ALL_METADATA # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
   # log-metadatafields: | # Use if CUSTOM_METADATA is used for `log-metadata`
   #   - test 
-  acm-version: 1.9.0
   private-google-access: true
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
   ######
-  # Sandbox Cluster Values
+  #
+  # GKE Sandbox Cluster Values
+  # Creates a Private GKE Cluster with 1 Node Pool
+  #
   ######
   sandbox-project-id: sandbox-00000 # Must be globally unique
   zone: northamerica-northeast1-a
   cluster-description: dev-cluster
   cluster-name: sandbox
+  #####
+  #
+  # CIDR Range to be used for GKE Endpoint Access
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
+  #
   auth-network: |
     - cidrBlock: 0.0.0.0/32
       displayName: private-net
@@ -63,4 +87,16 @@ data:
   branch: prod-env
   gke-admin: email@domain.com
   gke-viewer: email@domain.com
+  ####
+  #
+  # Machine Type to be used for GKE Node Pool
+  # https://cloud.google.com/compute/docs/machine-types
+  #
   machineType: e2-standard-8
+  region: northamerica-northeast1
+  ######
+  #
+  # Anthos Values
+  #
+  ######
+  acm-version: 1.9.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management

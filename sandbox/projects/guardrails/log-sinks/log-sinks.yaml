@@ -1,3 +1,11 @@
+######
+#
+#
+#  Logging and Monitoring Services to be compliant with Guardrails 11 Logging and Monitoring
+#  https://github.com/canada-ca/cloud-guardrails/blob/master/EN/11_Logging-and-Monitoring.md
+#
+#
+#####
 # Storage Bucket Org LogSink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink

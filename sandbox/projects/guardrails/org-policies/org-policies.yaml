@@ -1,7 +1,15 @@
+#########
+#
+# GCP Organization Policies
+# Org policies that correspond with a Guardrail will container a label indicating what Guardrails it helps in enforcing
+#
+#########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-resource-locations
+  labels:
+    guardrails-enforced: guardrail-05
 spec:
   constraint: "constraints/gcp.resourceLocations"
   listPolicy:
@@ -18,6 +26,8 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-vpc-external-ipv6
+  labels:
+    guardrail-enforced: guardrail-09
 spec:
   constraint: "constraints/compute.disableVpcExternalIpv6"
   booleanPolicy:
@@ -54,6 +64,8 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-vm-external-access
+  labels:
+    guardrail-enforced: guardrail-09  
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   list:
@@ -78,6 +90,8 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-peering
+  labels:
+    guardrail-enforced: guardrail-09  
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:
