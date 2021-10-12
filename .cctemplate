@@ -1,5 +1,5 @@
 
-[
+{
     "metadata": {
         "version": "1"
     },
@@ -10,4 +10,4 @@
             "description": "Testing"
         }
     ]
-]
+}
