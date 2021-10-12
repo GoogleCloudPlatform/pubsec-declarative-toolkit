@@ -1,0 +1,13 @@
+
+[
+    "metadata": {
+        "version": "1"
+    },
+    "templates": [
+        {
+            "path": "/solutions/docai",
+            "name": "Document AI - Form Processor",
+            "description": "Testing"
+        }
+    ]
+]
