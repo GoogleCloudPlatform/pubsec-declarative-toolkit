@@ -78,6 +78,7 @@ spec:
 # This list constraint defines the set of projects that can be used for image storage and disk instantiation for Compute Engine.
 # https://cloud.google.com/compute/docs/images/restricting-image-access
 #
+# List public images: gcloud compute images list
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -88,7 +89,9 @@ metadata:
 spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
-    values:
+    values: # kpt-set: ${allowed-images}
+      - projects/debian-cloud
+      - projects/cos-cloud
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}   
@@ -163,7 +166,12 @@ spec:
     external: "0000000000" # kpt-set: ${org-id}       
 #########
 #
-#
+# Constraint: constraints/storage.uniformBucketLevelAccess
+# 
+# This boolean constraint requires buckets to use uniform bucket-level access 
+# where this constraint is set to True. Any new bucket in the Organization resource
+# must have uniform bucket-level access enabled, and no existing buckets in the 
+# organization resource can disable uniform bucket-level access.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -175,16 +183,19 @@ metadata:
     guardrail-enforced: 
 spec:
   constraint: "constraints/storage.uniformBucketLevelAccess"
-  listPolicy:
-    allow:
-      all: true
-      values:
+  booleanPolicy:
+    enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
 #########
 #
-#
+# Constraint: constraints/compute.requireOsLogin
+# 
+# This boolean constraint, when set to true, enables OS Login on all newly created Projects. 
+# All VM instances created in new projects will have OS Login enabled. 
+# On new and existing projects, this constraint prevents metadata updates that disable OS 
+# Login at the project or instance level.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -196,10 +207,95 @@ metadata:
     guardrail-enforced:     
 spec:
   constraint: "constraints/compute.requireOsLogin"
-  listPolicy:
-    allow:
-      all: true
-      values:
+  booleanPolicy:
+    enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+#########
+#
+# Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
+#
+# This list constraint defines 
+# the set of load balancer types which can be created for an organization, 
+# folder, or project. Every load balancer type to be allowed or denied must be listed explicitly.
+#
+# Options: INTERNAL, EXTERNAL, INTERNAL_TCP_UDP, INTERNAL_HTTP_HTTPS, EXTERNAL_NETWORK_TCP_UDP
+# EXTERNAL_TCP_PROXY, EXTERNAL_SSL_PROXY, EXTERNAL_HTTP_HTTPS, EXTERNAL_MANAGED_HTTP_HTTPS
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-loadbalancer-creation
+  labels:
+    guardrail: false
+    guardrail-enforced:     
+spec:
+  constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
+  listPolicy:
+    allow:
+      all: true
+      values: # kpt-set: ${allowed-loadbalancers}
+        - INTERNAL
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+#########
+#
+# Constraint: constraints/essentialcontacts.allowedContactDomains
+#
+# This list constraint defines the set of domains that email addresses added to Essential Contacts can have.
+# By default, email addresses with any domain can be added to Essential Contacts.
+# The allowed/denied list must specify one or more domains of the form @example.com. 
+# If this constraint is active and configured with allowed values, 
+# only email addresses with a suffix matching one of the entries from the 
+# list of allowed domains can be added in Essential Contacts.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: allowed-contact-domains
+  labels:
+    guardrail: false
+    guardrail-enforced:     
+spec:
+  constraint: "constraints/essentialcontacts.allowedContactDomains"
+  listPolicy:
+    allow:
+      all: true
+      values: # kpt-set: ${allowed-domain-contacts}
+        - "@example.com"
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+#########
+#
+# Constraint: constraints/iam.allowedPolicyMemberDomains
+#
+# This list constraint defines one or more Cloud Identity or 
+# Google Workspace customer IDs whose principals can be added to IAM policies.
+# To get instructions workspace ID make sure you are logged in as the admin user for admin.google.com
+# In your Google Admin console (at admin.google.com)...
+# Go to Account settings > Profile.
+# Next to Customer ID, find your organization's unique ID.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-loadbalancer-creation
+  labels:
+    guardrail: false
+    guardrail-enforced:     
+spec:
+  constraint: "constraints/iam.allowedPolicyMemberDomains"
+  listPolicy:
+    allow:
+      all: true
+      values: # kpt-set: ${allowed-domain-members}
+        - "12131231"
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}    

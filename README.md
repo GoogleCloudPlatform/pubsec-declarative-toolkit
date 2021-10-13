@@ -17,6 +17,9 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 - Disable Service Account Key Creation
 - Enforce Uniform bucket-level IAM Access and management
 - Requires OS login for any SSH/RDP needs
+- Only GC organization's customer directory ID will be allowed as IAM entity in GCP, this will block all other GSuite organization, including Gmail accounts.
+
+
 
 ### Folder Structure
 - Guardrails

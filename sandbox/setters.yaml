@@ -13,6 +13,20 @@ data:
   org-id: "0000000000"
   department-code: "goc"
   ######
+  #
+  # Org Policies
+  #
+  ######
+  allowed-images: |
+    - projects/debian-cloud
+    - projects/cos-cloud
+  allowed-loadbalacers: |
+    - INTERNAL
+  allowed-domain-contacts: |
+    - "@example.com"
+  allowed-domain-members: |
+    - "asdasda"
+  ######
   # Guardrails Values
   ######
   #
