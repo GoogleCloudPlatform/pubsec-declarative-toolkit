@@ -15,6 +15,8 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 - Resource Locations
 - Disable VPC External IPV6
 - Disable Service Account Key Creation
+- Enforce Uniform bucket-level IAM Access and management
+- Requires OS login for any SSH/RDP needs
 
 ### Folder Structure
 - Guardrails

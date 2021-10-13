@@ -14,6 +14,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-resource-locations
   labels:
+    guardrail: true
     guardrails-enforced: guardrail-05
 spec:
   constraint: "constraints/gcp.resourceLocations"
@@ -39,6 +40,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-vpc-external-ipv6
   labels:
+    guardrail: true
     guardrail-enforced: guardrail-09
 spec:
   constraint: "constraints/compute.disableVpcExternalIpv6"
@@ -60,6 +62,8 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: require-shielded-vm
+  labels:
+    guardrail: false
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
@@ -79,6 +83,8 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: require-trusted-images
+  labels:
+    guardrail: false
 spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
@@ -119,6 +125,8 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-serviceaccount-key-creation
+  labels:
+    guardrail: false
 spec:
   constraint: "constraints/iam.disableServiceAccountKeyCreation"
   booleanPolicy:
@@ -142,6 +150,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-peering
   labels:
+    guardrail: true
     guardrail-enforced: guardrail-09  
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
@@ -152,3 +161,45 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}       
+#########
+#
+#
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: uniform-bucket-level-access
+  labels:
+    guardrail: true
+    guardrail-enforced: 
+spec:
+  constraint: "constraints/storage.uniformBucketLevelAccess"
+  listPolicy:
+    allow:
+      all: true
+      values:
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+#########
+#
+#
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-os-login
+  labels:
+    guardrail: false
+    guardrail-enforced:     
+spec:
+  constraint: "constraints/compute.requireOsLogin"
+  listPolicy:
+    allow:
+      all: true
+      values:
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
