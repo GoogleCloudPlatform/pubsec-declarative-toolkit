@@ -2,6 +2,12 @@
 
 This Repo contains the configuration to deploy a Sandbox Environment based off on the GoC's 30 Day [Guardrails](https://github.com/canada-ca/cloud-guardrails).
 
+## Prerequisites
+- GCP Account
+- [Cloud Shell](https://cloud.google.com/shell#:~:text=Cloud%20Shell%20is%20an%20online,tool%2C%20kubectl%2C%20and%20more.)
+- [kpt](https://kpt.dev/)
+- git
+
 ## Quickstart
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md)
 
@@ -28,8 +34,8 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 - Unclassified Workloads
 
 ### Services
-- Private GKE Instance
-- Artifact Registry
-- Secret Manager
-- BinAuth
-- Anthos
+- [Private GKE Instance](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters)
+- [Artifact Registry](https://cloud.google.com/artifact-registry)
+- [Secret Manager](https://cloud.google.com/secret-manager#:~:text=Secret%20Manager%20is%20a%20secure,audit%20secrets%20across%20Google%20Cloud.)
+- [BinaryAuthorization](https://cloud.google.com/binary-authorization)
+- [Anthos](https://anthos.dev/)
