@@ -26,6 +26,8 @@ data:
     - "@example.com"
   allowed-domain-members: |
     - "asdasda"
+  can-ip-forward: | # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+   - "" 
   ######
   # Guardrails Values
   ######

@@ -165,7 +165,8 @@ spec:
       values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}       
+    external: "0000000000" # kpt-set: ${org-id}  
+---     
 #########
 #
 # Constraint: constraints/storage.uniformBucketLevelAccess
@@ -190,6 +191,7 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #########
 #
 # Constraint: constraints/compute.requireOsLogin
@@ -214,6 +216,7 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #########
 #
 # Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
@@ -243,6 +246,7 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #########
 #
 # Constraint: constraints/essentialcontacts.allowedContactDomains
@@ -272,6 +276,7 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #########
 #
 # Constraint: constraints/iam.allowedPolicyMemberDomains
@@ -301,14 +306,14 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #########
 #
-# Constraint: constraints/compute.requireOsLogin
+# Constraint: constraints/compute.disableSerialPortAccess
 # 
-# This boolean constraint, when set to true, enables OS Login on all newly created Projects. 
-# All VM instances created in new projects will have OS Login enabled. 
-# On new and existing projects, this constraint prevents metadata updates that disable OS 
-# Login at the project or instance level.
+# This boolean constraint disables serial port access to 
+# Compute Engine VMs belonging to the organization, project, 
+# or folder where this constraint is set to True.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -324,10 +329,121 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #######
-# To Add:
-# constraints/compute.vmCanIpForward
-# constraints/compute.disableGuestAttributesAccess
-# constraints/compute.disableNestedVirtualization
-# constraints/compute.restrictXpnProjectLienRemoval
-# constraints/sql.restrictPublicIp
+#
+# Constraint: constraints/compute.vmCanIpForward
+# This list constraint defines the set of VM instances that can enable IP forwarding.
+# By default, any VM can enable IP forwarding in any virtual network. 
+# VM instances must be specified in the form: 
+# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID, 
+# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: require-trusted-images
+  labels:
+    guardrail: false
+spec:
+  constraint: "constraints/compute.vmCanIpForward"
+  listPolicy:
+    allow:
+      all: true
+      values: # kpt-set: ${can-ip-forward}
+        - ""
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id} 
+---
+#########
+#
+# Constraint: constraints/compute.disableGuestAttributesAccess
+# 
+# This boolean constraint disables Compute Engine API access 
+# to the Guest Attributes of Compute Engine VMs belonging 
+# to the organization, project, or folder where this constraint is set to True.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: disable-nested-virtualization
+  labels:
+    guardrail: false 
+spec:
+  constraint: "constraints/compute.disableGuestAttributesAccess"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+#
+# Constraint: constraints/compute.disableNestedVirtualization
+# 
+# This boolean constraint disables hardware-accelerated nested 
+# virtualization for all Compute Engine VMs belonging to the 
+# organization, project, or folder where this constraint is set to True.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: disable-nested-virtualization
+  labels:
+    guardrail: false 
+spec:
+  constraint: "constraints/compute.disableNestedVirtualization"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+---
+##################
+#
+# Constraint: constraints/compute.restrictXpnProjectLienRemoval
+# 
+# This boolean constraint restricts the set of users that can 
+# remove a Shared VPC project lien without organization-level 
+# permission where this constraint is set to True.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-vpc-lien-removal
+  labels:
+    guardrail: false 
+spec:
+  constraint: "constraints/compute.restrictXpnProjectLienRemoval"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+#
+# Constraint: constraints/sql.restrictPublicIp
+# 
+# This boolean constraint restricts configuring Public IP on 
+# Cloud SQL instances where this constraint is set to True. 
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-sql-public-ip
+  labels:
+    guardrail: false 
+spec:
+  constraint: "constraints/sql.restrictPublicIp"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
