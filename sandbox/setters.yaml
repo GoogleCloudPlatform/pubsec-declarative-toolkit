@@ -18,8 +18,8 @@ data:
   #
   ######
   allowed-images: |
-    - projects/debian-cloud
-    - projects/cos-cloud
+    - "projects/debian-cloud"
+    - "projects/cos-cloud"
   allowed-loadbalacers: |
     - INTERNAL
   allowed-domain-contacts: |

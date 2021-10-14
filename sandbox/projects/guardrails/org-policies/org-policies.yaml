@@ -89,9 +89,11 @@ metadata:
 spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
-    values: # kpt-set: ${allowed-images}
-      - projects/debian-cloud
-      - projects/cos-cloud
+    allow:
+      all: true
+      values: # kpt-set: ${allowed-images}
+        - "projects/debian-cloud"
+        - "projects/cos-cloud"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}   
@@ -298,4 +300,34 @@ spec:
         - "12131231"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}    
+    external: "0000000000" # kpt-set: ${org-id}
+#########
+#
+# Constraint: constraints/compute.requireOsLogin
+# 
+# This boolean constraint, when set to true, enables OS Login on all newly created Projects. 
+# All VM instances created in new projects will have OS Login enabled. 
+# On new and existing projects, this constraint prevents metadata updates that disable OS 
+# Login at the project or instance level.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: disable-serial-port-access
+  labels:
+    guardrail: false 
+spec:
+  constraint: "constraints/compute.disableSerialPortAccess"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+#######
+# To Add:
+# constraints/compute.vmCanIpForward
+# constraints/compute.disableGuestAttributesAccess
+# constraints/compute.disableNestedVirtualization
+# constraints/compute.restrictXpnProjectLienRemoval
+# constraints/sql.restrictPublicIp
