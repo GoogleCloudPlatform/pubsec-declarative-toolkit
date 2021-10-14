@@ -232,7 +232,7 @@ spec:
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: restrict-loadbalancer-creation
+  name: restrict-loadbalancer-creation-types
   labels:
     guardrail: false
     guardrail-enforced:     
@@ -292,7 +292,7 @@ spec:
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: restrict-loadbalancer-creation
+  name: allowed-policy-member-domain
   labels:
     guardrail: false
     guardrail-enforced:     
@@ -343,7 +343,7 @@ spec:
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: require-trusted-images
+  name: vm-can-ip-forward
   labels:
     guardrail: false
 spec:
