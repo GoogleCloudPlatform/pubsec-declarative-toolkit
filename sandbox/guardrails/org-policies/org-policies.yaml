@@ -447,3 +447,29 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+#########
+#
+# Constraint: constraints/storage.publicAccessPrevention
+# 
+# Secure your Cloud Storage data from public exposure by 
+# enforcing public access prevention. This governance policy 
+# prevents existing and future resources from being accessed 
+# via the public internet by disabling and blocking ACLs and 
+# IAM permissions that grant access to allUsers and allAuthenticatedUsers.
+# Enforce this policy on the entire organization (recommended), 
+# specific projects, or specific folders to ensure no data is publicly exposed.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: storage-public-access-prevention
+  labels:
+    guardrail: false 
+spec:
+  constraint: "constraints/storage.publicAccessPrevention"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}

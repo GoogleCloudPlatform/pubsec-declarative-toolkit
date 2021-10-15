@@ -53,11 +53,14 @@ spec:
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
 ---
+#########
+# PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:
   name: logginglogsink-org
 ---
+#########
 # BigQuery Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
@@ -71,6 +74,8 @@ spec:
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
 ---
+#########
+# Big Query Instance
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata:
