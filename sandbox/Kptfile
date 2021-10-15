@@ -6,10 +6,10 @@ info:
   description: sample description
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml
   validators:
-    - image: gcr.io/kpt-fn/kubeval:v0.1
+    - image: gcr.io/kpt-fn/kubeval:v0.2
       configMap:
         ignore_missing_schemas: "true"
         strict: "true"
