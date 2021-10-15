@@ -13,7 +13,13 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 
 ## What is in the Sandbox
 
-### Org Policies Enabled
+This repostory contains a series of [KRM](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) (Kubernetes Resource Model) `kpt` packages needed to deploy a Sandbox Environment in Google Cloud. [kpt](https://kpt.dev/) is a Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources.
+
+Each `kpt` package contains configuration files to be used with a [Config Connector](https://cloud.google.com/config-connector/docs/overview) enabled Kubernetes Cluster or using the [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) service.
+
+The Sandbox Solution contains the following.
+
+### Org Policies
 | Org Policy | Usage | Guardrail Enforced |
 |---|---|---|
 | Restrict VM External Access | This list constraint defines the set of Compute Engine VM instances that are allowed to use external IP addresses. The allowed/denied list of VM instances must be identified by the VM instance name, in the form: projects/PROJECT_ID/zones/ZONE/instances/INSTANCE  | [06 - Network Security Services](https://github.com/canada-ca/cloud-guardrails/blob/master/EN/09_Network-Security-Services.md) |
@@ -36,12 +42,20 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 
 
 ### Folder Structure
+A basic folder structure to deploy the included resources
 - Guardrails
-    - Guardrails-configs
+    - Configuration to comply with the GC 30 Day Guardrails
+        - IAM Roles
+        - Log Sinks
+        - Source Control
+        - Cloud Build Trigger and Scheduler for BreakGlass alerting.
 - Protected B Workloads
+    - Example folder and project
 - Unclassified Workloads
+    - Example folder and project
 
-### Services
+### GKE Sandbox
+The following services will be deployed into a GKE-Sandbox folder for learning and development.
 - [Private GKE Instance](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters)
 - [Artifact Registry](https://cloud.google.com/artifact-registry)
 - [Secret Manager](https://cloud.google.com/secret-manager#:~:text=Secret%20Manager%20is%20a%20secure,audit%20secrets%20across%20Google%20Cloud.)
