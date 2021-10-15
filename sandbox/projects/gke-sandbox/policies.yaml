@@ -1,6 +1,6 @@
 #############
 #
-# Both of these policies need to be inplace
+# Add exception to Org Policies for GKE
 # If not the GKE cluster will fail to come online
 #
 #############
