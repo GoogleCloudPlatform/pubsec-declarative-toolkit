@@ -1,3 +1,12 @@
+###############
+#
+# Create VPC and Subnet for GKE Cluster
+# Network is set to Regional Routing and
+# Flow Logging is initialized in the SubNetwork
+# Private Google Access is Enabled
+# Includes NAT for accessing outbound Public Internet
+#
+###############
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
@@ -43,7 +52,7 @@ metadata: # kpt-merge: ${NAMESPACE}/computerouternat-dep-forallsubnets
   annotations:
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
 spec:
-  description: example router description
+  description: Compute Router for GKE NAT
   networkRef:
     name: sandbox-net # kpt-set: ${cluster-name}-net
   region: northamerica-northeast1 # kpt-set: ${region}
@@ -67,3 +76,26 @@ spec:
     sourceIpRangesToNat: 
     - ALL_IP_RANGES
 
+---
+#################
+# NIST Compliance Firewalls
+# Firewall rules should not allow connections from all IP addresses on TCP ports 7000-7001, 7199, 8888, 9042, 9160, 61620-61621
+# Firewall rules should not allow connections from all IP addresses on TCP port 9090
+# Firewall rules should not allow connections from all IP addresses on TCP or UDP port 445
+# Firewall rules should not allow connections from all IP addresses on TCP or UDP port 53
+# Firewall rules should not allow connections from all IP addresses on TCP ports 9200, 9300
+# Firewall rules should not allow connections from all IP addresses on TCP port 21
+# Firewall rules should not allow connections from all IP addresses on TCP port 80
+# Firewall rules should not allow connections from all IP addresses on TCP ports 389, 636 or UDP port 389
+# Firewall rules should not allow connections from all IP addresses on TCP ports 11211, 11214-11215 or UDP ports 11211, 11214-11215
+# Firewall rules should not allow connections from all IP addresses on TCP ports 27017-27019
+# Firewall rules should not allow connections from all IP addresses on TCP port 3306
+# Firewall rules should not allow connections from all IP addresses on TCP or UDP ports 137-139
+# Firewall rules should not allow connections from all IP addresses on TCP ports 1521, 2483-2484 or UDP ports 2483-2484
+# Firewall rules should not allow connections from all IP addresses on TCP port 110
+# Firewall rules should not allow connections from all IP addresses on TCP or UDP port 5432
+# Firewall rules should not allow connections from all IP addresses on TCP or UDP port 3389
+# Firewall rules should not allow connections from all IP addresses on TCP port 6379
+# Firewall rules should not allow connections from all IP addresses on TCP port 25
+# Firewall rules should not allow connections from all IP addresses on TCP or SCTP port 22
+# Firewall rules should not allow connections from all IP addresses on TCP port 23
