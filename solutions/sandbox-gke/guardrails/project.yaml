@@ -1,0 +1,27 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  labels:
+    classification: "guardrails"
+  name: guardrails-configs-folder
+spec:
+  displayName: Guardrails Configs
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  name: dpt-guardrails
+  labels:
+    classification: "guardrails"
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+spec:
+  name: guardrails
+  resourceID: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  folderRef:
+    name: guardrails-configs-folder
+  billingAccountRef:
+    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    external: "0000000000" # kpt-set: ${billing-id}

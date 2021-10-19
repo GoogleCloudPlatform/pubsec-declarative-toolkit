@@ -1,0 +1,23 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: k8s-viewer
+spec:
+  member: group:email@domain.com # kpt-set: group:${gke-viewer}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: sandbox
+  role: roles/container.clusterViewer
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: k8s-admin
+spec:
+  member: group:email@domain.com # kpt-set: group:${gke-admin}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: sandbox
+  role: roles/container.admin

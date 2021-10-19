@@ -1,0 +1,86 @@
+######
+#
+#
+#  Logging and Monitoring Services to be compliant with Guardrails 11 Logging and Monitoring
+#  https://github.com/canada-ca/cloud-guardrails/blob/master/EN/11_Logging-and-Monitoring.md
+#
+#
+#####
+# Storage Bucket Org LogSink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata:
+  name: storage-logsink
+spec:
+  destination:
+    storageBucketRef:
+      # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
+      name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
+  filter: |
+    resource.type="organization" AND
+    logName: /logs/cloudaudit.googleapis.com%2Factivity OR
+    logName: /logs/cloudaudit.googleapis.com%2Fsystem_event OR
+    logName: /logs/cloudaudit.googleapis.com%2Fdata_access OR
+    logName: /logs/compute.googleapis.com%2Fvpc_flows OR
+    logName: /logs/compute.googleapis.com%2Ffirewall OR
+    logName: /logs/cloudaudit.googleapis.com%2Faccess_transparency
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+---
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
+metadata:
+  # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
+  name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
+  annotations:
+    cnrm.cloud.google.com/force-destroy: "true"
+spec:
+  location: northamerica-northeast1
+  storageClass: REGIONAL
+  uniformBucketLevelAccess: true
+---
+# PubSub Log Sink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata:
+  name: pubsub-logsink
+spec:
+  destination:
+    pubSubTopicRef:
+      name: logginglogsink-org
+  filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+# PubSub Instance
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata:
+  name: logginglogsink-org
+---
+#########
+# BigQuery Log Sink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata:
+  name: bigquery-logsink
+spec:
+  destination:
+    bigQueryDatasetRef:
+      name: logginglogsink
+  filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+# Big Query Instance
+apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+kind: BigQueryDataset
+metadata:
+  name: logginglogsink
+  annotations:
+    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
+spec:
+  location: northamerica-northeast1

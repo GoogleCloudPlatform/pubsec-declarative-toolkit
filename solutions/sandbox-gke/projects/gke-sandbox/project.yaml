@@ -1,0 +1,27 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  labels:
+    classification: protected-b
+  name: sanbox-workloads
+spec:
+  displayName: sandbox-workloads
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  name: sandbox
+  labels:
+    classification: protected-b
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+spec:
+  name: gcp-test-sandbox
+  resourceID: sandbox-00000 # kpt-set: ${sandbox-project-id}
+  folderRef:
+    name: sanbox-workloads
+  billingAccountRef:
+    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    external: "0000000000" # kpt-set: ${billing-id}

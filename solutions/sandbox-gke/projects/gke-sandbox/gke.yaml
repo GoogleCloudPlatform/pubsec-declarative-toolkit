@@ -1,0 +1,132 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
+  name: sandbox # kpt-set: ${cluster-name}
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/remove-default-node-pool: "true"
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+spec:
+  addonsConfig:
+    configConnectorConfig:
+      enabled: false
+    dnsCacheConfig:
+      enabled: true
+    networkPolicyConfig:
+      disabled: false
+  description: dev-cluster # kpt-set: ${cluster-description}
+  enableBinaryAuthorization: true
+  enableIntranodeVisibility: true
+  enableShieldedNodes: true
+  initialNodeCount: 1
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: clusterrange
+    servicesSecondaryRangeName: servicesrange
+  location: northamerica-northeast1 # kpt-set: ${region}
+  maintenancePolicy:
+    dailyMaintenanceWindow:
+      startTime: 01:00
+  masterAuthorizedNetworksConfig:
+    cidrBlocks: # kpt-set: ${auth-network}
+      - cidrBlock: 0.0.0.0/32
+        displayName: private-net
+  networkPolicy:
+    enabled: true
+  networkRef:
+    name: sandbox-net # kpt-set: ${cluster-name}-net
+  networkingMode: VPC_NATIVE
+  notificationConfig:
+    pubsub:
+      enabled: true
+      topicRef:
+        name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
+  resourceUsageExportConfig:
+    bigqueryDestination:
+      datasetId: gkemetering
+    enableNetworkEgressMetering: true
+    enableResourceConsumptionMetering: true
+  podSecurityPolicyConfig:
+    enabled: false
+  privateClusterConfig:
+    enablePrivateEndpoint: false
+    enablePrivateNodes: true
+    masterIpv4CidrBlock: 172.16.0.0/28
+  subnetworkRef:
+    name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
+  verticalPodAutoscaling:
+    enabled: true
+  workloadIdentityConfig:
+    # Workload Identity supports only a single namespace based on your project name.
+    # Replace ${PROJECT_ID?} below with your project ID.
+    identityNamespace: sandbox-00000.svc.id.goog # kpt-set: ${sandbox-project-id}.svc.id.goog
+---
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
+  name: sandbox-worker-pool-1 # kpt-set: ${cluster-name}-worker-pool-1
+  namespace: config-control # kpt-set: ${namespace}
+  labels:
+    cluster: sandbox # kpt-set: ${cluster-name}
+  annotations:
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+spec:
+  autoscaling:
+    maxNodeCount: 3
+    minNodeCount: 1
+  clusterRef:
+    name: sandbox # kpt-set: ${cluster-name}
+  initialNodeCount: 3
+  location: northamerica-northeast1 # kpt-set: ${region}
+  management:
+    autoRepair: true
+    autoUpgrade: true
+  nodeConfig:
+    metadata:
+      disable-legacy-endpoints: "true"
+    diskSizeGb: 100
+    diskType: pd-standard
+    imageType: COS_CONTAINERD
+    machineType: e2-standard-8 # kpt-set: ${machineType}
+    oauthScopes:
+      - "https://www.googleapis.com/auth/logging.write"
+      - "https://www.googleapis.com/auth/monitoring"
+    preemptible: false
+    tags: # kpt-set: ${tags}
+      - regional
+      - northamerica
+      - sandbox
+---
+# GKE Metering BQ
+apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+kind: BigQueryDataset
+metadata:
+  annotations:
+    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+  name: gkemetering
+spec:
+  defaultTableExpirationMs: 3600000
+  description: "BigQuery Dataset Sample"
+  friendlyName: gke-metering-dataset
+  location: northamerica-northeast1 # kpt-set: ${region}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: gkemetering-bq-viewer
+spec:
+  # replace ${PROJECT_ID?} with your project name
+  member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
+  role: roles/bigquery.dataViewer
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: sandbox
+---
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-pubsub
+  name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}

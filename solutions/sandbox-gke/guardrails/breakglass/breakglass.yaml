@@ -1,0 +1,55 @@
+apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
+kind: CloudBuildTrigger
+metadata:
+  name: breakglass-trigger
+  annotations:
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
+spec:
+  description: Cloud Build Trigger with a build template file. Builds the master branch of the referenced Cloud Source Repository.
+  disabled: false
+  triggerTemplate:
+    repoRef:
+      name: breakglass
+    dir: "team-a/service-b"
+    branchName: master
+  build:
+    step:
+      - name: gcr.io/cloud-builders/gcloud
+        env:
+          - ORG_ID=$_ORG_ID
+          - CB_SA_EMAIL=$_CB_SA_EMAIL
+          - SA_EMAIL=$_SA_EMAIL
+          - PROJECT_ID=$PROJECT_ID
+        args:
+          - breakglass.sh
+        entrypoint: bash
+---
+apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+kind: SourceRepoRepository
+metadata:
+  name: breakglass
+  annotations:
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
+---
+apiVersion: cloudscheduler.cnrm.cloud.google.com/v1beta1
+kind: CloudSchedulerJob
+metadata:
+  name: cloudscheduler-sample-http
+spec:
+  description: "scheduler-http-target-job"
+  schedule: "*/5 * * * *"
+  location: "northamerica-northeast1"
+  timeZone: "EST"
+  attemptDeadline: "600s"
+  retryConfig:
+    retryCount: 3
+    maxRetryDuration: "60s"
+    maxDoublings: 2
+  httpTarget:
+    headers:
+      app: test
+      Content-Type: application/octet-stream
+      User-Agent: Google-Cloud-Scheduler
+    httpMethod: "POST"
+    uri: "https://cloudbuild.googleapis.com/v1/projects/guardrails-00000/triggers/breakglass-trigger:run" # kpt-set: https://cloudbuild.googleapis.com/v1/projects/${guardrails-project-id}/triggers/breakglass-trigger:run
+    body: "" # base64 encoded {"foo":"bar"}

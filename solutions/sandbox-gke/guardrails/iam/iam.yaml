@@ -1,0 +1,100 @@
+######
+#
+#
+#  IAM Roles Required to be compliant with Guardrails 04 Enterprise Monitoring Accounts
+#  https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
+#
+#
+#####
+### Enable Audit Logs 
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMAuditConfig
+metadata:
+  name: org-audit-logs
+spec:
+  service: allServices
+  auditLogConfigs:
+    - logType: DATA_WRITE
+    - logType: DATA_READ
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: guardrails-test-folder
+---
+# BigQuery Audit Log Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-audit-data-viewer
+spec:
+  member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/bigquery.user
+---
+# BigQuery Audit Log User
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-audit-data-user
+spec:
+  member: group:email@domain.com # kpt-set: group:${audit-data-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/bigquery.user
+---
+# Billing Big Query User
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-billing-data-user
+spec:
+  member: group:email@domain.com # kpt-set: group:${billing-data-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/bigquery.user
+---
+# Billing Big Query User
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-billing-data-viewer
+spec:
+  member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/bigquery.user
+---
+# Billing Console Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: billing-console-viewer
+spec:
+  member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: "roles/billing.viewer"
+---
+# Asset Inventory Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: asset-inventory-viewer
+spec:
+  member: group:email@domain.com # kpt-set: group:${asset-viewer-group}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: "roles/cloudasset.viewer"

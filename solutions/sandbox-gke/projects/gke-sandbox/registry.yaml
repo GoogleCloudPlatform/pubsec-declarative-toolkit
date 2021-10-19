@@ -1,0 +1,13 @@
+apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
+kind: ArtifactRegistryRepository
+metadata: # kpt-merge: /container-registry
+  name: container-registry
+  namespace: config-control # kpt-set: ${namespace}
+  labels:
+    environment: sandbox
+  annotations:
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+spec:
+  description: "Dev Container Registry"
+  format: DOCKER
+  location: northamerica-northeast1 # kpt-set: ${region}
