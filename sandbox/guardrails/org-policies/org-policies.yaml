@@ -131,7 +131,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-serviceaccount-key-creation
   labels:
-    guardrail: false
+    guardrail: true
+    guardrail-enforced: guardrail-02
 spec:
   constraint: "constraints/iam.disableServiceAccountKeyCreation"
   booleanPolicy:
@@ -183,7 +184,7 @@ metadata:
   name: uniform-bucket-level-access
   labels:
     guardrail: true
-    guardrail-enforced: 
+    guardrail-enforced: guardrail-02
 spec:
   constraint: "constraints/storage.uniformBucketLevelAccess"
   booleanPolicy:
@@ -207,8 +208,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-os-login
   labels:
-    guardrail: false
-    guardrail-enforced:     
+    guardrail: true
+    guardrail-enforced: guardrail-06
 spec:
   constraint: "constraints/compute.requireOsLogin"
   booleanPolicy:
@@ -234,8 +235,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-loadbalancer-creation-types
   labels:
-    guardrail: false
-    guardrail-enforced:     
+    guardrail: true
+    guardrail-enforced: guardrail-06
 spec:
   constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
   listPolicy:
@@ -264,8 +265,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: allowed-contact-domains
   labels:
-    guardrail: false
-    guardrail-enforced:     
+    guardrail: true
+    guardrail-enforced: guardrail-02
 spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
   listPolicy:
@@ -294,8 +295,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: allowed-policy-member-domain
   labels:
-    guardrail: false
-    guardrail-enforced:     
+    guardrail: true
+    guardrail-enforced: guardrail-06
 spec:
   constraint: "constraints/iam.allowedPolicyMemberDomains"
   listPolicy:
@@ -321,7 +322,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-serial-port-access
   labels:
-    guardrail: false 
+    guardrail: true
+    guardrail-enforced: guardrails-02 
 spec:
   constraint: "constraints/compute.disableSerialPortAccess"
   booleanPolicy:
