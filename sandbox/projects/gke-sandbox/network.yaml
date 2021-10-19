@@ -73,10 +73,8 @@ spec:
   subnetwork:
   - subnetworkRef:
       name: sandbox-subnet
-    sourceIpRangesToNat: 
+    sourceIpRangesToNat:
     - ALL_IP_RANGES
-
----
 #################
 # NIST Compliance Firewalls
 # Firewall rules should not allow connections from all IP addresses on TCP ports 7000-7001, 7199, 8888, 9042, 9160, 61620-61621
