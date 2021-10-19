@@ -40,7 +40,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-vpc-external-ipv6
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-09
 spec:
   constraint: "constraints/compute.disableVpcExternalIpv6"
@@ -63,7 +63,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: require-shielded-vm
   labels:
-    guardrail: false
+    guardrail: "false"
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
@@ -85,7 +85,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: require-trusted-images
   labels:
-    guardrail: false
+    guardrail: "false"
 spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
@@ -111,7 +111,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-vm-external-access
   labels:
-    guardrail-enforced: guardrail-09  
+    guardrail-enforced: guardrail-09
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   list:
@@ -131,7 +131,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-serviceaccount-key-creation
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-02
 spec:
   constraint: "constraints/iam.disableServiceAccountKeyCreation"
@@ -156,8 +156,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-peering
   labels:
-    guardrail: true
-    guardrail-enforced: guardrail-09  
+    guardrail: "true"
+    guardrail-enforced: guardrail-09
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:
@@ -167,7 +167,7 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}  
----     
+---
 #########
 #
 # Constraint: constraints/storage.uniformBucketLevelAccess
@@ -183,7 +183,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: uniform-bucket-level-access
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-02
 spec:
   constraint: "constraints/storage.uniformBucketLevelAccess"
@@ -208,7 +208,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-os-login
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-06
 spec:
   constraint: "constraints/compute.requireOsLogin"
@@ -235,7 +235,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-loadbalancer-creation-types
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-06
 spec:
   constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
@@ -265,7 +265,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: allowed-contact-domains
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-02
 spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
@@ -295,7 +295,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: allowed-policy-member-domain
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrail-enforced: guardrail-06
 spec:
   constraint: "constraints/iam.allowedPolicyMemberDomains"
@@ -303,7 +303,7 @@ spec:
     allow:
       all: true
       values: # kpt-set: ${allowed-domain-members}
-        - "12131231"
+        - "asdasda"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
@@ -322,8 +322,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-serial-port-access
   labels:
-    guardrail: true
-    guardrail-enforced: guardrails-02 
+    guardrail: "true"
+    guardrail-enforced: guardrails-02
 spec:
   constraint: "constraints/compute.disableSerialPortAccess"
   booleanPolicy:
@@ -347,7 +347,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: vm-can-ip-forward
   labels:
-    guardrail: false
+    guardrail: "false"
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
@@ -373,7 +373,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-guest-attribute-access
   labels:
-    guardrail: false 
+    guardrail: "false"
 spec:
   constraint: "constraints/compute.disableGuestAttributesAccess"
   booleanPolicy:
@@ -396,7 +396,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-nested-virtualization
   labels:
-    guardrail: false 
+    guardrail: "false"
 spec:
   constraint: "constraints/compute.disableNestedVirtualization"
   booleanPolicy:
@@ -419,7 +419,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-lien-removal
   labels:
-    guardrail: false 
+    guardrail: "false"
 spec:
   constraint: "constraints/compute.restrictXpnProjectLienRemoval"
   booleanPolicy:
@@ -441,7 +441,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-sql-public-ip
   labels:
-    guardrail: false 
+    guardrail: "false"
 spec:
   constraint: "constraints/sql.restrictPublicIp"
   booleanPolicy:
@@ -449,6 +449,7 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
 #########
 #
 # Constraint: constraints/storage.publicAccessPrevention
@@ -467,7 +468,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: storage-public-access-prevention
   labels:
-    guardrail: false 
+    guardrail: "false"
 spec:
   constraint: "constraints/storage.publicAccessPrevention"
   booleanPolicy:

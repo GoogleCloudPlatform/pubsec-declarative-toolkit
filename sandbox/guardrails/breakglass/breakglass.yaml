@@ -51,5 +51,5 @@ spec:
       Content-Type: application/octet-stream
       User-Agent: Google-Cloud-Scheduler
     httpMethod: "POST"
-    uri: "https://cloudbuild.googleapis.com/v1/projects/test-corp-prod-seed-project/triggers/b6395494-ad94-43f3-81dc-a8c0b7b2125c:run"  # kpt-set: https://cloudbuild.googleapis.com/v1/projects/${guardrails-project-id}/triggers/breakglass-trigger:run
-    body: "e2JyYW5jaE5hbWU6bWFzdGVyfQo=" # base64 encoded {"foo":"bar"}
+    uri: "https://cloudbuild.googleapis.com/v1/projects/guardrails-00000/triggers/breakglass-trigger:run" # kpt-set: https://cloudbuild.googleapis.com/v1/projects/${guardrails-project-id}/triggers/breakglass-trigger:run
+    body: "" # base64 encoded {"foo":"bar"}
