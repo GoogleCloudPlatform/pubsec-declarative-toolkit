@@ -1,6 +1,6 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /k8s-viewer
   name: k8s-viewer
 spec:
   member: group:email@domain.com # kpt-set: group:${gke-viewer}
@@ -12,7 +12,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /k8s-admin
   name: k8s-admin
 spec:
   member: group:email@domain.com # kpt-set: group:${gke-admin}

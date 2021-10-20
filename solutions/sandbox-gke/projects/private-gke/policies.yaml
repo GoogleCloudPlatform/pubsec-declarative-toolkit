@@ -1,12 +1,12 @@
 #############
 #
-# Add exception to Org Policies for GKE
+# Both of these policies need to be inplace
 # If not the GKE cluster will fail to come online
 #
 #############
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata:
+metadata: # kpt-merge: /require-shielded-vm-false
   name: require-shielded-vm-false
 spec:
   constraint: "constraints/compute.requireShieldedVm"
@@ -18,8 +18,8 @@ spec:
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata:
-  name: gke-restrict-ip-forwarding
+metadata: # kpt-merge: /restrict-ip-forwarding
+  name: restrict-ip-forwarding
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   list:

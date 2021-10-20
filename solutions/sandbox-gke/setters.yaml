@@ -23,9 +23,9 @@ data:
   allowed-loadbalacers: |
     - INTERNAL
   allowed-domain-contacts: |
-    - "@example.com"
+    - "@email.com"
   allowed-domain-members: |
-    - "asdasda"
+    - "loremipsum"
   can-ip-forward: | # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
    - "" 
   ######

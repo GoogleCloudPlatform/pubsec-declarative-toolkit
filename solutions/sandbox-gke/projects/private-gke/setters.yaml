@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: setters
+data:
+  ######
+  # General Settings Values
+  #
+  # The following are Settings for the environment to bootstrap with
+  #
+  ######
+  # GKE Sandbox Network Values
+  ######
+  routing-mode: REGIONAL # REGIONAL or GLOBAL
+  mtu: 1460 # Range can be between 1460 and 1500 bytes
+  subnet-cidr: 10.2.0.0/16
+  log-aggregation-interval: INTERVAL_5_SEC # Possible Values ["INTERVAL_5_SEC", "INTERVAL_30_SEC", "INTERVAL_1_MIN", "INTERVAL_5_MIN", "INTERVAL_10_MIN", "INTERVAL_15_MIN"]
+  flow-sampling: 0.5 # Value must be between 0 and 1
+  log-metadata: INCLUDE_ALL_METADATA # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
+  # log-metadatafields: | # Use if CUSTOM_METADATA is used for `log-metadata`
+  #   - test 
+  private-google-access: true
+  gke-services-cidr: 10.3.0.0/16
+  gke-pod-cidr: 10.4.0.0/16
+  ######
+  #
+  # GKE Sandbox Cluster Values
+  # Creates a Private GKE Cluster with 1 Node Pool
+  #
+  ######
+  sandbox-project-id: sandbox-00000 # Must be globally unique
+  zone: northamerica-northeast1-a
+  cluster-description: dev-cluster
+  cluster-name: sandbox
+  #####
+  #
+  # CIDR Range to be used for GKE Endpoint Access
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
+  #
+  auth-network: |
+    - cidrBlock: 0.0.0.0/32
+      displayName: private-net
+  tags: |
+    - regional
+    - northamerica
+    - sandbox
+  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
+  branch: prod-env
+  gke-admin: email@domain.com
+  gke-viewer: email@domain.com
+  ####
+  #
+  # Machine Type to be used for GKE Node Pool
+  # https://cloud.google.com/compute/docs/machine-types
+  #
+  machineType: e2-standard-8
+  region: northamerica-northeast1
+  ######
+  #
+  # Anthos Values
+  #
+  ######
+  acm-version: 1.9.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management

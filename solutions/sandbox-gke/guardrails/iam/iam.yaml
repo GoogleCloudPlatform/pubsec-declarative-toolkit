@@ -9,7 +9,7 @@
 ### Enable Audit Logs 
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
-metadata:
+metadata: # kpt-merge: /org-audit-logs
   name: org-audit-logs
 spec:
   service: allServices
@@ -24,7 +24,7 @@ spec:
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /bq-audit-data-viewer
   name: bq-audit-data-viewer
 spec:
   member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
@@ -37,7 +37,7 @@ spec:
 # BigQuery Audit Log User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /bq-audit-data-user
   name: bq-audit-data-user
 spec:
   member: group:email@domain.com # kpt-set: group:${audit-data-group}
@@ -50,7 +50,7 @@ spec:
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /bq-billing-data-user
   name: bq-billing-data-user
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-data-group}
@@ -63,7 +63,7 @@ spec:
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /bq-billing-data-viewer
   name: bq-billing-data-viewer
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
@@ -76,7 +76,7 @@ spec:
 # Billing Console Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /billing-console-viewer
   name: billing-console-viewer
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
@@ -89,7 +89,7 @@ spec:
 # Asset Inventory Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /asset-inventory-viewer
   name: asset-inventory-viewer
 spec:
   member: group:email@domain.com # kpt-set: group:${asset-viewer-group}

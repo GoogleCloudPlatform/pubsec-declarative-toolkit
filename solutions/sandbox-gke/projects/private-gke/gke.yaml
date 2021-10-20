@@ -99,7 +99,7 @@ spec:
 # GKE Metering BQ
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
-metadata:
+metadata: # kpt-merge: /gkemetering
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
@@ -112,7 +112,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: /gkemetering-bq-viewer
   name: gkemetering-bq-viewer
 spec:
   # replace ${PROJECT_ID?} with your project name

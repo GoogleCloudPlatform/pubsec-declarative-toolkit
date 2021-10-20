@@ -9,7 +9,7 @@
 # Storage Bucket Org LogSink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata:
+metadata: # kpt-merge: /storage-logsink
   name: storage-logsink
 spec:
   destination:
@@ -30,7 +30,7 @@ spec:
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
-metadata:
+metadata: # kpt-merge: /0000000000-logginglogsink-org
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
   annotations:
@@ -43,7 +43,7 @@ spec:
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata:
+metadata: # kpt-merge: /pubsub-logsink
   name: pubsub-logsink
 spec:
   destination:
@@ -57,14 +57,14 @@ spec:
 # PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
-metadata:
+metadata: # kpt-merge: /logginglogsink-org
   name: logginglogsink-org
 ---
 #########
 # BigQuery Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata:
+metadata: # kpt-merge: /bigquery-logsink
   name: bigquery-logsink
 spec:
   destination:
@@ -78,7 +78,7 @@ spec:
 # Big Query Instance
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
-metadata:
+metadata: # kpt-merge: /logginglogsink
   name: logginglogsink
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
