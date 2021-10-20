@@ -11,13 +11,20 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 ## Quickstart
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md)
 
-## What is in the Sandbox
+## Available Solutions
+| Sandbox | Command |
+| --- | --- |
+| Private GKE Cluster | `kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/sandbox-gke` |
 
-This repostory contains a series of [KRM](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) (Kubernetes Resource Model) `kpt` packages needed to deploy a Sandbox Environment in Google Cloud. [kpt](https://kpt.dev/) is a Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources.
+## What is a Solution Sandbox
+
+This repostory contains a series of [KRM](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) (Kubernetes Resource Model) `kpt` packages needed to deploy Sandbox Environments in Google Cloud. [kpt](https://kpt.dev/) is a Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources.
 
 Each `kpt` package contains configuration files to be used with a [Config Connector](https://cloud.google.com/config-connector/docs/overview) enabled Kubernetes Cluster or using the [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) service.
 
-The Sandbox Solution contains the following.
+These packages will container a package for Guardrails and a package for the associated Servce(s). For example the `sandbox-gke` bundles the `guardrails` and `private-gke` bundles to create its sandbox environment.
+
+The Guardrails package contains the following Org Policies in order to help meet the 30 Day Guardrails benchment.
 
 ### Org Policies
 | Org Policy | Usage | Guardrail Enforced |
@@ -49,10 +56,6 @@ A basic folder structure to deploy the included resources
         - Log Sinks
         - Source Control
         - Cloud Build Trigger and Scheduler for BreakGlass alerting.
-- Protected B Workloads
-    - Example folder and project
-- Unclassified Workloads
-    - Example folder and project
 
 ### GKE Sandbox
 The following services will be deployed into a GKE-Sandbox folder for learning and development.
