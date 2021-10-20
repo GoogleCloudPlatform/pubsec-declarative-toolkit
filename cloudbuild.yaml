@@ -1,6 +1,8 @@
 
 steps:
 - name: 'gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.5'
-  args: ['fn', 'render', 'solutions']
+  args: ['fn', 'render', 'solutions/sandbox-gke']
 - name: 'gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.5'
-  args: ['fn', 'render', 'services']  
+  args: ['fn', 'render', 'services/guardrails']
+- name: 'gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.5'
+  args: ['fn', 'render', 'services/private-gke']  
