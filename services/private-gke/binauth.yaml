@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: binaryauthorization.cnrm.cloud.google.com/v1beta1
 kind: BinaryAuthorizationPolicy
 metadata: # kpt-merge: config-control/binauth-allowed-repos
@@ -27,7 +26,7 @@ spec:
     - namePattern: "gke.gcr.io/*"
     - namePattern: "gcr.io/stackdriver-agents/*"
     - namePattern: "gcr.io/google-samples/*"
-    - namePattern: "${region}-docker.pkg.dev/${project_id}/container-registry" # kpt-set: ${region}-docker.pkg.dev/${sandbox-project-id}/container-registry
+    - namePattern: "northamerica-northeast1-docker.pkg.dev/sandbox-00000/container-registry" # kpt-set: ${region}-docker.pkg.dev/${sandbox-project-id}/container-registry
   defaultAdmissionRule:
     enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
     evaluationMode: "ALWAYS_ALLOW"
