@@ -1,4 +1,4 @@
- GCP Canadian PubSec Sandbox
+# GCP Canadian PubSec Sandbox
 
 This Repo contains the configuration to deploy a Sandbox Environment based off on the GoC's 30 Day [Guardrails](https://github.com/canada-ca/cloud-guardrails).
 
@@ -9,6 +9,7 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 - git
 
 ## Required Permissions
+
 | Role | Description | Command |
 | --- | --- | --- |
 | Folder Creator | Used to create Folder for Configuratio Project | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/resourcemanager.folderCreator'` |
@@ -16,6 +17,7 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 | Billing Account User | Required to attach a billing account to the host project | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/billing.user'` |
 
 ## Quickstart
+
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md)
 
 Alternatively you can download the `bootstrap` script and following the steps in the following [Docs](docs/cloudshell-tutorial.md). To get download `bootstrap.sh` download it from the [releases page](https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases) or use the following command:
@@ -24,7 +26,35 @@ release=v0.01
 wget https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases/download/${release}/bootstrap.sh
 ```
 
-## Available Solutions
+Running the quickstart will provision the necessary resources required to provision the sandbox environment. 
+
+- Enables the following services
+    - krmapihosting.googleapis.com (if using Config Controller)
+    - compute.googleapis.com
+    - container.googleapis.com
+    - cloudresourcemanager.googleapis.com
+- A Private GKE Cluster with Workloadidentity and Config Connector enabled
+- A Service Account to be used by Config Connector with the following roles
+    - roles/billing.user
+    - roles/compute.networkAdmin
+    - roles/compute.xpnAdmin
+    - roles/iam.organizationRoleAdmin
+    - roles/orgpolicy.policyAdmin
+    - roles/resourcemanager.folderAdmin
+    - roles/resourcemanager.organizationAdmin
+    - roles/resourcemanager.projectCreator
+    - roles/resourcemanager.projectDeleter
+    - roles/resourcemanager.projectIamAdmin
+    - roles/resourcemanager.projectMover
+    - roles/logging.configWriter
+    - roles/resourcemanager.projectIamAdmin
+    - roles/serviceusage.serviceUsageAdmin
+    - roles/bigquery.dataEditor
+    - storage.admin
+
+
+
+## Available Sandbox Solutions
 | Sandbox | Command |
 | --- | --- |
 | Private GKE Cluster | `kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/sandbox-gke` |
