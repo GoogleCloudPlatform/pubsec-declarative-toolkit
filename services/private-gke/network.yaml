@@ -130,3 +130,5 @@ spec:
   - protocol: sctp
     ports:
     - "22"
+  networkRef:
+    name: sandbox-net
