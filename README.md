@@ -8,8 +8,19 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 - [kpt](https://kpt.dev/)
 - git
 
+## Required Permissions
+| Role | Description | Command |
+| --- | --- | --- |
+| Folder Creator | Used to create Folder for Configuratio Project | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/resourcemanager.folderCreator'` |
+| Project Creator | Required to create project for hosting GKE Cluster | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/resourcemanager.projectCreator'` |
+| Billing Account User | Required to attach a billing account to the host project | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/billing.user'` |
+
 ## Quickstart
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md)
+
+Alternatively you can view the walkthrough by following the steps in the following [Docs](docs/cloudshell-tutorial.md)
+
+
 
 ## Available Solutions
 | Sandbox | Command |
