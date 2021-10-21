@@ -22,8 +22,7 @@ metadata: # kpt-merge: /restrict-ip-forwarding
   name: restrict-ip-forwarding
 spec:
   constraint: "constraints/compute.vmCanIpForward"
-  list:
-    values:
+  list: {}
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     name: "sandbox"

@@ -15,7 +15,7 @@ upstreamLock:
     repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
     directory: /services/private-gke
     ref: main
-    commit: a98e009b610fa694b3ed59a011a546063a028897
+    commit: 0cff06656b3ce1c6dd389f872370ddf6bf1ac3e2
 info:
   description: sample description
 pipeline:
