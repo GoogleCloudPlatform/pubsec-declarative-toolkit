@@ -18,15 +18,11 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 ## Quickstart
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md)
 
-Alternatively you download the `bootstrap` script and following the steps in the following [Docs](docs/cloudshell-tutorial.md). To get download `bootstrap.sh` download it from the [releases page](https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases) or use the following command:
+Alternatively you can download the `bootstrap` script and following the steps in the following [Docs](docs/cloudshell-tutorial.md). To get download `bootstrap.sh` download it from the [releases page](https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases) or use the following command:
 ```
 release=v0.01
 wget https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases/download/${release}/bootstrap.sh
 ```
-
-
-
-
 
 ## Available Solutions
 | Sandbox | Command |
