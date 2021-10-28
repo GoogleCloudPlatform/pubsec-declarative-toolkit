@@ -88,7 +88,7 @@ billing() {
 }
 
 # Read the options / arguments and set the script variables
-while getopts ":f:o:p:" opt; do
+while getopts ":f:o:p:b:" opt; do
     case "${opt}" in
         f)
             FOLDER_NAME=${OPTARG}
