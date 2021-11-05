@@ -21,22 +21,24 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: require-shielded-vm-false
+  namespace: config-control # kpt-set: ${namespace}
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
     enforced: false
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    name: "sandbox"
+    name: "sandbox" # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-ip-forwarding
+  namespace: config-control # kpt-set: ${namespace}
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   list:
     values:
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    name: "sandbox"
+    name: "sandbox" # kpt-set: ${sandbox-project-id}
