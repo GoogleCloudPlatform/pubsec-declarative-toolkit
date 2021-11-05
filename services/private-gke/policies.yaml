@@ -38,9 +38,10 @@ metadata:
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
+    allow:
     all: true
     values:
-      - "sandbox"
+      - "projects/project-id" # kpt-set: projects/${sandbox-project-id}
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     name: "sandbox" # kpt-set: ${sandbox-project-id}
