@@ -18,7 +18,7 @@
 PROGRAM_NAME="PBMM Sandbox"
 
 # Config Controller release version
-CC_RELEASE="Preview"
+CC_RELEASE="GA"
 
 # Log file name
 LOGFILE="bootstrap-log-$(date +"%FT%T").log"
@@ -87,6 +87,23 @@ billing() {
     done
 }
 
+# Execute a command, add it to the logfile and test the output status for any errors.
+exec_cmd() {
+    "$@" 2>&1 | tee -a $LOGFILE
+
+    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+        exit ${PIPESTATUS[0]}
+    fi
+}
+
+# Log text message to log file and console, remove colour coding from log file text
+log_message () {
+    set -- echo -e "$@"
+
+    $@
+    $@ | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | tee -a $LOGFILE > /dev/null
+}
+
 # Read the options / arguments and set the script variables
 while getopts ":f:o:p:b:" opt; do
     case "${opt}" in
@@ -116,7 +133,7 @@ fi
 
 # If project id is not provided, use the default with a random string. This can still cause collisions, random is only so random :)
 if [ -z "${PROJECT_ID}" ]; then
-    PROJECT_ID="bootstrap-${RANDOM}"
+    PROJECT_ID="config-${RANDOM}"
 fi
 
 
@@ -139,49 +156,44 @@ FOLDER_ID=$(gcloud resource-manager folders list --organization $ORG_ID --filter
 if [ -z "${FOLDER_ID}" ]; then
     unset FOLDER_ID
 
-    echo -e "${GREEN}Creating Folder (${FOLDER_NAME})...." 2>&1 | tee -a $LOGFILE    
+    log_message "${GREEN}Creating Folder (${FOLDER_NAME})....${RESET}"
     # Create the Bootstrap Folder and capture its ID
-    gcloud resource-manager folders create \
-    --display-name=$FOLDER_NAME \
-    --organization=$ORG_ID \
-    &>> $LOGFILE
+    exec_cmd gcloud resource-manager folders create --display-name=$FOLDER_NAME --organization=$ORG_ID
 
     FOLDER_ID=$(gcloud resource-manager folders list --organization $ORG_ID --filter="display_name:${FOLDER_NAME}" --format="value(ID)")
 fi
 
 # Check to see if the project already exists; if not then create it
 if [ -z $(gcloud projects list --filter="PROJECT_ID:${PROJECT_ID}" --format="value(PROJECT_ID)") ]; then
-    echo -e "${GREEN}Creating Project (${PROJECT_ID})...." 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Creating Project (${PROJECT_ID})....${RESET}"
     # Creat the Configuration Project
-    gcloud projects create $PROJECT_ID \
-    --folder $FOLDER_ID \
-    &>> $LOGFILE
+    exec_cmd gcloud projects create $PROJECT_ID --folder $FOLDER_ID
 fi
 
 # Configure the Cloud Shell ENV
-echo -e "${GREEN}Setting gcloud context to active project..." 2>&1 | tee -a $LOGFILE
-gcloud config set project $PROJECT_ID  > /dev/null 2>&1
-gcloud beta billing projects link "${PROJECT_ID}" --billing-account "${BILLING_ID}" --quiet  > /dev/null 2>&1
+log_message  "${GREEN}Setting gcloud context to active project...${RESET}"
+exec_cmd gcloud config set project $PROJECT_ID
+
+log_message "${GREEN}Adding billing account to project...${RESET}"
+exec_cmd gcloud beta billing projects link ${PROJECT_ID} --billing-account ${BILLING_ID}
 
 standalone_setup() {
     SA_EMAIL=${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 
-    echo -e "${GREEN}Enabling Services...." 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Enabling Services....${RESET}"
     # Enable the Required Services
-    gcloud services enable compute.googleapis.com &>> $LOGFILE
-    gcloud services enable container.googleapis.com &>> $LOGFILE
-    gcloud services enable cloudresourcemanager.googleapis.com &>> $LOGFILE
+    exec_cmd gcloud services enable compute.googleapis.com
+    exec_cmd gcloud services enable container.googleapis.com
+    exec_cmd gcloud services enable cloudresourcemanager.googleapis.com
 
-    echo -e "${GREEN}Creating VPC (${NETWORK})...." 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Creating VPC (${NETWORK})....${RESET}"
     # Create the Network
-    gcloud compute networks create $NETWORK --subnet-mode custom &>> $LOGFILE
+    exec_cmd gcloud compute networks create $NETWORK --subnet-mode custom
 
-    echo -e "${GREEN}Configuring Org Policies for GKE on folder (${FOLDER_ID})...." 2>&1 | tee -a $LOGFILE
-    gcloud resource-manager org-policies disable-enforce constraints/compute.requireOsLogin \
-    --folder ${FOLDER_ID} &>> $LOGFILE
+    log_message "${GREEN}Configuring Org Policies for GKE on folder (${FOLDER_ID})....${RESET}"
+    exec_cmd gcloud resource-manager org-policies disable-enforce constraints/compute.requireOsLogin --folder ${FOLDER_ID}
 
-    gcloud resource-manager org-policies disable-enforce constraints/compute.requireShieldedVm \
-    --folder ${FOLDER_ID} &>> $LOGFILE
+    exec_cmd gcloud resource-manager org-policies disable-enforce constraints/compute.requireShieldedVm  --folder ${FOLDER_ID}
 
     cat > restrictVpcPeering.yaml << ENDOFFILE
 constraint: constraints/compute.restrictVpcPeering
@@ -189,12 +201,11 @@ listPolicy:
   allValues: ALLOW
 ENDOFFILE
 
-    gcloud resource-manager org-policies set-policy restrictVpcPeering.yaml  \
-    --folder ${FOLDER_ID} &>> $LOGFILE
+    exec_cmd gcloud resource-manager org-policies set-policy restrictVpcPeering.yaml --folder ${FOLDER_ID}
 
-    echo -e "${GREEN}Creating GKE Cluster (${CLUSTER}) (may take several minutes)...." 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Creating GKE Cluster (${CLUSTER}) (may take several minutes)....${RESET}"
     # Create the GKE Cluster to act as the Config Controller
-    gcloud container clusters create $CLUSTER --enable-binauthz \
+    exec_cmd gcloud container clusters create $CLUSTER --enable-binauthz \
     --machine-type e2-standard-4 --image-type cos_containerd --num-nodes 1 \
     --enable-shielded-nodes --no-enable-basic-auth --enable-ip-alias --shielded-secure-boot \
     --workload-pool ${PROJECT_ID}.svc.id.goog --network $NETWORK --create-subnetwork name=$SUBNETWORK \
@@ -205,27 +216,22 @@ ENDOFFILE
     --enable-dataplane-v2 \
     --release-channel regular \
     --addons ConfigConnector \
-    --enable-stackdriver-kubernetes \
-    &>> $LOGFILE
+    --enable-stackdriver-kubernetes
 
     # Creat the SA for Config Connector to use
-    echo -e "${GREEN}Creating Service Account and adding to owner role (${SA_NAME})...." 2>&1 | tee -a $LOGFILE
-    gcloud iam service-accounts create $SA_NAME &>> $LOGFILE
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-    --member="serviceAccount:${SA_EMAIL}" \
-    --role="roles/owner" \
-    &>> $LOGFILE
+    log_message "${GREEN}Creating Service Account and adding to owner role (${SA_NAME})....${RESET}"
+    exec_cmd gcloud iam service-accounts create $SA_NAME
+    exec_cmd gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:${SA_EMAIL}" --role="roles/owner"
 
-    echo -e "${GREEN}Adding SA GKE Workload Identity (${SA_NAME})...." 2>&1 | tee -a $LOGFILE
-    gcloud iam service-accounts add-iam-policy-binding \
-    ${SA_EMAIL} \
+    log_message "${GREEN}Adding SA GKE Workload Identity (${SA_NAME})....${RESET}"
+    exec_cmd gcloud iam service-accounts add-iam-policy-binding ${SA_EMAIL} \
     --member="serviceAccount:${PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager]" \
-    --role="roles/iam.workloadIdentityUser" &>> $LOGFILE
+    --role="roles/iam.workloadIdentityUser"
 
     set_sa_policies
 
     # Configure the config connector agent
-    gcloud container clusters get-credentials $CLUSTER --region $REGION &>> $LOGFILE
+    exec_cmd gcloud container clusters get-credentials $CLUSTER --region $REGION
     cat > configconnector.yaml << EOF
 # configconnector.yaml
 apiVersion: core.cnrm.cloud.google.com/v1beta1
@@ -239,12 +245,12 @@ spec:
     googleServiceAccount: "${SA_EMAIL}"
 EOF
 
-    echo -e "${GREEN}Setting up config connector on standalone cluster...." 2>&1 | tee -a $LOGFILE
-    kubectl apply -f configconnector.yaml &>> $LOGFILE
-    kubectl create namespace config-control &>> $LOGFILE
-    kubectl annotate namespace config-control cnrm.cloud.google.com/project-id=${PROJECT_ID} &>> $LOGFILE
+    log_message "${GREEN}Setting up config connector on standalone cluster....${RESET}"
+    exec_cmd kubectl apply -f configconnector.yaml
+    exec_cmd kubectl create namespace config-control
+    exec_cmd kubectl annotate namespace config-control cnrm.cloud.google.com/project-id=${PROJECT_ID}
 
-    echo -e "${GREEN}Standalone GKE cluster completed${RESET}" 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Standalone GKE cluster completed${RESET}"
 
     rm configconnector.yaml 1>&2
     rm restrictVpcPeering.yaml 1>&2
@@ -253,75 +259,50 @@ EOF
 }
 
 cc_setup() {
-
-    echo -e "${GREEN}Enabling Services...." 2>&1 | tee -a $LOGFILE
-    gcloud services enable krmapihosting.googleapis.com \
-        container.googleapis.com \
-        cloudresourcemanager.googleapis.com \
-        &>> $LOGFILE 
+    log_message "${GREEN}Enabling Services....${RESET}"
+    exec_cmd gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com
     
-    echo -e "${GREEN}Creating VPC (${NETWORK}) with default subnets..." 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Creating VPC (${NETWORK}) with default subnets...${RESET}"
     # Create the Network
-    gcloud compute networks create $NETWORK --subnet-mode auto &>> $LOGFILE
+    exec_cmd gcloud compute networks create $NETWORK --subnet-mode auto
     
     # Bootstrap the project and install / setup Config Controller
-    echo -e "${GREEN}Bootstrapping Config Controller (may take several minutes)..." 2>&1 | tee -a $LOGFILE       
+    log_message "${GREEN}Bootstrapping Config Controller (may take several minutes)...${RESET}"       
 
-    gcloud alpha anthos config controller create my-awesome-kcc \
-        --location=us-central1 \
-        --network=$NETWORK \
-         &>> $LOGFILE
+    exec_cmd gcloud alpha anthos config controller create my-awesome-kcc --location=us-central1 --network=$NETWORK
 
-    gcloud alpha anthos config controller get-credentials my-awesome-kcc \
-        --location us-central1 \
-         &>> $LOGFILE
+    exec_cmd gcloud alpha anthos config controller get-credentials my-awesome-kcc --location us-central1
 
-    gcloud container clusters get-credentials $(gcloud container clusters list --project ${PROJECT_ID} --format="value(NAME)") --region us-central1 &>> $LOGFILE
+    exec_cmd gcloud container clusters get-credentials $(gcloud container clusters list --project ${PROJECT_ID} --format="value(NAME)") --region us-central1
 
     SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
         -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
     set_sa_policies
 
-    echo -e "${GREEN}Config Controller Setup completed${RESET}" 2>&1 | tee -a $LOGFILE
+    log_message "${GREEN}Config Controller Setup completed${RESET}"
 
     exit
 }
 
 set_sa_policies() {
-    echo -e "${GREEN}Adding SA to requires roles (${SA_EMAIL})...." 2>&1 | tee -a $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-    --role=roles/billing.user &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-    --role=roles/compute.networkAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/compute.xpnAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/iam.organizationRoleAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/orgpolicy.policyAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.folderAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.organizationAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.projectCreator &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.projectDeleter &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.projectIamAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.projectMover &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/logging.configWriter &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/resourcemanager.projectIamAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/serviceusage.serviceUsageAdmin &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/bigquery.dataEditor &>> $LOGFILE
-    gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} \
-        --role=roles/storage.admin &>> $LOGFILE
+    log_message "${GREEN}Adding SA to requires roles (${SA_EMAIL})....${RESET}"
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/billing.user
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/compute.networkAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/compute.xpnAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/iam.organizationRoleAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/orgpolicy.policyAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.folderAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.organizationAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.projectCreator
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.projectDeleter
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.projectIamAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.projectMover
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/logging.configWriter
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/resourcemanager.projectIamAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/serviceusage.serviceUsageAdmin
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/bigquery.dataEditor
+    exec_cmd gcloud organizations add-iam-policy-binding ${ORG_ID}  --member=serviceAccount:${SA_EMAIL} --role=roles/storage.admin
 }
 
 # Standalong GKE or Config Controller?
