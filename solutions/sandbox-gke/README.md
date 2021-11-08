@@ -13,7 +13,10 @@
 
 #### Manually
 
-First make sure we have access to the target cluster and are pointing to the correct namespace
+First make sure we have access to the target cluster and are pointing to the correct namespace. Bootstrap defaults for `CLUSTER` and `REGION` are:
+- `CLUSTER=config-controller`
+- `REGION=northamerica-northeast1`
+
 ```
 gcloud container clusters get-credentials $CLUSTER --region $REGION
 kubens config-control
