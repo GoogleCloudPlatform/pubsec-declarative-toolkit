@@ -22,7 +22,7 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 
 Alternatively you can download the `bootstrap` script and following the steps in the following [Docs](docs/cloudshell-tutorial.md). To get download `bootstrap.sh` download it from the [releases page](https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases) or use the following command:
 ```
-release=v0.01
+release=v0.0.1
 wget https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox/releases/download/${release}/bootstrap.sh
 ```
 
