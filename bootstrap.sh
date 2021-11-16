@@ -186,9 +186,11 @@ standalone_setup() {
     exec_cmd gcloud services enable container.googleapis.com
     exec_cmd gcloud services enable cloudresourcemanager.googleapis.com
 
-    log_message "${GREEN}Creating VPC (${NETWORK})....${RESET}"
-    # Create the Network
-    exec_cmd gcloud compute networks create $NETWORK --subnet-mode custom
+    if [ -z $(gcloud compute networks list --filter="name=('${NETWORK}')" --format="value(NAME)") ]; then
+        log_message "${GREEN}Creating VPC (${NETWORK})....${RESET}"
+        # Create the Network
+        exec_cmd gcloud compute networks create $NETWORK --subnet-mode custom
+    fi
 
     log_message "${GREEN}Configuring Org Policies for GKE on folder (${FOLDER_ID})....${RESET}"
     exec_cmd gcloud resource-manager org-policies disable-enforce constraints/compute.requireOsLogin --folder ${FOLDER_ID}
@@ -203,24 +205,30 @@ ENDOFFILE
 
     exec_cmd gcloud resource-manager org-policies set-policy restrictVpcPeering.yaml --folder ${FOLDER_ID}
 
-    log_message "${GREEN}Creating GKE Cluster (${CLUSTER}) (may take several minutes)....${RESET}"
-    # Create the GKE Cluster to act as the Config Controller
-    exec_cmd gcloud container clusters create $CLUSTER --enable-binauthz \
-    --machine-type e2-standard-4 --image-type cos_containerd --num-nodes 1 \
-    --enable-shielded-nodes --no-enable-basic-auth --enable-ip-alias --shielded-secure-boot \
-    --workload-pool ${PROJECT_ID}.svc.id.goog --network $NETWORK --create-subnetwork name=$SUBNETWORK \
-    --region $REGION --enable-private-nodes \
-    --master-ipv4-cidr $MASTER_IPV4 \
-    --enable-master-authorized-networks \
-    --master-authorized-networks $AUTHORIZED_NETWORKS \
-    --enable-dataplane-v2 \
-    --release-channel regular \
-    --addons ConfigConnector \
-    --enable-stackdriver-kubernetes
+    if [ -z $(gcloud container clusters list --filter="name=('${CLUSTER}')" --format="value(NAME)") ]; then
+        log_message "${GREEN}Creating GKE Cluster (${CLUSTER}) (may take several minutes)....${RESET}"
+        # Create the GKE Cluster to act as the Config Controller
+        exec_cmd gcloud container clusters create $CLUSTER --enable-binauthz \
+        --machine-type e2-standard-4 --image-type cos_containerd --num-nodes 1 \
+        --enable-shielded-nodes --no-enable-basic-auth --enable-ip-alias --shielded-secure-boot \
+        --workload-pool ${PROJECT_ID}.svc.id.goog --network $NETWORK --create-subnetwork name=$SUBNETWORK \
+        --region $REGION --enable-private-nodes \
+        --master-ipv4-cidr $MASTER_IPV4 \
+        --enable-master-authorized-networks \
+        --master-authorized-networks $AUTHORIZED_NETWORKS \
+        --enable-dataplane-v2 \
+        --release-channel regular \
+        --addons ConfigConnector \
+        --enable-stackdriver-kubernetes
+    fi
 
-    # Creat the SA for Config Connector to use
-    log_message "${GREEN}Creating Service Account and adding to owner role (${SA_NAME})....${RESET}"
-    exec_cmd gcloud iam service-accounts create $SA_NAME
+    if [ -z $(gcloud iam service-accounts list --filter="EMAIL:${SA_EMAIL}" --format="value(EMAIL)") ]; then
+        # Creat the SA for Config Connector to use
+        log_message "${GREEN}Creating Service Account(${SA_NAME})....${RESET}"
+        exec_cmd gcloud iam service-accounts create $SA_NAME
+    fi
+
+    log_message "${GREEN}Adding to owner role to Service Account...${RESET}"
     exec_cmd gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:${SA_EMAIL}" --role="roles/owner"
 
     log_message "${GREEN}Adding SA GKE Workload Identity (${SA_NAME})....${RESET}"
