@@ -174,6 +174,9 @@ fi
 log_message  "${GREEN}Setting gcloud context to active project...${RESET}"
 exec_cmd gcloud config set project $PROJECT_ID
 
+log_message "${GREEN}Getting project number for active project...${RESET}"
+PROJECT_NUMBER=$(exec_cmd gcloud projects list --filter="project_id: ${PROJECT_ID}" --format="value(PROJECT_NUMBER)")
+
 log_message "${GREEN}Adding billing account to project...${RESET}"
 exec_cmd gcloud beta billing projects link ${PROJECT_ID} --billing-account ${BILLING_ID}
 
@@ -232,6 +235,19 @@ ENDOFFILE
 
     log_message "${GREEN}Adding to owner role to Service Account...${RESET}"
     exec_cmd gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:${SA_EMAIL}" --role="roles/owner"
+
+    log_message "${GREEN}Adding logging and monitoring roles to default compute engine service account...{$RESET}"
+    exec_cmd gcloud projects add-iam-policy-binding $PROJECT_ID  \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role="roles/logging.logWriter"
+
+    exec_cmd gcloud projects add-iam-policy-binding $PROJECT_ID  \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role="roles/monitoring.metricWriter"
+
+    exec_cmd gcloud projects add-iam-policy-binding $PROJECT_ID  \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role="roles/stackdriver.resourceMetadata.writer"
 
     log_message "${GREEN}Adding SA GKE Workload Identity (${SA_NAME})....${RESET}"
     exec_cmd gcloud iam service-accounts add-iam-policy-binding ${SA_EMAIL} \
