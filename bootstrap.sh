@@ -185,6 +185,8 @@ standalone_setup() {
     exec_cmd gcloud services enable compute.googleapis.com
     exec_cmd gcloud services enable container.googleapis.com
     exec_cmd gcloud services enable cloudresourcemanager.googleapis.com
+    exec_cmd gcloud services enable cloudbilling.googleapis.com
+
 
     if [ -z $(gcloud compute networks list --filter="name=('${NETWORK}')" --format="value(NAME)") ]; then
         log_message "${GREEN}Creating VPC (${NETWORK})....${RESET}"
@@ -268,7 +270,7 @@ EOF
 
 cc_setup() {
     log_message "${GREEN}Enabling Services....${RESET}"
-    exec_cmd gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com
+    exec_cmd gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com
     
     log_message "${GREEN}Creating VPC (${NETWORK}) with default subnets...${RESET}"
     # Create the Network
