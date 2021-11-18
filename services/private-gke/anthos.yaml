@@ -23,7 +23,7 @@ metadata: # kpt-merge: ${NAMESPACE}/gkehubfeature-acm
 spec:
   location: global
   projectRef:
-    name: sandbox
+    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
   # The resourceID must be "configmanagement" if you want to use Anthos config
   # management feature.
   resourceID: configmanagement
@@ -75,7 +75,7 @@ spec:
       logDeniesEnabled: true
       referentialRulesEnabled: true
       templateLibraryInstalled: true
-    version: 1.9.0 # kpt-set: ${acm-version}
+    version: 1.9.1 # kpt-set: ${acm-version}
   featureRef:
     name: anthos-config-management
   location: global

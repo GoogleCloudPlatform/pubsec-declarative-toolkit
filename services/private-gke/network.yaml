@@ -76,7 +76,7 @@ spec:
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
   - subnetworkRef:
-      name: sandbox-subnet
+      name: sandbox-subnet # kpt-set: ${cluster-name}-net
     sourceIpRangesToNat:
     - ALL_IP_RANGES
 ---
@@ -85,6 +85,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   name: nist-firewall-deny
+  namespace: config-control
+  annotations:
+      cnrm.cloud.google.com/project-id: sandbox-00000 # kpt-set: ${sandbox-project-id}
 spec:
   deny:
     - protocol: tcp
@@ -130,4 +133,4 @@ spec:
       ports:
         - "22"
   networkRef:
-    name: sandbox-net
+    name: sandbox-net # kpt-set: ${cluster-name}-net

@@ -21,7 +21,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: sandbox
+    external: sandbox # kpt-set: ${sandbox-project-id}
   role: roles/container.clusterViewer
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -34,5 +34,5 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: sandbox
+    external: sandbox # kpt-set: ${sandbox-project-id}
   role: roles/container.admin
