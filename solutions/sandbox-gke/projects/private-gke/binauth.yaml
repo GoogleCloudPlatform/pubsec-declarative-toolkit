@@ -46,4 +46,4 @@ spec:
     evaluationMode: "ALWAYS_ALLOW"
   globalPolicyEvaluationMode: ENABLE
   projectRef:
-    name: sandbox
+    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
