@@ -41,7 +41,7 @@ data:
   allowed-domain-members: |
     - "loremipsum"
   can-ip-forward: | # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
-   - "" 
+   - "projects/PROJECT_ID" 
   ######
   # Guardrails Values
   ######
