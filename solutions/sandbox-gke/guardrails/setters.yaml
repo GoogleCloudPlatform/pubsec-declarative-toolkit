@@ -42,7 +42,8 @@ data:
     - "asdasda"
   # Can IP Forward
   # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
-  can-ip-forward: "- \"projects/PROJECT_ID\" \n"
+  can-ip-forward:
+    - "projects/PROJECT_ID"
   ######
   # Guardrails Values
   ######
