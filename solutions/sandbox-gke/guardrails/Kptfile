@@ -15,7 +15,7 @@ upstreamLock:
     repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
     directory: /services/guardrails
     ref: main
-    commit: a98e009b610fa694b3ed59a011a546063a028897
+    commit: bd9c889dce5ada467ff68584f5ccf158959aae90
 info:
   description: sample description
 pipeline:

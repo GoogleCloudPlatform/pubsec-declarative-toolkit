@@ -126,10 +126,10 @@ metadata: # kpt-merge: /restrict-vm-external-access
   name: restrict-vm-external-access
   labels:
     guardrail-enforced: guardrail-09
+    guardrail: "true"
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
-  list:
-    values:
+  list: {}
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}          
@@ -177,7 +177,6 @@ spec:
   listPolicy:
     allow:
       all: true
-      values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}  

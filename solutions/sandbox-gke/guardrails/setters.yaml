@@ -40,7 +40,10 @@ data:
     - "@example.com"
   allowed-domain-members: |
     - "asdasda"
-  can-ip-forward: "- \"\" \n" # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+  # Can IP Forward
+  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+  can-ip-forward:
+    - "projects/PROJECT_ID"
   ######
   # Guardrails Values
   ######
