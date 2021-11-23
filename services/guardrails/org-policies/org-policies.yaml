@@ -28,7 +28,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-resource-locations
   labels:
-    guardrail: true
+    guardrail: "true"
     guardrails-enforced: guardrail-05
 spec:
   constraint: "constraints/gcp.resourceLocations"
@@ -126,6 +126,7 @@ metadata:
   name: restrict-vm-external-access
   labels:
     guardrail-enforced: guardrail-09
+    guardrail: "true"
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   list:
