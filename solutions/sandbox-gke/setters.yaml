@@ -131,4 +131,4 @@ data:
   # Anthos Values
   #
   ######
-  acm-version: 1.9.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
+  acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
