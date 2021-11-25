@@ -69,14 +69,7 @@ data:
   billing-data-group: email@domain.com
   billing-data-viewer-group: email@domain.com
   billing-console-viewer-group: email@domain.com
-  ####
-  # Protected B Project Values
-  ######
-  projected-b-project-name: protected-b-00000
-  ######
-  # Unclassified Project Values
-  ######
-  unclassified-project-name: unclassified-00000
+  #######
   # Guardrails Project Values
   guardrails-project-id: guardrails-00000 # Must be globally unique
   ######
