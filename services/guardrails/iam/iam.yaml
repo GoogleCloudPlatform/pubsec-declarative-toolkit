@@ -33,7 +33,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: guardrails-test-folder
+    name: dpt-guardrails
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
