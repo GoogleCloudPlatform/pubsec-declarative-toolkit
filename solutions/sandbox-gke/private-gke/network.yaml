@@ -76,7 +76,7 @@ spec:
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
   - subnetworkRef:
-      name: sandbox-subnet # kpt-set: ${cluster-name}-net
+      name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
     sourceIpRangesToNat:
     - ALL_IP_RANGES
 ---
