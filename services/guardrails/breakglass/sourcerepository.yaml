@@ -1,0 +1,6 @@
+apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+kind: SourceRepoRepository
+metadata:
+  name: breakglass
+  annotations:
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
