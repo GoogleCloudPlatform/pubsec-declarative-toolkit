@@ -43,6 +43,7 @@ data:
   #
   ######
   sandbox-project-id: sandbox-00000 # Must be globally unique
+  sandbox-namespace: config-control
   zone: northamerica-northeast1-a
   cluster-description: dev-cluster
   cluster-name: sandbox

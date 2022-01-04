@@ -6,7 +6,7 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
   name: gkemetering
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: config-control # kpt-set: ${sandbox-namespace}
 spec:
   defaultTableExpirationMs: 3600000
   description: "BigQuery Dataset Sample"

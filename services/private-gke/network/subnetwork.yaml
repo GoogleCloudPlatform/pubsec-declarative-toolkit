@@ -2,7 +2,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
   name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: config-control # kpt-set: ${sandbox-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
 spec:

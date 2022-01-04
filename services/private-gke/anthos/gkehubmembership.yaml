@@ -2,7 +2,7 @@ apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-cluster
   name: sandbox-hub # kpt-set: ${cluster-name}-hub
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: config-control # kpt-set: ${target-namespace}
   labels:
     label-one: value-one
   annotations:

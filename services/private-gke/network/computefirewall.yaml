@@ -3,7 +3,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   name: nist-firewall-deny
-  namespace: config-control
+  namespace: config-control # kpt-set: ${sandbox-namespace}
   annotations:
       cnrm.cloud.google.com/project-id: sandbox-00000 # kpt-set: ${sandbox-project-id}
 spec:

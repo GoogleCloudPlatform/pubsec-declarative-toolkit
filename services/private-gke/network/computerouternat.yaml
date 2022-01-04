@@ -2,7 +2,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
   name: nat-sandbox-net # kpt-set: nat-${cluster-name}-net
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: config-control # kpt-set: ${sandbox-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
 spec:
