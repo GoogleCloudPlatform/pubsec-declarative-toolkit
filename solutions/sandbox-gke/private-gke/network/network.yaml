@@ -11,16 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
-kind: ArtifactRegistryRepository
-metadata: # kpt-merge: /container-registry
-  name: container-registry
-  namespace: config-control # kpt-set: ${namespace}
-  labels:
-    environment: sandbox
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
+  name: sandbox-net # kpt-set: ${cluster-name}-net
+  namespace: config-control # kpt-set: ${sandbox-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
 spec:
-  description: "Dev Container Registry"
-  format: DOCKER
-  location: northamerica-northeast1 # kpt-set: ${region}
+  autoCreateSubnetworks: false
+  routingMode: REGIONAL # kpt-set: ${routing-mode}
+  mtu: 1460 # kpt-set: ${mtu}
