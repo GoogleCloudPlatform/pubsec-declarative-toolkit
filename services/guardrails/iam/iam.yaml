@@ -25,6 +25,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
 metadata:
   name: org-audit-logs
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   service: allServices
   auditLogConfigs:
@@ -33,13 +34,14 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: dpt-guardrails
+    name: dpt-guardrails # kpt-set: ${guardrails-project-id}
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-audit-data-viewer
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
@@ -53,6 +55,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-audit-data-user
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   member: group:email@domain.com # kpt-set: group:${audit-data-group}
   resourceRef:
@@ -66,6 +69,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-billing-data-user
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-data-group}
   resourceRef:
@@ -79,6 +83,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-billing-data-viewer
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
@@ -92,6 +97,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: billing-console-viewer
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
@@ -105,6 +111,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: asset-inventory-viewer
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   member: group:email@domain.com # kpt-set: group:${asset-viewer-group}
   resourceRef:

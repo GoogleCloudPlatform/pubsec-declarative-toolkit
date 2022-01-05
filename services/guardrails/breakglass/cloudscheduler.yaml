@@ -2,6 +2,9 @@ apiVersion: cloudscheduler.cnrm.cloud.google.com/v1beta1
 kind: CloudSchedulerJob
 metadata:
   name: cloudscheduler-sample-http
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
 spec:
   description: "scheduler-http-target-job"
   schedule: "*/5 * * * *"
