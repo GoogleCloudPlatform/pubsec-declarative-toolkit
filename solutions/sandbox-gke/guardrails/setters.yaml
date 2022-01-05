@@ -72,3 +72,4 @@ data:
   ####
   # Guardrails Project Values
   guardrails-project-id: guardrails-00000 # Must be globally unique
+  guardrails-namespace: guardrails
