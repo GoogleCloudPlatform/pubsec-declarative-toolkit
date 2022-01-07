@@ -6,11 +6,11 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-cluster
   labels:
     label-one: value-one
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}
 spec:
   description: sandbox # kpt-set: ${cluster-name}
   endpoint:
     gkeCluster:
       resourceRef:
-        external: https://container.googleapis.com/v1/projects/sandbox-00000/locations/northamerica-northeast1-a/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${zone}/clusters/${cluster-name}
+        external: https://container.googleapis.com/v1/projects/sandbox-project-id/locations/us-central1-a/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${zone}/clusters/${cluster-name}
   location: global

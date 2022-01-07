@@ -2,10 +2,10 @@ apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   name: sandbox # kpt-set: ${cluster-name}
-  namespace: config-control # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -22,7 +22,7 @@ spec:
   ipAllocationPolicy:
     clusterSecondaryRangeName: clusterrange
     servicesSecondaryRangeName: servicesrange
-  location: northamerica-northeast1 # kpt-set: ${region}
+  location: us-central1 # kpt-set: ${region}
   maintenancePolicy:
     dailyMaintenanceWindow:
       startTime: 01:00
@@ -58,4 +58,4 @@ spec:
   workloadIdentityConfig:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: sandbox-00000.svc.id.goog # kpt-set: ${sandbox-project-id}.svc.id.goog
+    identityNamespace: sandbox-project-id.svc.id.goog # kpt-set: ${sandbox-project-id}.svc.id.goog

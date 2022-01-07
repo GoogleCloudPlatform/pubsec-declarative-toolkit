@@ -4,11 +4,11 @@ kind: BigQueryDataset
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}
   name: gkemetering
-  namespace: config-control # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${sandbox-namespace}
 spec:
   defaultTableExpirationMs: 3600000
   description: "BigQuery Dataset Sample"
   friendlyName: gke-metering-dataset
-  location: northamerica-northeast1 # kpt-set: ${region}
+  location: us-central1 # kpt-set: ${region}

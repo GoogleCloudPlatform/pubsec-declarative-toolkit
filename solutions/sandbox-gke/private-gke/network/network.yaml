@@ -15,9 +15,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
   name: sandbox-net # kpt-set: ${cluster-name}-net
-  namespace: config-control # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}  
 spec:
   autoCreateSubnetworks: false
   routingMode: REGIONAL # kpt-set: ${routing-mode}

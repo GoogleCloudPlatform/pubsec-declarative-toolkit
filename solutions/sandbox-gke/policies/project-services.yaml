@@ -21,7 +21,7 @@ metadata: # kpt-merge: ${NAMESPACE}/anthos-configmanagement
 spec:
   resourceID: anthosconfigmanagement.googleapis.com
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -33,7 +33,7 @@ metadata: # kpt-merge: ${NAMESPACE}/compute
 spec:
   resourceID: compute.googleapis.com
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -44,7 +44,7 @@ metadata: # kpt-merge: ${NAMESPACE}/gkehub
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
   resourceID: gkehub.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -56,7 +56,7 @@ metadata: # kpt-merge: ${NAMESPACE}/anthos
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
   resourceID: anthos.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -68,7 +68,7 @@ metadata: # kpt-merge: ${NAMESPACE}/container
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
   resourceID: container.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -79,7 +79,7 @@ metadata: # kpt-merge: ${NAMESPACE}/binaryauthorization
 spec:
   resourceID: binaryauthorization.googleapis.com
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -91,7 +91,7 @@ metadata: # kpt-merge: ${NAMESPACE}/secret-manager
 spec:
   resourceID: secretmanager.googleapis.com
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -103,7 +103,7 @@ metadata: # kpt-merge: ${NAMESPACE}/artifactregistry
 spec:
   resourceID: artifactregistry.googleapis.com
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -114,7 +114,7 @@ metadata: # kpt-merge: ${NAMESPACE}/bigquery
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
   projectRef:
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
   resourceID: bigquery.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -123,6 +123,6 @@ metadata: # kpt-merge: config-control/binauth-service
   name: binauth-service
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: sandbox-00000 # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: sandbox-project-id # kpt-set: ${sandbox-project-id}
 spec:
   resourceID: binaryauthorization.googleapis.com

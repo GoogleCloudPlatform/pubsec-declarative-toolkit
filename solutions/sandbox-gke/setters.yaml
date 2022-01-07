@@ -23,7 +23,7 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   ######
-  billing-id: "0000000000"
+  billing-id: "00000-00000-00000"
   org-id: "0000000000"
   department-code: "goc"
   ######
@@ -40,10 +40,9 @@ data:
     - "@email.com"
   allowed-domain-members: |
     - "loremipsum"
-  # Can IP Forward
-  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
-  can-ip-forward: | 
-   - "projects/PROJECT_ID" 
+  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME.
+  can-ip-forward: |
+    - "projects/PROJECT_ID" 
   ######
   # Guardrails Values
   ######
@@ -69,10 +68,9 @@ data:
   billing-data-group: email@domain.com
   billing-data-viewer-group: email@domain.com
   billing-console-viewer-group: email@domain.com
-  #######
   # Guardrails Project Values
   guardrails-project-id: guardrails-00000 # Must be globally unique
-  guardrails-namespace: guardrails
+  guardrails-namespace: guardrails  
   ######
   # GKE Sandbox Network Values
   ######
@@ -93,8 +91,11 @@ data:
   # Creates a Private GKE Cluster with 1 Node Pool
   #
   ######
-  sandbox-project-id: sandbox-00000 # Must be globally unique
-  zone: northamerica-northeast1-a
+  management-project-id: config-controller-project-id
+  management-namespace: config-control
+  sandbox-project-id: sandbox-project-id # Must be globally unique
+  sandbox-namespace: sandbox
+  zone: us-central1-a
   cluster-description: dev-cluster
   cluster-name: sandbox
   #####
@@ -118,8 +119,8 @@ data:
   # Machine Type to be used for GKE Node Pool
   # https://cloud.google.com/compute/docs/machine-types
   #
-  machineType: e2-standard-8
-  region: northamerica-northeast1
+  machineType: e2-standard-4
+  region: us-central1
   ######
   #
   # Anthos Values
