@@ -22,7 +22,7 @@ spec:
   ipAllocationPolicy:
     clusterSecondaryRangeName: clusterrange
     servicesSecondaryRangeName: servicesrange
-  location: northamerica-northeast1 # kpt-set: ${region}
+  location: northamerica-northeast1 # kpt-set: ${location}
   maintenancePolicy:
     dailyMaintenanceWindow:
       startTime: 01:00
