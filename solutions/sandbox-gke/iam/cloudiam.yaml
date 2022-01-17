@@ -1,6 +1,6 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata:
+metadata: # kpt-merge: ${sandbox-namespace}/kcc-${sandbox-project-id}-owners-permissions
   name: kcc-sandbox-project-id-owners-permissions # kpt-set: kcc-${sandbox-project-id}-owners-permissions
   namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:

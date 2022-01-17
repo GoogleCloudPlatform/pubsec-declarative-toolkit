@@ -13,3 +13,7 @@ pipeline:
       configMap:
         ignore_missing_schemas: "true"
         strict: "true"
+inventory:
+  namespace: sandbox
+  name: inventory-82432462
+  inventoryID: 86e5dc77cef8f298b8ffd310baf834868ac293ee-1642187002534821295

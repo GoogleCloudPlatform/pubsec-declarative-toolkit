@@ -29,7 +29,7 @@ spec:
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-      name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
+      name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
   filter: |
     resource.type="organization" AND
     logName: /logs/cloudaudit.googleapis.com%2Factivity OR
@@ -44,12 +44,13 @@ spec:
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
-metadata: # kpt-merge: guardrails/0000000000-logginglogsink-org
+metadata: # kpt-merge: guardrails/0000000000-logginglogsink_${department-code}
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
+  name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}    
 spec:
   location: northamerica-northeast1
   storageClass: REGIONAL
@@ -59,12 +60,12 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata: # kpt-merge: guardrails/pubsub-logsink
-  name: pubsub-logsink
+  name: pubsub-logsink # kpt-merge: pubsub-logsink_${department-code}
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   destination:
     pubSubTopicRef:
-      name: logginglogsink-org
+      name: logginglogsink-goc # kpt-set: logginglogsink-${department-code}
   filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
@@ -73,21 +74,23 @@ spec:
 # PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
-metadata: # kpt-merge: guardrails/logginglogsink-org
-  name: logginglogsink-org
+metadata: # kpt-merge: guardrails/logginglogsink_${department-code}
+  name: logginglogsink-goc # kpt-set: logginglogsink-${department-code}
   namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
 ---
 #########
 # BigQuery Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata: # kpt-merge: guardrails/bigquery-logsink
-  name: bigquery-logsink
+  name: bigquery-logsink # kpt-merge: bigquery-logsink_${department-code}
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
   destination:
     bigQueryDatasetRef:
-      name: logginglogsink
+      name: bqlogginglogsinkgoc # kpt-set: bqlogginglogsink${department-code}
   filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
@@ -97,7 +100,7 @@ spec:
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata: # kpt-merge: guardrails/logginglogsink
-  name: logginglogsink
+  name: bqlogginglogsinkgoc # kpt-set: bqlogginglogsink${department-code}
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"

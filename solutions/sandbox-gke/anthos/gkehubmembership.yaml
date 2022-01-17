@@ -12,5 +12,5 @@ spec:
   endpoint:
     gkeCluster:
       resourceRef:
-        external: https://container.googleapis.com/v1/projects/sandbox-project-id/locations/us-central1-a/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${zone}/clusters/${cluster-name}
+        external: https://container.googleapis.com/v1/projects/sandbox-project-id/locations/northamerica-northeast1-a/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${zone}/clusters/${cluster-name}
   location: global

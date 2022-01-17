@@ -34,3 +34,29 @@ spec:
     - role: roles/iam.workloadIdentityUser
       members:
         - member: serviceAccount:config-controller-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-sandbox] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${sandbox-namespace}]
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: management-sa-owner-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:service-00000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+  role: roles/owner
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: sandbox-project-id-sa-owner-identity-binding # kpt-set: ${sandbox-project-id}-sa-owner-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:sandbox-project-id@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${sandbox-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+  role: roles/owner

@@ -43,7 +43,6 @@ data:
   #
   ######
   sandbox-project-id: sandbox-00000 # Must be globally unique
-  zone: northamerica-northeast1-a
   cluster-description: dev-cluster
   cluster-name: sandbox
   #####
@@ -58,8 +57,6 @@ data:
     - regional
     - northamerica
     - sandbox
-  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
-  branch: prod-env
   gke-admin: email@domain.com
   gke-viewer: email@domain.com
   ####
@@ -68,7 +65,6 @@ data:
   # https://cloud.google.com/compute/docs/machine-types
   #
   machineType: e2-standard-8
-  region: northamerica-northeast1
   ######
   #
   # Anthos Values
@@ -76,3 +72,4 @@ data:
   ######
   acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
   sandbox-namespace: config-control
+  location: northamerica-northeast1s

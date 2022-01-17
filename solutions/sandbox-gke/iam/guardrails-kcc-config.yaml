@@ -1,0 +1,127 @@
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+spec:
+  googleServiceAccount: guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: ${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+---
+# Create GCP ServiceAccount for use by KCC to manage resources in this project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: config-controller-project-id # kpt-set: ${management-project-id}
+spec:
+  displayName: guardrails-00000 # kpt-set: ${guardrails-project-id}
+---
+# Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: guardrails-00000-sa-workload-identity-binding # kpt-set: ${guardrails-project-id}-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: config-controller-project-id # kpt-set: ${management-project-id}
+spec:
+  resourceRef:
+    name: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:config-controller-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-guardrails] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${guardrails-namespace}]
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-00000-sa-owner-identity-binding # kpt-set: ${guardrails-project-id}-sa-owner-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  role: roles/owner
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: host-guardrails-sa-owner-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:service-00000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  role: roles/owner
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: org-policyadmin
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:service-00000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/orgpolicy.policyAdmin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-3265895-sa-policy-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/orgpolicy.policyAdmin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-00000-sa-org-admin # kpt-set: ${guardrails-project-id}-sa-org-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/resourcemanager.organizationAdmin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-3265895-sa-logging-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/logging.admin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-3265895-sa-logging-config-writer
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/logging.configWriter

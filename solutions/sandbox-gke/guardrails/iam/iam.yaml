@@ -33,7 +33,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1

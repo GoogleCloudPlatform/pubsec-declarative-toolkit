@@ -1,13 +1,11 @@
-apiVersion: skaffold/v2beta16
-kind: Config
-metadata:
-  name: gke-sandbox-deploy
-deploy:
-  kubectl:
-    manifests:
-    - sandbox-namespace.yaml
-    - guardrails/namespace.yaml
-    - guardrails/project.yaml
-    - private-gke/*/*.yaml
-    - guardrails/*/*.yaml
-    - projects/*.yaml
+# apiVersion: skaffold/v2beta26
+# kind: Config
+# metadata:
+#   name: gke-sandbox-deploy
+# deploy:
+#   kubectl:
+#     manifests:
+#     - namespace.yaml
+#     - projects/*.yaml
+#     - private-gke/*/*.yaml
+#     - guardrails/*/*.yaml

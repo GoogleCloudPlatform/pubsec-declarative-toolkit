@@ -13,7 +13,7 @@
 # limitations under the License.
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: breakglass-repo
+metadata: # kpt-merge: artifact-registry-service
   name: artifact-registry
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -25,7 +25,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: breakglass-repo
+metadata: # kpt-merge: binary-authorization-service
   name: binary-authorization
   namespace: config-control # kpt-set: ${namespace}
   annotations:
@@ -34,3 +34,51 @@ spec:
   projectRef:
     name: sandbox-project-id # kpt-set: ${sandbox-project-id}
   resourceID: binaryauthorization.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: gke-hub-service
+  name: gke-hub
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  projectRef:
+    name: sandbox-project-id # kpt-set: ${sandbox-project-id}
+  resourceID: gkehub.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: anthos-config-management-service
+  name: anthos-config-management
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  projectRef:
+    name: sandbox-project-id # kpt-set: ${sandbox-project-id}
+  resourceID: anthosconfigmanagement.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: big-query-service
+  name: big-query
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  projectRef:
+    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  resourceID: bigquery.googleapis.com
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: # kpt-merge: cloudscheduler-service
+  name: cloudscheduler
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  projectRef:
+    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  resourceID: cloudscheduler.googleapis.com

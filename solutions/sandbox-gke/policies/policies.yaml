@@ -39,9 +39,35 @@ spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
     allow:
-      all: true
       values:
-        - "projects/sandbox-project-id" # kpt-set: projects/${sandbox-project-id}
+        - "under:projects/sandbox-project-id" # kpt-set: under:projects/${sandbox-project-id}
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: require-os-login
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  constraint: "constraints/compute.requireOsLogin"
+  booleanPolicy:
+    enforced: false
+  projectRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-vpc-peering
+  namespace: config-control # kpt-set: ${namespace}
+spec:
+  constraint: "constraints/compute.restrictVpcPeering"
+  listPolicy:
+    allow:
+      all: true
+  projectRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: sandbox-project-id # kpt-set: ${sandbox-project-id}    

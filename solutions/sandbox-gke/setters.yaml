@@ -42,7 +42,7 @@ data:
     - "loremipsum"
   # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME.
   can-ip-forward: |
-    - "projects/PROJECT_ID" 
+    - "projects/PROJECT_ID"
   ######
   # Guardrails Values
   ######
@@ -69,6 +69,7 @@ data:
   billing-data-viewer-group: email@domain.com
   billing-console-viewer-group: email@domain.com
   # Guardrails Project Values
+  guardrails-folder-name: guardrails
   guardrails-project-id: guardrails-00000 # Must be globally unique
   guardrails-namespace: guardrails  
   ######
@@ -92,10 +93,13 @@ data:
   #
   ######
   management-project-id: config-controller-project-id
+  management-project-number: "00000000"
   management-namespace: config-control
+  host-cluster: main
+  host-location: us-east1
   sandbox-project-id: sandbox-project-id # Must be globally unique
   sandbox-namespace: sandbox
-  zone: us-central1-a
+  location: northamerica-northeast1
   cluster-description: dev-cluster
   cluster-name: sandbox
   #####

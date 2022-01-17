@@ -15,8 +15,6 @@ spec:
     aggregationInterval: INTERVAL_10_MIN # kpt-set: ${log-aggreation-interval}
     flowSampling: 0.5 # kpt-set: ${flow-sampling}
     metadata: INCLUDE_ALL_METADATA # kpt-set: ${log-metadata}
-    metadataFields: # kpt-set: ${log-metadatafields}
-      - ""
   secondaryIpRange:
     - ipCidrRange: 10.3.0.0/16 # kpt-set: ${gke-services-cidr}
       rangeName: servicesrange
