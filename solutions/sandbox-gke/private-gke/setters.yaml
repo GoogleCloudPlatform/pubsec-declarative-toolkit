@@ -72,4 +72,4 @@ data:
   ######
   acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
   sandbox-namespace: config-control
-  location: northamerica-northeast1s
+  location: northamerica-northeast1

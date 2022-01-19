@@ -3,11 +3,11 @@ kind: Namespace
 metadata:
   name: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: sandbox-project-id # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: sandbox-000000 # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    cnrm.cloud.google.com/project-id: guardrails-0000000 # kpt-set: ${guardrails-project-id}

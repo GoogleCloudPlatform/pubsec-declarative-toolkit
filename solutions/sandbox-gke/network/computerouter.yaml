@@ -4,7 +4,7 @@ metadata: # kpt-merge: ${NAMESPACE}/computerouternat-dep-forallsubnets
   name: router-sandbox-net # kpt-set: router-${cluster-name}-net
   namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}  
 spec:
   description: example router description
   networkRef:

@@ -33,7 +33,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    external: guardrails-0000000 # kpt-set: ${guardrails-project-id}
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -42,11 +42,11 @@ metadata: # kpt-merge: guardrails/bq-audit-data-viewer
   name: bq-audit-data-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
+  member: group:group@email.com # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "000000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # BigQuery Audit Log User
@@ -56,11 +56,11 @@ metadata: # kpt-merge: guardrails/bq-audit-data-user
   name: bq-audit-data-user
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${audit-data-group}
+  member: group:group@email.com # kpt-set: group:${audit-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "000000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -70,11 +70,11 @@ metadata: # kpt-merge: guardrails/bq-billing-data-user
   name: bq-billing-data-user
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${billing-data-group}
+  member: group:group@email.com # kpt-set: group:${billing-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "000000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -84,11 +84,11 @@ metadata: # kpt-merge: guardrails/bq-billing-data-viewer
   name: bq-billing-data-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
+  member: group:group@email.com # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "000000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Console Viewer
@@ -98,11 +98,11 @@ metadata: # kpt-merge: guardrails/billing-console-viewer
   name: billing-console-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
+  member: group:group@email.com # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "000000000000" # kpt-set: ${org-id}
   role: "roles/billing.viewer"
 ---
 # Asset Inventory Viewer
@@ -112,9 +112,9 @@ metadata: # kpt-merge: guardrails/asset-inventory-viewer
   name: asset-inventory-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${asset-viewer-group}
+  member: group:group@email.com # kpt-set: group:${asset-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "000000000000" # kpt-set: ${org-id}
   role: "roles/cloudasset.viewer"

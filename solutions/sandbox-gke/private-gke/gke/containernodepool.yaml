@@ -6,8 +6,8 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
   labels:
     cluster: sandbox # kpt-set: ${cluster-name}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}
-    # config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespace/sandbox/containercluster/sandbox
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespace/sandbox/containercluster/sandbox
 spec:
   autoscaling:
     maxNodeCount: 3
@@ -15,7 +15,7 @@ spec:
   clusterRef:
     name: sandbox # kpt-set: ${cluster-name}
   initialNodeCount: 3
-  location: us-central1 # kpt-set: ${region}
+  location: northamerica-northeast1 # kpt-set: ${location}
   management:
     autoRepair: true
     autoUpgrade: true

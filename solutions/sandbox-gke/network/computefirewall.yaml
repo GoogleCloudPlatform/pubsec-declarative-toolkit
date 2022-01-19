@@ -5,7 +5,7 @@ metadata:
   name: nist-firewall-deny
   namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: sandbox-project-id # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: sandbox-000000 # kpt-set: ${sandbox-project-id}
 spec:
   deny:
     - protocol: tcp

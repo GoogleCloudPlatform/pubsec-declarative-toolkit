@@ -2,15 +2,16 @@ apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-cluster
   name: sandbox-hub # kpt-set: ${cluster-name}-hub
-  namespace: config-control # kpt-set: ${target-namespace}
+  namespace: sandbox # kpt-set: ${sandbox-namespace}
   labels:
     label-one: value-one
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}
+    config.kubernetes.io/depends-on: /namespace/sandbox/containercluster/sandbox
 spec:
   description: sandbox # kpt-set: ${cluster-name}
   endpoint:
     gkeCluster:
       resourceRef:
-        external: https://container.googleapis.com/v1/projects/sandbox-project-id/locations/northamerica-northeast1-a/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${zone}/clusters/${cluster-name}
+        external: https://container.googleapis.com/v1/projects/sandbox-000000/locations/us-central1/clusters/sandbox # kpt-set: https://container.googleapis.com/v1/projects/${sandbox-project-id}/locations/${region}/clusters/${cluster-name}
   location: global

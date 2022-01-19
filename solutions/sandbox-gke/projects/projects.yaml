@@ -5,21 +5,21 @@ metadata: # kpt-merge: /sandbox-project-id
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
     classification: "sandbox"
-  name: sandbox-project-id # kpt-set: ${sandbox-project-id}
+  name: sandbox-000000 # kpt-set: ${sandbox-project-id}
   namespace: config-control
 spec:
   name: GKE Sandbox Project
   folderRef:
     # Replace "${FOLDER_ID?}" with the numeric ID of the parent folder
     name: sandbox-workloads
-  billingAccountRef:
-    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "00000-00000-00000" # kpt-set: ${billing-id}
+    billingAccountRef:
+      # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+      external: "00000-00000-00000" # kpt-set: ${billing-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata: # kpt-merge: /guardrails-project-id
-  name: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  name: guardrails-0000000 # kpt-set: ${guardrails-project-id}
   labels:
     classification: "guardrails"
   namespace: config-control
@@ -27,9 +27,9 @@ metadata: # kpt-merge: /guardrails-project-id
     cnrm.cloud.google.com/auto-create-network: "false"
 spec:
   name: guardrails
-  resourceID: guardrails-00000 # kpt-set: ${guardrails-project-id}
+  resourceID: guardrails-0000000 # kpt-set: ${guardrails-project-id}
   folderRef:
-    name: guardrails-configs-folder
-  billingAccountRef:
-    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "00000-00000-00000" # kpt-set: ${billing-id}
+    name: org-folder # kpt-set: ${department-code}-${guardrails}
+    billingAccountRef:
+      # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+      external: "00000-00000-00000" # kpt-set: ${billing-id}

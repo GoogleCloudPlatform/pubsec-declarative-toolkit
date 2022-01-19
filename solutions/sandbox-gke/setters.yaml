@@ -24,8 +24,8 @@ data:
   #
   ######
   billing-id: "00000-00000-00000"
-  org-id: "0000000000"
-  department-code: "goc"
+  org-id: "000000000000"
+  department-code: "org"
   ######
   #
   # Org Policies
@@ -62,15 +62,15 @@ data:
   # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
   #
   ######
-  asset-viewer-group: email@domain.com
-  audit-data-group: email@domain.com
-  audit-data-viewer-group: email@domain.com
-  billing-data-group: email@domain.com
-  billing-data-viewer-group: email@domain.com
-  billing-console-viewer-group: email@domain.com
+  asset-viewer-group: group@email.com
+  audit-data-group: group@email.com
+  audit-data-viewer-group: group@email.com
+  billing-data-group: group@email.com
+  billing-data-viewer-group: group@email.com
+  billing-console-viewer-group: group@email.com
   # Guardrails Project Values
   guardrails-folder-name: guardrails
-  guardrails-project-id: guardrails-00000 # Must be globally unique
+  guardrails-project-id: guardrails-0000000 # Must be globally unique
   guardrails-namespace: guardrails  
   ######
   # GKE Sandbox Network Values
@@ -93,11 +93,11 @@ data:
   #
   ######
   management-project-id: config-controller-project-id
-  management-project-number: "00000000"
+  management-project-number: "00000000000"
   management-namespace: config-control
   host-cluster: main
   host-location: us-east1
-  sandbox-project-id: sandbox-project-id # Must be globally unique
+  sandbox-project-id: sandbox-000000 # Must be globally unique
   sandbox-namespace: sandbox
   location: northamerica-northeast1
   cluster-description: dev-cluster
@@ -116,8 +116,8 @@ data:
     - sandbox
   repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
   branch: prod-env
-  gke-admin: email@domain.com
-  gke-viewer: email@domain.com
+  gke-admin: group@email.com
+  gke-viewer: group@email.com
   ####
   #
   # Machine Type to be used for GKE Node Pool

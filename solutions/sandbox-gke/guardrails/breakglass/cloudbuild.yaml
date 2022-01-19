@@ -17,7 +17,7 @@ metadata: # kpt-merge: guardrails/breakglass-trigger
   name: breakglass-trigger
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    cnrm.cloud.google.com/project-id: guardrails-0000000 # kpt-set: ${guardrails-project-id}
 spec:
   description: Cloud Build Trigger with a build template file. Builds the master branch of the referenced Cloud Source Repository.
   disabled: false

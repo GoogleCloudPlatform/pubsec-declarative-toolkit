@@ -20,5 +20,5 @@ metadata: # kpt-merge: breakglass-repo
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
   projectRef:
-    name: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    name: guardrails-0000000 # kpt-set: ${guardrails-project-id}
   resourceID: sourcerepo.googleapis.com

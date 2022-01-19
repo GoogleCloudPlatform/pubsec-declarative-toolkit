@@ -1,7 +1,7 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata: # kpt-merge: ${guardrails-namespace}/kcc-${guardrails-project-id}-owners-permissions
-  name: kcc-guardrails-00000-owners-permissions # kpt-set: kcc-${guardrails-project-id}-owners-permissions
+  name: kcc-guardrails-0000000-owners-permissions # kpt-set: kcc-${guardrails-project-id}-owners-permissions
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: config-controller-project-id # kpt-set: ${management-project-id}
@@ -9,8 +9,8 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    external: guardrails-0000000 # kpt-set: ${guardrails-project-id}
   bindings:
     - role: roles/owner
       members:
-        - member: serviceAccount:guardrails-00000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+        - member: serviceAccount:guardrails-0000000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com

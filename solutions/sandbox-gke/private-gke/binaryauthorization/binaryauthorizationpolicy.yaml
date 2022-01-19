@@ -17,7 +17,8 @@ metadata: # kpt-merge: config-control/binauth-allowed-repos
   name: binauth-allowed-repos
   namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-project-id" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}
+    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/binaryauthorization # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Project/binaryauthorization
 spec:
   admissionWhitelistPatterns:
     - namePattern: "gcr.io/google_containers/*"
@@ -26,10 +27,10 @@ spec:
     - namePattern: "gke.gcr.io/*"
     - namePattern: "gcr.io/stackdriver-agents/*"
     - namePattern: "gcr.io/google-samples/*"
-    - namePattern: "us-central1-docker.pkg.dev/sandbox-project-id/container-registry" # kpt-set: ${region}-docker.pkg.dev/${sandbox-project-id}/container-registry
+    - namePattern: "us-central1-docker.pkg.dev/sandbox-000000/container-registry" # kpt-set: ${region}-docker.pkg.dev/${sandbox-project-id}/container-registry
   defaultAdmissionRule:
     enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
     evaluationMode: "ALWAYS_ALLOW"
   globalPolicyEvaluationMode: ENABLE
   projectRef:
-    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${sandbox-project-id}

@@ -28,7 +28,7 @@ spec:
     enforced: false
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -40,10 +40,10 @@ spec:
   listPolicy:
     allow:
       values:
-        - "under:projects/sandbox-project-id" # kpt-set: under:projects/${sandbox-project-id}
+        - "under:projects/sandbox-000000" # kpt-set: under:projects/${sandbox-project-id}
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -56,7 +56,7 @@ spec:
     enforced: false
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: sandbox-project-id # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${sandbox-project-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
@@ -70,4 +70,4 @@ spec:
       all: true
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: sandbox-project-id # kpt-set: ${sandbox-project-id}    
+    external: sandbox-000000 # kpt-set: ${sandbox-project-id}    
