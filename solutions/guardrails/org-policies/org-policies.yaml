@@ -134,7 +134,7 @@ metadata:
     guardrail: "true"
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
-  list:
+  listPolicy:
     values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
