@@ -27,7 +27,7 @@ spec:
     - namePattern: "gke.gcr.io/*"
     - namePattern: "gcr.io/stackdriver-agents/*"
     - namePattern: "gcr.io/google-samples/*"
-    - namePattern: "us-central1-docker.pkg.dev/sandbox-000000/container-registry" # kpt-set: ${region}-docker.pkg.dev/${sandbox-project-id}/container-registry
+    - namePattern: "northamerica-northeast1-docker.pkg.dev/sandbox-00000/container-registry" # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
   defaultAdmissionRule:
     enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
     evaluationMode: "ALWAYS_ALLOW"

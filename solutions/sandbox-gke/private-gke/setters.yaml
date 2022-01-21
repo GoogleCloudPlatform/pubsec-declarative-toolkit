@@ -17,14 +17,6 @@ kind: ConfigMap
 metadata: # kpt-merge: /setters
   name: setters
 data:
-  ######
-  # General Settings Values
-  #
-  # The following are Settings for the environment to bootstrap with
-  #
-  ######
-  # GKE Sandbox Network Values
-  ######
   routing-mode: REGIONAL # REGIONAL or GLOBAL
   mtu: "1460" # Range can be between 1460 and 1500 bytes
   subnet-cidr: 10.2.0.0/16
@@ -36,13 +28,6 @@ data:
   private-google-access: "true"
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
-  ######
-  #
-  # GKE Sandbox Cluster Values
-  # Creates a Private GKE Cluster with 1 Node Pool
-  #
-  ######
-  sandbox-project-id: sandbox-00000 # Must be globally unique
   cluster-description: dev-cluster
   cluster-name: sandbox
   #####
@@ -64,12 +49,31 @@ data:
   # Machine Type to be used for GKE Node Pool
   # https://cloud.google.com/compute/docs/machine-types
   #
-  machineType: e2-standard-8
+  machineType: e2-standard-4
   ######
   #
   # Anthos Values
   #
   ######
-  acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
-  sandbox-namespace: config-control
+  acm-version: 1.10.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
   location: northamerica-northeast1
+  gke-pod-range-name: clusterrange
+  gke-services-range-name: servicesrange
+  ######
+  # General Settings Values
+  #
+  # The following are Settings for the environment to bootstrap with
+  #
+  ######
+  # GKE Sandbox Network Values
+  ######
+  network-name: gke-net
+  ######
+  #
+  # GKE Sandbox Cluster Values
+  # Creates a Private GKE Cluster with 1 Node Pool
+  #
+  ######
+  project-id: sandbox-00000 # Must be globally unique
+  project-namespace: config-control
+  subnetwork-name: gke-subnet
