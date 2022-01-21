@@ -4,7 +4,7 @@ kind: BigQueryDataset
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${project-id}
   name: gkemetering
   namespace: config-control # kpt-set: ${sandbox-namespace}
 spec:

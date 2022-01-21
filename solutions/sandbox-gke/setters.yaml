@@ -86,6 +86,8 @@ data:
   private-google-access: true
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
+  gke-pod-range-name: clusterrange
+  gke-services-range-name: servicesrange
   ######
   #
   # GKE Sandbox Cluster Values
@@ -97,8 +99,8 @@ data:
   management-namespace: config-control
   host-cluster: main
   host-location: us-east1
-  sandbox-project-id: sandbox-000000 # Must be globally unique
-  sandbox-namespace: sandbox
+  project-id: sandbox-000000 # Must be globally unique
+  project-namespace: sandbox
   location: northamerica-northeast1
   cluster-description: dev-cluster
   cluster-name: sandbox

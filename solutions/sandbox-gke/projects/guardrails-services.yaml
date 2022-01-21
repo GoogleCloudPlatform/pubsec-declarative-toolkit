@@ -3,7 +3,7 @@ kind: Service
 metadata: # kpt-merge: big-query-service
   name: big-query
   namespace: guardrails # kpt-set: ${guardrails-namespace}
-  config.kubernetes.io/depends-on: /namespace/config-control/Project/guardrails-0000000 # kpt-set: /namespace/config-control/Project/${guardrails-project-id}
+  config.kubernetes.io/depends-on: /namespace/config-control/Project/guardrails-0000000 # kpt-set: /namespace/${management-namespace}/Project/${guardrails-project-id}
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "false"
 spec:
@@ -18,7 +18,7 @@ metadata: # kpt-merge: cloudscheduler-service
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    config.kubernetes.io/depends-on: /namespace/config-control/Project/guardrails-0000000 # kpt-set: /namespace/config-control/Project/${guardrails-project-id}
+    config.kubernetes.io/depends-on: /namespace/config-control/Project/guardrails-0000000 # kpt-set: /namespace/${management-namespace}/Project/${guardrails-project-id}
 spec:
   projectRef:
     external: guardrails-0000000 # kpt-set: ${guardrails-project-id}

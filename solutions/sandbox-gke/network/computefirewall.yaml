@@ -3,9 +3,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   name: nist-firewall-deny
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: sandbox-000000 # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: sandbox-000000 # kpt-set: ${project-id}
 spec:
   deny:
     - protocol: tcp
@@ -51,4 +51,4 @@ spec:
       ports:
         - "22"
   networkRef:
-    name: sandbox-net # kpt-set: ${cluster-name}-net
+    name: sandbox-net # kpt-set: ${network-name}

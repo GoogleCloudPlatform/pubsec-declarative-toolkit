@@ -4,7 +4,7 @@ metadata: # kpt-merge: /sanbox-workloads
   labels:
     classification: sandbox
   name: sandbox-workloads
-  namespace: config-control
+  namespace: config-control # kpt-set: ${management-namespace}
 spec:
   displayName: sandbox-workloads
   organizationRef:
@@ -16,7 +16,7 @@ metadata: # kpt-merge: /guardrails-configs-folder
   labels:
     classification: "guardrails"
   name: org-folder # kpt-set: ${department-code}-${guardrails}
-  namespace: config-control
+  namespace: config-control # kpt-set: ${management-namespace}
 spec:
   displayName: Guardrails Configs
   organizationRef:

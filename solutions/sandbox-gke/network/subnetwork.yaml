@@ -1,10 +1,10 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
-  name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  name: sandbox-subnet # kpt-set: ${subnetwork-name}
+  namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
 spec:
   ipCidrRange: 10.2.0.0/16 # kpt-set: ${subnet-cidr}
   networkRef:
@@ -17,6 +17,6 @@ spec:
     metadata: INCLUDE_ALL_METADATA # kpt-set: ${log-metadata}
   secondaryIpRange:
     - ipCidrRange: 10.3.0.0/16 # kpt-set: ${gke-services-cidr}
-      rangeName: servicesrange
+      rangeName: servicesrange # kpt-set: ${gke-services-range-name}
     - ipCidrRange: 10.4.0.0/16 # kpt-set: ${gke-pod-cidr}
-      rangeName: clusterrange
+      rangeName: podrange # kpt-set: ${gke-pod-range-name}

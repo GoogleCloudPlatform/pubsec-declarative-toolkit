@@ -25,8 +25,10 @@ data:
   ######
   # GKE Sandbox Network Values
   ######
+  network-name: gke-net
   routing-mode: REGIONAL # REGIONAL or GLOBAL
   mtu: "1460" # Range can be between 1460 and 1500 bytes
+  subnetwork-name: gke-subnet
   subnet-cidr: 10.2.0.0/16
   log-aggregation-interval: INTERVAL_5_SEC # Possible Values ["INTERVAL_5_SEC", "INTERVAL_30_SEC", "INTERVAL_1_MIN", "INTERVAL_5_MIN", "INTERVAL_10_MIN", "INTERVAL_15_MIN"]
   flow-sampling: "0.5" # Value must be between 0 and 1
@@ -36,15 +38,17 @@ data:
   private-google-access: "true"
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
+  gke-pod-range-name: clusterrange
+  gke-services-range-name: servicesrange
   ######
   #
   # GKE Sandbox Cluster Values
   # Creates a Private GKE Cluster with 1 Node Pool
   #
   ######
-  sandbox-project-id: sandbox-00000 # Must be globally unique
-  sandbox-namespace: config-control
-  location: northamerica-northeast1s
+  project-id: sandbox-00000 # Must be globally unique
+  project-namespace: config-control
+  location: northamerica-northeast1
   cluster-description: dev-cluster
   cluster-name: sandbox
   #####
@@ -66,10 +70,10 @@ data:
   # Machine Type to be used for GKE Node Pool
   # https://cloud.google.com/compute/docs/machine-types
   #
-  machineType: e2-standard-8
+  machineType: e2-standard-4
   ######
   #
   # Anthos Values
   #
   ######
-  acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
+  acm-version: 1.10.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management

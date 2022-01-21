@@ -20,8 +20,8 @@ spec:
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
-    clusterSecondaryRangeName: clusterrange
-    servicesSecondaryRangeName: servicesrange
+    clusterSecondaryRangeName: podrange # kpt-set: ${gke-pod-range-name}
+    servicesSecondaryRangeName: servicesrange # kpt-set: ${gke-services-range-name}
   location: northamerica-northeast1 # kpt-set: ${location}
   maintenancePolicy:
     dailyMaintenanceWindow:
@@ -33,7 +33,9 @@ spec:
   networkPolicy:
     enabled: true
   networkRef:
-    name: sandbox-net # kpt-set: ${cluster-name}-net
+    name: sandbox-net # kpt-set: ${network-name}
+  subnetworkRef:
+    name: sandbox-subnet # kpt-set: ${subnetwork-name}  
   networkingMode: VPC_NATIVE
   notificationConfig:
     pubsub:
@@ -51,8 +53,6 @@ spec:
     enablePrivateEndpoint: false
     enablePrivateNodes: true
     masterIpv4CidrBlock: 172.16.0.0/28
-  subnetworkRef:
-    name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
   verticalPodAutoscaling:
     enabled: true
   workloadIdentityConfig:

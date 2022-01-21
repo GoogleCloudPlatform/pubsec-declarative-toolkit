@@ -2,17 +2,17 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
   name: nat-sandbox-net # kpt-set: nat-${cluster-name}-net
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
 spec:
   natIpAllocateOption: AUTO_ONLY
   region: us-central1 # kpt-set: ${region}
   routerRef:
-    name: router-sandbox-net # kpt-set: router-${cluster-name}-net
+    name: router-sandbox-net # kpt-set: router-${netowork-name}
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
   - subnetworkRef:
-      name: sandbox-subnet # kpt-set: ${cluster-name}-subnet
+      name: sandbox-subnet # kpt-set: ${subnetwork-name}
     sourceIpRangesToNat:
     - ALL_IP_RANGES
