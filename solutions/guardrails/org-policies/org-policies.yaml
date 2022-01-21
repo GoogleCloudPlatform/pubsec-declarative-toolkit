@@ -31,6 +31,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrails-enforced: guardrail-05
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/gcp.resourceLocations"
   listPolicy:
@@ -58,6 +60,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-09
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.disableVpcExternalIpv6"
   booleanPolicy:
@@ -81,6 +85,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
@@ -104,6 +110,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
@@ -132,6 +140,8 @@ metadata:
   labels:
     guardrail-enforced: guardrail-09
     guardrail: "true"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:
@@ -154,6 +164,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-02
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/iam.disableServiceAccountKeyCreation"
   booleanPolicy:
@@ -180,6 +192,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-09
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:
@@ -208,6 +222,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-02
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/storage.uniformBucketLevelAccess"
   booleanPolicy:
@@ -234,6 +250,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-06
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.requireOsLogin"
   booleanPolicy:
@@ -262,6 +280,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-06
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
   listPolicy:
@@ -293,6 +313,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-02
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
   listPolicy:
@@ -324,6 +346,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-06
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/iam.allowedPolicyMemberDomains"
   listPolicy:
@@ -352,6 +376,8 @@ metadata:
   labels:
     guardrail: "true"
     guardrail-enforced: guardrails-02
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.disableSerialPortAccess"
   booleanPolicy:
@@ -377,6 +403,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
@@ -404,6 +432,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.disableGuestAttributesAccess"
   booleanPolicy:
@@ -428,6 +458,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.disableNestedVirtualization"
   booleanPolicy:
@@ -452,6 +484,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/compute.restrictXpnProjectLienRemoval"
   booleanPolicy:
@@ -475,6 +509,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/sql.restrictPublicIp"
   booleanPolicy:
@@ -503,6 +539,8 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
 spec:
   constraint: "constraints/storage.publicAccessPrevention"
   booleanPolicy:
