@@ -3,6 +3,7 @@ kind: Project
 metadata: # kpt-merge: /sandbox-project-id
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/management-sa-owner-identity-binding
   labels:
     classification: "sandbox"
   name: sandbox-000000 # kpt-set: ${sandbox-project-id}

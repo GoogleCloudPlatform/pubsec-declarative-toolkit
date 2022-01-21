@@ -11,7 +11,7 @@ spec:
       enabled: true
     configSync:
       git:
-        policyDir: ""
+        policyDir: "" # kpt-set: ${acm-dir}
         secretType: "none"
         syncBranch: prod-env # kpt-set: ${branch}
         syncRepo: https://github.com/cartyc/acm-test.git # kpt-set: ${repo}

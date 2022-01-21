@@ -114,8 +114,6 @@ data:
     - regional
     - northamerica
     - sandbox
-  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
-  branch: prod-env
   gke-admin: group@email.com
   gke-viewer: group@email.com
   ####
@@ -131,3 +129,6 @@ data:
   #
   ######
   acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
+  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
+  branch: prod-env
+  path: acm-dir

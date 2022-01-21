@@ -3,6 +3,8 @@ kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: sandbox # kpt-set: ${sandbox-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/namespaces/sandbox-0000000 # kpt-set: /namespace/config-control/namespaces/${sandbox-project-id}
 spec:
   googleServiceAccount: sandbox-000000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: ${sandbox-project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -40,6 +42,8 @@ kind: IAMPolicyMember
 metadata: # kpt-merge: sandbox/
   name: management-sa-owner-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/Project/sandbox-000000 # kpt-set: /namespace/config-control/Project/${sandbox-project-id}
 spec:
   member: serviceAccount:service-00000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:

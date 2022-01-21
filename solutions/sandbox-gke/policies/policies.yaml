@@ -22,6 +22,9 @@ kind: ResourceManagerPolicy
 metadata:
   name: require-shielded-vm-false
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin
+  
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
@@ -35,6 +38,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-ip-forwarding
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
@@ -50,6 +55,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: require-os-login
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin
 spec:
   constraint: "constraints/compute.requireOsLogin"
   booleanPolicy:
@@ -63,6 +70,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-peering
   namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:

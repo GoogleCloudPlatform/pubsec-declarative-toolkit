@@ -5,6 +5,7 @@ metadata: # kpt-merge: ${sandbox-namespace}/kcc-${sandbox-project-id}-owners-per
   namespace: sandbox # kpt-set: ${sandbox-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: config-controller-project-id # kpt-set: ${management-project-id}
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/management-sa-owner-identity-binding
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

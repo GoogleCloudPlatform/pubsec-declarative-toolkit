@@ -3,6 +3,8 @@ kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/namespaces/guardrails-0000000 # kpt-set: /namespace/config-control/namespaces/${guardrails-project-id} 
 spec:
   googleServiceAccount: guardrails-0000000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: ${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
