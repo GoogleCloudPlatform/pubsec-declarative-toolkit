@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
-metadata: # kpt-merge: breakglass-repo
-  name: breakglass-repo
-  namespace: config-control # kpt-set: ${namespace}
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
+  name: sandbox-net # kpt-set: ${network-name}
+  namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
 spec:
-  projectRef:
-    name: guardrails-0000000 # kpt-set: ${guardrails-project-id}
-  resourceID: sourcerepo.googleapis.com
+  autoCreateSubnetworks: false
+  routingMode: REGIONAL # kpt-set: ${routing-mode}
+  mtu: 1460 # kpt-set: ${mtu}

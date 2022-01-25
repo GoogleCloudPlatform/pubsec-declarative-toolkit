@@ -1,0 +1,22 @@
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: DeliveryPipeline
+metadata:
+  name: sandbox-gke
+  annotations:
+    config.kubernetes.io/local-config: "true"
+description: "KCC Test Deployment"
+serialPipeline:
+  stages:
+  - targetId: prod
+    profiles: []
+---
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: Target
+metadata:
+  name: prod
+  annotations:
+    config.kubernetes.io/local-config: "true"
+description: Test Prod Deploy
+requireApproval: true
+gke:
+  cluster: projects/config-controller-project-id/locations/{$host-location}/clusers/krmapihost-main # kpt-set: projects/${management-project-id}/locations/{$host-location}/clusers/krmapihost-${host-cluster}

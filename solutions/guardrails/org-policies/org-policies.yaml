@@ -1,30 +1,31 @@
-# # Copyright 2021 Google LLC
-# #
-# # Licensed under the Apache License, Version 2.0 (the "License");
-# # you may not use this file except in compliance with the License.
-# # You may obtain a copy of the License at
-# #
-# #      http://www.apache.org/licenses/LICENSE-2.0
-# #
-# # Unless required by applicable law or agreed to in writing, software
-# # distributed under the License is distributed on an "AS IS" BASIS,
-# # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# # See the License for the specific language governing permissions and
-# # limitations under the License.
-# #########
-# #
-# # GCP Organization Policies
-# # Org policies that correspond with a Guardrail will container a label indicating what Guardrails it helps in enforcing
-# # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
-# #
-# #########
-# #
-# # Constraint: constraints/gcp.resourceLocations
-# # This list constraint defines the set of locations where location-based GCP resources can be created.
-# #
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#########
+#
+# GCP Organization Policies
+# Org policies that correspond with a Guardrail will container a label indicating what Guardrails it helps in enforcing
+# https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
+#
+#########
+#
+# Constraint: constraints/gcp.resourceLocations
+# This list constraint defines the set of locations where location-based GCP resources can be created.
+#
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-resource-locations
+metadata:
   name: restrict-resource-locations
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -32,7 +33,6 @@ metadata: # kpt-merge: guardrails/restrict-resource-locations
     guardrails-enforced: guardrail-05
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/gcp.resourceLocations"
   listPolicy:
@@ -43,7 +43,7 @@ spec:
         - northamerica-northeast2
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -54,7 +54,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-vpc-external-ipv6
+metadata:
   name: disable-vpc-external-ipv6
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -62,14 +62,13 @@ metadata: # kpt-merge: guardrails/disable-vpc-external-ipv6
     guardrail-enforced: guardrail-09
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.disableVpcExternalIpv6"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -81,21 +80,20 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/require-shielded-vm
+metadata:
   name: require-shielded-vm
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -107,14 +105,13 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/require-trusted-images
+metadata:
   name: require-trusted-images
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
@@ -125,7 +122,7 @@ spec:
         - "projects/cos-cloud"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}   
+    external: "0000000000" # kpt-set: ${org-id}   
 ---
 #########
 #
@@ -137,7 +134,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-vm-external-access
+metadata:
   name: restrict-vm-external-access
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -145,13 +142,13 @@ metadata: # kpt-merge: guardrails/restrict-vm-external-access
     guardrail: "true"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
-  listPolicy: {}
+  listPolicy:
+    values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}          
+    external: "0000000000" # kpt-set: ${org-id}          
 ---
 #########
 #
@@ -161,7 +158,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-serviceaccount-key-creation
+metadata:
   name: disable-serviceaccount-key-creation
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -169,14 +166,13 @@ metadata: # kpt-merge: guardrails/disable-serviceaccount-key-creation
     guardrail-enforced: guardrail-02
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/iam.disableServiceAccountKeyCreation"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}              
+    external: "0000000000" # kpt-set: ${org-id}              
 ---
 #########
 #
@@ -190,7 +186,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-vpc-peering
+metadata:
   name: restrict-vpc-peering
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -198,15 +194,15 @@ metadata: # kpt-merge: guardrails/restrict-vpc-peering
     guardrail-enforced: guardrail-09
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:
     allow:
       all: true
+      values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}  
+    external: "0000000000" # kpt-set: ${org-id}  
 ---
 #########
 #
@@ -220,7 +216,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/uniform-bucket-level-access
+metadata:
   name: uniform-bucket-level-access
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -228,14 +224,13 @@ metadata: # kpt-merge: guardrails/uniform-bucket-level-access
     guardrail-enforced: guardrail-02
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/storage.uniformBucketLevelAccess"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -249,7 +244,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-os-login
+metadata:
   name: restrict-os-login
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -257,14 +252,13 @@ metadata: # kpt-merge: guardrails/restrict-os-login
     guardrail-enforced: guardrail-06
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.requireOsLogin"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -280,7 +274,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-loadbalancer-creation-types
+metadata:
   name: restrict-loadbalancer-creation-types
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -288,7 +282,6 @@ metadata: # kpt-merge: guardrails/restrict-loadbalancer-creation-types
     guardrail-enforced: guardrail-06
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
   listPolicy:
@@ -298,7 +291,7 @@ spec:
         - INTERNAL
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -314,7 +307,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/allowed-contact-domains
+metadata:
   name: allowed-contact-domains
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -322,17 +315,16 @@ metadata: # kpt-merge: guardrails/allowed-contact-domains
     guardrail-enforced: guardrail-02
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
   listPolicy:
     allow:
       all: true
       values: # kpt-set: ${allowed-domain-contacts}
-        - "chris@chriscarty.altostrat.com"
+        - "@example.com"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -348,7 +340,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/allowed-policy-member-domain
+metadata:
   name: allowed-policy-member-domain
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -356,17 +348,16 @@ metadata: # kpt-merge: guardrails/allowed-policy-member-domain
     guardrail-enforced: guardrail-06
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/iam.allowedPolicyMemberDomains"
   listPolicy:
     allow:
       all: true
       values: # kpt-set: ${allowed-domain-members}
-        - "loremipsum"
+        - "asdasda"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -379,7 +370,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-serial-port-access
+metadata:
   name: disable-serial-port-access
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
@@ -387,14 +378,13 @@ metadata: # kpt-merge: guardrails/disable-serial-port-access
     guardrail-enforced: guardrails-02
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.disableSerialPortAccess"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #######
 #
@@ -408,24 +398,23 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/vm-can-ip-forward
+metadata:
   name: vm-can-ip-forward
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
     allow:
       all: true
       values: # kpt-set: ${can-ip-forward}
-        - "projects/PROJECT_ID"
+        - ""
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id} 
+    external: "0000000000" # kpt-set: ${org-id} 
 ---
 #########
 #
@@ -438,21 +427,20 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-guest-attribute-access
+metadata:
   name: disable-guest-attribute-access
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.disableGuestAttributesAccess"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -465,21 +453,20 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-nested-virtualization
+metadata:
   name: disable-nested-virtualization
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.disableNestedVirtualization"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 ##################
 #
@@ -492,21 +479,20 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-vpc-lien-removal
+metadata:
   name: restrict-vpc-lien-removal
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/compute.restrictXpnProjectLienRemoval"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -518,21 +504,20 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-sql-public-ip
+metadata:
   name: restrict-sql-public-ip
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/sql.restrictPublicIp"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 #
@@ -549,18 +534,17 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/storage-public-access-prevention
+metadata:
   name: storage-public-access-prevention
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   labels:
     guardrail: "false"
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-0000000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   constraint: "constraints/storage.publicAccessPrevention"
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}

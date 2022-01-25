@@ -1,0 +1,66 @@
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: sandbox # kpt-set: ${project-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/namespaces/sandbox-0000000 # kpt-set: /namespace/${management-namespace}/namespaces/${project-id}
+spec:
+  googleServiceAccount: sandbox-000000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: ${project-id}@${management-project-id}.iam.gserviceaccount.com
+---
+# Create GCP ServiceAccount for use by KCC to manage resources in this project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: sandbox-000000 # kpt-set: ${project-id}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: config-controller-project-id # kpt-set: ${management-project-id}
+spec:
+  displayName: sandbox-000000 # kpt-set: ${project-id}
+---
+# Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: sandbox-000000-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: config-controller-project-id # kpt-set: ${management-project-id}
+spec:
+  resourceRef:
+    name: sandbox-000000 # kpt-set: ${project-id}
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:config-controller-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-sandbox] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-namespace}]
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: management-sa-owner-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/Project/sandbox-000000 # kpt-set: /namespace/${management-project-id}/Project/${project-id}
+spec:
+  member: serviceAccount:service-00000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: sandbox-000000 # kpt-set: ${project-id}
+  role: roles/owner
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: sandbox-000000-sa-owner-identity-binding # kpt-set: ${project-id}-sa-owner-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+spec:
+  member: serviceAccount:sandbox-000000@config-controller-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: sandbox-000000 # kpt-set: ${project-id}
+  role: roles/owner

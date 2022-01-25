@@ -23,9 +23,9 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   ######
-  billing-id: "0000000000"
-  org-id: "0000000000"
-  department-code: "goc"
+  billing-id: "00000-00000-00000"
+  org-id: "000000000000"
+  department-code: "org"
   ######
   #
   # Org Policies
@@ -40,10 +40,9 @@ data:
     - "@email.com"
   allowed-domain-members: |
     - "loremipsum"
-  # Can IP Forward
-  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
-  can-ip-forward: | 
-   - "projects/PROJECT_ID" 
+  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME.
+  can-ip-forward: |
+    - "projects/PROJECT_ID"
   ######
   # Guardrails Values
   ######
@@ -63,15 +62,16 @@ data:
   # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
   #
   ######
-  asset-viewer-group: email@domain.com
-  audit-data-group: email@domain.com
-  audit-data-viewer-group: email@domain.com
-  billing-data-group: email@domain.com
-  billing-data-viewer-group: email@domain.com
-  billing-console-viewer-group: email@domain.com
-  #######
+  asset-viewer-group: group@email.com
+  audit-data-group: group@email.com
+  audit-data-viewer-group: group@email.com
+  billing-data-group: group@email.com
+  billing-data-viewer-group: group@email.com
+  billing-console-viewer-group: group@email.com
   # Guardrails Project Values
-  guardrails-project-id: guardrails-00000 # Must be globally unique
+  guardrails-folder-name: guardrails
+  guardrails-project-id: guardrails-0000000 # Must be globally unique
+  guardrails-namespace: guardrails  
   ######
   # GKE Sandbox Network Values
   ######
@@ -86,14 +86,22 @@ data:
   private-google-access: true
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
+  gke-pod-range-name: clusterrange
+  gke-services-range-name: servicesrange
   ######
   #
   # GKE Sandbox Cluster Values
   # Creates a Private GKE Cluster with 1 Node Pool
   #
   ######
-  sandbox-project-id: sandbox-00000 # Must be globally unique
-  zone: northamerica-northeast1-a
+  management-project-id: config-controller-project-id
+  management-project-number: "00000000000"
+  management-namespace: config-control
+  host-cluster: main
+  host-location: us-east1
+  project-id: sandbox-000000 # Must be globally unique
+  project-namespace: sandbox
+  location: northamerica-northeast1
   cluster-description: dev-cluster
   cluster-name: sandbox
   #####
@@ -108,20 +116,21 @@ data:
     - regional
     - northamerica
     - sandbox
-  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
-  branch: prod-env
-  gke-admin: email@domain.com
-  gke-viewer: email@domain.com
+  gke-admin: group@email.com
+  gke-viewer: group@email.com
   ####
   #
   # Machine Type to be used for GKE Node Pool
   # https://cloud.google.com/compute/docs/machine-types
   #
-  machineType: e2-standard-8
-  region: northamerica-northeast1
+  machineType: e2-standard-4
+  region: us-central1
   ######
   #
   # Anthos Values
   #
   ######
   acm-version: 1.9.1 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
+  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
+  branch: prod-env
+  path: acm-dir

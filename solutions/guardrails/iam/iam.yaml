@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 ######
 #
 #
@@ -22,7 +23,7 @@
 ### Enable Audit Logs 
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
-metadata: # kpt-merge: guardrails/org-audit-logs
+metadata:
   name: org-audit-logs
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
@@ -33,88 +34,88 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-0000000 # kpt-set: ${guardrails-project-id}
+    name: dpt-guardrails # kpt-set: ${guardrails-project-id}
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-audit-data-viewer
+metadata:
   name: bq-audit-data-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:group@email.com # kpt-set: group:${audit-data-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # BigQuery Audit Log User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-audit-data-user
+metadata:
   name: bq-audit-data-user
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:group@email.com # kpt-set: group:${audit-data-group}
+  member: group:email@domain.com # kpt-set: group:${audit-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-billing-data-user
+metadata:
   name: bq-billing-data-user
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:group@email.com # kpt-set: group:${billing-data-group}
+  member: group:email@domain.com # kpt-set: group:${billing-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-billing-data-viewer
+metadata:
   name: bq-billing-data-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:group@email.com # kpt-set: group:${billing-data-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Console Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/billing-console-viewer
+metadata:
   name: billing-console-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:group@email.com # kpt-set: group:${billing-console-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: "roles/billing.viewer"
 ---
 # Asset Inventory Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/asset-inventory-viewer
+metadata:
   name: asset-inventory-viewer
   namespace: guardrails # kpt-set: ${guardrails-namespace}
 spec:
-  member: group:group@email.com # kpt-set: group:${asset-viewer-group}
+  member: group:email@domain.com # kpt-set: group:${asset-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "000000000000" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
   role: "roles/cloudasset.viewer"

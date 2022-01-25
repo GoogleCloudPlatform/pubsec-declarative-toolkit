@@ -21,27 +21,62 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: require-shielded-vm-false
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin # kpt-set: /namespace/${management-namespace}/IAMPolicyMember/org-policyadmin
+  
 spec:
   constraint: "constraints/compute.requireShieldedVm"
   booleanPolicy:
     enforced: false
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${project-id}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-ip-forwarding
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin # kpt-set: /namespace/${management-namespace}/IAMPolicyMember/org-policyadmin
 spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
     allow:
-      all: true
       values:
-        - "projects/project-id" # kpt-set: projects/${sandbox-project-id}
+        - "under:projects/sandbox-000000" # kpt-set: under:projects/${project-id}
   projectRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: sandbox-0000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${project-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: require-os-login
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin # kpt-set: /namespace/${management-namespace}/IAMPolicyMember/org-policyadmin
+spec:
+  constraint: "constraints/compute.requireOsLogin"
+  booleanPolicy:
+    enforced: false
+  projectRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: sandbox-000000 # kpt-set: ${project-id}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: restrict-vpc-peering
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/org-policyadmin # kpt-set: /namespace/${management-namespace}/IAMPolicyMember/org-policyadmin
+spec:
+  constraint: "constraints/compute.restrictVpcPeering"
+  listPolicy:
+    allow:
+      all: true
+  projectRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: sandbox-000000 # kpt-set: ${project-id}    

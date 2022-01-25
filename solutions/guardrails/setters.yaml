@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 apiVersion: v1
 kind: ConfigMap
 metadata: # kpt-merge: /setters
@@ -42,7 +43,7 @@ data:
   # Can IP Forward
   # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
   can-ip-forward: |
-    - "projects/PROJECT_ID"
+    - "projects/PROJECT_ID" 
   ######
   # Guardrails Values
   ######
