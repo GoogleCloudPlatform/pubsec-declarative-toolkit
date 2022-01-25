@@ -7,7 +7,7 @@ upstream:
   git:
     repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
     directory: /services/private-gke
-    ref: folder-restructure
+    ref: main
   updateStrategy: resource-merge
 upstreamLock:
   type: git
