@@ -1,83 +1,26 @@
-<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
-# Project Namespace Package
+# kcc-namespaces solution
 
+## Description
+This solution is a simple fork of the KCC Project Namespaces blueprint found at
+https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint
 
-<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
-<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
-Kubernetes namespace configured for use with Config Connector to manage GCP
-resources in a specific project.
+This simple solution will great a dedicated namespace to manage your GCP resources in a certain project. The namespace and project-id will be match for simplicity. This solution assumes that you storing all high-level resources in the `config-control` namespsace.
 
-## Setters
-
-|         Name          |         Value         | Type | Count |
-|-----------------------|-----------------------|------|-------|
-| management-namespace  | config-control        | str  |     2 |
-| management-project-id | management-project-id | str  |     5 |
-| networking-namespace  | networking            | str  |     1 |
-| project-id            | project-id            | str  |    16 |
-| projects-namespace    | projects              | str  |     2 |
-
-## Sub-packages
-
-This package has no sub-packages.
-
-## Resources
-
-|           File            |             APIVersion             |          Kind          |                       Name                        |   Namespace    |
-|---------------------------|------------------------------------|------------------------|---------------------------------------------------|----------------|
-| kcc-namespace-viewer.yaml | rbac.authorization.k8s.io/v1       | RoleBinding            | cnrm-network-viewer-project-id                    | networking     |
-| kcc-namespace-viewer.yaml | rbac.authorization.k8s.io/v1       | RoleBinding            | cnrm-project-viewer-project-id                    | projects       |
-| kcc-project-owner.yaml    | iam.cnrm.cloud.google.com/v1beta1  | IAMPartialPolicy       | kcc-project-id-owners-permissions                 | projects       |
-| kcc.yaml                  | core.cnrm.cloud.google.com/v1beta1 | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | project-id     |
-| kcc.yaml                  | iam.cnrm.cloud.google.com/v1beta1  | IAMServiceAccount      | kcc-project-id                                    | config-control |
-| kcc.yaml                  | iam.cnrm.cloud.google.com/v1beta1  | IAMPartialPolicy       | project-id-sa-workload-identity-binding           | config-control |
-| namespace.yaml            | v1                                 | Namespace              | project-id                                        |                |
-
-## Resource References
-
-- [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
-- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
-- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
-- [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#namespace-v1-core)
-- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#rolebinding-v1-rbac-authorization-k8s-io)
+Also, this solution grants the GCP Service Account that KCC uses to create resources in the tenant project the `Owner` role. This is a very broad role and it is recommend that you update the `kcc-project-owner.yaml` file to specify only the roles that are required to create the resources you wish. This will adopt the principal of least privilege.
 
 ## Usage
 
-1.  Clone the package:
-    ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/project/kcc-namespace@${VERSION}
-    ```
-    Replace `${VERSION}` with the desired repo branch or tag
-    (for example, `main`).
+### Fetch the package
+`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] guardrails`
+Details: https://kpt.dev/reference/cli/pkg/get/
 
-1.  Move into the local package:
-    ```shell
-    cd "./kcc-namespace/"
-    ```
+### View package content
+`kpt pkg tree guardrails`
+Details: https://kpt.dev/reference/cli/pkg/tree/
 
-1.  Edit the function config file(s):
-    - setters.yaml
-
-1.  Execute the function pipeline
-    ```shell
-    kpt fn render
-    ```
-
-1.  Initialize the resource inventory
-    ```shell
-    kpt live init --namespace ${NAMESPACE}"
-    ```
-    Replace `${NAMESPACE}` with the namespace in which to manage
-    the inventory ResourceGroup (for example, `config-control`).
-
-1.  Apply the package resources to your cluster
-    ```shell
-    kpt live apply
-    ```
-
-1.  Wait for the resources to be ready
-    ```shell
-    kpt live status --output table --poll-until current
-    ```
-
-<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
+### Apply the package
+```
+kpt live init kcc-namespaces
+kpt live apply kcc-namespaces --reconcile-timeout=2m --output=table
+```
+Details: https://kpt.dev/reference/cli/live/
