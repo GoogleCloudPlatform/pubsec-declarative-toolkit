@@ -21,3 +21,4 @@ data:
   management-namespace: config-control
   management-project-id: MGMT_PROJECT_ID_0000 # This is the project-id where config controller resides
   project-id: MY_AWESOME_PROJECT_0000 # This is the project-id where you want KCC to deploy resource to
+  admin-user: admins@example.com # This user or group will have access to the create resources in the project namespace within kcc
