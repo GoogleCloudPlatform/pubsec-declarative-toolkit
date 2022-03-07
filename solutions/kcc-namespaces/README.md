@@ -10,15 +10,23 @@ Also, this solution grants the GCP Service Account that KCC uses to create resou
 
 ## Usage
 
-### Fetch the package
+### **Fetch the package**
 `kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] guardrails`
+
 Details: https://kpt.dev/reference/cli/pkg/get/
 
-### View package content
+### **View package content**
 `kpt pkg tree guardrails`
+
 Details: https://kpt.dev/reference/cli/pkg/tree/
 
-### Apply the package
+### **Update and render package**
+Update the setters.yaml file to match your environment then run
+`kpt fn render kcc-namespaces`
+
+Details: https://kpt.dev/book/03-packages/04-rendering-a-package
+
+### **Apply the package**
 ```
 kpt live init kcc-namespaces
 kpt live apply kcc-namespaces --reconcile-timeout=2m --output=table
