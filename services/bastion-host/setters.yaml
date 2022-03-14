@@ -17,17 +17,8 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
-  ######
-  #
-  # General Settings - Normally modified setters. You can change anything in this file
-  # or leave it at the defaults.
-  #
-  # REMINDER: You must create a SECRET on the KCC cluster to store the SQL users password.
-  # kubectl create secret generic <NAME> --from-literal=password=<PASSWORD> --namespace=<KCC-NAMESPACE>
-  #
-  ######
   project-id: PROJECT_ID # Project ID that will host Climate Engine GKE Cluster
-  region: GCP_REGION
+  region: GCP_REGION # The region that the resources will be created in
   network-name: NETWORK_NAME # The name of the VPC that the Climate Engine GKE Cluster will create oncd ..
   subnet-name: SUBNET_NAME # The name of the Subnet that the GKE cluster will pull it's internal IPs from
   cloud-router: CLOUD_ROUTER_NAME # The name of the cloud router on the network
