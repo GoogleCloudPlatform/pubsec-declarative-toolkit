@@ -27,6 +27,7 @@ Details: https://kpt.dev/reference/cli/pkg/tree/
 This services uses 2 files for templating:
 - Update the setters.yaml file to meet your environment specs
 - Update the fn-namespaces.yaml, namespace: field to match the KCC namespace that the resources should be created in. If you are using the default config-control KCC namespace then you can ignore this file.
+
 `kpt fn render bastion-host`
 
 Details: https://kpt.dev/book/03-packages/04-rendering-a-package
