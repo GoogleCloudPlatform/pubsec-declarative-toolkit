@@ -31,7 +31,7 @@ metadata: # kpt-merge: guardrails/restrict-resource-locations
     guardrail: "true"
     guardrails-enforced: guardrail-05
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/gcp.resourceLocations"
@@ -61,7 +61,7 @@ metadata: # kpt-merge: guardrails/disable-vpc-external-ipv6
     guardrail: "true"
     guardrail-enforced: guardrail-09
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.disableVpcExternalIpv6"
@@ -87,7 +87,7 @@ metadata: # kpt-merge: guardrails/require-shielded-vm
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.requireShieldedVm"
@@ -113,7 +113,7 @@ metadata: # kpt-merge: guardrails/require-trusted-images
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.trustedImageProjects"
@@ -144,7 +144,7 @@ metadata: # kpt-merge: guardrails/restrict-vm-external-access
     guardrail-enforced: guardrail-09
     guardrail: "true"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
@@ -169,7 +169,7 @@ metadata: # kpt-merge: guardrails/disable-serviceaccount-key-creation
     guardrail: "true"
     guardrail-enforced: guardrail-02
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/iam.disableServiceAccountKeyCreation"
@@ -198,7 +198,7 @@ metadata: # kpt-merge: guardrails/restrict-vpc-peering
     guardrail: "true"
     guardrail-enforced: guardrail-09
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.restrictVpcPeering"
@@ -229,7 +229,7 @@ metadata: # kpt-merge: guardrails/uniform-bucket-level-access
     guardrail: "true"
     guardrail-enforced: guardrail-02
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/storage.uniformBucketLevelAccess"
@@ -258,7 +258,7 @@ metadata: # kpt-merge: guardrails/restrict-os-login
     guardrail: "true"
     guardrail-enforced: guardrail-06
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.requireOsLogin"
@@ -289,7 +289,7 @@ metadata: # kpt-merge: guardrails/restrict-loadbalancer-creation-types
     guardrail: "true"
     guardrail-enforced: guardrail-06
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
@@ -323,7 +323,7 @@ metadata: # kpt-merge: guardrails/allowed-contact-domains
     guardrail: "true"
     guardrail-enforced: guardrail-02
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
@@ -331,7 +331,7 @@ spec:
     allow:
       all: true
       values: # kpt-set: ${allowed-domain-contacts}
-        - "@example.com"
+        - "@email.com"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
@@ -357,7 +357,7 @@ metadata: # kpt-merge: guardrails/allowed-policy-member-domain
     guardrail: "true"
     guardrail-enforced: guardrail-06
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/iam.allowedPolicyMemberDomains"
@@ -388,7 +388,7 @@ metadata: # kpt-merge: guardrails/disable-serial-port-access
     guardrail: "true"
     guardrail-enforced: guardrails-02
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.disableSerialPortAccess"
@@ -416,7 +416,7 @@ metadata: # kpt-merge: guardrails/vm-can-ip-forward
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.vmCanIpForward"
@@ -424,7 +424,7 @@ spec:
     allow:
       all: true
       values: # kpt-set: ${can-ip-forward}
-        - "projects/PROJECT_ID"
+        - projects/PROJECT_ID
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id} 
@@ -446,7 +446,7 @@ metadata: # kpt-merge: guardrails/disable-guest-attribute-access
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.disableGuestAttributesAccess"
@@ -473,7 +473,7 @@ metadata: # kpt-merge: guardrails/disable-nested-virtualization
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.disableNestedVirtualization"
@@ -500,7 +500,7 @@ metadata: # kpt-merge: guardrails/restrict-vpc-lien-removal
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/compute.restrictXpnProjectLienRemoval"
@@ -526,7 +526,7 @@ metadata: # kpt-merge: guardrails/restrict-sql-public-ip
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/sql.restrictPublicIp"
@@ -557,7 +557,7 @@ metadata: # kpt-merge: guardrails/storage-public-access-prevention
   labels:
     guardrail: "false"
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/guardrails-00000-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
+    config.kubernetes.io/depends-on: /namespace/config-control/IAMPolicyMember/PROJECT_ID-sa-policy-admin # kpt-set: /namespace/config-control/IAMPolicyMember/${guardrails-project-id}-sa-policy-admin
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   constraint: "constraints/storage.publicAccessPrevention"

@@ -16,4 +16,4 @@ apiVersion: v1
 metadata: # kpt-merge: /guardrails
   name: guardrails
   annotations:
-    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
+    cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${guardrails-project-id}

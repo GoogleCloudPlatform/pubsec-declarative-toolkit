@@ -15,7 +15,9 @@ Enable Billing
 ```
 gcloud beta billing projects link guardrails-controller --billing-account 0X0X0X-0X0X0X-0X0X0X
 ```
-Create the Network
+Create the Network.
+
+If the `compute.googleapis.com` api has not been enabled previously you will be prompted to enable it. Type `y` and press enter when prompted to do so.
 ```
 gcloud compute networks create default --subnet-mode=auto
 ```
@@ -29,13 +31,13 @@ gcloud services enable krmapihosting.googleapis.com \
 
 Create Config Controller
 ```
-gcloud anthos config controller create guardrails \
+gcloud anthos config controller create guardrails-controller \
     --location=us-east1
 ```
 
 Get access to the Controller
 ```
-gcloud anthos config controller get-credentials guardrails \
+gcloud anthos config controller get-credentials guardrails-controller \
     --location us-east1
 ```
 
@@ -60,6 +62,9 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
 gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --member "serviceAccount:${SA_EMAIL}" \
     --role "roles/orgpolicy.policyAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/serviceusage.serviceUsageConsumer"
 ```
 
 Permissions Needed For Config Controller SA

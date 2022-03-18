@@ -37,13 +37,13 @@ data:
   allowed-loadbalacers: |
     - INTERNAL
   allowed-domain-contacts: |
-    - "@example.com"
+    - "@email.com"
   allowed-domain-members: |
     - "asdasda"
   # Can IP Forward
   # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
   can-ip-forward: |
-    - "projects/PROJECT_ID" 
+    - projects/PROJECT_ID
   ######
   # Guardrails Values
   ######
@@ -63,13 +63,19 @@ data:
   # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
   #
   ######
-  asset-viewer-group: email@domain.com
-  audit-data-group: email@domain.com
-  audit-data-viewer-group: email@domain.com
-  billing-data-group: email@domain.com
-  billing-data-viewer-group: email@domain.com
-  billing-console-viewer-group: email@domain.com
+  asset-viewer-group: email@email.com
+  audit-data-group: email@email.com
+  audit-data-viewer-group: email@email.com
+  billing-data-group: email@email.com
+  billing-data-viewer-group: email@email.com
+  billing-console-viewer-group: email@email.com
   ####
   # Guardrails Project Values
-  guardrails-project-id: guardrails-00000 # Must be globally unique
+  guardrails-project-id: PROJECT_ID # Must be globally unique
   guardrails-namespace: guardrails
+  
+
+  #### Management Project
+  management-project-id: config-controller-project
+  management-namespace: config-control
+  management-project-number: 0000000000
