@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 ######
 #
 #
@@ -23,9 +22,11 @@
 ### Enable Audit Logs 
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
-metadata:
+metadata: # kpt-merge: guardrails/org-audit-logs
   name: org-audit-logs
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   service: allServices
   auditLogConfigs:
@@ -33,15 +34,17 @@ spec:
     - logType: DATA_READ
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: dpt-guardrails # kpt-set: ${guardrails-project-id}
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: guardrails/bq-audit-data-viewer
   name: bq-audit-data-viewer
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: group:email@domain.com # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
@@ -53,9 +56,11 @@ spec:
 # BigQuery Audit Log User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: guardrails/bq-audit-data-user
   name: bq-audit-data-user
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: group:email@domain.com # kpt-set: group:${audit-data-group}
   resourceRef:
@@ -67,9 +72,11 @@ spec:
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: guardrails/bq-billing-data-user
   name: bq-billing-data-user
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-data-group}
   resourceRef:
@@ -81,9 +88,11 @@ spec:
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: guardrails/bq-billing-data-viewer
   name: bq-billing-data-viewer
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
@@ -95,9 +104,11 @@ spec:
 # Billing Console Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: guardrails/billing-console-viewer
   name: billing-console-viewer
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: group:email@domain.com # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
@@ -109,9 +120,11 @@ spec:
 # Asset Inventory Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: guardrails/asset-inventory-viewer
   name: asset-inventory-viewer
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: group:email@domain.com # kpt-set: group:${asset-viewer-group}
   resourceRef:

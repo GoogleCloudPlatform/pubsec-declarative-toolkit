@@ -11,8 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 kind: Namespace
 apiVersion: v1
-metadata:
+metadata: # kpt-merge: /guardrails
   name: guardrails
+  annotations:
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}

@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 ######
 #
 #
@@ -23,34 +22,32 @@
 # Storage Bucket Org LogSink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata:
+metadata: # kpt-merge: guardrails/storage-logsink
   name: storage-logsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
       name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
-  filter: |
-    resource.type="organization" AND
-    logName: /logs/cloudaudit.googleapis.com%2Factivity OR
-    logName: /logs/cloudaudit.googleapis.com%2Fsystem_event OR
-    logName: /logs/cloudaudit.googleapis.com%2Fdata_access OR
-    logName: /logs/compute.googleapis.com%2Fvpc_flows OR
-    logName: /logs/compute.googleapis.com%2Ffirewall OR
-    logName: /logs/cloudaudit.googleapis.com%2Faccess_transparency
+  includeChildren: true
+  filter: logName:cloudaudit.googleapis.com
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
-metadata:
+metadata: # kpt-merge: guardrails/0000000000-logginglogsink-org
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    cnrm.cloud.google.com/project-id: guardrails-00000 # kpt-set: ${guardrails-project-id}
 spec:
   location: northamerica-northeast1
   storageClass: REGIONAL
@@ -59,14 +56,16 @@ spec:
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata:
+metadata: # kpt-merge: guardrails/pubsub-logsink
   name: pubsub-logsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   destination:
     pubSubTopicRef:
       name: logginglogsink-org
-  filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
+  includeChildren: true
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
 ---
@@ -74,22 +73,28 @@ spec:
 # PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
-metadata:
+metadata: # kpt-merge: guardrails/logginglogsink-org
   name: logginglogsink-org
   namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 ---
 #########
 # BigQuery Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata:
+metadata: # kpt-merge: guardrails/bigquery-logsink
   name: bigquery-logsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: /namespace/guardrails/BigQueryDataset/bigquerylogginglogsink # kpt-set: /namespace/${guardrails-namespace}/BigQueryDataset/bigquerylogginglogsink
 spec:
   destination:
     bigQueryDatasetRef:
-      name: logginglogsink
-  filter: resource.type="bigquery_project" AND logName:"cloudaudit.googleapis.com"
+      name: bigquerylogginglogsink
+  includeChildren: true
+  filter: logName:cloudaudit.googleapis.com
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
 ---
@@ -97,12 +102,13 @@ spec:
 # Big Query Instance
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
-metadata:
-  name: logginglogsink
+metadata: # kpt-merge: guardrails/logginglogsink
+  name: bigquerylogginglogsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   location: northamerica-northeast1
   projectRef:
-    external: guardrails # kpt-set: ${guardrails-project-id}
+    external: guardrails-00000 # kpt-set: ${guardrails-project-id}
