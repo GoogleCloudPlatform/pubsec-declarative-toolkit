@@ -1,35 +1,39 @@
 # 30 Day Guardrails
 
 ## Description
-sample description
+This packge contains the minimal set of infrastructure needed to help provision a 30 Day Guardrail Compliant Environment.
 
 ## Usage
 
+### Fetch the package
+`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails guardrails`
+Details: https://kpt.dev/reference/cli/pkg/get/
 
-Create Project
+### Create Project
 ```
 gcloud projects create guardrails-controller --name="Guardrails Controller" --labels=type=infrastructure-automation --set-as-default
 ```
 
-Enable Billing
+### Enable Billing
 ```
 gcloud beta billing projects link guardrails-controller --billing-account 0X0X0X-0X0X0X-0X0X0X
 ```
-Create the Network.
+
+### Create the Network.
 
 If the `compute.googleapis.com` api has not been enabled previously you will be prompted to enable it. Type `y` and press enter when prompted to do so.
 ```
 gcloud compute networks create default --subnet-mode=auto
 ```
 
-Enable APIs
+### Enable APIs
 ```
 gcloud services enable krmapihosting.googleapis.com \
     container.googleapis.com \
     cloudresourcemanager.googleapis.com
 ```
 
-Create Config Controller
+### Create Config Controller
 ```
 gcloud anthos config controller create guardrails-controller \
     --location=us-east1
@@ -66,6 +70,14 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --member "serviceAccount:${SA_EMAIL}" \
     --role "roles/serviceusage.serviceUsageConsumer"
 ```
+
+### Apply the package
+```
+kpt live init guardrails
+kpt live apply guardrails --output=table
+```
+
+## Permissions
 
 Permissions Needed For Config Controller SA
 - Project Creator
@@ -144,18 +156,8 @@ Permissions Needed For Config Controller SA
 | Source Repository Service | Guardrails | Project ||
 | Cloud Source Repository | Guardrails | Project ||
 
-
-### Fetch the package
-`kpt pkg get GoogleCloudPlatform/gcp-pbmm-sandbox/gatekeeper-policies/solutions/guardrails.git guardrails`
-Details: https://kpt.dev/reference/cli/pkg/get/
-
 ### View package content
 `kpt pkg tree guardrails`
 Details: https://kpt.dev/reference/cli/pkg/tree/
 
-### Apply the package
-```
-kpt live init guardrails
-kpt live apply guardrails --reconcile-timeout=2m --output=table
-```
 Details: https://kpt.dev/reference/cli/live/
