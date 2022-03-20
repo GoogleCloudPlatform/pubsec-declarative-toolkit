@@ -1,0 +1,120 @@
+# Create GCP ServiceAccount for use by KCC to manage resources in this project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata: # kpt-merge: config-control/PROJECT_ID
+  name: PROJECT_ID # kpt-set: ${guardrails-project-id}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  displayName: PROJECT_ID # kpt-set: ${guardrails-project-id}
+---
+# Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata: # kpt-merge: config-control/PROJECT_ID-sa-workload-identity-binding
+  name: PROJECT_ID-sa-workload-identity-binding # kpt-set: ${guardrails-project-id}-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  resourceRef:
+    name: PROJECT_ID # kpt-set: ${guardrails-project-id}
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:config-controller-project.svc.id.goog[cnrm-system/cnrm-controller-manager-guardrails] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${guardrails-namespace}]
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: org-policyadmin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/orgpolicy.policyAdmin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-3265895-sa-policy-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/orgpolicy.policyAdmin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-3265895-sa-logging-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/logging.admin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-3265895-sa-logging-config-writer
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/logging.admin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-security-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/iam.securityAdmin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: sandbox/
+  name: guardrails-bq-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
+  role: roles/iam.securityAdmin
