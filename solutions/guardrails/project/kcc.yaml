@@ -18,7 +18,7 @@ metadata:
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     config.kubernetes.io/depends-on: /namespace/config-control/namespaces/PROJECT_ID # kpt-set: /namespace/config-control/namespaces/${guardrails-project-id} 
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   googleServiceAccount: PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: ${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -30,7 +30,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   displayName: PROJECT_ID # kpt-set: ${guardrails-project-id}
 ---
@@ -42,7 +42,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   resourceRef:
     name: PROJECT_ID # kpt-set: ${guardrails-project-id}
@@ -59,7 +59,7 @@ metadata: # kpt-merge: sandbox/
   name: PROJECT_ID-sa-owner-identity-binding # kpt-set: ${guardrails-project-id}-sa-owner-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
@@ -74,7 +74,7 @@ metadata: # kpt-merge: sandbox/
   name: host-guardrails-sa-owner-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -89,7 +89,7 @@ metadata: # kpt-merge: sandbox/
   name: org-policyadmin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -104,7 +104,7 @@ metadata: # kpt-merge: sandbox/
   name: guardrails-3265895-sa-policy-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
@@ -119,7 +119,7 @@ metadata: # kpt-merge: sandbox/
   name: guardrails-3265895-sa-logging-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
@@ -134,7 +134,7 @@ metadata: # kpt-merge: sandbox/
   name: guardrails-3265895-sa-logging-admin-project
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
@@ -149,7 +149,7 @@ metadata: # kpt-merge: sandbox/
   name: guardrails-3265895-sa-logging-config-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   member: serviceAccount:PROJECT_ID@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:

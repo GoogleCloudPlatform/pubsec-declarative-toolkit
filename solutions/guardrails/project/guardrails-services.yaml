@@ -19,7 +19,7 @@ metadata: # kpt-merge: big-query-service
   config.kubernetes.io/depends-on: /namespace/config-control/Project/PROJECT_ID # kpt-set: /namespace/${management-namespace}/Project/${guardrails-project-id}
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "true"
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   projectRef:
     external: PROJECT_ID # kpt-set: ${guardrails-project-id}
@@ -33,7 +33,7 @@ metadata: # kpt-merge: cloudscheduler-service
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: /namespace/guardrails/Project/PROJECT_ID # kpt-set: /namespace/${guardrails-namespace}/Project/${guardrails-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   projectRef:
     external: PROJECT_ID # kpt-set: ${guardrails-project-id}
@@ -47,7 +47,7 @@ metadata: # kpt-merge: cloudscheduler-service
   annotations:
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: /namespace/guardrails/Project/PROJECT_ID # kpt-set: /namespace/${guardrails-namespace}/Project/${guardrails-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   projectRef:
     external: PROJECT_ID # kpt-set: ${guardrails-project-id}
