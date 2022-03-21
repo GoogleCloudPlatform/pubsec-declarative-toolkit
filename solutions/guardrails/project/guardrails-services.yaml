@@ -11,44 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
-metadata: # kpt-merge: big-query-service
-  name: big-query
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
-  config.kubernetes.io/depends-on: /namespace/config-control/Project/PROJECT_ID # kpt-set: /namespace/${management-namespace}/Project/${guardrails-project-id}
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: ProjectServiceSet
+metadata:
+  name: guardrails-project-services
   annotations:
-    cnrm.cloud.google.com/disable-dependent-services: "true"
-    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    cnrm.cloud.google.com/deletion-policy: false
+    config.kubernetes.io/local-config: "true"
 spec:
-  projectRef:
-    external: PROJECT_ID # kpt-set: ${guardrails-project-id}
-  resourceID: bigquery.googleapis.com
----
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
-metadata: # kpt-merge: cloudscheduler-service
-  name: cloudscheduler
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
-  annotations:
-    cnrm.cloud.google.com/disable-dependent-services: "false"
-    config.kubernetes.io/depends-on: /namespace/guardrails/Project/PROJECT_ID # kpt-set: /namespace/${guardrails-namespace}/Project/${guardrails-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
-spec:
-  projectRef:
-    external: PROJECT_ID # kpt-set: ${guardrails-project-id}
-  resourceID: cloudscheduler.googleapis.com
----
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
-metadata: # kpt-merge: cloudscheduler-service
-  name: cloudbuild
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
-  annotations:
-    cnrm.cloud.google.com/disable-dependent-services: "false"
-    config.kubernetes.io/depends-on: /namespace/guardrails/Project/PROJECT_ID # kpt-set: /namespace/${guardrails-namespace}/Project/${guardrails-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
-spec:
-  projectRef:
-    external: PROJECT_ID # kpt-set: ${guardrails-project-id}
-  resourceID: cloudbuild.googleapis.com
+  services: # list of services to generate
+    - bigquery.googleapis.com
+    - pubsub.googleapis.com
+  projectID: PROJECT_ID # kpt-set: ${guardrails-project-id}

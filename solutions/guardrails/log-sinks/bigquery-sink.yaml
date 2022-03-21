@@ -1,0 +1,33 @@
+#########
+# BigQuery Log Sink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata: # kpt-merge: guardrails/bigquery-logsink
+  name: bigquery-logsink
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: /namespace/guardrails/BigQueryDataset/bigquerylogginglogsink # kpt-set: /namespace/${guardrails-namespace}/BigQueryDataset/bigquerylogginglogsink
+spec:
+  destination:
+    bigQueryDatasetRef:
+      name: bigquerylogginglogsink
+  includeChildren: true
+  filter: logName:cloudaudit.googleapis.com
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+# Big Query Instance
+apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+kind: BigQueryDataset
+metadata: # kpt-merge: guardrails/logginglogsink
+  name: bigquerylogginglogsink
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  location: northamerica-northeast1
+  projectRef:
+    external: PROJECT_ID # kpt-set: ${guardrails-project-id}

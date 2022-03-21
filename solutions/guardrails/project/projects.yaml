@@ -27,5 +27,5 @@ spec:
   folderRef:
     name: goc-folder # kpt-set: ${department-code}-${guardrails}
     billingAccountRef:
-    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+      # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
       external: "0000000000" # kpt-set: ${billing-id}
