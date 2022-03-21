@@ -14,7 +14,7 @@
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: # kpt-merge: guardrails/pubsub-logsink
+metadata: 
   name: pubsub-logsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
@@ -31,7 +31,7 @@ spec:
 # PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
-metadata: # kpt-merge: guardrails/logginglogsink-org
+metadata: 
   name: logginglogsink-org
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:

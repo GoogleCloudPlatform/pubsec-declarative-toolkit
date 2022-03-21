@@ -25,7 +25,7 @@
 #
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-resource-locations
+metadata: 
   name: restrict-resource-locations
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -55,7 +55,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-vpc-external-ipv6
+metadata: 
   name: disable-vpc-external-ipv6
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -82,7 +82,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/require-shielded-vm
+metadata:
   name: require-shielded-vm
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -108,7 +108,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/require-trusted-images
+metadata:
   name: require-trusted-images
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -138,7 +138,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-vm-external-access
+metadata:
   name: restrict-vm-external-access
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -163,7 +163,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-serviceaccount-key-creation
+metadata:
   name: disable-serviceaccount-key-creation
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -192,7 +192,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-vpc-peering
+metadata:
   name: restrict-vpc-peering
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -223,7 +223,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/uniform-bucket-level-access
+metadata:
   name: uniform-bucket-level-access
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -252,7 +252,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-os-login
+metadata:
   name: restrict-os-login
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -283,7 +283,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-loadbalancer-creation-types
+metadata:
   name: restrict-loadbalancer-creation-types
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -317,7 +317,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/allowed-contact-domains
+metadata:
   name: allowed-contact-domains
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -351,7 +351,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/allowed-policy-member-domain
+metadata:
   name: allowed-policy-member-domain
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -382,7 +382,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-serial-port-access
+metadata:
   name: disable-serial-port-access
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -411,7 +411,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/vm-can-ip-forward
+metadata:
   name: vm-can-ip-forward
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -441,7 +441,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-guest-attribute-access
+metadata:
   name: disable-guest-attribute-access
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -468,7 +468,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/disable-nested-virtualization
+metadata:
   name: disable-nested-virtualization
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -495,7 +495,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-vpc-lien-removal
+metadata:
   name: restrict-vpc-lien-removal
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -521,7 +521,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/restrict-sql-public-ip
+metadata:
   name: restrict-sql-public-ip
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:
@@ -552,7 +552,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: guardrails/storage-public-access-prevention
+metadata:
   name: storage-public-access-prevention
   namespace: guardrails # kpt-set: ${ management-project-id}
   labels:

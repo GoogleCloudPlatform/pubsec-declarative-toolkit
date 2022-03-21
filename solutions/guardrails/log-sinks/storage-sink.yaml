@@ -14,7 +14,7 @@
 # Storage Bucket Org LogSink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: # kpt-merge: guardrails/storage-logsink
+metadata:
   name: storage-logsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
@@ -32,7 +32,7 @@ spec:
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
-metadata: # kpt-merge: guardrails/0000000000-logginglogsink-org
+metadata:
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: 0000000000-logginglogsink-org # kpt-set: ${org-id}-logginglogsink-org
   namespace: guardrails # kpt-set: ${guardrails-namespace}

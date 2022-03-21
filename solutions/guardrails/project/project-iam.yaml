@@ -13,7 +13,7 @@
 # limitations under the License.
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
-metadata: # kpt-merge: guardrails/configconnectorcontext.core.cnrm.cloud.google.com
+metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
@@ -24,7 +24,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-3265895-service-usage
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -39,7 +39,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-3265895-storage-admin-project
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -54,7 +54,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-3265895-sa-logging-admin-project
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -69,7 +69,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-bigquery-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -84,7 +84,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-pubsub-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -99,7 +99,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-serviceaccount-crate
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:

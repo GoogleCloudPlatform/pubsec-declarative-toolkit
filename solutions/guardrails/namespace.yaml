@@ -13,7 +13,7 @@
 # limitations under the License.
 kind: Namespace
 apiVersion: v1
-metadata: # kpt-merge: /guardrails
+metadata:
   name: guardrails
   annotations:
     cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${guardrails-project-id}

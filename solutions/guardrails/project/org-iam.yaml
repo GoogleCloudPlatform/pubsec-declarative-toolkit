@@ -14,7 +14,7 @@
 # Create GCP ServiceAccount for use by KCC to manage resources in this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
-metadata: # kpt-merge: config-control/PROJECT_ID
+metadata:
   name: PROJECT_ID # kpt-set: ${guardrails-project-id}
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -26,7 +26,7 @@ spec:
 # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: config-control/PROJECT_ID-sa-workload-identity-binding
+metadata:
   name: PROJECT_ID-sa-workload-identity-binding # kpt-set: ${guardrails-project-id}-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -44,7 +44,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: org-policyadmin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -59,7 +59,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-3265895-sa-policy-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -74,7 +74,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-3265895-sa-logging-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -89,7 +89,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-3265895-sa-logging-config-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -104,7 +104,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-security-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -119,7 +119,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/
+metadata:
   name: guardrails-bq-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:

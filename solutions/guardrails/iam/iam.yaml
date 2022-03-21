@@ -22,7 +22,7 @@
 ### Enable Audit Logs 
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
-metadata: # kpt-merge: guardrails/org-audit-logs
+metadata: 
   name: org-audit-logs
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -40,7 +40,7 @@ spec:
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-audit-data-viewer
+metadata: 
   name: bq-audit-data-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -56,7 +56,7 @@ spec:
 # BigQuery Audit Log User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-audit-data-user
+metadata: 
   name: bq-audit-data-user
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -72,7 +72,7 @@ spec:
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-billing-data-user
+metadata: 
   name: bq-billing-data-user
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -88,7 +88,7 @@ spec:
 # Billing Big Query User
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/bq-billing-data-viewer
+metadata: 
   name: bq-billing-data-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -104,7 +104,7 @@ spec:
 # Billing Console Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/billing-console-viewer
+metadata: 
   name: billing-console-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -120,7 +120,7 @@ spec:
 # Asset Inventory Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: guardrails/asset-inventory-viewer
+metadata: 
   name: asset-inventory-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
