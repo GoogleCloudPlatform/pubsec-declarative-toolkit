@@ -1,0 +1,30 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: guardrails
+upstream:
+  type: git
+  git:
+    repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
+    directory: /solutions/guardrails
+    ref: guardrails-solution-update
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
+    directory: /solutions/guardrails
+    ref: guardrails-solution-update
+    commit: ebd4d73f09d94b01f7d06808e8f3e4674b03382b
+info:
+  description: sample description
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/enable-gcp-services:v0.1.0
+  validators:
+    - image: gcr.io/kpt-fn/kubeval:v0.2
+      configMap:
+        ignore_missing_schemas: "true"
+        strict: "true"

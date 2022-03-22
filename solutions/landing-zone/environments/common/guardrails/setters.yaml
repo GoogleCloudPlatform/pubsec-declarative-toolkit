@@ -1,0 +1,79 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: setters
+data:
+  ######
+  # General Settings Values
+  #
+  # The following are Settings for the environment to bootstrap with
+  #
+  ######
+  billing-id: "0000000000"
+  org-id: "0000000000"
+  department-code: "goc"
+  ######
+  #
+  # Org Policies
+  #
+  ######
+  allowed-images: |
+    - "projects/debian-cloud"
+    - "projects/cos-cloud"
+  allowed-loadbalacers: |
+    - INTERNAL
+  allowed-domain-contacts: |
+    - "@email.com"
+  allowed-domain-members: |
+    - "asdasda"
+  # Can IP Forward
+  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+  can-ip-forward: |
+    - projects/PROJECT_ID
+  ######
+  # Guardrails Values
+  ######
+  #
+  # Required to be compliant with Guardrails 05 - Data Location
+  # This will prevent resources from being provisioned outside of the lists regions. 
+  # To be PBMM Compliant resources must be located in Canadian Regions
+  # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/05_Data-Location.md
+  #
+  allowed-regions: |
+    - northamerica-northeast1
+    - northamerica-northeast2
+  # Required to be compliant with Guardrails 04 - Enterprise Monitoring
+  # Create role-based account to enable enterprise monitoring and visibility
+  # Emails used must be Already in Cloud Identity
+  # Users and roles will be created for the accociated emails
+  # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
+  #
+  ######
+  asset-viewer-group: email@email.com
+  audit-data-group: email@email.com
+  audit-data-viewer-group: email@email.com
+  billing-data-group: email@email.com
+  billing-data-viewer-group: email@email.com
+  billing-console-viewer-group: email@email.com
+  ####
+  # Guardrails Project Values
+  guardrails-project-id: PROJECT_ID # Must be globally unique
+  guardrails-namespace: guardrails
+  #### Management Project
+  management-project-id: config-controller-project
+  management-namespace: config-control
+  management-project-number: 0000000000

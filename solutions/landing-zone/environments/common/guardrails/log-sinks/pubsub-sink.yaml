@@ -1,0 +1,38 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# PubSub Log Sink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata: # kpt-merge: guardrails/pubsub-logsink
+  name: pubsub-logsink
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  destination:
+    pubSubTopicRef:
+      name: logginglogsink-org
+  includeChildren: true
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+# PubSub Instance
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata: # kpt-merge: guardrails/logginglogsink-org
+  name: logginglogsink-org
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
