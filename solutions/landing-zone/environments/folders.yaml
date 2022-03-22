@@ -7,11 +7,16 @@ spec:
     kind: Organization
     external: test-organization
   config:
-    - Dev:
+    - Infrastructure:
+        - Networking:
+            - ProdNetworking
+            - NonProdNetworking
+        - SharedInfrastructure
+    - Workloads:
         - Team "One"
         - Team_2
-    - Prod:
-        - Team "One"
-        - Team_2
-    - QA:
-        - bar
+    - Audit and Security:
+        - Audit
+        - Security
+    - Automation
+    - Shared Services
