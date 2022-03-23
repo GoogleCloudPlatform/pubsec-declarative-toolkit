@@ -14,9 +14,9 @@
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: 
+metadata: # kpt-merge: guardrails/pubsub-logsink
   name: pubsub-logsink
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
@@ -25,14 +25,39 @@ spec:
       name: logginglogsink-org
   includeChildren: true
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: "org-id" # kpt-set: ${org-id}
 ---
 #########
 # PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
-metadata: 
+metadata: # kpt-merge: guardrails/logginglogsink-org
   name: logginglogsink-org
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    cnrm.cloud.google.com/project-id: guardrails-project-id # kpt-set: ${guardrails-project-id}
+---
+# PubSub Audit Log Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/bq-audit-data-viewer
+  name: pubsub-sink-writer
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/apply-time-mutation: |
+      - sourceRef:
+          apiVersion: logging.cnrm.cloud.google.com/v1beta1
+          kind: LoggingLogSink
+          name: pubsub-logsink
+        sourcePath: $.status.writerIdentity
+        targetPath: $.spec.member
+        token: ${logging-writerIdentity}
+spec:
+  member: ${logging-writerIdentity}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: guardrails-project-id # kpt-set: ${guardrails-project-id}
+  role: roles/pubsub.admin
