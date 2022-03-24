@@ -23,4 +23,5 @@ spec:
   services: # list of services to generate
     - bigquery.googleapis.com
     - pubsub.googleapis.com
+    - cloudasset.googleapis.com
   projectID: PROJECT_ID # kpt-set: ${guardrails-project-id}
