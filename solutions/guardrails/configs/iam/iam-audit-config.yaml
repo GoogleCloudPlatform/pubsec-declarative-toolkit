@@ -1,0 +1,18 @@
+#####
+### Enable Audit Logs 
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMAuditConfig
+metadata: 
+  name: org-audit-logs
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  service: allServices
+  auditLogConfigs:
+    - logType: DATA_WRITE
+    - logType: DATA_READ
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}
