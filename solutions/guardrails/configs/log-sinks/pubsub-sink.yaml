@@ -25,7 +25,7 @@ spec:
       name: logginglogsink-org
   includeChildren: true
   organizationRef:
-    external: "org-id" # kpt-set: ${org-id}
+    external: "0000000000" # kpt-set: ${org-id}
 ---
 #########
 # PubSub Instance
@@ -33,10 +33,10 @@ apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata: # kpt-merge: guardrails/logginglogsink-org
   name: logginglogsink-org
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
-    cnrm.cloud.google.com/project-id: guardrails-project-id # kpt-set: ${guardrails-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -59,5 +59,5 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-project-id # kpt-set: ${guardrails-project-id}
+    external: project-id # kpt-set: ${guardrails-project-id}
   role: roles/pubsub.admin

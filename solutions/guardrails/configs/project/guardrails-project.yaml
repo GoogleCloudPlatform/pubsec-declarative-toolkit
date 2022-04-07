@@ -14,7 +14,7 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: PROJECT_ID # kpt-set: ${guardrails-project-id}
+  name: project-id # kpt-set: ${guardrails-project-id}
   labels:
     classification: "guardrails"
   namespace: config-control # kpt-set: ${management-namespace}
@@ -23,7 +23,7 @@ metadata:
     cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   name: guardrails
-  resourceID: PROJECT_ID # kpt-set: ${guardrails-project-id}
+  resourceID: project-id # kpt-set: ${guardrails-project-id}
   folderRef:
     name: goc-folder # kpt-set: ${department-code}-${guardrails}
     billingAccountRef:

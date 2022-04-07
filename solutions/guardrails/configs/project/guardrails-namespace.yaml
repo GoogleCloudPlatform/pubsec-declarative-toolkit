@@ -16,4 +16,4 @@ apiVersion: v1
 metadata:
   name: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${guardrails-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}

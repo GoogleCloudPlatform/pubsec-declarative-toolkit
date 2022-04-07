@@ -15,13 +15,14 @@ apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: ProjectServiceSet
 metadata:
   name: guardrails-project-services
+  namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    cnrm.cloud.google.com/deletion-policy: false
+    cnrm.cloud.google.com/deletion-policy: "false"
     config.kubernetes.io/local-config: "true"
-    config.kubernetes.io/depends-on: /namespace/config-control/Project/guardrailsproject # kpt-set: /namespace/config-control/Project/${guardrails-project-id} 
+    config.kubernetes.io/depends-on: /namespace/config-control/Project/project-id # kpt-set: /namespace/config-control/Project/${guardrails-project-id} 
 spec:
   services: # list of services to generate
     - bigquery.googleapis.com
     - pubsub.googleapis.com
     - cloudasset.googleapis.com
-  projectID: PROJECT_ID # kpt-set: ${guardrails-project-id}
+  projectID: project-id # kpt-set: ${guardrails-project-id}

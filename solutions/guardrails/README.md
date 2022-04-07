@@ -5,47 +5,48 @@ This packge contains the minimal set of infrastructure needed to help provision 
 
 ## Usage
 
-### Fetch the package
+1. Fetch the package
 `kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails guardrails`
+
 Details: https://kpt.dev/reference/cli/pkg/get/
 
-### Create Project
+2. Create Project
 ```
-gcloud projects create guardrails-controller --name="Guardrails Controller" --labels=type=infrastructure-automation --set-as-default
-```
-
-### Enable Billing
-```
-gcloud beta billing projects link guardrails-controller --billing-account 0X0X0X-0X0X0X-0X0X0X
+gcloud projects create unique-project-name --name="Guardrails Controller" --labels=type=infrastructure-automation --set-as-default
 ```
 
-### Create the Network.
+3. Enable Billing
+```
+gcloud beta billing projects link unique-project-name --billing-account 0X0X0X-0X0X0X-0X0X0X
+```
+
+4. Create the Network.
 
 If the `compute.googleapis.com` api has not been enabled previously you will be prompted to enable it. Type `y` and press enter when prompted to do so.
 ```
 gcloud compute networks create default --subnet-mode=auto
 ```
 
-### Enable APIs
+5. Enable APIs
 ```
 gcloud services enable krmapihosting.googleapis.com \
     container.googleapis.com \
     cloudresourcemanager.googleapis.com
 ```
 
-### Create Config Controller
+6. Create Config Controller
 ```
 gcloud anthos config controller create guardrails-controller \
     --location=us-east1
 ```
 
-Get access to the Controller
+7. Get access to the Controller
 ```
 gcloud anthos config controller get-credentials guardrails-controller \
     --location us-east1
 ```
 
-Give Controller IAM Permissions to be able to create resources. You can get your org id by running the following commands `gcloud organizations list`
+8. Give Controller IAM Permissions to be able to create resources. You can get your org id by running the following commands `gcloud organizations list`
 ```
 export PROJECT_ID=$(gcloud config get-value project)
 export ORG_ID=0X0X0X-0X0X0X-0X0X0X
@@ -71,9 +72,16 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --role "roles/serviceusage.serviceUsageConsumer"
 ```
 
-### Apply the package
+9. Apply the package
 ```
-kpt live init guardrails
+kpt live init guardrails --namespace config-control
+kpt fn render
+```
+
+10. Edit the `setters.yaml` file with the values you need.
+
+11. Apply the Changes
+```
 kpt live apply guardrails --output=table
 ```
 
