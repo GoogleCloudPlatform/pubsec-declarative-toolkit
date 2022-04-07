@@ -13,6 +13,12 @@
 # limitations under the License.
 
 solutions:
-- guardrails
-- kcc-namespaces
-- sandbox-gke
+  guardrails:
+    description: |
+      Implementation of the GC Cloud Guardrails Checks. More Info: https://github.com/canada-ca/cloud-guardrails-gcp
+  kcc-namespaces:
+    description: |
+      Simplified declarative multi-tenancy with project namespaces taken from: https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint
+  sandbox-gke:
+    description: |
+      A private GKE cluster with so many bells and whistles!
