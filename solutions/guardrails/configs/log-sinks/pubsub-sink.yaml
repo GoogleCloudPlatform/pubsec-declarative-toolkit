@@ -17,6 +17,8 @@ kind: LoggingLogSink
 metadata: # kpt-merge: guardrails/pubsub-logsink
   name: pubsub-logsink
   namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: pubsub.cnrm.cloud.google.com/namespaces/guardrails/PubSubTopic/logginglogsink-org
 spec:
   destination:
     pubSubTopicRef:
@@ -45,9 +47,11 @@ metadata: # kpt-merge: config-control/bq-audit-data-viewer
   annotations:
     config.kubernetes.io/apply-time-mutation: |
       - sourceRef:
-          apiVersion: logging.cnrm.cloud.google.com/v1beta1
+          apiVersion: v1beta1
+          group: logging.cnrm.cloud.google.com
           kind: LoggingLogSink
           name: pubsub-logsink
+          namespace: config-control
         sourcePath: $.status.writerIdentity
         targetPath: $.spec.member
         token: ${logging-writerIdentity}
