@@ -18,12 +18,11 @@ kind: LoggingLogSink
 metadata: # kpt-merge: guardrails/bigquery-logsink
   name: bigquery-logsink
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   destination:
     bigQueryDatasetRef:
       name: bigquerylogginglogsink
+      namespace: guardrails
   includeChildren: true
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
@@ -38,7 +37,6 @@ metadata: # kpt-merge: guardrails/bigquerylogginglogsink
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   location: northamerica-northeast1
   projectRef:
@@ -51,7 +49,6 @@ metadata: # kpt-merge: config-control/bq-audit-data-viewer
   name: bq-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
     config.kubernetes.io/apply-time-mutation: |
       - sourceRef:
           apiVersion: logging.cnrm.cloud.google.com/v1beta1

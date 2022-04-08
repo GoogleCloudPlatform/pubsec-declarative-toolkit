@@ -17,13 +17,12 @@ kind: LoggingLogSink
 metadata: # kpt-merge: guardrails/storage-logsink
   name: storage-logsink
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
       name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
+      namespace: guardrails
   includeChildren: true
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
@@ -38,7 +37,6 @@ metadata: # kpt-merge: guardrails/0000000000-logginglogsink-org
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
 spec:
   location: northamerica-northeast1
@@ -52,7 +50,6 @@ metadata: # kpt-merge: config-control/bq-audit-data-viewer
   name: storage-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
     config.kubernetes.io/apply-time-mutation: |
       - sourceRef:
           apiVersion: logging.cnrm.cloud.google.com/v1beta1

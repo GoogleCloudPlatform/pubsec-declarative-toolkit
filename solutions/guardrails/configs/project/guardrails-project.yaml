@@ -20,7 +20,6 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   name: guardrails
   resourceID: project-id # kpt-set: ${guardrails-project-id}

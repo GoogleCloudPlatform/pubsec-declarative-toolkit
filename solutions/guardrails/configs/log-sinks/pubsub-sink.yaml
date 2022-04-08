@@ -17,12 +17,11 @@ kind: LoggingLogSink
 metadata: # kpt-merge: guardrails/pubsub-logsink
   name: pubsub-logsink
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   destination:
     pubSubTopicRef:
       name: logginglogsink-org
+      namespace: guardrails
   includeChildren: true
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
@@ -35,7 +34,6 @@ metadata: # kpt-merge: guardrails/logginglogsink-org
   name: logginglogsink-org
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
 ---
 # PubSub Audit Log Viewer
@@ -45,7 +43,6 @@ metadata: # kpt-merge: config-control/bq-audit-data-viewer
   name: pubsub-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
     config.kubernetes.io/apply-time-mutation: |
       - sourceRef:
           apiVersion: logging.cnrm.cloud.google.com/v1beta1

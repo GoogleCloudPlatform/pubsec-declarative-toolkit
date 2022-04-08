@@ -17,7 +17,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    config.kubernetes.io/depends-on: /namespace/config-control/namespaces/project-id # kpt-set: /namespace/config-control/namespaces/${guardrails-project-id} 
+    config.kubernetes.io/depends-on: /namespaces/config-control/namespaces/project-id # kpt-set: /namespaces/config-control/namespaces/${guardrails-project-id} 
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   googleServiceAccount: project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: ${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
@@ -25,7 +25,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-3265895-service-usage
+  name: guardrails-3265895-service-usage # kpt-set: ${guardrails-project-id}-service-usage
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
@@ -40,7 +40,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-3265895-storage-admin-project
+  name: guardrails-3265895-storage-admin-project # kpt-set: ${guardrails-project-id}-storage-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
@@ -55,7 +55,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-3265895-sa-logging-admin-project
+  name: guardrails-3265895-sa-logging-admin-project # kpt-set: ${guardrails-project-id}-sa-logging-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
@@ -70,7 +70,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-bigquery-admin
+  name: guardrails-bigquery-admin # kpt-set: ${guardrails-project-id}-bq-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
@@ -85,7 +85,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-pubsub-admin
+  name: guardrails-pubsub-admin # kpt-set: ${guardrails-project-id}-pubsub-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
@@ -100,7 +100,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-serviceaccount-crate
+  name: guardrails-serviceaccount-crate # kpt-set: ${guardrails-project-id}-serviceaccount-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'

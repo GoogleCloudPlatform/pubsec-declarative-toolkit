@@ -19,7 +19,6 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   displayName: project-id # kpt-set: ${guardrails-project-id}
 ---
@@ -31,7 +30,6 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   resourceRef:
     name: project-id # kpt-set: ${guardrails-project-id}
@@ -47,23 +45,6 @@ kind: IAMPolicyMember
 metadata:
   name: config-controller-project-org-policyadmin # kpt-set: ${management-project-id}-org-policyadmin
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
-spec:
-  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
-  role: roles/orgpolicy.policyAdmin
----
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: guardrails-3265895-sa-policy-admin
-  namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -77,8 +58,6 @@ kind: IAMPolicyMember
 metadata:
   name: config-controller-project-sa-logging-admin # kpt-set: ${management-project-id}-sa-logging-admin
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:

@@ -5,7 +5,7 @@ metadata:
   name: bq-audit-data-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-3265895-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   member: group:email@email.com # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
@@ -21,7 +21,7 @@ metadata:
   name: bq-audit-data-user
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-3265895-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   member: group:email@email.com # kpt-set: group:${audit-data-group}
   resourceRef:
@@ -37,7 +37,7 @@ metadata:
   name: bq-billing-data-user
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-3265895-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   member: group:email@email.com # kpt-set: group:${billing-data-group}
   resourceRef:
@@ -53,7 +53,7 @@ metadata:
   name: bq-billing-data-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-3265895-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   member: group:email@email.com # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
@@ -69,7 +69,7 @@ metadata:
   name: billing-console-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-3265895-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   member: group:email@email.com # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
@@ -85,7 +85,7 @@ metadata:
   name: asset-inventory-viewer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-3265895-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   member: group:email@email.com # kpt-set: group:${asset-viewer-group}
   resourceRef:

@@ -18,8 +18,6 @@ metadata:
     classification: "guardrails"
   name: goc-folder # kpt-set: ${department-code}-${guardrails}
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
 spec:
   displayName: Guardrails Configs
   organizationRef:
