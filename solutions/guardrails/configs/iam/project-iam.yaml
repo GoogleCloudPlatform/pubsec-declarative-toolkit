@@ -14,12 +14,12 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-3265895-service-usage # kpt-set: ${guardrails-project-id}-service-usage
+  name: guardrails-project-id-service-usage # kpt-set: ${guardrails-project-id}-service-usage
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -29,12 +29,12 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-3265895-storage-admin-project # kpt-set: ${guardrails-project-id}-storage-admin
+  name: guardrails-project-id-storage-admin-project # kpt-set: ${guardrails-project-id}-storage-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -44,12 +44,12 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: guardrails-3265895-sa-logging-admin-project # kpt-set: ${guardrails-project-id}-sa-logging-admin
+  name: guardrails-project-id-sa-logging-admin-project # kpt-set: ${guardrails-project-id}-sa-logging-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -64,7 +64,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -79,7 +79,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project

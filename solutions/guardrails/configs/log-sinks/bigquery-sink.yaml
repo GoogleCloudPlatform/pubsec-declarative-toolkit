@@ -24,7 +24,7 @@ spec:
   destination:
     bigQueryDatasetRef:
       name: bigquerylogginglogsink
-      namespace: guardrails
+      namespace: guardrails # kpt-set: ${management-namespace}
   includeChildren: true
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
@@ -36,7 +36,7 @@ apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata: # kpt-merge: guardrails/bigquerylogginglogsink
   name: bigquerylogginglogsink
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
 spec:

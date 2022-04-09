@@ -18,13 +18,13 @@ metadata:
   name: storage-logsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/1020902403876-logginglogsink-csc
+    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/1020902403876-logginglogsink-csc # kpt-set: storage.cnrm.cloud.google.com/namespaces/${management-namespace}/StorageBucket/${org-id}-logginglogsink-${department-code}
 spec:
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
       name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
-      namespace: guardrails
+      namespace: guardrails # kpt-set: ${management-namespace}
   includeChildren: true
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
@@ -36,7 +36,7 @@ kind: StorageBucket
 metadata:
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}

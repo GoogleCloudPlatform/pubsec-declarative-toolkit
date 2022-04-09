@@ -23,7 +23,7 @@ spec:
   destination:
     pubSubTopicRef:
       name: logginglogsink-org
-      namespace: guardrails
+      namespace: guardrails # kpt-set: ${management-namespace}
   includeChildren: true
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
@@ -34,7 +34,7 @@ apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata: # kpt-merge: guardrails/logginglogsink-org
   name: logginglogsink-org
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
 ---
