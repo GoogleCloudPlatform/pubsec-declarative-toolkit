@@ -18,7 +18,7 @@ kind: BigQueryDataset
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/bigquery # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Project/bigquery
   name: gkemetering
   namespace: sandbox # kpt-set: ${sandbox-namespace}

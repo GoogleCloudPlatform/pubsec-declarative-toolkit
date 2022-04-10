@@ -15,9 +15,9 @@ apiVersion: binaryauthorization.cnrm.cloud.google.com/v1beta1
 kind: BinaryAuthorizationPolicy
 metadata: # kpt-merge: config-control/binauth-allowed-repos
   name: binauth-allowed-repos
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/binaryauthorization # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Project/binaryauthorization
 spec:
   admissionWhitelistPatterns:
@@ -33,4 +33,4 @@ spec:
     evaluationMode: "ALWAYS_ALLOW"
   globalPolicyEvaluationMode: ENABLE
   projectRef:
-    external: sandbox-000000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${project-id}
