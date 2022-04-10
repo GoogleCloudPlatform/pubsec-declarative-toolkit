@@ -37,7 +37,7 @@ gcloud services enable krmapihosting.googleapis.com \
 6. Create Config Controller
 ```
 gcloud anthos config controller create guardrails-controller \
-    --location=us-east1
+    --location=northamerica-northeast1
 ```
 
 7. Get access to the Controller
