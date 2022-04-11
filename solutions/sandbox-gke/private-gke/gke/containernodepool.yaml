@@ -21,7 +21,7 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
     cluster: sandbox # kpt-set: ${cluster-name}
   annotations:
     cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespace/sandbox/containercluster/sandbox
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespace/sandbox/containercluster/sandbox # kpt-set: container.cnrm.cloud.google.com/namespace/${project-namespace}/containercluster/${cluster-name}
 spec:
   autoscaling:
     maxNodeCount: 3

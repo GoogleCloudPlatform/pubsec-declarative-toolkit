@@ -20,7 +20,7 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: /namespace/config-control/Service/container # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Project/container
+    config.kubernetes.io/depends-on: /namespace/config-control/Service/container # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Service/${project-id}-services-container
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -73,4 +73,4 @@ spec:
   workloadIdentityConfig:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: sandbox-000000.svc.id.goog # kpt-set: ${sandbox-project-id}.svc.id.goog
+    identityNamespace: sandbox-000000.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
