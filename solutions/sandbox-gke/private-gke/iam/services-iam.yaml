@@ -100,3 +100,33 @@ spec:
     kind: Project
     external: sandbox-000000 # kpt-set: ${project-id}
   role: roles/iam.serviceAccountUser
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/sandbox-000000-sa-user
+  name: sandbox-000000-registry-admin # kpt-set: ${project-id}-registry-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:service-000000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: sandbox-000000 # kpt-set: ${project-id}
+  role: roles/artifactregistry.admin
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/sandbox-000000-sa-user
+  name: sandbox-000000-services-admin # kpt-set: ${project-id}-services-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:service-000000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: sandbox-000000 # kpt-set: ${project-id}
+  role: roles/serviceusage.serviceUsageAdmin

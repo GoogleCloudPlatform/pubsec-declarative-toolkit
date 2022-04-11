@@ -20,10 +20,10 @@ metadata:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
     cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/bigquery # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/${project-namespace}/Service/${project-id}-services-bigquery
-  name: gkemetering # kpt-set: ${project-id}-services-gkemetering
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  name: gkemetering # kpt-set: ${cluster-name}gkemetering
+  namespace: sandbox # kpt-set: ${project-namespace}
 spec:
   defaultTableExpirationMs: 3600000
-  description: "BigQuery Dataset Sample"
+  description: "BigQuery Dataset Sample" # kpt-set: ${cluster-name}-gkemetering
   friendlyName: gke-metering-dataset
   location: us-central1 # kpt-set: ${region}
