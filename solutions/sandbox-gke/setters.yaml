@@ -17,13 +17,9 @@ kind: ConfigMap
 metadata: # kpt-merge: /setters
   name: setters
 data:
-  ######
-  # General Settings Values
-  #
-  # The following are Settings for the environment to bootstrap with
-  #
-  ######
-  department-code: "org"
+
+  project-id: sandbox-000000 # Must be globally unique
+  project-namespace: config-control
   ######
   # GKE Sandbox Network Values
   ######
@@ -46,13 +42,6 @@ data:
   # Creates a Private GKE Cluster with 1 Node Pool
   #
   ######
-  management-project-id: config-controller-project-id
-  management-project-number: "00000000000"
-  management-namespace: config-control
-  host-cluster: main
-  host-location: us-east1
-  project-id: sandbox-000000 # Must be globally unique
-  project-namespace: sandbox
   location: northamerica-northeast1
   cluster-description: dev-cluster
   cluster-name: sandbox
@@ -77,12 +66,3 @@ data:
   #
   machineType: e2-standard-4
   region: us-central1
-  ######
-  #
-  # Anthos Values
-  #
-  ######
-  acm-version: 1.11.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
-  repo: https://github.com/cartyc/acm-test.git # Example repo replace with your own.
-  branch: prod-env
-  path: configs/
