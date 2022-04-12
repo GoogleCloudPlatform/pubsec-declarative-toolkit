@@ -103,7 +103,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/sandbox-000000-sa-user
+metadata:
   name: sandbox-000000-registry-admin # kpt-set: ${project-id}-registry-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -118,7 +118,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/sandbox-000000-sa-user
+metadata:
   name: sandbox-000000-services-admin # kpt-set: ${project-id}-services-admin
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
