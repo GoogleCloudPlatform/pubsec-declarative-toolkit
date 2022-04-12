@@ -18,7 +18,7 @@ metadata: # kpt-merge: config-control/binauth-allowed-repos
   namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/binaryauthorization # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Project/binaryauthorization
+    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/binaryauthorization # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/${project-id}/Project/binaryauthorization,iam.cnrm.cloud.google.com/namespace/${project-namespace}/IAMPolicyMember/${project-id}-binauth-admin
 spec:
   admissionWhitelistPatterns:
     - namePattern: "gcr.io/google_containers/*"
