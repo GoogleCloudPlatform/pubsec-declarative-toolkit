@@ -22,7 +22,7 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
 spec:
   ipCidrRange: 10.2.0.0/16 # kpt-set: ${subnet-cidr}
   networkRef:
-    name: sandbox-net # kpt-set: ${cluster-name}-net
+    name: sandbox-net # kpt-set: ${network-name}
   region: us-central1 # kpt-set: ${region}
   privateIpGoogleAccess: true # kpt-set: ${private-google-access}
   logConfig:
