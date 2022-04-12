@@ -12,13 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: Folder
+kind: Project
 metadata:
+  name: project-id # kpt-set: ${guardrails-project-id}
   labels:
     classification: "guardrails"
-  name: goc-folder # kpt-set: ${department-code}-${guardrails}
   namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
 spec:
-  displayName: Guardrails Configs
-  organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+  name: guardrails
+  resourceID: project-id # kpt-set: ${guardrails-project-id}
+  folderRef:
+    name: guardrails
+    billingAccountRef:
+      # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+      external: "0000000000" # kpt-set: ${billing-id}
