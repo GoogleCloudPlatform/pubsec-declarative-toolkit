@@ -1,0 +1,52 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: loggingandmonitoring
+  annotations:
+    description: Enable logging for the cloud environment and for cloud-based workloads.
+    reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/11_Logging-and-Monitoring.md
+spec:
+  crd:
+    spec:
+      names:
+        kind: LoggingAndMonitoring
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            storagesink:
+              description: "Name of Enterprise Monitoring Role"
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package loggingandmonitoring
+        identical(obj, review) {
+          obj.metadata.name == review
+        }
+
+        # Verify matching storagesink exists
+        # Fail if it does not
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "LoggingLogSink"
+          # Get list of "LoggingLogSink" we can compare against
+          other := data.inventory.namespace[_][otherapis]["LoggingLogSink"][name]
+          # Does Log Sink with matching name exit
+          not input.review.object.metadata.name == input.parameters.storagesink
+
+          msg := sprintf("Guardrail # 4: The role '%s' does not exist and is required", [input.parameters.storagesink])
+        }          
