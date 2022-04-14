@@ -17,7 +17,7 @@
   metadata:
     name: computesubnetwork-dep
     annotations:
-      config.kubernetes.io/local-config: 'true'
+      config.kubernetes.io/local-config: 'true'    
   spec:
     routingMode: REGIONAL
     autoCreateSubnetworks: false

@@ -49,7 +49,7 @@ spec:
           # Make sure privateClusterConfig exists
           input.review.kind.kind == "ContainerCluster"
           has_key(input.review.object.spec, "privateClusterConfig")
-          not input.review.object.spec.privateClusterConfig.enablePrivateNodes == "true"
+          not input.review.object.spec.privateClusterConfig.enablePrivateNodes == true
           msg := sprintf("GKE is not Private %s", [input.review.object.metadata.name])
         }
 
@@ -85,3 +85,13 @@ spec:
           not input.review.object.spec.autoCreateSubnetworks == false
           msg := sprintf("Subnets will be created automatically %s", [input.review.object.metadata.name])
         }        
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: LimitEgressTraffic
+metadata:
+  name: limitegresstraffic
+spec:
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["*"]

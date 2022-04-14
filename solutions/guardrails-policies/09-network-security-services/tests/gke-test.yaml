@@ -17,7 +17,7 @@ kind: ContainerCluster
 metadata:
   name: sandbox
   annotations:
-    config.kubernetes.io/local-config: 'true'  
+    config.kubernetes.io/local-config: 'true'    
 spec:
   description: dev-cluster # kpt-set: ${cluster-description}
   enableBinaryAuthorization: true
