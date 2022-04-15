@@ -17,8 +17,8 @@ kind: ConfigMap
 metadata: # kpt-merge: /setters
   name: setters
 data:
-
-  project-id: sandbox-000000 # Must be globally unique
+  # Must be globally unique
+  project-id: sandbox-000000 # arete-prompt
   project-namespace: config-control
   ######
   # GKE Sandbox Network Values
@@ -57,8 +57,8 @@ data:
     - regional
     - northamerica
     - sandbox
-  gke-admin: group@email.com
-  gke-viewer: group@email.com
+  gke-admin: group@email.com # arete-prompt
+  gke-viewer: group@email.com # arete-prompt
   ####
   #
   # Machine Type to be used for GKE Node Pool
