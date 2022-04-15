@@ -86,12 +86,3 @@ spec:
           msg := sprintf("Subnets will be created automatically %s", [input.review.object.metadata.name])
         }        
 ---
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: LimitEgressTraffic
-metadata:
-  name: limitegresstraffic
-spec:
-  match:
-    kinds:
-      - apiGroups: ["*"]
-        kinds: ["*"]

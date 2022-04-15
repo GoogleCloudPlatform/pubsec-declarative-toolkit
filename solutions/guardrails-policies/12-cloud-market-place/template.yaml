@@ -46,12 +46,3 @@ spec:
           msg := sprintf("Binding disallowed, has marketplace role %s", [input.review.object.metadata.name])
         }
 ---
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: CloudMarketPlaceConfig
-metadata:
-  name: cloudmarketplaceconfig
-spec:
-  match:
-    kinds:
-      - apiGroups: ["*"]
-        kinds: ["IAMPartialPolicy","IAMPolicyMember"]

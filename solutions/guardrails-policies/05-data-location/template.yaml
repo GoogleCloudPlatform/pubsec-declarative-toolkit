@@ -58,19 +58,3 @@ spec:
           resource == allowed[_]
         }
 ---
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: DataLocation
-metadata:
-  name: datalocation
-spec:
-  match:
-    kinds:
-      - apiGroups: ["*"]
-        kinds: ["*"]
-  parameters:
-    locations:
-      - "northamerica-northeast1"
-      - "northamerica-northeast2"
-      - "global"
-    allowedServices:
-      - ""
