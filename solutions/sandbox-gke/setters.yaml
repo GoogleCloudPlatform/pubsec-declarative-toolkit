@@ -19,7 +19,7 @@ metadata: # kpt-merge: /setters
 data:
   # Must be globally unique
   project-id: sandbox-000000 # arete-prompt
-  project-namespace: config-control
+  project-namespace: config-control # arete-prompt
   ######
   # GKE Sandbox Network Values
   ######
