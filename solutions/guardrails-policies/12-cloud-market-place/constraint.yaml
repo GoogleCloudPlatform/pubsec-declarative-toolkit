@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: CloudMarketPlaceConfig
+metadata: # kpt-merge: /cloudmarketplaceconfig
+  name: cloudmarketplaceconfig
+spec:
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["IAMPartialPolicy", "IAMPolicyMember"]

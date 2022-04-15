@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: LimitEgressTraffic
+metadata: # kpt-merge: /limitegresstraffic
+  name: limitegresstraffic
+spec:
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["*"]
