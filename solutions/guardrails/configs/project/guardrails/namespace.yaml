@@ -11,11 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
-kind: PubSubTopic
+kind: Namespace
+apiVersion: v1
 metadata:
-  name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
-  namespace: sandbox # kpt-set: ${project-namespace}
+  name: guardrails # kpt-set: ${guardrails-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}

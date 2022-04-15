@@ -15,24 +15,24 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/k8s-viewer
   name: k8s-viewer
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${project-namespace}
 spec:
   member: group:group@email.com # kpt-set: group:${gke-viewer}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: sandbox-000000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${project-id}
   role: roles/container.clusterViewer
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/k8s-admin
   name: k8s-admin
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${project-namespace}
 spec:
   member: group:group@email.com # kpt-set: group:${gke-admin}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: sandbox-000000 # kpt-set: ${sandbox-project-id}
+    external: sandbox-000000 # kpt-set: ${project-id}
   role: roles/container.admin

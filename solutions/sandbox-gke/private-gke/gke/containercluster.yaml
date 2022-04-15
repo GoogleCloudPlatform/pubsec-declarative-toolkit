@@ -16,11 +16,11 @@ apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   name: sandbox # kpt-set: ${cluster-name}
-  namespace: sandbox # kpt-set: ${sandbox-namespace}
+  namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${sandbox-project-id}
-    config.kubernetes.io/depends-on: /namespace/config-control/Service/container # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Project/container
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Service/sandbox-00000-services-container,iam.cnrm.cloud.google.com/namespace/config-control/IAMPolicyMember/sandbox-00000-container-admin # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/config-control/Service/${project-id}-services-container,iam.cnrm.cloud.google.com/namespace/${project-namespace}/IAMPolicyMember/${project-id}-container-admin
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -57,7 +57,7 @@ spec:
         name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
   resourceUsageExportConfig:
     bigqueryDestination:
-      datasetId: gkemetering
+      datasetId: sandboxgkemetering # kpt-set: ${cluster-name}gkemetering
     enableNetworkEgressMetering: true
     enableResourceConsumptionMetering: true
   podSecurityPolicyConfig:
@@ -73,4 +73,4 @@ spec:
   workloadIdentityConfig:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: sandbox-000000.svc.id.goog # kpt-set: ${sandbox-project-id}.svc.id.goog
+    identityNamespace: sandbox-000000.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
