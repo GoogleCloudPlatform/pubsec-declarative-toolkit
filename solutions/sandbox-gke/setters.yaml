@@ -50,6 +50,7 @@ data:
   # CIDR Range to be used for GKE Endpoint Access
   # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
   #
+  network-name: gke-net
   auth-network: |
     - cidrBlock: 0.0.0.0/32
       displayName: private-net
