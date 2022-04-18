@@ -51,6 +51,7 @@ data:
   # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
   #
   network-name: gke-net
+  subnetwork-name: sandbox-subnet
   auth-network: |
     - cidrBlock: 0.0.0.0/32
       displayName: private-net
