@@ -57,7 +57,7 @@ func GetCoreSolutions() (*solutionsList, error) {
 	var lines []string
 	ret := ""
 
-	resp, err := http.Get("https://raw.githubusercontent.com/GoogleCloudPlatform/gcp-pbmm-sandbox/main/solutions/solutions.yaml?token=GHSAT0AAAAAABKXBGSPQ4JDZFV7RR4DTRH2YSZ3OEQ")
+	resp, err := http.Get("https://raw.githubusercontent.com/GoogleCloudPlatform/gcp-pbmm-sandbox/main/solutions/solutions.yaml?token=" + viper.GetString("git_token"))
 
 	if err != nil {
 		log.Error().Err(err).Msg("")
