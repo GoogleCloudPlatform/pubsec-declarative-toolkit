@@ -14,8 +14,8 @@ upstreamLock:
   git:
     repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
     directory: /services/private-gke
-    ref: folder-restructure
-    commit: 57c638a35a80c1d9c4e5ebaff21c7d26a7caf2a2
+    ref: main
+    commit: f922dd133034775a3de9c03e0c2911d7ea2bd6e8
 info:
   description: sample description
 pipeline:
