@@ -50,7 +50,9 @@ func init() {
 	rootCmd.AddCommand(solutionCmd)
 }
 
-// Get the Solutions.yaml file from GutHub
+// Get the Solutions.yaml file from GitHub
+// @TODO: Need to figure out how to track modifications to the cached solutions.yaml file
+// so as to not override them
 func GetCoreSolutions() (*solutionsList, error) {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 

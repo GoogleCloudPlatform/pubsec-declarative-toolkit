@@ -17,8 +17,11 @@ import (
 
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
-	
+	"reflect"
+
+	"gopkg.in/yaml.v3"
 	"github.com/manifoldco/promptui"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -28,10 +31,19 @@ import (
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
 )
 
+// PromptIdentifier is the comment pattern that will be searched for in the solutions
+// yaml config files
 const PromptIdentifier = "# arete-prompt"
+
+// dryRun or live apply the solution. This is set from a flag
 var dryRun bool
 
-type SetPrompts struct {
+// fromCache tells the CLI to not download the solution from GIT but use the local cache version
+var fromCache bool
+
+// Prompts store the found key/value scalar yaml nodes in a solutions config files
+// as well as the prompted results from the user
+type Prompts struct {
 	Prompts []Prompt
 	Results []Result
 }
@@ -46,16 +58,47 @@ type Result struct {
 	Value string
 }
 
-// solutionCmd represents the create command
+
+// SetPrompt adds a new prompt to the prompt struct map
+func (p *Prompts) SetPrompt(node *kyaml.MapNode) {
+	if testPromptComment(node.Value.YNode().LineComment) {
+		p.Prompts = append(p.Prompts, Prompt{Name: node.Key.YNode().Value, Value: node.Value.YNode().Value})
+	}
+}
+
+func (p *Prompts) runPrompts() {
+
+	fmt.Println("Please set this solutions required values")
+
+	for _, v := range p.Prompts {
+		prompt := promptui.Prompt{
+			Label: v.Name,
+		}
+
+		result, err := prompt.Run()
+
+		if err != nil {
+			log.Fatal().Err(err).Msg("Error running prompt command")
+		}
+
+		p.Results = append(p.Results, Result{Name: v.Name, Value: result})
+	}
+}
+
+// testPromptComment tests line comments to see if the PromptIdentifier is present
+func testPromptComment(lineComment string) bool {
+	return strings.HasPrefix(lineComment, PromptIdentifier)
+}
+
+// solutionDeployCmd is the cobra command that represents the solution deploy sub command
 var solutionDeployCmd = &cobra.Command{
 	Use:   "deploy <solution-name>",
 	Short: "Deploy a solution",
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var url string
-		var pipeline interface{}
-		var mutator map[string]interface{}
-		pr := SetPrompts{}
+		var decoder map[string]interface{}
+		pr := Prompts{}
 
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 
@@ -75,44 +118,55 @@ var solutionDeployCmd = &cobra.Command{
 
 		cacheDir := viper.GetString("cache") + "/" + args[0]
 
-		if _, err := os.Stat(cacheDir); err == nil {
-			os.RemoveAll(cacheDir)
+		_, statErr := os.Stat(cacheDir)
+
+		if !fromCache {
+			if statErr == nil {
+				os.RemoveAll(cacheDir)
+			}
+
+			log.Info().Msg("Pulling package from repo...")
+
+			// Use KPT to pull down the package
+			resp, err := utils.CallCommand("kpt", []string{"pkg", "get", url, cacheDir})
+			
+			if err != nil {
+				log.Error().Err(err).Msg(string(resp))
+				return
+			}
+
+			if viper.GetBool("verbose") {
+				log.Debug().Msg(string(resp))
+			}
+		} else {
+
+			if statErr != nil {
+				log.Fatal().Err(statErr).Msg("from-cache was used but that solution was not found in local cache dir")
+			}
+
+			log.Info().Msg("Using local cached copy of the package...")
 		}
 
-		log.Info().Msg("Pulling package from repo...")
-
-		// Use KPT to pull down the package
-		resp, err := utils.CallCommand("kpt", []string{"pkg", "get", url, cacheDir})
-		
-		if err != nil {
-			log.Error().Err(err).Msg(string(resp))
-			return
-		}
-
-		if viper.GetBool("verbose") {
-			log.Debug().Msg(string(resp))
-		}
-
-		data, err := os.ReadFile(cacheDir + "/Kptfile")
+		data, err := os.ReadFile(filepath.Join(cacheDir, "Kptfile"))
 
 		if err != nil {
 			log.Error().Err(err).Msg("Unable to read Kptfile for solution")
 			return
 		}
 
-		kptFile, _ := kio.FromBytes(data)
-
-		if pipeline, err = kptFile[0].GetFieldValue("pipeline"); err != nil {
-			log.Fatal().Err(err).Msg("Unable to find solutions Kptfile pipeline")
-		}
-
-		for i, pipe := range pipeline.(map[string]interface{}) {
-			if i == "mutators" {
-				for _, pipe := range pipe.([]interface{}) {
-					mutator = pipe.(map[string]interface{})
-
-					if configPath, ex := mutator["configPath"]; ex {
-						processConfigMutator(cacheDir + "/" + configPath.(string), &pr)
+		// Unmarshal the Kptfile YAML file and search for any configPaths in the pipline / mutators
+		// section. If found then  parse the configPath file mutator and search for the PromptIdentifier
+		yaml.Unmarshal(data, &decoder)
+		
+		for pipeline, configPaths := range decoder {
+			if pipeline == "pipeline" && reflect.TypeOf(configPaths).Kind() == reflect.Map {
+				for mutator, mutators := range configPaths.(map[string]interface{}) {
+					if mutator == "mutators" && reflect.TypeOf(mutators).Kind() == reflect.Slice {
+						for configPath, path := range mutators.([]interface{})[0].(map[string]interface{}) {
+							if configPath == "configPath" {
+								processConfigMutator(filepath.Join(cacheDir, path.(string)), &pr)
+							}
+						}
 					}
 				}
 			}
@@ -125,6 +179,7 @@ var solutionDeployCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal().Err(err).Msg("Rendering KPT solution failed: " + cacheDir)
 		}
+
 
 		if viper.GetBool("verbose") {
 			log.Debug().Msg(strings.TrimSuffix(string(res), "\n"))
@@ -172,6 +227,8 @@ var solutionDeployCmd = &cobra.Command{
 
 		var cmdArgs []string
 
+		// @TODO: Need to handle the reconcile timeout properly. Should we timeout or wait indef for kpt to reconcile?
+		// Perhaps stream the kpt output to the console?
 		if !dryRun {
 			cmdArgs = []string{"live", "apply", "--reconcile-timeout=2m", cacheDir}
 		} else {
@@ -201,9 +258,12 @@ func init() {
 	solutionCmd.AddCommand(solutionDeployCmd)
 
 	solutionDeployCmd.Flags().BoolVar(&dryRun, "dry-run", false, "kpt will validate the resources in the package and print which resources will be applied and which resources will be pruned, but no resources will be changed.")
+
+	solutionDeployCmd.Flags().BoolVar(&fromCache, "from-cache", false, "Don't pull down a copy of the solution form the GIT URL but use the local cached version")
 }
 
-func processConfigMutator(configPath string, pr *SetPrompts) {
+// process the Kptfile mutators configPaths and search for any comments that match the PromptIdentifier
+func processConfigMutator(configPath string, pr *Prompts) {
 	data, err := os.ReadFile(configPath)
 
 	if err != nil {
@@ -213,123 +273,59 @@ func processConfigMutator(configPath string, pr *SetPrompts) {
 
 	kptFile, _ := kio.FromBytes(data)
 
-	if dataMap := kptFile[0].GetDataMap(); len(dataMap) != 0 {
-		setPrompts(dataMap, pr)
+	if len(kptFile) > 0 {
+		walk(kptFile[0], pr)
+		pr.runPrompts()
 
-		walk(kptFile[0], "", pr)
+		err := modifyConfig(pr, configPath, data)
 
-		if pr, l := comparePrompts(pr); l > 0 {
-			runPrompts(pr)
-
-			err := modifyConfig(pr, configPath, data)
-
-			if err != nil {
-				log.Fatal().Err(err).Msg("Unable to modify solution setter config file")
-			}
-		} else {
-			log.Info().Msg("No solution substitutions were found")
+		if err != nil {
+			log.Fatal().Err(err).Msg("Unable to modify solutions config file")
+		}
+	} else {
+		if viper.GetBool("verbose") {
+			log.Debug().Msg("No Kptfile was found for the solution or the Kptfile is malformed")
 		}
 	}
 }
 
-func modifyConfig(pr *SetPrompts, configPath string, orgData []byte) error {
+// modifyConfig will modify the configPath file using a simple search replace for the key/value scalar values that
+// have the prompt identifier
+func modifyConfig(pr *Prompts, configPath string, orgData []byte) error {
 	newContent := string(orgData)
 
 	for i, p := range pr.Prompts {
 		newContent = strings.Replace(newContent, p.Name + ": " + p.Value, pr.Results[i].Name + ": " + pr.Results[i].Value, 1)
 	}
 
-	os.WriteFile(configPath, []byte(newContent), 0644)
+	if err := os.WriteFile(configPath, []byte(newContent), 0644); err != nil {
+		return err
+	}
 
 	return nil
 }
 
-func runPrompts(prs *SetPrompts) {
-
-	fmt.Println("Please set this solutions required values")
-
-	for _, v := range prs.Prompts {
-		prompt := promptui.Prompt{
-			Label: v.Name,
-		}
-
-		result, err := prompt.Run()
-
-		if err != nil {
-			log.Fatal().Err(err).Msg("Error running prompt command")
-		}
-
-		prs.Results = append(prs.Results, Result{Name: v.Name, Value: result})
-	}
-}
-
-func comparePrompts(pr *SetPrompts) (*SetPrompts, int) {
-	newPrompts  := SetPrompts{}
-
-	for _, r := range pr.Results {
-		for _, v := range pr.Prompts {
-			if r.Value == v.Value {
-				newPrompts.Prompts = append(newPrompts.Prompts, Prompt{Name: v.Name, Value: v.Value})
-			}
-		}
-	}
-	return &newPrompts, len(newPrompts.Prompts)
-}
-
-func setPrompts(dataMap map[string]string, pr *SetPrompts) {
-	for k, v := range dataMap {
-		pr.Prompts = append(pr.Prompts, Prompt{Name: k, Value: v})
-	}	
-}
-
-// Walk pattern was copied from the KPT apply-setters function
-// https://github.com/GoogleContainerTools/kpt-functions-catalog/tree/master/functions/go/apply-setters
-
-func walk(node *kyaml.RNode, p string, pr *SetPrompts) error {
+// walk the kyaml.RNode to check the type. Keeping this function in-case there is a use-case
+// that the walkMapping doesn't cover and more node types need to be added here.
+func walk(node *kyaml.RNode, pr *Prompts) error {
 	switch node.YNode().Kind {
-	case kyaml.DocumentNode:
-		fmt.Println("DocumentNode")
 	case kyaml.MappingNode:
-		if err := walkMapping(node, p); err != nil {
+		if err := walkMapping(node, pr); err != nil {
 			return err
 		}
-
-		return node.VisitFields( func(node *kyaml.MapNode) error {
-			return walk(node.Value, p + " " + node.Key.YNode().Value, pr)
-		})
-	case kyaml.SequenceNode:
-		fmt.Println("Seq")
-	case kyaml.ScalarNode:
-		return visitScalar(node, p, pr)
 	}
-
 	return nil
 }
 
-func walkMapping(object *kyaml.RNode, path string) error {
+// walkMapping walks the YAML mapping node type. This should be the only real node type we care about
+// since we can keep diving through the scalars and maps in this reoccuring function.
+func walkMapping(object *kyaml.RNode, pr *Prompts) error {
 	return object.VisitFields( func(node *kyaml.MapNode) error {
-		lineComment := node.Key.YNode().LineComment
-
-		if !testPromptComment(lineComment) {
-			return nil
+		if node.Value.YNode().Kind == kyaml.MappingNode {
+			walkMapping(node.Value, pr)
 		}
 
-
+		pr.SetPrompt(node)
 		return nil
 	})
-}
-
-func visitScalar(node *kyaml.RNode, path string, pr *SetPrompts) error {
-	if !testPromptComment(node.YNode().LineComment) {
-		return nil
-	}
-
-	pr.Results = append(pr.Results, Result{Value: node.YNode().Value})
-
-	return nil
-}
-
-// testPromptComment tests line comments to see if the PromptIdentifier is present
-func testPromptComment(lineComment string) bool {
-	return strings.HasPrefix(lineComment, PromptIdentifier)
 }

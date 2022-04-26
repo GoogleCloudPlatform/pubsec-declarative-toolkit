@@ -70,6 +70,9 @@ func WriteToCache(data *string, fileName string) error {
 	return nil
 }
 
+// CallCommand will execute a local command with the args that are passed in and either return the output of that comand
+// or the error from the command.
+// @TODO: Need to add streaming output for long running commands
 func CallCommand(command string, args []string) ([]byte, error) {	
 	//args := []string{"alpha", "billing", "accounts", "list", "--format=value[separator=' - '](NAME, ACCOUNT_ID)"}
 
