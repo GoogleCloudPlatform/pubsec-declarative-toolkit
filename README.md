@@ -1,6 +1,6 @@
-# GCP Canadian PubSec Sandbox
+# GCP PubSec Declarative Toolkit
 
-This Repo contains the configuration to deploy a Sandbox Environment based off on the GoC's 30 Day [Guardrails](https://github.com/canada-ca/cloud-guardrails).
+This repository is a collection of delcarative solutions to help you on your Journey to Google Cloud.
 
 ## Quickstart
 
@@ -9,6 +9,11 @@ This Repo contains the configuration to deploy a Sandbox Environment based off o
 ### Documentation
 
 For further documentation on the project, including the setup pre-requirements see the [Documentation Site](https://reimagined-meme-7df92d3b.pages.github.io/).
+
+### Additional Resources
+- [Awesome KRM](https://github.com/askmeegs/learn-krm)
+- [I do declare! Infrastructure automation with Configuration as Data](https://cloud.google.com/blog/products/containers-kubernetes/understanding-configuration-as-data-in-kubernetes)
+- [Rationale Behind kpt](https://kpt.dev/guides/rationale)
 
 ## Disclaimer
 
