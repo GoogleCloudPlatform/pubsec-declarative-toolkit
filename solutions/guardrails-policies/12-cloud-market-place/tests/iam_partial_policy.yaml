@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# GKE Metering BQ
-apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
-kind: BigQueryDataset
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: iampartialpolicy-sample-pubsubadmin
   annotations:
-    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${project-id}
-  name: gkemetering
-  namespace: config-control # kpt-set: ${project-namespace}
+    config.kubernetes.io/local-config: 'true'      
 spec:
-  defaultTableExpirationMs: 3600000
-  description: "BigQuery Dataset Sample"
-  friendlyName: gke-metering-dataset
-  location: northamerica-northeast1 # kpt-set: ${region}
+  resourceRef:
+    apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+    kind: PubSubTopic
+    name: iampartialpolicy-dep-pubsubadmin
+  bindings:
+    - role: roles/cloudprivatecatalogproducer.admin
+      members:
+        - member: serviceAccount:partialpolicy-dep-pubsubadmin@${PROJECT_ID?}.iam.gserviceaccount.com

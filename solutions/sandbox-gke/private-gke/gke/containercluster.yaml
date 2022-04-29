@@ -74,3 +74,7 @@ spec:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
     identityNamespace: sandbox-000000.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
+  nodeConfig:
+    shieldedInstanceConfig:
+      enableIntegrityMonitoring: true
+      enableSecureBoot: true
