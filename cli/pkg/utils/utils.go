@@ -17,13 +17,12 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"path/filepath"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
-
-// Creating a random string
-// Copied from: https://www.calhoun.io/creating-random-strings-in-go/
 
 const charset = "abcdefghijklmnopqrstuvwxyz0123456789"
 
@@ -34,6 +33,8 @@ func init() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 }
 
+// Creating a random string
+// Copied from: https://www.calhoun.io/creating-random-strings-in-go/
 func stringWithCharset(length int, charset string) string {
   b := make([]byte, length)
   for i := range b {
@@ -49,7 +50,7 @@ func RandomString(length int) string {
 // Write some data to the local cache dir in the specifiec name. This will either create
 // or update the file with the new content
 func WriteToCache(data *string, fileName string) error {
-	file := viper.GetString("cache") + "/" + fileName
+	file := filepath.Join(viper.GetString("cache"), fileName)
 
 	f, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0600)
 

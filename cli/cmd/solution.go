@@ -16,18 +16,21 @@ import (
 	"bufio"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"fmt"
-	"arete/pkg/utils"
+	//"arete/pkg/utils"
+
+	"go.uber.org/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"gopkg.in/yaml.v3"
+	//"gopkg.in/yaml.v3"
 )
 
 type solutionsList struct {
-	Solutions map[string]solution `yaml:"solutions"`
+	Solutions map[string]solution `yaml:solution`
 }
 
 type solution struct {
@@ -50,10 +53,24 @@ func init() {
 	rootCmd.AddCommand(solutionCmd)
 }
 
+func (sl *solutionsList) GetSolutions() error {
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+
+	provider, err := config.NewYAML(config.Source(sl.getCoreSolutions()), config.File(filepath.Join(viper.GetString("cache"), "solutions.yaml")))
+
+	if err != nil {
+		return err
+	}
+	
+	if err = provider.Get("solutions").Populate(&sl); err != nil {
+		log.Fatal().Err(err).Msg("")
+	}
+
+	return nil
+}
+
 // Get the Solutions.yaml file from GitHub
-// @TODO: Need to figure out how to track modifications to the cached solutions.yaml file
-// so as to not override them
-func GetCoreSolutions() (*solutionsList, error) {
+func (*solutionsList) getCoreSolutions() *strings.Reader {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 
 	var lines []string
@@ -62,8 +79,7 @@ func GetCoreSolutions() (*solutionsList, error) {
 	resp, err := http.Get("https://raw.githubusercontent.com/GoogleCloudPlatform/gcp-pbmm-sandbox/main/solutions/solutions.yaml?token=" + viper.GetString("git_token"))
 
 	if err != nil {
-		log.Error().Err(err).Msg("")
-		return nil, err
+		log.Fatal().Err(err).Msg("")
 	}
 
 	if viper.GetBool("verbose") {
@@ -79,23 +95,35 @@ func GetCoreSolutions() (*solutionsList, error) {
 	}
 
 	if err := scanner.Err(); err != nil {
-		log.Error().Err(err).Msg("")
-		return nil, err
+		log.Fatal().Err(err).Msg("")
 	}
 
 	ret = strings.Join(lines, "\n")
 
-	utils.WriteToCache(&ret, "solutions.yaml")
-
-	// Update the Solutions list yaml file from GitHub
-	sl := solutionsList{}
-
-	err = yaml.Unmarshal([]byte(ret), &sl)
-
-	if err != nil {
-		log.Error().Err(err).Msg("")
-		return nil, err
-	}
-
-	return &sl, nil
+	return strings.NewReader(ret)
 }
+
+// func (*solutionsList) getCacheSolutions() (*solutionsList, error) {
+// 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+
+// 	solutionsFile := 
+// 	cacheSl, err := os.ReadFile(solutionsFile)
+
+// 	if err != nil {
+// 		log.Error().Err(err).Msg("")
+
+// 		return nil, err
+// 	}
+
+// 	sl := solutionsList{}
+
+// 	err = yaml.Unmarshal(cacheSl, &sl)
+
+// 	if err != nil {
+// 		log.Error().Err(err).Msg("")
+
+// 		return nil, err
+// 	}
+
+// 	return &sl, nil
+// }

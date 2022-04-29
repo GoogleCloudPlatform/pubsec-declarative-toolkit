@@ -102,11 +102,11 @@ var solutionDeployCmd = &cobra.Command{
 
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 
-		sl, err := GetCoreSolutions() // Update the core solutions from GitHub
+		sl := solutionsList{}
+		sl.GetSolutions()
 
-		if err != nil {
-			return
-		}
+		fmt.Println(sl)
+		os.Exit(1)
 
 		if url = sl.Solutions[args[0]].Url; url == "" {
 			if viper.GetBool("verbose") {

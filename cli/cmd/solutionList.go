@@ -29,7 +29,9 @@ var solutionListCmd = &cobra.Command{
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 		whiteBold := color.New(color.FgWhite).Add(color.Bold).SprintFunc()
 
-		sl, err := GetCoreSolutions()
+		sl := solutionsList{}
+
+		err := sl.GetSolutions()
 
 		if err != nil {
 			return
