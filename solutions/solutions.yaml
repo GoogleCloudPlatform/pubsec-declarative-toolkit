@@ -13,15 +13,15 @@
 # limitations under the License.
 
 solutions:
-  guardrails:
+  - solution: guardrails
     description: |
       Implementation of the GC Cloud Guardrails Checks. More Info: https://github.com/canada-ca/cloud-guardrails-gcp
     url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails@main
-  kcc-namespaces:
+  - solution: kcc-namespaces
     description: |
       Simplified declarative multi-tenancy with project namespaces taken from: https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint
     url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/kcc-namespaces@main
-  sandbox-gke:
+  - solution: sandbox-gke
     description: |
       A private GKE cluster with so many bells and whistles!
     url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/sandbox-gke@main
