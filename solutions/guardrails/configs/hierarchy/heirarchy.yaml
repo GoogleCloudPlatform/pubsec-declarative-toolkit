@@ -22,7 +22,7 @@ metadata:
 spec:
   parentRef:
     kind: Organization
-    external: test-organization # kpt-set: ${org-id}
+    external: "test-organization" # kpt-set: ${org-id}
   config:
     - guardrails:
         - null
