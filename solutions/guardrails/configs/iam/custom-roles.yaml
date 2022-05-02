@@ -16,6 +16,8 @@ kind: IAMCustomRole
 metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   name: enterprise-monitor
+  annotations:
+    cnrm.cloud.google.com/organization-id: "0000000000" # kpt-set: ${org-id}
 spec:
   title: Enterprise Monitoring Custom Role
   description: Enterprise Monitoring Custom Role

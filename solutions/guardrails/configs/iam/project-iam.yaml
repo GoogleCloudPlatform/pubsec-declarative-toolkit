@@ -18,6 +18,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -33,6 +34,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -48,6 +50,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -63,6 +66,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -78,6 +82,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   member: serviceAccount:project-id@config-controller-project.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
@@ -93,6 +98,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:

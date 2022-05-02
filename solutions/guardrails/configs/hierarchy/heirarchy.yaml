@@ -16,7 +16,9 @@ apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
   name: guardrails-resource-hierarchy
-  namespace: config-control # kpt-set: ${management-namespace}  
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/local-config: 'true'
 spec:
   parentRef:
     kind: Organization

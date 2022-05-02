@@ -19,7 +19,7 @@ metadata: # kpt-merge: guardrails/bigquery-logsink
   name: bigquery-logsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: bigquery.cnrm.cloud.google.com/namespaces/guardrails/BigQueryDataset/bigquerylogginglogsink
+    config.kubernetes.io/depends-on: bigquery.cnrm.cloud.google.com/namespaces/guardrails/BigQueryDataset/bigquerylogginglogsink # kpt-set: bigquery.cnrm.cloud.google.com/namespaces/${management-namespace}/BigQueryDataset/bigquerylogginglogsink,resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   destination:
     bigQueryDatasetRef:
@@ -39,6 +39,7 @@ metadata: # kpt-merge: guardrails/bigquerylogginglogsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id},serviceusage.cnrm.cloud.google.com/namespaces/${management-namespace}/Service/guardrails-project-services-bigquery
 spec:
   location: northamerica-northeast1
   projectRef:
