@@ -65,6 +65,7 @@ spec:
     kind: Organization
     external: "0000000000" # kpt-set: ${org-id}
   role: roles/logging.admin
+---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/guardrails-bq-admin
