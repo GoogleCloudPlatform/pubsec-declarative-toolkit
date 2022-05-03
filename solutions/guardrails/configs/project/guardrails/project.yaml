@@ -20,7 +20,7 @@ metadata:
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    config.kubernetes.io/depends-on: /namespace/config-control/Folder/guardrails
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Folder/guardrails
 spec:
   name: guardrails
   resourceID: project-id # kpt-set: ${guardrails-project-id}
