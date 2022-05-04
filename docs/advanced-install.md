@@ -1,7 +1,5 @@
-Getting Started - Config Connector
+Advanced Install
 ==================================
-
-### Advanced
 
 This assumes you are running in Cloud Shell which has all of the prerequisites installed. 
 
