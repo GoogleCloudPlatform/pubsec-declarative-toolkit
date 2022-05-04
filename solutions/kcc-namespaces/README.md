@@ -11,7 +11,7 @@ Also, this solution grants the GCP Service Account that KCC uses to create resou
 ## Usage
 
 ### **Fetch the package**
-`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] kcc-namespaces`
+`kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/kcc-namespaces kcc-namespaces`
 
 Details: https://kpt.dev/reference/cli/pkg/get/
 
