@@ -19,7 +19,6 @@ kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.gi
 kpt live init guardrails --namespace config-control
 kpt fn render
 ```
-```
 
 ## Permissions
 
