@@ -18,6 +18,7 @@ import (
 	"os/exec"
 	"strings"
 	"path/filepath"
+	"bufio"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -47,8 +48,7 @@ func RandomString(length int) string {
   return stringWithCharset(length, charset)
 }
 
-// Write some data to the local cache dir in the specifiec name. This will either create
-// or update the file with the new content
+// Write some data to the local cache dir in the specifiec name. This will create or overwrite the file
 func WriteToCache(data *string, fileName string) error {
 	file := filepath.Join(viper.GetString("cache"), fileName)
 
@@ -71,22 +71,52 @@ func WriteToCache(data *string, fileName string) error {
 	return nil
 }
 
-// CallCommand will execute a local command with the args that are passed in and either return the output of that comand
-// or the error from the command.
-// @TODO: Need to add streaming output for long running commands
-func CallCommand(command string, args []string) ([]byte, error) {	
+// CallCommand will execute a local command with the args that are passed in and either return the combined output/err of that comand
+// or stream the commands output/error to stdout
+func CallCommand(command string, args []string, stream bool) ([]byte, error) {	
 	//args := []string{"alpha", "billing", "accounts", "list", "--format=value[separator=' - '](NAME, ACCOUNT_ID)"}
-
 	if viper.GetBool("verbose") {
 		log.Debug().Msg(command + " " + strings.Join(args, " "))
 	}
 
 	cmd := exec.Command(command, args...)
-	out, err := cmd.CombinedOutput()
 
-	if err != nil {
-		return out, err
+	if stream {
+		cmdErr, err := cmd.StderrPipe()
+
+		if err != nil {
+			return nil, err
+		}
+
+		cmdOut, err := cmd.StdoutPipe()
+
+		if err != nil {
+			return nil, err
+		}
+
+		cmd.Start()
+
+		errScanner := bufio.NewScanner(cmdErr)
+		outScanner := bufio.NewScanner(cmdOut)
+
+		for errScanner.Scan() {
+			log.Info().Msg(errScanner.Text())
+		}
+
+		for outScanner.Scan() {
+			log.Info().Msg(outScanner.Text())
+		}
+
+		cmd.Wait()
+
+		return nil, nil
+	} else {
+		output, err := cmd.CombinedOutput()
+
+		if err != nil {
+			return nil, err
+		}
+
+		return output, nil
 	}
-
-	return out, nil
 }

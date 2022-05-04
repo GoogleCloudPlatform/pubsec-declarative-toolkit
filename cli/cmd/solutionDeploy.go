@@ -13,13 +13,13 @@
 package cmd
 
 import (
-	"arete/pkg/utils"
-
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"reflect"
+
+	"arete/pkg/utils"
 
 	"gopkg.in/yaml.v3"
 	"github.com/manifoldco/promptui"
@@ -85,35 +85,32 @@ func (p *Prompts) runPrompts() {
 	}
 }
 
-// testPromptComment tests line comments to see if the PromptIdentifier is present
-func testPromptComment(lineComment string) bool {
-	return strings.HasPrefix(lineComment, PromptIdentifier)
-}
-
 // solutionDeployCmd is the cobra command that represents the solution deploy sub command
 var solutionDeployCmd = &cobra.Command{
 	Use:   "deploy <solution-name>",
 	Short: "Deploy a solution",
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var url string
 		var decoder map[string]interface{}
 		pr := Prompts{}
 
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 
 		sl := solutionsList{}
-		sl.GetSolutions()
+		err := sl.GetSolutions()
 
-		fmt.Println(sl)
-		os.Exit(1)
+		if err != nil {
+			log.Fatal().Err(err).Msg("")
+		}
 
-		if url = sl.Solutions[args[0]].Url; url == "" {
+		url, err := sl.GetUrl(args[0])
+
+		if err != nil {
 			if viper.GetBool("verbose") {
 				log.Debug().Msg(sl.String())
 			}
 
-			log.Fatal().Msg("Solution not found in list")
+			log.Fatal().Err(err).Msg("")
 		}
 
 		cacheDir := viper.GetString("cache") + "/" + args[0]
@@ -126,9 +123,9 @@ var solutionDeployCmd = &cobra.Command{
 			}
 
 			log.Info().Msg("Pulling package from repo...")
-
+			
 			// Use KPT to pull down the package
-			resp, err := utils.CallCommand("kpt", []string{"pkg", "get", url, cacheDir})
+			resp, err := utils.CallCommand("kpt", []string{"pkg", "get", url, cacheDir}, false)
 			
 			if err != nil {
 				log.Error().Err(err).Msg(string(resp))
@@ -174,7 +171,7 @@ var solutionDeployCmd = &cobra.Command{
 
 		log.Info().Msg("Updating solutions settings....")
 		
-		res, err := utils.CallCommand("kpt", []string{"fn", "render", cacheDir})
+		res, err := utils.CallCommand("kpt", []string{"fn", "render", cacheDir}, false)
 
 		if err != nil {
 			log.Fatal().Err(err).Msg("Rendering KPT solution failed: " + cacheDir)
@@ -187,7 +184,7 @@ var solutionDeployCmd = &cobra.Command{
 
 		log.Info().Msg("Getting kubectl current context....")
 
-		config, err := utils.CallCommand("kubectl", []string{"config", "current-context"})
+		config, err := utils.CallCommand("kubectl", []string{"config", "current-context"}, false)
 
 		if err != nil {
 			log.Error().Err(err).Msg(string(config))
@@ -215,7 +212,7 @@ var solutionDeployCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		res, err = utils.CallCommand("kpt", []string{"live", "init", cacheDir})
+		res, err = utils.CallCommand("kpt", []string{"live", "init", cacheDir}, false)
 
 		if err != nil {
 			log.Fatal().Err(err).Msg("Unable to inialize kpt for " + cacheDir)
@@ -227,17 +224,16 @@ var solutionDeployCmd = &cobra.Command{
 
 		var cmdArgs []string
 
-		// @TODO: Need to handle the reconcile timeout properly. Should we timeout or wait indef for kpt to reconcile?
-		// Perhaps stream the kpt output to the console?
 		if !dryRun {
-			cmdArgs = []string{"live", "apply", "--reconcile-timeout=2m", cacheDir}
+			cmdArgs = []string{"live", "apply", cacheDir}
 		} else {
-			cmdArgs = []string{"live", "apply", "--reconcile-timeout=2m", "--dry-run", cacheDir}
+			cmdArgs = []string{"live", "apply", "--dry-run", cacheDir}
 		}
 
 		log.Info().Msg("Executing kpt live apply.....")
 		
-		res, err = utils.CallCommand("kpt", cmdArgs)
+		// Streaming output since we are not setting the reconcile timeout. Good idea?
+		res, err = utils.CallCommand("kpt", cmdArgs, true)
 
 		if err != nil {
 			log.Fatal().Err(err).Msg("Applying solution using KPT failed" + cacheDir)
@@ -260,6 +256,11 @@ func init() {
 	solutionDeployCmd.Flags().BoolVar(&dryRun, "dry-run", false, "kpt will validate the resources in the package and print which resources will be applied and which resources will be pruned, but no resources will be changed.")
 
 	solutionDeployCmd.Flags().BoolVar(&fromCache, "from-cache", false, "Don't pull down a copy of the solution form the GIT URL but use the local cached version")
+}
+
+// testPromptComment tests line comments to see if the PromptIdentifier is present
+func testPromptComment(lineComment string) bool {
+	return strings.HasPrefix(lineComment, PromptIdentifier)
 }
 
 // process the Kptfile mutators configPaths and search for any comments that match the PromptIdentifier

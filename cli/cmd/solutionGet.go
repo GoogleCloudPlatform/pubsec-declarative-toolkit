@@ -13,37 +13,41 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 	
-	"github.com/fatih/color"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
 
+var branch, subFolder string
+
 // solutionCmd represents the create command
-var solutionListCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List Solutions",
+var solutionGetCmd = &cobra.Command{
+	Use:   "get",
+	Short: "Get a solution from a remote git repo",
+	Example: ` arete solution get git@github.com:accountName/solutionName.git`,
+	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
-		whiteBold := color.New(color.FgWhite).Add(color.Bold).SprintFunc()
 
 		sl := solutionsList{}
 
-		err := sl.GetSolutions()
+		err := sl.getRemoteSolutions(args[0], true, branch, subFolder)
 
 		if err != nil {
-			return
+			log.Fatal().Err(err).Msg("")
 		}
-		 for _, sl := range sl.Solutions {
-		 	fmt.Printf("%s \n  %s\n", whiteBold(sl.Solution), sl.Description)
-		 }
+
+		log.Info().Msg("Solution Added")
 	},
 }
 
 // init the command and add flags
 func init() {
-	solutionCmd.AddCommand(solutionListCmd)
+	solutionCmd.AddCommand(solutionGetCmd)
+
+	solutionGetCmd.Flags().StringVar(&branch, "branch", "main", "If the solutions.yaml file is in a different branch from the default")
+
+	solutionGetCmd.Flags().StringVar(&subFolder, "sub-folder", "/", "If the solutions.yaml file is not in the root of the repo then provide the path here.")
 }
