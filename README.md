@@ -41,6 +41,7 @@ For further documentation on the project, including the setup pre-requirements s
 - [Awesome KRM](https://github.com/askmeegs/learn-krm)
 - [I do declare! Infrastructure automation with Configuration as Data](https://cloud.google.com/blog/products/containers-kubernetes/understanding-configuration-as-data-in-kubernetes)
 - [Rationale Behind kpt](https://kpt.dev/guides/rationale)
+- [KRM Blueprints](https://github.com/GoogleCloudPlatform/blueprints)
 
 ## Disclaimer
 
