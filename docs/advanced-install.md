@@ -41,8 +41,8 @@ gcloud services enable krmapihosting.googleapis.com \
 
 6. Create a network and subnet
 ```
-gcloud compute network create $NETWORK --subnet-mode=custom
-gcloud compute network subnets create $SUBNET  \
+gcloud compute networks create $NETWORK --subnet-mode=custom
+gcloud compute networks subnets create $SUBNET  \
 --network $NETWORK \
 --range 192.168.0.0/16 \
 --region $REGION
@@ -50,7 +50,7 @@ gcloud compute network subnets create $SUBNET  \
 
 7. Create the Config Controller Instance
 ```
-gcloud anthos config controller create main --location us-east1 --network $NETWORK --subnet $SUBNET
+gcloud anthos config controller create main --location northamerica-northeast1 --network $NETWORK --subnet $SUBNET
 ```
 ```
 gcloud container clusters get-credentials $CLUSTER --region $REGION
