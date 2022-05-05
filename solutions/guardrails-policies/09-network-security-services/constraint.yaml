@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
-metadata: # kpt-merge: breakglass-repo
-  name: breakglass-repo
-  namespace: config-control # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/disable-dependent-services: "false"
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: LimitEgressTraffic
+metadata: # kpt-merge: /limitegresstraffic
+  name: limitegresstraffic
 spec:
-  projectRef:
-    name: dpt-guardrails # kpt-set: ${guardrails-project-id}
-  resourceID: sourcerepo.googleapis.com
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["*"]

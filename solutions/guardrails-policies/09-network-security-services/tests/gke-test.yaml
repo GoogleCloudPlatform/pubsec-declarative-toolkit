@@ -14,29 +14,20 @@
 
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
-  name: sandbox # kpt-set: ${cluster-name}
-  namespace: config-control # kpt-set: ${project-namespace}
+metadata:
+  name: sandbox
   annotations:
-    cnrm.cloud.google.com/remove-default-node-pool: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${project-id}
+    config.kubernetes.io/local-config: 'true'    
 spec:
-  addonsConfig:
-    configConnectorConfig:
-      enabled: false
-    dnsCacheConfig:
-      enabled: true
-    networkPolicyConfig:
-      disabled: false
   description: dev-cluster # kpt-set: ${cluster-description}
   enableBinaryAuthorization: true
   enableIntranodeVisibility: true
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
-    clusterSecondaryRangeName: podrange # kpt-set: ${gke-pod-range-name}
+    clusterSecondaryRangeName: clusterrange # kpt-set: ${gke-pod-range-name}
     servicesSecondaryRangeName: servicesrange # kpt-set: ${gke-services-range-name}
-  location: northamerica-northeast1 # kpt-set: ${location}
+  location: northamerica-northeast1 # kpt-set: ${region}
   maintenancePolicy:
     dailyMaintenanceWindow:
       startTime: 01:00
@@ -47,9 +38,7 @@ spec:
   networkPolicy:
     enabled: true
   networkRef:
-    name: sandbox-net # kpt-set: ${network-name}
-  subnetworkRef:
-    name: sandbox-subnet # kpt-set: ${subnetwork-name}  
+    name: gke-net # kpt-set: ${network-name}
   networkingMode: VPC_NATIVE
   notificationConfig:
     pubsub:
@@ -58,22 +47,8 @@ spec:
         name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
   resourceUsageExportConfig:
     bigqueryDestination:
-      datasetId: gkemetering # kpt-set: ${cluster-name}gkemetering
+      datasetId: gkemetering
     enableNetworkEgressMetering: true
     enableResourceConsumptionMetering: true
   podSecurityPolicyConfig:
     enabled: false
-  privateClusterConfig:
-    enablePrivateEndpoint: false
-    enablePrivateNodes: true
-    masterIpv4CidrBlock: 172.16.0.0/28
-  verticalPodAutoscaling:
-    enabled: true
-  workloadIdentityConfig:
-    # Workload Identity supports only a single namespace based on your project name.
-    # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: sandbox-00000.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
-  nodeConfig:
-    shieldedInstanceConfig:
-      enableIntegrityMonitoring: true
-      enableSecureBoot: true      

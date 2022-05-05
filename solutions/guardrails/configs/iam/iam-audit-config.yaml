@@ -11,17 +11,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#####
+### Enable Audit Logs 
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata: # kpt-merge: sandbox/gkemetering-bq-viewer
-  name: gkemetering-bq-viewer # kpt-set: ${project-id}-gkemetering-bq-viewer
-  namespace: sandbox # kpt-set: ${project-namespace}
+kind: IAMAuditConfig
+metadata:
+  name: org-audit-logs
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  # replace ${PROJECT_ID?} with your project name
-  member: group:group@email.com # kpt-set: group:${billing-data-viewer-group}
-  role: roles/bigquery.dataViewer
+  service: allServices
+  auditLogConfigs:
+    - logType: DATA_WRITE
+    - logType: DATA_READ
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: sandbox-000000 # kpt-set: ${project-id}
+    kind: Organization
+    external: "0000000000" # kpt-set: ${org-id}

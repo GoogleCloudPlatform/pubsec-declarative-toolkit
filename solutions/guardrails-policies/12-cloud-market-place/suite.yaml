@@ -12,17 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# GKE Metering BQ
-apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
-kind: BigQueryDataset
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata:
+  name: cloudmarketplaceconfig
   annotations:
-    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${project-id}
-  name: gkemetering
-  namespace: config-control # kpt-set: ${project-namespace}
-spec:
-  defaultTableExpirationMs: 3600000
-  description: "BigQuery Dataset Sample"
-  friendlyName: gke-metering-dataset
-  location: northamerica-northeast1 # kpt-set: ${region}
+    config.kubernetes.io/local-config: 'true'      
+tests:
+- name: limitegresstraffic
+  template: template.yaml
+  constraint: constraint.yaml
+  cases:
+  - name: marketplace-role
+    object: tests/iam.yaml
+    assertions:
+    - violations: no
+  - name: marketplace-role
+    object: tests/iam_bad.yaml
+    assertions:
+    - violations: yes
+  - name: marketplace-role-partial-policy
+    object: tests/iam_partial_policy.yaml
+    assertions:
+    - violations: yes        
