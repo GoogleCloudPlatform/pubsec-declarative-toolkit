@@ -48,11 +48,17 @@ func RandomString(length int) string {
   return stringWithCharset(length, charset)
 }
 
-// Write some data to the local cache dir in the specifiec name. This will create or overwrite the file
-func WriteToCache(data *string, fileName string) error {
+// Write some data to the local cache dir in the specifiec name. This will create or overwrite the file if append is false
+func WriteToCache(data *string, fileName string, append bool) error {
 	file := filepath.Join(viper.GetString("cache"), fileName)
 
-	f, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0600)
+	opts := os.O_RDWR|os.O_CREATE
+
+	if append {
+		opts = opts|os.O_APPEND
+	}
+
+	f, err := os.OpenFile(file, opts, 0600)
 
 	if err != nil {
 		log.Error().Err(err). Msg("Unable to create / open file")
@@ -74,7 +80,6 @@ func WriteToCache(data *string, fileName string) error {
 // CallCommand will execute a local command with the args that are passed in and either return the combined output/err of that comand
 // or stream the commands output/error to stdout
 func CallCommand(command string, args []string, stream bool) ([]byte, error) {	
-	//args := []string{"alpha", "billing", "accounts", "list", "--format=value[separator=' - '](NAME, ACCOUNT_ID)"}
 	if viper.GetBool("verbose") {
 		log.Debug().Msg(command + " " + strings.Join(args, " "))
 	}

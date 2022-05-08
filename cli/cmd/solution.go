@@ -194,7 +194,7 @@ func (sl *solutionsList) getRemoteSolutions(url string, writeToCache bool, branc
 		ret = string(append(lic, yamlout...))
 
 	
-	 	utils.WriteToCache(&ret, "solutions.yaml")
+	 	utils.WriteToCache(&ret, "solutions.yaml", false)
 	}
 
 	return nil 
