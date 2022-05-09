@@ -18,7 +18,7 @@ metadata:
   name: storage-logsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/1020902403876-logginglogsink-csc # kpt-set: storage.cnrm.cloud.google.com/namespaces/${management-namespace}/StorageBucket/${org-id}-logginglogsink-${department-code}
+    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/0000000000-logginglogsink-dpt # kpt-set: storage.cnrm.cloud.google.com/namespaces/${management-namespace}/StorageBucket/${org-id}-logginglogsink-${department-code},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${guardrails-project-id}
 spec:
   destination:
     storageBucketRef:
@@ -40,10 +40,12 @@ metadata:
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   location: northamerica-northeast1
   storageClass: REGIONAL
   uniformBucketLevelAccess: true
+  publicAccessPrevention: true
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
