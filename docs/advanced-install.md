@@ -8,13 +8,15 @@ If you are not the following resources are required.
 * [kpt](https://kpt.dev/installation/)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) ( >= v1.20)
 
-1. Set Project ID, Cluster and Region Environment Variables
+1. Set environment variables that match your environment
 ```
-CLUSTER=config-controller
-REGION=northamerica-northeast1
-PROJECT_ID=<project_id>
-NETWORK=config-control
-SUBNET=config-control-subnet
+CLUSTER=<cluster-name>
+REGION=<supported-region>
+PROJECT_ID=<project-id>
+NETWORK=<vpc-name>
+SUBNET=<subnet-name>
+ORG_ID=<your_org_id>
+BILLING_ID=<your_billing_id>
 ```
 
 2. Create Project
@@ -24,7 +26,7 @@ gcloud projects create $PROJECT_ID --name="Config Controller" --labels=type=infr
 
 3. Enable Billing
 ```
-gcloud beta billing projects link unique-project-name --billing-account 0X0X0X-0X0X0X-0X0X0X
+gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID
 ```
 
 4. Set the project ID
@@ -50,7 +52,7 @@ gcloud compute networks subnets create $SUBNET  \
 
 7. Create the Config Controller Instance
 ```
-gcloud anthos config controller create main --location northamerica-northeast1 --network $NETWORK --subnet $SUBNET
+gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
 ```
 gcloud container clusters get-credentials $CLUSTER --region $REGION
@@ -60,7 +62,7 @@ kubens config-control
 8. Assign Permissions to the config connector Service Account.
 
 ```
-export ORG_ID=0X0X0X-0X0X0X-0X0X0X
+export ORG_ID=$ORG_ID
 export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 gcloud organizations add-iam-policy-binding "${ORG_ID}" \
