@@ -8,3 +8,4 @@ include:
 - issues.markdown.md
 - solutions.md
 - index.md
+theme: jekyll-theme-cayman
