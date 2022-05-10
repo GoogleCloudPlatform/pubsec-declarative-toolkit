@@ -34,7 +34,3 @@ OR JUST
 | Role | Description | Command |
 | --- | --- | --- |
 | Organization Administrator | Required to apply IAM Policies to a Service Account at the Org Level and adjust org policies | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/resourcemanager.organizationAdmin'` | 
-
-### Custom Role - Required Permissions
-
-If you wish to create a custom role for the bootstrap process then the following permissions need to be added to the role. _NOTE_: The user will also need to assigned the Organization Policy Administrator Role as these permission can not be assigned to a custom role.
