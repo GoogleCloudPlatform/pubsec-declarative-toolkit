@@ -16,6 +16,7 @@ The following steps are modified from this [guide](https://cloud.google.com/anth
 ```
 export PROJECT_ID=<config-controller-project-id>
 export CONFIG_CONTROLLER_NAME=<name-of-config-controller-instance>
+```
 
 1. Enable source repository service.
 
