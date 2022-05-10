@@ -77,7 +77,7 @@ Validates no account has been created with the required permissions to access th
 ## Usage
 
 ### Fetch the package
-`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails-policies guardrails-policies`
+`kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies guardrails-policies`
 Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### View package content

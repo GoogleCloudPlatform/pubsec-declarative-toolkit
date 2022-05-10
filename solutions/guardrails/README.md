@@ -5,84 +5,19 @@ This packge contains the minimal set of infrastructure needed to help provision 
 
 ## Usage
 
+0. Follow the steps in the [quickstart](../../README.md#Quickstart) to provision a config controller instances or the [advanced guide](../../docs/advanced-install.md)
+
 1. Fetch the package
-`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails guardrails`
-
-Details: https://kpt.dev/reference/cli/pkg/get/
-
-2. Create Project
 ```
-gcloud projects create unique-project-name --name="Guardrails Controller" --labels=type=infrastructure-automation --set-as-default
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails guardrails
 ```
 
-3. Enable Billing
-```
-gcloud beta billing projects link unique-project-name --billing-account 0X0X0X-0X0X0X-0X0X0X
-```
+2. Edit the `setters.yaml` file with the values you need.
 
-4. Create the Network.
-
-If the `compute.googleapis.com` api has not been enabled previously you will be prompted to enable it. Type `y` and press enter when prompted to do so.
-```
-gcloud compute networks create default --subnet-mode=auto
-```
-
-5. Enable APIs
-```
-gcloud services enable krmapihosting.googleapis.com \
-    container.googleapis.com \
-    cloudresourcemanager.googleapis.com
-```
-
-6. Create Config Controller
-```
-gcloud anthos config controller create guardrails-controller \
-    --location=northamerica-northeast1
-```
-
-7. Get access to the Controller
-```
-gcloud anthos config controller get-credentials guardrails-controller \
-    --location us-east1
-```
-
-8. Give Controller IAM Permissions to be able to create resources. You can get your org id by running the following commands `gcloud organizations list`
-```
-export PROJECT_ID=$(gcloud config get-value project)
-export ORG_ID=0X0X0X-0X0X0X-0X0X0X
-export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
-    -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/resourcemanager.folderAdmin"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/resourcemanager.projectCreator"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/resourcemanager.projectDeleter"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/iam.securityAdmin"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/orgpolicy.policyAdmin"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/serviceusage.serviceUsageConsumer"
-```
-
-9. Apply the package
+3. Apply the Changes
 ```
 kpt live init guardrails --namespace config-control
 kpt fn render
-```
-
-10. Edit the `setters.yaml` file with the values you need.
-
-11. Apply the Changes
-```
-kpt live apply guardrails --output=table
 ```
 
 ## Permissions

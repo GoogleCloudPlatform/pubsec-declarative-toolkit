@@ -6,9 +6,9 @@
     - Big Query Log Sink
     - GKE Metering
 
-### Apply the Configs
+## Usage
 
-#### Manually
+0. Follow the steps in the [quickstart](../../README.md#Quickstart) to provision a config controller instances or the [advanced guide](../../docs/advanced-install.md) if you don't already have an instance up and running.
 
 1. First make sure we have access to the target cluster and are pointing to the correct namespace. Bootstrap defaults for `CLUSTER` and `REGION` are:
 - `CLUSTER=config-controller`
@@ -20,7 +20,9 @@ kubens config-control
 ```
 
 2. Fetch the package
-`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/sandbox-gke sandbox-gke`
+```
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke sandbox-gke
+```
 
 3. Once we have done that we can start editing the `setters.yaml` file and populate the correct information. The values in the `setters` file will be used to populate the infrastructure YAML.
 
