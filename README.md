@@ -17,18 +17,7 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 
 In order to deploy the solutions we will need to activate a config-controller instance which we will then deploy a solution or solutions to it.
 
-1. Download the `arete` cli
-
-```
-wget .....
-```
-
-2. Creat the Config Controller Instance.
-```
-arete create config-control <name>
-```
-
-For a custom install please see the following [guide](docs/advanced-install.md)
+Follow the following [guide](docs/advanced-install.md) to deploy a standalone Config Controller instance or see the examples [directory](examples/) for example installation methods.
 
 ### Additional Documentation
 
