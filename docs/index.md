@@ -2,6 +2,10 @@ Table of contents
 
 *   [What is this Public Sector Declarative Toolkit?](#what-is-this-public-sector-declarative-toolkit)
 *   [What problem does the Sandbox solve?](#what-problem-does-this-solve)
+*   [What are Solutions](./solutions.md)
+*   [Getting Started](./getting-started.md)
+*   [Advanced Install](./advanced-install.md)
+*   [Known Issues](./issues.md)
 
 GCP Canadian PubSec Sandbox
 ===========================
