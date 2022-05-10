@@ -26,6 +26,6 @@ spec:
   resourceID: project-id # kpt-set: ${guardrails-project-id}
   folderRef:
     name: guardrails
-    billingAccountRef:
-      # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-      external: "0000000000" # kpt-set: ${billing-id}
+  billingAccountRef:
+    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    external: "0000000000" # kpt-set: ${billing-id}
