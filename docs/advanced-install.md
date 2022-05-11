@@ -15,8 +15,6 @@ REGION=<supported-region>
 PROJECT_ID=<project-id>
 NETWORK=<vpc-name>
 SUBNET=<subnet-name>
-ORG_ID=<your_org_id>
-BILLING_ID=<your_billing_id>
 ```
 
 2. Create Project
@@ -55,13 +53,15 @@ gcloud compute networks subnets create $SUBNET  \
 gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
 ```
-gcloud container clusters get-credentials $CLUSTER --region $REGION
+gcloud container clusters get-credentials krmapihost-$CLUSTER --region $REGION
 kubens config-control
 ```
 
 8. Assign Permissions to the config connector Service Account.
 
 ```
+ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
+BILLING_ID=$(gcloud alpha billing projects describe $PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
 export ORG_ID=$ORG_ID
 export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
