@@ -45,7 +45,7 @@ spec:
   location: northamerica-northeast1
   storageClass: REGIONAL
   uniformBucketLevelAccess: true
-  publicAccessPrevention: "true"
+  publicAccessPrevention: "enforced"
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
