@@ -126,7 +126,7 @@ spec:
     secretType: gcpserviceaccount
     gcpServiceAccountEmail: config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com
     syncBranch: main
-    syncRepo: https://source.developers.google.com/p/${PROJECT_ID}/r/guardrails-infra
+    syncRepo: https://source.developers.google.com/p/${PROJECT_ID}/r/guardrails-configs
   sourceFormat: unstructured
 EOF
 ```
@@ -162,11 +162,11 @@ Open the `setters.yaml` file in your favorite text editor. The most important fi
 kpt fn render
 
 # Succesfull Output
-Package "guardrails-infra/configs/hierarchy": 
+Package "guardrails-configs/configs/hierarchy": 
 [RUNNING] "gcr.io/kpt-fn/generate-folders:v0.1"
 [PASS] "gcr.io/kpt-fn/generate-folders:v0.1" in 1.2s
 
-Package "guardrails-infra": 
+Package "guardrails-configs": 
 [RUNNING] "gcr.io/kpt-fn/apply-setters:v0.2"
 [PASS] "gcr.io/kpt-fn/apply-setters:v0.2" in 900ms
   Results:
@@ -191,16 +191,16 @@ This will populate the required fields with the informatin you set in `setters.y
 
 4. Clone the repo that you created in the previous steps.
 ```
-gcloud source repos clone guardrails-infra
+gcloud source repos clone guardrails-configs
 ```
 
 ```
-mv guardrails/* guardrails-infra
+mv guardrails/* guardrails-configs
 rm -rf guardrails
 ```
 
 ```
-cd guardrails-infra
+cd guardrails-configs
 ```
 
 Create and switch to `main` branch.
