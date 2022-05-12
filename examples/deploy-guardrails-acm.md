@@ -21,11 +21,13 @@ export CONFIG_CONTROLLER_NAME=<name-of-config-controller-instance>
 1. Enable source repository service.
 
 ```
+cat > service << EOF
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   name: sourcerepo.googleapis.com
   namespace: config-control
+EOF
 ```
 
 2. Apply the manifest
@@ -38,13 +40,14 @@ This should take a few minutes for the service to enable. You can check on it's 
 
 3. Create the Repository Configs
 ```
-# repo.yaml
+cat > repo.yaml << EOF
 
 apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
 kind: SourceRepoRepository
 metadata:
   name: guardrails-configs
   namespace: config-control
+EOF
 ```
 
 4. Create the reposiory
@@ -56,8 +59,7 @@ Now we have our base infrastructure in place and we can now set up some IAM so t
 
 1. Create the IAM permissions. This is grant source repository reader access to the ACM service account.
 ```
-# gitops-iam.yaml
-
+cat > gitops-iam.yaml << EOF
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -95,6 +97,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/${PROJECT_ID}
+EOF
 ```
 
 2. Apply the configs
@@ -106,7 +109,7 @@ kubectl apply -f gitops-iam.yaml
 3. Configure the ACM instance.
 
 ```
-# config-management.yaml
+cat > config-management.yaml << EOF
 
 apiVersion: configmanagement.gke.io/v1
 kind: ConfigManagement
@@ -125,6 +128,7 @@ spec:
     syncBranch: main
     syncRepo: https://source.developers.google.com/p/${PROJECT_ID}/r/guardrails-infra
   sourceFormat: unstructured
+EOF
 ```
 
 4. Deploy ACM
@@ -156,6 +160,31 @@ Open the `setters.yaml` file in your favorite text editor. The most important fi
 3. Populate the config files with the setters information.
 ```
 kpt fn render
+
+# Succesfull Output
+Package "guardrails-infra/configs/hierarchy": 
+[RUNNING] "gcr.io/kpt-fn/generate-folders:v0.1"
+[PASS] "gcr.io/kpt-fn/generate-folders:v0.1" in 1.2s
+
+Package "guardrails-infra": 
+[RUNNING] "gcr.io/kpt-fn/apply-setters:v0.2"
+[PASS] "gcr.io/kpt-fn/apply-setters:v0.2" in 900ms
+  Results:
+    [info] metadata.namespace: set field value to "config-control"
+    [info] spec.parentRef.external: set field value to "00000000000"
+    [info] metadata.namespace: set field value to "config-control"
+    [info] metadata.annotations.cnrm.cloud.google.com/organization-id: set field value to "00000000000"
+    ...(163 line(s) truncated, use '--truncate-output=false' to disable)
+[RUNNING] "gcr.io/kpt-fn/enable-gcp-services:v0.1.0"
+[PASS] "gcr.io/kpt-fn/enable-gcp-services:v0.1.0" in 1.8s
+  Results:
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/guardrails-project-services-bigquery: recreated service
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/guardrails-project-services-cloudasset: recreated service
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/guardrails-project-services-pubsub: recreated service
+[RUNNING] "gcr.io/kpt-fn/kubeval:v0.2"
+[PASS] "gcr.io/kpt-fn/kubeval:v0.2" in 4s
+
+Successfully executed 4 function(s) in 2 package(s).
 ```
 
 This will populate the required fields with the informatin you set in `setters.yaml`
@@ -166,15 +195,17 @@ gcloud source repos clone guardrails-infra
 ```
 
 ```
-mv guardrails guardrails-infra
+mv guardrails/* guardrails-infra
+rm -rf guardrails
 ```
 
 ```
 cd guardrails-infra
 ```
 
+Create and switch to `main` branch.
 ```
-git config init.defaultBranch main
+git checkout -b main
 ```
 
 5. Commit your changes to git and push the configs to the repository.
@@ -189,13 +220,29 @@ After a few minutes you should start to see the resources deploying into the Con
 
 ```
 kubectl get gcp -n config-control
+
+#output should resemble this
+NAME                                                                    AGE   READY   STATUS     STATUS AGE
+bigquerydataset.bigquery.cnrm.cloud.google.com/bigquerylogginglogsink   18m   True    UpToDate   16m
+
+NAME                                                      AGE   READY   STATUS     STATUS AGE
+iamauditconfig.iam.cnrm.cloud.google.com/org-audit-logs   18m   True    UpToDate   17m
+
+NAME                                                                                           AGE   READY   STATUS     STATUS AGE
+iampartialpolicy.iam.cnrm.cloud.google.com/grd-rails-test-43535-sa-workload-identity-binding   60m   True    UpToDate   60m
+
+NAME                                                               AGE   READY   STATUS     STATUS AGE
+iamserviceaccount.iam.cnrm.cloud.google.com/config-sync-sa         69m   True    UpToDate   69m
+iamserviceaccount.iam.cnrm.cloud.google.com/grd-rails-test-43535   60m   True    UpToDate   60m
 ```
+
+
 
 ## Clean Up
 
 1. Remove resources from git to delete them from config controller.
 ```
-git rm -rf .
+git rm -rf configs/*
 git commit -m "deleted guardrails solution"
 ```
 
