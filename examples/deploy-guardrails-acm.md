@@ -21,7 +21,7 @@ export CONFIG_CONTROLLER_NAME=<name-of-config-controller-instance>
 1. Enable source repository service.
 
 ```
-cat > service << EOF
+cat > service.yaml << EOF
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
