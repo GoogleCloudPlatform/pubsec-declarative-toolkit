@@ -27,6 +27,19 @@ data:
   org-id: "0000000000"
   department-code: "goc"
   ######
+  # Guardrails Project Values
+  # This is the project where the guardrails resources will be deployed into
+  # Most likely a new project
+  #
+  guardrails-project-id: project-id # Must be globally unique and max 30 characters
+  guardrails-namespace: guardrails
+  #### Management Project
+  # This is the project where the config controller instance lives
+  #
+  management-project-id: config-controller-project
+  management-namespace: config-control
+  management-project-number: "0000000000"
+  ####
   #
   # Org Policies
   #
@@ -56,6 +69,7 @@ data:
   allowed-regions: |
     - northamerica-northeast1
     - northamerica-northeast2
+  ##########
   # Required to be compliant with Guardrails 04 - Enterprise Monitoring
   # Create role-based account to enable enterprise monitoring and visibility
   # Emails used must be Already in Cloud Identity
@@ -69,11 +83,4 @@ data:
   billing-data-group: email@email.com
   billing-data-viewer-group: email@email.com
   billing-console-viewer-group: email@email.com
-  ####
-  # Guardrails Project Values
-  guardrails-project-id: project-id # Must be globally unique and max 30 characters
-  guardrails-namespace: guardrails
-  #### Management Project
-  management-project-id: config-controller-project
-  management-namespace: config-control
-  management-project-number: 0000000000
+
