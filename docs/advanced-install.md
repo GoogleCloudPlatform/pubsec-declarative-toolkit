@@ -55,7 +55,7 @@ gcloud compute networks subnets create $SUBNET  \
 gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
 ```
-gcloud container clusters get-credentials $CLUSTER --region $REGION
+gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
 kubens config-control
 ```
 
