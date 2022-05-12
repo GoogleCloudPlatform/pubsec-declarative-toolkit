@@ -15,7 +15,6 @@
 - `REGION=northamerica-northeast1`
 
 ```
-gcloud container clusters get-credentials $CLUSTER --region $REGION
 gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
 kubens config-control
 ```
