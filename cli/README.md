@@ -13,6 +13,23 @@ Arete is the Public Sector Declarative Toolkits simplified workflow by providing
 - [Config Controller Setup](./docs/create.md)
 - [Config / Cache Management](./docs/config.md)
 
+### Compile the CLI ###
+
+In order to compile the CLI manually you can use the normal [Go](https://go.dev) compile and install process:
+
+You can Git clone the repo or even use kpt to get the cli package and then run
+
+```
+go build
+```
+
+add the location where the executable is installed in to your path
+
+```
+export PATH=$PATH:/path/to/your/install/directory
+```
+
+For more information read: https://go.dev/doc/tutorial/compile-install
 
 ### Technical ###
 
@@ -23,7 +40,6 @@ Arete utilizes / expects that the following executables are installed and global
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 
 Arete assumes that user authorization for gloud and the correct context for kubectl has already been completed by the user prior to calling arete.
-
 
 Arete is written in [Go](https://go.dev) utilizing the following primary packages:
 
