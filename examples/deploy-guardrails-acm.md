@@ -236,7 +236,83 @@ iamserviceaccount.iam.cnrm.cloud.google.com/config-sync-sa         69m   True   
 iamserviceaccount.iam.cnrm.cloud.google.com/grd-rails-test-43535   60m   True    UpToDate   60m
 ```
 
+## Policy Enforcement
 
+Now that we are able to deploy our infrastructure the next thing we might want to do is enforce policy to ensure we're doing things in a compliant manner. Luckily we can do this with [Policy Controller](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) which is included in Anthos Config Management and preinstalled in our Config Controller instance. Policy Controller allows us to write custom policy as code and have it enforced within our Config Controller instance.
+
+To get you started you can use the policies from our [guardrails-policies](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) package. At the time of this writing includes 3 policies (data-location, network-security-services, cloud-marketplace) to help enforce 30 Guardrails policies. 
+
+Using the infrastructure we've already deployed we'll download the `guardrails-policy` package and do some local testing.
+
+```
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies guardrails-policies
+```
+
+Now we'll need to add the [gatekeeper](https://catalog.kpt.dev/gatekeeper/v0.2/) function to our `Kptfile` so that it will execute on a `kpt fn render`. To do that add the following to the `validators` section.
+
+```
+  validators:
+    - image: gcr.io/kpt-fn/kubeval:v0.2
+      configMap:
+        ignore_missing_schemas: "true"
+        strict: "true"
+    - image: gcr.io/kpt-fn/gatekeeper:v0.2.1
+```
+
+With that added and the file saved running `kpt fn render` should pass. Here's the abbreviated output.
+
+```
+...
+[RUNNING] "gcr.io/kpt-fn/kubeval:v0.2"
+[PASS] "gcr.io/kpt-fn/kubeval:v0.2" in 5.4s
+[RUNNING] "gcr.io/kpt-fn/gatekeeper:v0.2.1"
+[PASS] "gcr.io/kpt-fn/gatekeeper:v0.2.1" in 1.8s
+```
+
+Now let's modify some files so that we get a failure to show how this works. Open the following file in your favorite code editor `guardrails-policies/05-data-location/constraint.yaml`
+
+This is the file that you will pass in parameters to decide what regions are allowed or not allowed in your environment and should look like the following.
+
+```
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: DataLocation
+metadata: # kpt-merge: /datalocation
+  name: datalocation
+spec:
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["*"]
+  parameters:
+    locations:
+      - "northamerica-northeast1"
+      - "northamerica-northeast2"
+      - "global"
+    allowedServices:
+      - ""
+```
+
+What this policy is doing is looking for any location that does not belong in the listed locations. In order to trigger a failure remove the following lines and save the file.
+
+```
+- "northamerica-northeast1"
+- "northamerica-northeast2"
+```
+
+Now this policy will only allow global resources to be deployed. Run `kpt fn render` again and things should now fail and you should get output similar to this.
+
+```
+[FAIL] "gcr.io/kpt-fn/gatekeeper:v0.2.1" in 1.6s
+  Results:
+    [error] bigquery.cnrm.cloud.google.com/v1beta1/BigQueryDataset/config-control/bigquerylogginglogsink: Guardrail # 5: Resource BigQueryDataset ('bigquerylogginglogsink') is located in 'northamerica-northeast1' when it is required to be in '["global"]' violatedConstraint: datalocation
+    [error] storage.cnrm.cloud.google.com/v1beta1/StorageBucket/config-control/1020902403876-logginglogsink-erg: Guardrail # 5: Resource StorageBucket ('1020902403876-logginglogsink-erg') is located in 'northamerica-northeast1' when it is required to be in '["global"]' violatedConstraint: datalocation
+  Stderr:
+    "[error] bigquery.cnrm.cloud.google.com/v1beta1/BigQueryDataset/config-control/bigquerylogginglogsink : Guardrail # 5: Resource BigQueryDataset ('bigquerylogginglogsink') is located in 'northamerica-northeast1' when it is required to be in '[\"global\"]'"
+    "violatedConstraint: datalocation"
+    ""
+    "[error] storage.cnrm.cloud.google.com/v1beta1/StorageBucket/config-control/1020902403876-logginglogsink-erg : Guardrail # 5: Resource StorageBucket ('1020902403876-logginglogsink-erg') is located in 'northamerica-northeast1' when it is required to be in '[\"global\"]'"
+    ...(1 line(s) truncated, use '--truncate-output=false' to disable)
+```
 
 ## Clean Up
 
