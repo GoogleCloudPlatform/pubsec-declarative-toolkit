@@ -38,7 +38,7 @@ data:
   #
   management-project-id: config-controller-project
   management-namespace: config-control
-  management-project-number: "0000000000"
+  management-project-number: "0000000000" # You can can this by running gcloud projects list --format="table(projectNumber)" --filter="management-project-id" <-- replace with management project id
   ####
   #
   # Org Policies
