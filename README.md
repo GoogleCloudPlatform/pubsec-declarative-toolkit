@@ -3,6 +3,9 @@
 The GCP PubSec Declarative Toolkit is a collection of declarative solutions to help you on your Journey to Google Cloud. Solutions are designed using [Config Connector](https://cloud.google.com/config-connector/docs/overview) and deployed using [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview).
 
 ## Current Solutions
+
+**While this repo is private you will need to use `git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git` instead of the provided `https` url**
+
 | Name | Description | Command | link |
 | --- | --- | --- | --- |
 | Guardrails | Base Infrastructure for 30 Day Guardrail Deployment | ```kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails guardrails``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails) |
