@@ -14,6 +14,7 @@ package cmd
 
 import (
 	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/rs/zerolog"
@@ -44,6 +45,8 @@ func Execute() {
 	}
 }
 
+
+// Init the CLI and add global flags
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))

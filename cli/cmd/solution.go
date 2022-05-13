@@ -111,6 +111,7 @@ func (sl *solutionsList) getRemoteSolutions(url string, writeToCache bool, branc
 		branch = "main"
 	}
 
+	// Remove prefix and suffix forward slashes
 	if subFolder == "" {
 		subFolder = "/"
 	} else if strings.Index(subFolder, "/") == 0 {
@@ -131,6 +132,7 @@ func (sl *solutionsList) getRemoteSolutions(url string, writeToCache bool, branc
 		return errors.New("malformed URL, unable to process")
 	}
 
+	// If the repo is private then a token can be passed in the URL to get access to the solutions file
 	gitToken := viper.GetString("git_token")
 
 	if  gitToken != "" {
