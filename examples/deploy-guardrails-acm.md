@@ -151,16 +151,14 @@ This will pull down the configurations required to deploy the guardrails infrast
 
 2. Our next step will be to populate the setters file with any relevant information.
 
-```
-cd guardrails
-```
 
 Open the `setters.yaml` file in your favorite text editor. The most important fields here are at the top of the file.
 
 3. Populate the config files with the setters information.
 ```
-kpt fn render
-
+kpt fn render guardrails
+```
+```
 # Succesfull Output
 Package "guardrails-configs/configs/hierarchy": 
 [RUNNING] "gcr.io/kpt-fn/generate-folders:v0.1"
