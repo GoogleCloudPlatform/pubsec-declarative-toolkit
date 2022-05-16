@@ -1,0 +1,29 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-na-ne-2
+upstream:
+  type: git
+  git:
+    repo: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit
+    directory: /services/private-gke
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit
+    directory: /services/private-gke
+    ref: main
+    commit: 1989bdc7e8ea388f90bf9885f345039388bbf184
+info:
+  description: sample description
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
+  validators:
+    - image: gcr.io/kpt-fn/kubeval:v0.2
+      configMap:
+        ignore_missing_schemas: "true"
+        strict: "true"

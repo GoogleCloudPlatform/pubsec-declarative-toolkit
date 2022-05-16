@@ -1,0 +1,19 @@
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubFeature
+metadata:
+  name: multi-cluster-ingress
+  labels:
+    label-one: value-one
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+spec:
+  projectRef:
+    external: guardrails-bootstrap # kpt-set: ${project-id} 
+  location: global
+  # The resourceID must be "multiclusteringress" if you want to use multi-cluster
+  # ingress feature.
+  resourceID: multiclusteringress
+  spec:
+    multiclusteringress:
+      configMembershipRef:
+        name: gke-ne1
