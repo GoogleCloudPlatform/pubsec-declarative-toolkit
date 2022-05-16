@@ -204,7 +204,7 @@ var createCmd = &cobra.Command{
 
 			sa := strings.Replace(string(ret), "'", "", 2)
 
-			cmdArgs = []string{"projects", "add-iam-policy-binding", project, `--member=serviceAccount:`+sa, `--role=roles/owner`}
+			cmdArgs = []string{"projects", "add-iam-policy-binding", project, `--member=serviceAccount:`+sa, `--role=roles/owner`, `--condition=None`}
 
 			log.Info().Msg("Add SA to roles/owner role...")
 			ret, err = utils.CallCommand(gcloud, cmdArgs, false)
