@@ -158,7 +158,7 @@ var createCmd = &cobra.Command{
 		// If the VPC has not already been created by the cli then let's do it
 		if !createSteps.stepExists("network") {
 			// BUT first let's check to make sure that the network with the same name doesn't already exist
-			cmdArgs := []string{"compute", "networks", "list", "--project=" + project, "--filter=\"name:" + networkConfig["name"].(string) + "\"", "--format=\"yaml\""}
+			cmdArgs := []string{"compute", "networks", "list", "--project=" + project, "--filter=name:" + networkConfig["name"].(string), "--format=\"yaml\""}
 
 			ret, err := utils.CallCommand(gcloud, cmdArgs, false)
 
@@ -184,7 +184,7 @@ var createCmd = &cobra.Command{
 		// If the subnet on the VPC has not already been created by the cli then let's do it
 		if !createSteps.stepExists("subnet") {
 			// BUT first let's check to make sure that a subnet with the same name doesn't already exist
-			cmdArgs := []string{"compute", "networks", "subnets", "list", "--project=" + project, "--filter=\"name:" + networkConfig["subnet-name"].(string) + "\"", "--format=\"yaml\""}
+			cmdArgs := []string{"compute", "networks", "subnets", "list", "--project=" + project, "--filter=name:" + networkConfig["subnet-name"].(string), "--format=\"yaml\""}
 
 			ret, err := utils.CallCommand(gcloud, cmdArgs, false)
 
