@@ -14,8 +14,8 @@ package cmd
 
 import (
 	"os"
-	"strings"
 	"path/filepath"
+	"strings"
 
 	"arete/pkg/utils"
 
@@ -29,7 +29,7 @@ import (
 
 var region, project, billing string
 var gcloud string = "gcloud"
-var currentRegions = []string {"us-central1", "us-east1", "northamerica-northeast1", "europe-north1", "australia-southeast1", "asia-northeast1"}
+var currentRegions = []string{"us-central1", "us-east1", "northamerica-northeast1", "europe-north1", "australia-southeast1", "asia-northeast1"}
 
 type createSteps struct {
 	Steps []step `yaml:"steps"`
@@ -54,8 +54,12 @@ func (cs *createSteps) stepExists(step string) bool {
 var createCmd = &cobra.Command{
 	Use:   "create <instance-name>",
 	Short: "Create a new Config Controller instance",
-	Example: ` arete create my-awesome-kcc --region=us-central1
-	arete create my-awesome-kcc --region=us-central1 --project=my-awesome-project --billing=111111-111A1A-AAAAA1`,
+	Long: `
+ The arete create command will create a new config controller instance for you, it can either use an existing project or create
+ a new one for you. Arete will check to make sure that the project exists, if it does not exist then arete will attempt to
+ create project and either prompt for a billing account or if the --billing flag is present it will use that billing ID`,
+	Example: ` arete create my-awesome-kcc --region=us-central1 # This will create a new project and prompt for billing ID
+ arete create my-awesome-kcc --region=us-central1 --project=my-awesome-project # This will utilize an existing project`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
@@ -97,18 +101,44 @@ var createCmd = &cobra.Command{
 			log.Info().Msgf("Project name will be set to: %s", project)
 		}
 
-		// billing flag not used, pull billing accounts and prompt the user to select one
-		if billing == "" {
-			if err := billingPrompt(); err!= nil {
-				log.Fatal().Err(err).Msg("Unable to generate billing prompt")
+		// Test if project exists
+		rtr, err := utils.CallCommand(gcloud, []string{"projects", "list", "--filter=projectId:" + project , "--format=\"yaml\""}, false)
+
+		if err != nil {
+			log.Fatal().Err(err).Msg("")
+		}
+
+		// If no project exists (or the user doesn't have access to it) let's create one
+		if len(string(rtr)) == 0 {
+			// billing flag not used, pull billing accounts and prompt the user to select one
+			if billing == "" {
+				billing, err = selectGcloudPrompt([]string{"alpha", "billing", "accounts", "list", "--format=value[separator=' - '](NAME, ACCOUNT_ID)"}, "billing account")
+
+				if err != nil {
+					log.Fatal().Err(err).Msg("Unable to generate billing prompt")
+				}
+			}
+
+			err := createProject(project, billing)
+
+			if err != nil {
+				log.Fatal().Err(err).Msg("")
+			}
+
+			cmdArgs := []string{"beta", "billing", "projects", "link", project, "--billing-account", billing}
+
+			billRes, err := utils.CallCommand(gcloud, cmdArgs, false)
+
+			if err != nil {
+				log.Fatal().Err(err).Msg("Unable to assign billing account to project: " + string(billRes))
 			}
 		}
 
 		// If the GCP services have not already been enabled by the cli then let's do it.
 		if !createSteps.stepExists("services") {
 			log.Info().Msg("Enabling required services...")
-			
-			cmdArgs := []string{"services", "enable", "krmapihosting.googleapis.com", "container.googleapis.com", "cloudresourcemanager.googleapis.com", "cloudbilling.googleapis.com", "--project="+project}
+
+			cmdArgs := []string{"services", "enable", "krmapihosting.googleapis.com", "container.googleapis.com", "cloudresourcemanager.googleapis.com", "cloudbilling.googleapis.com", "--project=" + project}
 
 			_, err := utils.CallCommand(gcloud, cmdArgs, true)
 
@@ -128,7 +158,7 @@ var createCmd = &cobra.Command{
 		// If the VPC has not already been created by the cli then let's do it
 		if !createSteps.stepExists("network") {
 			// BUT first let's check to make sure that the network with the same name doesn't already exist
-			cmdArgs := []string{"compute", "networks", "list", "--project="+project, "--filter=\"name:"+networkConfig["name"].(string)+"\"", "--format=\"yaml\""}
+			cmdArgs := []string{"compute", "networks", "list", "--project=" + project, "--filter=\"name:" + networkConfig["name"].(string) + "\"", "--format=\"yaml\""}
 
 			ret, err := utils.CallCommand(gcloud, cmdArgs, false)
 
@@ -137,7 +167,7 @@ var createCmd = &cobra.Command{
 			}
 
 			if len(string(ret)) == 0 {
-				cmdArgs = []string{"compute", "networks", "create" , networkConfig["name"].(string), "--project="+project, "--subnet-mode=custom"}
+				cmdArgs = []string{"compute", "networks", "create", networkConfig["name"].(string), "--project=" + project, "--subnet-mode=custom"}
 
 				log.Info().Msg("Creating Network...")
 
@@ -154,7 +184,7 @@ var createCmd = &cobra.Command{
 		// If the subnet on the VPC has not already been created by the cli then let's do it
 		if !createSteps.stepExists("subnet") {
 			// BUT first let's check to make sure that a subnet with the same name doesn't already exist
-			cmdArgs := []string{"compute", "networks", "subnets", "list", "--project="+project, "--filter=\"name:"+networkConfig["subnet-name"].(string)+"\"", "--format=\"yaml\""}
+			cmdArgs := []string{"compute", "networks", "subnets", "list", "--project=" + project, "--filter=\"name:" + networkConfig["subnet-name"].(string) + "\"", "--format=\"yaml\""}
 
 			ret, err := utils.CallCommand(gcloud, cmdArgs, false)
 
@@ -163,7 +193,7 @@ var createCmd = &cobra.Command{
 			}
 
 			if len(string(ret)) == 0 {
-				cmdArgs = []string{"compute", "networks", "subnets", "create", networkConfig["subnet-name"].(string), "--network="+networkConfig["name"].(string), "--range="+networkConfig["cidr"].(string), "--enable-private-ip-google-access", "--region="+region, "--project="+project}
+				cmdArgs = []string{"compute", "networks", "subnets", "create", networkConfig["subnet-name"].(string), "--network=" + networkConfig["name"].(string), "--range=" + networkConfig["cidr"].(string), "--enable-private-ip-google-access", "--region=" + region, "--project=" + project}
 
 				log.Info().Msg("Creating subnet....")
 
@@ -179,7 +209,7 @@ var createCmd = &cobra.Command{
 
 		// If config controller hasn't already been setup by the cli then let's do it
 		if !createSteps.stepExists("config-controller") {
-			cmdArgs := []string{"anthos", "config", "controller", "create", args[0], "--location="+region, "--network="+networkConfig["name"].(string), "--subnet="+networkConfig["subnet-name"].(string), "--project="+project}
+			cmdArgs := []string{"anthos", "config", "controller", "create", args[0], "--location=" + region, "--network=" + networkConfig["name"].(string), "--subnet=" + networkConfig["subnet-name"].(string), "--project=" + project}
 
 			log.Info().Msg("Creating Config Controller Cluster....")
 
@@ -204,7 +234,7 @@ var createCmd = &cobra.Command{
 
 			sa := strings.Replace(string(ret), "'", "", 2)
 
-			cmdArgs = []string{"projects", "add-iam-policy-binding", project, `--member=serviceAccount:`+sa, `--role=roles/owner`, `--condition=None`}
+			cmdArgs = []string{"projects", "add-iam-policy-binding", project, `--member=serviceAccount:` + sa, `--role=roles/owner`, `--condition=None`}
 
 			log.Info().Msg("Add SA to roles/owner role...")
 			ret, err = utils.CallCommand(gcloud, cmdArgs, false)
@@ -232,21 +262,62 @@ func init() {
 	createCmd.Flags().StringVarP(&billing, "billing", "b", "", "Billing account to be used for project and resources")
 }
 
-// billingPrompt will pull the list of billing accounts using glcoud that the current user has access to
-// and prompt them to select one to use to for the command
-func billingPrompt() error {
+// Create a project at either the org or at a folder level.
+func createProject(project string, billing string) error {
+	var folderId string
+
+	orgId, err := selectGcloudPrompt([]string{"organizations", "list", "--format=value[separator=' - '](DISPLAY_NAME, ID)"}, "organization ID")
+
+	if err != nil {
+		return err
+	}
+
+	prompt := promptui.Select{
+		Label: "Would you like the project to be created at the Org level or in a folder",
+		Items: []string{"Organization Level", "Folder Level"},
+	}
+
+	_, result, err := prompt.Run()
+
+	if err != nil {
+		return err
+	}
+
+	cmdArgs := []string{"projects", "create", project, "--set-as-default", "--labels=created-with-arete=true"}
+
+	if result == "Folder Level" {
+		folderId, err = selectGcloudPrompt([]string{"resource-manager", "folders", "list", "--organization="+orgId,  "--format=value[separator=' - '](DISPLAY_NAME, ID)"}, "folder")
+
+		if err != nil {
+			return err
+		}
+
+		cmdArgs = append(cmdArgs, "--folder="+folderId)
+	} else {
+		cmdArgs = append(cmdArgs, "--organization="+orgId)
+	}
+
+	_, err = utils.CallCommand(gcloud, cmdArgs, true)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Generic select prompt from a gcloud list command
+func selectGcloudPrompt(args []string, label string) (string, error) {
 	var opts []string
 
 	if verbose {
-		log.Debug().Msg("Calling gcloud alpha billing accounts list")
+		log.Debug().Msg("Calling gcloud "+label+" list")
 	}
-
-	args := []string{"alpha", "billing", "accounts", "list", "--format=value[separator=' - '](NAME, ACCOUNT_ID)"}
 
 	out, err := utils.CallCommand("gcloud", args, false)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	sp := strings.Split(string(out), "\n")
@@ -256,20 +327,18 @@ func billingPrompt() error {
 		opts = append(opts, sp[i])
 	}
 
-	 prompt := promptui.Select{
-		 Label: "Choose a billing account",
-		 Items: opts,
-	 }
+	prompt := promptui.Select{
+		Label: "Choose a " + label,
+		Items: opts,
+	}
 
-	 _, result, err := prompt.Run()
+	_, result, err := prompt.Run()
 
-	 if err != nil {
-		 return err
-	 }
+	if err != nil {
+		return "", err
+	}
 
-	billing = result[strings.Index(result, " - ") + 3:]
-
-	return nil
+	return result[strings.Index(result, " - ")+3:], nil
 }
 
 // Save a step to the cache .create file for future tracking
