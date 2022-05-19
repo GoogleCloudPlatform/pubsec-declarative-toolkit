@@ -17,10 +17,11 @@ Arete is the Public Sector Declarative Toolkits simplified workflow by providing
 
 In order to compile the CLI manually you can use the normal [Go](https://go.dev) compile and install process:
 
-You can Git clone the repo or even use kpt to get the cli package and then run
+You can Git clone the repo or even use kpt (`kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/cli`)to get the cli package and then run
 
 ```
-go build
+cd cli
+go install
 ```
 
 add the location where the executable is installed in to your path
