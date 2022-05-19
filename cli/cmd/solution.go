@@ -126,17 +126,19 @@ func (sl *solutionsList) getRemoteSolutions(url string, writeToCache bool, branc
 	reg := regexp.MustCompile(`^https://github.com/([a-zA-Z0-9-/]*)`)
 	res := reg.FindStringSubmatch(url)
 
-	if len(res) == 2 {
-		url = "https://raw.githubusercontent.com/" + res[1] + "/" + branch + "/" + subFolder + "/solutions.yaml"
-	} else {
-		return errors.New("malformed URL, unable to process")
-	}
-
 	// If the repo is private then a token can be passed in the URL to get access to the solutions file
 	gitToken := viper.GetString("git_token")
 
-	if  gitToken != "" {
-		url += "?token=" + gitToken
+	if len(res) == 2 {
+		url = "https://"
+
+		if  gitToken != "" {
+			url = url + gitToken + "@"
+		}
+
+		url = url + "raw.githubusercontent.com/" + res[1] + "/" + branch + "/" + subFolder + "/solutions.yaml"
+	} else {
+		return errors.New("malformed URL, unable to process")
 	}
 
 	if viper.GetBool("verbose") {

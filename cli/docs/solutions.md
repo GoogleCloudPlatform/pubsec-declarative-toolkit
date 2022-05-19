@@ -2,6 +2,12 @@
 
 There are 2 aspects to way solutions are managed in arete. First there is a local `solutions.yaml` file that tracks all solutions that have been added to arete from either the global GitHub solutions library or by calling `arete solution get`.
 
+---
+*ALPHA NOTE:* Right now the GitHub repo is private and thusly you need to add your GitHub personal access token to the config file. See: [Config Doc](config.md)
+
+---
+
+
  ## Listing available solutions ##
 
  If you wish to see which solutions have been added and / or are available to arete, simple run the command `arete solution list`
