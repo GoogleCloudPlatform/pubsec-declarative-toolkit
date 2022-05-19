@@ -39,7 +39,6 @@ Follow the following [guide](docs/advanced-install.md) to deploy a standalone Co
 ## Additional Documentation
 
 For further documentation on the project, including the setup pre-requirements see the 
-- [Advanced Install](docs/advanced-install.md).
 - [Multi-Tenancy](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint)
 - [Known Issues](docs/issues.md)
 
