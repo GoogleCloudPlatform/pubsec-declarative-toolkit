@@ -75,7 +75,7 @@ spec:
 
         violation[{"msg":msg}] {
           input.review.kind.kind == "StorageBucket"
-          not input.review.object.spec.publicAccessPrevention == "true"
+          not input.review.object.spec.publicAccessPrevention == "enforced"
           msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
         }
 

@@ -17,6 +17,10 @@ solutions:
     description: |
       Implementation of the GC Cloud Guardrails Checks. More Info: https://github.com/canada-ca/cloud-guardrails-gcp
     url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails@main
+  - solution: guardrails-policy-bundle
+    description: |
+      Policy Bundle to help analyze compliance for Guardrails
+    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails-policies@main
   - solution: kcc-namespaces
     description: |
       Simplified declarative multi-tenancy with project namespaces taken from: https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint
