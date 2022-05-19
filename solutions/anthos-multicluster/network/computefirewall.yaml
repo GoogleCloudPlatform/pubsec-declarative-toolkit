@@ -18,7 +18,7 @@ metadata: # kpt-merge: sandbox/nist-firewall-deny
   name: nist-firewall-deny
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: guardrails-bootstrap # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: my-awesome-project # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn'
 spec:
   deny:

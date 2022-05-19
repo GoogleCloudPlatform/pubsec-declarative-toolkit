@@ -17,7 +17,7 @@ kind: BigQueryDataset
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "guardrails-bootstrap" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "my-awesome-project" # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
   name: gkemeteringne1
   namespace: config-control # kpt-set: ${project-namespace}

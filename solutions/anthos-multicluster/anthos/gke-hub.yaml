@@ -5,14 +5,14 @@ metadata:
     label-one: value-one
   name: gke-ne1
   annotations:
-    cnrm.cloud.google.com/project-id: "guardrails-bootstrap" # kpt-set: ${project-id}    
+    cnrm.cloud.google.com/project-id: "my-awesome-project" # kpt-set: ${project-id}    
     cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
   namespace: config-control # kpt-set: ${project-namespace}
 spec:
   location: global
   authority:
     # Issuer must contain a link to a valid JWT issuer. Your ContainerCluster is one. To use it, replace ${PROJECT_ID?} with your project ID.
-    issuer: https://container.googleapis.com/v1/projects/guardrails-bootstrap/locations/northamerica-northeast1/clusters/gke-net-na-ne-1 # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/northamerica-northeast1/clusters/gke-net-na-ne-1
+    issuer: https://container.googleapis.com/v1/projects/my-awesome-project/locations/northamerica-northeast1/clusters/gke-net-na-ne-1 # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/northamerica-northeast1/clusters/gke-net-na-ne-1
   description: northamerica-northeast1
   endpoint:
     gkeCluster:
@@ -26,14 +26,14 @@ metadata:
     label-one: value-one
   name: gke-ne2
   annotations:
-    cnrm.cloud.google.com/project-id: "guardrails-bootstrap" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "my-awesome-project" # kpt-set: ${project-id}  
     cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
   namespace: config-control # kpt-set: ${project-namespace}
 spec:
   location: global
   authority:
     # Issuer must contain a link to a valid JWT issuer. Your ContainerCluster is one. To use it, replace ${PROJECT_ID?} with your project ID.
-    issuer: https://container.googleapis.com/v1/projects/guardrails-bootstrap/locations/northamerica-northeast2/clusters/gke-net-na-ne-2 # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/northamerica-northeast2/clusters/gke-net-na-ne-2
+    issuer: https://container.googleapis.com/v1/projects/my-awesome-project/locations/northamerica-northeast2/clusters/gke-net-na-ne-2 # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/northamerica-northeast2/clusters/gke-net-na-ne-2
   description: northamerica-northeast2
   endpoint:
     gkeCluster:

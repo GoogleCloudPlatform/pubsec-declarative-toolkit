@@ -19,11 +19,11 @@ metadata: # kpt-merge: config-control/k8s-viewer
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: group:anthos-users@chriscarty.altostrat.com # kpt-set: group:${gke-viewer}
+  member: group:email@domain.ca # kpt-set: group:${gke-viewer}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-bootstrap # kpt-set: ${project-id}
+    external: my-awesome-project # kpt-set: ${project-id}
   role: roles/container.clusterViewer
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -34,9 +34,9 @@ metadata: # kpt-merge: config-control/k8s-admin
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
-  member: group:anthos-users@chriscarty.altostrat.com # kpt-set: group:${gke-admin}
+  member: group:email@domain.ca # kpt-set: group:${gke-admin}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-bootstrap # kpt-set: ${project-id}
+    external: my-awesome-project # kpt-set: ${project-id}
   role: roles/container.admin

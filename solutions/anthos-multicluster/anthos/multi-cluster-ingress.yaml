@@ -6,9 +6,10 @@ metadata:
     label-one: value-one
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
+  namespace: config-control # kpt-set: ${project-namespace}
 spec:
   projectRef:
-    external: guardrails-bootstrap # kpt-set: ${project-id} 
+    external: my-awesome-project # kpt-set: ${project-id} 
   location: global
   # The resourceID must be "multiclusteringress" if you want to use multi-cluster
   # ingress feature.

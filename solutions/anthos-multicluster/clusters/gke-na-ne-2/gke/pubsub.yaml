@@ -17,5 +17,5 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-pubsub
   name: gke-net-na-ne-2-pubsub # kpt-set: ${cluster-name}-pubsub
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "guardrails-bootstrap" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "my-awesome-project" # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'

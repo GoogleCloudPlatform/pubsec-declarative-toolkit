@@ -17,7 +17,7 @@ metadata: # kpt-merge: config-control/binauth-allowed-repos
   name: binauth-allowed-repos
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "guardrails-bootstrap" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "my-awesome-project" # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   admissionWhitelistPatterns:
@@ -27,10 +27,10 @@ spec:
     - namePattern: "gke.gcr.io/*"
     - namePattern: "gcr.io/stackdriver-agents/*"
     - namePattern: "gcr.io/google-samples/*"
-    - namePattern: "northamerica-northeast1-docker.pkg.dev/guardrails-bootstrap/container-registry" # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
+    - namePattern: "northamerica-northeast1-docker.pkg.dev/my-awesome-project/container-registry" # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
   defaultAdmissionRule:
     enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
     evaluationMode: "ALWAYS_ALLOW"
   globalPolicyEvaluationMode: ENABLE
   projectRef:
-    external: guardrails-bootstrap # kpt-set: ${project-id}
+    external: my-awesome-project # kpt-set: ${project-id}

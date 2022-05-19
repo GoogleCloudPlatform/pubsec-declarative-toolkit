@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata: # kpt-merge: /setters
@@ -23,16 +22,16 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   #### Management Project
-  project-id: guardrails-bootstrap
+  project-id: my-awesome-project
   project-namespace: config-control
   department-code: "goc"
   ######
-  asset-viewer-group: anthos-users@chriscarty.altostrat.com
-  audit-data-group: anthos-users@chriscarty.altostrat.com
-  audit-data-viewer-group: anthos-users@chriscarty.altostrat.com
-  billing-data-group: anthos-users@chriscarty.altostrat.com
-  billing-data-viewer-group: anthos-users@chriscarty.altostrat.com
-  billing-console-viewer-group: anthos-users@chriscarty.altostrat.com
+  asset-viewer-group: email@domain.ca
+  audit-data-group: email@domain.ca
+  audit-data-viewer-group: email@domain.ca
+  billing-data-group: email@domain.ca
+  billing-data-viewer-group: email@domain.ca
+  billing-console-viewer-group: email@domain.ca
   ####
-  gke-admin: anthos-users@chriscarty.altostrat.com
-  gke-viewer: anthos-users@chriscarty.altostrat.com
+  gke-admin: email@domain.ca
+  gke-viewer: email@domain.ca

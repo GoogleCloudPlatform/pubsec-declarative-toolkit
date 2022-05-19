@@ -18,9 +18,11 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
-    cnrm.cloud.google.com/project-id: "guardrails-bootstrap" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: "my-awesome-project" # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    # config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/config-control/ComputeSubnetwork/gke-ne2-subnet
 spec:
+  minMasterVersion: 1.23.5-gke.1501
   addonsConfig:
     configConnectorConfig:
       enabled: false
@@ -28,6 +30,8 @@ spec:
       enabled: true
     networkPolicyConfig:
       disabled: false
+  releaseChannel:
+    channel: REGULAR
   description: dev-cluster # kpt-set: ${cluster-description}
   enableBinaryAuthorization: true
   enableIntranodeVisibility: true
@@ -72,7 +76,7 @@ spec:
   workloadIdentityConfig:
     # Workload Identity supports only a single namespace based on your project name.
     # Replace ${PROJECT_ID?} below with your project ID.
-    identityNamespace: guardrails-bootstrap.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
+    identityNamespace: my-awesome-project.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
   nodeConfig:
     shieldedInstanceConfig:
       enableIntegrityMonitoring: true

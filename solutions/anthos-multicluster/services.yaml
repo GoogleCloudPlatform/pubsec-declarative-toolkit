@@ -1,7 +1,7 @@
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: ProjectServiceSet
 metadata:
-  name: guardrails-bootstrap-services # kpt-set: ${project-id}-services
+  name: innovapost-demo-services
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
     cnrm.cloud.google.com/deletion-policy: "false"
@@ -22,4 +22,6 @@ spec:
     - gkehub.googleapis.com
     - multiclusteringress.googleapis.com
     - multiclusterservicediscovery.googleapis.com
-  projectID: guardrails-bootstrap # kpt-set: ${project-id}
+    - trafficdirector.googleapis.com
+    - containersecurity.googleapis.com
+  projectID: my-awesome-project # kpt-set: ${project-id}

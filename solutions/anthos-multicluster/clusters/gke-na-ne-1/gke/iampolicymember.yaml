@@ -20,9 +20,9 @@ metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-viewer
     cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   # replace ${PROJECT_ID?} with your project name
-  member: group:anthos-users@chriscarty.altostrat.com # kpt-set: group:${billing-data-viewer-group}
+  member: group:email@domain.ca # kpt-set: group:${billing-data-viewer-group}
   role: roles/bigquery.dataViewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: guardrails-bootstrap # kpt-set: ${project-id}
+    external: my-awesome-project # kpt-set: ${project-id}
