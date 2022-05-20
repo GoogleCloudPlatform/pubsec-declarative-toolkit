@@ -10,6 +10,35 @@ To do that follow the steps outlined in the advanced [install guide](../docs/adv
 arete create my-configcontroller --region northamerica-northeast1 --project=my-project-id
 ```
 
+We will be adding some org level services so we will need the following services added to the Config Controller Service Account.
+
+```
+export ORG_ID=<orgID>
+export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
+    -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/resourcemanager.folderAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/resourcemanager.projectCreator"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/resourcemanager.projectDeleter"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/iam.securityAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/orgpolicy.policyAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/serviceusage.serviceUsageConsumer"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/billing.user"  
+```
+
 This will create a new Config Controller instance along with networking in the target project.
 
 ## Setting Up ACM
@@ -23,6 +52,11 @@ The following steps are modified from this [guide](https://cloud.google.com/anth
 ```
 export PROJECT_ID=<config-controller-project-id>
 export CONFIG_CONTROLLER_NAME=<name-of-config-controller-instance>
+```
+
+Set your project context
+```
+gcloud config set project $PROJECT_ID
 ```
 
 1. Enable source repository service.
@@ -194,6 +228,16 @@ Successfully executed 4 function(s) in 2 package(s).
 
 This will populate the required fields with the informatin you set in `setters.yaml`
 
+### Note on Billing ID
+If you want to omit the billing id you can leave it as is and in the `configs/project/guardrails/project.yaml` file comment out or delete the billing id section like so.
+```
+  # billingAccountRef:
+  #   # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+  #   external: "0000000000000" # kpt-set: ${billing-id}
+```
+
+This will cause the project to be created without a billing id but you can manually add it in the billing UI under projects or by running the following command `gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID`.
+
 4. Clone the repo that you created in the previous steps.
 ```
 gcloud source repos clone guardrails-configs
@@ -218,15 +262,17 @@ git checkout -b main
 ```
 git add .
 git commit -m "Add Guardrails solution"
-git push
+git push --set-upstream origin main
 ```
 
 After a few minutes you should start to see the resources deploying into the Config Controller instance
 
 ```
 kubectl get gcp -n config-control
+```
 
-#output should resemble this
+The output should resemble this.
+```
 NAME                                                                    AGE   READY   STATUS     STATUS AGE
 bigquerydataset.bigquery.cnrm.cloud.google.com/bigquerylogginglogsink   18m   True    UpToDate   16m
 
@@ -241,6 +287,34 @@ iamserviceaccount.iam.cnrm.cloud.google.com/config-sync-sa         69m   True   
 iamserviceaccount.iam.cnrm.cloud.google.com/grd-rails-test-43535   60m   True    UpToDate   60m
 ```
 
+If there are any services that are reporting `UpdateFailed` you can inspect them like a standard Kubernetes object to find out what went wrong or is causing the problem.
+
+For example if you forgot to add the organization policy to the `setters.yaml` file and attempt to deploy the services you should end up in a similar state to this.
+
+
+```
+NAME                                                                              AGE     READY   STATUS         STATUS AGE
+iampolicymember.iam.cnrm.cloud.google.com/allow-configsync-sa-read-csr            17m     True    UpToDate       17m
+iampolicymember.iam.cnrm.cloud.google.com/config-sync-wi                          17m     True    UpToDate       17m
+iampolicymember.iam.cnrm.cloud.google.com/my-awesome-project-org-policyadmin    9m28s   False   UpdateFailed   9m28s
+iampolicymember.iam.cnrm.cloud.google.com/my-awesome-project-sa-logging-admin   9m28s   False   UpdateFailed   9m27s
+iampolicymember.iam.cnrm.cloud.google.com/project-id-sa-role-admin                9m28s   False   UpdateFailed   9m27s
+```
+
+We can see that they objects are failing so lets use `kubectl describe` to find out what is wrong.
+```
+kubectl describe iampolicymember.iam.cnrm.cloud.google.com/my-awesome-project-org-policyadmin 
+```
+At the bottom of the page you see an events section that contains an explaination for why the object is in it's current state.
+```
+Events:
+  Type     Reason        Age                 From                        Message
+  ----     ------        ----                ----                        -------
+  Warning  UpdateFailed  99s (x12 over 13m)  iampolicymember-controller  Update call failed: error fetching live state for resource: error reading underlying resource: summary: Error when reading or editing Resource "organization \"0000000000\"" with IAM Member: Role "roles/orgpolicy.policyAdmin" Member "serviceAccount:service-000000000@gcp-sa-yakima.iam.gserviceaccount.com": Error retrieving IAM policy for organization "0000000000": googleapi: Error 403: The caller does not have permission, forbidden
+```
+
+As you can image `0000000000` does not exist so I will have to fix that and rerun `kpt fn render` and save things to get again.
+
 **Note: [Apply Time Mutation](https://kpt.dev/reference/annotations/apply-time-mutation/) is not fully integrated into ACM at the moment so you may see some errors in the ACM logs failing to sync as a result of this. 
 
 ## Policy Enforcement
@@ -251,11 +325,18 @@ To get you started you can use the policies from our [guardrails-policies](https
 
 Using the infrastructure we've already deployed we'll download the `guardrails-policy` package and do some local testing.
 
+First move into the `guardrails-configs` folder
 ```
-kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies guardrails-policies
+cd guardrails-configs
 ```
 
-Now we'll need to add the [gatekeeper](https://catalog.kpt.dev/gatekeeper/v0.2/) function to our `Kptfile` so that it will execute on a `kpt fn render`. To do that add the following to the `validators` section.
+and then grab the package.
+
+```
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies configs/guardrails-policies
+```
+
+Now we'll need to add the [gatekeeper](https://catalog.kpt.dev/gatekeeper/v0.2/) function to our `Kptfile` (`guardrails-configs/Kptfile`) so that it will execute on a `kpt fn render`. To do that add the following to the `validators` section.
 
 ```
   validators:
@@ -276,7 +357,7 @@ With that added and the file saved running `kpt fn render` should pass. Here's t
 [PASS] "gcr.io/kpt-fn/gatekeeper:v0.2.1" in 1.8s
 ```
 
-Now let's modify some files so that we get a failure to show how this works. Open the following file in your favorite code editor `guardrails-policies/05-data-location/constraint.yaml`
+Now let's modify some files so that we get a failure to show how this works. Open the following file in your favorite code editor `configs/guardrails-policies/05-data-location/constraint.yaml`
 
 This is the file that you will pass in parameters to decide what regions are allowed or not allowed in your environment and should look like the following.
 
@@ -330,6 +411,25 @@ git push
 ```
 
 What will happen now is the policies we just used to validate our infrastructure will be deployed into our cluster. This now means that not only will we get a check locally or in a CI/CD pipeline that our infrastructure state is compliant but it will also be enforced in our cluster. If anyone were to attempt to deploy some new infrastructure to our cluster it would be stopped and the new infra would be denied.
+
+You can check on your policies by using running
+```
+kubectl get constraints
+```
+
+Which will return a list of all the running constraints in your cluster
+```
+NAME                                                              ENFORCEMENT-ACTION   TOTAL-VIOLATIONS
+limitegresstraffic.constraints.gatekeeper.sh/limitegresstraffic                        0
+
+NAME                                                                      ENFORCEMENT-ACTION   TOTAL-VIOLATIONS
+cloudmarketplaceconfig.constraints.gatekeeper.sh/cloudmarketplaceconfig                        0
+
+NAME                                                  ENFORCEMENT-ACTION   TOTAL-VIOLATIONS
+datalocation.constraints.gatekeeper.sh/datalocation                        0
+```
+
+Policy Controller can also be integrated with Security Command Center for improved reporting of the audit violations. This is detailed in this [guide](https://cloud.google.com/architecture/reporting-policy-controller-audit-violations-security-command-center)
 
 ## Clean Up
 
