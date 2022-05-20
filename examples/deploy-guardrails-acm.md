@@ -436,11 +436,29 @@ Policy Controller can also be integrated with Security Command Center for improv
 1. Remove resources from git to delete them from config controller.
 ```
 git rm -rf configs/*
+mkdir configs/
+touch configs/.gitkeep
+git add .
 git commit -m "deleted guardrails solution"
 git push
 ```
 
-2. Delete Config Controller
+2. Delete the manaully created resources. Make sure you are in the same directory as the following file `config-management.yaml  gitops-iam.yaml   repo.yaml  service.yaml`.
+
+```
+kubectl delete -f config-management.yaml,gitops-iam.yaml,repo.yaml,service.yaml
+```
+
+3. Delete Config Controller
+
+Before deleting the resource check to make sure the GCP resources have been removed.
+
+```
+kubectl get gcp -n config-control
+```
+
+If the result is `No resources found in config-control namespace.`, then you are good to proceed. If you skip this step and delete the config controller instance then these resources will persist in your GCP environment.
+
 ```
 gcloud anthos config controller delete --location=us-central1 ${CONFIG_CONTROLLER_NAME}
 ```
