@@ -437,6 +437,7 @@ Policy Controller can also be integrated with Security Command Center for improv
 ```
 git rm -rf configs/*
 git commit -m "deleted guardrails solution"
+git push
 ```
 
 2. Delete Config Controller
