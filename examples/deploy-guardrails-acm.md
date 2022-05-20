@@ -4,13 +4,20 @@
 
 Our first step will be to provision a Config Controller Instance to deploy our infrastructure with.
 
-To do that follow the steps outlined in the advanced [install guide](../docs/advanced-install.md). This process should take about 20mins.
+To do that follow the steps outlined in the advanced [install guide](../docs/advanced-install.md). This process should take about 20mins or if you have  `arete` installed you can run the following command.
+
+```
+arete create my-configcontroller --region northamerica-northeast1 --project=my-project-id
+```
+
+This will create a new Config Controller instance along with networking in the target project.
 
 ## Setting Up ACM
 
 Now that we have a Config Controller Instance up we'll want to create a Source Repository for us to store our infrastructure code in. For this example we will be using Cloud Source Repositories because we can quickly create it and access it using Workload Identity, so no keys to manage! If you already have a favorite source repository you should be able to use that following these [instructions](https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#git-creds-secret).
 
 The following steps are modified from this [guide](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#manage-resources)
+
 
 0. Set Environment Variables
 ```
@@ -234,6 +241,8 @@ iamserviceaccount.iam.cnrm.cloud.google.com/config-sync-sa         69m   True   
 iamserviceaccount.iam.cnrm.cloud.google.com/grd-rails-test-43535   60m   True    UpToDate   60m
 ```
 
+**Note: [Apply Time Mutation](https://kpt.dev/reference/annotations/apply-time-mutation/) is not fully integrated into ACM at the moment so you may see some errors in the ACM logs failing to sync as a result of this. 
+
 ## Policy Enforcement
 
 Now that we are able to deploy our infrastructure the next thing we might want to do is enforce policy to ensure we're doing things in a compliant manner. Luckily we can do this with [Policy Controller](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) which is included in Anthos Config Management and preinstalled in our Config Controller instance. Policy Controller allows us to write custom policy as code and have it enforced within our Config Controller instance.
@@ -311,6 +320,16 @@ Now this policy will only allow global resources to be deployed. Run `kpt fn ren
     "[error] storage.cnrm.cloud.google.com/v1beta1/StorageBucket/config-control/1020902403876-logginglogsink-erg : Guardrail # 5: Resource StorageBucket ('1020902403876-logginglogsink-erg') is located in 'northamerica-northeast1' when it is required to be in '[\"global\"]'"
     ...(1 line(s) truncated, use '--truncate-output=false' to disable)
 ```
+
+Now that we've seen what a failure scenario looks like lets revert that change to its working state by readding the 2 lines we deleted and committing the new state to git.
+
+```
+git add .
+git commit -m "added guardrails"
+git push 
+```
+
+What will happen now is the policies we just used to validate our infrastructure will be deployed into our cluster. This now means that not only will we get a check locally or in a CI/CD pipeline that our infrastructure state is compliant but it will also be enforced in our cluster. If anyone were to attempt to deploy some new infrastructure to our cluster it would be stopped and the new infra would be denied.
 
 ## Clean Up
 
