@@ -27,6 +27,19 @@ data:
   org-id: "0000000000"
   department-code: "goc"
   ######
+  # Guardrails Project Values
+  # This is the project where the guardrails resources will be deployed into
+  # Most likely a new project
+  #
+  guardrails-project-id: project-id # Must be globally unique and max 30 characters
+  guardrails-namespace: guardrails
+  #### Management Project
+  # This is the project where the config controller instance lives
+  #
+  management-project-id: config-controller-project
+  management-namespace: config-control
+  management-project-number: "000000000000" # You can can this by running gcloud projects list --format="table(projectNumber)" --filter="management-project-id" <-- replace with management project id
+  ####
   #
   # Org Policies
   #
@@ -37,13 +50,13 @@ data:
   allowed-loadbalacers: |
     - INTERNAL
   allowed-domain-contacts: |
-    - "@example.com"
+    - "@email.com"
   allowed-domain-members: |
     - "asdasda"
   # Can IP Forward
   # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
   can-ip-forward: |
-    - "projects/PROJECT_ID" 
+    - projects/PROJECT_ID
   ######
   # Guardrails Values
   ######
@@ -56,6 +69,7 @@ data:
   allowed-regions: |
     - northamerica-northeast1
     - northamerica-northeast2
+  ##########
   # Required to be compliant with Guardrails 04 - Enterprise Monitoring
   # Create role-based account to enable enterprise monitoring and visibility
   # Emails used must be Already in Cloud Identity
@@ -63,13 +77,10 @@ data:
   # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/04_Enterprise-Monitoring-Accounts.md
   #
   ######
-  asset-viewer-group: email@domain.com
-  audit-data-group: email@domain.com
-  audit-data-viewer-group: email@domain.com
-  billing-data-group: email@domain.com
-  billing-data-viewer-group: email@domain.com
-  billing-console-viewer-group: email@domain.com
-  ####
-  # Guardrails Project Values
-  guardrails-project-id: guardrails-00000 # Must be globally unique
-  guardrails-namespace: guardrails
+  asset-viewer-group: email@email.com
+  audit-data-group: email@email.com
+  audit-data-viewer-group: email@email.com
+  billing-data-group: email@email.com
+  billing-data-viewer-group: email@email.com
+  billing-console-viewer-group: email@email.com
+

@@ -1,0 +1,73 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Storage Bucket Org LogSink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata:
+  name: storage-logsink
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/0000000000-logginglogsink-dpt # kpt-set: storage.cnrm.cloud.google.com/namespaces/${management-namespace}/StorageBucket/${org-id}-logginglogsink-${department-code},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${guardrails-project-id}
+spec:
+  destination:
+    storageBucketRef:
+      # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
+      name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
+      namespace: guardrails # kpt-set: ${management-namespace}
+  includeChildren: true
+  filter: logName:cloudaudit.googleapis.com
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "0000000000" # kpt-set: ${org-id}
+---
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
+metadata:
+  # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
+  name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/force-destroy: "true"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
+spec:
+  location: northamerica-northeast1
+  storageClass: REGIONAL
+  uniformBucketLevelAccess: true
+  publicAccessPrevention: "enforced"
+---
+# PubSub Audit Log Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: storage-sink-writer
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/apply-time-mutation: |
+      - sourceRef:
+          apiVersion: v1beta1
+          group: logging.cnrm.cloud.google.com
+          kind: LoggingLogSink
+          name: storage-logsink
+          namespace: config-control
+        sourcePath: $.status.writerIdentity
+        targetPath: $.spec.member
+        token: ${logging-writerIdentity}
+spec:
+  member: ${logging-writerIdentity}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${guardrails-project-id}
+  role: roles/storage.admin

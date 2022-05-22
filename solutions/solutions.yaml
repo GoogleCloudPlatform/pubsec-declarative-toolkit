@@ -1,0 +1,31 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+solutions:
+  - solution: guardrails
+    description: |
+      Implementation of the GC Cloud Guardrails Checks. More Info: https://github.com/canada-ca/cloud-guardrails-gcp
+    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails@main
+  - solution: guardrails-policy-bundle
+    description: |
+      Policy Bundle to help analyze compliance for Guardrails
+    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/guardrails-policies@main
+  - solution: kcc-namespaces
+    description: |
+      Simplified declarative multi-tenancy with project namespaces taken from: https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint
+    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/kcc-namespaces@main
+  - solution: sandbox-gke
+    description: |
+      A private GKE cluster with so many bells and whistles!
+    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/sandbox-gke@main

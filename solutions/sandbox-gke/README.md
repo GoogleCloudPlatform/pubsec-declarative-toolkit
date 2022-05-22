@@ -1,50 +1,79 @@
 # GCP PBMM Sandbox Environment
 
 ## What is Deployed in this package
-- 30 Day Guardrails Enforcement
 - Private GKE Cluster
 - Logging/Monitoring for GKE Cluster
     - Big Query Log Sink
     - GKE Metering
 
+## Usage
 
+0. Follow the steps in the [quickstart](../../README.md#Quickstart) to provision a config controller instances or the [advanced guide](../../docs/advanced-install.md) if you don't already have an instance up and running.
 
-### Apply the Configs
-
-#### Manually
-
-First make sure we have access to the target cluster and are pointing to the correct namespace. Bootstrap defaults for `CLUSTER` and `REGION` are:
+1. First make sure we have access to the target cluster and are pointing to the correct namespace. Bootstrap defaults for `CLUSTER` and `REGION` are:
 - `CLUSTER=config-controller`
 - `REGION=northamerica-northeast1`
 
 ```
-gcloud container clusters get-credentials $CLUSTER --region $REGION
+gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
 kubens config-control
 ```
 
-First we will want to initilize the directory with Git so we can keep track of local changes vs upstream changes. This will be needed to pull new updates from the `upstream` repository using `kpt pkg update`.
-
+2. Fetch the package
 ```
-git init
-```
-
-Once we have done that we can start editing the `setters.yaml` file and populate the correct information. The values in the `setters` file will be used to populate the infrastructure YAML.
-
-To populate the template with the `setters` inputs run `kpt fn render`.
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke sandbox-gke
 ```
 
-With the changes populated let's save the changes in `git`.
-```
-git add .
-git commit -m "description of the changes made"
-```
+3. Once we have done that we can start editing the `setters.yaml` file and populate the correct information. The values in the `setters` file will be used to populate the infrastructure YAML.
 
-Before we deploy the changes let's make sure we're in the correct `namespace` by running `kubens config-control`. Now we can run the `kpt` commands to deploy the configs to the Cluster.
+The following fields are exposed in `setters.yaml`
+
+| Name | Default Value | Type | 
+| -------- | --------- | ----- |
+| project-id | `sandbox-000000` | |
+| project-namespace | `config-control` | |
+| routing-mode | `REGIONAL` | |
+| mtu | `1460` | |
+| subnet-cidr | `10.2.0.0/16` | |
+| log-aggregation-interval | `INTERVAL_5_SEC` | |
+| flow-sampling | `0.5` | |
+| log-metadata | `INCLUDE_ALL_METADATA | |
+| private-google-access | `true` | |
+| gke-services-cidr | `10.3.0.0/16` | |
+| gke-pod-cidr | 10.4.0.0/16 | |
+| gke-pod-range-name | clusterrange | |
+| gke-services-range-name  | servicesrange | |
+| location | northamerica-northeast1 | |
+| cluster-description | dev-cluster | |
+| cluster-name | sandbox  | |
+| auth-network | | |
+| tags | | |
+| gke-admin | group@email.com | |
+| gke-viewer | group@email.com | |
+| machineType | e2-standard-4 | |
+| region | us-central1 | |
+4. To populate the template with the `setters` inputs run `kpt fn render`.
+
+
+5. Before we deploy the changes let's make sure we're in the correct `namespace` by running `kubens config-control`. Now we can run the `kpt` commands to deploy the configs to the Cluster.
 
 ```
 kpt live init
 kpt live apply
 ```
 
-#### GitOps via Config Sync
+### Resources Provisions
 
+| Resource | Namespace | Scope | Purpose |
+| -------- | --------- | ----- | ------- |
+| Artifact Registry | | | |
+| Compute Firewall | | | |
+| Compute Router | | | |
+| Compute Router NAT | | | |
+| Network | | | |
+| Subnet | | | |
+| GKE Cluster | | | |
+| Container Node Pool | | | |
+| Big Query Dataset | | | |
+| Pub/Sub | | | |
+| IAM Roles | | | |

@@ -23,7 +23,7 @@ spec:
   natIpAllocateOption: AUTO_ONLY
   region: us-central1 # kpt-set: ${region}
   routerRef:
-    name: router-sandbox-net # kpt-set: router-${netowork-name}
+    name: router-sandbox-net # kpt-set: router-${network-name}
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
   - subnetworkRef:
