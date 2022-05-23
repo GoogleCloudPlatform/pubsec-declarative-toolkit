@@ -20,6 +20,7 @@ metadata:
   labels:
     label-one: "value-one"
   name: project-sample-in-org
+  namespace: common
 spec:
   name: Config Connector Sample
   folderRef:

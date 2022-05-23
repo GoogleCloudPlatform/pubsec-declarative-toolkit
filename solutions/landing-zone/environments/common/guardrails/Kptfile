@@ -7,15 +7,15 @@ upstream:
   git:
     repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
     directory: /solutions/guardrails
-    ref: guardrails-solution-update
+    ref: main
   updateStrategy: resource-merge
 upstreamLock:
   type: git
   git:
     repo: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox
     directory: /solutions/guardrails
-    ref: guardrails-solution-update
-    commit: ebd4d73f09d94b01f7d06808e8f3e4674b03382b
+    ref: main
+    commit: 1eaf45aad27b714a6c882689b1a2e1f1b66b2245
 info:
   description: sample description
 pipeline:

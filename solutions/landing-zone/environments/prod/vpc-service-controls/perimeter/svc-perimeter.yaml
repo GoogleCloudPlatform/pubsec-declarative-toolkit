@@ -1,0 +1,80 @@
+apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
+kind: AccessContextManagerServicePerimeter
+metadata:
+  name: regular_service_perimeter_nonp_1
+  namespace: prod
+spec:
+  # Config for DRY-RUN
+  # To use this 'useExplicitDryRunSpec' must be set to 'true'
+  # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy
+  # Replace "${PROJECT_NUMBERx}" with the appropriate `project number` for the project to be protected by the perimeter
+  spec:
+    # List of Access Levels to be applied for this perimeter
+    description: Regular Service Perimeter Nonp 1
+    accessLevels:
+    - name: serviceperimeterdep2
+    # List of projects to be included in this perimeter
+    resources:
+    - projectRef:
+        external: "projects/${PROJECT_NUMBER1}"
+    - projectRef:
+        external: "projects/${PROJECT_NUMBER2}"
+    # List of restricted services
+    restrictedServices:
+    - "storage.googleapis.com"
+    # List of services that could be accessed from within the perimeter
+    vpcAccessibleServices:
+      allowedServices:
+      - "storage.googleapis.com"
+      - "pubsub.googleapis.com"
+      enableRestriction: true
+    egressPolicies:
+    - egressFrom:
+        identities:
+        - name: serviceperimeterengressdep
+    - egressTo:
+        resources:
+        - projectRef:
+            external: "projects/${PROJECT_NUMBER1}"
+    ingressPolicies:
+    - ingressFrom:
+        identities:
+        - name: serviceperimeteringressdep
+        sources:
+        - accessLevelRef:
+            name: serviceperimeterdep2
+      ingressTo:
+        resources:
+        - projectRef:
+            external: "projects/${PROJECT_NUMBER2}"
+  # Config to ENFORCE
+  # Config items are repeated as above for DRY-RUN
+  # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy
+  # Replace "${PROJECT_NUMBERx}" with the appropriate `project number` for the project to be protected by the perimeter
+  status:
+    accessLevels:
+    - name: serviceperimeterdep2
+    resources:
+    - projectRef:
+        external: "projects/${PROJECT_NUMBER3}"
+    - projectRef:
+        external: "projects/${PROJECT_NUMBER4}"
+    restrictedServices:
+    - "bigquery.googleapis.com"
+    vpcAccessibleServices:
+      allowedServices:
+      - "bigquery.googleapis.com"
+      - "logging.googleapis.com"
+      enableRestriction: true
+  title: Service Perimeter created by Config Connector
+  useExplicitDryRunSpec: true
+  accessPolicyRef:
+    # Using an already existing Access Policy.  Currently there is a limitation
+    # of only one Access Policy per Organisation.
+    # Use one of the two options below to select Access Policy
+    # 1. The dependent Access Policy Object created via Config Connector
+    # name: accesscontextmanagerserviceperimeterdep
+    # 2. Set the appropriate ACCESS_POLICY_NUMBER
+    external: accessPolicies/${ACCESS_POLICY_NUMBER}
+  description: A Service Perimeter Created by Config Connector
+  perimeterType: PERIMETER_TYPE_REGULAR

@@ -18,6 +18,7 @@
     labels:
       label-one: "value-one"
     name: computefirewall-sample-deny
+    namespace: prod
   spec:
     deny:
       - protocol: icmp

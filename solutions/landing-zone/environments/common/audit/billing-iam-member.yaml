@@ -16,6 +16,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: billing-iam-member
+  namespace: common
 spec:
   member: serviceAccount:billing-service-account@${PROJECT_ID?}.iam.gserviceaccount.com
   role: roles/logging.viewAccessor

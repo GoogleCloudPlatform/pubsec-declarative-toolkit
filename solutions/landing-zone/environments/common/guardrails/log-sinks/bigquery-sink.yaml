@@ -30,18 +30,3 @@ spec:
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
----
-#########
-# Big Query Instance
-apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
-kind: BigQueryDataset
-metadata: # kpt-merge: guardrails/bigquerylogginglogsink
-  name: bigquerylogginglogsink
-  namespace: guardrails # kpt-set: ${guardrails-namespace}
-  annotations:
-    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
-spec:
-  location: northamerica-northeast1
-  projectRef:
-    external: PROJECT_ID # kpt-set: ${guardrails-project-id}

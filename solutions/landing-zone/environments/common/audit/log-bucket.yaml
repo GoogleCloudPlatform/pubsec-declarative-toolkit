@@ -22,6 +22,7 @@ metadata:
     label-one: "value-one"
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: log-bucket
+  namespace: common
 spec:
   lifecycleRule:
     - action:

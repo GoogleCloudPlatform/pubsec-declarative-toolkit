@@ -1,0 +1,47 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  labels:
+    label-one: "value-one"
+  name: allow-egress-internet-pu
+  namespace: common
+spec:
+  description: Allow egress to the internet
+  direction: EGRESS
+  deny:
+    - protocol: icmp
+    - protocol: udp
+  sourceRanges:
+    - 0.0.0.0/0
+  networkRef:
+    name: computefirewall-dep-deny
+  targetTags:
+    - "allow-egress-internet-pu"
+  priority: 1000
+  disabled: false
+  logConfig:
+    metadata: EXCLUDE_ALL_METADATA
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  labels:
+    label-one: "value-one"
+  name: allow-ssh-ingressp
+  namespace: common
+spec:
+  description: Allow SSH Connections from the internet
+  direction: INGRESS
+  deny:
+    - protocol: icmp
+      ports: 22
+  sourceRanges:
+    - 0.0.0.0/0
+  networkRef:
+    name: computefirewall-dep-deny
+  targetTags:
+    - "allow-ssh"
+  priority: 1000
+  disabled: false
+  logConfig:
+    metadata: EXCLUDE_ALL_METADATA

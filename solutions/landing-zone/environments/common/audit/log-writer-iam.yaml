@@ -16,6 +16,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: log-writer
+  namespace: common
 spec:
   member: google_logging_billing_account_sink.billing-sink.writer_identity
   role: roles/storage.objectCreator
