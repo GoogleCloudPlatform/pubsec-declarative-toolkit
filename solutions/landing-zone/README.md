@@ -1,15 +1,36 @@
-# Landing Zone
+# KRM Landing Zone
 
 This is a reimplementation of [pbmm-on-gcp-onboarding](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding) Landing Zone in KRM.
 
 ## Usage
 
-### Fetch the package
-`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/landing-zone landing-zone`
+To deploy this LAnding Zone you will first need to create a Bootstrap project with a Config Controller instance.
+
+1. Deploy Bootstrap
+
+```
+arete create landing-zone-controller
+```
+
+This command will create a new project and deploy a Config Controller instance for you.
+
+2. Fetch the package
+`kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
 Details: https://kpt.dev/reference/cli/pkg/get/
 
+3. Set Organization Hierarchy
+
+4. Customize Package
+
+5. Deploy
+
+    a. kpt
+    b. GitOps
+    c. Arete
+
 ## Description
-sample description
+
+This landing Zone will create an initial 3 environments.
 
 Creates 3 Environments
 - Common
