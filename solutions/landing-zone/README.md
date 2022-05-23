@@ -1,4 +1,6 @@
-# landing-zone
+# Landing Zone
+
+This is a reimplementation of [pbmm-on-gcp-onboarding](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding) Landing Zone in KRM.
 
 ## Usage
 
@@ -19,13 +21,14 @@ Each environment contains the following resources:
 ### Common
 | Resource | Name | Purpose |
 | ---- | ---- | ---- |
-| Access Context Manage | | |
+| Access Context Manager | | |
 | Core Audit Bunker | | |
 | Core Folders | | |
 | Core IAM | | |
 | Core Org Custom Roles | | |
 | Core Org Policy | | |
 | Guardrails | | |
+| Base Network Perimeter | | |
 
 ### Non-Prod
 | Resource | Name | Purpose |
