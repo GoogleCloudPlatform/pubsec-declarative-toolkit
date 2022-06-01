@@ -192,7 +192,7 @@ var createCmd = &cobra.Command{
 				log.Fatal().Err(err).Msg(string(ret))
 			}
 
-			if len(string(ret)) == 0 {
+			if len(string(ret)) == 0 || strings.Contains(strings.ToLower(string(ret)), "warning") {
 				cmdArgs = []string{"compute", "networks", "subnets", "create", networkConfig["subnet-name"].(string), "--network=" + networkConfig["name"].(string), "--range=" + networkConfig["cidr"].(string), "--enable-private-ip-google-access", "--region=" + region, "--project=" + project}
 
 				log.Info().Msg("Creating subnet....")
