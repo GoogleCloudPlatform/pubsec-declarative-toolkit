@@ -28,4 +28,4 @@ solutions:
   - solution: sandbox-gke
     description: |
       A private GKE cluster with so many bells and whistles!
-    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/sandbox-gke@main
+    url: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@main
