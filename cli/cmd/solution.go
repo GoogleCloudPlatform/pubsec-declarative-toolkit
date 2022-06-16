@@ -188,15 +188,8 @@ func (sl *solutionsList) getRemoteSolutions(url string, writeToCache bool, branc
 		if err != nil {
 			return err
 		}
-
-		lic, err := os.ReadFile(filepath.Join("static", "license.txt"))
-
-		if err != nil {
-			return err
-		}
-
-		ret = string(append(lic, yamlout...))
-
+		
+		ret = string(yamlout)
 	
 	 	utils.WriteToCache(&ret, "solutions.yaml", false)
 	}
