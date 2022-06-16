@@ -1,0 +1,12 @@
+apiVersion: mesh.cloud.google.com/v1beta1
+kind: ControlPlaneRevision
+metadata: # kpt-merge: istio-system/asm-managed
+  name: asm-managed
+  namespace: istio-system
+  annotations:
+    cnrm.cloud.google.com/project-id: "innovapost-351413" # kpt-set: ${project-id}  
+  labels:
+    mesh.cloud.google.com/managed-cni-enabled: "true"
+spec:
+  type: managed_service
+  channel: regular

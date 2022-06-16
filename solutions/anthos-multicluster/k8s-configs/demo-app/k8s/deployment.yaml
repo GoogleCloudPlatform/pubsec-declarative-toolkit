@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # kpt-merge: whereami/whereami-deployment
+  name: whereami-deployment
+  namespace: whereami
+  labels:
+    app: whereami
+spec:
+  selector:
+    matchLabels:
+      app: whereami
+  template:
+    metadata:
+      labels:
+        app: whereami
+    spec:
+      containers:
+      - name: frontend
+        image: us-docker.pkg.dev/google-samples/containers/gke/whereami:v1.2.8
+        ports:
+        - containerPort: 8080

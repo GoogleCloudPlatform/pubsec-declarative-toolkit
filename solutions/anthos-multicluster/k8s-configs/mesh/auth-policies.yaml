@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata: # kpt-merge: innovapost-pop/innova-app
+  name: innova-app
+  namespace: innovapost-pop
+spec:
+  selector:
+    matchLabels:
+      app: innova-app
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        methods: ["GET", "POST"]

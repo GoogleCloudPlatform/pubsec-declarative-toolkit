@@ -1,0 +1,21 @@
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubFeature
+metadata: # kpt-merge: config-control/multi-cluster-ingress
+  name: multi-cluster-ingress
+  labels:
+    label-one: value-one
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/config-control/ContainerCluster/gke-net-na-ne-1
+  namespace: config-control # kpt-set: ${project-namespace}
+spec:
+  projectRef:
+    external: project-id # kpt-set: ${project-id} 
+  location: global
+  # The resourceID must be "multiclusteringress" if you want to use multi-cluster
+  # ingress feature.
+  resourceID: multiclusteringress
+  spec:
+    multiclusteringress:
+      configMembershipRef:
+        name: gke-ne1

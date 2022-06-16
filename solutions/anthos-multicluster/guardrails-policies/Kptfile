@@ -1,0 +1,20 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: guardrails-policies
+upstream:
+  type: git
+  git:
+    repo: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit
+    directory: /solutions/guardrails-policies
+    ref: v0.0.2-alpha
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit
+    directory: /solutions/guardrails-policies
+    ref: v0.0.2-alpha
+    commit: 99139e5d833c45a2acdcbc80853504f0cfa0d1e5
+info:
+  description: sample description

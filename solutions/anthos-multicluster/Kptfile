@@ -10,11 +10,8 @@ pipeline:
       configPath: setters.yaml
     - image: gcr.io/kpt-fn/enable-gcp-services:v0.1.0
   validators:
-    - image: gcr.io/kpt-fn/kubeval:v0.2
+    - image: gcr.io/kpt-fn/kubeval:v0.3.0
       configMap:
         ignore_missing_schemas: "true"
         strict: "true"
-inventory:
-  namespace: config-control
-  name: inventory-89023470
-  inventoryID: d52bb238db35a53672daa68f1d82feeaeb2e4202-1651690656919453843
+    - image: gcr.io/kpt-fn/gatekeeper:v0.2.1

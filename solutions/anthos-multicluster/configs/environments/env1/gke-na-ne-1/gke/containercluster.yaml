@@ -1,0 +1,81 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
+  name: gke-net-na-ne-1 # kpt-set: ${cluster-name}
+  namespace: config-control # kpt-set: ${project-namespace}
+  labels:
+    mesh_id: proj-000000000000 # kpt-set: proj-${project-number}
+  annotations:
+    cnrm.cloud.google.com/remove-default-node-pool: "true"
+    cnrm.cloud.google.com/project-id: "project-id" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/config-control/ComputeSubnetwork/gke-ne1-subnet
+spec:
+  minMasterVersion: 1.23.5-gke.1501
+  addonsConfig:
+    configConnectorConfig:
+      enabled: false
+    dnsCacheConfig:
+      enabled: true
+    networkPolicyConfig:
+      disabled: false
+  releaseChannel:
+    channel: REGULAR
+  description: dev-cluster # kpt-set: ${cluster-description}
+  enableBinaryAuthorization: true
+  enableIntranodeVisibility: true
+  enableShieldedNodes: true
+  initialNodeCount: 1
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: clusterrange # kpt-set: ${gke-pod-range-name}
+    servicesSecondaryRangeName: servicesrange # kpt-set: ${gke-services-range-name}
+  location: northamerica-northeast1 # kpt-set: ${location}
+  maintenancePolicy:
+    dailyMaintenanceWindow:
+      startTime: 01:00
+  masterAuthorizedNetworksConfig:
+    cidrBlocks: # kpt-set: ${auth-network}
+      - cidrBlock: 24.246.3.67/32
+        displayName: private-net
+  networkPolicy:
+    enabled: true
+  networkRef:
+    name: gke-net
+  subnetworkRef:
+    name: gke-ne1-subnet # kpt-set: ${subnetwork-name}  
+  networkingMode: VPC_NATIVE
+  notificationConfig:
+    pubsub:
+      enabled: true
+      topicRef:
+        name: gke-net-na-ne-1-pubsub # kpt-set: ${cluster-name}-pubsub
+  resourceUsageExportConfig:
+    bigqueryDestination:
+      datasetId: gkemeteringne1
+    enableNetworkEgressMetering: true
+    enableResourceConsumptionMetering: true
+  podSecurityPolicyConfig:
+    enabled: false
+  privateClusterConfig:
+    enablePrivateEndpoint: false
+    enablePrivateNodes: true
+    masterIpv4CidrBlock: 172.16.0.0/28
+  verticalPodAutoscaling:
+    enabled: true
+  workloadIdentityConfig:
+    # Workload Identity supports only a single namespace based on your project name.
+    # Replace ${PROJECT_ID?} below with your project ID.
+    identityNamespace: project-id.svc.id.goog # kpt-set: ${project-id}.svc.id.goog

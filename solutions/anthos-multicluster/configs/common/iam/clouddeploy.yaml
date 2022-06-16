@@ -1,0 +1,29 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/k8s-viewer
+  name: cb-clouddeploy-releaser
+  namespace: config-control # kpt-set: ${project-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:000000000000@cloudbuild.gserviceaccount.com # kpt-set: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/clouddeploy.releaser
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/k8s-viewer
+  name: cb-clouddeploy-sa-user
+  namespace: config-control # kpt-set: ${project-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:000000000000@cloudbuild.gserviceaccount.com # kpt-set: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/iam.serviceAccountUser

@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata: # kpt-merge: whereami/whereami-test
+  name: whereami-test
+  namespace: whereami
+spec:
+  selector:
+    app: whereami
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+kind: ServiceExport
+apiVersion: net.gke.io/v1
+metadata: # kpt-merge: whereami/whereami-test
+  name: whereami-test
+  namespace: whereami
+---
+apiVersion: v1
+kind: Service
+metadata: # kpt-merge: whereami/whereami-test-na-ne1
+  name: whereami-test-na-ne1
+  namespace: whereami
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne1"
+spec:
+  selector:
+    app: whereami
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+kind: ServiceExport
+apiVersion: net.gke.io/v1
+metadata: # kpt-merge: whereami/whereami-test-na-ne1
+  name: whereami-test-na-ne1
+  namespace: whereami
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne1"
+---
+apiVersion: v1
+kind: Service
+metadata: # kpt-merge: whereami/whereami-test-na-ne2
+  name: whereami-test-na-ne2
+  namespace: whereami
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne2"
+spec:
+  selector:
+    app: whereami
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+kind: ServiceExport
+apiVersion: net.gke.io/v1
+metadata: # kpt-merge: whereami/whereami-test-na-ne2
+  name: whereami-test-na-ne2
+  namespace: whereami
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne2"

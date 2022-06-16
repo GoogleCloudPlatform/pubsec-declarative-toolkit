@@ -1,0 +1,8 @@
+apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+kind: SourceRepoRepository
+metadata:
+  name: gcp-ha-infra # kpt-set: ${infra-repo}
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/project-id: "project-id" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'

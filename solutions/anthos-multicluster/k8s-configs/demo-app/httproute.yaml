@@ -1,0 +1,27 @@
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1alpha2
+metadata: # kpt-merge: demo/innova-gateway
+  name: innova-gateway
+  namespace: demo
+  labels:
+    gateway: external-http
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne1"
+spec:
+  hostnames:
+  - "demo-app.testgcp.ca"
+  parentRefs:
+  - name: external-http
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /popRequest
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - group: net.gke.io
+      kind: ServiceImport
+      name: demo-app-test
+      port: 8080

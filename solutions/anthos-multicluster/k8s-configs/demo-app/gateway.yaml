@@ -1,0 +1,38 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1alpha2
+metadata: # kpt-merge: demo/external-http
+  name: external-http
+  namespace: demo
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne1"
+spec:
+  gatewayClassName: gke-l7-gxlb-mc
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      kinds:
+      - kind: HTTPRoute
+---
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1alpha2
+metadata: # kpt-merge: demo/internal-http
+  name: internal-http
+  namespace: demo-gateway
+  annotations:
+    configsync.gke.io/cluster-name-selector: "gke-ne1"
+spec:
+  gatewayClassName: gke-l7-rilb-mc
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      kinds:
+      - kind: HTTPRoute
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway: internal-http

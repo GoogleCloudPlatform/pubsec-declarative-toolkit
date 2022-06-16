@@ -1,0 +1,8 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata: # kpt-merge: innovapost-pop/mlts-strick
+  name: mlts-strick
+  namespace: innovapost-pop
+spec:
+  mtls:
+    mode: PERMISSIVE

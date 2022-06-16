@@ -1,0 +1,40 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata: # kpt-merge: config-control/config-sync-sa
+  name: config-sync-sa-gateway
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/project-id: "project-id" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  displayName: ConfigSync
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/config-sync-wi
+  name: config-sync-wi-gateway
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:project-id.svc.id.goog[config-management-system/root-reconciler] # kpt-set: serviceAccount:${project-id}.svc.id.goog[config-management-system/root-reconciler]
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: config-sync-sa-gateway
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/allow-configsync-sa-read-csr
+  name: allow-configsync-sa-read-csr-gateway
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+spec:
+  member: serviceAccount:config-sync-sa-gateway@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:config-sync-sa-gateway@${project-id}.iam.gserviceaccount.com
+  role: roles/source.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}

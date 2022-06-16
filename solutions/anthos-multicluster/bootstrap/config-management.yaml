@@ -1,0 +1,17 @@
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: config-management
+spec:
+  enableMultiRepo: true
+  enableLegacyFields: true
+  policyController:
+    enabled: true
+  clusterName: krmapihost-config-connector-name # kpt-set: ${config-controller-name}
+  git:
+    policyDir: infra/configs
+    secretType: gcpserviceaccount
+    gcpServiceAccountEmail: config-sync-sa@/host-project-id.iam.gserviceaccount.com # kpt-set: config-sync-sa@/${host-project-id}.iam.gserviceaccount.com
+    syncBranch: main
+    syncRepo: gcp-ha-infra # kpt-set: ${infra-repo}
+  sourceFormat: unstructured

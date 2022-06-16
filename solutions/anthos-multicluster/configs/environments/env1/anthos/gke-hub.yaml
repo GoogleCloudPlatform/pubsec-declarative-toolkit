@@ -1,0 +1,21 @@
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubMembership
+metadata: # kpt-merge: config-control/gke-ne1
+  labels:
+    label-one: value-one
+  name: gke-ne1
+  annotations:
+    cnrm.cloud.google.com/project-id: "project-id" # kpt-set: ${project-id}    
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/config-control/ContainerCluster/gke-net-na-ne-1
+  namespace: config-control # kpt-set: ${project-namespace}
+spec:
+  location: global
+  authority:
+    # Issuer must contain a link to a valid JWT issuer. Your ContainerCluster is one. To use it, replace ${PROJECT_ID?} with your project ID.
+    issuer: https://container.googleapis.com/v1/projects/project-id/locations/northamerica-northeast1/clusters/gke-net-na-ne-1 # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/northamerica-northeast1/clusters/gke-net-na-ne-1
+  description: northamerica-northeast1
+  endpoint:
+    gkeCluster:
+      resourceRef:
+        name: gke-net-na-ne-1

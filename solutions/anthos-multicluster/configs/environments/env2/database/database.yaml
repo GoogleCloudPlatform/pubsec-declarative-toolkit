@@ -1,0 +1,14 @@
+apiVersion: sql.cnrm.cloud.google.com/v1beta1
+kind: SQLDatabase
+metadata:
+  labels:
+    label-one: "value-one"
+  name: postgres-secondary-demo
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    config.kubernetes.io/depends-on: sql.cnrm.cloud.google.com/namespaces/config-control/SQLInstance/postgres-secondary-1 # kpt-set: sql.cnrm.cloud.google.com/namespaces/config-control/SQLInstance/${db-instance-2}
+spec:
+  charset: UTF8
+  collation: en_US.UTF8
+  instanceRef:
+    name: postgres-secondary # kpt-set: ${db-instance-2}

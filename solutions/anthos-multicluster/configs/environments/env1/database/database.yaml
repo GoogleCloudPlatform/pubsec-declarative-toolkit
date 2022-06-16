@@ -1,0 +1,14 @@
+apiVersion: sql.cnrm.cloud.google.com/v1beta1
+kind: SQLDatabase
+metadata:
+  labels:
+    label-one: "value-one"
+  name: postgres-demo
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    config.kubernetes.io/depends-on: sql.cnrm.cloud.google.com/namespaces/config-control/SQLInstance/postgres-primary-1 # kpt-set: sql.cnrm.cloud.google.com/namespaces/config-control/SQLInstance/${db-instance-1}
+spec:
+  charset: UTF8
+  collation: en_US.UTF8
+  instanceRef:
+    name: postgres-primary # kpt-set: ${db-instance-1}

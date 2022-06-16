@@ -1,0 +1,39 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: config-sync-sa
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+spec:
+  displayName: ConfigSync
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: config-sync-wi
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+spec:
+  member: serviceAccount:host-project-id.svc.id.goog[config-management-system/root-reconciler] # kpt-set: serviceAccount:${host-project-id}.svc.id.goog[config-management-system/root-reconciler]
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: config-sync-sa
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: allow-configsync-sa-read-csr
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+spec:
+  member: serviceAccount:config-sync-sa@host-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:config-sync-sa@${host-project-id}.iam.gserviceaccount.com
+  role: roles/source.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/host-project-id # kpt-set: projects/${host-project-id}

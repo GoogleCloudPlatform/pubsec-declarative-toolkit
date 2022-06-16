@@ -21,17 +21,20 @@ data:
   #
   # The following are Settings for the environment to bootstrap with
   #
+  # Host Project
+  host-project-id: host-project-id
+  infra-repo: gcp-ha-infra
   #### Management Project
-  project-id: my-awesome-project
+  project-id: project-id
+  project-number: "000000000000"
   project-namespace: config-control
-  department-code: "goc"
-  ######
-  asset-viewer-group: email@domain.ca
-  audit-data-group: email@domain.ca
-  audit-data-viewer-group: email@domain.ca
-  billing-data-group: email@domain.ca
-  billing-data-viewer-group: email@domain.ca
-  billing-console-viewer-group: email@domain.ca
+  department-code: "cp"
   ####
-  gke-admin: email@domain.ca
-  gke-viewer: email@domain.ca
+  gke-admin: k8s-admin@domain.com
+  gke-viewer: k8s-admin@domain.com
+  billing-data-viewer-group: k8s-admin@domain.com
+  ###
+  #
+  ### Databases
+  db-instance-1: postgres-primary
+  db-instance-2: postgres-secondary
