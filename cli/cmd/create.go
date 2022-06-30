@@ -178,6 +178,8 @@ var createCmd = &cobra.Command{
 				}
 
 				saveStep("network")
+			} else {
+				saveStep("network")
 			}
 		}
 
@@ -192,7 +194,7 @@ var createCmd = &cobra.Command{
 				log.Fatal().Err(err).Msg(string(ret))
 			}
 
-			if len(string(ret)) == 0 {
+			if len(string(ret)) == 0 || strings.Contains(strings.ToLower(string(ret)), "warning") {
 				cmdArgs = []string{"compute", "networks", "subnets", "create", networkConfig["subnet-name"].(string), "--network=" + networkConfig["name"].(string), "--range=" + networkConfig["cidr"].(string), "--enable-private-ip-google-access", "--region=" + region, "--project=" + project}
 
 				log.Info().Msg("Creating subnet....")
@@ -203,6 +205,8 @@ var createCmd = &cobra.Command{
 					log.Fatal().Err(err).Msg(string(ret))
 				}
 
+				saveStep("subnet")
+			} else { 
 				saveStep("subnet")
 			}
 		}
@@ -224,7 +228,15 @@ var createCmd = &cobra.Command{
 
 		// Adding service account to the owners role
 		if !createSteps.stepExists("add-policy") {
-			cmdArgs := []string{"get", "ConfigConnectorContext", "-n", "config-control", "-o", "jsonpath='{.items[0].spec.googleServiceAccount}'"}
+			cmdArgs := []string{"container", "clusters", "get-credentials", "krmapihost-" + args[0], "--region=" + region, "--project=" + project}
+
+			_, err := utils.CallCommand(gcloud, cmdArgs, false)
+
+			if err != nil {
+				log.Fatal().Err(err).Msg("Unable to get configconnectorcontext")
+			}
+
+			cmdArgs = []string{"get", "ConfigConnectorContext", "-n", "config-control", "-o", "jsonpath='{.items[0].spec.googleServiceAccount}'"}
 
 			ret, err := utils.CallCommand("kubectl", cmdArgs, false)
 
@@ -232,7 +244,7 @@ var createCmd = &cobra.Command{
 				log.Fatal().Err(err).Msg("Unable to get configconnectorcontext")
 			}
 
-			sa := strings.Replace(string(ret), "'", "", 2)
+			sa := strings.Replace(strings.Split(strings.Split(string(ret), "@")[0], "'")[1] + "@" + strings.Split(string(ret), "@")[1], "'", "",1)
 
 			cmdArgs = []string{"projects", "add-iam-policy-binding", project, `--member=serviceAccount:` + sa, `--role=roles/owner`, `--condition=None`}
 

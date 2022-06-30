@@ -1,0 +1,54 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# A custom function that will update the SQL apply-time spec with the customer supplied
+# setters and update all KRMs with the proper namespace
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata:
+  name: sql_apply_time_mutation
+  annotations:
+    config.kubernetes.io/local-config: "true"
+params:
+  toMatch:
+    config.kubernetes.io/apply-time-mutation: "true"
+  # Update the following 2 keys with the namespace in your KCC instance that the resources will be created in and that there is an
+  # SA in the target project for. The default is config-control.
+  # Also update the name of the SQL Instance key with the name you want to call your SQL Instance
+  namespace: CHANGE-NAMESPACE
+  sqlInstanceName: sql-instance
+source: |-
+  toMatch = ctx.resource_list["functionConfig"]["params"]["toMatch"]
+  namespace = ctx.resource_list["functionConfig"]["params"]["namespace"]
+  sqlInstanceName = ctx.resource_list["functionConfig"]["params"]["sqlInstanceName"]
+  for resource in ctx.resource_list["items"]:
+    kind = resource["kind"]
+    if kind == "IAMPolicyMember":
+      for key in toMatch:
+        if key in resource["metadata"]["annotations"]:
+          splitls = resource["metadata"]["annotations"][key].splitlines()
+          for str in splitls:
+            if str.rfind("name:") != -1:
+              resource["metadata"]["annotations"][key] = resource["metadata"]["annotations"][key].replace(str, "    name: " + sqlInstanceName)
+              if str.rfind("namespace:") != -1:
+                resource["metadata"]["annotations"][key] = resource["metadata"]["annotations"][key].replace(str, "    namespace: " + namespace)
+    elif kind == "SQLInstance":
+      resource["metadata"]["name"] = sqlInstanceName
+    elif kind == "SQLDatabase" or kind == "SQLUser":
+      resource["spec"]["instanceRef"]["name"] = sqlInstanceName
+      resource["spec"]["instanceRef"]["namespace"] = namespace
+    elif kind == "ServiceNetworkingConnection":
+      resource["spec"]["reservedPeeringRanges"][0]["namespace"] = namespace
+                
+    resource["metadata"]["namespace"] = namespace
