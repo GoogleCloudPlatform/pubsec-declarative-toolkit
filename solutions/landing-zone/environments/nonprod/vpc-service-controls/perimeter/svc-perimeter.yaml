@@ -15,7 +15,7 @@
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerServicePerimeter
 metadata:
-  name: serviceperimetersample
+  name: regular_service_perimeter_nonp_1
   namespace: nonprod
 spec:
   # Config for DRY-RUN
@@ -28,18 +28,11 @@ spec:
     - name: serviceperimeterdep2
     # List of projects to be included in this perimeter
     resources:
-    - projectRef:
-        external: "projects/${PROJECT_NUMBER1}"
-    - projectRef:
-        external: "projects/${PROJECT_NUMBER2}"
     # List of restricted services
     restrictedServices:
-    - "storage.googleapis.com"
     # List of services that could be accessed from within the perimeter
     vpcAccessibleServices:
       allowedServices:
-      - "storage.googleapis.com"
-      - "pubsub.googleapis.com"
       enableRestriction: true
     egressPolicies:
     - egressFrom:
@@ -73,13 +66,10 @@ spec:
     - projectRef:
         external: "projects/${PROJECT_NUMBER4}"
     restrictedServices:
-    - "bigquery.googleapis.com"
     vpcAccessibleServices:
       allowedServices:
-      - "bigquery.googleapis.com"
-      - "logging.googleapis.com"
       enableRestriction: true
-  title: Service Perimeter created by Config Connector
+  title: Regular Service Perimeter Nonp 1
   useExplicitDryRunSpec: true
   accessPolicyRef:
     # Using an already existing Access Policy.  Currently there is a limitation
@@ -88,6 +78,6 @@ spec:
     # 1. The dependent Access Policy Object created via Config Connector
     # name: accesscontextmanagerserviceperimeterdep
     # 2. Set the appropriate ACCESS_POLICY_NUMBER
-    external: accessPolicies/${ACCESS_POLICY_NUMBER}
-  description: A Service Perimeter Created by Config Connector
+    name: accesspolicy_nonp_1
+  description: Regular Service Perimeter Nonp 1
   perimeterType: PERIMETER_TYPE_REGULAR
