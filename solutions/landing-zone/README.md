@@ -1,34 +1,8 @@
 # KRM Landing Zone
 
-This is a reimplementation of [pbmm-on-gcp-onboarding](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding) Landing Zone in KRM.
+This is a reimplementation of [pbmm-on-gcp-onboarding](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding) Landing Zone using KRM.
 
-## Usage
-
-To deploy this LAnding Zone you will first need to create a Bootstrap project with a Config Controller instance.
-
-1. Deploy Bootstrap
-
-```
-arete create landing-zone-controller
-```
-
-This command will create a new project and deploy a Config Controller instance for you.
-
-2. Fetch the package
-`kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
-Details: https://kpt.dev/reference/cli/pkg/get/
-
-3. Set Organization Hierarchy
-
-4. Customize Package
-
-5. Deploy
-
-    a. kpt
-    b. GitOps
-    c. Arete
-
-## Description
+## Organzation
 
 This landing Zone will create an initial 3 environments.
 
@@ -37,7 +11,9 @@ Creates 3 Environments
 - Non-prod
 - Prod
 
-Each environment contains the following resources:
+These configurations for these environments is contained in the environments directory of this package.
+
+Each environment will deploy the following resources:
 
 ### Common
 | Resource | Name | Purpose |
@@ -50,6 +26,7 @@ Each environment contains the following resources:
 | Core Org Policy | | |
 | Guardrails | | |
 | Base Network Perimeter | | |
+| Network Management Perimeter | | |
 
 ### Non-Prod
 | Resource | Name | Purpose |
@@ -66,24 +43,41 @@ Each environment contains the following resources:
 | Firewall | | |
 | Network Perimeter Project | | |
 | Network HA Perimeter | | |
-| Network Management Perimeter | | |
 | Net Private Perimeter | | |
 | Network Private Perimeter Firewall | | |
 | Network Public Perimeter Firewall | | |
 
 ## Usage
 
-### Fetch the package
-`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] landing-zone`
-Details: https://kpt.dev/reference/cli/pkg/get/
+To deploy this Landing Zone you will first need to create a Bootstrap project with a Config Controller instance.
 
-### View package content
-`kpt pkg tree landing-zone`
-Details: https://kpt.dev/reference/cli/pkg/tree/
+1. Deploy Bootstrap
 
-### Apply the package
-```
-kpt live init landing-zone
-kpt live apply landing-zone --reconcile-timeout=2m --output=table
-```
-Details: https://kpt.dev/reference/cli/live/
+    ```
+    arete create landing-zone-controller
+    ```
+
+    This command will create a new project and deploy a Config Controller instance for you.
+
+2. Fetch the package
+
+    `kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
+
+    Details: https://kpt.dev/reference/cli/pkg/get/
+
+3. Set Organization Hierarchy
+
+4. Customize Package
+
+5. Deploy
+
+    a. kpt
+    
+    ```
+    kpt live init landing-zone
+    kpt live apply landing-zone --reconcile-timeout=2m --output=table
+    ```
+
+    b. GitOps
+
+    c. Arete

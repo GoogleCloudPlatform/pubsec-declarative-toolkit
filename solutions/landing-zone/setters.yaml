@@ -25,3 +25,9 @@ data:
   ######
   billing-id: "0000000000"
   org-id: "0000000000"
+  ###
+  # Project  IDs
+  net-host-prj-nonprod-id: 
+  net-host-prj-prod-id: 
+  net-perimeter-prj-common-id:
+  audit-prj-id: 

@@ -12,27 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-  apiVersion: compute.cnrm.cloud.google.com/v1beta1
-  kind: ComputeFirewall
-  metadata:
-    labels:
-      label-one: "value-one"
-    name: allow-egress-internet
-    namespace: nonprod
-  spec:
-    allow:
-      - protocol: TCP
-      - protocol: UDP
-    direction: EGRESS
-    destinationRanges:
-    - "0.0.0.0/0"
-    priority: 1000
-    logConfig:
-      metadata: EXCLUDE_ALL_METADATA
-    networkRef:
-      name: computefirewall-dep-deny
-    targetTags:
-    - "allow-egress-internet"
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  labels:
+    label-one: "value-one"
+  name: allow-egress-internet
+  namespace: nonprod
+  annotations:
+  # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+  cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+spec:
+  allow:
+    - protocol: TCP
+    - protocol: UDP
+  direction: EGRESS
+  destinationRanges:
+  - "0.0.0.0/0"
+  priority: 1000
+  logConfig:
+    metadata: EXCLUDE_ALL_METADATA
+  networkRef:
+    name: computefirewall-dep-deny
+  targetTags:
+  - "allow-egress-internet"
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
@@ -41,6 +44,9 @@ metadata:
     label-one: "value-one"
   name: allow-ssh-ingress
   namespace: nonprod
+  annotations:
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   allow:
     - protocol: TCP

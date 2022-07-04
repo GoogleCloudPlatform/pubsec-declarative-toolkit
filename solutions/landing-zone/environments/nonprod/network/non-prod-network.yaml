@@ -17,6 +17,9 @@ kind: ComputeNetwork
 metadata:
   name: nonprod-sharedvpc
   namespace: nonprod
+  annotations:
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   description: The Non-Production Shared VPC
   routingMode: GLOBAL
@@ -31,6 +34,9 @@ metadata:
     label-one: "value-one"
   name: subnet01
   namespace: nonprod
+  annotations:
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   ipCidrRange: 10.10.20.0/24
   region: northamerica-northeast1
