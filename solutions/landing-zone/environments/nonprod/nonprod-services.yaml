@@ -23,4 +23,4 @@ spec:
   services:
     - logging.googleapis.com
     - dns.googleapis.com
-  projectID: net-host-prj # ${net-host-prj-nonprod}
+  projectID: net-host-prj # ${net-host-prj-nonprod-id}
