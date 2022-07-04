@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: blueprints.cloud.google.com/v1alpha1
-kind: ProjectServiceSet
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
 metadata:
-  name: proj1-service
-  namespace: nonprod
   annotations:
-    config.kubernetes.io/local-config: true
+    cnrm.cloud.google.com/auto-create-network: "false"
+  labels:
+    label-one: "value-one"
+  name: guardrails
+  namespace: common
 spec:
-  services:
-    - logging.googleapis.com
-    - dns.googleapis.com
-  projectID: net-host-prj # ${net-host-prj-nonprod}
+  name: Config Connector Sample
+  folderRef:
+    # Replace "${ORG_ID?}" with the numeric ID of the parent organization
+    name: "Audit"
+  billingAccountRef:
+    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    external: "${BILLING_ACCOUNT_ID?}"
