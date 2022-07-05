@@ -6,4 +6,4 @@ info:
   description: sample description
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/generate-folders:v0.1
+    - image: gcr.io/kpt-fn/generate-folders:v0.1.1
