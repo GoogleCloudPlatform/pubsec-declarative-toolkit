@@ -54,10 +54,10 @@ spec:
         - subnetwork-name
         requiredAccessLevels:
         - name: access-level
-          namespaces: string
+          namespace: string
           external: name
         members:
-        - user
+        - user: username
         negate: true
         regions:
         - northamerica-northeast1

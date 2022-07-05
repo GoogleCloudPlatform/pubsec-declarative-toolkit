@@ -24,5 +24,4 @@ spec:
     kind: Organization
     external: "test-organization" # kpt-set: ${org-id}
   config:
-    - guardrails:
-        - null
+    - guardrails

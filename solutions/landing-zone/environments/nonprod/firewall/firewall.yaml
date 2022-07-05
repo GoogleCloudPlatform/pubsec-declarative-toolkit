@@ -50,7 +50,8 @@ metadata:
 spec:
   allow:
     - protocol: TCP
-      ports: "22"
+      ports: 
+      - "22"
   direction: INGRESS
   destinationRanges:
   - "0.0.0.0/0"

@@ -39,7 +39,7 @@ spec:
   storageClass: "STANDARD"
   location: northamerica-northeast1
   retentionPolicy:
-    isLocked: ture
+    isLocked: true
     retentionPeriod: 1
   versioning:
     enabled: true

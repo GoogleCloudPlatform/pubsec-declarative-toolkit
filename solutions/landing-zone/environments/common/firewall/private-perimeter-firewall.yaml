@@ -48,7 +48,8 @@ spec:
   direction: INGRESS
   deny:
     - protocol: icmp
-      ports: 22
+      ports: 
+      - "22"
   sourceRanges:
     - 0.0.0.0/0
   networkRef:
