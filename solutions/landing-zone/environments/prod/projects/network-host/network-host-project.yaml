@@ -19,13 +19,13 @@ metadata:
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
     environment: "production"
-  name: net-host-prj
+  name: net-host-prj # kpt-set: ${net-host-prj-prod-id}
   namespace: prod
 spec:
   name: Config Connector Sample
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID of the parent organization
-    external: "${ORG_ID?}"
+    external: "${ORG_ID?}" # kpt-set: ${org-id}
   billingAccountRef:
     # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "${BILLING_ACCOUNT_ID?}"
+    external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
