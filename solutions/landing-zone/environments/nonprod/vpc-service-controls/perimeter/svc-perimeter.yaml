@@ -15,7 +15,7 @@
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerServicePerimeter
 metadata:
-  name: regular_service_perimeter_nonp_1
+  name: regular-service-perimeter-nonp-1
   namespace: nonprod
 spec:
   # Config for DRY-RUN

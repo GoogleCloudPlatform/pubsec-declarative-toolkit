@@ -26,8 +26,8 @@
     priority: 0
     nextHopIp: ""
     nextHopInstanceRef:
-    - external: name
+      external: name
     nextHopVPNTunnelRef:
-    - external: name
+      external: name
     tags:
     - "egress-inet"

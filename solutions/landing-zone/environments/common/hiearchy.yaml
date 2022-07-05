@@ -17,10 +17,12 @@ kind: ResourceHierarchy
 metadata:
   name: landing-zone-heirarchy
   namespace: common
+  annotations:
+    config.kubernetes.io/local-config: 'true'
 spec:
   parentRef:
     kind: Organization
-    external: test-organization
+    external: test-organization # kpt-set: ${org-id}
   config:
     - Infrastructure:
         - Networking:
@@ -32,9 +34,9 @@ spec:
         - Prod
         - UAT
         - DEv
-    - Audit and Security:
+    - "Audit and Security":
         - Audit
         - Security
     - Automation
-    - Shared Services
+    - "Shared Services"
     

@@ -27,5 +27,5 @@ metadata:
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of the project that you want to enable as a Shared VPC host.
     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
-  name: shared_vpc_host
+  name: shared-vpc-host
   namespace: nonprod

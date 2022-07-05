@@ -33,13 +33,13 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeProjectMetadata
 metadata:
-  name: oslogin_meta
+  name: oslogin-meta
   namespace: nonprod
   annotations:
     cnrm.cloud.google.com/project-id: net-host-prj # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   metadata:
-    enable-oslogin: true
+    enable-oslogin: "true"
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSharedVPCServiceProject
