@@ -25,13 +25,11 @@ spec:
   spec:
     # List of Access Levels to be applied for this perimeter
     accessLevels:
-    - name: serviceperimeterdep2
+    - name: accesspolicy-prod
     # List of projects to be included in this perimeter
     resources:
     - projectRef:
-        external: "projects/${PROJECT_NUMBER1}"
-    - projectRef:
-        external: "projects/${PROJECT_NUMBER2}"
+        name: ${project-id} # kpt-set: ${project-id}
     # List of restricted services
     restrictedServices:
     - "storage.googleapis.com"
@@ -88,6 +86,6 @@ spec:
     # 1. The dependent Access Policy Object created via Config Connector
     # name: accesscontextmanagerserviceperimeterdep
     # 2. Set the appropriate ACCESS_POLICY_NUMBER
-    external: accessPolicies/${ACCESS_POLICY_NUMBER}
+    name: accesspolicy-prod
   description: A Service Perimeter Created by Config Connector
   perimeterType: PERIMETER_TYPE_REGULAR

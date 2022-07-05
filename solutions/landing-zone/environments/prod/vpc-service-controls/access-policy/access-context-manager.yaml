@@ -17,8 +17,8 @@ kind: AccessContextManagerAccessPolicy
 metadata:
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}"
-  name: accesspolicysample
+    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org-id}
+  name: accesspolicy-prod
   namespace: prod
 spec:
   title: Config Connector Sample
@@ -28,13 +28,13 @@ kind: AccessContextManagerAccessLevel
 metadata:
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}"
+    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org-id}
   name: serviceperimeterdep1
   namespace: prod
 spec:
   accessPolicyRef:
     # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
-    external: "accessPolicies/${ACCESS_POLICY_NUMBER}"
+    name: "accesspolicy-prod"
   title: Service Perimeter Dependency ACL1
   basic:
     conditions:

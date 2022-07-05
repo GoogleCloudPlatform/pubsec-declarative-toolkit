@@ -17,6 +17,9 @@
   metadata:
     name: egress-internet
     namespace: prod
+    annotations:
+      # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+      cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
   spec:
     description: "route through IGW to access internet"
     destRange: 0.0.0.0/0

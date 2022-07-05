@@ -44,3 +44,4 @@ spec:
   versioning:
     enabled: true
   uniformBucketLevelAccess: true
+  publicAccessPrevention: "enforced"
