@@ -1,0 +1,39 @@
+apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
+kind: AccessContextManagerAccessLevel
+metadata:
+  annotations:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org-id}
+  name: commonaccesslevels
+  namespace: config-control
+  labels:
+    resource-group: common
+spec:
+  accessPolicyRef:
+    name: orgaccesspolicy
+  title: Service Perimeter Dependency ACL1
+  basic:
+    conditions:
+      - regions:
+        - CA 
+        # devicePolicy:
+        #   allowedDeviceManagementLevels:
+        #   - ""
+        #   allowedEncryptionStatuses:
+        #   - ""
+        #   osConstraints:
+        #   - minimumVersion: ""
+        #     osType: OS_UNSPECIFIED
+        #     requireVerifiedChromeOs: false
+        #   requireAdminApproval: false
+        #   requireCorpOwned: false
+        #   requireScreenLock: false
+        # ipSubnetworks: 
+        # - subnetwork-name
+        # requiredAccessLevels:
+        # - name: access-level
+        #   namespace: string
+        #   external: name
+        # members:
+        # - user: username
+        # negate: true

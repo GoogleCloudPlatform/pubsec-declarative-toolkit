@@ -47,7 +47,7 @@ spec:
   description: Allow SSH Connections from the internet
   direction: INGRESS
   deny:
-    - protocol: icmp
+    - protocol: tcp
       ports: 
       - "22"
   sourceRanges:

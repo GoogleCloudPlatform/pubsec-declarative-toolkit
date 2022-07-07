@@ -15,8 +15,12 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetworkPeering
 metadata:
-  name: computenetworkpeering-sample1
+  name: common-mgmt-perimeter-peer
   namespace: common
+  annotations:
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+  labels:
+    resource-group: common
 spec:
   exportCustomRoutes: false
   importCustomRoutes: false
@@ -29,9 +33,11 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
   labels:
-    label-one: "value-one"
-  name: management-perimeter-vpc-name
+    resource-group: common
+  name: common-mgmt-perimeter
   namespace: common
+  annotations:
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
 spec:
   description: The Perimeter VPC
   routingMode: GLOBAL
@@ -42,16 +48,18 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
   labels:
-    label-one: "value-one"
+    resource-group: common
   name: management
   namespace: common
+  annotations:
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
 spec:
   ipCidrRange: 10.10.0.192/26
   region: northamerica-northeast1
   description: This subnet is used for the management interface of the fortigate firewall
   privateIpGoogleAccess: true
   networkRef:
-    name: privperimvpc
+    name: common-mgmt-perimeter
   logConfig:
     aggregationInterval: INTERVAL_1_MIN
     flowSampling: 0.5

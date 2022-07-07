@@ -18,7 +18,7 @@ metadata:
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org_id}
-  name: accesspolicy_nonp_1
+  name: accesspolicy-nonp-1
   namespace: nonprod
 spec:
   title: Config Connector Sample
@@ -29,14 +29,14 @@ metadata:
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org_id}
-  name: serviceperimeterdep1_nonp_1
+  name: serviceperimeterdep1-nonp-1
   namespace: nonprod
 spec:
   accessPolicyRef:
     # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
-    name: accesspolicy_nonp_1
+    name: accesspolicy-nonp-1
   title: Service Perimeter Dependency ACL1
   basic:
     conditions:
-      - devicePolicy:
-          requireCorpOwned: true
+      - regions:
+        - CA

@@ -17,6 +17,8 @@ kind: IAMPolicyMember
 metadata:
   name: organization-viewer
   namespace: common
+  labels:
+    resource-group: common
 spec:
   member: org-viewer # kpt-set: ${organization-viewer}
   role: roles/viewer

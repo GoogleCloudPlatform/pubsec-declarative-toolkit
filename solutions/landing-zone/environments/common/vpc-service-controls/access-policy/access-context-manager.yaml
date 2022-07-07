@@ -17,50 +17,11 @@ kind: AccessContextManagerAccessPolicy
 metadata:
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}"
-  name: accesspolicysample
-  namespace: common
+    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org-id}
+  name: orgaccesspolicy
+  namespace: config-control
+  labels:
+    resource-group: common
 spec:
-  title: Config Connector Sample # kpt-set: ${access-policy-name}
+  title: Org Access Policy
 ---
-apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
-kind: AccessContextManagerAccessLevel
-metadata:
-  annotations:
-    # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}"
-  name: serviceperimeterdep1
-  namespace: common
-spec:
-  accessPolicyRef:
-    # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
-    external: "accessPolicies/${ACCESS_POLICY_NUMBER}"
-  title: Service Perimeter Dependency ACL1
-  basic:
-    conditions:
-      - devicePolicy:
-          allowedDeviceManagementLevels:
-          - ""
-          allowedEncryptionStatuses:
-          - ""
-          osConstraints:
-          - minimumVersion: ""
-            osType: OS_UNSPECIFIED
-            requireVerifiedChromeOs: false
-          requireAdminApproval: false
-          requireCorpOwned: false
-          requireScreenLock: false
-        ipSubnetworks: 
-        - subnetwork-name
-        requiredAccessLevels:
-        - name: access-level
-          namespace: string
-          external: name
-        members:
-        - user: username
-        negate: true
-        regions:
-        - northamerica-northeast1
-        - northamerica-northeast2
-        
-        

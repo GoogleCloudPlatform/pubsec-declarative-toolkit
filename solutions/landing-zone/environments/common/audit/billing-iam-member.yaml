@@ -17,8 +17,10 @@ kind: IAMPolicyMember
 metadata:
   name: billing-iam-member
   namespace: common
+  labels:
+    resource-group: common
 spec:
-  member: serviceAccount:billing-service-account@${PROJECT_ID?}.iam.gserviceaccount.com
+  member: serviceAccount:billing-service-account@${PROJECT_ID?}.iam.gserviceaccount.com # kpt-set: serviceAccount:billing-service-account@${audit-prj-id}.iam.gserviceaccount.com
   role: roles/logging.viewAccessor
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

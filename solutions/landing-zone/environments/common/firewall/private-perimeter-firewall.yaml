@@ -16,7 +16,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   labels:
-    label-one: "value-one"
+    resource-group: common
   name: allow-egress-internet-pr
   namespace: common
 spec:
@@ -40,14 +40,14 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   labels:
-    label-one: "value-one"
+    resource-group: common
   name: allow-ssh-ingress
   namespace: common
 spec:
   description: Allow SSH Connections from the internet
   direction: INGRESS
   deny:
-    - protocol: icmp
+    - protocol: tcp
       ports: 
       - "22"
   sourceRanges:

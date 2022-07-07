@@ -15,12 +15,12 @@
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: ProjectServiceSet
 metadata:
-  name: proj1-service
-  namespace: nonprod
+  name: prod-nethost-service
   annotations:
-    config.kubernetes.io/local-config: true
+    config.kubernetes.io/local-config: true 
 spec:
   services:
     - logging.googleapis.com
-    - dns.googleapis.com
-  projectID: net-host-prj # ${net-host-prj-nonprod-id}
+    - compute.googleapis.com
+    - compute.organizations.enableXpnHost
+  projectID: proj1 # kpt-set: ${net-host-prj-prod-id}   

@@ -25,7 +25,7 @@ spec:
   name: Config Connector Sample
   folderRef:
     # Replace "${ORG_ID?}" with the numeric ID of the parent organization
-    name: "Audit"
+    name: "audit-and-security.audit"
   billingAccountRef:
     # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "${BILLING_ACCOUNT_ID?}"
+    external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}

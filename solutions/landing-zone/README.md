@@ -59,6 +59,13 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     This command will create a new project and deploy a Config Controller instance for you.
 
+    Set Permissions
+    ```
+    gcloud organizations add-iam-policy-binding "${ORG_ID}"     --member "serviceAccount:${SA_EMAIL}"     --role roles/accesscontextmanager.policyAdmin
+    ```
+    cloudbilling.googleapis.com
+    roles/compute.xpnAdmin
+    
 2. Fetch the package
 
     `kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
@@ -66,6 +73,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     Details: https://kpt.dev/reference/cli/pkg/get/
 
 3. Set Organization Hierarchy
+
 
 4. Customize Package
 

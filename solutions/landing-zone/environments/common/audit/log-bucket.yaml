@@ -17,11 +17,11 @@ kind: StorageBucket
 metadata:
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
-    cnrm.cloud.google.com/project-id: "Audit"
+    cnrm.cloud.google.com/project-id: "Audit" # kpt-set: audit-sink-${audit-prj-id}
   labels:
-    label-one: "value-one"
+    resource-group: common
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: log-bucket
+  name: log-bucket # kpt-set: log-bucket-${audit-prj-id}
   namespace: common
 spec:
   lifecycleRule:

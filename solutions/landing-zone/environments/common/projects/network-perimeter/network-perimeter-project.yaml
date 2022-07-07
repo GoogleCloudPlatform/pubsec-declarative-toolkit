@@ -19,13 +19,12 @@ metadata:
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
     label-one: "value-one"
-  name: net-perimeter-prj
+  name: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
   namespace: common
 spec:
-  name: Config Connector Sample
+  name: Common Network Perimeter Project
   folderRef:
-    # Replace "${ORG_ID?}" with the numeric ID of the parent organization
-    name: "Audit"
+    name: "audit-and-security.security"
   billingAccountRef:
     # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "${BILLING_ACCOUNT_ID?}"
+    external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}

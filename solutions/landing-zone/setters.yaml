@@ -32,3 +32,8 @@ data:
   net-perimeter-prj-common-id:
   audit-prj-id: 
   management-project-id: 
+  ###
+  # Groups
+  audit-viewer: group@domain.com
+  log-writer: group@domain.com
+  organization-viewer: group@domain.com

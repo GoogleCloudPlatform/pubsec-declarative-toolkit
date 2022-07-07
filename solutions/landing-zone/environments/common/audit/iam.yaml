@@ -15,36 +15,42 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: Audit-viewer
+  name: audit-viewer
   namespace: common
+  labels:
+    resource-group: common
 spec:
   member: audit-viewer # kpt-set: ${audit-viewer}
   role: roles/viewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: Audit
+    name: audit-and-security.audit
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: log-reader
+  labels:
+    resource-group: common
 spec:
   member: log-writer
   role: roles/storage.objectViewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: Audit
+    name: audit-and-security.audit
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: log-writer
+  labels:
+    resource-group: common
 spec:
   member: log-writer
   role: roles/storage.objectCreator
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: Audit
+    name: audit-and-security.audit

@@ -15,16 +15,18 @@
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: logginglogsink-sample-org
+  name: audit-bucket-sink
   namespace: common
+  labels:
+    resource-group: common
 spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "${ORG_ID?}"
+    external: "${ORG_ID?}" # kpt-set: ${org-id}
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-      name: audit-sink
+      name: audit-sink # kpt-set: audit-sink-${audit-prj-id}
   filter: "severity >= WARNING"
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
@@ -34,9 +36,9 @@ metadata:
     cnrm.cloud.google.com/force-destroy: "true"
     cnrm.cloud.google.com/project-id: "Audit"
   labels:
-    label-one: "value-one"
+    resource-group: common
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: audit-sink
+  name: audit-sink-${project-id} # kpt-set: audit-sink-${audit-prj-id}
 spec:
   lifecycleRule:
     - action:
