@@ -16,8 +16,8 @@
   kind: ComputeFirewall
   metadata:
     labels:
-      label-one: "value-one"
-    name: computefirewall-sample-deny
+    resource-group: nonprod
+    name: prod-firewall-default-deny
     annotations:
       # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
       cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
@@ -25,6 +25,6 @@
     deny:
       - protocol: icmp
     networkRef:
-      name: computefirewall-dep-deny
+      name: prod-sharedvpc
     sourceTags:
     - "web"

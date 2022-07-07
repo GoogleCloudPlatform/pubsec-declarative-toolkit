@@ -16,7 +16,7 @@
   kind: ComputeFirewall
   metadata:
     labels:
-      label-one: "value-one"
+      resource-group: nonprod
     name: computefirewall-sample-deny
     namespace: prod
     annotations:
@@ -26,6 +26,6 @@
     deny:
       - protocol: icmp
     networkRef:
-      name: computefirewall-dep-deny
+      name: prod-sharedvpc
     sourceTags:
     - "web"
