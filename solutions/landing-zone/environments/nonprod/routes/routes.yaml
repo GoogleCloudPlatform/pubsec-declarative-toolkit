@@ -12,22 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-  apiVersion: compute.cnrm.cloud.google.com/v1beta1
-  kind: ComputeRoute
-  metadata:
-    name: egress-internet
-    namespace: nonprod
-  spec:
-    description: "route through IGW to access internet"
-    destRange: 0.0.0.0/0
-    nextHopGateway: ""
-    networkRef:
-      name: testvpc
-    priority: 0
-    nextHopIp: ""
-    nextHopInstanceRef:
-      external: name
-    nextHopVPNTunnelRef:
-      external: name
-    tags:
-    - "egress-inet"
+# apiVersion: compute.cnrm.cloud.google.com/v1beta1
+# kind: ComputeRoute
+# metadata:
+#   name: egress-internet
+#   namespace: nonprod
+#   labels:
+#   resource-group: nonprod
+# spec:
+#   description: "route through IGW to access internet"
+#   destRange: 0.0.0.0/0
+#   nextHopGateway: ""
+#   networkRef:
+#     name: testvpc
+#   priority: 0
+#   nextHopIp: ""
+#   nextHopInstanceRef:
+#     external: name
+#   nextHopVPNTunnelRef:
+#     external: name
+#   tags:
+#   - "egress-inet"

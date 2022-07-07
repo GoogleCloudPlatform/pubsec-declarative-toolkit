@@ -19,6 +19,8 @@ metadata:
   namespace: nonprod
   annotations:
     config.kubernetes.io/local-config: true
+  labels:
+    resource-group: nonprod
 spec:
   services:
     - logging.googleapis.com

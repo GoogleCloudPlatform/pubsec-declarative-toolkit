@@ -16,12 +16,12 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   labels:
-    label-one: "value-one"
+    resource-group: nonprod
   name: allow-egress-internet
   namespace: nonprod
   annotations:
-  # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-  cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   allow:
     - protocol: TCP
@@ -33,7 +33,7 @@ spec:
   logConfig:
     metadata: EXCLUDE_ALL_METADATA
   networkRef:
-    name: computefirewall-dep-deny
+    name: nonprod-sharedvpc
   targetTags:
   - "allow-egress-internet"
 ---
@@ -41,7 +41,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   labels:
-    label-one: "value-one"
+    resource-group: nonprod
   name: allow-ssh-ingress
   namespace: nonprod
   annotations:
@@ -59,6 +59,6 @@ spec:
   logConfig:
     metadata: INCLUDE_ALL_METADATA
   networkRef:
-    name: computefirewall-dep-deny
+    name: nonprod-sharedvpc
   targetTags:
   - "allow-ssh"

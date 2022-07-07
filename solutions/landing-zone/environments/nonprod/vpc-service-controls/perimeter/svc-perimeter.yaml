@@ -17,6 +17,8 @@ kind: AccessContextManagerServicePerimeter
 metadata:
   name: regular-service-perimeter-nonp-1
   namespace: nonprod
+  labels:
+    resource-group: nonprod
 spec:
   # Config for DRY-RUN
   # To use this 'useExplicitDryRunSpec' must be set to 'true'
@@ -25,7 +27,7 @@ spec:
   spec:
     # List of Access Levels to be applied for this perimeter
     accessLevels:
-    - name: serviceperimeterdep2
+    - name: nonprodperimaccessleve
     # List of projects to be included in this perimeter
     resources:
     # List of restricted services
@@ -48,7 +50,7 @@ spec:
         - name: serviceperimeteringressdep
         sources:
         - accessLevelRef:
-            name: serviceperimeterdep2
+            name: nonprodperimaccessleve
       ingressTo:
         resources:
         - projectRef:
@@ -59,7 +61,7 @@ spec:
   # Replace "${PROJECT_NUMBERx}" with the appropriate `project number` for the project to be protected by the perimeter
   status:
     accessLevels:
-    - name: serviceperimeterdep2
+    - name: nonprodperimaccessleve
     resources:
     - projectRef:
         external: "projects/${PROJECT_NUMBER3}"
@@ -78,6 +80,6 @@ spec:
     # 1. The dependent Access Policy Object created via Config Connector
     # name: accesscontextmanagerserviceperimeterdep
     # 2. Set the appropriate ACCESS_POLICY_NUMBER
-    name: accesspolicy_nonp_1
+    name: orgaccesspolicy
   description: Regular Service Perimeter Nonp 1
   perimeterType: PERIMETER_TYPE_REGULAR

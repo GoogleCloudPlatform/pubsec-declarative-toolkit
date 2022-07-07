@@ -18,7 +18,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
-    label-one: "value-one"
+    resource-group: nonprod
   name: net-host-prj-nonprod # kpt-set: ${net-host-prj-nonprod-id}
   namespace: nonprod
 spec:
@@ -33,10 +33,12 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeProjectMetadata
 metadata:
-  name: oslogin-meta
+  name: nonprod-oslogin-meta
   namespace: nonprod
   annotations:
     cnrm.cloud.google.com/project-id: net-host-prj # kpt-set: ${net-host-prj-nonprod-id}
+  labels:
+    resource-group: nonprod
 spec:
   metadata:
     enable-oslogin: "true"
@@ -49,6 +51,8 @@ metadata:
     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
   name: net-host-prj-nonprod-shared-vpc
   namespace: nonprod
+  labels:
+    resource-group: nonprod
 spec:
   projectRef:
     name: net-host-prj # kpt-set: ${net-host-prj-nonprod-id}

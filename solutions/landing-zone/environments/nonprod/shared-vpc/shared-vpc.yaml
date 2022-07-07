@@ -18,14 +18,18 @@ metadata:
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of the project that you want to enable as a Shared VPC host.
     cnrm.cloud.google.com/project-id: net-host-prj # kpt-set: ${net-host-prj-nonprod-id}
-  name: computesharedvpchostproject-sample
+  name: nonprod-shared-vpc-host
   namespace: nonprod
+  labels:
+    resource-group: nonprod
 ---
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSharedVPCHostProject
-metadata:
-  annotations:
-    # Replace ${HOST_PROJECT_ID?} with the ID of the project that you want to enable as a Shared VPC host.
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
-  name: shared-vpc-host
-  namespace: nonprod
+# apiVersion: compute.cnrm.cloud.google.com/v1beta1
+# kind: ComputeSharedVPCHostProject
+# metadata:
+#   annotations:
+#     # Replace ${HOST_PROJECT_ID?} with the ID of the project that you want to enable as a Shared VPC host.
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#   labels:
+#     resource-group: nonprod
+#   name: shared-vpc-project
+#   namespace: nonprod

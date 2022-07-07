@@ -15,18 +15,20 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNGateway
 metadata:
-  name: ha_gateway
+  name: nonprod-ha-gateway
   namespace: nonprod
+  labels:
+    resource-group: nonprod
 spec:
   description: "Compute VPN Gateway Sample"
-  region: us-central1
+  region: northamerica-northeast1
   networkRef:
     name: computevpngateway-dep
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeExternalVPNGateway
 metadata:
-  name: computeexternalvpngateway-sample
+  name: nonprod-ext-gateway
   namespace: nonprod
   labels:
     label-one: "value-one"
@@ -40,35 +42,39 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNTunnel
 metadata:
-  name: computevpntunnel-sample
+  name: nonprod-vpn-tunnel
   namespace: nonprod
   labels:
-    foo: bar
+    resource-group: nonprod
 spec:
   peerIp: "15.0.0.120"
-  region: us-central1
+  region: northamerica-northeast1
   sharedSecret:
     valueFrom:
       secretKeyRef:
         name: computevpntunnel-dep
         key: sharedSecret
   targetVPNGatewayRef:
-    name: computevpntunnel-dep
+    name: nonprod-ha-gateway
   localTrafficSelector:
     - "192.168.0.0/16"
+---
+### Missing Router
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterInterface
 metadata:
-  name: computerouterinterface-sample
+  name: nonprod-router-int
   namespace: nonprod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+  labels:
+    resource-group: nonprod
 spec:
   routerRef:
     name: computerouterinterface-dep
-  region: us-central1
+  region: northamerica-northeast1
   ipRange: "169.254.1.1/30"
   vpnTunnelRef:
     name: computerouterinterface-dep
@@ -76,13 +82,15 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterPeer
 metadata:
-  name: computerouterpeer-sample
+  name: nonprod-router-peer
   namespace: nonprod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+  labels:
+    resource-group: nonprod
 spec:
-  region: us-central1
+  region: northamerica-northeast1
   peerIpAddress: "169.254.0.2"
   peerAsn: 65513
   ipAddress:
@@ -91,4 +99,4 @@ spec:
   routerRef:
     name: computerouterpeer-dep
   routerInterfaceRef:
-    name: computerouterpeer-dep    
+    name: nonprod-router-int 

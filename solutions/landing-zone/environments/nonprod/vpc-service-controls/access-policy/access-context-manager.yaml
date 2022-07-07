@@ -13,29 +13,20 @@
 # limitations under the License.
 
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
-kind: AccessContextManagerAccessPolicy
-metadata:
-  annotations:
-    # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org_id}
-  name: accesspolicy-nonp-1
-  namespace: nonprod
-spec:
-  title: Config Connector Sample
----
-apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerAccessLevel
 metadata:
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org_id}
-  name: serviceperimeterdep1-nonp-1
+  name: nonprod-perim-access-level
   namespace: nonprod
+  labels:
+    resource-group: nonprod
 spec:
   accessPolicyRef:
     # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
-    name: accesspolicy-nonp-1
-  title: Service Perimeter Dependency ACL1
+    name: orgaccesspolicy
+  title: Non Prod Service Perimeter Dependency ACL1
   basic:
     conditions:
       - regions:
