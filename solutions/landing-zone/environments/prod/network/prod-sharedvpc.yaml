@@ -20,6 +20,8 @@ metadata:
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
+  labels:
+    resource-group: prod
 spec:
   description: The Production Shared VPC
   routingMode: GLOBAL
@@ -29,7 +31,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
   labels:
-    environment: "production"
+    resource-group: prod
   name: subnet01
   namespace: prod
   annotations:

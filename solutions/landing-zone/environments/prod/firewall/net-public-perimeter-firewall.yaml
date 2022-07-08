@@ -16,7 +16,7 @@
   kind: ComputeFirewall
   metadata:
     labels:
-      resource-group: nonprod
+      resource-group: prod
     name: computefirewall-sample-deny
     namespace: prod
     annotations:

@@ -15,8 +15,10 @@
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerServicePerimeter
 metadata:
-  name: regular-service-perimeter-nonp_1
+  name: prodserviceperim
   namespace: prod
+  labels:
+    resource-group: prod
 spec:
   # Config for DRY-RUN
   # To use this 'useExplicitDryRunSpec' must be set to 'true'
