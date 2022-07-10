@@ -22,7 +22,7 @@ metadata:
   name: guardrails
   namespace: common
 spec:
-  name: Config Connector Sample
+  name: Guardrails
   folderRef:
     # Replace "${ORG_ID?}" with the numeric ID of the parent organization
     name: "audit-and-security.audit"

@@ -22,7 +22,7 @@ metadata:
   name: audit-bunker # kpt-set: ${audit-prj-id}
   namespace: common
 spec:
-  name: Config Connector Sample
+  name: Audit Bunker
   folderRef:
     # Replace "${ORG_ID?}" with the numeric ID of the parent organization
     name: "audit-and-security.audit"
