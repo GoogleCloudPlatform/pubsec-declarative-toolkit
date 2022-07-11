@@ -102,18 +102,33 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     Details: https://kpt.dev/reference/cli/pkg/get/
 
 3. Set Organization Hierarchy
-
+    Modifiy `environments/common/hiearchy.yaml` if required.
 
 4. Customize Package
 
+    Edit `setters.yaml`
+
 5. Deploy
 
-    a. kpt
+    a. kpt fn render
     
     ```
     kpt live init landing-zone
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
+
+    Note: Deploying without billing use permissions is possible but will require a user to manually add the billing account to the project. To do this you will need to remove the Billing Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`).
+
+    The section looks like the following.
+    ```
+    billingAccountRef:
+    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+    external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
+    ```
+
+    This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI.
+
+    Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`).
 
     b. GitOps
 
