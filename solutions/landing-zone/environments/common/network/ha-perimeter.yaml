@@ -18,7 +18,7 @@ metadata:
   name: common-network-peering
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
   labels:
     resource-group: common
 spec:
@@ -37,7 +37,7 @@ metadata:
   name: common-ha-perimeter
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   description: The Perimeter VPC
   routingMode: GLOBAL
@@ -52,7 +52,7 @@ metadata:
   name: common-ha-perimeter-subnet
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   ipCidrRange: 10.10.0.128/26
   region: northamerica-northeast1

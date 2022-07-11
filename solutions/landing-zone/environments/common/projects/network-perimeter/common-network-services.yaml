@@ -15,16 +15,16 @@
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: ProjectServiceSet
 metadata:
-  name: prod-nethost-service
+  name: common-nethost-service
   namespace: config-control
   annotations:
     cnrm.cloud.google.com/deletion-policy: "false"
     config.kubernetes.io/local-config: "true"
     cnrm.cloud.google.com/disable-dependent-services: "false"
   labels:
-    resource-group: prod
+    resource-group: common
 spec:
   services:
     - logging.googleapis.com
     - compute.googleapis.com
-  projectID: proj1 # kpt-set: ${net-host-prj-prod-id}   
+  projectID: net-host-prj # kpt-set: ${net-perimeter-prj-common-id}

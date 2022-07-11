@@ -43,19 +43,16 @@ spec:
       enableRestriction: true
     egressPolicies:
     - egressFrom:
-        identities:
-        - name: serviceperimeterengressdep
+        identityType: ANY_IDENTITY
     - egressTo:
         resources:
         - projectRef:
             external: "projects/${PROJECT_NUMBER1}"
     ingressPolicies:
     - ingressFrom:
-        identities:
-        - name: serviceperimeteringressdep
         sources:
         - accessLevelRef:
-            name: serviceperimeterdep2
+            name: prodaccesslevels
       ingressTo:
         resources:
         - projectRef:

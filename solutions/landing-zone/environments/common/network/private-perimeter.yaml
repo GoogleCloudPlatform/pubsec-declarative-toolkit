@@ -18,7 +18,7 @@ metadata:
   name: common-prv-prm-peer
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
   labels:
     resource-group: common
 spec:
@@ -37,7 +37,7 @@ metadata:
   name: priv-perimeter
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   routingMode: GLOBAL
   autoCreateSubnetworks: false
@@ -51,7 +51,7 @@ metadata:
   name: priv-perimeter-subnet
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${commom-prj-id}
+    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   ipCidrRange: 10.10.0.64/26
   region: northamerica-northeast1
