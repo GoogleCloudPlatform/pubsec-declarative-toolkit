@@ -122,13 +122,15 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     The section looks like the following.
     ```
     billingAccountRef:
-    # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-    external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
+        # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
+        external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
     ```
 
     This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI.
 
-    Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`).
+    You can view the status of any deployed object by running `kubectl get gcp` when connected to the Config Controller instance. If an object is pending or is displaying an error you can investigate by copying the name of the object and running the describe command.
+
+    For example `kubectl describe storagebucket.storage.cnrm.cloud.google.com/audit-sink-audit-prj-12345`.
 
     b. GitOps
 
