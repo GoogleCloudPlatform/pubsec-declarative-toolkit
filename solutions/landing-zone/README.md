@@ -106,13 +106,16 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 3. Set Organization Hierarchy
 
-    Modifiy `environments/common/hiearchy.yaml` if required. Emails used for groups should be exist in iam/groups before running the script.
-
-    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.
+    Modifiy `environments/common/hiearchy.yaml` if required. 
 
 4. Customize Package
 
     Edit `setters.yaml` with the relevant information. 
+
+    Emails used for groups should be exist in iam/groups before running the script.
+
+    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.
+
 
 5. Deploy
 
