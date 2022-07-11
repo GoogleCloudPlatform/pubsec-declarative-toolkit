@@ -27,7 +27,7 @@ spec:
   spec:
     # List of Access Levels to be applied for this perimeter
     accessLevels:
-    - name: accesspolicy-prod
+    - name: prodaccesslevels
     # List of projects to be included in this perimeter
     resources:
     - projectRef:
@@ -66,7 +66,7 @@ spec:
   # Replace "${PROJECT_NUMBERx}" with the appropriate `project number` for the project to be protected by the perimeter
   status:
     accessLevels:
-    - name: serviceperimeterdep2
+    - name: prodaccesslevels
     resources:
     - projectRef:
         external: "projects/${PROJECT_NUMBER3}"
@@ -88,6 +88,6 @@ spec:
     # 1. The dependent Access Policy Object created via Config Connector
     # name: accesscontextmanagerserviceperimeterdep
     # 2. Set the appropriate ACCESS_POLICY_NUMBER
-    name: accesspolicy-prod
+    name: orgaccesspolicy
   description: A Service Perimeter Created by Config Connector
   perimeterType: PERIMETER_TYPE_REGULAR

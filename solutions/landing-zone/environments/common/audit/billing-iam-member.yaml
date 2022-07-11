@@ -25,5 +25,5 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: Audit
+    name: Audit # kpt-set: ${audit-prj-id}
 ---

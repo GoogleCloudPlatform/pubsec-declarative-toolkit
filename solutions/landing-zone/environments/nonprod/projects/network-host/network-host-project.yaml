@@ -22,7 +22,7 @@ metadata:
   name: net-host-prj-nonprod # kpt-set: ${net-host-prj-nonprod-id}
   namespace: nonprod
 spec:
-  name: net-host-prj
+  name: Non Prod Network Host
   folderRef:
     # Replace "${ORG_ID?}" with the numeric ID of the parent organization
     name: infrastructure.networking.nonprodnetworking

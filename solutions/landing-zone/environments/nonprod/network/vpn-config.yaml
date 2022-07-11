@@ -17,6 +17,9 @@ kind: ComputeVPNGateway
 metadata:
   name: nonprod-ha-gateway
   namespace: nonprod
+  annotations:
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
   labels:
     resource-group: nonprod
 spec:
@@ -30,6 +33,9 @@ kind: ComputeExternalVPNGateway
 metadata:
   name: nonprod-ext-gateway
   namespace: nonprod
+  annotations:
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
   labels:
     label-one: "value-one"
 spec:
@@ -44,6 +50,9 @@ kind: ComputeVPNTunnel
 metadata:
   name: nonprod-vpn-tunnel
   namespace: nonprod
+  annotations:
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
   labels:
     resource-group: nonprod
 spec:

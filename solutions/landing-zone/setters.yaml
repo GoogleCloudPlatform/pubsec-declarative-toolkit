@@ -27,15 +27,16 @@ data:
   org-id: "0000000000"
   ###
   # Project  IDs
-  # Project IDs must be at most 30 characters
   net-host-prj-nonprod-id: net-host-prj-nonprod-12345
   net-host-prj-prod-id: net-host-prj-prod-12345
-  net-perimeter-prj-common-id: net-prm-prj-common-1234
-  audit-prj-id: audit-prj-12345
-  management-project-id: audit-prj-12345
-  guardrails-project-id: guardrails-prj-12345
+  net-perimeter-prj-common-id: net-perimeter-prj-common-12345
+  audit-prj-id: audit-prj-id-12345
+  management-project-id: management-project-12345
+  management-project-number: "0000000000"
+  guardrails-project-id: guardrails-project-12345
   ###
   # Groups
   audit-viewer: group@domain.com
+  log-writer: group@domain.com
   log-writer: group@domain.com
   organization-viewer: group@domain.com

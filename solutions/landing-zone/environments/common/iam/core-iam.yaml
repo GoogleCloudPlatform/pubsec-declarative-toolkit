@@ -20,9 +20,9 @@ metadata:
   labels:
     resource-group: common
 spec:
-  member: org-viewer # kpt-set: ${organization-viewer}
+  member: org-viewer # kpt-set: group:${organization-viewer}
   role: roles/viewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "${ORG_ID?}" # kpt-set: ${org_id}
+    external: "${ORG_ID?}" # kpt-set: ${org-id}

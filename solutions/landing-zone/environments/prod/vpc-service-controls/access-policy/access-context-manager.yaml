@@ -11,34 +11,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
-kind: AccessContextManagerAccessPolicy
-metadata:
-  annotations:
-    # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org-id}
-  labels:
-    resource-group: prod
-  name: accesspolicy-prod
-  namespace: prod
-spec:
-  title: Config Connector Sample
 ---
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerAccessLevel
-metadata:
+metadata: # kpt-merge: prod/serviceperimeterdep1
   annotations:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    cnrm.cloud.google.com/organization-id: "${ORG_ID}" # kpt-set: ${org-id}
-  name: serviceperimeterdep1
-  namespace: prod
+    cnrm.cloud.google.com/organization-id: '0000000000000' # kpt-set: ${org-id}
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn-live
+  name: prodaccesslevels
+  namespace: config-control
 spec:
   accessPolicyRef:
     # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
-    name: "accesspolicy-prod"
-  title: Service Perimeter Dependency ACL1
+    name: orgaccesspolicy
+  title: Service Perimeter Prod ACL1
   basic:
     conditions:
-      - devicePolicy:
-          requireCorpOwned: true
+      - regions:
+          - CA

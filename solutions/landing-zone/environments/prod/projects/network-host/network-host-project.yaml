@@ -23,9 +23,9 @@ metadata:
   namespace: prod
 spec:
   name: Host Network Perimeter
-  organizationRef:
+  folderRef:
     # Replace "${ORG_ID?}" with the numeric ID of the parent organization
-    external: "${ORG_ID?}" # kpt-set: ${org-id}
+    name: infrastructure.networking.prodnetworking
   billingAccountRef:
     # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
     external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
