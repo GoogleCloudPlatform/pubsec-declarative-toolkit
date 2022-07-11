@@ -4,7 +4,7 @@ This is a reimplementation of [pbmm-on-gcp-onboarding](https://github.com/Google
 
 ## Organzation
 
-This landing Zone will create an initial 3 environments.
+This Landing Zone will create an initial 3 environments.
 
 Creates 3 Environments
 - Common
@@ -88,12 +88,15 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     This command will create a new project and deploy a Config Controller instance for you.
 
-    Set Permissions
+    Set Permissions additional permission
     ```
+    export ORG_ID=your-org-id
+    export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
     gcloud organizations add-iam-policy-binding "${ORG_ID}"     --member "serviceAccount:${SA_EMAIL}"     --role roles/accesscontextmanager.policyAdmin
+    gcloud organizations add-iam-policy-binding "${ORG_ID}"     --member "serviceAccount:${SA_EMAIL}"     --role roles/compute.xpnAdmin
+    gcloud organizations add-iam-policy-binding "${ORG_ID}"     --member "serviceAccount:${SA_EMAIL}"     --role roles/iam.serviceAccountAdmin
+    gcloud organizations add-iam-policy-binding "${ORG_ID}"     --member "serviceAccount:${SA_EMAIL}"     --role roles/serviceusage.serviceUsageConsumer
     ```
-    cloudbilling.googleapis.com
-    roles/compute.xpnAdmin
     
 2. Fetch the package
 
@@ -102,18 +105,22 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     Details: https://kpt.dev/reference/cli/pkg/get/
 
 3. Set Organization Hierarchy
-    Modifiy `environments/common/hiearchy.yaml` if required.
+
+    Modifiy `environments/common/hiearchy.yaml` if required. Emails used for groups should be exist in iam/groups before running the script.
+
+    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.
 
 4. Customize Package
 
-    Edit `setters.yaml`
+    Edit `setters.yaml` with the relevant information. 
 
 5. Deploy
 
-    a. kpt fn render
+    a. kpt
     
     ```
-    kpt live init landing-zone
+    kpt fn render
+    kpt live init landing-zone --namespace config-control
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
 
@@ -134,4 +141,6 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     b. GitOps
 
-    c. Arete
+      Deploy Infrastructure via GitOps using Anthos Config Management
+
+    c. Cloud Deploy (future)
