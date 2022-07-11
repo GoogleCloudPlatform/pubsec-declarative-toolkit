@@ -15,7 +15,7 @@ These configurations for these environments is contained in the environments dir
 
 This landing zone will deploy the following folder structure and projects. 
 
-*Assume folder unless identity as a project*
+*Assume folder unless identified as a project*
 
 ```
 Infrastructure:
