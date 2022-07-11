@@ -19,6 +19,8 @@ metadata:
     resource-group: common
   name: allow-egress-internet-pr
   namespace: common
+  annotations:
+    cnrm.cloud.google.com/project-id: net-prm-prj-common-12345 # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   description: Allow egress to the internet
   direction: EGRESS
@@ -28,7 +30,7 @@ spec:
   sourceRanges:
     - 0.0.0.0/0
   networkRef:
-    name: computefirewall-dep-deny
+    name: priv-perimeter
   targetTags:
     - "allow-egress-internet-pr"
   priority: 1000
@@ -41,8 +43,10 @@ kind: ComputeFirewall
 metadata:
   labels:
     resource-group: common
-  name: allow-ssh-ingress
+  name: allow-ssh-ingress-pr
   namespace: common
+  annotations:
+    cnrm.cloud.google.com/project-id: net-prm-prj-common-12345 # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   description: Allow SSH Connections from the internet
   direction: INGRESS
@@ -53,7 +57,7 @@ spec:
   sourceRanges:
     - 0.0.0.0/0
   networkRef:
-    name: computefirewall-dep-deny
+    name: priv-perimeter
   targetTags:
     - "allow-ssh"
   priority: 1000

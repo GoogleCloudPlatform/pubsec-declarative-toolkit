@@ -43,16 +43,16 @@ spec:
   metadata:
     enable-oslogin: "true"
 ---
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSharedVPCServiceProject
-metadata:
-  annotations:
-    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
-  name: net-host-prj-nonprod-shared-vpc
-  namespace: nonprod
-  labels:
-    resource-group: nonprod
-spec:
-  projectRef:
-    name: net-host-prj # kpt-set: ${net-host-prj-nonprod-id}
+# apiVersion: compute.cnrm.cloud.google.com/v1beta1
+# kind: ComputeSharedVPCServiceProject
+# metadata:
+#   annotations:
+#     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#   name: net-host-prj-nonprod-shared-vpc
+#   namespace: nonprod
+#   labels:
+#     resource-group: nonprod
+# spec:
+#   projectRef:
+#     name: net-host-prj # kpt-set: ${net-host-prj-nonprod-id}
