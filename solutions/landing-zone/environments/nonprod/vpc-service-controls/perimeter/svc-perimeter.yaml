@@ -15,7 +15,7 @@
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerServicePerimeter
 metadata:
-  name: regular-service-perimeter-nonp-1
+  name: nonprodserviceperim
   namespace: nonprod
   labels:
     resource-group: nonprod
@@ -48,9 +48,6 @@ spec:
     - ingressFrom:
         identities:
         - name: serviceperimeteringressdep
-        sources:
-        - accessLevelRef:
-            name: nonprodperimaccessleve
       ingressTo:
         resources:
         - projectRef:

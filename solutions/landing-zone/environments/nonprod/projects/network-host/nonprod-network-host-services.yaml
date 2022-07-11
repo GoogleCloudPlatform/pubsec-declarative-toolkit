@@ -18,7 +18,9 @@ metadata:
   name: nonprod-nethost-service
   namespace: nonprod
   annotations:
-    config.kubernetes.io/local-config: true
+    cnrm.cloud.google.com/deletion-policy: "false"
+    config.kubernetes.io/local-config: "true"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
   labels:
     resource-group: nonprod
 spec:
