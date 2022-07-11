@@ -16,14 +16,14 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: log-writer
-  namespace: common
+  namespace: config-control
   labels:
     resource-group: common
 spec:
-  member: google_logging_billing_account_sink.billing-sink.writer_identity
+  member: group:log-writer # kpt-set: group:${log-writer}
   role: roles/storage.objectCreator
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: Audit # kpt-set: audit-${audit-prj-id}
+    kind: Folder
+    name: audit-and-security.audit
 ---

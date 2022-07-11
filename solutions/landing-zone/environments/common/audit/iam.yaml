@@ -20,7 +20,7 @@ metadata:
   labels:
     resource-group: common
 spec:
-  member: audit-viewer # kpt-set: ${audit-viewer}
+  member: audit-viewer # kpt-set: group:${audit-viewer}
   role: roles/viewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -34,23 +34,10 @@ metadata:
   labels:
     resource-group: common
 spec:
-  member: log-writer
+  member: group:log-reader # kpt-set: group:${log-reader}
   role: roles/storage.objectViewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
     name: audit-and-security.audit
 ---
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: log-writer
-  labels:
-    resource-group: common
-spec:
-  member: log-writer
-  role: roles/storage.objectCreator
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Folder
-    name: audit-and-security.audit
