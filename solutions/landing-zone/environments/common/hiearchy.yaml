@@ -33,7 +33,7 @@ spec:
     - Workloads:
         - Prod
         - UAT
-        - DEv
+        - DEV
     - "Audit and Security":
         - Audit
         - Security

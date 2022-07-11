@@ -13,39 +13,68 @@ Creates 3 Environments
 
 These configurations for these environments is contained in the environments directory of this package.
 
-Each environment will deploy the following resources:
+This landing zone will deploy the following folder structure and projects. 
+
+*Assume folder unless identity as a project*
+
+```
+Infrastructure:
+  - Networking:
+      - ProdNetworking
+        - Production Network Project
+      - NonProdNetworking
+        - Non Production Network Project
+  - SharedInfrastructure
+Sandbox
+Workloads:
+  - Prod
+  - UAT
+  - DEV
+Audit and Security:
+  - Audit
+    - Guardrails Project
+    - Audit Bunker Project
+  - Security
+    - Common Network Perimeter Project
+Automation
+Shared Services
+```
+
+The following resources will be deployed.
 
 ### Common
-| Resource | Name | Purpose |
-| ---- | ---- | ---- |
-| Access Context Manager | | |
-| Core Audit Bunker | | |
-| Core Folders | | |
-| Core IAM | | |
-| Core Org Custom Roles | | |
-| Core Org Policy | | |
-| Guardrails | | |
-| Base Network Perimeter | | |
-| Network Management Perimeter | | |
+| Resource | Name | Purpose | Status | Location |
+| ---- | ---- | ---- | --- | -- |
+| Access Context Manager | | | Work In Progress | `environments/common/vpc-service-controls`
+| Core Audit Bunker | | | Available | `environments/common/audit` |
+| Core Folders | | | Available | `environments/common/hiearchy.yaml` |
+| Core IAM | | | Available | `environments/common/iam` |
+| Core Org Custom Roles | | File for Custom Org Roles | Available | `environments/common/iam` |
+| Core Org Policy | | Default Org Policies | Available | `environments/common/policies` |
+| Guardrails | | | Available | `environments/common/guardrails-policies` |
+| Base Network Perimeter | | | Available | `environments/common/network` |
+| Network Management Perimeter | | | Available | `environments/common/network` |
 
 ### Non-Prod
-| Resource | Name | Purpose |
-| ---- | ---- | ---- |
-| VPC Service Control | | |
-| Network Host Project | | |
-| Firewall | | |
+| Resource | Name | Purpose | Status | Location |
+| ---- | ---- | ---- | --- | -- |
+| VPC Service Control | | | Available | `environments/nonprod/shared-vpc` |
+| VPN Controllers | |  | Not Available | `environments/nonprod/network` |
+| Network Host Project | | | Available | `environments/nonprod/network` |
+| Firewall | | | Available | `environments/nonprod/firewall` |
 
 ### Prod
-| Resource | Name | Purpose |
-| ---- | ---- | ---- |
-| Network Host Project | | |
-| VPC Service Controls | | |
-| Firewall | | |
-| Network Perimeter Project | | |
-| Network HA Perimeter | | |
-| Net Private Perimeter | | |
-| Network Private Perimeter Firewall | | |
-| Network Public Perimeter Firewall | | |
+| Resource | Name | Purpose | Status | Location |
+| ---- | ---- | ---- | --- | -- |
+| Network Host Project | | | Available | `environments/nonprod/network` |
+| VPC Service Controls | | | Available | `environments/nonprod/vpc-service-controls` |
+| Network Perimeter Project | | | Available | `environments/nonprod/network` |
+| Network HA Perimeter | | | Available | `environments/nonprod/network` |
+| Net Private Perimeter | | | Available | `environments/nonprod/network` |
+| Firewall | | | Available | `environments/nonprod/firewall` |
+| Network Private Perimeter Firewall | | | Available | `environments/nonprod/firewall` |
+| Network Public Perimeter Firewall | | | Available | `environments/nonprod/firewall` |
+
 
 ## Usage
 
