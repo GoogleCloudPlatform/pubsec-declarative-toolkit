@@ -26,4 +26,4 @@ spec:
     - logging.googleapis.com
     - dns.googleapis.com
     - compute.googleapis.com
-  projectID: net-host-prj # ${net-host-prj-nonprod-id}
+  projectID: net-host-prj # kpt-set:${net-host-prj-nonprod-id}
