@@ -12,22 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeNetworkPeering
-metadata:
-  name: common-mgmt-perimeter-peer
-  namespace: common
-  annotations:
-    cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
-  labels:
-    resource-group: common
-spec:
-  exportCustomRoutes: false
-  importCustomRoutes: false
-  networkRef:
-    name: privperimvpc # Production Host Project Name
-  peerNetworkRef:
-    name: computenetworkpeering-dep2 # Production VPC Name
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
