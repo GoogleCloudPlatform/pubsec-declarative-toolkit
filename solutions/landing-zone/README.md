@@ -2,6 +2,12 @@
 
 This is a reimplementation of [pbmm-on-gcp-onboarding](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding) Landing Zone using KRM.
 
+The goal of this repo is to have parity with pbmm-on-gcp-onboarding repository using [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to deploy and manage the infrastructure.
+
+Config Controller is a hosted service to provision and orchestrate Anthos and Google Cloud resources. It offers an API endpoint that can provision, actuate, and orchestrate Google Cloud resources as part of Anthos Config Management.
+
+![img](img/arch.svg)
+
 ## Organzation
 
 This Landing Zone will create an initial 3 environments.
@@ -11,9 +17,9 @@ Creates 3 Environments
 - Non-prod
 - Prod
 
-These configurations for these environments is contained in the environments directory of this package.
+These configurations for these environments is contained in the environments directory (`environments/`) of this package.
 
-This landing zone will deploy the following folder structure and projects. 
+The following folder structure and projects will be deployed. 
 
 *Assume folder unless identified as a project*
 
@@ -86,7 +92,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     arete create landing-zone-controller
     ```
 
-    This command will create a new project and deploy a Config Controller instance for you.
+    This command will create a new project and deploy a Config Controller instance for you. This will create a project at the top level and can be moved into a folder if you like.
 
     Set Permissions additional permission
     ```
@@ -136,7 +142,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
         external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
     ```
 
-    This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI.
+    This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI. If you do not remove this section the project will fail to create.
 
     You can view the status of any deployed object by running `kubectl get gcp` when connected to the Config Controller instance. If an object is pending or is displaying an error you can investigate by copying the name of the object and running the describe command.
 
