@@ -18,7 +18,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
-    label-one: "value-one"
+    resource-group: common
   name: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
   namespace: common
 spec:

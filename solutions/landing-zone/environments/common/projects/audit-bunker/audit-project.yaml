@@ -18,7 +18,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
-    label-one: "value-one"
+    resource-group: common
   name: audit-bunker # kpt-set: ${audit-prj-id}
   namespace: common
 spec:
