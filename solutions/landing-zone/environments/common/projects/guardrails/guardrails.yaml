@@ -19,7 +19,7 @@ metadata:
     cnrm.cloud.google.com/auto-create-network: "false"
   labels:
     resource-group: common
-  name: guardrails
+  name: guardrails ${guardrails-project-id}
   namespace: common
 spec:
   name: Guardrails
