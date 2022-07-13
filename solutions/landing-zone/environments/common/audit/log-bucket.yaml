@@ -42,6 +42,6 @@ spec:
     isLocked: true
     retentionPeriod: 1
   versioning:
-    enabled: true
+    enabled: false
   uniformBucketLevelAccess: true
   publicAccessPrevention: "enforced"
