@@ -31,7 +31,7 @@ spec:
         age: 365
         withState: "ANY"
     - action:
-        type: "SetStorageCLass"
+        type: "SetStorageClass"
         storageClass: "COLDLINE"
       condition:
         age: 180

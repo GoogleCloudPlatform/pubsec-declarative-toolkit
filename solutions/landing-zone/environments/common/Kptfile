@@ -4,7 +4,6 @@ metadata:
   name: common-env
 pipeline:
   mutators:
-    - image: 'gcr.io/kpt-fn/enable-gcp-services:v0.1.0'
     - image: 'gcr.io/kpt-fn/set-namespace:v0.4.1'
       configMap:
         namespace: config-control

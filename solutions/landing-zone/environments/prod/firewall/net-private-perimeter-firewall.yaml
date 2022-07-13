@@ -18,6 +18,7 @@ metadata:
   labels:
     resource-group: prod
   name: prod-firewall-default-deny
+  namespace: config-control
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
