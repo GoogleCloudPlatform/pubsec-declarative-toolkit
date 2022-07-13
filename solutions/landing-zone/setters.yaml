@@ -51,5 +51,5 @@ data:
   # Permissions will be assigned to the specified group email
   audit-viewer: group@domain.com
   log-writer: group@domain.com
-  log-writer: group@domain.com
+  log-reader: group@domain.com
   organization-viewer: group@domain.com

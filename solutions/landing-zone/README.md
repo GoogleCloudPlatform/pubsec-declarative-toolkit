@@ -128,8 +128,25 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     Emails used for groups should be exist in iam/groups before running the script.
 
-    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.
+    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.  
 
+    | Name | Default | Description |
+    | --- | --- | --- |
+    | billing-id | "0000000000" | Billing ID used with created projects |
+    | org-id | "0000000000" | Target Organization ID |
+    | management-project-id | management-project-12345  | ID of the Project where the Config Controller instance is located |
+    | management-project-number | "0000000000" |  Number of the Project where the Config Controller instance is location |
+    | net-host-prj-nonprod-id | net-host-prj-nonprod-12345 | ID to be used for the Non-Prod Network Host Project |
+    | net-host-prj-prod-id | net-host-prj-prod-12345 | ID to be used for the Prod Network Host Project |
+    | net-perimeter-prj-common-id | net-perimeter-prj-common-12345 | ID to be used for the Common Network Perimeter Host Project |
+    | audit-prj-id | audit-prj-id-12345 | ID to be used for the Audit Project |
+    | guardrails-project-id | guardrails-project-12345 | ID to be used for the Guardrails Project |
+    | audit-viewer | group@domain.com | Group email to get audit viewer permissions |
+    | log-writer | group@domain.com | Group email to get log writer permissions |
+    | log-reader | group@domain.com | Group email to get log reader permissions |
+    | organization-viewer| group@domain.com | Group email to get org viewer permissions |
+
+    **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
 
 5. Deploy
 
@@ -141,9 +158,9 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
 
-    Note: Deploying without billing use permissions is possible but will require a user to manually add the billing account to the project. To do this you will need to remove the Billing Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`).
+    **Note**: Deploying without billing use permissions is possible but will require a user to manually add the billing account to the project. To do this you will need to remove the Billing Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`).
 
-    The section looks like the following.
+    The section looks like the following and can either be commented out or deleted.
     ```
     billingAccountRef:
         # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
