@@ -24,7 +24,7 @@
 #   networkRef:
 #     name: nonprod-sharedvpc
 #   description: example router description
-#   region: us-west1
+#   region: northamerica-northeast1
 #   bgp:
 #     asn: 64514
 #     advertiseMode: CUSTOM
