@@ -12,3 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# apiVersion: compute.cnrm.cloud.google.com/v1beta1
+# kind: ComputeRouter
+# metadata:
+#   name: nonprod-router
+#   namespace: config-controller
+#   annotations:
+#     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+#     cnrm.cloud.google.com/project-id: non-prod-project-id # kpt-set: ${net-host-prj-nonprod-id}
+# spec:
+#   networkRef:
+#     name: nonprod-sharedvpc
+#   description: example router description
+#   region: us-west1
+#   bgp:
+#     asn: 64514
+#     advertiseMode: CUSTOM
+#     advertisedGroups:
+#       - ALL_SUBNETS
+#     advertisedIpRanges:
+#       - range: "1.2.3.4"

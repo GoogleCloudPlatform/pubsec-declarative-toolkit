@@ -27,7 +27,7 @@ spec:
   destRange: 0.0.0.0/0
   nextHopGateway: "default-internet-gateway"
   networkRef:
-    name: testvpc
+    name: nonprod-sharedvpc
   priority: 0
   # nextHopIp: ""
   # nextHopInstanceRef:

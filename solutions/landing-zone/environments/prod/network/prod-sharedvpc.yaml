@@ -32,7 +32,7 @@ kind: ComputeSubnetwork
 metadata:
   labels:
     resource-group: prod
-  name: subnet01
+  name: prod-sharedvpc-subnet
   namespace: prod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
