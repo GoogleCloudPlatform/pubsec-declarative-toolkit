@@ -321,8 +321,6 @@ spec:
   listPolicy:
     allow:
       all: true
-      values: # kpt-set: ${allowed-domain-contacts}
-        - "@email.com"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
@@ -354,8 +352,8 @@ spec:
   listPolicy:
     allow:
       all: true
-      values: # kpt-set: ${allowed-domain-members}
-        - "asdasda"
+      # values:
+      #  - "asdasda"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
@@ -411,8 +409,8 @@ spec:
   listPolicy:
     allow:
       all: true
-      values: # kpt-set: ${can-ip-forward}
-        - projects/PROJECT_ID
+      # values: # kpt-set: ${can-ip-forward}
+      # - projects/PROJECT_ID
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id} 
