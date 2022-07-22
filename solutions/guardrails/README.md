@@ -7,29 +7,83 @@ This packge contains the minimal set of infrastructure needed to help provision 
 
 0. Follow the steps in the [quickstart](../../README.md#Quickstart) to provision a config controller instances or the [advanced guide](../../docs/advanced-install.md)
 
-1. Fetch the package
+    Once you have a config controller instance up and running you can proceed with the next steps.
+
+    The following permissions are required on the service account being used.
+
+    ## Permissions
+
+    The following permissions Needed For Config Controller SA
+    - Project Creator
+    - Folder Creator
+    - Billing User
+    - IAM
+    - Service Account Creator
+    - Policy Admin
+    - Logging
+
+    They can be set by running the following commands:
+    ```
+    export ORG_ID=your-org-id
+    export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member 
+    "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectCreator"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectDeleter"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.folderAdmin"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/billing.user"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/iam.securityAdmin"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/iam.serviceAccountAdmin
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/orgpolicy.policyAdmin"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer"
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/logging.admin
+    ```
+
+1. Fetch the `guardrails` package by running the `kpt pkg get` command.
+
 ```
 kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails guardrails
 ```
 
-2. Edit the `setters.yaml` file with the values you need.
+This will download the package containing the configuration files for the Guardrails deployment.
 
-3. Apply the Changes
+2. Set Organization Hierarchy (optional)
+
+    Modifiy `configs/hierarchy/hiearchy.yaml` if required. The default settings will create a single folder called  `guardrails` and the guardrails project will be deployed into that.
+
+3. Customize the Guardrails Package.
+
+    Edit `setters.yaml` with the relevant information. 
+
+    Emails used for groups should be exist in iam/groups before running the script.
+
+    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.  
+
+    The following values are exposed in the `setters.yaml` file. Additional changes can be made by modifying the packages yaml files.
+
+    | Name | Default | Description |
+    | --- | --- | --- |
+    | billing-id | "0000000000" | Billing ID used with created projects |
+    | org-id | "0000000000" | Target Organization ID |
+    | management-project-id | management-project-12345  | ID of the Project where the Config Controller instance is located |
+    | management-project-number | "0000000000" |  Number of the Project where the Config Controller instance is location |
+    | management-namespace | "config-controller" |  Number of the Project where the Config Controller instance is location |
+    | guardrails-project-id | guardrails-project-12345 | ID to be used for the Guardrails Project |
+    | guardrails-namespace | config-controller | ID to be used for the Guardrails Project |
+    | audit-viewer-group | group@domain.com | Group email to get audit viewer permissions |
+    | audit-data-group | group@domain.com | Group email to get log writer permissions |
+    | audit-data-viewer-group | group@domain.com | Group email to get audit data viewer permissions for the bq billing exports |
+    | billing-data-viewer-group | group@domain.com | Group email to get billing data viewer permissions for the bq billing exports |
+    | billing-console-viewer-group | group@domain.com | Group email to get billing viewer permissions |
+
+4. Apply the Changes
+
+The following commands will set the values from `setters.yaml`, generate the hierarchy and service configs.
+
 ```
 kpt live init guardrails --namespace config-control
 kpt fn render
 ```
-
-## Permissions
-
-Permissions Needed For Config Controller SA
-- Project Creator
-- Folder Creator
-- Billing User
-- IAM
-- Service Account Creator
-- Policy Admin
-- Logging
 
 ## Resources Provisioned
 
