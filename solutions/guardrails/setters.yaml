@@ -32,7 +32,7 @@ data:
   # Most likely a new project
   #
   guardrails-project-id: project-id # Must be globally unique and max 30 characters
-  guardrails-namespace: guardrails
+  guardrails-namespace: config-control
   #### Management Project
   # This is the project where the config controller instance lives
   #
