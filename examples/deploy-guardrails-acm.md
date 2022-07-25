@@ -62,7 +62,6 @@ Now that we have a Config Controller Instance up we'll want to create a Source R
 
 The following steps are modified from this [guide](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#manage-resources)
 
-```
 
 1. Enable source repository service.
 
