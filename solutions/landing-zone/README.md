@@ -281,6 +281,17 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
           5. Push Configs to Git
               ```
+              gcloud source repos clone my-lz-repo
+              cd my-lz-repo
+              ```
+
+              Modify the `setters.yaml` file and apply the changes.
+
+              ```
+              kpt fn render
+              ```
+
+              ```
               git add . 
               git commit -m "Add Guardrails solution"
               git push --set-upstream origin main
