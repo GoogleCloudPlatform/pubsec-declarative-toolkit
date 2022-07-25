@@ -32,43 +32,14 @@ data:
   # Most likely a new project
   #
   guardrails-project-id: project-id # Must be globally unique and max 30 characters
-  guardrails-namespace: guardrails
+  guardrails-namespace: config-control
   #### Management Project
   # This is the project where the config controller instance lives
   #
   management-project-id: config-controller-project
   management-namespace: config-control
   management-project-number: "000000000000" # You can can this by running gcloud projects list --format="table(projectNumber)" --filter="management-project-id" <-- replace with management project id
-  ####
-  #
-  # Org Policies
-  #
-  ######
-  allowed-images: |
-    - "projects/debian-cloud"
-    - "projects/cos-cloud"
-  allowed-loadbalacers: |
-    - INTERNAL
-  allowed-domain-contacts: |
-    - "@email.com"
-  allowed-domain-members: |
-    - "asdasda"
-  # Can IP Forward
-  # organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,  or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
-  can-ip-forward: |
-    - projects/PROJECT_ID
-  ######
-  # Guardrails Values
-  ######
-  #
-  # Required to be compliant with Guardrails 05 - Data Location
-  # This will prevent resources from being provisioned outside of the lists regions. 
-  # To be PBMM Compliant resources must be located in Canadian Regions
-  # https://github.com/canada-ca/cloud-guardrails/blob/master/EN/05_Data-Location.md
-  #
-  allowed-regions: |
-    - northamerica-northeast1
-    - northamerica-northeast2
+  
   ##########
   # Required to be compliant with Guardrails 04 - Enterprise Monitoring
   # Create role-based account to enable enterprise monitoring and visibility
