@@ -97,6 +97,8 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     Set Permissions additional permission
     ```
     export ORG_ID=your-org-id
+    ```
+    ```
     export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.folderAdmin"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectCreator"
@@ -176,5 +178,112 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     b. GitOps
 
       Deploy Infrastructure via GitOps using Anthos Config Management
+
+      To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located [here](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops)
+
+      1. Create Source Control Service (skip this if not using Cloud Repositories)
+          ```
+          # service.yaml
+
+          apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+          kind: Service
+          metadata:
+            name: sourcerepo.googleapis.com
+            namespace: config-control
+          ```
+
+      2. Apply the Manifest
+          ```
+          kubectl apply -f service.yaml
+          kubectl wait -f service.yaml --for=condition=Ready
+          ```
+      3. Create the Repo YAML
+          ```
+          apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+          kind: SourceRepoRepository
+          metadata:
+            name: my-lz-repo
+            namespace: config-control
+          ```
+      Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
+
+      1. Create a Service Account and give it permissions to access the repo.
+            ```
+            # gitops-iam.yaml
+
+            apiVersion: iam.cnrm.cloud.google.com/v1beta1
+            kind: IAMServiceAccount
+            metadata:
+              name: config-sync-sa
+              namespace: config-control
+            spec:
+              displayName: ConfigSync
+
+            ---
+
+            apiVersion: iam.cnrm.cloud.google.com/v1beta1
+            kind: IAMPolicyMember
+            metadata:
+              name: config-sync-wi
+              namespace: config-control
+            spec:
+              member: serviceAccount:PROJECT_ID.svc.id.goog[config-management-system/root-reconciler]
+              role: roles/iam.workloadIdentityUser
+              resourceRef:
+                apiVersion: iam.cnrm.cloud.google.com/v1beta1
+                kind: IAMServiceAccount
+                name: config-sync-sa
+
+            ---
+
+            apiVersion: iam.cnrm.cloud.google.com/v1beta1
+            kind: IAMPolicyMember
+            metadata:
+              name: allow-configsync-sa-read-csr
+              namespace: config-control
+            spec:
+              member: serviceAccount:config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
+              role: roles/source.reader
+              resourceRef:
+                apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+                kind: Project
+                external: projects/PROJECT_ID
+            ```
+          2. Deploy the manifests
+              ```
+              kubectl apply -f gitops-iam.yaml
+              ```
+
+          3. Config the config sync instance.
+              ```
+              # root-sync.yaml
+
+              apiVersion: configsync.gke.io/v1beta1
+              kind: RootSync
+              metadata:
+                name: root-sync
+                namespace: config-management-system
+              spec:
+                sourceFormat: unstructured
+                git:
+                  repo: https://source.developers.google.com/p/PROJECT_ID/r/REPO_NAME
+                  branch: REPO_BRANCH
+                  dir: REPO_PATH
+                  auth: gcpserviceaccount
+                  gcpServiceAccountEmail: config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
+              ```
+
+          4. Deploy the Config Sync Manifest
+              ```
+              kubectl apply -f root-sync.yaml
+              kubectl wait --for condition=established --timeout=10s crd/rootsyncs.configsync.gke.io
+              ```
+
+          5. Push Configs to Git
+              ```
+              git add . 
+              git commit -m "Add Guardrails solution"
+              git push --set-upstream origin main
+              ```
 
     c. Cloud Deploy (future)
