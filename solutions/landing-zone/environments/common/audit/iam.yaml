@@ -31,6 +31,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: log-reader
+  namespace: config-control
   labels:
     resource-group: common
 spec:
