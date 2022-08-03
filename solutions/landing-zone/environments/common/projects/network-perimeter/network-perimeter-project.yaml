@@ -22,7 +22,7 @@ metadata:
   name: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
   namespace: common
 spec:
-  name: Common Network Perimeter Project
+  name: Common Network Perimeter
   folderRef:
     name: "audit-and-security.security"
   billingAccountRef:
