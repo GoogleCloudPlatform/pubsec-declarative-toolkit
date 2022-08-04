@@ -16,6 +16,8 @@ kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
 metadata: # kpt-merge: /datalocation
   name: datalocation
+  annotations:
+    config.kubernetes.io/local-config: 'true'
 tests:
 - name: datalocation
   template: template.yaml
