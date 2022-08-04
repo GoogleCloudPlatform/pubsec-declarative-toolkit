@@ -27,4 +27,60 @@ spec:
         kind: LimitEgressTraffic
   targets:
     - target: admission.k8s.gatekeeper.sh
-      rego: "\npackage limitegresstraffic\n\nhas_key(obj, field){\n  obj[field]\n}\n\n# Validate GKE Private Instance\nviolation[{\"msg\":msg}] {\n  # Make sure privateClusterConfig exists\n  input.review.kind.kind == \"ContainerCluster\"\n  not has_key(input.review.object.spec, \"privateClusterConfig\")\n  msg := sprintf(\"GKE is not Private %s\", [input.review.object.metadata.name])\n}          \n\n# Ensure Services do not configure External IPs\n# IE Private GKE Cluster\nviolation[{\"msg\":msg}] {\n  # Make sure privateClusterConfig exists\n  input.review.kind.kind == \"ContainerCluster\"\n  has_key(input.review.object.spec, \"privateClusterConfig\")\n  not input.review.object.spec.privateClusterConfig.enablePrivateNodes == true\n  msg := sprintf(\"GKE is not Private %s\", [input.review.object.metadata.name])\n}\n\n# Validate Cloud SQL Private Instance\nviolation[{\"msg\":msg}] {\n  input.review.kind.kind == \"SQLInstance\"\n  not has_key(input.review.object.spec.settings, \"ipConfiguration\")\n  msg := sprintf(\"CloudSql is not Private %s\", [input.review.object.metadata.name])\n}\n\nviolation[{\"msg\":msg}] {\n  input.review.kind.kind == \"SQLInstance\"\n  not has_key(input.review.object.spec.settings.ipConfiguration, \"privateNetworkRef\")\n  msg := sprintf(\"CloudSql is not Private %s\", [input.review.object.metadata.name])\n}\n\n# Check for Public Buckets\nviolation[{\"msg\":msg}] {\n  input.review.kind.kind == \"StorageBucket\"\n  not has_key(input.review.object.spec, \"publicAccessPrevention\")\n  msg := sprintf(\"Bucket is not Private %s\", [input.review.object.metadata.name])\n}        \n\nviolation[{\"msg\":msg}] {\n  input.review.kind.kind == \"StorageBucket\"\n  not input.review.object.spec.publicAccessPrevention == \"enforced\"\n  msg := sprintf(\"Bucket is not Private %s\", [input.review.object.metadata.name])\n}\n\n# Check for autocreate subnets\nviolation[{\"msg\":msg}] {\n  input.review.kind.kind == \"ComputeNetwork\"\n  not input.review.object.spec.autoCreateSubnetworks == false\n  msg := sprintf(\"Subnets will be created automatically %s\", [input.review.object.metadata.name])\n}        "
+      rego: |-
+        package limitegresstraffic
+
+        has_key(obj, field){
+          obj[field]
+        }
+
+        # Validate GKE Private Instance
+        violation[{"msg":msg}] {
+          # Make sure privateClusterConfig exists
+          input.review.kind.kind == "ContainerCluster"
+          not has_key(input.review.object.spec, "privateClusterConfig")
+          msg := sprintf("GKE is not Private %s", [input.review.object.metadata.name])
+        }          
+
+        # Ensure Services do not configure External IPs
+        # IE Private GKE Cluster
+        violation[{"msg":msg}] {
+          # Make sure privateClusterConfig exists
+          input.review.kind.kind == "ContainerCluster"
+          has_key(input.review.object.spec, "privateClusterConfig")
+          not input.review.object.spec.privateClusterConfig.enablePrivateNodes == true
+          msg := sprintf("GKE is not Private %s", [input.review.object.metadata.name])
+        }
+
+        # Validate Cloud SQL Private Instance
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "SQLInstance"
+          not has_key(input.review.object.spec.settings, "ipConfiguration")
+          msg := sprintf("CloudSql is not Private %s", [input.review.object.metadata.name])
+        }
+
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "SQLInstance"
+          not has_key(input.review.object.spec.settings.ipConfiguration, "privateNetworkRef")
+          msg := sprintf("CloudSql is not Private %s", [input.review.object.metadata.name])
+        }
+
+        # Check for Public Buckets
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "StorageBucket"
+          not has_key(input.review.object.spec, "publicAccessPrevention")
+          msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
+        }        
+
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "StorageBucket"
+          not input.review.object.spec.publicAccessPrevention == "enforced"
+          msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
+        }
+
+        # Check for autocreate subnets
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ComputeNetwork"
+          not input.review.object.spec.autoCreateSubnetworks == false
+          msg := sprintf("Subnets will be created automatically %s", [input.review.object.metadata.name])
+        }
