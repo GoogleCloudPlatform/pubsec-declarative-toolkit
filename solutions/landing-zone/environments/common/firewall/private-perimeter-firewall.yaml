@@ -55,7 +55,7 @@ spec:
       ports: 
       - "22"
   sourceRanges:
-    - 0.0.0.0/0
+    - 0.0.0.0/32
   networkRef:
     name: priv-perimeter
   targetTags:
