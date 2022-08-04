@@ -34,7 +34,7 @@ spec:
   constraint: "constraints/gcp.resourceLocations"
   listPolicy:
     allow:
-      all: true
+      all: false
       values: # kpt-set: ${allowed-regions}
         - northamerica-northeast1
         - northamerica-northeast2
@@ -107,7 +107,7 @@ spec:
   constraint: "constraints/compute.trustedImageProjects"
   listPolicy:
     allow:
-      all: true
+      all: true # set to false to enable
       values: # kpt-set: ${allowed-images}
         - "projects/debian-cloud"
         - "projects/cos-cloud"
@@ -135,7 +135,7 @@ spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:
     allow:
-      all: true
+      all: false
       values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
@@ -185,8 +185,9 @@ spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:
     allow:
-      all: true
+      all: true # set to false to enable
       values:
+      - under:folders/FOLDER_ID
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}  
@@ -267,9 +268,11 @@ spec:
   constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
   listPolicy:
     allow:
-      all: true
+      all: false # set to false to disable
       values: # kpt-set: ${allowed-loadbalancers}
         - INTERNAL
+        - INTERNAL_TCP_UDP
+        - INTERNAL_HTTP_HTTPS
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
@@ -298,7 +301,7 @@ spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
   listPolicy:
     allow:
-      all: true
+      all: true # set to false to disable
       values: # kpt-set: ${allowed-domain-contacts}
         - "@email.com"
   organizationRef:
@@ -329,7 +332,7 @@ spec:
   constraint: "constraints/iam.allowedPolicyMemberDomains"
   listPolicy:
     allow:
-      all: true
+      all: true # set to false to disable
       values: # kpt-set: ${allowed-domain-members}
         - "asdasda"
   organizationRef:
@@ -382,7 +385,7 @@ spec:
   constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
     allow:
-      all: true
+      all: true # set to false to disable
       values: # kpt-set: ${can-ip-forward}
         - projects/PROJECT_ID
   organizationRef:
@@ -510,3 +513,30 @@ spec:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}
+---
+#########
+#
+# Constraint: constraints/storage.publicAccessPrevention
+# 
+# This boolean constraint skips the creation of the default network and related resources 
+# during Google Cloud Platform Project resource creation where this constraint is set to 
+# True. By default, a default network and supporting resources are automatically created
+# when creating a Project resource. 
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata: # kpt-merge: config-control/storage-public-access-prevention
+  name: skip-default-network-creation
+  namespace: config-control # kpt-set: ${management-namespace}
+  labels:
+    guardrail: 'false'
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
+spec:
+  constraint: constraints/storage.publicAccessPrevention
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: '0000000000' # kpt-set: ${org-id}
