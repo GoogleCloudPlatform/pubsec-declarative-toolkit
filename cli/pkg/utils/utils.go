@@ -19,6 +19,7 @@ import (
 	"strings"
 	"path/filepath"
 	"bufio"
+	"errors"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -26,6 +27,27 @@ import (
 )
 
 const charset = "abcdefghijklmnopqrstuvwxyz0123456789"
+
+type Command int64
+
+const (
+	Gcloud Command = iota
+	Kubectl
+	Kpt
+)
+
+func (c Command) String() string {
+	switch c {
+	case Gcloud:
+		return "gcloud"
+	case Kubectl:
+		return "kubectl"
+	case Kpt:
+		return "kpt"
+	}
+
+	return ""
+}
 
 var seededRand *rand.Rand = rand.New(
   rand.NewSource(time.Now().UnixNano()))
@@ -79,7 +101,11 @@ func WriteToCache(data *string, fileName string, append bool) error {
 
 // CallCommand will execute a local command with the args that are passed in and either return the combined output/err of that comand
 // or stream the commands output/error to stdout
-func CallCommand(command string, args []string, stream bool) ([]byte, error) {	
+//
+// The gcloud command for some strange reason sends all output to the standard error pipe. Added a check to not error out on any gcloud ouput.
+func CallCommand(c Command, args []string, stream bool) ([]byte, error) {
+	command := c.String()
+
 	if viper.GetBool("verbose") {
 		log.Debug().Msg(command + " " + strings.Join(args, " "))
 	}
@@ -87,6 +113,8 @@ func CallCommand(command string, args []string, stream bool) ([]byte, error) {
 	cmd := exec.Command(command, args...)
 
 	if stream {
+		errString := ""
+
 		cmdErr, err := cmd.StderrPipe()
 
 		if err != nil {
@@ -99,13 +127,17 @@ func CallCommand(command string, args []string, stream bool) ([]byte, error) {
 			return nil, err
 		}
 
-		cmd.Start()
+		err = cmd.Start()
 
-		errScanner := bufio.NewScanner(cmdErr)
+		if err != nil {
+			return nil, err
+		}
+
+		errScanner  := bufio.NewScanner(cmdErr)
 		outScanner := bufio.NewScanner(cmdOut)
 
 		for errScanner.Scan() {
-			log.Info().Msg(errScanner.Text())
+			errString += errScanner.Text()
 		}
 
 		for outScanner.Scan() {
@@ -114,12 +146,30 @@ func CallCommand(command string, args []string, stream bool) ([]byte, error) {
 
 		cmd.Wait()
 
+		if len(errString) > 0 && c != Gcloud {
+			return nil, errors.New(errString)
+		} else if len(errString) > 0 && c == Gcloud {
+			if strings.Contains(strings.ToLower(errString), "error") {
+				return nil, errors.New(errString)
+			} else {
+				log.Info().Msg(errString)
+			}
+		}
+		
 		return nil, nil
 	} else {
 		output, err := cmd.CombinedOutput()
 
 		if err != nil {
-			return nil, err
+			if len(output) > 0 && c != Gcloud {
+				return output, err
+			} else {
+				if c == Gcloud && strings.Contains(strings.ToLower(string(output)), "error") {
+					return nil, errors.New(string(output) + err.Error())
+				}
+
+				return nil, err
+			}
 		}
 
 		return output, nil

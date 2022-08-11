@@ -13,9 +13,8 @@
 package cmd
 
 import (
-	"os"
+	"arete/internal/cmdsolution"
 	
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
@@ -29,12 +28,10 @@ var solutionGetCmd = &cobra.Command{
 	Example: ` arete solution get git@github.com:accountName/solutionName.git`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+		sl := cmdsolution.SolutionsList{}
 
-		sl := solutionsList{}
-
-		err := sl.getRemoteSolutions(args[0], true, branch, subFolder)
-
+		err := sl.GetRemoteSolutions(args[0], true, branch, subFolder)
+		
 		if err != nil {
 			log.Fatal().Err(err).Msg("")
 		}
