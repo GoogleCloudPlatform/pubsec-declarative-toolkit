@@ -184,8 +184,6 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 					}
 				}
 			}
-
-			os.Exit(1)
 		}
 
 		data, err := os.ReadFile(filepath.Join(cacheDir, "Kptfile"))
