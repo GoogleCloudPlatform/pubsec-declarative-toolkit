@@ -14,6 +14,7 @@ package cmd
 
 import (
 	"os"
+	"fmt"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -24,6 +25,9 @@ import (
 // verbose states if the -v or --verbose flag as been set for debug purposes
 var verbose bool
 
+// current version of arete
+var version = "0.0.2-alpha"
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "arete",
@@ -32,6 +36,15 @@ var rootCmd = &cobra.Command{
 	
 It utilizes Googles Config Connector and Config Controller to deploy declaritive resources into your environment
 with as little changes as required.`,
+}
+
+// rootCmd represents the base command when called without any subcommands
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Print out the current version of arete",
+	Run: func(cmd *cobra.Command, args[]string) {
+		fmt.Printf("%s\n", version)
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -49,6 +62,7 @@ func Execute() {
 // Init the CLI and add global flags
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
+	rootCmd.AddCommand(versionCmd)
 	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
 }
 
