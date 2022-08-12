@@ -12,30 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Suite
-apiVersion: test.gatekeeper.sh/v1alpha1
+apiVersion: blueprints.cloud.google.com/v1alpha3
+kind: ResourceHierarchy
 metadata:
-  name: limitegresstraffic
+  name: landing-zone-heirarchy
+  namespace: config-control
   annotations:
     config.kubernetes.io/local-config: 'true'
-tests:
-- name: limitegresstraffic
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: gke-private
-    object: tests/gke-test.yaml
-    assertions:
-    - violations: yes
-  - name: cloudsql-private
-    object: tests/cloudsql-test.yaml
-    assertions:
-    - violations: no
-  - name: cloudstorage-private
-    object: tests/cloudstorage-test.yaml
-    assertions:
-    - violations: no
-  - name: subnet-autocreate
-    object: tests/network-test.yaml
-    assertions:
-    - violations: no    
+spec:
+  parentRef:
+    kind: Organization # Optional: Folder. If deploying to a folder change 'external' to the target folder id.
+    external: test-organization # kpt-set: ${org-id}
+  config:
+    - Infrastructure:
+        - Networking:
+            - ProdNetworking
+            - NonProdNetworking
+        - SharedInfrastructure
+    - Sandbox
+    - Workloads:
+        - Prod
+        - UAT
+        - DEV
+    - "Audit and Security":
+        - Audit
+        - Security
+    - Automation
+    - "Shared Services"
+    

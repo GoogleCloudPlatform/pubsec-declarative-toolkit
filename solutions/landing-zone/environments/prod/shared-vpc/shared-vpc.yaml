@@ -12,18 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Suite
-apiVersion: test.gatekeeper.sh/v1alpha1
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSharedVPCHostProject
 metadata:
-  name: datalocation
   annotations:
-    config.kubernetes.io/local-config: 'true'
-tests:
-- name: datalocation
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: example-allowed
-    object: private-gke/gke/containercluster.yaml
-    assertions:
-    - violations: no
+    # Replace ${HOST_PROJECT_ID?} with the ID of the project that you want to enable as a Shared VPC host.
+    cnrm.cloud.google.com/project-id: prod_host_net # kpt-set: ${net-host-prj-prod-id}
+  labels:
+    resource-group: prod
+  name: computesharedvpchostproject-sample
+  namespace: config-control
+---

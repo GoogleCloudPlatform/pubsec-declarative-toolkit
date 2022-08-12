@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Suite
-apiVersion: test.gatekeeper.sh/v1alpha1
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
 metadata:
-  name: datalocation
+  name: iampartialpolicy-sample-pubsubadmin
   annotations:
-    config.kubernetes.io/local-config: 'true'
-tests:
-- name: datalocation
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: example-allowed
-    object: private-gke/gke/containercluster.yaml
-    assertions:
-    - violations: no
+    config.kubernetes.io/local-config: 'true'      
+spec:
+  resourceRef:
+    apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+    kind: PubSubTopic
+    name: iampartialpolicy-dep-pubsubadmin
+  bindings:
+    - role: roles/cloudprivatecatalogproducer.admin
+      members:
+        - member: serviceAccount:partialpolicy-dep-pubsubadmin@${PROJECT_ID?}.iam.gserviceaccount.com

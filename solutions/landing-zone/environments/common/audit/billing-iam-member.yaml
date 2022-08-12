@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Suite
-apiVersion: test.gatekeeper.sh/v1alpha1
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
 metadata:
-  name: datalocation
-  annotations:
-    config.kubernetes.io/local-config: 'true'
-tests:
-- name: datalocation
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: example-allowed
-    object: private-gke/gke/containercluster.yaml
-    assertions:
-    - violations: no
+  name: billing-iam-member
+  namespace: common
+  labels:
+    resource-group: common
+spec:
+  member: serviceAccount:billing-service-account@${PROJECT_ID?}.iam.gserviceaccount.com # kpt-set: serviceAccount:billing-service-account@${audit-prj-id}.iam.gserviceaccount.com
+  role: roles/logging.viewAccessor
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: Audit # kpt-set: ${audit-prj-id}
+---

@@ -12,18 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Suite
-apiVersion: test.gatekeeper.sh/v1alpha1
-metadata:
-  name: datalocation
-  annotations:
-    config.kubernetes.io/local-config: 'true'
-tests:
-- name: datalocation
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: example-allowed
-    object: private-gke/gke/containercluster.yaml
-    assertions:
-    - violations: no
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: prod
+#   labels:
+#     resource-group: prod

@@ -14,8 +14,8 @@
 
 kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
-metadata:
-  name: limitegresstraffic
+metadata: # kpt-merge: /cloudmarketplaceconfig
+  name: cloudmarketplaceconfig
   annotations:
     config.kubernetes.io/local-config: 'true'
 tests:
@@ -23,19 +23,15 @@ tests:
   template: template.yaml
   constraint: constraint.yaml
   cases:
-  - name: gke-private
-    object: tests/gke-test.yaml
+  - name: marketplace-role
+    object: tests/iam.yaml
+    assertions:
+    - violations: no
+  - name: marketplace-role
+    object: tests/iam_bad.yaml
     assertions:
     - violations: yes
-  - name: cloudsql-private
-    object: tests/cloudsql-test.yaml
+  - name: marketplace-role-partial-policy
+    object: tests/iam_partial_policy.yaml
     assertions:
-    - violations: no
-  - name: cloudstorage-private
-    object: tests/cloudstorage-test.yaml
-    assertions:
-    - violations: no
-  - name: subnet-autocreate
-    object: tests/network-test.yaml
-    assertions:
-    - violations: no    
+    - violations: yes

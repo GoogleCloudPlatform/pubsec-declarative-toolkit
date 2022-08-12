@@ -17,6 +17,7 @@ apiVersion: test.gatekeeper.sh/v1alpha1
 metadata:
   name: cloudmarketplaceconfig
   annotations:
+    config.kubernetes.io/local-config: 'true'
     config.kubernetes.io/local-config: 'true'      
 tests:
 - name: limitegresstraffic

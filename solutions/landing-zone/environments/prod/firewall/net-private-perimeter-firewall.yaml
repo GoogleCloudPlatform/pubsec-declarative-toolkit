@@ -12,18 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Suite
-apiVersion: test.gatekeeper.sh/v1alpha1
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
 metadata:
-  name: datalocation
+  labels:
+    resource-group: prod
+  name: prod-firewall-default-deny
+  namespace: config-control
   annotations:
-    config.kubernetes.io/local-config: 'true'
-tests:
-- name: datalocation
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: example-allowed
-    object: private-gke/gke/containercluster.yaml
-    assertions:
-    - violations: no
+    # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
+    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
+spec:
+  deny:
+    - protocol: icmp
+  networkRef:
+    name: prod-sharedvpc
+  sourceTags:
+  - "web"
