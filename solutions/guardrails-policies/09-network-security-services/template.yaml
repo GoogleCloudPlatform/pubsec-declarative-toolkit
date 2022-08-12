@@ -28,7 +28,7 @@ spec:
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |-
-
+      
         package limitegresstraffic
 
         has_key(obj, field){
