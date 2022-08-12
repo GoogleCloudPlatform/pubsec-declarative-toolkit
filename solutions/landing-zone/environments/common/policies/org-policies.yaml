@@ -24,7 +24,7 @@
 #
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-resource-locations
+metadata: 
   name: restrict-resource-locations
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -51,7 +51,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/disable-vpc-external-ipv6
+metadata: 
   name: disable-vpc-external-ipv6
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -75,7 +75,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/require-shielded-vm
+metadata: 
   name: require-shielded-vm
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -98,7 +98,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/require-trusted-images
+metadata: 
   name: require-trusted-images
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -125,7 +125,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-vm-external-access
+metadata: 
   name: restrict-vm-external-access
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -149,7 +149,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/disable-serviceaccount-key-creation
+metadata: 
   name: disable-serviceaccount-key-creation
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -175,7 +175,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-vpc-peering
+metadata: 
   name: restrict-vpc-peering
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -204,7 +204,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/uniform-bucket-level-access
+metadata: 
   name: uniform-bucket-level-access
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -230,7 +230,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-os-login
+metadata: 
   name: restrict-os-login
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -258,7 +258,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-loadbalancer-creation-types
+metadata: 
   name: restrict-loadbalancer-creation-types
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -291,7 +291,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/allowed-contact-domains
+metadata: 
   name: allowed-contact-domains
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -322,7 +322,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/allowed-policy-member-domain
+metadata: 
   name: allowed-policy-member-domain
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -350,7 +350,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/disable-serial-port-access
+metadata: 
   name: disable-serial-port-access
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -376,7 +376,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/vm-can-ip-forward
+metadata: 
   name: vm-can-ip-forward
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -403,7 +403,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/disable-guest-attribute-access
+metadata: 
   name: disable-guest-attribute-access
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -426,7 +426,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/disable-nested-virtualization
+metadata: 
   name: disable-nested-virtualization
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -450,7 +450,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-vpc-lien-removal
+metadata: 
   name: restrict-vpc-lien-removal
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -473,7 +473,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/restrict-sql-public-ip
+metadata: 
   name: restrict-sql-public-ip
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -501,7 +501,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/storage-public-access-prevention
+metadata: 
   name: storage-public-access-prevention
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
@@ -526,7 +526,7 @@ spec:
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: config-control/storage-public-access-prevention
+metadata: 
   name: skip-default-network-creation
   namespace: config-control # kpt-set: ${management-namespace}
   labels:
