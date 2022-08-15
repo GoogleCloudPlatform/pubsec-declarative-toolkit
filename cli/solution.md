@@ -7,6 +7,8 @@ apiVersion: arete/v1alpha1                                      # version of the
 kind: Config                                                    # always `Config`
 metadata:                                                       # hold additional information about the config
   name:                                                         # solution name
+  annotations:                                                  #
+    config.kubernetes.io/local-config: "true"                   # apply the local config flag so that this file won't be applied to the cluster
 deploy:                                                         # deployment pipeline
   stage:                                                        # deployment pipeline stage
     infra:                                                      # infrastructure pipeline stage is expecting the a KCC endpoint

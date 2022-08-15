@@ -267,7 +267,7 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 		var cmdArgs []string
 
 		if !dryRun {
-			cmdArgs = []string{"live", "apply", cacheDir}
+			cmdArgs = []string{"live", "apply", "--install-resource-group", cacheDir}
 		} else {
 			cmdArgs = []string{"live", "apply", "--dry-run", cacheDir}
 		}
@@ -379,7 +379,7 @@ func createPolicyBindingCall(iam []solutionFilev1.Iam, memberReplacement string)
 		case "org", "organization", "organizations", "orgs":
 			level = "organizations"
 		case "project", "prj", "projects", "proj":
-			level = "project"
+			level = "projects"
 		}
 
 		if level == "" {
