@@ -12,6 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata:
+  name: logs-bucket-sink
+  namespace: common
+  labels:
+    resource-group: common
+spec:
+  organizationRef:
+    # Replace "${ORG_ID?}" with the numeric ID for your organization
+    external: "${ORG_ID?}" # kpt-set: ${org-id}
+  destination:
+    storageBucketRef:
+      # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
+      name: log-sink # kpt-set: log-bucket-${audit-prj-id}
+  filter: "severity >= WARNING"
+---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
 metadata:
@@ -45,3 +62,29 @@ spec:
     enabled: false
   uniformBucketLevelAccess: true
   publicAccessPrevention: "enforced"
+---
+# Log Bucket Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/bq-audit-data-viewer
+  name: log-sink-writer
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/apply-time-mutation: |
+      - sourceRef:
+          apiVersion: v1beta1
+          group: logging.cnrm.cloud.google.com
+          kind: LoggingLogSink
+          name: logs-bucket-sink
+          namespace: config-control
+        sourcePath: $.status.writerIdentity
+        targetPath: $.spec.member
+        token: ${logging-writerIdentity}
+spec:
+  member: ${logging-writerIdentity}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: StorageBucket
+    name: log-bucket # kpt-set: log-bucket-${audit-prj-id}
+  role: roles/storage.objectCreator
+  
