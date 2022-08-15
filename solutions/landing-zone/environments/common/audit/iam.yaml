@@ -42,3 +42,18 @@ spec:
     kind: Folder
     name: audit-and-security.audit
 ---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: log-writer
+  namespace: config-control
+  labels:
+    resource-group: common
+spec:
+  member: group:log-writer # kpt-set: group:${log-writer}
+  role: roles/storage.objectCreator
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: audit-and-security.audit
+---
