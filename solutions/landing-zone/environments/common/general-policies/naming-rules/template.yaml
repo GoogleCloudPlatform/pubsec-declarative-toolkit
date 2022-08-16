@@ -1,0 +1,72 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata: # kpt-merge: /datalocation
+  name: namingpolicy
+  annotations:
+    description: Naming Enforcement Policy
+spec:
+  crd:
+    spec:
+      names:
+        kind: NamingPolicy
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            namingConvention:
+              description: REGEX Naming convention.
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package NamingPolicy
+        max_char = 30
+        min_char = 4
+        # Standard Project Naming Restrictions
+        # https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin
+        # Maximum Project Length
+        violation[{"msg": message}] {
+          asset := input.review.object
+          asset.kind == "Project"
+          object_length = count(asset.metadata.name)
+          object_length > max_char
+          message := sprintf("Project '%s' has a name that is '%s' chars long which is greater than the allowed '%s'", [asset.metadata.name, object_length, max_char])
+        }
+        # Minimum Project Length
+        violation[{"msg": message}] {
+          asset := input.review.object
+          asset.kind == "Project"
+          object_length = count(asset.metadata.name)
+          object_length < min_char
+          message := sprintf("Project '%s' has a name that is '%s' chars long which is less than the required '%s'", [asset.metadata.name, object_length, min_char])
+        }
+        # A project name can contain only letters, numbers, single quotes, hyphens, spaces, or exclamation points
+        violation[{"msg": message}] {
+          asset := input.review.object
+          asset.kind == "Project"
+          regex = "^[a-z][a-z0-9-]*[a-z0-9]$"
+          not re_match(regex, asset.metadata.name)
+          message := sprintf("Project '%s' does not match meet naming requirements 'Can only contain lowercase letters, numbers, and hyphens, Must be 6 to 30 characters in length, Must start with a letter, Cannot end with a hyphen'", [asset.metadata.name])
+        }
+        violation[{"msg": message}] {
+          asset := input.review.object
+          rule := input.parameters.namingConvention
+          rule != ""
+          asset.metadata.name != ""
+          not re_match(rule, asset.metadata.name)
+
+          message := sprintf("Project '%s' does not match meet naming requirements '%s'", [asset.metadata.name, rule])
+        }
