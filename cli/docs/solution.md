@@ -1,6 +1,6 @@
 # Solution YAML
 
-This file describes the yaml spec for solutions that are deployed with arete.
+This file describes the yaml spec for a solution that are deployed with arete.
 
 ```
 apiVersion: arete/v1alpha1                                      # version of the configuration
@@ -9,6 +9,9 @@ metadata:                                                       # hold additiona
   name:                                                         # solution name
   annotations:                                                  #
     config.kubernetes.io/local-config: "true"                   # apply the local config flag so that this file won't be applied to the cluster
+spec:
+  url: "https://github.com/user/repo"                           # the github url of the solution
+  description: "Cool solution"                                  # short description of the solution
 deploy:                                                         # deployment pipeline
   stage:                                                        # deployment pipeline stage
     infra:                                                      # infrastructure pipeline stage is expecting the a KCC endpoint

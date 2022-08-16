@@ -24,6 +24,7 @@ import (
 	"regexp"
 
 	"arete/pkg/utils"
+	solutionFilev1 "arete/pkg/api/solution/v1"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -76,6 +77,7 @@ func (firstSL *SolutionsList) compareSolutions (secondSL *SolutionsList) error {
 
 // Get the solutions list which is a combination of the GitHub solutions file and
 // any modification to the local cached solutions file.
+// TODO: Where do we store a list of the global solutions other then GitHub solutions.yaml file? This is to manual
 func (sl *SolutionsList) GetSolutions() error {
 	err := sl.GetRemoteSolutions("https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit", true, "main", "solutions")
 
@@ -86,9 +88,11 @@ func (sl *SolutionsList) GetSolutions() error {
 	return nil
 }
 
-// Get the Solutions.yaml file from GitHub. If writeToCache is true then create or overwrite the local
-// cached copy of the solutions.yaml file
-func (sl *SolutionsList) GetRemoteSolutions(url string, writeToCache bool, branch string, subFolder string) error {
+// Get a GitHub raw filefrom the url, branch and subFolder provided
+func getGitHubRaw(url string, branch string, subFolder string, file string) (string, error) {
+	var lines []string
+	ret := ""
+
 	if branch == "" {
 		branch = "main"
 	}
@@ -101,9 +105,6 @@ func (sl *SolutionsList) GetRemoteSolutions(url string, writeToCache bool, branc
 	}
 	
 	subFolder = strings.TrimSuffix(subFolder, "/")
-
-	var lines []string
-	var ret string
 
 	reg := regexp.MustCompile(`^https://github.com/([a-zA-Z0-9-/]*)`)
 	res := reg.FindStringSubmatch(url)
@@ -118,19 +119,19 @@ func (sl *SolutionsList) GetRemoteSolutions(url string, writeToCache bool, branc
 			url = url + gitToken + "@"
 		}
 
-		url = url + "raw.githubusercontent.com/" + res[1] + "/" + branch + "/" + subFolder + "/solutions.yaml"
+		url = url + "raw.githubusercontent.com/" + res[1] + "/" + branch + "/" + subFolder + "/" + file
 	} else {
-		return errors.New("malformed URL, unable to process")
+		return ret, errors.New("malformed URL, unable to process")
 	}
 
 	if viper.GetBool("verbose") {
-		log.Debug().Msg("Getting solutions.yaml from url: " + url)
+		log.Debug().Msgf("Getting %s from url: %s", file, url)
 	}
 
 	resp, err := http.Get(url)
 
 	if err != nil || resp.StatusCode == 404 {
-		return err
+		return ret, err
 	}
 
 	if viper.GetBool("verbose") {
@@ -150,6 +151,60 @@ func (sl *SolutionsList) GetRemoteSolutions(url string, writeToCache bool, branc
 	}
 
 	ret = strings.Join(lines, "\n")
+
+	return ret, nil
+}
+
+// Get the solution.yaml file from a GitHub repo.
+func (sl *SolutionsList) GetRemoteSolution(url string, branch string, subFolder string) error {
+	ret, err := getGitHubRaw(url, branch, subFolder, "solution.yaml")
+
+	if err != nil {
+		return err
+	}
+
+	solutionFile := solutionFilev1.SolutionFile{}
+
+	yaml.Unmarshal([]byte(ret), &solutionFile)
+
+	if !solutionFile.Spec.IsEmpty() {
+		sol := make([]Solution, 1)
+		sol[0].Url = solutionFile.Spec.Url
+		sol[0].Description = solutionFile.Spec.Description
+		sol[0].Solution = solutionFile.Name
+
+		sl.Solutions = append(sl.Solutions, sol[0])
+
+		var cachedSolutions SolutionsList
+
+		if err := cachedSolutions.getCacheSolutions(); err != nil {
+			return err
+		}
+
+		sl.compareSolutions(&cachedSolutions)
+
+		yamlout, err := yaml.Marshal(&sl)
+
+		if err != nil {
+			return err
+		}
+		
+		ret = string(yamlout)
+	
+	 	utils.WriteToCache(&ret, "solutions.yaml", false)
+	}
+
+	return nil
+}
+
+// Get the solutions.yaml file from GitHub. If writeToCache is true then create or overwrite the local
+// cached copy of the solutions.yaml file
+func (sl *SolutionsList) GetRemoteSolutions(url string, writeToCache bool, branch string, subFolder string) error {
+	ret, err := getGitHubRaw(url, branch, subFolder, "solutions.yaml")
+
+	if err != nil {
+		return err
+	}
 
 	err = yaml.Unmarshal([]byte(ret), &sl)
 

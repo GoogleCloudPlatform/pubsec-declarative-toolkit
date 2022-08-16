@@ -24,7 +24,7 @@ cd cli
 go install
 ```
 
-add the location where the executable is installed in to your path
+add the location where the executable (normally in your Go path /bin folder) is installed in to your path
 
 ```
 export PATH=$PATH:/path/to/your/install/directory
@@ -40,7 +40,7 @@ Arete utilizes / expects that the following executables are installed and global
 - [Kpt](https://kpt.dev/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 
-Arete assumes that user authorization for gloud and the correct context for kubectl has already been completed by the user prior to calling arete.
+Arete assumes that user authorization for gloud and the correct context for kubectl has already been completed by the user prior to calling arete. Some solutions will can specifiy their own kubectl context so switch, these are found in their solution.yaml file.
 
 Arete is written in [Go](https://go.dev) utilizing the following primary packages:
 
