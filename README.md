@@ -14,7 +14,7 @@ When getting a package the `@` indicates what tag or branch you will be getting 
 | Guardrails Policy Bundle | Policy Bundle to help analyze compliance for Guardrails | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies@v0.0.2-alpha guardrails-policies``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) |
 | KCC Namespaces | This solution is a simple fork of the KCC Project Namespaces blueprint found [here](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint) | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/kcc-namespaces@v0.0.2-alpha kcc-namespaces``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/kcc-namespaces) |
 | Sandbox GKE | Private GKE deployment | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@v0.0.2-alpha sandbox-gke``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/sandbox-gke) |
-
+| Landing Zone | PBMM Landing Zone | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone@v0.0.3-alpha landing-zone``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone) |
 
 ## Quickstart
 

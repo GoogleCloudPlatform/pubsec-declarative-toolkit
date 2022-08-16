@@ -16,6 +16,8 @@ kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
 metadata:
   name: limitegresstraffic
+  annotations:
+    config.kubernetes.io/local-config: 'true'
 tests:
 - name: limitegresstraffic
   template: template.yaml

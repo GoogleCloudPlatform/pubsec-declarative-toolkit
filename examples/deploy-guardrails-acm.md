@@ -10,10 +10,16 @@ To do that follow the steps outlined in the advanced [install guide](../docs/adv
 arete create my-configcontroller --region northamerica-northeast1 --project=my-project-id
 ```
 
-We will be adding some org level services so we will need the following services added to the Config Controller Service Account.
+We will be adding some org level services so we will need to update the permissions on the Config Controller Service Account.
+
+First lets set some environment variables.
 
 ```
 export ORG_ID=<orgID>
+export PROJECT_ID=<config-controller-project-id>
+export CONFIG_CONTROLLER_NAME=<name-of-config-controller-instance>
+```
+```
 export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 gcloud organizations add-iam-policy-binding "${ORG_ID}" \
@@ -36,7 +42,16 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --role "roles/serviceusage.serviceUsageConsumer"
 gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/billing.user"  
+    --role "roles/billing.user"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/iam.serviceAccountAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/serviceusage.serviceUsageAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/source.admin"
 ```
 
 This will create a new Config Controller instance along with networking in the target project.
@@ -47,17 +62,6 @@ Now that we have a Config Controller Instance up we'll want to create a Source R
 
 The following steps are modified from this [guide](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#manage-resources)
 
-
-0. Set Environment Variables
-```
-export PROJECT_ID=<config-controller-project-id>
-export CONFIG_CONTROLLER_NAME=<name-of-config-controller-instance>
-```
-
-Set your project context
-```
-gcloud config set project $PROJECT_ID
-```
 
 1. Enable source repository service.
 
