@@ -29,3 +29,7 @@ solutions:
     description: |
       A private GKE cluster with so many bells and whistles!
     url: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@main
+  - solution: landing-zone
+    description: |
+      This is a reimplementation of pbmm-on-gcp-onboarding Landing Zone using KRM.
+    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/landing-zone@main

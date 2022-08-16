@@ -13,9 +13,8 @@
 package cmd
 
 import (
-	"os"
+	"arete/internal/cmdsolution"
 	
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
@@ -26,15 +25,13 @@ var branch, subFolder string
 var solutionGetCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get a solution from a remote git repo",
-	Example: ` arete solution get git@github.com:accountName/solutionName.git`,
+	Example: ` arete solution get https://github.com/user/repo`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+		sl := cmdsolution.SolutionsList{}
 
-		sl := solutionsList{}
-
-		err := sl.getRemoteSolutions(args[0], true, branch, subFolder)
-
+		err := sl.GetRemoteSolution(args[0], branch, subFolder)
+		
 		if err != nil {
 			log.Fatal().Err(err).Msg("")
 		}
@@ -47,7 +44,7 @@ var solutionGetCmd = &cobra.Command{
 func init() {
 	solutionCmd.AddCommand(solutionGetCmd)
 
-	solutionGetCmd.Flags().StringVar(&branch, "branch", "main", "If the solutions.yaml file is in a different branch from the default")
+	solutionGetCmd.Flags().StringVar(&branch, "branch", "main", "If the solution.yaml file is in a different branch from the default")
 
-	solutionGetCmd.Flags().StringVar(&subFolder, "sub-folder", "/", "If the solutions.yaml file is not in the root of the repo then provide the path here.")
+	solutionGetCmd.Flags().StringVar(&subFolder, "sub-folder", "/", "If the solution.yaml file is not in the root of the repo then provide the path here.")
 }

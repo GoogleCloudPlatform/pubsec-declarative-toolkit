@@ -14,11 +14,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
+
+	"arete/internal/cmdsolution"
 	
 	"github.com/fatih/color"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
 
@@ -27,10 +26,9 @@ var solutionListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List Solutions",
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 		whiteBold := color.New(color.FgWhite).Add(color.Bold).SprintFunc()
 
-		sl := solutionsList{}
+		sl := cmdsolution.SolutionsList{}
 
 		err := sl.GetSolutions()
 
