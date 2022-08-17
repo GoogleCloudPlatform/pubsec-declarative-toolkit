@@ -13,7 +13,7 @@
 # limitations under the License.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: 
+metadata: # kpt-merge: sandbox/k8s-viewer
   name: k8s-viewer
   namespace: sandbox # kpt-set: ${project-namespace}
 spec:
@@ -26,7 +26,7 @@ spec:
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata:
+metadata: # kpt-merge: sandbox/k8s-admin
   name: k8s-admin
   namespace: sandbox # kpt-set: ${project-namespace}
 spec:
