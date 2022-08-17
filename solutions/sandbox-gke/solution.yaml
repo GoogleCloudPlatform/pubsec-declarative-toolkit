@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,17 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-viewer
-  name: gkemetering-bq-viewer
-  namespace: config-control # kpt-set: ${project-namespace}
-spec:
-  # replace ${PROJECT_ID?} with your project name
-  member: group:email@domain.com # kpt-set: group:${gke-admin}
-  role: roles/bigquery.dataViewer
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: sandbox # kpt-set: ${project-id}
+apiVersion: arete/v1alpha1
+kind: Config
+metadata:
+  name: kcc-landing-zone
+  annotations:
+    config.kubernetes.io/local-config: "true"
+deploy:
+  stage:
+    infra:
+      requires:
+        useConfigConnectorSA: "true"
+        iam:
+          - role: "roles/owner"
+            resource:
+              level: "project"
+              id: "project-id" # kpt-set: ${project-id}

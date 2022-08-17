@@ -15,10 +15,11 @@ apiVersion: binaryauthorization.cnrm.cloud.google.com/v1beta1
 kind: BinaryAuthorizationPolicy
 metadata: # kpt-merge: config-control/binauth-allowed-repos
   name: binauth-allowed-repos
-  namespace: sandbox # kpt-set: ${project-namespace}
+  namespace: config-control # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespace/config-control/Service/binaryauthorization # kpt-set: resourcemanager.cnrm.cloud.google.com/namespace/${project-id}/Project/binaryauthorization,iam.cnrm.cloud.google.com/namespace/${project-namespace}/IAMPolicyMember/${project-id}-binauth-admin
+    cnrm.cloud.google.com/project-id: "${project-id}" # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${project-id}-binauth-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-binauth-admin
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
 spec:
   admissionWhitelistPatterns:
     - namePattern: "gcr.io/google_containers/*"
@@ -27,10 +28,10 @@ spec:
     - namePattern: "gke.gcr.io/*"
     - namePattern: "gcr.io/stackdriver-agents/*"
     - namePattern: "gcr.io/google-samples/*"
-    - namePattern: "northamerica-northeast1-docker.pkg.dev/sandbox-00000/container-registry" # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
+    - namePattern: "northamerica-northeast1-docker.pkg.dev/${project-id}/container-registry" # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
   defaultAdmissionRule:
     enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
     evaluationMode: "ALWAYS_ALLOW"
   globalPolicyEvaluationMode: ENABLE
   projectRef:
-    external: sandbox-000000 # kpt-set: ${project-id}
+    external: ${project-id} # kpt-set: ${project-id}
