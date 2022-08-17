@@ -14,7 +14,7 @@
 apiVersion: arete/v1alpha1
 kind: Config
 metadata:
-  name: kcc-landing-zone
+  name: sandbox-gke
   annotations:
     config.kubernetes.io/local-config: "true"
 deploy:
