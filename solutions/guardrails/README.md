@@ -48,7 +48,7 @@ This packge contains the minimal set of infrastructure needed to help provision 
 1. Fetch the `guardrails` package by running the `kpt pkg get` command.
 
 ```
-kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@v0.0.2-alpha guardrails
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@v0.0.2-alpha guardrails
 ```
 
 This will download the package containing the configuration files for the Guardrails deployment.

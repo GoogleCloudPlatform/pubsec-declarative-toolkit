@@ -116,7 +116,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     
 2. Fetch the package
 
-    `kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
+    `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
 
     Details: https://kpt.dev/reference/cli/pkg/get/
 

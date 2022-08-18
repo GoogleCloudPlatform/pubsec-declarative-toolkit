@@ -16,20 +16,20 @@ solutions:
   - solution: guardrails
     description: |
       Implementation of the GC Cloud Guardrails Checks. More Info: https://github.com/canada-ca/cloud-guardrails-gcp
-    url: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@main
+    url: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@main
   - solution: guardrails-policy-bundle
     description: |
       Policy Bundle to help analyze compliance for Guardrails
-    url: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies@main
+    url: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies@main
   - solution: kcc-namespaces
     description: |
       Simplified declarative multi-tenancy with project namespaces taken from: https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint
-    url: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/kcc-namespaces@main
+    url: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/kcc-namespaces@main
   - solution: sandbox-gke
     description: |
       A private GKE cluster with so many bells and whistles!
-    url: git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@main
+    url: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@main
   - solution: landing-zone
     description: |
       This is a reimplementation of pbmm-on-gcp-onboarding Landing Zone using KRM.
-    url: git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/landing-zone@main
+    url: https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox.git/solutions/landing-zone@main
