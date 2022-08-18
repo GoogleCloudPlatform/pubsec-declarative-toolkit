@@ -50,7 +50,7 @@ You can easily change any of the defaults that this sevice uses by modifying the
 | Charset / Collation | UTF8 / en_US.UTF8 | sql.yaml(46/47) |
 
 ### **Fetch the package**
-`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/services/private-sql@main private-sql`
+`kpt pkg get https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox.git/services/private-sql@main private-sql`
 Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### **View package content**
