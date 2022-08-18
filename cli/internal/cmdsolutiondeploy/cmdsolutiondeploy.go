@@ -139,6 +139,44 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 			log.Info().Msg("Using local cached copy of the package...")
 		}
 
+		data, err := os.ReadFile(filepath.Join(cacheDir, "Kptfile"))
+
+		if err != nil {
+			log.Error().Err(err).Msg("Unable to read Kptfile for solution")
+			return
+		}
+
+		// Unmarshal the Kptfile YAML file and search for any configPaths in the pipline / mutators
+		// section. If found then  parse the configPath file mutator and search for the PromptIdentifier
+		yaml.Unmarshal(data, &decoder)
+		
+		for pipeline, configPaths := range decoder {
+			if pipeline == "pipeline" && reflect.TypeOf(configPaths).Kind() == reflect.Map {
+				for mutator, mutators := range configPaths.(map[string]interface{}) {
+					if mutator == "mutators" && reflect.TypeOf(mutators).Kind() == reflect.Slice {
+						for configPath, path := range mutators.([]interface{})[0].(map[string]interface{}) {
+							if configPath == "configPath" {
+								processConfigMutator(filepath.Join(cacheDir, path.(string)), &pr)
+							}
+						}
+					}
+				}
+			}
+		}
+
+		log.Info().Msg("Updating solutions settings....")
+		
+		res, err := utils.CallCommand(utils.Kpt, []string{"fn", "render", cacheDir}, false)
+
+		if err != nil {
+			log.Fatal().Err(err).Msg("Rendering KPT solution failed: " + cacheDir)
+		}
+
+
+		if viper.GetBool("verbose") {
+			log.Debug().Msg(strings.TrimSuffix(string(res), "\n"))
+		}
+
 		solutionYaml := filepath.Join(cacheDir, "solution.yaml")
 		_, statErr = os.Stat(solutionYaml)
 
@@ -184,44 +222,6 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 					}
 				}
 			}
-		}
-
-		data, err := os.ReadFile(filepath.Join(cacheDir, "Kptfile"))
-
-		if err != nil {
-			log.Error().Err(err).Msg("Unable to read Kptfile for solution")
-			return
-		}
-
-		// Unmarshal the Kptfile YAML file and search for any configPaths in the pipline / mutators
-		// section. If found then  parse the configPath file mutator and search for the PromptIdentifier
-		yaml.Unmarshal(data, &decoder)
-		
-		for pipeline, configPaths := range decoder {
-			if pipeline == "pipeline" && reflect.TypeOf(configPaths).Kind() == reflect.Map {
-				for mutator, mutators := range configPaths.(map[string]interface{}) {
-					if mutator == "mutators" && reflect.TypeOf(mutators).Kind() == reflect.Slice {
-						for configPath, path := range mutators.([]interface{})[0].(map[string]interface{}) {
-							if configPath == "configPath" {
-								processConfigMutator(filepath.Join(cacheDir, path.(string)), &pr)
-							}
-						}
-					}
-				}
-			}
-		}
-
-		log.Info().Msg("Updating solutions settings....")
-		
-		res, err := utils.CallCommand(utils.Kpt, []string{"fn", "render", cacheDir}, false)
-
-		if err != nil {
-			log.Fatal().Err(err).Msg("Rendering KPT solution failed: " + cacheDir)
-		}
-
-
-		if viper.GetBool("verbose") {
-			log.Debug().Msg(strings.TrimSuffix(string(res), "\n"))
 		}
 
 		log.Info().Msg("Getting kubectl current context....")
