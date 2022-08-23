@@ -220,6 +220,28 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 					if err != nil {
 						log.Error().Err(err).Msg("Unable to set IAM policies for infra deploy stage")
 					}
+
+					err = enableServices(solutionFile.Deploy.Stage.Infra.Requires.Services)
+
+					if err != nil {
+						log.Error().Err(err).Msg("Unable to enable required services")
+					}
+
+					rtrn, err := checkDependency(solutionFile.Deploy.Stage.Infra.Requires.Depends)
+
+					if err != nil {
+						log.Error().Err(err).Msg("Unable to check dependencies")
+					}
+
+					if len(rtrn) > 0 {
+						msg := "Following dependencies do not exist:"
+
+						for _, name := range rtrn {
+							msg += "\n- " + name
+						}
+
+						log.Fatal().Msg(msg)
+					}
 				}
 			}
 		}
@@ -407,6 +429,62 @@ func createPolicyBindingCall(iam []solutionFilev1.Iam, memberReplacement string)
 	}
 
 	return nil
+}
+
+// enable services based upon the spec that is provided
+func enableServices(services []solutionFilev1.Services) error {
+	if len(services) > 0 {
+		log.Info().Msg("Enabling required services...")
+	} else {
+		return nil
+	}
+
+	for _, service := range services {
+		cmdArgs := []string{"services", "enable", service.Service, "--project=" + service.Project}
+
+		ret, err := utils.CallCommand(utils.Gcloud, cmdArgs, false)
+
+		if err != nil {
+			return err
+		}
+
+		if viper.GetBool("verbose") {
+			log.Debug().Msg(string(ret))
+		}
+	}
+
+	return nil
+}
+
+// check the environment for required dependencies using the glcoud asset inventory command
+func checkDependency(depends []solutionFilev1.Depends) ([]string, error) {
+	var rtrn []string
+
+	if len(depends) > 0 {
+		log.Info().Msg("Checking required dependencies...")
+	} else {
+		return rtrn, nil
+	}
+
+	for _, dependency := range depends {
+		cmdArgs := []string{"asset", "search-all-resources", "--asset-types=" + dependency.AssetType, "--scope=" + dependency.Scope, "--query=name:" + dependency.Name, "--read-mask=name"}
+
+		ret, err := utils.CallCommand(utils.Gcloud, cmdArgs, false)
+
+		if err != nil {
+			return rtrn, err
+		}
+
+		if viper.GetBool("verbose") {
+			log.Debug().Msg(string(ret))
+		}
+
+		if strings.Contains(string(ret), "0 items") {
+			rtrn = append(rtrn, dependency.AssetType + "/" + dependency.Scope + "/" + dependency.Name)
+		}
+	}
+
+	return rtrn, nil
 }
 
 // set the kube context based upon the settings specified in the solution.yaml file

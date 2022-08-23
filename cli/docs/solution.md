@@ -23,6 +23,13 @@ deploy:                                                         # deployment pip
             resource:                                                 # add role binding to a resource
               level: "organization|project"                           # bindings are added at either the organization or project level
               id: "123abc"                                            # organization ID or Project ID
+        services:                                               # enable apis on the project, normally used to enable apis outside the project the solution is being deployed into
+          - service: "api.googleapis.com"                       # api to be enabled
+            project: "project ID"                               # project ID that the API should be enabled on
+        depends:                                                # depends uses the asset inventory, search-all-resources gcloud command
+          - asset-type: "compute.googleapis.com/Networks"       # see https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types
+            scope: "projects/prod_id"                           # projects/project_id or organizations/org_id or folders/folder_id
+            name: "my-vpc"                                      # the name of the asset
       kubeContext:                                              # Kube Context configuration
         clusterName: "cluster name"                             # the name of the GKE cluster in which KCC is installed and setup on
         region: "gcp region"                                    # the region the GKE cluster is in. Set if the cluster is regional else use zone
