@@ -24,7 +24,13 @@ In order to deploy the solutions we will need to activate a config-controller in
 
 ### arete cli Install
 
-See arete [README](./cli/README.md) for installation instructions.
+See arete [README](./cli/README.md) for instructions to build from source.
+
+```
+wget https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases/download/v0.0.3-alpha/arete
+chmod +x ./arete
+sudo mv ./arete /usr/local/bin
+```
 
 Once you have `arete` installed we can create the Config Controller environment by running:
 
