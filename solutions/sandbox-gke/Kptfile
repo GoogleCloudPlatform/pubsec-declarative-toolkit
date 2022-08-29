@@ -8,6 +8,7 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml
+    - image: 'gcr.io/kpt-fn/enable-gcp-services:v0.1.0'
   validators:
     - image: gcr.io/kpt-fn/kubeval:v0.2
       configMap:

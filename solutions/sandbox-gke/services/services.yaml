@@ -20,7 +20,7 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "false"
     config.kubernetes.io/local-config: "true"
     cnrm.cloud.google.com/disable-dependent-services: "true"
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespace/config-control/IAMPolicyMember/my-demo-guardrails-controller-services-admin # kpt-set: iam.cnrm.cloud.google.com/namespace/${project-namespace}/IAMPolicyMember/${project-id-services-admin}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/my-demo-guardrails-controller-services-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-services-admin
 spec:
   services: # list of services to generate
     - compute.googleapis.com

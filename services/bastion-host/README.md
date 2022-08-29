@@ -14,7 +14,7 @@ If you wish you can edit the os-config.yaml file to add / remove any software yo
 ## Usage
 
 ### **Fetch the package**
-`kpt pkg get git@github.com:GoogleCloudPlatform/gcp-pbmm-sandbox.git/services/bastion-host@main bastion-host`
+`kpt pkg get https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox.git/services/bastion-host@main bastion-host`
 
 Details: https://kpt.dev/reference/cli/pkg/get/
 

@@ -4,21 +4,20 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 
 ## Current Solutions
 
-**While this repo is private you will need to use `git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git` instead of the provided `https` url**
 
-When getting a package the `@` indicates what tag or branch you will be getting with the `kpt pkg get` command. The current version is set for `v0.0.2-alpha` and should be stable but you can use `main` if you want the latest changes as they come in.
+When getting a package the `@` indicates what tag or branch you will be getting with the `kpt pkg get` command. The current version is set for `v0.0.3-alpha` and should be stable but you can use `main` if you want the latest changes as they come in.
 
 | Name | Description | Command | link |
 | --- | --- | --- | --- |
-| Guardrails | Base Infrastructure for 30 Day Guardrail Deployment | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@v0.0.3-alpha guardrails``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails) |
-| Guardrails Policy Bundle | Policy Bundle to help analyze compliance for Guardrails | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies@v0.0.2-alpha guardrails-policies``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) |
-| KCC Namespaces | This solution is a simple fork of the KCC Project Namespaces blueprint found [here](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint) | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/kcc-namespaces@v0.0.3-alpha kcc-namespaces``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/kcc-namespaces) |
-| Sandbox GKE | Private GKE deployment | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@v0.0.3-alpha sandbox-gke``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/sandbox-gke) |
-| Landing Zone | PBMM Landing Zone | ```kpt pkg get git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone@v0.0.3-alpha landing-zone``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone) |
+| Guardrails | Base Infrastructure for 30 Day Guardrail Deployment | ```kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@v0.0.3-alpha guardrails``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails) |
+| Guardrails Policy Bundle | Policy Bundle to help analyze compliance for Guardrails | ```kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails-policies@v0.0.3-alpha guardrails-policies``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) |
+| KCC Namespaces | This solution is a simple fork of the KCC Project Namespaces blueprint found [here](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint) | ```kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/kcc-namespaces@v0.0.3-alpha kcc-namespaces``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/kcc-namespaces) |
+| Sandbox GKE | Private GKE deployment | ```kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/sandbox-gke@v0.0.3-alpha sandbox-gke``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/sandbox-gke) |
+| Landing Zone | PBMM Landing Zone | ```kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone@v0.0.3-alpha landing-zone``` | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone) |
 
 ## Quickstart
 
-<!-- [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=git@github.com:GoogleCloudPlatform/pubsec-declarative-toolkit.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md) -->
+<!-- [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md) -->
 
 In order to deploy the solutions we will need to activate a config-controller instance which we will then deploy a solution or solutions to it.
 

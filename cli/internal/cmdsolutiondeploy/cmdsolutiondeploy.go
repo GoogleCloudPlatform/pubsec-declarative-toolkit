@@ -139,6 +139,44 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 			log.Info().Msg("Using local cached copy of the package...")
 		}
 
+		data, err := os.ReadFile(filepath.Join(cacheDir, "Kptfile"))
+
+		if err != nil {
+			log.Error().Err(err).Msg("Unable to read Kptfile for solution")
+			return
+		}
+
+		// Unmarshal the Kptfile YAML file and search for any configPaths in the pipline / mutators
+		// section. If found then  parse the configPath file mutator and search for the PromptIdentifier
+		yaml.Unmarshal(data, &decoder)
+		
+		for pipeline, configPaths := range decoder {
+			if pipeline == "pipeline" && reflect.TypeOf(configPaths).Kind() == reflect.Map {
+				for mutator, mutators := range configPaths.(map[string]interface{}) {
+					if mutator == "mutators" && reflect.TypeOf(mutators).Kind() == reflect.Slice {
+						for configPath, path := range mutators.([]interface{})[0].(map[string]interface{}) {
+							if configPath == "configPath" {
+								processConfigMutator(filepath.Join(cacheDir, path.(string)), &pr)
+							}
+						}
+					}
+				}
+			}
+		}
+
+		log.Info().Msg("Updating solutions settings....")
+		
+		res, err := utils.CallCommand(utils.Kpt, []string{"fn", "render", cacheDir}, false)
+
+		if err != nil {
+			log.Fatal().Err(err).Msg("Rendering KPT solution failed: " + cacheDir)
+		}
+
+
+		if viper.GetBool("verbose") {
+			log.Debug().Msg(strings.TrimSuffix(string(res), "\n"))
+		}
+
 		solutionYaml := filepath.Join(cacheDir, "solution.yaml")
 		_, statErr = os.Stat(solutionYaml)
 
@@ -182,46 +220,30 @@ func SolutiondeployRun(solutionName string, fromCache bool, dryRun bool) {
 					if err != nil {
 						log.Error().Err(err).Msg("Unable to set IAM policies for infra deploy stage")
 					}
-				}
-			}
-		}
 
-		data, err := os.ReadFile(filepath.Join(cacheDir, "Kptfile"))
+					err = enableServices(solutionFile.Deploy.Stage.Infra.Requires.Services)
 
-		if err != nil {
-			log.Error().Err(err).Msg("Unable to read Kptfile for solution")
-			return
-		}
+					if err != nil {
+						log.Error().Err(err).Msg("Unable to enable required services")
+					}
 
-		// Unmarshal the Kptfile YAML file and search for any configPaths in the pipline / mutators
-		// section. If found then  parse the configPath file mutator and search for the PromptIdentifier
-		yaml.Unmarshal(data, &decoder)
-		
-		for pipeline, configPaths := range decoder {
-			if pipeline == "pipeline" && reflect.TypeOf(configPaths).Kind() == reflect.Map {
-				for mutator, mutators := range configPaths.(map[string]interface{}) {
-					if mutator == "mutators" && reflect.TypeOf(mutators).Kind() == reflect.Slice {
-						for configPath, path := range mutators.([]interface{})[0].(map[string]interface{}) {
-							if configPath == "configPath" {
-								processConfigMutator(filepath.Join(cacheDir, path.(string)), &pr)
-							}
+					rtrn, err := checkDependency(solutionFile.Deploy.Stage.Infra.Requires.Depends)
+
+					if err != nil {
+						log.Error().Err(err).Msg("Unable to check dependencies")
+					}
+
+					if len(rtrn) > 0 {
+						msg := "Following dependencies do not exist:"
+
+						for _, name := range rtrn {
+							msg += "\n- " + name
 						}
+
+						log.Fatal().Msg(msg)
 					}
 				}
 			}
-		}
-
-		log.Info().Msg("Updating solutions settings....")
-		
-		res, err := utils.CallCommand(utils.Kpt, []string{"fn", "render", cacheDir}, false)
-
-		if err != nil {
-			log.Fatal().Err(err).Msg("Rendering KPT solution failed: " + cacheDir)
-		}
-
-
-		if viper.GetBool("verbose") {
-			log.Debug().Msg(strings.TrimSuffix(string(res), "\n"))
 		}
 
 		log.Info().Msg("Getting kubectl current context....")
@@ -407,6 +429,62 @@ func createPolicyBindingCall(iam []solutionFilev1.Iam, memberReplacement string)
 	}
 
 	return nil
+}
+
+// enable services based upon the spec that is provided
+func enableServices(services []solutionFilev1.Services) error {
+	if len(services) > 0 {
+		log.Info().Msg("Enabling required services...")
+	} else {
+		return nil
+	}
+
+	for _, service := range services {
+		cmdArgs := []string{"services", "enable", service.Service, "--project=" + service.Project}
+
+		ret, err := utils.CallCommand(utils.Gcloud, cmdArgs, false)
+
+		if err != nil {
+			return err
+		}
+
+		if viper.GetBool("verbose") {
+			log.Debug().Msg(string(ret))
+		}
+	}
+
+	return nil
+}
+
+// check the environment for required dependencies using the glcoud asset inventory command
+func checkDependency(depends []solutionFilev1.Depends) ([]string, error) {
+	var rtrn []string
+
+	if len(depends) > 0 {
+		log.Info().Msg("Checking required dependencies...")
+	} else {
+		return rtrn, nil
+	}
+
+	for _, dependency := range depends {
+		cmdArgs := []string{"asset", "search-all-resources", "--asset-types=" + dependency.AssetType, "--scope=" + dependency.Scope, "--query=name:" + dependency.Name, "--read-mask=name"}
+
+		ret, err := utils.CallCommand(utils.Gcloud, cmdArgs, false)
+
+		if err != nil {
+			return rtrn, err
+		}
+
+		if viper.GetBool("verbose") {
+			log.Debug().Msg(string(ret))
+		}
+
+		if strings.Contains(string(ret), "0 items") {
+			rtrn = append(rtrn, dependency.AssetType + "/" + dependency.Scope + "/" + dependency.Name)
+		}
+	}
+
+	return rtrn, nil
 }
 
 // set the kube context based upon the settings specified in the solution.yaml file

@@ -36,7 +36,7 @@ spec:
   constraint: "constraints/gcp.resourceLocations"
   listPolicy:
     allow:
-      all: true
+      all: false
       values: # kpt-set: ${allowed-regions}
         - northamerica-northeast1
         - northamerica-northeast2
@@ -145,7 +145,7 @@ spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:
     allow:
-      all: true
+      all: false
       values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization

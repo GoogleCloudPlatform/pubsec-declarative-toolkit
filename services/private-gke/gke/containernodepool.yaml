@@ -27,7 +27,7 @@ spec:
     minNodeCount: 1
   clusterRef:
     name: sandbox # kpt-set: ${cluster-name}
-  initialNodeCount: 3
+  initialNodeCount: 1
   location: northamerica-northeast1 # kpt-set: ${region}
   management:
     autoRepair: true

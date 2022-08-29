@@ -50,10 +50,23 @@ func (s *Spec) IsEmpty() bool {
 type Requires struct {
 	UseConfigConnectorSA string `yaml:"useConfigConnectorSA,omitempty"`
 	Iam                  []Iam  `yaml:"iam,omitempty"`
+	Services						 []Services `yaml:"services,omitempty"`
+	Depends							 []Depends	`yaml:"depends,omitempty"`
 }
 
 func (r *Requires) IsEmpty() bool {
 	return len(r.UseConfigConnectorSA) == 0 && len(r.Iam) == 0
+}
+
+type Services struct {
+	Service string `yaml:"service,omitempty"`
+	Project string `yaml:"project,omitempty"`
+}
+
+type Depends struct {
+	AssetType string `yaml:"asset-type,omitempty"`
+	Scope			string `yaml:"scope,omitempty"`
+	Name			string `yaml:"name,omitempty"`
 }
 
 type Deploy struct {
