@@ -31,6 +31,7 @@ chmod +x ./arete
 sudo mv ./arete /usr/local/bin
 ```
 
+#### Create the Config Controller Environment
 Once you have `arete` installed we can create the Config Controller environment by running:
 
 ```
