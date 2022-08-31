@@ -89,7 +89,15 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 1. Deploy Bootstrap
 
     ```
-    arete create landing-zone-controller
+    arete create landing-zone-controller --region=northamerica-northeast1
+    ```
+    
+    or set the region as an environment variable - for later usage
+    
+    ```
+    export REGION=northamerica-northeast1
+    arete create landing-zone-controller --region=$REGION
+
     ```
 
     This command will create a new project and deploy a Config Controller instance for you. This will create a project at the top level and can be moved into a folder if you like.
