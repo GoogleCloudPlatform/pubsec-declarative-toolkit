@@ -1,0 +1,37 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+stages:
+  - validate
+  - policy
+
+validate:
+  stage: validate
+  image:
+    name: gcr.io/config-management-release/nomos:stable
+    entrypoint:
+      - ""
+  variables:
+    KUBECONFIG: ""
+  script:
+    - nomos vet --no-api-server-check --source-format unstructured --path environments
+
+kpt:
+    image: docker
+    stage: policy
+    services:
+      - docker:dind
+    script: 
+    - docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.19
+        fn render /app
