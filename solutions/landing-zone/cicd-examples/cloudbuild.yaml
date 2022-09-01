@@ -16,4 +16,4 @@ steps:
 - name: 'gcr.io/config-management-release/nomos'
   args: ['vet', '--no-api-server-check', '--clusters', '""']
 - name: 'gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.19'
-  args: ['fn', 'render', 'solutions/sandbox-gke']
+  args: ['fn', 'render', '.']
