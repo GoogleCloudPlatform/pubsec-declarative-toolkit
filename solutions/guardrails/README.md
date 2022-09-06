@@ -6,6 +6,14 @@ This packge contains the minimal set of infrastructure needed to help provision 
 ## Usage
 
 0. Create a Config Controller instance with the `arete` cli tool. Installation instructions [here](../../cli/README.md)
+    
+    First we will ensure the default logging buckets that are generated with a new project are set to the selected region instead of the default location `global` with the following command.
+
+    ```
+    cloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+    ```
+
+    Now we can run the `arete` command to create the environment.
 
     `arete create my-awesome-kcc --region=northamerica-northeast1 --project=target-project`
     
