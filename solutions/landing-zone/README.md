@@ -86,6 +86,12 @@ The following resources will be deployed.
 
 To deploy this Landing Zone you will first need to create a Bootstrap project with a Config Controller instance.
 
+0. Set Default Logging Storage Location.
+
+```
+cloud alpha logging settings update --organization=ORGANIZATION_ID --storage-location=$REGION
+```
+
 1. Deploy Bootstrap
 
     ```
