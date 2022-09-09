@@ -1,1 +1,3 @@
 cicd-examples/
+environments/common/guardrails-policies
+environments/common/general-policies/naming-rules
