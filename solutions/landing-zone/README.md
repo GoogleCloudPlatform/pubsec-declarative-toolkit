@@ -153,7 +153,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     | billing-id | "0000000000" | Billing ID used with created projects |
     | org-id | "0000000000" | Target Organization ID |
     | management-project-id | management-project-12345  | ID of the Project where the Config Controller instance is located |
-    | management-project-number | "0000000000" |  Number of the Project where the Config Controller instance is location |
+    | management-project-number | "0000000000" |  [Number](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) of the Project where the Config Controller instance is location |
     | net-host-prj-nonprod-id | net-host-prj-nonprod-12345 | ID to be used for the Non-Prod Network Host Project |
     | net-host-prj-prod-id | net-host-prj-prod-12345 | ID to be used for the Prod Network Host Project |
     | net-perimeter-prj-common-id | net-perimeter-prj-common-12345 | ID to be used for the Common Network Perimeter Host Project |
