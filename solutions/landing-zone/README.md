@@ -97,10 +97,10 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     export EMAIL=your-super-admin@email.com
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
     
-    cloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+    gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
-## 1. Deploy Bootstrap
+1. Deploy Bootstrap
 
     ```
     arete create landing-zone-controller --region=northamerica-northeast1
@@ -136,17 +136,17 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/logging.admin
     ```
     
-## 2. Fetch the package
+2. Fetch the package
 
     `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
 
     Details: https://kpt.dev/reference/cli/pkg/get/
 
-## 3. Set Organization Hierarchy
+3. Set Organization Hierarchy
 
     Modifiy `environments/common/hiearchy.yaml` if required. 
 
-## 4. Customize Package
+4. Customize Package
 
     Edit `setters.yaml` with the relevant information. 
 
@@ -172,7 +172,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
 
-## 5. Deploy
+5. Deploy
 
     a. kpt
     
