@@ -48,6 +48,18 @@ For further documentation on the project, including the setup pre-requirements s
 - [Multi-Tenancy](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint)
 - [Known Issues](docs/issues.md)
 
+## Prerequisites
+### Billing and Project Quotas
+  For billing accounts that are new - there are default quotas that will need to be increased.  For shared billing account IDs - these should already have their quota increased.
+  If you receive a billing association error like the following - you may need to increase your billing/project association and project number quotas above the default 5 and 20 before deploying solution that deploy more than 4 additional projects such as the [Landing Zone Solution](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone).  
+```
+ERROR: (gcloud.beta.billing.projects.link) FAILED_PRECONDITION: Precondition check failed.\n- '@type': [type.googleapis.com/google.rpc.QuotaFailure\n](http://type.googleapis.com/google.rpc.QuotaFailure%5Cn)  violations:\n  - description: 'Cloud billing quota exceeded: https://support.google.com/code/contact/billing_quota_increase'\n
+```
+Additional quota can be requested via the forms below    
+* Fill out the billing quota increase from the default 5 directly via https://support.google.com/code/contact/billing_quota_increase
+* Fill out the project quota increase from the default 20 directly via https://support.google.com/code/contact/project_quota_increase
+
+
 ## Resources
 - [Awesome KRM](https://github.com/askmeegs/learn-krm)
 - [I do declare! Infrastructure automation with Configuration as Data](https://cloud.google.com/blog/products/containers-kubernetes/understanding-configuration-as-data-in-kubernetes)
