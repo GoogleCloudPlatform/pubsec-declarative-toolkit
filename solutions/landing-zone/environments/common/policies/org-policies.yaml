@@ -134,9 +134,8 @@ metadata:
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:
-    allow:
-      all: false
-      values:
+    deny:
+      all: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}          
@@ -270,7 +269,6 @@ spec:
     allow:
       all: false # set to false to disable
       values: # kpt-set: ${allowed-loadbalancers}
-        - INTERNAL
         - INTERNAL_TCP_UDP
         - INTERNAL_HTTP_HTTPS
   organizationRef:
