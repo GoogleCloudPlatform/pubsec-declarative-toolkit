@@ -15,7 +15,7 @@ This packge contains the minimal set of infrastructure needed to help provision 
     export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
     export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
-    cloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+    gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
     Now we can run the `arete` command to create the environment.
