@@ -10,6 +10,11 @@ This packge contains the minimal set of infrastructure needed to help provision 
     First we will ensure the default logging buckets that are generated with a new project are set to the selected region instead of the default location `global` with the following command.
 
     ```
+    export REGION=northamerica-northeast1
+    export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+    export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
+    export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
     cloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
