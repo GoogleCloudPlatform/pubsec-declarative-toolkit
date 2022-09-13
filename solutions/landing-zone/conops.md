@@ -1,5 +1,10 @@
-# ConOps: Concept of Operations
+# PBMM Landing Zone ConOps: Concept of Operations
+## LZ References
+- ITSG-33 [Scurity Controls Mapping](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-security-controls.md) | [GCP Onboarding](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-onboarding.md)
+
+
 ## Architecture
+- Previous [Terraform based PBMM LZ Architecture](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md)
 ### Diagrams
 #### High Level Network Diagram
 #### Low Level Zoning Diagram
