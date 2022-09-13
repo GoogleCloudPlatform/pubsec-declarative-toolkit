@@ -177,7 +177,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     a. kpt
     
     ```
-    kpt fn render
+    kpt fn render landing-zone
     kpt live init landing-zone --namespace config-control
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
