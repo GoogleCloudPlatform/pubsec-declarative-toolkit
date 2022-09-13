@@ -19,7 +19,7 @@ When getting a package the `@` indicates what tag or branch you will be getting 
 
 <!-- [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git&cloudshell_workspace=.&cloudshell_tutorial=docs/cloudshell-tutorial.md) -->
 
-In order to deploy the solutions we will need to activate a config-controller instance which we will then deploy a solution or solutions to it.
+In order to deploy the solutions we will need to activate a config-controller instance which we will then deploy a solution or solutions to it.  You have the option of installing the config-controller as part of the solution documentation or pre-installing it here - using either the [arete cli](#arete-cli-install) or an [advanced](#advanced-install) install.
 
 ### arete cli Install
 
