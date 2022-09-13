@@ -37,3 +37,4 @@
 # Deployments
 
 # References
+- [nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command) CLI for anthos config controller  (init vet status hydrate)
