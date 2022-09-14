@@ -19,21 +19,6 @@ This document details the connections, devices, network segments, zones, hostnam
 A spreadsheet of cloud ingress/egress application flows with an implementation diagram.
 
 
-## Requirements
-### R1: L7 Packet Inspection required
-### R2: Workload separation
-### R3: Centralized IP space management
-### R4: Security Command Center
-Security Command Center (Standard and Premium) is what Google uses to secure Google.
-### R5: IP Addressing vi RFC 1918/RFC 6598 Addressing, ground and cloud zoning
-### R6: Validate DNS flows for bidirectional cloud to ground
-### R7: GC-CAP infrastructure - Internet to Cloud
-### R8: GC-TIP infrastructure - Ground to Cloud
-Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connectivity/docs/interconnect/concepts/dedicated-overview) and IPSEC / MACSEC [VPN](https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview)
-### R9: Bastion Access per security zone
-- IAP and private connect
-### R10: Separate VPC per Cloud Profile 3/5/6 workloads
-
 
 ## Installation/Deployment
 
@@ -177,6 +162,22 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
 - VPC
   - Secure data exchange with ingress and egress rules : https://cloud.google.com/vpc-service-controls/docs/secure-data-exchange
 # Design Issues
+
+## DI-10: L7 Packet Inspection required
+## DI-12: Workload separation
+## DI-13: Centralized IP space management
+## DI-14: Security Command Center
+Security Command Center (Standard and Premium) is what Google uses to secure Google.
+## DI-15: IP Addressing vi RFC 1918/RFC 6598 Addressing, ground and cloud zoning
+## DI-16: Validate DNS flows for bidirectional cloud to ground
+## DI-17: GC-CAP infrastructure - Internet to Cloud
+## DI-18: GC-TIP infrastructure - Ground to Cloud
+Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connectivity/docs/interconnect/concepts/dedicated-overview) and IPSEC / MACSEC [VPN](https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview)
+## DI-19: Bastion Access per security zone
+- IAP and private connect
+## DI-20: Separate VPC per Cloud Profile 3/5/6 workloads
+- see slide 18 of https://wiki.gccollab.ca/images/7/75/GC_Cloud_Connection_Patterns.pdf
+- Since profile 3 and 6 access the PAZ and profile 5 is restricted to the RZ - profile 3 does not use GC-TIP for SC2G. The security appliance setup for GC-TIP is therefore restricted to 5 and 6, but the security appliance(s) used for GC-CAP can be shared.  Need to operationally verify this
 
 # Deployments 
 
