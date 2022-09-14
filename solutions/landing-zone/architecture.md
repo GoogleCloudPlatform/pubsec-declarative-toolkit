@@ -164,6 +164,7 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
 # Design Issues
 
 ## DI-09: Naming Standard
+- see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/130
 - Follow https://cloud.google.com/architecture/best-practices-vpc-design#naming
 
 ### Discussion
