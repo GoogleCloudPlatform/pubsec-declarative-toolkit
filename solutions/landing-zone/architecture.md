@@ -178,9 +178,12 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solu
 We have multiple optional dept/domain/org id;s throughout
 (org)-(domain)-(env = prod/stg..)-vpc
 
+see ongoing TF naming standard discussion we are bring over here in https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/132
+
 ### Pros/Cons
 
 ### Decision
+- GCP service wide naming strategy to be determined
 
 ## DI-10: L7 Packet Inspection required
 ## DI-12: Workload separation
