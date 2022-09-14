@@ -182,7 +182,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     ### kpt
     
     ```
-    kpt fn render
+    kpt fn render landing-zone
     kpt live init landing-zone --namespace config-control
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
@@ -366,7 +366,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       At this point we'll want to update our `setters.yaml` with the appropriate values and render the solution configurations using `kpt`.
 
       ```
-      kpt fn render
+      kpt fn render landing-zone
       kpt live init landing-zone --namespace config-control
       kpt live apply landing-zone --reconcile-timeout=2m --output=table
       ``` 
