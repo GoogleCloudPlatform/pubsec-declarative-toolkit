@@ -49,6 +49,7 @@ Do you want to continue (Y/n)?  y
 Delete request issued for: [landing-zone-controller]
 Waiting for operation [projects/landing-zone-controller-1z583/locations/northamerica-northeast1/operations/operation-1663186645640-5e8a8d13563dd-418ffc6f-eb3f878d] to complete...working.
 ```
+remember to delete the org policies added by the landing-zone to avoid https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
 ### Recreating the Anthos Cluster
 gcp.zone
 ```
@@ -59,7 +60,8 @@ Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northame
 3) Not all instances running in IGM after 26.129857499s. Expected 1, running 0, transitioning 1. Current errors: [CONDITION_NOT_MET]: Instance 'gke-krmapihost-landing-z-default-pool-eafd49e4-6msn' creation failed: Constraint constraints/compute.requireShieldedVm violated for project projects/landing-zone-controller-e4g7d. Secure Boot is not enabled in the 'shielded_instance_config' field. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints for more information.
 
 ```
-last deployment was OK, just getting the cluster up
+Issue is that the shieldedVM org policy will not allow the Anthos GKE cluster to come back up - delete it first to avoid issues with Anthos in a now landing-zone controlled organization (which is normal behaviour from an lz view) - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
+last deployment was still OK
 <img width="1483" alt="Screen Shot 2022-09-14 at 4 48 42 PM" src="https://user-images.githubusercontent.com/94715080/190259456-bb67b528-eae9-4092-ac38-77fdf4dc7ca5.png">
 
 
