@@ -33,14 +33,21 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 ### Creating the Anthos Cluster
 Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
 ```
+michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
+Create request issued for: [landing-zone-controller]
+Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
 ```
 ### Updating the Anthos Cluster
 ### Deleting the Anthos Cluster
 see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/91
 
-For the name pdt... leave out the "krmapihost-" prefix
+For the name, leave out the "krmapihost-" prefix
 ```
-gcloud anthos config controller delete pdt-cno-kcc --location=northamerica-northeast1
+ichael@cloudshell:~ (landing-zone-controller-1z583)$ gcloud anthos config controller delete landing-zone-controller --location=northamerica-northeast1
+You are about to delete instance [landing-zone-controller]
+Do you want to continue (Y/n)?  y
+Delete request issued for: [landing-zone-controller]
+Waiting for operation [projects/landing-zone-controller-1z583/locations/northamerica-northeast1/operations/operation-1663186645640-5e8a8d13563dd-418ffc6f-eb3f878d] to complete...working.
 ```
 ### Recreating the Anthos Cluster
 TBD
