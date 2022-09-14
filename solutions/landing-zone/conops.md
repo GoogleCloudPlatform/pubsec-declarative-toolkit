@@ -7,6 +7,17 @@ Create, manage and operate a PBMM secure landing zone for the Google Cloud Envir
 ### Why Landing Zones
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
 
+## Deliverables
+### SC2G Deliverables
+#### CDD: Conceptual Design Document
+High leve applications and interconnections through the SC2G infrastructure.  Include examples of PaaS, SaaS, IaaS and hybrid applications.
+
+#### SID: Solution Integration Document
+This document details the connections, devices, network segments, zones, hostnames, ports, IPS of a particular application - usually worked out with the team implementing a particular workload.  The diagram centers on the GC-TIP and GC-CAP connections.
+
+#### WIF: Workload Intake Form
+A spreadsheet of cloud ingress/egress application flows with an implementation diagram.
+
 
 ## Requirements
 ### R1: L7 Packet Inspection required
@@ -14,6 +25,15 @@ Expand on https://cloud.google.com/architecture/landing-zones/decide-network-des
 ### R3: Centralized IP space management
 ### R4: Security Command Center
 Security Command Center (Standard and Premium) is what Google uses to secure Google.
+### R5: IP Addressing vi RFC 1918/RFC 6598 Addressing, ground and cloud zoning
+### R6: Validate DNS flows for bidirectional cloud to ground
+### R7: GC-CAP infrastructure - Internet to Cloud
+### R8: GC-TIP infrastructure - Ground to Cloud
+Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connectivity/docs/interconnect/concepts/dedicated-overview) and IPSEC / MACSEC [VPN](https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview)
+### R9: Bastion Access per security zone
+- IAP and private connect
+### R10: Separate VPC per Cloud Profile 3/5/6 workloads
+
 
 ## Installation/Deployment
 
@@ -103,6 +123,11 @@ Security Command Center Premium - Threat Detection - https://cloud.google.com/se
 
 GCP provides trusted image scanning to reject unsanctioned public image downloads through a organizational policy called trusted image policy https://cloud.google.com/compute/docs/images/restricting-image-access 
 
+## Operations
+### Allowlist
+Allowlists are defined by workload and security profile.  Dev may have cloud-internet egress all the way to 0.0.0.0/0.
+### Denylist
+
 
 ## Security Controls
 - see ITSG-33 [Scurity Controls Mapping](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-security-controls.md) 
@@ -150,8 +175,108 @@ GCP provides trusted image scanning to reject unsanctioned public image download
   - Secure data exchange with ingress and egress rules : https://cloud.google.com/vpc-service-controls/docs/secure-data-exchange
 # Design Issues
 
-# Deployments
+# Deployments 
+
+```mermaid
+graph LR;
+    style Landing-Zones fill:#44f,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
+    %% mapped and documented
+
+    on-prem-simulate-->prem
+    identity-as-a-service-simulate-->idp-dev
+    identity-as-a-service-simulate-->idp-uat
+    3rd-cloud-->dev-aws
+    
+    manual-->sbx
+    manual-->dev
+    automated-->uat
+    automated-->prd
+    
+    prem-->onprem.gcp.zone
+    idp-dev-->azure.obrienlabs.dev
+    idp-uat-->azure.cloudnuage.dev
+    dev-->approach.gcp.zone-->procedure/verify
+    dev-aws-->aws.cloudnuage.dev
+    sbx-->checklist.gcp.zone-->experiment
+    prd-->landing.gcp.zone-->resilient/stable
+    uat-->alternate.gcp.zone-->cicd/automated
+    sbx-->gcp.zone-->experiment
+    sbx-->arg.corporate-->experiment
+    gcp.zone-->gcp-domain-zone
+        
+```
 
 # References
 - Config Connector release notes - https://cloud.google.com/config-connector/docs/release-notes
 - [nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command) CLI for anthos config controller  (init vet status hydrate)
+
+
+# TODO - to integrate into this doc and the issue system
+20220913
+- Detail branching/PR/release/tagging strategy doc/procedures
+- Detail CD clean deployment on remote org as PR on demand (+1) regression testing (full LZ install with infrastructure - not just actual LZ solution)
+- Provide doc/tooling to add secure zone deployment bastion VM in addition to default cloud shell and local developer SDK
+- Detail admin super-admin role of org admin not required for LZ deploy - role add/delete are automated
+- Dev workflow assistance: Fully delete/recreate LZ (reuse procedure for CD redeploys) - up to fully clean organization
+- Prepare workaround for 25 limit on VPC Peering connections - after forest of division/team/workload projects passes 25
+- Detail Canary CD and ATO traffic generation app with UAT/Firewall config to both exercise the LZ and demo serverless/IaaS/PaaS workload example
+- Unclassified/Classified separation of Profile 3/5/6 workloads via VPC separation
+- SC2G GC-TIP Dev test version of IPSEC VPN (leave out interconnect for cost) - for cloud to ground workload testing (IE: DB on prem, app on CSP)
+- SC2G prepare DNS flows in prep for 30d prior WIF (workload intake form) per workload - have example shared PaaS and custom IaaS/SaaS flows
+- CCCS project and zoning for logging agent placement and traffic flows
+- Expand zoning on existing shared workload PaaS ready Shared VPC host/service projects with 1:1 service project subnets
+- Detail zoning for per-team workload separate VPC with its own perimeter peering and VPC endpoints
+- Onboarding: Dev only: Full/Paid Accounts: detail procedure on adding day 1 Full/Paid accounts before LZ deployment - 90d free stays (all others use shared billing)
+- Onboarding: Quota: Do GCP projects/billing association quota increase from 5 to 20 before LZ deployment
+- Onboarding: Quota: expand projects limit from 20 to 50 in prep for running out of project quota on dev recycling of parameterized project IDs
+- RFC-6598 perimeter VPC
+- RFC-1918 dev/staging
+- SC2G GC-CAP ingress/egress traffic must be decrypted (except finance/health by ip rule exclusion)
+- GoC root cert on all endpoints - https://www.gcpedia.gc.ca/wiki/Non-Person_Entity_Public_Key_Infrastructure#Root_Certificate_Authorities
+- detail option to create cluster during root readme or as part of the lz solution
+- Dev workaround for timed out cluster creation (we are usually 5 min from a 30 min timeout on 25 min duration)
+
+Notes
+- CE = customer edge
+- high level diagram at cxp with active/passive router deployments
+- pre-shared key (psk)
+- internal /30 bgp peering through tunnel
+- ipsec phase 1/2 params
+- fortinet vip
+- ipsec + bgp configs
+- bgp through tunnel peering / route table
+- tunnel failover and app testing
+
+- SC2G
+- MacSEC protocol through CE routers - for pbmm flows encrypted across gcbb
+- MacSEC tunnels ground ce to tip ce (mon/tor)
+- cxp = cloud exchange provider (2 parts vpn(iis/eps, gc-cap
+- eps = enterprise perimeter security system
+- pbmm traffix must traverse macsec and ipsec tunnels
+- non-pbmm traffic via l3 gcbb mpls service
+- casb (cloud access security broker) for saas (2023)
+- iaas perimeter firewall, tls, ips, sandboxing, l3 l7 inbound controls, logging
+- cse/cccs via sc2g
+
+- flows from cloud tenancy to cap: 100.96 rfc6598 (snat address)
+
+- no snat for tip
+- cloud interconnect bandwidth shared between cap/tip
+- manditory rfc6598 (perimeter vpc) and 1918 (dev/stg/prod zones)
+- 100.96 for ext facing fw - distinct between csps
+- no cloud/ground ip address overlaps
+
+- paz:
+- public zone zip
+- ean
+- ean/dmz boundary
+- dmz
+- ian
+- internal zone zip
+- all flows documented in wif
+- uat for cloud tenancy
+- edc rz
+- cap traversal latency 20-30 ms
+- 2 CxP at each region
+- approved fw for sc2g not including waf
+
