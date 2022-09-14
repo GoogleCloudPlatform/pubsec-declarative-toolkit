@@ -163,6 +163,25 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
   - Secure data exchange with ingress and egress rules : https://cloud.google.com/vpc-service-controls/docs/secure-data-exchange
 # Design Issues
 
+## DI-09: Naming Standard
+- Follow https://cloud.google.com/architecture/best-practices-vpc-design#naming
+
+### Discussion
+The current naming standard in the PBMM LZ keys off the constraints in https://cloud.google.com/resource-manager/docs/creating-managing-projects
+- There are the GCP limitations around the naming standard (30 char,...) to start. - from the blueprints repo link to ACM docs
+https://cloud.google.com/anthos-config-management/docs/tutorials/landing-zone#setting_up_your_resource_hierarchy and back to the constraint example
+https://github.com/GoogleCloudPlatform/blueprints/blob/main/catalog/hierarchy/simple/policies/naming-constraint.yaml#L26
+- Which requires our naming strategy population
+https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/environments/common/general-policies/naming-rules/constraint.yaml#L26 based on the rules in https://cloud.google.com/resource-manager/docs/creating-managing-projects
+
+
+We have multiple optional dept/domain/org id;s throughout
+(org)-(domain)-(env = prod/stg..)-vpc
+
+### Pros/Cons
+
+### Decision
+
 ## DI-10: L7 Packet Inspection required
 ## DI-12: Workload separation
 ## DI-13: Centralized IP space management
@@ -178,6 +197,7 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 ## DI-20: Separate VPC per Cloud Profile 3/5/6 workloads
 - see slide 18 of https://wiki.gccollab.ca/images/7/75/GC_Cloud_Connection_Patterns.pdf
 - Since profile 3 and 6 access the PAZ (GC-CAP) and profile 5 is restricted to the RZ (GC-TIP) - profile 3 does not use GC-TIP for SC2G. The security appliance setup for GC-TIP is therefore restricted to 5 and 6, but the security appliance(s) used for GC-CAP can be shared.  Need to operationally verify this
+
 
 # Deployments 
 
