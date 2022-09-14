@@ -30,9 +30,21 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 - follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
 
 
-### Creating the Config Controller Cluster
-### Updating the Config Controller Cluster
-### Deleting the Config Controller Cluster
+### Creating the Anthos Cluster
+Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
+```
+```
+### Updating the Anthos Cluster
+### Deleting the Anthos Cluster
+see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/91
+
+For the name pdt... leave out the "krmapihost-" prefix
+```
+gcloud anthos config controller delete pdt-cno-kcc --location=northamerica-northeast1
+```
+### Recreating the Anthos Cluster
+TBD
+
 ### Deploying the Landing Zone
 ### Updating the Landing Zone from Upstream source
 #### Reconciling
