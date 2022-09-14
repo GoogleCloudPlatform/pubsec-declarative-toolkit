@@ -175,7 +175,9 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     When deploying resources `kpt` will wait for all resources to deploy before finishing, `kpt` also provides annotations such as [depends-on](https://kpt.dev/reference/annotations/depends-on/) that allow us to order the deployment of resources. 
 
-    GitOps allows us to connect our cluster to a "source of truth" and deploy from that. To do this we use [Anthos Config Management](https://cloud.google.com/anthos/config-management), which is pre-installed in Config Controller, and this allows us to target either a [Git Repository](https://cloud.google.com/anthos-config-management/docs/concepts/configs) or [OCI Artifact](https://cloud.google.com/anthos-config-management/docs/how-to/publish-config-registry) (Container). The benefit to this method is we now have an additional reconciliation process to ensure the deployed state matches our desired state or "source of truth". This also allows for improved automation and removes the need to run `kpt live apply` to deploy resources.
+    GitOps allows us to connect our cluster to a "source of truth" and deploy from that. To do this we use [Anthos Config Management](https://cloud.google.com/anthos/config-management), which is pre-installed in Config Controller, and this allows us to target either a [Git Repository](https://cloud.google.com/anthos-config-management/docs/concepts/configs) or [OCI Artifact](https://cloud.google.com/anthos-config-management/docs/how-to/publish-config-registry) (Container). 
+    
+    The benefit to this method is we now have an additional reconciliation process to ensure the deployed state matches our desired state or "source of truth". This also allows for improved automation and removes the need to run `kpt live apply` to deploy resources.
 
     ### kpt
     
@@ -350,21 +352,33 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       --project=${PROJECT_ID}
       ```
 
-      Push Config Image to the repository
+      #### Push Config Image to the repository
 
-      Install crane and login to Artifact Registry
+      ##### Install crane and login to Artifact Registry
 
       ```
       go install github.com/google/go-containerregistry/cmd/crane@latest
       crane auth login northamerica-northeast1-docker.pkg.dev  -u oauth2accesstoken -p "$(gcloud auth print-access-token)"
       ```
 
-      Create and Push the Image
+      #### Render the Configs
+
+      At this point we'll want to update our `setters.yaml` with the appropriate values and render the solution configurations using `kpt`.
+
       ```
-      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/gcp-ha-demo-353515/landing-zone/lz-test:v1
+      kpt fn render
+      kpt live init landing-zone --namespace config-control
+      kpt live apply landing-zone --reconcile-timeout=2m --output=table
+      ``` 
+
+      Once that has completed we can build our OCI Artifact with the crane CLI.
+
+      ```
+      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/landing-zone/lz-test:v1
       ```
 
-      Create a RootSync Object
+      Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
+
       ```
       cat <<EOF>> ROOT_SYNC_NAME.yaml
       apiVersion: configsync.gke.io/v1beta1
@@ -376,8 +390,8 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
         sourceFormat: unstructured
         sourceType: oci
         oci:
-          image: northamerica-northeast1-docker.pkg.dev/${PROJECT_ID}/${AR_REPO_NAME}/kustomize-components
-          dir: tenant-a
+          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/landing-zone/lz-test:v1
+          dir: environments
           auth: gcpserviceaccount
           gcpServiceAccountEmail: ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
       EOF
