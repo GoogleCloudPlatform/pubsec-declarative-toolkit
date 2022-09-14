@@ -211,6 +211,7 @@ graph LR;
 ```
 
 # References
+- Anthos Config Management - "Deploy a Landing Zone Blueprint" - https://cloud.google.com/anthos-config-management/docs/tutorials/landing-zone and 
 - Config Connector release notes - https://cloud.google.com/config-connector/docs/release-notes
 - [nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command) CLI for anthos config controller  (init vet status hydrate)
 
