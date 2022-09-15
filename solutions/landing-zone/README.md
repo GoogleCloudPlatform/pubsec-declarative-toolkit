@@ -102,7 +102,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 1. Deploy Bootstrap
 
-    This bootstrap assume you have a [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) instance provisioned already. If you do not you can follow either the [quickstart](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) guide or the [detailed install guide](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) for advanced users.
+    This bootstrap assume you have a [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) instance provisioned already. If you do not you can follow either the [quickstart](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) guide or the [detailed install guide](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) for advanced users (this is recommended for experienced users).
     
 
     This Solution will require the Config Controller instance to have the following permissions.
@@ -171,7 +171,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       - [OCI](#oci)
 
 
-    Deploying through `kpt` is a more traditial push approach to deploying the infrastructure. This will deploy the infrastructure resources into the target cluster similar to how `kubectl` operates. Some of the deployment advantages `kpt` offers is the ability to use functions live `render` to populate variables in the configuration and `gatekeeper` which allows us to validate policy before deployment. 
+    Deploying through `kpt` is a more traditional push approach to deploying the infrastructure. This will deploy the infrastructure resources into the target cluster similar to how `kubectl` operates. Some of the deployment advantages `kpt` offers is the ability to use functions live `render` to populate variables in the configuration and `gatekeeper` which allows us to validate policy before deployment. 
 
     When deploying resources `kpt` will wait for all resources to deploy before finishing, `kpt` also provides annotations such as [depends-on](https://kpt.dev/reference/annotations/depends-on/) that allow us to order the deployment of resources. 
 
@@ -237,47 +237,46 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
 
       1. Create a Service Account and give it permissions to access the repo.
-        ```
-        # gitops-iam.yaml
+          ```
+          # gitops-iam.yaml
 
-        apiVersion: iam.cnrm.cloud.google.com/v1beta1
-        kind: IAMServiceAccount
-        metadata:
-          name: config-sync-sa
-          namespace: config-control
-        spec:
-          displayName: ConfigSync
-
-        ---
-
-        apiVersion: iam.cnrm.cloud.google.com/v1beta1
-        kind: IAMPolicyMember
-        metadata:
-          name: config-sync-wi
-          namespace: config-control
-        spec:
-          member: serviceAccount:PROJECT_ID.svc.id.goog[config-management-system/root-reconciler]
-          role: roles/iam.workloadIdentityUser
-          resourceRef:
-            apiVersion: iam.cnrm.cloud.google.com/v1beta1
-            kind: IAMServiceAccount
+          apiVersion: iam.cnrm.cloud.google.com/v1beta1
+          kind: IAMServiceAccount
+          metadata:
             name: config-sync-sa
+            namespace: config-control
+          spec:
+            displayName: ConfigSync
+          ---
 
-        ---
+          apiVersion: iam.cnrm.cloud.google.com/v1beta1
+          kind: IAMPolicyMember
+          metadata:
+            name: config-sync-wi
+            namespace: config-control
+          spec:
+            member: serviceAccount:PROJECT_ID.svc.id.goog[config-management-system/root-reconciler]
+            role: roles/iam.workloadIdentityUser
+            resourceRef:
+              apiVersion: iam.cnrm.cloud.google.com/v1beta1
+              kind: IAMServiceAccount
+              name: config-sync-sa
 
-        apiVersion: iam.cnrm.cloud.google.com/v1beta1
-        kind: IAMPolicyMember
-        metadata:
-          name: allow-configsync-sa-read-csr
-          namespace: config-control
-        spec:
-          member: serviceAccount:config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
-          role: roles/source.reader
-          resourceRef:
-            apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-            kind: Project
-            external: projects/PROJECT_ID
-        ```
+          ---
+
+          apiVersion: iam.cnrm.cloud.google.com/v1beta1
+          kind: IAMPolicyMember
+          metadata:
+            name: allow-configsync-sa-read-csr
+            namespace: config-control
+          spec:
+            member: serviceAccount:config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
+            role: roles/source.reader
+            resourceRef:
+              apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+              kind: Project
+              external: projects/PROJECT_ID
+          ```
       2. Deploy the manifests
           ```
           kubectl apply -f gitops-iam.yaml
@@ -325,6 +324,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
           git commit -m "Add Guardrails solution"
           git push --set-upstream origin main
           ```
+
     ### OCI
 
       Before we deploy via OCI we have a few things we'll need to do to prepare our environment.
@@ -425,7 +425,25 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       #### Clean Up
 
-      First delete the Rootsync version.
+      First delete the Rootsync deployment. This will prevent the resources from self-healing.
+
+      ```
+      kubectl delete rootsync landing-zone -n config-management-system
+      ```
+
+      Now we can delete our KCC resources from the Config Controller instance.
+
+      ```
+      kubectl delete gcp --all -n config-control
+      ```
+
+      Once the resources have been deleted you can delete the config controller instance .
+      
+      If you have forgotten tha name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
+
+      ```
+      gcloud anthos config controller instance-name --location instance-region
+      ```
 
 
     ## Cloud Deploy (future)
