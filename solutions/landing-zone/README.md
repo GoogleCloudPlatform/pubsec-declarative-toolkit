@@ -233,6 +233,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
             name: my-lz-repo
             namespace: config-control
           ```
+
       Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
 
       1. Create a Service Account and give it permissions to access the repo.
@@ -334,7 +335,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       ```
       export PROJECT_ID=PROJECT_ID
       export AR_REPO_NAME=REPO_NAME
-      export GSA_NAME="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+      export GSA_NAME="config-management-oci"
       ```
 
       Enable Artifact Registry
@@ -352,6 +353,28 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       --project=${PROJECT_ID}
       ```
 
+      Create a Service Account for Config Management to Access the Artifact Repository.
+
+      ```
+      gcloud iam service-accounts create $GSA_NAME \
+      --project=${PROJECT_ID}
+      ```
+
+      Assign it the read permissions
+      ```
+      gcloud artifacts repositories add-iam-policy-binding ${AR_REPO_NAME} \
+      --member "serviceAccount:${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" \
+      --location northamerica-northeast1 \
+      --role "roles/artifactregistry.reader"
+      ```
+
+      Allow the SA to be accessed by the Root Sync Service account.
+      ```
+      gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
+      --role roles/iam.workloadIdentityUser \
+      --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler-landing-zone]"
+      ```
+
       #### Push Config Image to the repository
 
       ##### Install crane and login to Artifact Registry
@@ -367,30 +390,28 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       ```
       kpt fn render landing-zone
-      kpt live init landing-zone --namespace config-control
-      kpt live apply landing-zone --reconcile-timeout=2m --output=table
       ``` 
 
       Once that has completed we can build our OCI Artifact with the crane CLI.
 
       ```
-      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/landing-zone/lz-test:v1
+      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/lz-test:v1
       ```
 
       Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
 
       ```
-      cat <<EOF>> ROOT_SYNC_NAME.yaml
+      cat <<EOF>> lz-oci.yaml
       apiVersion: configsync.gke.io/v1beta1
       kind: RootSync
       metadata:
-        name: ROOT_SYNC_NAME
+        name: landing-zone
         namespace: config-management-system
       spec:
         sourceFormat: unstructured
         sourceType: oci
         oci:
-          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/landing-zone/lz-test:v1
+          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/oci-test/lz-test:v1
           dir: environments
           auth: gcpserviceaccount
           gcpServiceAccountEmail: ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
@@ -399,6 +420,12 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       Apply it to the target cluster.
       ```
-      kubectl apply -f ROOT_SYNC_NAME.yaml
+      kubectl apply -f lz-oci.yaml
       ```
+
+      #### Clean Up
+
+      First delete the Rootsync version.
+
+
     ## Cloud Deploy (future)
