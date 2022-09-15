@@ -32,6 +32,9 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 
 ### Creating the Anthos Cluster
 Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
+
+Verify that the shieldedVM org policy is off for the folder or project before starting the anthos cluster
+
 ```
 michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
