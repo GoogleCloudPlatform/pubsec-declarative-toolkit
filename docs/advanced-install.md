@@ -63,29 +63,19 @@ kubens config-control
 
 ```
 export ORG_ID=$ORG_ID
-export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
-    -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/resourcemanager.folderAdmin"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/resourcemanager.projectCreator"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/resourcemanager.projectDeleter"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/iam.securityAdmin"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/orgpolicy.policyAdmin"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/serviceusage.serviceUsageConsumer"
-gcloud organizations add-iam-policy-binding "${ORG_ID}" \
-    --member "serviceAccount:${SA_EMAIL}" \
-    --role "roles/billing.user"    
+export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.folderAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectCreator"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectDeleter"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/iam.securityAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/orgpolicy.policyAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/billing.user" 
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/accesscontextmanager.policyAdmin
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/compute.xpnAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/iam.serviceAccountAdmin"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer"
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/logging.admin"   
 ``` 
 
 9. Now you are ready to deploy a solution!
