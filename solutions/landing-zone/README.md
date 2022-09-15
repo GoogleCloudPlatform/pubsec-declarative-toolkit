@@ -90,13 +90,13 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     This command will ensure that the default logging buckets that are generated with a new project (organization wide) are set to the selected region instead of the default location `global`.
 
+
     ```
     export REGION=northamerica-northeast1
     export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
     export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
-    export EMAIL=your-super-admin@email.com
+    export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
-    
     gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
