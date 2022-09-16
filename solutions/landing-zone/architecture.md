@@ -26,22 +26,23 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 #### Cloud Identity Onboarding and Organization Domain Validation
 #### Billing Quota
 #### Project Quota
-#### Config Controller enabled Anthos GKE Cluster
+#### Config Controller enabled GKE Cluster
 - follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
 
 
-### Creating the Anthos Cluster
+### Creating the Config Controller Cluster
 Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
 
-Verify that the shieldedVM org policy is off for the folder or project before starting the anthos cluster
+Verify that the requireShieldedVM org policy is off for the folder or project before starting the CC cluster
 
 ```
 michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
 Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
 ```
-### Updating the Anthos Cluster
-### Deleting the Anthos Cluster
+
+### Updating the Config Controller Cluster
+### Deleting the Config Controller Cluster
 see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/91
 
 For the name, leave out the "krmapihost-" prefix
@@ -63,7 +64,7 @@ Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northame
 3) Not all instances running in IGM after 26.129857499s. Expected 1, running 0, transitioning 1. Current errors: [CONDITION_NOT_MET]: Instance 'gke-krmapihost-landing-z-default-pool-eafd49e4-6msn' creation failed: Constraint constraints/compute.requireShieldedVm violated for project projects/landing-zone-controller-e4g7d. Secure Boot is not enabled in the 'shielded_instance_config' field. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints for more information.
 
 ```
-Issue is that the shieldedVM org policy will not allow the Anthos GKE cluster to come back up - delete it first to avoid issues with Anthos in a now landing-zone controlled organization (which is normal behaviour from an lz view) - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
+Issue is that the requireShieldedVM org policy will not allow the CC GKE cluster to come back up - delete it first to avoid issues with the CC cluster in a now landing-zone controlled organization (which is normal behaviour from an lz view) - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
 last deployment was still OK
 <img width="1483" alt="Screen Shot 2022-09-14 at 4 48 42 PM" src="https://user-images.githubusercontent.com/94715080/190259456-bb67b528-eae9-4092-ac38-77fdf4dc7ca5.png">
 
@@ -81,6 +82,10 @@ last deployment was still OK
 #### High Level Network Diagram
 #### Low Level Zoning Diagram
 ### Naming Standard
+### Deployed Project Structure
+
+<img width="1290" alt="Screen Shot 2022-09-15 at 10 46 44" src="https://user-images.githubusercontent.com/24765473/190434889-ff2fab6a-e705-46b9-8400-19e86a8419d9.png">
+
 
 
 ### Backups
