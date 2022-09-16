@@ -467,7 +467,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       Once the resources have been deleted you can delete the config controller instance .
       
-      If you have forgotten tha name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
+      If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
 
       ```
       gcloud anthos config controller instance-name --location instance-region
