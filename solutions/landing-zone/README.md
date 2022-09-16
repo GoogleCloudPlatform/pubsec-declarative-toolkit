@@ -427,6 +427,32 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       #### Clean Up
 
+      Follow the below steps to delete the provisioned infrastructure and Config Controller instances.
+
+      If you want the deployed resources to live on and just destroy the Config Controller instance you can do so by running `gcloud anthos config controller instance-name --location instance-region`. This will remove the config controller instances but leave the resources it deployed untouched.
+
+      To reacquire the resources you will need to redeploy a new instance and deploy the same configs to it. Config Controller should reattach to the previously deployed instances and start managing them again.
+
+      #### kpt
+
+      First run either
+      ```
+      kpt live destroy
+      ```
+
+      or
+
+      ```
+      kubectl delete gcp --all
+      ```
+
+      Finally delete the Config Controller instance
+
+      ```
+      gcloud anthos config controller instance-name --location instance-region
+      ```
+
+      #### OCI
       First delete the Rootsync deployment. This will prevent the resources from self-healing.
 
       ```
