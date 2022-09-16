@@ -100,6 +100,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
+
 1. Deploy Bootstrap
 
     This bootstrap assume you have a [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) instance provisioned already. If you do not you can follow either the [quickstart](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) guide or the [detailed install guide](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) for advanced users (this is recommended for experienced users).
@@ -126,6 +127,10 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/logging.admin
     ```
     
+    **Note**: You will also need to give the Service Account ($SA_EMAIL) the Billing Account User role on your billing account in order to allow it to associate billing IDs to the Projects that will be created. You can do that by following the steps in this [guide](https://cloud.google.com/billing/docs/how-to/billing-access#update-cloud-billing-permissions). If this is not granted projects will not be able to be provisioned.
+
+    Deploying without Billing Account User role is possible but will require a user who does to manually add the billing account to the project. To do this you will need to remove the Billing Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`). Once the project is created the user with the Billing User will be able to add the billing id to the generated projects in the [manage billing page](https://console.cloud.google.com/billing).
+
 2. Fetch the package
 
     `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
@@ -188,8 +193,6 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     kpt live init landing-zone --namespace config-control
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
-
-    **Note**: Deploying without billing use permissions is possible but will require a user to manually add the billing account to the project. To do this you will need to remove the Billing Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`).
 
     The section looks like the following and can either be commented out or deleted.
     ```
