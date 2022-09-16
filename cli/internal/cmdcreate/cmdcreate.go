@@ -25,7 +25,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-var currentRegions = []string{"us-central1", "us-east1", "northamerica-northeast1", "europe-north1", "australia-southeast1", "asia-northeast1"}
+var currentRegions = []string{"us-central1", "us-east1", "northamerica-northeast1",	"northamerica-northeast2",	 "europe-north1",	"europe-west1",	"europe-west3",	"australia-southeast1",	"australia-southeast2",	"asia-northeast1",	"asia-northeast2"}
 
 type createSteps struct {
 	Steps []step `yaml:"steps"`
