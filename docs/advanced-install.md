@@ -8,7 +8,7 @@ If you are not the following resources are required.
 * [kpt](https://kpt.dev/installation/)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) ( >= v1.20)
 
-1. Set environment variables that match your environment
+## 1. Set environment variables that match your environment
 ```
 CLUSTER=<cluster-name>
 REGION=<supported-region>
@@ -19,29 +19,29 @@ ORG_ID=<your_org_id>
 BILLING_ID=<your_billing_id>
 ```
 
-2. Create Project
+## 2. Create Project
 ```
 gcloud projects create $PROJECT_ID --name="Config Controller" --labels=type=infrastructure-automation --set-as-default
 ```
 
-3. Enable Billing
+## 3. Enable Billing
 ```
 gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID
 ```
 
-4. Set the project ID
+## 4. Set the project ID
 ```
 gcloud config set project $PROJECT_ID
 ```
 
-5. Enable the required services
+## 5. Enable the required services
 ```
 gcloud services enable krmapihosting.googleapis.com \
     container.googleapis.com \
     cloudresourcemanager.googleapis.com
 ```
 
-6. Create a network and subnet
+## 6. Create a network and subnet
 ```
 gcloud compute networks create $NETWORK --subnet-mode=custom
 gcloud compute networks subnets create $SUBNET  \
@@ -50,7 +50,7 @@ gcloud compute networks subnets create $SUBNET  \
 --region $REGION
 ```
 
-7. Create the Config Controller Instance
+## 7. Create the Config Controller Instance
 ```
 gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
@@ -59,7 +59,7 @@ gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
 kubens config-control
 ```
 
-8. Assign Permissions to the config connector Service Account.
+## 8. Assign Permissions to the config connector Service Account.
 
 ```
 export ORG_ID=$ORG_ID
@@ -88,4 +88,13 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --role "roles/billing.user"    
 ``` 
 
-9. Now you are ready to deploy a solution!
+## 9. Now you are ready to deploy a solution!
+
+
+## 10. Development Operations: Delete the Config Controller Cluster
+Optional operation: In the CC cluster project
+```
+gcloud anthos config controller delete --location $REGION $CLUSTER
+```
+## 11. Development Operations: Re Create the Config Controller Cluster
+Optional Operation: Override the requireShieldedVm organization policy only on the CC project before re creating the CC cluster - by deferring to the Google Default over the inherited value. See https://console.cloud.google.com/iam-admin/orgpolicies/compute-requireOsLogin
