@@ -92,7 +92,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 
     ```
-    export REGION=northamerica-northeast1
+    export REGION=northamerica-northeast2
     export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
     export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
     export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
@@ -109,7 +109,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     or set the region as an environment variable - for later usage
     
     ```
-    export REGION=northamerica-northeast1
+    export REGION=northamerica-northeast2
     arete create landing-zone-controller --region=$REGION
 
     ```
