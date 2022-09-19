@@ -12,7 +12,6 @@ If you are not the following resources are required.
 ```
 CLUSTER=<cluster-name>
 REGION=<supported-region> # default to northamerica-northeast2 with alternate northamerica-northeast1
-REGION
 PROJECT_ID=<project-id>
 NETWORK=<vpc-name>
 SUBNET=<subnet-name>
