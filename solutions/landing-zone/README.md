@@ -92,6 +92,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 
     ```
+    gcloud config set project <your project id>
     export REGION=northamerica-northeast2
     export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
     export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
