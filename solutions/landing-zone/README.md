@@ -8,7 +8,7 @@ Config Controller is a hosted service to provision and orchestrate Anthos and Go
 
 ![img](img/arch.svg)
 
-## Organzation
+## Organization
 
 This Landing Zone will create an initial 3 environments.
 
@@ -92,7 +92,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 
     ```
-    gcloud config set project <your project id>
+    gcloud config set project <your bootstrap project id>
     export REGION=northamerica-northeast2
     export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
     export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
@@ -102,6 +102,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     ```
 
 1. Deploy Bootstrap
+Note: You may use the [advanced install](/docs/advanced-install.md) as an alternative to using arete to create the CC project, VPC, Subnet, deploy the CC cluster.
 
     ```
     arete create landing-zone-controller --region=northamerica-northeast1
