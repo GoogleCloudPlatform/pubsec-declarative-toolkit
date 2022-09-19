@@ -8,40 +8,45 @@ If you are not the following resources are required.
 * [kpt](https://kpt.dev/installation/)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) ( >= v1.20)
 
-1. Set environment variables that match your environment
+## 1. Set environment variables that match your environment
 ```
-CLUSTER=<cluster-name>
-REGION=<supported-region>
-PROJECT_ID=<project-id>
-NETWORK=<vpc-name>
-SUBNET=<subnet-name>
-ORG_ID=<your_org_id>
-BILLING_ID=<your_billing_id>
-```
-
-2. Create Project
-```
-gcloud projects create $PROJECT_ID --name="Config Controller" --labels=type=infrastructure-automation --set-as-default
+# note: CLUSTER, NETWORK, SUBNET can be renamed to anything, CC_PROJECT_ID must be a unique name (use your org name/date combo) - like controller-lgz-0919, the rest are derived.
+# note: for multiple billing accounts - set the BILLING_ID manually
+gcloud config set project <your bootstrap project id>
+export CC_PROJECT_ID=controller-lgz-0919
+export REGION=northamerica-northeast2
+export CLUSTER=pdt
+export SUBNET=pdt
+export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
+export BILLING_ID=$(gcloud alpha billing projects describe $PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
 ```
 
-3. Enable Billing
+## 2. Create Project
 ```
-gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID
-```
-
-4. Set the project ID
-```
-gcloud config set project $PROJECT_ID
+gcloud projects create $CC_PROJECT_ID --name="Config Controller" --labels=type=infrastructure-automation --set-as-default
 ```
 
-5. Enable the required services
+## 3. Enable Billing
+```
+gcloud beta billing projects link $CC_PROJECT_ID --billing-account $BILLING_ID
+```
+
+## 4. Set the project ID
+```
+The project should already be set during the last step: create project, otherwise run the following
+
+gcloud config set project $CC_PROJECT_ID
+```
+
+## 5. Enable the required services
 ```
 gcloud services enable krmapihosting.googleapis.com \
     container.googleapis.com \
     cloudresourcemanager.googleapis.com
 ```
 
-6. Create a network and subnet
+## 6. Create a network and subnet
 ```
 gcloud compute networks create $NETWORK --subnet-mode=custom
 gcloud compute networks subnets create $SUBNET  \
@@ -50,7 +55,7 @@ gcloud compute networks subnets create $SUBNET  \
 --region $REGION
 ```
 
-7. Create the Config Controller Instance
+## 7. Create the Config Controller Instance
 ```
 gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
@@ -59,7 +64,7 @@ gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
 kubens config-control
 ```
 
-8. Assign Permissions to the config connector Service Account.
+## 8. Assign Permissions to the config connector Service Account.
 
 ```
 export ORG_ID=$ORG_ID
@@ -88,4 +93,15 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --role "roles/billing.user"    
 ``` 
 
-9. Now you are ready to deploy a solution!
+## 9. Now you are ready to deploy a solution!
+see for example the [Landing Zone](/solutions/landing-zone) solution
+
+## 10. Development Operations: Delete the Config Controller Cluster
+Optional operation: In the CC cluster project
+```
+gcloud anthos config controller delete --location $REGION $CLUSTER
+```
+## 11. Development Operations: Re Create the Config Controller Cluster
+Optional Operation: Override the requireShieldedVm organization policy only on the CC project before re creating the CC cluster - by deferring to the Google Default over the inherited value. See https://console.cloud.google.com/iam-admin/orgpolicies/compute-requireOsLogin
+
+
