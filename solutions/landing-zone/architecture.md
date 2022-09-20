@@ -242,6 +242,14 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 - see slide 18 of https://wiki.gccollab.ca/images/7/75/GC_Cloud_Connection_Patterns.pdf
 - Since profile 3 and 6 access the PAZ (GC-CAP) and profile 5 is restricted to the RZ (GC-TIP) - profile 3 does not use GC-TIP for SC2G. The security appliance setup for GC-TIP is therefore restricted to 5 and 6, but the security appliance(s) used for GC-CAP can be shared.  Need to operationally verify this
 
+### VPC Peering
+- AWS = 50 (modifiable)
+- https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-quotas.html
+- https://us-east-1.console.aws.amazon.com/servicequotas/home/requests
+- GCP = 25 (modifiable)
+- https://cloud.google.com/vpc/docs/quota?hl=en_US&_ga=2.238983808.-1098396564.1647194753#vpc-peering
+
+
 
 # Deployments 
 
