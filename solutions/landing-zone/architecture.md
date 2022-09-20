@@ -243,11 +243,16 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 - Since profile 3 and 6 access the PAZ (GC-CAP) and profile 5 is restricted to the RZ (GC-TIP) - profile 3 does not use GC-TIP for SC2G. The security appliance setup for GC-TIP is therefore restricted to 5 and 6, but the security appliance(s) used for GC-CAP can be shared.  Need to operationally verify this
 
 ### VPC Peering
+VPC peering for hub and spoke vs Shared VPC - in terms of workload separation.
+Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
+
+#### Links
 - AWS = 50 (modifiable)
 - https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-quotas.html
 - https://us-east-1.console.aws.amazon.com/servicequotas/home/requests
 - GCP = 25 (modifiable)
 - https://cloud.google.com/vpc/docs/quota?hl=en_US&_ga=2.238983808.-1098396564.1647194753#vpc-peering
+- see p65 of https://www.google.ca/books/edition/Google_Cloud_Certified_Professional_Clou/HfNPEAAAQBAJ?hl=en&gbpv=1&dq=google+cloud+certified+professional+network&printsec=frontcover
 
 
 
@@ -296,6 +301,7 @@ graph LR;
 - Detail admin super-admin role of org admin not required for LZ deploy - role add/delete are automated
 - Dev workflow assistance: Fully delete/recreate LZ (reuse procedure for CD redeploys) - up to fully clean organization
 - Prepare workaround for 25 limit on VPC Peering connections - after forest of division/team/workload projects passes 25
+- - 
 - Detail Canary CD and ATO traffic generation app with UAT/Firewall config to both exercise the LZ and demo serverless/IaaS/PaaS workload example
 - Unclassified/Classified separation of Profile 3/5/6 workloads via VPC separation
 - SC2G GC-TIP Dev test version of IPSEC VPN (leave out interconnect for cost) - for cloud to ground workload testing (IE: DB on prem, app on CSP)
