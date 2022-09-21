@@ -532,7 +532,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-pkg-fn
 spec:
-  constraint: constraints/storage.publicAccessPrevention
+  constraint: constraints/storage.skipDefaultNetworkCreation
   booleanPolicy:
     enforced: true
   organizationRef:
