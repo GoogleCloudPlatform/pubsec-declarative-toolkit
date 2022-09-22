@@ -289,6 +289,13 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 ### VPC Peering
 VPC peering for hub and spoke vs Shared VPC - in terms of workload separation.
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
+#### Issues
+GCP has a default limit of 25 to AWS limit of 50 VPC peering connections.
+#### Alternatives
+Investigate alternatives like VPN tunnelling (essentially GC-TIP but internal).  Looks at above L4 network separation via namespaces (K8S to start).
+Look at verifying that the shared VPC model (analog to the Transit Gateway from 2019) does not have network separation even though we can use 1:1 project/subnet pairing as an alternative.
+#### Decision
+
 
 #### Links
 - AWS = 50 (modifiable)
@@ -298,6 +305,35 @@ Expand on https://cloud.google.com/architecture/landing-zones/decide-network-des
 - https://cloud.google.com/vpc/docs/quota?hl=en_US&_ga=2.238983808.-1098396564.1647194753#vpc-peering
 - see p65 of https://www.google.ca/books/edition/Google_Cloud_Certified_Professional_Clou/HfNPEAAAQBAJ?hl=en&gbpv=1&dq=google+cloud+certified+professional+network&printsec=frontcover
 
+## DI-21: Log Sink Errors
+These are specific to the Terraform Guardrails at this point - but we need to verify that they are OK in the Terraform LZ and the KCC LZ
+```
+---------- Forwarded message ---------
+From: Google Cloud Logging <logging-noreply@google.com>
+Date: Sat, Sep 17, 2022 at 4:28 PM
+Subject: [ACTION REQUIRED] Cloud Logging sink configuration error in 93413315325
+To: <admin-root@nuage-cloud.info>
+
+OPEN CLOUD LOGGING
+
+Cloud Logging
+Error in Cloud Logging sink configuration
+
+The following log sink in a organization you own had errors while routing logs. Due to this error, logs are not being routed to the sink destination.
+Organization ID
+93413315325
+Log Sink Name
+sk-c-logging-pub
+Sink Destination
+pubsub.googleapis.com/projects/guardrails-eaba/topics/tp-org-logs-5ufo
+Error Code
+topic_not_found
+Error Detail
+The specified Pub/Sub topic could not be found by the Cloud Logging service. Create the topic and grant publish permission for the service account specified in the sink's writerIdentity field on the topic. You can also set up Cloud Logging to use a different destination.
+Fix this error by following steps documented in troubleshooting sinks. If the sink is no longer needed, it can be quickly removed using gcloud:
+gcloud logging sinks delete sk-c-logging-pub --organization=93413315325
+```
+## DI-22: Log 
 
 
 # Deployments 
