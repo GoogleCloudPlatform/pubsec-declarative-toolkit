@@ -26,9 +26,13 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 ## Architecture
 
 ### Diagrams
-
-#### High Level Network Diagram
 #### Low Level Zoning Diagram
+![img](img/_landingzone_system_comm_description.png)
+#### High Level Network Diagram
+![img](img/_landingzone-high-level-op-concept.png)
+
+![img](img/_landingzone_system_interface_description.png)
+
 ### Naming Standard
 ### Deployed Project Structure
 
