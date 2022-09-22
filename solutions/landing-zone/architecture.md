@@ -333,7 +333,10 @@ The specified Pub/Sub topic could not be found by the Cloud Logging service. Cre
 Fix this error by following steps documented in troubleshooting sinks. If the sink is no longer needed, it can be quickly removed using gcloud:
 gcloud logging sinks delete sk-c-logging-pub --organization=93413315325
 ```
-## DI-22: Log 
+## DI-22: Audit Log Retention times - 1s and 365d
+The current 1 is slated for non-modifiable audit logs - but we need to verify this and check the bucket lifecycle into long term storage
+
+## DI-23: Verify the guardrails solution is embedded in the landing-zone solution
 
 
 # Deployments 
