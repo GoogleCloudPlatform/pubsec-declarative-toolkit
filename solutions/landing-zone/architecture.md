@@ -3,6 +3,7 @@
 
 ## Purpose
 Create, manage and operate a PBMM secure landing zone for the Google Cloud Environment. 
+This project details the architecture for a mult-tenant Landing Zone as a Service - where multiple deptartments and workloads deploy under a shared organization with TBD folder separation.
 
 ### Why Landing Zones
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
@@ -150,7 +151,7 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
   - Secure data exchange with ingress and egress rules : https://cloud.google.com/vpc-service-controls/docs/secure-data-exchange
 # Design Issues
 ## DI-08: Multitenancy
-For multiple LZ's - there is a requirement for multi-tenancy - this can be done by separate subdomain orgs (These would need their own lz and VPC cross org peering) - this is out of scope for now.  The design pattern for multi-tenancy will likely be folder based in a single org. 
+For multiple LZ's - there is a requirement for multi-tenancy - this can be done by separate subdomain orgs (These would need their own lz and VPC cross org peering) - this is out of scope for now.  The design pattern for multi-tenancy will likely be **folder** based in a single org. 
 So one LZ for all teams - will have to determine how this works with LZ upgrades... blast radius
 
 ## DI-09: Naming Standard
