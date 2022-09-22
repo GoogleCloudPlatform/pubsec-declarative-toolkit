@@ -473,7 +473,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
 
       ```
-      gcloud anthos config controller instance-name --location instance-region
+      gcloud anthos config controller delete instance-name --location instance-region
       ```
 
 
