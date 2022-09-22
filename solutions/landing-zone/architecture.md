@@ -20,109 +20,12 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 
 
 
-## Installation/Deployment
-
-### Deployment Preparations
-#### Cloud Identity Onboarding and Organization Domain Validation
-#### Billing Quota
-#### Project Quota
-#### Config Controller enabled GKE Cluster
-- follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
-
-
-### Creating the Config Controller Cluster
-Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
-
-Verify that the requireShieldedVM org policy is off for the folder or project before starting the CC cluster
-
-```
-michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
-Create request issued for: [landing-zone-controller]
-Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
-```
-
-### Updating the Config Controller Cluster
-### Deleting the Config Controller Cluster
-see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/91
-
-For the name, leave out the "krmapihost-" prefix
-```
-michael@cloudshell:~ (landing-zone-controller-1z583)$ gcloud anthos config controller delete landing-zone-controller --location=northamerica-northeast1
-You are about to delete instance [landing-zone-controller]
-Do you want to continue (Y/n)?  y
-Delete request issued for: [landing-zone-controller]
-Waiting for operation [projects/landing-zone-controller-1z583/locations/northamerica-northeast1/operations/operation-1663186645640-5e8a8d13563dd-418ffc6f-eb3f878d] to complete...working.
-```
-remember to delete the org policies added by the landing-zone to avoid https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
-### Recreating the Config Controller Cluster
-gcp.zone
-```
-michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
-Create request issued for: [landing-zone-controller]
-Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663188232198-5e8a92fc658f2-a614c3a2-993952f2] to complete...working..
-
-3) Not all instances running in IGM after 26.129857499s. Expected 1, running 0, transitioning 1. Current errors: [CONDITION_NOT_MET]: Instance 'gke-krmapihost-landing-z-default-pool-eafd49e4-6msn' creation failed: Constraint constraints/compute.requireShieldedVm violated for project projects/landing-zone-controller-e4g7d. Secure Boot is not enabled in the 'shielded_instance_config' field. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints for more information.
-
-```
-Issue is that the requireShieldedVM org policy will not allow the CC GKE cluster to come back up - delete it first to avoid issues with the CC cluster in a now landing-zone controlled organization (which is normal behaviour from an lz view) - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
-last deployment was still OK
-<img width="1483" alt="Screen Shot 2022-09-14 at 4 48 42 PM" src="https://user-images.githubusercontent.com/94715080/190259456-bb67b528-eae9-4092-ac38-77fdf4dc7ca5.png">
-
-#### Recreating the Config Controller Cluster in another region
-Switching to the northamerica-northeast2 region
-
-Create a VPC and single subnet in the new region
-```
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export CLUSTER=kcc2
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export NETWORK=kcc2
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export SUBNET=kcc2
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export REGION=northamerica-northeast2
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ gcloud compute networks create $NETWORK --subnet-mode=custom
-Created [https://www.googleapis.com/compute/v1/projects/landing-zone-controller-e4g7d/global/networks/kcc2].
-NAME: kcc2
-SUBNET_MODE: CUSTOM
-BGP_ROUTING_MODE: REGIONAL
-IPV4_RANGE:
-GATEWAY_IPV4:
-
-Instances on this network will not be reachable until firewall rules
-are created. As an example, you can allow all internal traffic between
-instances as well as SSH, RDP, and ICMP by running:
-
-$ gcloud compute firewall-rules create <FIREWALL_NAME> --network kcc2 --allow tcp,udp,icmp --source-ranges <IP_RANGE>
-$ gcloud compute firewall-rules create <FIREWALL_NAME> --network kcc2 --allow tcp:22,tcp:3389,icmp
-
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ gcloud compute networks subnets create $SUBNET  \
---network $NETWORK \
---range 192.168.0.0/16 \
---region $REGION
-Created [https://www.googleapis.com/compute/v1/projects/landing-zone-controller-e4g7d/regions/northamerica-northeast2/subnetworks/kcc2].
-NAME: kcc2
-REGION: northamerica-northeast2
-NETWORK: kcc2
-RANGE: 192.168.0.0/16
-STACK_TYPE: IPV4_ONLY
-IPV6_ACCESS_TYPE:
-INTERNAL_IPV6_PREFIX:
-EXTERNAL_IPV6_PREFIX:
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$
-
-michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller9 --location $REGION --network $NETWORK --subnet $SUBNET
-Create request issued for: [landing-zone-controller9]
-Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast2/operations/operation-1663775214611-5e931daa72dd2-0f4f4c7d-03c38fbd] to complete...w
-orking   
-```
-
-### Deploying the Landing Zone
-### Updating the Landing Zone from Upstream source
-#### Reconciling
-### Updating the Landing Zone Deployment with local changes
-### Deleting the Landing Zone Deployment
 
 
 ## Architecture
 
 ### Diagrams
+
 #### High Level Network Diagram
 #### Low Level Zoning Diagram
 ### Naming Standard
@@ -340,6 +243,106 @@ gcloud logging sinks delete sk-c-logging-pub --organization=93413315325
 The current 1 is slated for non-modifiable audit logs - but we need to verify this and check the bucket lifecycle into long term storage
 
 ## DI-23: Verify the guardrails solution is embedded in the landing-zone solution
+
+
+## Installation/Deployment
+
+### Deployment Preparations
+#### Cloud Identity Onboarding and Organization Domain Validation
+#### Billing Quota
+#### Project Quota
+#### Config Controller enabled GKE Cluster
+- follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
+
+
+### Creating the Config Controller Cluster
+Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
+
+Verify that the requireShieldedVM org policy is off for the folder or project before starting the CC cluster
+
+```
+michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
+Create request issued for: [landing-zone-controller]
+Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
+```
+
+### Updating the Config Controller Cluster
+### Deleting the Config Controller Cluster
+see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/91
+
+For the name, leave out the "krmapihost-" prefix
+```
+michael@cloudshell:~ (landing-zone-controller-1z583)$ gcloud anthos config controller delete landing-zone-controller --location=northamerica-northeast1
+You are about to delete instance [landing-zone-controller]
+Do you want to continue (Y/n)?  y
+Delete request issued for: [landing-zone-controller]
+Waiting for operation [projects/landing-zone-controller-1z583/locations/northamerica-northeast1/operations/operation-1663186645640-5e8a8d13563dd-418ffc6f-eb3f878d] to complete...working.
+```
+remember to delete the org policies added by the landing-zone to avoid https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
+### Recreating the Config Controller Cluster
+gcp.zone
+```
+michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
+Create request issued for: [landing-zone-controller]
+Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663188232198-5e8a92fc658f2-a614c3a2-993952f2] to complete...working..
+
+3) Not all instances running in IGM after 26.129857499s. Expected 1, running 0, transitioning 1. Current errors: [CONDITION_NOT_MET]: Instance 'gke-krmapihost-landing-z-default-pool-eafd49e4-6msn' creation failed: Constraint constraints/compute.requireShieldedVm violated for project projects/landing-zone-controller-e4g7d. Secure Boot is not enabled in the 'shielded_instance_config' field. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints for more information.
+
+```
+Issue is that the requireShieldedVM org policy will not allow the CC GKE cluster to come back up - delete it first to avoid issues with the CC cluster in a now landing-zone controlled organization (which is normal behaviour from an lz view) - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/132
+last deployment was still OK
+<img width="1483" alt="Screen Shot 2022-09-14 at 4 48 42 PM" src="https://user-images.githubusercontent.com/94715080/190259456-bb67b528-eae9-4092-ac38-77fdf4dc7ca5.png">
+
+#### Recreating the Config Controller Cluster in another region
+Switching to the northamerica-northeast2 region
+
+Create a VPC and single subnet in the new region
+```
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export CLUSTER=kcc2
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export NETWORK=kcc2
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export SUBNET=kcc2
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ export REGION=northamerica-northeast2
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ gcloud compute networks create $NETWORK --subnet-mode=custom
+Created [https://www.googleapis.com/compute/v1/projects/landing-zone-controller-e4g7d/global/networks/kcc2].
+NAME: kcc2
+SUBNET_MODE: CUSTOM
+BGP_ROUTING_MODE: REGIONAL
+IPV4_RANGE:
+GATEWAY_IPV4:
+
+Instances on this network will not be reachable until firewall rules
+are created. As an example, you can allow all internal traffic between
+instances as well as SSH, RDP, and ICMP by running:
+
+$ gcloud compute firewall-rules create <FIREWALL_NAME> --network kcc2 --allow tcp,udp,icmp --source-ranges <IP_RANGE>
+$ gcloud compute firewall-rules create <FIREWALL_NAME> --network kcc2 --allow tcp:22,tcp:3389,icmp
+
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ gcloud compute networks subnets create $SUBNET  \
+--network $NETWORK \
+--range 192.168.0.0/16 \
+--region $REGION
+Created [https://www.googleapis.com/compute/v1/projects/landing-zone-controller-e4g7d/regions/northamerica-northeast2/subnetworks/kcc2].
+NAME: kcc2
+REGION: northamerica-northeast2
+NETWORK: kcc2
+RANGE: 192.168.0.0/16
+STACK_TYPE: IPV4_ONLY
+IPV6_ACCESS_TYPE:
+INTERNAL_IPV6_PREFIX:
+EXTERNAL_IPV6_PREFIX:
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$
+
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller9 --location $REGION --network $NETWORK --subnet $SUBNET
+Create request issued for: [landing-zone-controller9]
+Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast2/operations/operation-1663775214611-5e931daa72dd2-0f4f4c7d-03c38fbd] to complete...w
+orking   
+```
+
+### Deploying the Landing Zone
+### Updating the Landing Zone from Upstream source
+#### Reconciling
+### Updating the Landing Zone Deployment with local changes
+### Deleting the Landing Zone Deployment
 
 
 # Deployments 
