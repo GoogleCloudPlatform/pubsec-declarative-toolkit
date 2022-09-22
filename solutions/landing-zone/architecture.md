@@ -8,6 +8,11 @@ This project details the architecture for a mult-tenant Landing Zone as a Servic
 ### Why Landing Zones
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
 
+## Artifacts
+### Google Cloud Architecture Slides
+Google Cloud Architecture slides templates - https://cloud.google.com/icons specifically the Google Slides tempate for 2022 in https://docs.google.com/presentation/d/1fD1AwQo4E9Un6012zyPEb7NvUAGlzF6L-vo5DbUe4NQ/edit. 
+We will keep the source for the diagrams in an invite-only shared folder at https://docs.google.com/presentation/d/19B3gdZ1ukrRekEFQ1UIWsZJJi4ElABzziKEkPnS54uI/edit#slide=id.gff25b70edb_0_0
+
 ## Deliverables
 ### SC2G Deliverables
 #### CDD: Conceptual Design Document
