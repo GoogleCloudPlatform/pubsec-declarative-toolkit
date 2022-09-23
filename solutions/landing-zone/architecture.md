@@ -158,7 +158,14 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
 - Prow : https://prow.k8s.io/command-help
 - VPC
   - Secure data exchange with ingress and egress rules : https://cloud.google.com/vpc-service-controls/docs/secure-data-exchange
+
+
+
+
 # Design Issues
+
+pending
+- 20220923: adjust billing text in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/dev/solutions/landing-zone#kpt
 
 ## DI-01: ITSG-33 PBMM Security Controls
 #145
