@@ -259,8 +259,32 @@ Use the new "All Products" page for a list of Google Cloud Services https://cons
 ##### Evidence
  - Security Controls covered: [SC-7](#6260sc-7boundary-protection)
  - Code: [05-data-location](#05-data-location)
- - ![img](img/evidence/_5590_iam_org_policy_resource_location_restriction_on_gr.png)
 
+###### Screencap
+- ![img](img/evidence/_5590_iam_org_policy_resource_location_restriction_on_gr.png)
+###### CLI
+```
+prep
+export PROJECT_ID=pubsec-declarative-tk-lgz
+export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
+
+verify org level
+gcloud beta resource-manager org-policies list --organization $ORG_ID
+CONSTRAINT: constraints/gcp.resourceLocations
+LIST_POLICY: SET
+BOOLEAN_POLICY: -
+
+Verify specific policy
+gcloud beta resource-manager org-policies describe gcp.resourceLocations --organization $ORG_ID
+
+constraint: constraints/gcp.resourceLocations
+etag: CMe_i5gGEKDVkL8D
+listPolicy:
+  allowedValues:
+  - in:northamerica-northeast2-locations
+  - in:northamerica-northeast1-locations
+updateTime: '2022-08-22T01:45:43.937700Z'
+```
 
 
 ##### Details
@@ -270,7 +294,6 @@ Use the new "All Products" page for a list of Google Cloud Services https://cons
 ###
 
 ## Code To Controls Mappings : 1:N
-
 ### environments
 #### common
 ##### guardrails-policies
