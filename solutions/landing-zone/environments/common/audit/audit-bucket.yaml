@@ -39,6 +39,7 @@ metadata:
     resource-group: common
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
   name: audit-sink-${project-id} # kpt-set: audit-${audit-prj-id}
+  namespace: common
 spec:
   lifecycleRule:
     - action:
