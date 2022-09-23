@@ -159,6 +159,11 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
 - VPC
   - Secure data exchange with ingress and egress rules : https://cloud.google.com/vpc-service-controls/docs/secure-data-exchange
 # Design Issues
+
+## DI-01: ITSG-33 PBMM Security Controls
+#145
+## DI-07: CD Canary Workload for deployment verification
+#145
 ## DI-08: Multitenancy
 For multiple LZ's - there is a requirement for multi-tenancy - this can be done by separate subdomain orgs (These would need their own lz and VPC cross org peering) - this is out of scope for now.  The design pattern for multi-tenancy will likely be **folder** based in a single org. 
 So one LZ for all teams - will have to determine how this works with LZ upgrades... blast radius
