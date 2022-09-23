@@ -291,7 +291,8 @@ updateTime: '2022-08-22T01:45:43.937700Z'
 - see https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations
 
 ## Controls to Code Mappings: M:N
-###
+### SC-7
+- [05-data-location](#05-data-location)
 
 ## Code To Controls Mappings : 1:N
 ### environments
