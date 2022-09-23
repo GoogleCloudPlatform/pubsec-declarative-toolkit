@@ -140,10 +140,14 @@ graph TD;
 
 
 ## Security Controls
+
+ --- | ---  
+AC _24_ | _AC-1_ 
+
 ### Mandatory 10 Security Controls 
 ```
 20220921
-10 security controls of high priority - not necessarily in this subset but recommended
+10 security controls of high priority
 AC-2 AC-17 CA-3 CM-7.5 IA-7 IR-4 IR-6 IR-9 SC-8 SC-12
 
 List of above not in 31 subset below
@@ -160,8 +164,7 @@ List of above not in larger already evidenced list
 
 
 ### Security Controls  - 31 subset
-20220913: 31 subset
-- AU-13 is new
+20220913: 31 subset of interest
 ```
 5 AC-2 AC-3 AC-4 AC-6 AC-12
 1 AT-3
@@ -177,6 +180,7 @@ List of above not in larger already evidenced list
 2 SA-4 SA-8
 5 SC-7 SC-13 SC-26 SC-28 SC-101
 4 SI-2 SI-3 SI-4 SI-7
+```
 
 ### Optional Security Controls - TB subset
 There is overalap bewteen the 31 subset and the TB subset
@@ -189,6 +193,7 @@ IA-2.1/2.2/2.11/4/5.1/5.6/5.7/5.13/6/8
 SA-22
 SC-5/7.5/8/8.1/12(p3?)/17/28/28.1
 SI-3.7
+```
 
 ### Extra security controls - via inheritance
 Extras we have
