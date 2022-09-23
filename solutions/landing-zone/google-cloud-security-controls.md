@@ -242,12 +242,10 @@ Admin Group Account, Password Policy, Access Logs Event Logging, MFA, IAM Essent
 
 ### Definition:
 ### GCP Services Coverage:
- - [IAM - Organization Policies - Resource Location Restriction](#iam--organization-policies--resource-location-restriction)
-    
-    
-### Services:
-
-
+ - [IAM - Organization Policies - Resource Location Restriction](#iam---organization-policies---resource-location-restriction)
+### Code Coverage
+ - [05-data-location](#05-data-location)
+### Services
 
 
 
@@ -260,7 +258,7 @@ Use the new "All Products" page for a list of Google Cloud Services https://cons
 #### IAM - Organization Policies - Resource Location Restriction
 ##### Evidence
  - Security Controls covered: [SC-7](#6260sc-7boundary-protection)
- - 
+ - Code: [05-data-location](#05-data-location)
  - ![img](img/evidence/_5590_iam_org_policy_resource_location_restriction_on_gr.png)
 
 
@@ -268,10 +266,19 @@ Use the new "All Products" page for a list of Google Cloud Services https://cons
 ##### Details
 - see https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations
 
-## Controls to Cod Mappings: M:N
-### 
+## Controls to Code Mappings: M:N
+###
 
 ## Code To Controls Mappings : 1:N
+
+### environments
+#### common
+##### guardrails-policies
+###### 05-data-location
+- Artifact: [https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone/environments/common/guardrails-policies/05-data-location](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/environments/common/guardrails-policies/05-data-location/constraint.yaml#L25)
+- Control: [SC-7](#6260sc-7boundary-protection)
+
+
 
 ## Guardrails Subset
 see - https://github.com/canada-ca/cloud-guardrails/tree/master/EN
