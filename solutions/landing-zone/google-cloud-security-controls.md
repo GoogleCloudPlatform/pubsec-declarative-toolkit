@@ -74,6 +74,7 @@ graph LR;
     RA-5-->Vulnerability-Scanning;
     SA-4-->SCC-Vulnerabilities;
     SA-4-->Vulnerability-Scanning;
+    SC-7-->Resource-Location-Restriction;
     SC-7== traffic gen ==>VPC-Firewall-Logs;
     SC-7.3== traffic gen ==>VPC-Firewall-Logs;
     SC-7.5== traffic gen ==>VPC-Firewall-Logs;
@@ -98,6 +99,7 @@ graph LR;
     Location-Restriction-->IAM;
     MFA---->Cloud-Identity;
     Private-Access-->VPC-Networks;
+    Resource-Location-Restriction-->IAM;
     Roles-->IAM;
     SCC-Findings-->SCC;
     SCC-Compliance-->SCC;
@@ -140,9 +142,10 @@ graph TD;
 
 
 ## Security Controls
-
+Category / Count | Controls
  --- | ---  
-AC _24_ | _AC-1_ 
+AC _1_ | _AC-1_ 
+SC _1_ | [SC-7](#6260sc-7boundary-protection)
 
 ### Mandatory 10 Security Controls 
 ```
@@ -234,7 +237,39 @@ Admin Group Account, Password Policy, Access Logs Event Logging, MFA, IAM Essent
 - H: Datasets should not be publicly accessible by anyone on the internet
 
 
+## 6260,SC-7,,,,,,,,,Boundary Protection
+[P1](https://cyber.gc.ca/en/guidance/annex-3a-security-control-catalogue-itsg-33) : 
+
+### Definition:
+### GCP Services Coverage:
+ - [IAM - Organization Policies - Resource Location Restriction](#iam--organization-policies--resource-location-restriction)
+    
+    
+### Services:
+
+
+
+
+
 ## GCP Service to Controls Mappings : 1:N
+# Google Cloud Services
+Use the new "All Products" page for a list of Google Cloud Services https://console.cloud.google.com/products
+
+## IAM
+### IAM - Organization Policies
+#### IAM - Organization Policies - Resource Location Restriction
+##### Evidence
+ - Security Controls covered: [SC-7](#6260sc-7boundary-protection)
+ - 
+ - ![img](img/evidence/_5590_iam_org_policy_resource_location_restriction_on_gr.png)
+
+
+
+##### Details
+- see https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations
+
+## Controls to Cod Mappings: M:N
+### 
 
 ## Code To Controls Mappings : 1:N
 
@@ -246,6 +281,7 @@ see - https://github.com/canada-ca/cloud-guardrails/tree/master/EN
   - detailed ITSG-33 (2014) https://cyber.gc.ca/en/guidance/annex-2-information-system-security-risk-management-activities-itsg-33
   - summary ITSG-33 https://cyber.gc.ca/en/guidance/annex-4-identification-control-elements-security-controls-itsg-41
   - AU-2 AU-3 AU-4 AU-5 AU-16 via cloud logging fedramp compliance https://cloud.google.com/blog/products/identity-security/5-must-know-security-and-compliance-features-in-cloud-logging
+  - CSO https://www.tpsgc-pwgsc.gc.ca/esc-src/msc-csm/xa-eng.html
 # Appendix
     
 ## Traffic Generation
