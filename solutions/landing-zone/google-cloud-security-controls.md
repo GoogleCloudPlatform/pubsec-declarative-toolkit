@@ -142,6 +142,8 @@ graph TD;
 
 
 ## Security Controls
+SA-4 marked KEY
+
 Category / Count | Controls
  --- | ---  
 AC _1_ | _AC-1_ 
@@ -215,8 +217,6 @@ CM-7.5
 
 ## legend
 pk,control id,phase 1,phase 2, service name, service link, service evidence,code link, future, control link, title 
-
-## 0010,AC-1,,,,,,,,,Access Control Policy and Procedures
 
 ## 0020,AC-2,,,,,,,,,Account Management
 P1 : (P1 is the priority number in the ITSG-33 document)
