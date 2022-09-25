@@ -267,6 +267,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 ## DI-23: Verify the guardrails solution is embedded in the landing-zone solution
 
 ## DI-24: Validate vdom - virtual domain fortigate zone isolation
+- See TF PBMM LZ https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
 - Verify the config and shadow deployment of a VDOM fortigate configaration - thanks Dave
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 
