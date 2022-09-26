@@ -49,25 +49,17 @@ spec:
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
+kind: IAMPartialPolicy
+metadata: 
   name: storage-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    config.kubernetes.io/apply-time-mutation: |
-      - sourceRef:
-          apiVersion: v1beta1
-          group: logging.cnrm.cloud.google.com
-          kind: LoggingLogSink
-          name: storage-logsink
-          namespace: config-control
-        sourcePath: $.status.writerIdentity
-        targetPath: $.spec.member
-        token: ${logging-writerIdentity}
 spec:
-  member: ${logging-writerIdentity}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: project-id # kpt-set: ${guardrails-project-id}
-  role: roles/storage.admin
+    apiVersion: storage.cnrm.cloud.google.com/v1beta1
+    kind: StorageBucket
+    name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
+  bindings:
+    role: roles/storage.objectCreator
+    members:
+      - memberFrom: 
+          logSinkRef: storage-logsink

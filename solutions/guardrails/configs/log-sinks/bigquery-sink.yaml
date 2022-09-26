@@ -15,7 +15,7 @@
 # BigQuery Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: # kpt-merge: guardrails/bigquery-logsink
+metadata:
   name: bigquery-logsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -34,7 +34,7 @@ spec:
 # Big Query Instance
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
-metadata: # kpt-merge: guardrails/bigquerylogginglogsink
+metadata:
   name: bigquerylogginglogsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -47,25 +47,17 @@ spec:
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/bq-audit-data-viewer
+kind: IAMPartialPolicy
+metadata: 
   name: bq-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    config.kubernetes.io/apply-time-mutation: |
-      - sourceRef:
-          apiVersion: v1beta1
-          group: logging.cnrm.cloud.google.com
-          kind: LoggingLogSink
-          name: bigquery-logsink
-          namespace: config-control
-        sourcePath: $.status.writerIdentity
-        targetPath: $.spec.member
-        token: ${logging-writerIdentity}
 spec:
-  member: ${logging-writerIdentity}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: project-id # kpt-set: ${guardrails-project-id}
-  role: roles/bigquery.admin
+    apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+    kind: BigQueryDataset
+    name: bigquerylogginglogsink
+  bindings:
+    role: roles/bigquery.admin
+    members:
+      - memberFrom: 
+          logSinkRef: bigquery-logsink
