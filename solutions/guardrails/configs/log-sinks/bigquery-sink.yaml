@@ -51,13 +51,15 @@ kind: IAMPartialPolicy
 metadata: 
   name: bq-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/bigquery-logsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/bigquery-logsink
 spec:
   resourceRef:
-    apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
-    kind: BigQueryDataset
-    name: bigquerylogginglogsink
+    kind: Project
+    name: guardrails-project-id # kpt-set: ${guardrails-project-id}
   bindings:
-    role: roles/bigquery.admin
-    members:
-      - memberFrom: 
-          logSinkRef: bigquery-logsink
+    - role: roles/bigquery.dataOwner
+      members:
+        - memberFrom: 
+            logSinkRef:
+              name: bigquery-logsink
