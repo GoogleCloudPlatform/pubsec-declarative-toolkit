@@ -271,6 +271,17 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - Verify the config and shadow deployment of a VDOM fortigate configaration - thanks Dave
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 
+## DI-25: Continuous Delivery Pipelines
+- [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines
+- Github actions
+- Gitlab
+
+## DI-26: Guardrails Solution Sync up into Landing Zone Solution
+- Chris noticed some discrepancies between the guadrails subset that are not in the landing zone
+
+
+
+
 ## Installation/Deployment
 
 ### Deployment Preparations
