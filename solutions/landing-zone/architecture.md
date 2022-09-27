@@ -272,7 +272,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 
 ## DI-25: Continuous Delivery Pipelines
-- [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines
+- [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (KCC support 242711314)
 - Github actions
 - Gitlab
 
@@ -489,3 +489,24 @@ Notes
 - 2 CxP at each region
 - approved fw for sc2g not including waf
 
+
+## Review
+- contitional IAM https://cloud.google.com/iam/docs/conditions-overview
+- Anthos Config Management https://cloud.google.com/anthos/config-management
+- Binauthz - attestation (on binary authorization) - for cloud deploy policy engine https://cloud.google.com/binary-authorization/docs/making-attestations
+
+
+
+- SCC enablement even for standard is required
+- https://console.cloud.google.com/security/command-center/config/access;setup=true?organizationId=925207728429&orgonly=true&supportedpurview=organizationId
+```
+gcloud organizations add-iam-policy-binding 925207728429\
+    --member serviceAccount:service-org-925207728429@security-center-api.iam.gserviceaccount.com\
+    --role roles/securitycenter.serviceAgent &&\
+gcloud organizations add-iam-policy-binding 925207728429\
+    --member serviceAccount:service-org-925207728429@security-center-api.iam.gserviceaccount.com\
+    --role roles/serviceusage.serviceUsageAdmin &&\
+gcloud organizations add-iam-policy-binding 925207728429\
+    --member serviceAccount:service-org-925207728429@security-center-api.iam.gserviceaccount.com\
+    --role roles/cloudfunctions.serviceAgent
+```
