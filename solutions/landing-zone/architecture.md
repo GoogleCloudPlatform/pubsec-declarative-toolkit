@@ -45,6 +45,8 @@ We can work out the KCC standard as we go using as reference in DI-09
 - see
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/130
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/132
+- see SSC naming/tagging doc reference https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/182
+- 
 ### Deployed Project Structure
 
 <img width="1290" alt="Screen Shot 2022-09-15 at 10 46 44" src="https://user-images.githubusercontent.com/24765473/190434889-ff2fab6a-e705-46b9-8400-19e86a8419d9.png">
@@ -184,6 +186,7 @@ So one LZ for all teams - will have to determine how this works with LZ upgrades
 ## DI-09: Naming Standard
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/dev/solutions/landing-zone/architecture.md#naming-standard
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/130
+- see SSC naming/tagging doc reference https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/182
 - Follow https://cloud.google.com/architecture/best-practices-vpc-design#naming
 
 ### Discussion
