@@ -42,7 +42,7 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 We have the design issue in the queue.  The original TF LZ had parts of the proposed standard but several of the schema attributes are distributed among the tfvars with some 1-off duplication.
 We can work out the KCC standard as we go using as reference in DI-09
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/dev/solutions/landing-zone/architecture.md#di-09-naming-standard
-see
+- see
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/130
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/132
 ### Deployed Project Structure
