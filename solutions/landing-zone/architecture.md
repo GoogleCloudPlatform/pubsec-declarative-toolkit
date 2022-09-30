@@ -1,4 +1,4 @@
-# PBMM Landing Zone Architecture and ConOps
+# PBMM Landing Zone Architecture
 
 
 ## Purpose
