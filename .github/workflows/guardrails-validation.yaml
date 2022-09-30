@@ -1,8 +1,8 @@
 name: guardrails-validation
 on:
   push:
-    paths:
-      - solutions/guardrails/**
+    # paths:
+    #   - solutions/guardrails/**
 jobs:
   solutions-render:
     runs-on: ubuntu-latest
