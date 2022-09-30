@@ -30,4 +30,4 @@ jobs:
         run: pwd && ls
       - name: nomos vet guardrails
         run: |
-          ls && docker run -v $PWD:/guardrails gcr.io/config-management-release/nomos:stable nomos vet --no-api-server-check --source-format unstructured --path /guardrails/configs
+          pwd && ls && docker run -v $PWD:/guardrails gcr.io/config-management-release/nomos:stable nomos vet --no-api-server-check --source-format unstructured --path ./guardrails/configs
