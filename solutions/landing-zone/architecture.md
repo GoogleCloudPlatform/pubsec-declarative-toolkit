@@ -288,12 +288,14 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - Azure devops
 
 ### Cloud Deploy Pipelines
+Investigate use of Cloud Deploy as a pipeline layer in both the infrastructure and workload deployment automation.
 
 <img width="1348" alt="Screen Shot 2022-09-30 at 9 19 38 AM" src="https://user-images.githubusercontent.com/94715080/193278579-5241ba61-114a-4fbc-b80b-9d2be37292af.png">
 
-Follow https://cloud.google.com/deploy/docs/deploy-app-run
-Can we use cloud deploy pipelines (krm compliant) as a layer between kpt and deployment rendering - to gain the policy/automation/promotion capabliities of cloud deploy.  Verify policy admin roles for promotion.
-
+Follow quickstart on https://cloud.google.com/deploy/docs/deploy-app-run
+- Can we use cloud deploy pipelines (krm compliant) as a layer between kpt and deployment rendering - to gain the policy/automation/promotion capabliities of cloud deploy.  Verify policy admin roles for promotion.
+- start with a reference validation pipeline and move to workload via the folder
+- https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone/cicd-examples
 
 ## DI-26: Guardrails Solution Sync up into Landing Zone Solution
 - Chris noticed some discrepancies between the guadrails subset that are not in the landing zone
