@@ -285,6 +285,15 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (KCC support 242711314)
 - Github actions
 - Gitlab
+- Azure devops
+
+### Cloud Deploy Pipelines
+
+<img width="1348" alt="Screen Shot 2022-09-30 at 9 19 38 AM" src="https://user-images.githubusercontent.com/94715080/193278579-5241ba61-114a-4fbc-b80b-9d2be37292af.png">
+
+Follow https://cloud.google.com/deploy/docs/deploy-app-run
+Can we use cloud deploy pipelines (krm compliant) as a layer between kpt and deployment rendering - to gain the policy/automation/promotion capabliities of cloud deploy.  Verify policy admin roles for promotion.
+
 
 ## DI-26: Guardrails Solution Sync up into Landing Zone Solution
 - Chris noticed some discrepancies between the guadrails subset that are not in the landing zone
