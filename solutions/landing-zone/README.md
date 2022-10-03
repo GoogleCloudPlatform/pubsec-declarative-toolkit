@@ -147,6 +147,8 @@ Note: You may use the [advanced install](/docs/advanced-install.md) as an altern
     Edit `setters.yaml` with the relevant information. 
 
     Emails used for groups should be exist in iam/groups before running the script.
+    
+    See instructions on creating groups in admin.google.com via https://github.com/canada-ca/accelerators_accelerateurs-gcp/tree/main/deployment-templates/Terraform/guardrails#stage-1---common-resources
 
     Project Number and Project ID for the management project will be for the project that the config controller instance runs in.  
 
