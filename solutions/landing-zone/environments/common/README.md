@@ -6,7 +6,7 @@ The following services will be deployed
 
 | Resource | Name | Location|
 | --- | --- |  --- |
-| ResourceHierarchy | landing-zone-heirarchy | `hiearchy.yaml` |
+| ResourceHierarchy | landing-zone-hierarchy | `hierarchy.yaml` |
 | LoggingLogSink | audit-bucket-sink | `audit/audit-bucket.yaml` |
 | StorageBucket | audit-${audit-prj-id} | `audit/audit-bucket.yaml` |
 |  IAMPolicyMember | billing-iam-member | `audit/billing-iam-member.yaml` |
