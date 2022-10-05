@@ -300,6 +300,14 @@ Follow quickstart on https://cloud.google.com/deploy/docs/deploy-app-run
 
 ## DI-26: Guardrails Solution Sync up into Landing Zone Solution
 - Chris noticed some discrepancies between the guadrails subset that are not in the landing zone
+- I also noticed that we are missing the BigQuery log sink (in the TF GR solution) - see issue https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/154
+
+## DI-27: Implement GateKeeper Security Center - SCC findings reporter
+- This would be in addition to SCC Premium - findings tab - for NIST-800-53
+- https://github.com/GoogleCloudPlatform/gatekeeper-securitycenter
+
+
+
 
 
 
