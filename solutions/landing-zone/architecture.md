@@ -34,6 +34,7 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 #### Low Level Zoning Diagram
 ![img](img/_landingzone_system_comm_description.png)
 #### High Level Network Diagram
+- Common Services Project - and "Shared Services", "SharedInfrastructure" - in the high level network diagram - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/dev/solutions/landing-zone/architecture.md#high-level-network-diagram - the common services project contains services like SSO, backup, IAP and any CI/CD infrastructure that would be common to a cross section of the workloads projects.  I will adjust the diagram to rename it "shared services".  A subset may reside in "SharedInfrastructure" depending on how we partition between a service and deployment infrastructure
 ![img](img/_landingzone-high-level-op-concept.png)
 
 ![img](img/_landingzone_system_interface_description.png)
@@ -46,7 +47,74 @@ We can work out the KCC standard as we go using as reference in DI-09
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/130
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/132
 - see SSC naming/tagging doc reference https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/182
-- 
+
+
+### Organization and Folder Structure
+  The folder structure proposed as an example to an evolving devops architecture that will attempt to satisfly the following constraints, requirements and SLO's
+  - these are evolving...
+  - day 1 operations - deployment
+  - day 2 operations - team deployment ops
+  - single or multi-tenant organization infrastructure (including vpc peering between orgs)
+  - classified and unclassified workloads and separation
+  - CI/CD pipelines for dev/stg/uat/prod
+  - sandbox (out of band) adhoc projects (usually unclassified)
+  - hierarchical config/security override structure via folder tree
+  
+  
+ I will put up a revised diagram for the KCC LZ - the structure is close to the original TF LZ but I expect us to evolve it.
+ 
+ <img width="1223" alt="Screen Shot 2022-10-05 at 8 35 48 AM" src="https://user-images.githubusercontent.com/94715080/194061583-738201a4-c220-44f9-be28-809ec668bda4.png">
+
+  
+
+ Some of our architectural docs are being developed here in the PDT repo in a just-in-time manner, other parts are the result of TF transfer or reverse engineering.  The folder diagram has aspects of this. 
+ see the original TF structure at https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/environments/common/common.auto.tfvars#L35
+ ```
+ 20221004
+   names  = ["Infrastructure", "Sandbox", "Workloads", "Audit and Security", "Automation", "Shared Services"] # Production, NonProduction and Platform are included in the module
+  subfolders_1 = {
+    SharedInfrastructure = "Infrastructure"
+    Networking           = "Infrastructure"
+    Prod                 = "Workloads"
+    UAT                  = "Workloads"
+    Dev                  = "Workloads"
+    Audit                = "Audit and Security"
+    Security             = "Audit and Security"
+  }
+  subfolders_2 = {
+    ProdNetworking    = "Networking"
+    NonProdNetworking = "Networking"
+  }
+}
+ ```
+ see the evolving KCC structure at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/environments/common/hiearchy.yaml#L27
+ ```
+ 20221004
+   config:
+    - Infrastructure:
+        - Networking:
+            - ProdNetworking
+            - NonProdNetworking
+        - SharedInfrastructure
+    - Sandbox
+    - Workloads:
+        - Prod
+        - UAT
+        - DEV
+    - "Audit and Security":
+        - Audit
+        - Security
+    - Automation
+    - "Shared Services"
+ ```
+ 
+#### Folder Structure Design Notes
+- Sandbox: this folder is an out of band folder for use by unclassified experimental workloads that may need overrides outside of the normal workloads folder - it may be folded into the workloads folder though.
+- Automation: Tentatively reserved for workload targetted continuous deployment pipelines work to start - however CD pipelines may still be workload folder specific
+- Common Services Project - and "Shared Services", "SharedInfrastructure" - in the high level network diagram - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/dev/solutions/landing-zone/architecture.md#high-level-network-diagram - the common services project contains services like SSO, backup, IAP and any CI/CD infrastructure that would be common to a cross section of the workloads projects.  I will adjust the diagram to rename it "shared services".  A subset may reside in "SharedInfrastructure" depending on how we partition between a service and deployment infrastructure
+
+
+  
 ### Deployed Project Structure
 
 <img width="1290" alt="Screen Shot 2022-09-15 at 10 46 44" src="https://user-images.githubusercontent.com/24765473/190434889-ff2fab6a-e705-46b9-8400-19e86a8419d9.png">
