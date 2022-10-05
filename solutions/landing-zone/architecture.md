@@ -347,7 +347,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 ## DI-23: Verify the guardrails solution is embedded in the landing-zone solution
 
 ## DI-24: Validate vdom - virtual domain fortigate zone isolation
-- Fortinet Fortigate config
+- Fortinet Fortigate config in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/158
 - The guidance on the KCC LZ project is that we use a single cluster (3 VMs tbd) for both gc-cap and gc-tip and use flow separation or the existing LB sandwich architecture and 2 clusters of 2VMs for CAP/TIP separation.
 - See TF PBMM LZ https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
 - Verify the config and shadow deployment of a VDOM fortigate configaration - thanks Dave (triple fortigate)
