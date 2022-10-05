@@ -41,9 +41,7 @@ gcloud config set project $CC_PROJECT_ID
 
 ## 5. Enable the required services
 ```
-gcloud services enable krmapihosting.googleapis.com \
-    container.googleapis.com \
-    cloudresourcemanager.googleapis.com
+gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com accesscontextmanager.googleapis.com
 ```
 
 ## 6. Create a network and subnet
