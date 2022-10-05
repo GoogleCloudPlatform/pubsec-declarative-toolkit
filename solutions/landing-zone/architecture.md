@@ -158,6 +158,8 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
   - Centralized Network Appliances on Google Cloud : https://cloud.google.com/architecture/architecture-centralized-network-appliances-on-google-cloud
 - Config Connector
   - Mutlirule Security Policy : https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesecuritypolicy#multirule_security_policy
+- KPT
+- https://kpt.dev/book/07-effective-customizations/01-single-value-replacement
 - GKE - Deploy multi-cluster Gateways : https://cloud.google.com/kubernetes-engine/docs/how-to/deploying-multi-cluster-gateways#capacity-load-balancing
 - Logging
   - Configure aggregated Sinks : https://cloud.google.com/logging/docs/export/aggregated_sinks#api
