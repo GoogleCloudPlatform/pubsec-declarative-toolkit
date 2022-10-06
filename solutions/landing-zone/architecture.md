@@ -248,7 +248,10 @@ pending
 ## DI-01: ITSG-33 PBMM Security Controls
 [#145](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/145)
 ## DI-05: Complete Network Design
+see [VPC Peering](#di-20-separate-vpc-per-cloud-profile-356-workloads)
 The networking side will be undergoing a lot of changes starting with initial peering and zoning for both shared and non-shared VPC config to make it usable.
+- [Networking Filter](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/labels/Networking)
+- https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/78
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/149
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
 - see overall TF to KCC migration https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/124
@@ -302,6 +305,7 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 ## DI-19: Bastion Access per security zone
 - IAP and private connect
 ## DI-20: Separate VPC per Cloud Profile 3/5/6 workloads
+- see see [Complete Network Design](#di-05-complete-network-design)
 - see slide 18 of https://wiki.gccollab.ca/images/7/75/GC_Cloud_Connection_Patterns.pdf
 - Since profile 3 and 6 access the PAZ (GC-CAP) and profile 5 is restricted to the RZ (GC-TIP) - profile 3 does not use GC-TIP for SC2G. The security appliance setup for GC-TIP is therefore restricted to 5 and 6, but the security appliance(s) used for GC-CAP can be shared.  Need to operationally verify this
 
