@@ -409,6 +409,9 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 ### Decision
 
 
+## DI-29: Firewall Polices
+- see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/162
+- VPC Firewall rules, Fortigate Policies, Cloud Armor Policies and Access Content Manager perimeters.
 
 
 ## Installation/Deployment
