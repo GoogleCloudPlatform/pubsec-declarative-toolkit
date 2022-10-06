@@ -312,6 +312,10 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 ### VPC Peering
 VPC peering for hub and spoke vs Shared VPC - in terms of workload separation.
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
+
+
+Uncomment and KPT render each peer pair in
+https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/environments/common/network/network-peering.yaml#L15
 #### Issues
 GCP has a default limit of 25 to AWS limit of 50 VPC peering connections - see p. 138 of the "Google Cloud Cerfified: [Professional Cloud Architect Study Guide](https://www.google.ca/books/edition/Google_Cloud_Certified_Professional_Clou/3YJlEAAAQBAJ?hl=en&gbpv=1&dq=Professional+Cloud+Architect+Study+Guide&printsec=frontcover)"
 #### Alternatives
