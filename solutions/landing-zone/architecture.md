@@ -379,7 +379,15 @@ Follow quickstart on https://cloud.google.com/deploy/docs/deploy-app-run
 - https://github.com/GoogleCloudPlatform/gatekeeper-securitycenter
 
 
+## DI-28: Organization wide LZ affecting change management  
+Request: "discuss folder structure and the promotion of changes to the landing zone. More specifically, as a landing zone admin, what is the recommended approach to implement a change that can potentially affect the whole organization,, including all environments.. ex. : org policies and gatekeeper policies."
+### Tracking
+### Discussion
+- IE: sandbox project that requires the first use of a particular service, VPC peering, VPC connector... that causes a global org update
+- Policy changes that affect all projects at the org or folder level
 
+### Options
+### Decision
 
 
 
