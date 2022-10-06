@@ -68,7 +68,7 @@ This will download the package containing the configuration files for the Guardr
 
 2. Set Organization Hierarchy (optional)
 
-    Modifiy `configs/hierarchy/hiearchy.yaml` if required. The default settings will create a single folder called  `guardrails` and the guardrails project will be deployed into that.
+    Modifiy `configs/hierarchy/hierarchy.yaml` if required. The default settings will create a single folder called  `guardrails` and the guardrails project will be deployed into that.
 
     When the solution is deployed you should have a folder at the top level with a guardrails project under it.
     

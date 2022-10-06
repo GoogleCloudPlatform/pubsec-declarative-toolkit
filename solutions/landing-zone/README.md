@@ -53,7 +53,7 @@ The following resources will be deployed.
 | ---- | ---- | ---- | --- | -- |
 | Access Context Manager | | | Work In Progress | `environments/common/vpc-service-controls`
 | Core Audit Bunker | | | Available | `environments/common/audit` |
-| Core Folders | | | Available | `environments/common/hiearchy.yaml` |
+| Core Folders | | | Available | `environments/common/hierarchy.yaml` |
 | Core IAM | | | Available | `environments/common/iam` |
 | Core Org Custom Roles | | File for Custom Org Roles | Available | `environments/common/iam` |
 | Core Org Policy | | Default Org Policies | Available | `environments/common/policies` |
@@ -139,7 +139,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 3. Set Organization Hierarchy
 
-    Modifiy `environments/common/hiearchy.yaml` if required. 
+    Modifiy `environments/common/hierarchy.yaml` if required. 
 
 4. Customize Package
 
