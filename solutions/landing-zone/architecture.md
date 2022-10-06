@@ -246,9 +246,19 @@ pending
 - 20220923: adjust billing text in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/dev/solutions/landing-zone#kpt
 
 ## DI-01: ITSG-33 PBMM Security Controls
-#145
+[#145](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/145)
+## DI-05: Complete Network Design
+The networking side will be undergoing a lot of changes starting with initial peering and zoning for both shared and non-shared VPC config to make it usable.
+- https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/149
+- https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
+- see overall TF to KCC migration https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/124
+
 ## DI-07: CD Canary Workload for deployment verification
-#145
+[#182](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/82)
+The LZ as-is (mostly still in line with the terraform original) has not actually been used yet for a canary workload until at least peering is added between the shared host VPC and the perimeter VPC, fw rules are set, routes are verified. 
+Putting the LZ to use is next in the queue - as traffic generation to exercise the log/alert/metrics system has only been done outside of the project set so far.
+
+
 ## DI-08: Multitenancy
 For multiple LZ's - there is a requirement for multi-tenancy - this can be done by separate subdomain orgs (These would need their own lz and VPC cross org peering) - this is out of scope for now.  The design pattern for multi-tenancy will likely be **folder** based in a single org. 
 So one LZ for all teams - will have to determine how this works with LZ upgrades... blast radius
@@ -277,6 +287,7 @@ see ongoing TF naming standard discussion we are bring over here in https://gith
 
 ### Decision
 - GCP service wide naming strategy to be determined
+
 
 ## DI-10: L7 Packet Inspection required
 ## DI-12: Workload separation
