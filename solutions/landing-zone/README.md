@@ -188,9 +188,16 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     
     Before deploying with `kpt` you will need to add `constraints.yaml` to the `.krmignore` file. This is due to needing to have the `constraintstemplate` resources deployed into the instance before the policy `constraint` can be deployed. Once the `constrainttemplates` have been deployed you can remove `constraints.yaml` from the `.krmignore` file and redeploy. This is not needed with either gitops deployment options.
 
+    Before running the `kpt` commands for the first time you will need to initialize the `kpt` package locally. You will only need to do this once after you initially get the `kpt` package
+
+    The following commands assume the `landing-zone` package is in your currently directory. If you are in the `landing-zone` directory you can remove omit the `landing-zone` argument from the commands.
+
+    ```
+    kpt live init landing-zone --namespace config-control
+    ```
+
     ```
     kpt fn render landing-zone
-    kpt live init landing-zone --namespace config-control
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
 
