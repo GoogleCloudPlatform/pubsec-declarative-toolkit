@@ -305,6 +305,7 @@ Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connecti
 ## DI-19: Bastion Access per security zone
 - IAP and private connect
 ## DI-20: Separate VPC per Cloud Profile 3/5/6 workloads
+- https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/78
 - see see [Complete Network Design](#di-05-complete-network-design)
 - see slide 18 of https://wiki.gccollab.ca/images/7/75/GC_Cloud_Connection_Patterns.pdf
 - Since profile 3 and 6 access the PAZ (GC-CAP) and profile 5 is restricted to the RZ (GC-TIP) - profile 3 does not use GC-TIP for SC2G. The security appliance setup for GC-TIP is therefore restricted to 5 and 6, but the security appliance(s) used for GC-CAP can be shared.  Need to operationally verify this
@@ -314,10 +315,33 @@ VPC peering for hub and spoke vs Shared VPC - in terms of workload separation.
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
 
 
+
 Uncomment and KPT render each peer pair in
 https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/environments/common/network/network-peering.yaml#L15
 #### Issues
 GCP has a default limit of 25 to AWS limit of 50 VPC peering connections - see p. 138 of the "Google Cloud Cerfified: [Professional Cloud Architect Study Guide](https://www.google.ca/books/edition/Google_Cloud_Certified_Professional_Clou/3YJlEAAAQBAJ?hl=en&gbpv=1&dq=Professional+Cloud+Architect+Study+Guide&printsec=frontcover)"
+
+#### Prototyping
+
+Move example peering on the TF side to the KCC side
+https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/146
+https://console.cloud.google.com/networking/peering/list?orgonly=true&project=ospe-obs-obsprd-obspubper&supportedpurview=project
+
+```
+perimeter-networ-auto.tfvars
+21
+      peer_project                           = "ospe-obs-obsprd-obshostproj9" # Production Host Project Name
+      peer_network                           = "ospecnr-prodvpc-vpc" # Production VPC Name
+prod-network-auto.tfvars
+
+      peer_project                           = "ospe-obs-obsprd-obspubper" # see perimeter-network
+      peer_network                           = "ospecnr-obspripervpc-vpc" # private not ha
+```
+
+org a- gcp.obrien.services 
+https://console.cloud.google.com/networking/peering/list?orgonly=true&project=ospe-obs-obsprd-obspubper&supportedpurview=project
+
+<img width="1577" alt="Screen Shot 2022-10-07 at 10 42 21 AM" src="https://user-images.githubusercontent.com/94715080/194580619-6690a1e7-dfcb-470d-9987-aae7099020d7.png">
 #### Alternatives
 Investigate alternatives like VPN tunnelling (essentially GC-TIP but internal).  Looks at above L4 network separation via namespaces (K8S to start).
 Look at verifying that the shared VPC model (analog to the Transit Gateway from 2019) does not have network separation even though we can use 1:1 project/subnet pairing as an alternative.
