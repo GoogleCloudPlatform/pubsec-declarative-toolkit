@@ -397,7 +397,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 
 ## DI-25: Continuous Delivery Pipelines
-- [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (KCC support 242711314)
+- [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (242711314) - https://cloud.google.com/blog/products/devops-sre/google-cloud-deploy-now-ga
 - Github actions
 - Gitlab
 - Jenkins
