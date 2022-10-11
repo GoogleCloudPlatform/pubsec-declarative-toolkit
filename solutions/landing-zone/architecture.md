@@ -435,7 +435,7 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 
 ## DI-29: Firewall Polices
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/162
-- VPC Firewall rules, Fortigate Policies, Cloud Armor Policies and Access Content Manager perimeters.
+- VPC Firewall rules, Fortigate Policies, Cloud Armor Policies and Access Content Manager perimeters (part of beyond corp).
 - firewall policies - https://cloud.google.com/vpc/docs/firewall-policies
 
 
@@ -662,7 +662,7 @@ Notes
 - https://cloud.google.com/vpc/docs/packet-mirroring?_ga=2.218767321.-175179844.1646174174
 - Firewall policies - https://cloud.google.com/vpc/docs/firewall-policies
 - PII DLP - https://cloud.google.com/architecture/de-identification-re-identification-pii-using-cloud-dlp
-- VPC Service Perimeter for data exfiltration - https://cloud.google.com/vpc-service-controls/docs/service-perimeters
+- VPC Service Perimeter for data exfiltration - https://cloud.google.com/vpc-service-controls/docs/service-perimeters - part of BeyondCorp ACM Access Context Manager
 - https://cloud.google.com/architecture/pci-dss-and-gke-guide
 - Bucket retention and locks - https://cloud.google.com/storage/docs/bucket-lock
 - Transit Gateway like https://cloud.google.com/network-connectivity-center
