@@ -660,12 +660,14 @@ Notes
 - Anthos Config Management https://cloud.google.com/anthos/config-management
 - Binauthz - attestation (on binary authorization) - for cloud deploy policy engine https://cloud.google.com/binary-authorization/docs/making-attestations
 - https://cloud.google.com/vpc/docs/packet-mirroring?_ga=2.218767321.-175179844.1646174174
-- https://cloud.google.com/vpc/docs/firewall-policies
-- https://cloud.google.com/architecture/de-identification-re-identification-pii-using-cloud-dlp
+- Firewall policies - https://cloud.google.com/vpc/docs/firewall-policies
+- PII DLP - https://cloud.google.com/architecture/de-identification-re-identification-pii-using-cloud-dlp
+- VPC Service Perimeter for data exfiltration - https://cloud.google.com/vpc-service-controls/docs/service-perimeters
 - https://cloud.google.com/architecture/pci-dss-and-gke-guide
-- https://cloud.google.com/storage/docs/bucket-lock
+- Bucket retention and locks - https://cloud.google.com/storage/docs/bucket-lock
 - Transit Gateway like https://cloud.google.com/network-connectivity-center
-- https://forsetisecurity.org/
+- Forseti - Security inventory, monitoring, enforcement - https://forsetisecurity.org/
+
 
 
 - SCC enablement even for standard is required
