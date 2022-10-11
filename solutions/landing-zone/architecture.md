@@ -436,7 +436,16 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 ## DI-29: Firewall Polices
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/162
 - VPC Firewall rules, Fortigate Policies, Cloud Armor Policies and Access Content Manager perimeters.
+- firewall policies - https://cloud.google.com/vpc/docs/firewall-policies
 
+
+## DI-30: ADFS vith AAD 
+- https://cloud.google.com/community/tutorials/gcds-use-cases-common-and-complex
+- SSO only
+- https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/99
+
+## DI-31: Enable VPC Flow Logs and Packet Mirroring Policies
+- VPC flow logs are a sample of packets, for full packet analyis via for example IDS see https://cloud.google.com/vpc/docs/packet-mirroring?_ga=2.218767321.-175179844.1646174174
 
 ## Installation/Deployment
 
@@ -650,7 +659,13 @@ Notes
 - contitional IAM https://cloud.google.com/iam/docs/conditions-overview
 - Anthos Config Management https://cloud.google.com/anthos/config-management
 - Binauthz - attestation (on binary authorization) - for cloud deploy policy engine https://cloud.google.com/binary-authorization/docs/making-attestations
-
+- https://cloud.google.com/vpc/docs/packet-mirroring?_ga=2.218767321.-175179844.1646174174
+- https://cloud.google.com/vpc/docs/firewall-policies
+- https://cloud.google.com/architecture/de-identification-re-identification-pii-using-cloud-dlp
+- https://cloud.google.com/architecture/pci-dss-and-gke-guide
+- https://cloud.google.com/storage/docs/bucket-lock
+- Transit Gateway like https://cloud.google.com/network-connectivity-center
+- https://forsetisecurity.org/
 
 
 - SCC enablement even for standard is required
