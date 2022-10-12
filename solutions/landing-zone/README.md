@@ -53,7 +53,7 @@ The following resources will be deployed.
 | ---- | ---- | ---- | --- | -- |
 | Access Context Manager | | | Work In Progress | `environments/common/vpc-service-controls`
 | Core Audit Bunker | | | Available | `environments/common/audit` |
-| Core Folders | | | Available | `environments/common/hiearchy.yaml` |
+| Core Folders | | | Available | `environments/common/hierarchy.yaml` |
 | Core IAM | | | Available | `environments/common/iam` |
 | Core Org Custom Roles | | File for Custom Org Roles | Available | `environments/common/iam` |
 | Core Org Policy | | Default Org Policies | Available | `environments/common/policies` |
@@ -140,7 +140,7 @@ Note: You may use the [advanced install](/docs/advanced-install.md) as an altern
 
 3. Set Organization Hierarchy
 
-    Modifiy `environments/common/hiearchy.yaml` if required. 
+    Modifiy `environments/common/hierarchy.yaml` if required. 
 
 4. Customize Package
 
@@ -191,9 +191,16 @@ Note: You may use the [advanced install](/docs/advanced-install.md) as an altern
     
     Before deploying with `kpt` you will need to add `constraints.yaml` to the `.krmignore` file. This is due to needing to have the `constraintstemplate` resources deployed into the instance before the policy `constraint` can be deployed. Once the `constrainttemplates` have been deployed you can remove `constraints.yaml` from the `.krmignore` file and redeploy. This is not needed with either gitops deployment options.
 
+    Before running the `kpt` commands for the first time you will need to initialize the `kpt` package locally. You will only need to do this once after you initially get the `kpt` package
+
+    The following commands assume the `landing-zone` package is in your currently directory. If you are in the `landing-zone` directory you can remove omit the `landing-zone` argument from the commands.
+
+    ```
+    kpt live init landing-zone --namespace config-control
+    ```
+
     ```
     kpt fn render landing-zone
-    kpt live init landing-zone --namespace config-control
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
 

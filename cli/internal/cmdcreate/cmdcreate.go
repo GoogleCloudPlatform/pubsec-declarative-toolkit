@@ -28,18 +28,35 @@ import (
 var currentRegions = []string{"us-central1", "us-east1", "northamerica-northeast1",	"northamerica-northeast2",	 "europe-north1",	"europe-west1",	"europe-west3",	"australia-southeast1",	"australia-southeast2",	"asia-northeast1",	"asia-northeast2"}
 
 type createSteps struct {
-	Steps []step `yaml:"steps"`
+	Clusters []clusters `yaml:"clusters"`
 }
 
-type step struct {
-	Step string `yaml:"step"`
+type clusters struct{
+	Cluster string `yaml:"cluster"`
+	Steps []string `yaml:""`
+}
+
+func (cs *createSteps) clusterExists(cluster string) bool {
+	for _, cls := range cs.Clusters {
+		if cls.Cluster == cluster {
+			return true
+		}
+	}
+
+	return false
 }
 
 // Does the step exist in the .create yaml file
-func (cs *createSteps) stepExists(step string) bool {
-	for _, stp := range cs.Steps {
-		if stp.Step == step {
-			return true
+func (cs *createSteps) stepExists(cluster string, step string) bool {
+	for _, cls := range cs.Clusters {
+		if cls.Cluster == cluster {
+			for _, stp := range cls.Steps {
+				if stp == step {
+					return true
+				}
+			}
+
+			return false;
 		}
 	}
 
@@ -62,13 +79,19 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 		log.Fatal().Msg(regionMsg)
 	}
 
+	// project flag not provided to create a random project name based on the cluster name and random string
+	if project == "" {
+		project = instanceName + "-" + utils.RandomString(5)
+		log.Info().Msgf("Project name will be set to: %s", project)
+	}
+
 	// check to see if the .create yaml file exists, if not create it
 	// The .create file keeps track of steps that have already been completed for repeated calls to the create function.
 	createStepsFile := filepath.Join(viper.GetString("cache"), ".create")
 	createSteps := createSteps{}
 
 	if _, err := os.Stat(createStepsFile); err != nil {
-		createYaml := "steps:\n"
+		createYaml := "clusters:\n  - cluster: " + instanceName + "\n    steps:\n"
 
 		utils.WriteToCache(&createYaml, ".create", false)
 	} else {
@@ -77,12 +100,20 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 		if err == nil {
 			yaml.Unmarshal(stepsFileContents, &createSteps)
 		}
-	}
 
-	// project flag not provided to create a random project name based on the cluster name and random string
-	if project == "" {
-		project = instanceName + "-" + utils.RandomString(5)
-		log.Info().Msgf("Project name will be set to: %s", project)
+		if(!createSteps.clusterExists(instanceName)) {
+			createYaml := "  - cluster: " + instanceName + "\n    steps:\n"
+
+			if err := utils.WriteToCache(&createYaml, ".create", true); err != nil {
+				log.Fatal().Err(err).Msg("")
+			}
+
+			stepsFileContents, err := os.ReadFile(createStepsFile)
+
+			if err == nil {
+				yaml.Unmarshal(stepsFileContents, &createSteps)
+			}
+		}
 	}
 
 	// Test if project exists
@@ -119,7 +150,7 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 	}
 
 	// If the GCP services have not already been enabled by the cli then let's do it.
-	if !createSteps.stepExists("services") {
+	if !createSteps.stepExists(instanceName, "services") {
 		log.Info().Msg("Enabling required services...")
 
 		cmdArgs := []string{"services", "enable", "krmapihosting.googleapis.com", "container.googleapis.com", "cloudresourcemanager.googleapis.com", "cloudbilling.googleapis.com", "--project=" + project}
@@ -130,7 +161,7 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 			log.Fatal().Err(err).Msg("")
 		}
 
-		saveStep("services")
+		saveStep(instanceName, "services")
 	}
 
 	networkConfig := map[string]interface{}{"name": "kcc-controller", "subnet-name": "kcc-regional-subnet", "cidr": "192.168.0.0/16"}
@@ -140,7 +171,7 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 	}
 
 	// If the VPC has not already been created by the cli then let's do it
-	if !createSteps.stepExists("network") {
+	if !createSteps.stepExists(instanceName, "network") {
 		// BUT first let's check to make sure that the network with the same name doesn't already exist
 		cmdArgs := []string{"compute", "networks", "list", "--project=" + project, "--filter=name:" + networkConfig["name"].(string), "--format=\"yaml\""}
 
@@ -161,14 +192,14 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 				log.Fatal().Err(err).Msg(string(ret))
 			}
 
-			saveStep("network")
+			saveStep(instanceName, "network")
 		} else {
-			saveStep("network")
+			saveStep(instanceName, "network")
 		}
 	}
 
 	// If the subnet on the VPC has not already been created by the cli then let's do it
-	if !createSteps.stepExists("subnet") {
+	if !createSteps.stepExists(instanceName, "subnet") {
 		// BUT first let's check to make sure that a subnet with the same name doesn't already exist
 		cmdArgs := []string{"compute", "networks", "subnets", "list", "--project=" + project, "--filter=name:" + networkConfig["subnet-name"].(string), "--format=\"yaml\""}
 
@@ -189,14 +220,14 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 				log.Fatal().Err(err).Msg(string(ret))
 			}
 
-			saveStep("subnet")
+			saveStep(instanceName, "subnet")
 		} else { 
-			saveStep("subnet")
+			saveStep(instanceName, "subnet")
 		}
 	}
 
 	// If config controller hasn't already been setup by the cli then let's do it
-	if !createSteps.stepExists("config-controller") {
+	if !createSteps.stepExists(instanceName, "config-controller") {
 		cmdArgs := []string{"anthos", "config", "controller", "create", instanceName, "--location=" + region, "--network=" + networkConfig["name"].(string), "--subnet=" + networkConfig["subnet-name"].(string), "--project=" + project}
 
 		log.Info().Msg("Creating Config Controller Cluster....")
@@ -207,11 +238,11 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 			log.Fatal().Err(err).Msg("")
 		}
 
-		saveStep("config-controller")
+		saveStep(instanceName, "config-controller")
 	}
 
 	// Adding service account to the owners role
-	if !createSteps.stepExists("add-policy") {
+	if !createSteps.stepExists(instanceName, "add-policy") {
 		cmdArgs := []string{"container", "clusters", "get-credentials", "krmapihost-" + instanceName, "--region=" + region, "--project=" + project}
 
 		_, err := utils.CallCommand(utils.Gcloud, cmdArgs, false)
@@ -239,7 +270,7 @@ func CmdcreateRun(instanceName string, region string, project string, billing st
 			log.Fatal().Err(err).Msg("Unable to add roles/owner to " + sa + string(ret))
 		}
 
-		saveStep("add-policy")
+		saveStep(instanceName, "add-policy")
 	}
 
 	log.Info().Msg("Config Controller setup complete")
@@ -325,8 +356,8 @@ func selectGcloudPrompt(args []string, label string) (string, error) {
 }
 
 // Save a step to the cache .create file for future tracking
-func saveStep(step string) error {
-	step = "- step: " + step + "\n"
+func saveStep(cluster string, step string) error {
+	step = "      - " + step + "\n"
 
 	if err := utils.WriteToCache(&step, ".create", true); err != nil {
 		return err
