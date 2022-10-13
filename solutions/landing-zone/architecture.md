@@ -450,8 +450,14 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 ## DI-32: Determine notification for kpt render service modification failed on required service delete/create - IAM audit bucket member role 
 - 49 Solutions specd.
 - Get the criteria to determine when a lower impact modification apply (kubectl apply - under the covers) failed (where a full delete/create would have been required)
+
+## DI-33: SCC - Enable Security Health Analytics and Web Security Scanner - for Vulnerabilities reporting
+- Security Command Center's vulnerabilities dashboard to find potential weaknesses in your Google Cloud resources.  SCC  displays results only for projects in which Security Health Analytics and Web Security Scanner are enabled.
+- Verify these are set - especially when we run the traffic generator for canary workload testing
 - 
-## Installation/Deployment
+
+
+# Installation/Deployment
 
 ### Deployment Preparations
 #### Cloud Identity Onboarding and Organization Domain Validation
