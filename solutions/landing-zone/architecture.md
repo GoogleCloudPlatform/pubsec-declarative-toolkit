@@ -447,6 +447,10 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 ## DI-31: Enable VPC Flow Logs and Packet Mirroring Policies
 - VPC flow logs are a sample of packets, for full packet analyis via for example IDS see https://cloud.google.com/vpc/docs/packet-mirroring?_ga=2.218767321.-175179844.1646174174
 
+## DI-32: Determine notification for kpt render service modification failed on required service delete/create - IAM audit bucket member role 
+- 49 Solutions specd.
+- Get the criteria to determine when a lower impact modification apply (kubectl apply - under the covers) failed (where a full delete/create would have been required)
+- 
 ## Installation/Deployment
 
 ### Deployment Preparations
