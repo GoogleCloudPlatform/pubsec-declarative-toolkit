@@ -456,6 +456,9 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 - Verify these are set - especially when we run the traffic generator for canary workload testing
 - 
 
+## DI-34: HA hot/warm/cold standby options for workloads
+- Also verify HA version of the fortigate architecture being worked out in design meetings.  with/without LB sandwich.
+- Cold standby can include full or partial deployment
 
 # Installation/Deployment
 
