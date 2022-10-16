@@ -395,7 +395,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - See TF PBMM LZ https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
 - Verify the config and shadow deployment of a VDOM fortigate configaration - thanks Dave (triple fortigate)
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
-
+- see https://cloud.google.com/architecture?category=networking&text=appliance to https://cloud.google.com/architecture/deploying-nat-gateways-in-a-hub-and-spoke-architecture-using-vpc-network-peering-and-routing?hl=en
 ## DI-25: Continuous Delivery Pipelines
 - [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (242711314) - https://cloud.google.com/blog/products/devops-sre/google-cloud-deploy-now-ga
 - Github actions
