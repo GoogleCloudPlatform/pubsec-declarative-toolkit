@@ -256,6 +256,7 @@ The networking side will be undergoing a lot of changes starting with initial pe
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#di-6-landing-zone-network-topology-design
 - see overall TF to KCC migration https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/124
+- 20221018:  [fortigate-tutorial-gcp](https://github.com/fortinet/fortigate-tutorial-gcp) - thanks Dave
 
 ### Network Architecture Patterns Available
 - Criteria: SC2G, multi-nic/Appliances bridging VPC's, prod/non-prod network/zone separation
