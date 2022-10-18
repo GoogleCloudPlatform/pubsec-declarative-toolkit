@@ -254,7 +254,17 @@ The networking side will be undergoing a lot of changes starting with initial pe
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/78
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/149
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/45
+- https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#di-6-landing-zone-network-topology-design
 - see overall TF to KCC migration https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/124
+
+### Network Architecture Patterns Available
+- Criteria: SC2G, multi-nic/Appliances bridging VPC's, prod/non-prod network/zone separation
+- We will go over the following network designs and come up with an aggregate that works for the landing zone
+- GCP Architecture: Option 2: Hub-and-spoke topology with centralized appliances https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2from https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#why-landing-zones 
+- (with gconsole deployment example) GCP Architecture: Deploying centralized VM-based appliances using VPC network peering https://cloud.google.com/architecture/deploying-nat-gateways-in-a-hub-and-spoke-architecture-using-vpc-network-peering-and-routing?hl=en off https://cloud.google.com/architecture/architecture-centralized-network-appliances-on-google-cloud
+- Fortinet specific: https://github.com/40net-cloud/fortinet-gcp-solutions/tree/master/FortiGate/architectures and https://github.com/fortinetsolutions/terraform-modules/tree/master/GCP/examples/ha-active-passive
+
+### 20221018 Network Appliance Design
 
 ## DI-07: CD Canary Workload for deployment verification
 [#182](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/82)
