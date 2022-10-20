@@ -407,6 +407,18 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - Verify the config and shadow deployment of a VDOM fortigate configaration - thanks Dave (triple fortigate)
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 - see https://cloud.google.com/architecture?category=networking&text=appliance to https://cloud.google.com/architecture/deploying-nat-gateways-in-a-hub-and-spoke-architecture-using-vpc-network-peering-and-routing?hl=en
+
+### Fortigate HA Active Standby POC
+- Using the reference architecture (thanks Dave) - from Fortinet around dual fortigate VMs with 4 nics each in 4 perimeter VPCs and 2 example workload VPCs.
+- see https://github.com/fortinet/fortigate-tutorial-gcp/issues/1 for details on deployment
+- Note you will need to ask for a compute.networks quota increase from 5 to 10 (you can also delete the default VPC)
+- <img width="402" alt="Screen Shot 2022-10-20 at 10 33 22 AM" src="https://user-images.githubusercontent.com/94715080/196978094-1c3a6b13-ea9d-4d88-a708-501fe6305512.png">
+- <img width="1640" alt="Screen Shot 2022-10-20 at 10 34 08 AM" src="https://user-images.githubusercontent.com/94715080/196978326-0d5ae2da-57e0-4d88-b592-7aef14308784.png">
+- After the quota increase - we have 6 VPCs
+- <img width="1633" alt="Screen Shot 2022-10-20 at 10 32 43 AM" src="https://user-images.githubusercontent.com/94715080/196977943-2d43e21e-e4bf-4c8e-9d75-93665bb01d1a.png">
+
+
+
 ## DI-25: Continuous Delivery Pipelines
 - [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (242711314) - https://cloud.google.com/blog/products/devops-sre/google-cloud-deploy-now-ga
 - Github actions
@@ -479,6 +491,7 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 #### Project Quota
 #### Config Controller enabled GKE Cluster
 - follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
+
 
 
 ### Creating the Config Controller Cluster
