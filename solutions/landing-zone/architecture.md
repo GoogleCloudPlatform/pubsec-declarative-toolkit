@@ -418,7 +418,32 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - <img width="402" alt="Screen Shot 2022-10-20 at 10 33 22 AM" src="https://user-images.githubusercontent.com/94715080/196978094-1c3a6b13-ea9d-4d88-a708-501fe6305512.png">
 - <img width="1640" alt="Screen Shot 2022-10-20 at 10 34 08 AM" src="https://user-images.githubusercontent.com/94715080/196978326-0d5ae2da-57e0-4d88-b592-7aef14308784.png">
 - After the quota increase - we have 6 VPCs
-- <img width="1633" alt="Screen Shot 2022-10-20 at 10 32 43 AM" src="https://user-images.githubusercontent.com/94715080/196977943-2d43e21e-e4bf-4c8e-9d75-93665bb01d1a.png">
+
+<img width="1664" alt="Screen Shot 2022-10-24 at 10 57 27 PM" src="https://user-images.githubusercontent.com/94715080/197672665-ae86c174-1fbb-4e19-96d3-36c8db54d21b.png">
+
+<img width="1829" alt="Screen Shot 2022-10-24 at 10 58 13 PM" src="https://user-images.githubusercontent.com/94715080/197672666-eb66ef04-a04d-4149-b417-09db0b0e923a.png">
+
+<img width="1448" alt="Screen Shot 2022-10-24 at 10 58 34 PM" src="https://user-images.githubusercontent.com/94715080/197672670-9c8a013f-3c2c-429a-b669-f2fe5d5cbd69.png">
+
+<img width="1853" alt="Screen Shot 2022-10-24 at 10 59 00 PM" src="https://user-images.githubusercontent.com/94715080/197672675-1d087cf1-f90e-4af8-a926-bd34c7b0ec43.png">
+
+<img width="2112" alt="Screen Shot 2022-10-24 at 10 59 24 PM" src="https://user-images.githubusercontent.com/94715080/197672677-9705bea9-0645-43c4-93df-e6c602891863.png">
+
+<img width="1624" alt="Screen Shot 2022-10-24 at 10 59 40 PM" src="https://user-images.githubusercontent.com/94715080/197672681-36b111b4-6ed1-4091-adb6-7efa63d08c5d.png">
+
+<img width="1541" alt="Screen Shot 2022-10-24 at 10 59 52 PM" src="https://user-images.githubusercontent.com/94715080/197672682-0f365964-b01f-474a-b1e0-fc070db5bd43.png">
+
+<img width="1759" alt="Screen Shot 2022-10-24 at 11 00 17 PM" src="https://user-images.githubusercontent.com/94715080/197672684-5a257460-e443-4797-aba9-f2b76297639f.png">
+
+<img width="1591" alt="Screen Shot 2022-10-24 at 11 00 29 PM" src="https://user-images.githubusercontent.com/94715080/197672686-d1133b3e-b8ec-4721-b500-0b82de386b71.png">
+
+<img width="1673" alt="Screen Shot 2022-10-24 at 11 01 19 PM" src="https://user-images.githubusercontent.com/94715080/197672690-7e3bec11-f927-466d-b088-b105694180e1.png">
+
+<img width="1671" alt="Screen Shot 2022-10-24 at 11 01 42 PM" src="https://user-images.githubusercontent.com/94715080/197672691-94dddbae-60a0-4de4-add1-5b1798c1cba4.png">
+
+<img width="1671" alt="Screen Shot 2022-10-24 at 11 01 56 PM" src="https://user-images.githubusercontent.com/94715080/197672692-fe289026-ffae-402c-a36f-397652c6243f.png">
+
+
 
 
 
