@@ -511,6 +511,15 @@ Request: "discuss folder structure and the promotion of changes to the landing z
 - Also verify HA version of the fortigate architecture being worked out in design meetings.  with/without LB sandwich.
 - Cold standby can include full or partial deployment
 
+## DI-35: Multi Organization Control
+fyi, Multi-org setup - Sean (49 Solutions) and I were creating new orgs and he mentioned he hadsee all orgs under one account and how to do it.  Quick google check verified that it is the same as sharing billing - just share iam roles (org admin+) on either side.
+Does answer a couple questions we had about the multi-org part of multi-tenancy (we are currently using folders)
+
+https://cloud.google.com/resource-manager/docs/managing-multiple-orgs
+
+<img width="1066" alt="Screen Shot 2022-10-25 at 5 40 44 PM" src="https://user-images.githubusercontent.com/94715080/197887396-4d0160bc-362d-42f3-b09c-e6a84f550e8a.png">
+
+
 # Installation/Deployment
 
 ### Deployment Preparations
