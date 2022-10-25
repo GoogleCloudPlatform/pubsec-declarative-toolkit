@@ -32,7 +32,10 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 
 ### Diagrams
 #### Low Level Zoning Diagram
-![img](img/_landingzone_system_comm_description.png)
+- _landingzone_system_comm_description
+- <img width="1668" alt="_20221024_lz_low_level_arch" src="https://user-images.githubusercontent.com/94715080/197665816-60b93de2-198b-47fd-9d25-ccdb3dd4b678.png">
+
+
 #### High Level Network Diagram
 - Common Services Project - and "Shared Services", "SharedInfrastructure" - in the high level network diagram - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/dev/solutions/landing-zone/architecture.md#high-level-network-diagram - the common services project contains services like SSO, backup, IAP and any CI/CD infrastructure that would be common to a cross section of the workloads projects.  I will adjust the diagram to rename it "shared services".  A subset may reside in "SharedInfrastructure" depending on how we partition between a service and deployment infrastructure
 ![img](img/_landingzone-high-level-op-concept.png)
