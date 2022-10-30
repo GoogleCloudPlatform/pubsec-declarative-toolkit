@@ -31,9 +31,9 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 ## Architecture
 
 ### Diagrams
-#### Low Level Zoning Diagram
-- _landingzone_system_comm_description
-- <img width="1668" alt="_20221024_lz_low_level_arch" src="https://user-images.githubusercontent.com/94715080/197665816-60b93de2-198b-47fd-9d25-ccdb3dd4b678.png">
+
+#### High Level PaaS Workflow Example
+![img](img/_gcp_pbmm_lz_sa_paas_workload_overview.png)
 
 
 #### High Level Network Diagram
@@ -41,6 +41,13 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 ![img](img/_landingzone-high-level-op-concept.png)
 
 ![img](img/_landingzone_system_interface_description.png)
+
+#### Low Level Zoning Diagram
+- _landingzone_system_comm_description
+- <img width="1668" alt="_20221024_lz_low_level_arch" src="https://user-images.githubusercontent.com/94715080/197665816-60b93de2-198b-47fd-9d25-ccdb3dd4b678.png">
+
+#### Organization/Folder/Projects Example
+![img](img/_gcp_org_folders_projects.png)
 
 ### Naming Standard
 We have the design issue in the queue.  The original TF LZ had parts of the proposed standard but several of the schema attributes are distributed among the tfvars with some 1-off duplication.
