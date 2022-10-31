@@ -662,6 +662,7 @@ graph LR;
 # References
 - Anthos Config Management - "Deploy a Landing Zone Blueprint" - https://cloud.google.com/anthos-config-management/docs/tutorials/landing-zone and 
 - Config Connector release notes - https://cloud.google.com/config-connector/docs/release-notes
+- Anthos Config Management – Policy Controller Library - CIS Foundation Benchmark checks in SCC-Premium and https://github.com/GoogleCloudPlatform/acm-policy-controller-library
 - [nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command) CLI for anthos config controller  (init vet status hydrate)
 - KPT functions catalog - https://github.com/GoogleContainerTools/kpt-functions-catalog
 - Starlark runtime (for yaml scripting - kpt/k8s) https://googlecontainertools.github.io/kpt/guides/producer/functions/starlark/
