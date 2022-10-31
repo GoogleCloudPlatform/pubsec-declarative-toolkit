@@ -5,6 +5,14 @@
 Create, manage and operate a PBMM secure landing zone for the Google Cloud Environment. 
 This project details the architecture for a mult-tenant Landing Zone as a Service - where multiple deptartments and workloads deploy under a shared organization with TBD folder separation.
 
+### Background
+
+The Google Cloud PBMM Secure [Landing Zone](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding) is a GCP services based - modular and scalable Infrastructure as Code configuration that enables an organization to deploy their business workflow and processes.  The landing zone is the prerequisite to deploying enterprise workloads in a cloud environment either all cloud native or a hybrid combination of on-prem.  The landing zone provides for GitOps automated deployment and management by the overall DevSecOps teams.  Workload migration and integration with a federated IdP is part of the extended API offered by the Google Cloud Landing Zone.  The system is focused on providing a secure zoned network infrastructure around various types of department workloads. 
+
+### Scope
+The scope of this assessment is limited to the Infrastructure as Service oriented GCP services that provide for a minimal secure landing zone.  Security assessments specific to IaaS/PaaS/SaaS/Hybrid workloads are part of a later stage.  The security profile for the GCP PBMM Landing Zone is PB (Protected B) confidentiality, Medium integrity, Medium availability (PBMM).
+
+
 ### Why Landing Zones
 Expand on https://cloud.google.com/architecture/landing-zones/decide-network-design#option-2 in https://cloud.google.com/architecture/landing-zones#what-is-a-google-cloud-landing-zone
 
@@ -666,6 +674,7 @@ graph LR;
 - [nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command) CLI for anthos config controller  (init vet status hydrate)
 - KPT functions catalog - https://github.com/GoogleContainerTools/kpt-functions-catalog
 - Starlark runtime (for yaml scripting - kpt/k8s) https://googlecontainertools.github.io/kpt/guides/producer/functions/starlark/
+- GoC Cloud Brokerage https://gc-cloud-services.canada.ca/s/cloud-fa-catalog?language=en_US&id=0010A000005vhilQAA
 
 
 # TODO - to integrate into this doc and the issue system
