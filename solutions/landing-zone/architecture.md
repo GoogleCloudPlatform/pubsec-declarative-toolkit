@@ -762,6 +762,7 @@ Notes
 - Bucket retention and locks - https://cloud.google.com/storage/docs/bucket-lock
 - Transit Gateway like https://cloud.google.com/network-connectivity-center
 - Forseti - Security inventory, monitoring, enforcement - https://forsetisecurity.org/
+- Tags on Storage Buckets - https://cloud.google.com/storage/docs/tags-and-labels#examples_for_attaching_tags_to_buckets
 
 
 
