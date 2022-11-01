@@ -275,6 +275,8 @@ The networking side will be undergoing a lot of changes starting with initial pe
 - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#di-6-landing-zone-network-topology-design
 - see overall TF to KCC migration https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/issues/124
 - 20221018:  [fortigate-tutorial-gcp](https://github.com/fortinet/fortigate-tutorial-gcp) - thanks Dave
+- Need to spin up/verify an alternative to regular peering (due to the 25 limit/project) for the hub-spoke pattern
+https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/overview over the normal https://cloud.google.com/architecture/deploy-hub-spoke-vpc-network-topology 
 
 ### Network Architecture Patterns Available
 - Criteria: SC2G, multi-nic/Appliances bridging VPC's, prod/non-prod network/zone separation
