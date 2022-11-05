@@ -429,6 +429,9 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - see https://cloud.google.com/architecture?category=networking&text=appliance to https://cloud.google.com/architecture/deploying-nat-gateways-in-a-hub-and-spoke-architecture-using-vpc-network-peering-and-routing?hl=en
 
 ### Fortigate HA Active Standby POC
+- tracking MGMT NIC and NAT specific https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/166
+- tracking deploying example https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/158
+- tracking add kcc version of fortigate-tutorial-gcp (collaboration PR) https://github.com/fortinet/fortigate-tutorial-gcp/issues/5
 - Using the reference architecture (thanks Dave) - from Fortinet around dual fortigate VMs with 4 nics each in 4 perimeter VPCs and 2 example workload VPCs.
 - see https://github.com/fortinet/fortigate-tutorial-gcp/issues/1 for details on deployment
 - Note you will need to ask for a compute.networks quota increase from 5 to 10 (you can also delete the default VPC)
