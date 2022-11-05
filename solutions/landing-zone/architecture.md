@@ -540,6 +540,16 @@ https://cloud.google.com/resource-manager/docs/managing-multiple-orgs
 <img width="1066" alt="Screen Shot 2022-10-25 at 5 40 44 PM" src="https://user-images.githubusercontent.com/94715080/197887396-4d0160bc-362d-42f3-b09c-e6a84f550e8a.png">
 
 
+## DI-36: Incorporate Software Delivery Shield
+### Software Delivery Shield
+- Next 22 https://cloud.google.com/blog/products/devops-sre/introducing-software-delivery-shield-from-google-cloud
+- Cloud Workstations https://cloud.google.com/workstations
+- Source Protect (part of Cloud Code) - https://cloud.google.com/code
+- Binary Authorization - https://cloud.google.com/binary-authorization
+- Assured Open Source Software - https://cloud.google.com/assured-open-source-software
+- SLSA Level 3 in [Cloud Build](https://cloud.google.com/build) and [Cloud Deploy](https://cloud.google.com/deploy) - https://slsa.dev/ 
+- Security Posture Management capabilities for [GKE](https://cloud.google.com/kubernetes-engine) (can be used in a SIEM - security information and event management system via [Pub/Sub](https://cloud.google.com/pubsub) or [Pub/Sub Lite](https://cloud.google.com/pubsub/lite/docs) - https://cloud.google.com/kubernetes-engine/docs/concepts/about-security-posture-dashboard
+
 # Installation/Deployment
 
 ### Deployment Preparations
