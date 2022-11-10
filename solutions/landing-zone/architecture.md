@@ -776,7 +776,7 @@ Notes
 - Transit Gateway like https://cloud.google.com/network-connectivity-center
 - Forseti - Security inventory, monitoring, enforcement - https://forsetisecurity.org/
 - Tags on Storage Buckets - https://cloud.google.com/storage/docs/tags-and-labels#examples_for_attaching_tags_to_buckets
-
+- Private Service Connect and VPC Service Controls https://cloud.google.com/vpc/docs/configure-private-service-connect-services-controls
 
 
 - SCC enablement even for standard is required
