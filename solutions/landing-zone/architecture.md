@@ -663,6 +663,77 @@ NAME                                                  STATUS   ROLES    AGE   VE
 gke-krmapihost-landi-krmapihost-landi-1ad6d226-0t58   Ready    <none>   10d   v1.23.8-gke.1900
 gke-krmapihost-landi-krmapihost-landi-3c83b5c4-7n9m   Ready    <none>   10d   v1.23.8-gke.1900
 gke-krmapihost-landi-krmapihost-landi-e79f699c-gsc2   Ready    <none>   10d   v1.23.8-gke.1900
+
+michael@cloudshell:~ (pubsec-declarative-tk-gz)$ kubectl get pods -n cnrm-system
+NAME                                             READY   STATUS    RESTARTS   AGE
+cnrm-controller-manager-ccljafcgkgtfkvoj8280-0   2/2     Running   0          10d
+cnrm-deletiondefender-0                          1/1     Running   0          10d
+cnrm-resource-stats-recorder-5d6bd8cc5b-k9ccj    2/2     Running   0          10d
+cnrm-unmanaged-detector-0                        1/1     Running   0          10d
+cnrm-webhook-manager-545b8bbf4b-2ghbd            1/1     Running   0          10d
+cnrm-webhook-manager-545b8bbf4b-bxm8z            1/1     Running   0          10d
+
+michael@cloudshell:~ (pubsec-declarative-tk-gz)$ kubectl logs -n cnrm-system cnrm-controller-manager-ccljafcgkgtfkvoj8280-0 --follow
+
+{"severity":"info","timestamp":"2022-11-11T22:49:49.515Z","logger":"controller.computeroute-controller","msg":"Starting workers","reconciler group":"compute.cnrm.cloud.google.com","reconciler kind":"ComputeRoute","worker count":20}
+{"severity":"info","timestamp":"2022-11-11T22:49:49.516Z","logger":"controller.memcacheinstance-controller","msg":"Starting workers","reconciler group":"memcache.cnrm.cloud.google.com","reconciler kind":"MemcacheInstance","worker count":20}
+
+michael@cloudshell:~/wse_github/GoogleCloudPlatform (pubsec-declarative-tk-gz)$ cd landing-zone/
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (pubsec-declarative-tk-gz)$ kpt fn render
+Package "landing-zone/environments/common/guardrails-policies":
+Package "landing-zone/environments/common":
+[RUNNING] "gcr.io/kpt-fn/set-namespace:v0.4.1"
+[PASS] "gcr.io/kpt-fn/set-namespace:v0.4.1" in 1.8s
+  Results:
+    [info]: all namespaces are already "config-control". no value changed
+
+Package "landing-zone/environments/nonprod":
+[RUNNING] "gcr.io/kpt-fn/set-namespace:v0.4.1"
+[PASS] "gcr.io/kpt-fn/set-namespace:v0.4.1" in 200ms
+  Results:
+    [info]: all namespaces are already "config-control". no value changed
+
+Package "landing-zone/environments/prod":
+[RUNNING] "gcr.io/kpt-fn/enable-gcp-services:v0.1.0"
+[PASS] "gcr.io/kpt-fn/enable-gcp-services:v0.1.0" in 2.5s
+  Results:
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/prod-nethost-service-compute: recreated service
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/prod-nethost-service-logging: recreated service
+[RUNNING] "gcr.io/kpt-fn/set-namespace:v0.4.1"
+[PASS] "gcr.io/kpt-fn/set-namespace:v0.4.1" in 200ms
+  Results:
+    [info]: all namespaces are already "config-control". no value changed
+
+Package "landing-zone":
+[RUNNING] "gcr.io/kpt-fn/apply-setters:v0.2"
+[PASS] "gcr.io/kpt-fn/apply-setters:v0.2" in 1.5s
+  Results:
+    [info] metadata.annotations.cnrm.cloud.google.com/organization-id: set field value to "925207728429"
+    [info] metadata.annotations.cnrm.cloud.google.com/organization-id: set field value to "925207728429"
+    [info] spec.projectID: set field value to "net-perimeter-prj-common-gz1"
+    [info] spec.parentRef.external: set field value to "925207728429"
+    ...(87 line(s) truncated, use '--truncate-output=false' to disable)
+[RUNNING] "gcr.io/kpt-fn/generate-folders:v0.1.1"
+[PASS] "gcr.io/kpt-fn/generate-folders:v0.1.1" in 3.3s
+[RUNNING] "gcr.io/kpt-fn/enable-gcp-services:v0.1.0"
+[PASS] "gcr.io/kpt-fn/enable-gcp-services:v0.1.0" in 1.3s
+  Results:
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/nonprod-nethost-service-compute: recreated service
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/nonprod-nethost-service-dns: recreated service
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/nonprod-nethost-service-logging: recreated service
+    [info] serviceusage.cnrm.cloud.google.com/v1beta1/Service/config-control/prod-nethost-service-compute: recreated service
+    ...(3 line(s) truncated, use '--truncate-output=false' to disable)
+[RUNNING] "gcr.io/kpt-fn/gatekeeper:v0.2.1"
+[PASS] "gcr.io/kpt-fn/gatekeeper:v0.2.1" in 2.4s
+[RUNNING] "gcr.io/kpt-fn/kubeval:v0.3.0"
+[PASS] "gcr.io/kpt-fn/kubeval:v0.3.0" in 17.5s
+
+Successfully executed 9 function(s) in 5 package(s).
+
+
+michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (pubsec-declarative-tk-gz)$ kpt live apply --reconcile-timeout=2m --output=table
+default     ConfigMap/setters                         Successful    Current                 <None>                                    15s     Resource is always ready
+default     StorageBucket/audit-audit-prj-id-gz1      Successful    InProgress              Ready                                     14s     No controller is managing this resource.
 ```
 
 ### Deleting the Landing Zone Deployment
