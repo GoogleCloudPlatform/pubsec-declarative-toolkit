@@ -648,6 +648,23 @@ orking
 ### Updating the Landing Zone from Upstream source
 #### Reconciling
 ### Updating the Landing Zone Deployment with local changes
+
+Get a connection to the GKE Kubernetes cluster running KCC.
+
+
+```
+gcp.zone
+michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud container clusters get-credentials krmapihost-landing-zone-controller9 --region northamerica-northeast2
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for krmapihost-landing-zone-controller9.
+
+michael@cloudshell:~ (landing-zone-controller-e4g7d)$ kubectl get nodes
+NAME                                                  STATUS   ROLES    AGE   VERSION
+gke-krmapihost-landi-krmapihost-landi-1ad6d226-0t58   Ready    <none>   10d   v1.23.8-gke.1900
+gke-krmapihost-landi-krmapihost-landi-3c83b5c4-7n9m   Ready    <none>   10d   v1.23.8-gke.1900
+gke-krmapihost-landi-krmapihost-landi-e79f699c-gsc2   Ready    <none>   10d   v1.23.8-gke.1900
+```
+
 ### Deleting the Landing Zone Deployment
 
 
