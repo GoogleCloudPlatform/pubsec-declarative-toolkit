@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# GSA
+# GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata: # kpt-merge: config-control/networking-sa
@@ -24,7 +24,7 @@ metadata: # kpt-merge: config-control/networking-sa
 spec:
   displayName: networking-sa
 ---
-# Grant GCP role Network Admin to GSA
+# Grant GCP role Network Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/networking-sa-networkadmin-permissions
@@ -42,7 +42,7 @@ spec:
   role: roles/compute.networkAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Security Admin to GSA
+# Grant GCP role Security Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/networking-sa-security-permissions
@@ -60,7 +60,7 @@ spec:
   role: roles/compute.securityAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role DNS Admin to GSA
+# Grant GCP role DNS Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/networking-sa-dns-permissions
@@ -78,7 +78,7 @@ spec:
   role: roles/dns.admin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role ACM Admin to GSA
+# Grant GCP role ACM Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/networking-sa-service-control-permissions
@@ -96,7 +96,7 @@ spec:
   role: roles/accesscontextmanager.policyAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Shared VPC Admin to GSA
+# Grant GCP role Shared VPC Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/networking-sa-xpnadmin-permissions
@@ -114,7 +114,7 @@ spec:
   role: roles/compute.xpnAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# KSA
+# K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata: # kpt-merge: config-control/networking-sa-workload-identity-binding
@@ -140,10 +140,9 @@ kind: Namespace
 metadata: # kpt-merge: /networking
   name: networking
   annotations:
-    cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 ---
-# Link GSA to K8S namespace
+# Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata: # kpt-merge: networking/configconnectorcontext.core.cnrm.cloud.google.com
@@ -155,7 +154,7 @@ metadata: # kpt-merge: networking/configconnectorcontext.core.cnrm.cloud.google.
 spec:
   googleServiceAccount: networking-sa@management-project-id.iam.gserviceaccount.com # kpt-set: networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant viewer role on the projects namespace to networking KSA
+# Grant viewer role on the projects namespace to networking K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata: # kpt-merge: projects/allow-resource-reference-from-networking

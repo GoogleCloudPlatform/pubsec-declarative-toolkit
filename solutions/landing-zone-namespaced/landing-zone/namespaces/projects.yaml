@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# GSA
+# GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata: # kpt-merge: config-control/projects-sa
@@ -24,7 +24,7 @@ metadata: # kpt-merge: config-control/projects-sa
 spec:
   displayName: projects-sa
 ---
-# Grant GCP role Project IAM Admin to GSA
+# Grant GCP role Project IAM Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/projects-sa-projectiamadmin-permissions
@@ -42,7 +42,7 @@ spec:
   role: roles/resourcemanager.projectIamAdmin
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Project Creator to GSA
+# Grant GCP role Project Creator to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/projects-sa-projectcreator-permissions
@@ -60,7 +60,7 @@ spec:
   role: roles/resourcemanager.projectCreator
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Project Mover to GSA
+# Grant GCP role Project Mover to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/projects-sa-projectmover-permissions
@@ -78,7 +78,7 @@ spec:
   role: roles/resourcemanager.projectMover
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Project Deleter to GSA
+# Grant GCP role Project Deleter to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/projects-sa-projectdeleter-permissions
@@ -96,7 +96,7 @@ spec:
   role: roles/resourcemanager.projectDeleter
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Service Usage Admin to GSA
+# Grant GCP role Service Usage Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/projects-sa-serviceusageadmin-permissions
@@ -114,7 +114,7 @@ spec:
   role: roles/serviceusage.serviceUsageAdmin
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Billing User to GSA
+# Grant GCP role Billing User to GCP SA
 # This role cannot be defined at a folder level. It can only be set at the org level.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -133,7 +133,7 @@ spec:
   role: roles/billing.user
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# KSA
+# K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata: # kpt-merge: config-control/projects-sa-workload-identity-binding
@@ -159,10 +159,9 @@ kind: Namespace
 metadata: # kpt-merge: /projects
   name: projects
   annotations:
-    cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 ---
-# Link GSA to K8S namespace
+# Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata: # kpt-merge: projects/configconnectorcontext.core.cnrm.cloud.google.com
