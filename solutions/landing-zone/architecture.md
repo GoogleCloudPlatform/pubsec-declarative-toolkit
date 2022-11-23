@@ -550,6 +550,10 @@ https://cloud.google.com/resource-manager/docs/managing-multiple-orgs
 - SLSA Level 3 in [Cloud Build](https://cloud.google.com/build) and [Cloud Deploy](https://cloud.google.com/deploy) - https://slsa.dev/ 
 - Security Posture Management capabilities for [GKE](https://cloud.google.com/kubernetes-engine) (can be used in a SIEM - security information and event management system via [Pub/Sub](https://cloud.google.com/pubsub) or [Pub/Sub Lite](https://cloud.google.com/pubsub/lite/docs) - https://cloud.google.com/kubernetes-engine/docs/concepts/about-security-posture-dashboard
 
+## DI-37: Config Controller vs Config Connector - Managed vs CRDs
+- https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/180
+
+
 # Installation/Deployment
 
 ### Deployment Preparations
