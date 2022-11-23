@@ -68,7 +68,7 @@ kind: Namespace
 metadata: # kpt-merge: /hierarchy
   name: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cgit conrm.cloud.google.com/ignore-clusterless: "true"
 ---
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
@@ -85,8 +85,8 @@ spec:
 # Grant viewer role on the hierarchy namespace to projects K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata: # kpt-merge: hierarchy/allow-resource-reference-from-hierarchy
-  name: allow-resource-reference-from-hierarchy
+metadata: # kpt-merge: hierarchy/allow-resource-reference-from-projects
+  name: allow-resource-reference-from-projects
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
