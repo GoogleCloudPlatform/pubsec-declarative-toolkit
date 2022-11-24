@@ -553,7 +553,7 @@ https://cloud.google.com/resource-manager/docs/managing-multiple-orgs
 ## DI-37: Config Controller vs Config Connector - Managed vs CRDs
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/180
 
-## DI-48: Identity Federation
+## DI-38: Identity Federation
 see https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#di-4-cloud-identity-federation
 
 See Identity Onboarding and Federation options at https://cloud.google.com/architecture/landing-zones/decide-how-to-onboard-identities
