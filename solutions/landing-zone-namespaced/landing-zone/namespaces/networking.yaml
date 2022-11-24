@@ -14,7 +14,7 @@
 # GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
-metadata: # kpt-merge: config-control/networking-sa
+metadata:
   name: networking-sa
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -27,7 +27,7 @@ spec:
 # Grant GCP role Network Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-networkadmin-permissions
+metadata:
   name: networking-sa-networkadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -45,7 +45,7 @@ spec:
 # Grant GCP role Security Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-security-permissions
+metadata:
   name: networking-sa-security-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -63,7 +63,7 @@ spec:
 # Grant GCP role DNS Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-dns-permissions
+metadata:
   name: networking-sa-dns-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -81,7 +81,7 @@ spec:
 # Grant GCP role ACM Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-service-control-permissions
+metadata:
   name: networking-sa-service-control-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -99,7 +99,7 @@ spec:
 # Grant GCP role Shared VPC Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-xpnadmin-permissions
+metadata:
   name: networking-sa-xpnadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -117,7 +117,7 @@ spec:
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: config-control/networking-sa-workload-identity-binding
+metadata:
   name: networking-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -137,7 +137,7 @@ spec:
 # K8S namespace
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /networking
+metadata:
   name: networking
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -145,7 +145,7 @@ metadata: # kpt-merge: /networking
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
-metadata: # kpt-merge: networking/configconnectorcontext.core.cnrm.cloud.google.com
+metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: networking
   annotations:
@@ -157,7 +157,7 @@ spec:
 # Grant viewer role on the projects namespace to networking K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata: # kpt-merge: projects/allow-resource-reference-from-networking
+metadata:
   name: allow-resource-reference-from-networking
   namespace: projects
   annotations:

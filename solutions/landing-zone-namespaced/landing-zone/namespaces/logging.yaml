@@ -14,7 +14,7 @@
 # GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
-metadata: # kpt-merge: config-control/logging-sa
+metadata:
   name: logging-sa
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -27,7 +27,7 @@ spec:
 # Grant GCP role Logging Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/logging-sa-logadmin-permissions
+metadata:
   name: logging-sa-logadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -45,7 +45,7 @@ spec:
 # Grant GCP role BigQuery Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/logging-sa-bigqueryadmin-permissions
+metadata:
   name: logging-sa-bigqueryadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -63,7 +63,7 @@ spec:
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: config-control/logging-sa-workload-identity-binding
+metadata:
   name: logging-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -83,7 +83,7 @@ spec:
 # K8S namespace
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /logging
+metadata:
   name: logging
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -91,7 +91,7 @@ metadata: # kpt-merge: /logging
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
-metadata: # kpt-merge: logging/configconnectorcontext.core.cnrm.cloud.google.com
+metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: logging
   annotations:
@@ -103,7 +103,7 @@ spec:
 # Grant viewer role on the projects namespace to logging K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata: # kpt-merge: projects/allow-resource-reference-from-logging
+metadata:
   name: allow-resource-reference-from-logging
   namespace: projects
   annotations:
