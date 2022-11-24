@@ -411,7 +411,7 @@ pubsub.googleapis.com/projects/guardrails-eaba/topics/tp-org-logs-5ufo
 Error Code
 topic_not_found
 Error Detail
-The specified Pub/Sub topic could not be found by the Cloud Logging service. Create the topic and grant publish permission for the service account specified in the sink's writerIdentity field on the topic. You can also set up Cloud Logging to use a different destination.
+The specified Pub/Sub topic could not be found by the Cloud Logging service. Create the topic and grant publish permission for the service account specified in the sink's writer. Identity field on the topic. You can also set up Cloud Logging to use a different destination.
 Fix this error by following steps documented in troubleshooting sinks. If the sink is no longer needed, it can be quickly removed using gcloud:
 gcloud logging sinks delete sk-c-logging-pub --organization=93413315325
 ```
@@ -553,6 +553,19 @@ https://cloud.google.com/resource-manager/docs/managing-multiple-orgs
 ## DI-37: Config Controller vs Config Connector - Managed vs CRDs
 - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/180
 
+## DI-48: Identity Federation
+see https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#di-4-cloud-identity-federation
+
+See Identity Onboarding and Federation options at https://cloud.google.com/architecture/landing-zones/decide-how-to-onboard-identities
+- using Option 2  
+- using https://cloud.google.com/architecture/identity/federating-gcp-with-azure-active-directory
+- https://cloud.google.com/architecture/identity/reference-architectures#using_an_external_idp
+
+#### SSO only
+- Verify details of backing IAM Identity user/role as part SSO federated IdP user auth during IAP session https://cloud.google.com/iap/docs/concepts-overview 
+- Verify GCP Identity role for application use is available via the IAP session token - thinking https://cloud.google.com/iap/docs/signed-headers-howto#controlling_access_with_sign_in_attributes 
+- see https://cloud.google.com/architecture/identity/single-sign-on
+"To use SSO, a user must have a user account in Cloud Identity or Google Workspace and a corresponding identity in the external IdP"
 
 # Installation/Deployment
 
