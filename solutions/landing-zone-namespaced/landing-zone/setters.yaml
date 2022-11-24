@@ -14,7 +14,7 @@
 
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:
   name: setters
   annotations:
     internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
