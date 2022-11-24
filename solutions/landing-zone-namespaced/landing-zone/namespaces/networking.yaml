@@ -18,7 +18,6 @@ metadata:
   name: networking-sa
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -31,7 +30,6 @@ metadata:
   name: networking-sa-networkadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -49,7 +47,6 @@ metadata:
   name: networking-sa-security-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -67,7 +64,6 @@ metadata:
   name: networking-sa-dns-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -85,7 +81,6 @@ metadata:
   name: networking-sa-service-control-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -103,7 +98,6 @@ metadata:
   name: networking-sa-xpnadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -121,7 +115,6 @@ metadata:
   name: networking-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -149,7 +142,6 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1,kpt-pkg
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   googleServiceAccount: networking-sa@management-project-id.iam.gserviceaccount.com # kpt-set: networking-sa@${management-project-id}.iam.gserviceaccount.com
