@@ -199,6 +199,9 @@ Security Command Center Premium - Threat Detection - https://cloud.google.com/se
 
 GCP provides trusted image scanning to reject unsanctioned public image downloads through a organizational policy called trusted image policy https://cloud.google.com/compute/docs/images/restricting-image-access 
 
+ - Accessing Security Command Center via API - https://cloud.google.com/security-command-center/docs/how-to-programmatic-access#python
+ - Accessing SCC via gcloud https://cloud.google.com/sdk/gcloud/reference/scc
+ - 
 ## Operations
 ### Allowlist
 Allowlists are defined by workload and security profile.  Dev may have cloud-internet egress all the way to 0.0.0.0/0.
