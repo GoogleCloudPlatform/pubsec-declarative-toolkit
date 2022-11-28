@@ -431,7 +431,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 - see https://cloud.google.com/architecture?category=networking&text=appliance to https://cloud.google.com/architecture/deploying-nat-gateways-in-a-hub-and-spoke-architecture-using-vpc-network-peering-and-routing?hl=en
 ### Fortigate Multitenant Architecture
-- The current architecture design - see is at least one fortigate HA cluster per organization with unclass and classified zones sharing one Fortigate HA cluster for now.  There may be an option to split traffic across 2 clusters per GC-CAP and GC-TIP but for now we are going with a single cluster per organization.
+- The current architecture design - see the slide share at https://docs.google.com/presentation/d/19B3gdZ1ukrRekEFQ1UIWsZJJi4ElABzziKEkPnS54uI/edit#slide=id.gff25b70edb_0_0 is at least one fortigate HA cluster per organization with unclass and classified zones sharing one Fortigate HA cluster for now.  There may be an option to split traffic across 2 clusters per GC-CAP and GC-TIP but for now we are going with a single cluster per organization.
 - There may be a use case for a shared Fortigate HA cluster under the Landing Zone as a Service model - but this LZaaS model is handled currently using Shared VPC's
 - Performance implications of the Fortigate cluster need to be determined.  The current standard is for at least 1 vCPU per NIC - where our default Fortigate VM has 4 NICs.  For maximum throughput we recommend 2 to 4 times vCPU's per NIC with the associated RAM and 10+Gbps network throughput
 - For example the recommended N2-standard-4 VM type has 4vCPUs, 16GB ram and under 10Gbps
@@ -439,6 +439,9 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - However the n2-standard-16 at 32 vCPU and 128GB ram can be provisioned (when using a gVNIC) past 32Gbps to 50Gbps
 - <img width="561" alt="Screen Shot 2022-11-28 at 3 18 17 PM" src="https://user-images.githubusercontent.com/94715080/204372702-2384b18d-1b23-400c-a30a-70cc2d29f70d.png">
 - <img width="567" alt="Screen Shot 2022-11-28 at 3 18 47 PM" src="https://user-images.githubusercontent.com/94715080/204372774-6007f1e6-8c35-44a9-a5e9-c5baa7058dfe.png">
+- Other criteria for NGFW HA cluster mapping is around the 25 limit on peering https://cloud.google.com/architecture/architecture-centralized-network-appliances-on-google-cloud#choosing_an_option_for_attaching_network_segments . The backup to the limitation via VPN will also reduce the egress bandwidth as a fallback option.
+
+
 
 ### Fortigate HA Active Standby POC
 - tracking MGMT NIC and NAT specific https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/166
