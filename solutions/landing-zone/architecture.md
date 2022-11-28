@@ -440,7 +440,8 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - <img width="561" alt="Screen Shot 2022-11-28 at 3 18 17 PM" src="https://user-images.githubusercontent.com/94715080/204372702-2384b18d-1b23-400c-a30a-70cc2d29f70d.png">
 - <img width="567" alt="Screen Shot 2022-11-28 at 3 18 47 PM" src="https://user-images.githubusercontent.com/94715080/204372774-6007f1e6-8c35-44a9-a5e9-c5baa7058dfe.png">
 - Other criteria for NGFW HA cluster mapping is around the 25 limit on peering https://cloud.google.com/architecture/architecture-centralized-network-appliances-on-google-cloud#choosing_an_option_for_attaching_network_segments . The backup to the limitation via VPN will also reduce the egress bandwidth as a fallback option.
-
+- There is also the NGFW policy question / org
+- We will need to monitor the egress traffic in this distributed/org setup to see if the cost/org is justified
 
 
 ### Fortigate HA Active Standby POC
