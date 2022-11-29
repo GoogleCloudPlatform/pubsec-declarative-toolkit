@@ -780,6 +780,11 @@ default     StorageBucket/audit-audit-prj-id-gz1      Successful    InProgress  
 
 ### Deleting the Landing Zone Deployment
 
+# FinOps
+## KCC Cluster
+- $14 CAD/day for GKE standard 3 node default zonal
+- $4 CAD/day for GKE standard default
+
 
 # Deployments 
 
