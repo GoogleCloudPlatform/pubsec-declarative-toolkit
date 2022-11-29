@@ -41,6 +41,7 @@ A spreadsheet of cloud ingress/egress application flows with an implementation d
 ### Diagrams
 
 #### High Level PaaS Workflow Example
+see https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/architecture.md#system-architecture-high-level-workload-overview
 ![img](img/_gcp_pbmm_lz_sa_paas_workload_overview.png)
 
 
@@ -778,6 +779,11 @@ default     StorageBucket/audit-audit-prj-id-gz1      Successful    InProgress  
 ```
 
 ### Deleting the Landing Zone Deployment
+
+# FinOps
+## KCC Cluster
+- $14 CAD/day for GKE standard 3 node default zonal
+- $4 CAD/day for GKE standard default
 
 
 # Deployments 
