@@ -11,6 +11,7 @@ pipeline:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml  
     - image: gcr.io/kpt-fn/enable-gcp-services:v0.1.0
+    - image: gcr.io/kpt-fn/generate-folders:v0.1.1
   validators:
     - image: gcr.io/kpt-fn/gatekeeper:v0.2.1
     - image: gcr.io/kpt-fn/kubeval:v0.3.0
