@@ -432,6 +432,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - https://docs.fortinet.com/document/fortigate/6.0.0/cookbook/154890/vdom-configuration
 - see https://cloud.google.com/architecture?category=networking&text=appliance to https://cloud.google.com/architecture/deploying-nat-gateways-in-a-hub-and-spoke-architecture-using-vpc-network-peering-and-routing?hl=en
 ### Fortigate Multitenant Architecture
+- see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/158#issuecomment-1332214668
 - The current architecture design - see the slide share at https://docs.google.com/presentation/d/19B3gdZ1ukrRekEFQ1UIWsZJJi4ElABzziKEkPnS54uI/edit#slide=id.gff25b70edb_0_0 is at least one fortigate HA cluster per organization with unclass and classified zones sharing one Fortigate HA cluster for now.  There may be an option to split traffic across 2 clusters per GC-CAP and GC-TIP but for now we are going with a single cluster per organization.
 - There may be a use case for a shared Fortigate HA cluster under the Landing Zone as a Service model - but this LZaaS model is handled currently using Shared VPC's
 - Performance implications of the Fortigate cluster need to be determined.  The current standard is for at least 1 vCPU per NIC - where our default Fortigate VM has 4 NICs.  For maximum throughput we recommend 2 to 4 times vCPU's per NIC with the associated RAM and 10+Gbps network throughput
