@@ -43,7 +43,7 @@ data:
   # Cannot contain restricted strings, such as google and ssl.
   net-host-prj-nonprod-id: net-host-prj-nonprod-12345
   net-host-prj-prod-id: net-host-prj-prod-12345
-  net-perimeter-prj-common-id: net-perimeter-prj-common-12345
+  net-perimeter-prj-common-id: net-per-prj-common-12345
   audit-prj-id: audit-prj-id-12345
   guardrails-project-id: guardrails-project-12345
   #############
