@@ -625,6 +625,19 @@ export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--f
 echo $BILLING_ID
 019283-6F1AB5-7AD576
 
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (pubsec-declarative-agz)$ gcloud projects create $CC_PROJECT_ID --name="Config Controller" --labels=type=infrastructure-automation --set-as-default
+Create in progress for [https://cloudresourcemanager.googleapis.com/v1/projects/controller-agz-1201].
+Waiting for [operations/cp.7683542102938739329] to finish...done.    
+Enabling service [cloudapis.googleapis.com] on project [controller-agz-1201]...
+Operation "operations/acat.p2-482702030934-67906db4-95f9-4ed3-b34d-8061b192168e" finished successfully.
+Updated property [core/project] to [controller-agz-1201].
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud beta billing projects link $CC_PROJECT_ID --billing-account $BILLING_ID
+billingAccountName: billingAccounts/019283-6F1AB5-7AD576
+billingEnabled: true
+name: projects/controller-agz-1201/billingInfo
+projectId: controller-agz-1201
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud config set project $CC_PROJECT_ID
+Updated property [core/project].
 1204-
 gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
