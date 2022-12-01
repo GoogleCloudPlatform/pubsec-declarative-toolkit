@@ -702,7 +702,13 @@ INTERNAL_IPV6_PREFIX:
 EXTERNAL_IPV6_PREFIX:
 
 ```
-
+### Verify the Config Controller Cluster
+```
+gcloud anthos config controller list
+NAME: pdt
+LOCATION: northamerica-northeast1
+STATE: RUNNING
+```
 
 ### Updating the Config Controller Cluster
 ### Deleting the Config Controller Cluster
