@@ -19,7 +19,7 @@ export CLUSTER=pdt
 export SUBNET=pdt
 export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 export ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
-export BILLING_ID=$(gcloud alpha billing projects describe $PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
+export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
 ```
 
 ## 2. Create Project
