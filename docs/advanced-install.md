@@ -16,6 +16,7 @@ gcloud config set project <your bootstrap project id>
 export CC_PROJECT_ID=controller-lgz-0919
 export REGION=northamerica-northeast2
 export CLUSTER=pdt
+export NETWORK=pdt-vpc
 export SUBNET=pdt
 export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 export ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
@@ -47,10 +48,7 @@ gcloud services enable krmapihosting.googleapis.com container.googleapis.com clo
 ## 6. Create a network and subnet
 ```
 gcloud compute networks create $NETWORK --subnet-mode=custom
-gcloud compute networks subnets create $SUBNET  \
---network $NETWORK \
---range 192.168.0.0/16 \
---region $REGION
+gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.168.0.0/16 --region $REGION
 ```
 
 ## 7. Create the Config Controller Instance
