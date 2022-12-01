@@ -662,15 +662,23 @@ $ gcloud compute firewall-rules create <FIREWALL_NAME> --network pdt-vpc --allow
 
 root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.168.0.0/16 --region $REGION
 
+```
+
+<img width="1502" alt="Screen Shot 2022-12-01 at 12 20 43 PM" src="https://user-images.githubusercontent.com/94715080/205118472-4e02806b-b2d7-4f72-a7fe-e77ead987a29.png">
+
+Create the GKE cluster - usually 5 but could take up to 30 min
+```
 
 
 
-1204-
+1230
 gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
 Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
 ```
-<img width="1502" alt="Screen Shot 2022-12-01 at 12 20 43 PM" src="https://user-images.githubusercontent.com/94715080/205118472-4e02806b-b2d7-4f72-a7fe-e77ead987a29.png">
+<img width="1557" alt="Screen Shot 2022-12-01 at 12 39 53 PM" src="https://user-images.githubusercontent.com/94715080/205122468-2b4cf94d-780d-4322-9682-f5bf1fe9e2c3.png">
+
+
 
 ### Updating the Config Controller Cluster
 ### Deleting the Config Controller Cluster
