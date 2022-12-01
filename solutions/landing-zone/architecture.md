@@ -612,6 +612,8 @@ Verify that the requireShieldedVM org policy is off for the folder or project be
 
 ```
 
+Watch for multiple billing accounts - pick the right one - as the script takes the first in sequence
+
 export CC_PROJECT_ID=controller-agz-1201
 export REGION=northamerica-northeast1
 export SUBNET=pdt
@@ -638,11 +640,15 @@ name: projects/controller-agz-1201/billingInfo
 projectId: controller-agz-1201
 root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud config set project $CC_PROJECT_ID
 Updated property [core/project].
+
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com accesscontextmanager.googleapis.com
+Operation "operations/acf.p2-482702030934-71d1d53e-7745-4133-9c10-7da1ce2f2099" finished successfully.
 1204-
 gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
 Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
 ```
+<img width="1502" alt="Screen Shot 2022-12-01 at 12 20 43 PM" src="https://user-images.githubusercontent.com/94715080/205118472-4e02806b-b2d7-4f72-a7fe-e77ead987a29.png">
 
 ### Updating the Config Controller Cluster
 ### Deleting the Config Controller Cluster
