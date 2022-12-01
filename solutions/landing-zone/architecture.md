@@ -616,6 +616,7 @@ Watch for multiple billing accounts - pick the right one - as the script takes t
 
 export CC_PROJECT_ID=controller-agz-1201
 export REGION=northamerica-northeast1
+export NETWORK=pdt-vpc
 export SUBNET=pdt
 export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 echo $BOOT_PROJECT_ID
@@ -643,6 +644,27 @@ Updated property [core/project].
 
 root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com accesscontextmanager.googleapis.com
 Operation "operations/acf.p2-482702030934-71d1d53e-7745-4133-9c10-7da1ce2f2099" finished successfully.
+
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud compute networks create $NETWORK --subnet-mode=custom
+Created [https://www.googleapis.com/compute/v1/projects/controller-agz-1201/global/networks/pdt-vpc].
+NAME: pdt-vpc
+SUBNET_MODE: CUSTOM
+BGP_ROUTING_MODE: REGIONAL
+IPV4_RANGE:
+GATEWAY_IPV4:
+
+Instances on this network will not be reachable until firewall rules
+are created. As an example, you can allow all internal traffic between
+instances as well as SSH, RDP, and ICMP by running:
+
+$ gcloud compute firewall-rules create <FIREWALL_NAME> --network pdt-vpc --allow tcp,udp,icmp --source-ranges <IP_RANGE>
+$ gcloud compute firewall-rules create <FIREWALL_NAME> --network pdt-vpc --allow tcp:22,tcp:3389,icmp
+
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.168.0.0/16 --region $REGION
+
+
+
+
 1204-
 gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
