@@ -605,12 +605,28 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/pull/183
 
 
 ### Creating the Config Controller Cluster
-Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
+- see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/33
+- Use the advanced install at https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md
 
 Verify that the requireShieldedVM org policy is off for the folder or project before starting the CC cluster
 
 ```
-michael@cloudshell:~ (landing-zone-controller-e4g7d)$ gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
+
+export CC_PROJECT_ID=controller-agz-1201
+export REGION=northamerica-northeast1
+export SUBNET=pdt
+export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+echo $BOOT_PROJECT_ID
+pubsec-declarative-agz
+export ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
+echo $ORG_ID
+6839210352
+export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
+echo $BILLING_ID
+019283-6F1AB5-7AD576
+
+1204-
+gcloud anthos config controller create landing-zone-controller --location northamerica-northeast1 --network kcc-controller --subnet kcc-regional-subnet
 Create request issued for: [landing-zone-controller]
 Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northamerica-northeast1/operations/operation-1663186893923-5e8a8e001e619-34ef85f4-6e91f4fd] to complete...working.
 ```
