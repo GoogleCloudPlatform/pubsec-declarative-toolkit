@@ -678,6 +678,30 @@ Waiting for operation [projects/landing-zone-controller-e4g7d/locations/northame
 ```
 <img width="1557" alt="Screen Shot 2022-12-01 at 12 39 53 PM" src="https://user-images.githubusercontent.com/94715080/205122468-2b4cf94d-780d-4322-9682-f5bf1fe9e2c3.png">
 
+Timeout after 40 min - switching to us-west1 and anthos option --full-management
+
+```
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ export CLUSTER=pdt-w1
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ export NETWORK=pdt-w1-vpc
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud compute networks create $NETWORK --subnet-mode=custom
+Created [https://www.googleapis.com/compute/v1/projects/controller-agz-1201/global/networks/pdt-w1-vpc].
+NAME: pdt-w1-vpc
+SUBNET_MODE: CUSTOM
+BGP_ROUTING_MODE: REGIONAL
+IPV4_RANGE:
+GATEWAY_IPV4:
+root_@cloudshell:~/wse_github/obriensystems/pubsec-declarative-toolkit (controller-agz-1201)$ gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.168.0.0/16 --region $REGION
+Created [https://www.googleapis.com/compute/v1/projects/controller-agz-1201/regions/us-west1/subnetworks/pdt].
+NAME: pdt
+REGION: us-west1
+NETWORK: pdt-w1-vpc
+RANGE: 192.168.0.0/16
+STACK_TYPE: IPV4_ONLY
+IPV6_ACCESS_TYPE:
+INTERNAL_IPV6_PREFIX:
+EXTERNAL_IPV6_PREFIX:
+
+```
 
 
 ### Updating the Config Controller Cluster
