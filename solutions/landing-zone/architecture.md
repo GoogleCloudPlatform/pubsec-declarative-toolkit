@@ -826,6 +826,7 @@ graph LR;
 - KPT functions catalog - https://github.com/GoogleContainerTools/kpt-functions-catalog
 - Starlark runtime (for yaml scripting - kpt/k8s) https://googlecontainertools.github.io/kpt/guides/producer/functions/starlark/
 - GoC Cloud Brokerage https://gc-cloud-services.canada.ca/s/cloud-fa-catalog?language=en_US&id=0010A000005vhilQAA
+- https://seroter.com/2021/08/18/using-the-new-google-cloud-config-controller-to-provision-and-manage-cloud-services-via-the-kubernetes-resource-model/
 
 
 # TODO - to integrate into this doc and the issue system
