@@ -52,6 +52,12 @@ gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.16
 ```
 
 ## 7. Create the Config Controller Instance
+### GKE Autopilot - recommended
+Fully managed cluster
+```
+gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --full-management
+```
+### GKE Standard
 ```
 gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
