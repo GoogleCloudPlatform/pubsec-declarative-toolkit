@@ -701,6 +701,21 @@ IPV6_ACCESS_TYPE:
 INTERNAL_IPV6_PREFIX:
 EXTERNAL_IPV6_PREFIX:
 
+
+export REGION=northamerica-northeast1
+export SUBNET=pdt-na1-sn
+export CLUSTER=pdt-na1
+export NETWORK=pdt-na1-vpc
+export CC_PROJECT_ID=controller-agz-1201
+export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
+USER="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+ORGID=$(gcloud projects get-ancestors $CC_PROJECT_ID --format='get(id)' | tail -1)
+gcloud compute networks create $NETWORK --subnet-mode=custom
+gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.168.0.0/16 --region $REGION
+gcloud alpha anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --full-management
+gcloud anthos config controller list
+
 ```
 ### Verify the Config Controller Cluster
 ```
@@ -872,6 +887,10 @@ Successfully executed 9 function(s) in 5 package(s).
 michael@cloudshell:~/wse_github/GoogleCloudPlatform/landing-zone (pubsec-declarative-tk-gz)$ kpt live apply --reconcile-timeout=2m --output=table
 default     ConfigMap/setters                         Successful    Current                 <None>                                    15s     Resource is always ready
 default     StorageBucket/audit-audit-prj-id-gz1      Successful    InProgress              Ready                                     14s     No controller is managing this resource.
+
+
+
+
 ```
 
 ### Deleting the Landing Zone Deployment
