@@ -19,7 +19,7 @@ Expand on https://cloud.google.com/architecture/landing-zones/decide-network-des
 ## Artifacts
 ### Google Cloud Architecture Slides
 Google Cloud Architecture slides templates - https://cloud.google.com/icons specifically the Google Slides tempate for 2022 in https://docs.google.com/presentation/d/1fD1AwQo4E9Un6012zyPEb7NvUAGlzF6L-vo5DbUe4NQ/edit. 
-We will keep the source for the diagrams in an invite-only shared folder at https://docs.google.com/presentation/d/19B3gdZ1ukrRekEFQ1UIWsZJJi4ElABzziKEkPnS54uI/edit#slide=id.gff25b70edb_0_0
+We will keep the source for the diagrams in an invite-only shared folder at https://docs.google.com/presentation/d/1Ztqn7G2rWFlssVwC7r5Xl-WFSFCbVo6MoHJffrXScmw/edit#slide=id.ga472c7d3d1_3_834 with deprecated sandbox versions at the older https://docs.google.com/presentation/d/19B3gdZ1ukrRekEFQ1UIWsZJJi4ElABzziKEkPnS54uI/edit#slide=id.gff25b70edb_0_0
 
 ## Deliverables
 ### SC2G Deliverables
