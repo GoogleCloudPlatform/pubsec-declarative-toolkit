@@ -105,7 +105,7 @@ see for example the [Landing Zone](/solutions/landing-zone) solution
 ## 11. Development Operations: Delete the Config Controller Cluster
 Optional operation: In the CC cluster project
 ```
-gcloud anthos config controller delete --location $REGION $CLUSTER
+gcloud anthos config controller delete --location $REGION $CLUSTER --quiet
 ```
 ## 12. Development Operations: Re Create the Config Controller Cluster
 Optional Operation: Override the requireShieldedVm organization policy only on the CC project before re creating the CC cluster - by deferring to the Google Default over the inherited value. See https://console.cloud.google.com/iam-admin/orgpolicies/compute-requireOsLogin
