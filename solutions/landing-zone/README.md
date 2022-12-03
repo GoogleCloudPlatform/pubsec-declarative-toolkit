@@ -112,11 +112,12 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
   This bootstrap assume you have a [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) instance provisioned already. If you do not you can follow either the [quickstart](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) guide or the [detailed install guide](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) for advanced users (this is recommended for experienced users).
     
 
-  This Solution will require the Config Controller instance to have the following permissions.
-
+  This Solution will require the Config Controller instance to have the following permissions. Note: ORD_ID will already be set in [step 0](#0-set-default-logging-storage-location) above - if not run the following line first.
   ```
   export ORG_ID=your-org-id
   ```
+  
+  Run
   ```
   export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
   gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.folderAdmin"
