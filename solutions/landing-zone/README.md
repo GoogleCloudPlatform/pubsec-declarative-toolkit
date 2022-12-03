@@ -108,10 +108,10 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
   This Solution will require the Config Controller instance to have the following permissions.
 
-    ```
-    export ORG_ID=your-org-id
-    ```
-    ```
+  ```
+  export ORG_ID=your-org-id
+  ```
+  ```
     export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.folderAdmin"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectCreator"
@@ -125,7 +125,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/iam.serviceAccountAdmin
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/serviceusage.serviceUsageConsumer
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/logging.admin
-    ```
+  ```
     
   **Note**: You will also need to give the Service Account ($SA_EMAIL) the Billing Account User role on your billing account in order to allow it to associate billing IDs to the Projects that will be created. You can do that by following the steps in this [guide](https://cloud.google.com/billing/docs/how-to/billing-access#update-cloud-billing-permissions). If this is not granted projects will not be able to be provisioned.
 
@@ -133,7 +133,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 ### 2. Fetch the package
 
-    `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
+  `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
 
  Details: https://kpt.dev/reference/cli/pkg/get/
 
@@ -192,21 +192,21 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
  The following commands assume the `landing-zone` package is in your currently directory. If you are in the `landing-zone` directory you can remove omit the `landing-zone` argument from the commands.
 
-    ```
+  ```
     kpt live init landing-zone --namespace config-control
-    ```
+  ```
 
-    ```
+  ```
     kpt fn render landing-zone
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
-    ```
+  ```
 
- The section looks like the following and can either be commented out or deleted.
-    ```
+ The section around billing that looks like the following and can either be commented out or deleted.
+  ```
     billingAccountRef:
         # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
         external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
-    ```
+  ```
 
  This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI. If you do not remove this section the project will fail to create.
 
@@ -222,7 +222,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
    To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located [here](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops)
 
  #### 1. Create Source Control Service (skip this if not using Cloud Repositories)
-          ```
+   ```
           # service.yaml
 
           apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -230,26 +230,26 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
           metadata:
             name: sourcerepo.googleapis.com
             namespace: config-control
-          ```
+   ```
 
  #### 2. Apply the Manifest
-          ```
+   ```
           kubectl apply -f service.yaml
           kubectl wait -f service.yaml --for=condition=Ready
-          ```
+   ```
  #### 3. Create the Repo YAML
-          ```
+   ```
           apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
           kind: SourceRepoRepository
           metadata:
             name: my-lz-repo
             namespace: config-control
-          ```
+   ```
 
    Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
 
  #### 4. Create a Service Account and give it permissions to access the repo.
-          ```
+   ```
           # gitops-iam.yaml
 
           apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -288,14 +288,14 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
               apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
               kind: Project
               external: projects/PROJECT_ID
-          ```
+   ```
  #### 5. Deploy the manifests
-          ```
+   ```
           kubectl apply -f gitops-iam.yaml
-          ```
+   ```
 
  #### 6. Config the config sync instance.
-          ```
+   ```
           # root-sync.yaml
 
           apiVersion: configsync.gke.io/v1beta1
@@ -311,31 +311,31 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
               dir: REPO_PATH
               auth: gcpserviceaccount
               gcpServiceAccountEmail: config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
-          ```
+   ```
 
  #### 7. Deploy the Config Sync Manifest
-          ```
+   ```
           kubectl apply -f root-sync.yaml
           kubectl wait --for condition=established --timeout=10s crd/rootsyncs.configsync.gke.io
-          ```
+   ```
 
  #### 8. Push Configs to Git
-          ```
+   ```
           gcloud source repos clone my-lz-repo
           cd my-lz-repo
-          ```
+   ```
 
     Modify the `setters.yaml` file and apply the changes.
 
-          ```
+   ```
           kpt fn render
-          ```
+   ```
 
-          ```
+   ```
           git add . 
           git commit -m "Add Guardrails solution"
           git push --set-upstream origin main
-          ```
+   ```
 
  ### OCI
 
@@ -344,75 +344,73 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
    First we'll need to create an artifact registry to store our OCI artifacts.
 
    Let's set some environment variables to start
-      ```
-      export PROJECT_ID=PROJECT_ID
-      export AR_REPO_NAME=REPO_NAME
+   ```
+      export PROJECT_ID=<PROJECT_ID>
+      export AR_REPO_NAME=<REPO_NAME>
       export GSA_NAME="config-management-oci"
-      ```
+   ```
 
    Enable Artifact Registry
-      ```
+   ```
       gcloud services enable artifactregistry.googleapis.com \
       --project=${PROJECT_ID}
-      ```
+   ```
 
    Create a new repository
-      ```
+   ```
       gcloud artifacts repositories create ${AR_REPO_NAME} \
       --repository-format=docker \
       --location=northamerica-northeast1 \
       --description="Config Sync OCI repo" \
       --project=${PROJECT_ID}
-      ```
+   ```
 
    Create a Service Account for Config Management to Access the Artifact Repository.
-
-      ```
-      gcloud iam service-accounts create $GSA_NAME \
-      --project=${PROJECT_ID}
-      ```
+   ```
+      gcloud iam service-accounts create $GSA_NAME --project=${PROJECT_ID}
+   ```
 
    Assign it the read permissions
-      ```
+   ```
       gcloud artifacts repositories add-iam-policy-binding ${AR_REPO_NAME} \
       --member "serviceAccount:${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" \
       --location northamerica-northeast1 \
       --role "roles/artifactregistry.reader"
-      ```
+   ```
 
    Allow the SA to be accessed by the Root Sync Service account.
-      ```
+   ```
       gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
       --role roles/iam.workloadIdentityUser \
       --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler-landing-zone]"
-      ```
+   ```
 
   #### Push Config Image to the repository
 
   ##### Install crane and login to Artifact Registry
 
-      ```
+    ```
       go install github.com/google/go-containerregistry/cmd/crane@latest
       crane auth login northamerica-northeast1-docker.pkg.dev  -u oauth2accesstoken -p "$(gcloud auth print-access-token)"
-      ```
+    ```
 
   #### Render the Configs
 
    At this point we'll want to update our `setters.yaml` with the appropriate values and render the solution configurations using `kpt`.
 
-      ```
+   ```
       kpt fn render landing-zone
-      ``` 
+   ``` 
 
    Once that has completed we can build our OCI Artifact with the crane CLI.
 
-      ```
+   ```
       crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/lz-test:v1
-      ```
+   ```
 
    Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
 
-      ```
+   ```
       cat <<EOF>> lz-oci.yaml
       apiVersion: configsync.gke.io/v1beta1
       kind: RootSync
@@ -428,12 +426,12 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
           auth: gcpserviceaccount
           gcpServiceAccountEmail: ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
       EOF
-      ```
+   ```
 
    Apply it to the target cluster.
-      ```
+   ```
       kubectl apply -f lz-oci.yaml
-      ```
+   ```
 
  #### Clean Up
 
@@ -446,41 +444,41 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
  #### kpt
 
    First run either
-      ```
+   ```
       kpt live destroy
-      ```
+   ```
 
    or
 
-      ```
+   ```
       kubectl delete gcp --all
-      ```
+   ```
 
    Finally delete the Config Controller instance
 
-      ```
+   ```
       gcloud anthos config controller instance-name --location instance-region
-      ```
+   ```
 
  #### OCI
    First delete the Rootsync deployment. This will prevent the resources from self-healing.
 
-      ```
+   ```
       kubectl delete rootsync landing-zone -n config-management-system
-      ```
+   ```
 
    Now we can delete our KCC resources from the Config Controller instance.
 
-      ```
+   ```
       kubectl delete gcp --all -n config-control
-      ```
+   ```
 
    Once the resources have been deleted you can delete the config controller instance .
       
    If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
 
-      ```
+   ```
       gcloud anthos config controller delete instance-name --location instance-region
-      ```
+   ```
 
  ## Cloud Deploy (future)
