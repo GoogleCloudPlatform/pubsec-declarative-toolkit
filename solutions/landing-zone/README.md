@@ -157,7 +157,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     | management-project-number | "0000000000" |  [Number](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) of the Project where the Config Controller instance is location |
     | net-host-prj-nonprod-id | net-host-prj-nonprod-12345 | ID to be used for the Non-Prod Network Host Project |
     | net-host-prj-prod-id | net-host-prj-prod-12345 | ID to be used for the Prod Network Host Project |
-    | net-perimeter-prj-common-id | net-perimeter-prj-common-12345 | ID to be used for the Common Network Perimeter Host Project |
+    | net-perimeter-prj-common-id | net-per-prj-common-12345 | ID to be used for the Common Network Perimeter Host Project |
     | audit-prj-id | audit-prj-id-12345 | ID to be used for the Audit Project |
     | guardrails-project-id | guardrails-project-12345 | ID to be used for the Guardrails Project |
     | audit-viewer | group@domain.com | Group email to get audit viewer permissions |
