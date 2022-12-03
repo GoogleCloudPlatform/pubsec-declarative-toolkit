@@ -165,7 +165,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     | log-reader | group@domain.com | Group email to get log reader permissions |
     | organization-viewer| group@domain.com | Group email to get org viewer permissions |
 
-    **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
+  **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
 
    ## Deployment
 
