@@ -23,24 +23,25 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   #############
-  billing-id: "0000000000"
-  org-id: "0000000000"
+  billing-id: "0123456-0123456-0123456"
+  org-id: "01234567890"
   #############
   # Management Project
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard
   management-project-id: management-project-12345 
-  management-project-number: "0000000000"
+  management-project-number: "0123456789012"
   #############
   # Project  IDs
   # These are the IDs for the projects that will be created by the LZ script
-  # All IDs should be universally unique
+  # All IDs should be GCP universally unique
   # Must be 6 to 30 characters in length.
   # Can only contain lowercase letters, numbers, and hyphens.
   # Must start with a letter.
   # Cannot end with a hyphen.
   # Cannot be in use or previously used; this includes deleted projects.
   # Cannot contain restricted strings, such as google and ssl.
+  # Replace the 12345 with an appropriate distinct postfix - like your org/domain name first char in reverse
   net-host-prj-nonprod-id: net-host-prj-nonprod-12345
   net-host-prj-prod-id: net-host-prj-prod-12345
   net-perimeter-prj-common-id: net-per-prj-common-12345
