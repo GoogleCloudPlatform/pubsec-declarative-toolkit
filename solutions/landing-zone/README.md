@@ -8,7 +8,7 @@ Config Controller is a hosted service to provision and orchestrate Anthos and Go
 
 ![img](img/arch.svg)
 
-## Organzation
+## Organization
 
 This Landing Zone will create an initial 3 environments.
 
@@ -88,21 +88,27 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
 ### 0. Set Default Logging Storage Location.
 
- This command will ensure that the default logging buckets that are generated with a new project (organization wide) are set to the selected region instead of the default location `global`.
+ This command will ensure that the default logging buckets that are generated with a new project (organization wide) are set to the selected region instead of the default location `global`.  
+ 
+The variable PROJECT_ID is derived from your currently set project via a previously run and authenticated...
+```
+gcloud config set project <your bootstrap project id>
+```
 
-
+Run the following code block
  ```
-    export REGION=northamerica-northeast1
-    export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
-    export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
-    export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
-    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
-    gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export REGION=northamerica-northeast1
+export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
+export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
+gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
  ```
 
 
 ### 1. Deploy Bootstrap
-
+  Note: You may use the [advanced install](/docs/advanced-install.md) as an alternative to using arete to create the CC project, VPC, Subnet, deploy the CC cluster.
   This bootstrap assume you have a [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) instance provisioned already. If you do not you can follow either the [quickstart](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) guide or the [detailed install guide](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) for advanced users (this is recommended for experienced users).
     
 
