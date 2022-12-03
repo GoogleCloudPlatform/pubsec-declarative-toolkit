@@ -228,9 +228,11 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
 
    Deploy Infrastructure via GitOps using Anthos Config Management
 
-   To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located [here](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops)
+   To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located in [Manage Google Cloud resources with Config Controller](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#manage-resources) and [Setup GitOps](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops). 
+   
+   Skip this step if not using Cloud Repositories.
 
- #### 1. Create Source Control Service (skip this if not using Cloud Repositories)
+ #### 1a. Create Source Control Service 
    ```
           # service.yaml
 
@@ -241,12 +243,12 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
             namespace: config-control
    ```
 
- #### 2. Apply the Manifest
+ #### 1b. Apply the service Manifest
    ```
           kubectl apply -f service.yaml
           kubectl wait -f service.yaml --for=condition=Ready
    ```
- #### 3. Create the Repo YAML
+ #### 1c. Create the Repo YAML
    ```
           apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
           kind: SourceRepoRepository
@@ -254,10 +256,14 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
             name: my-lz-repo
             namespace: config-control
    ```
-
+ #### 1d. Apply the repo Manifest
+   ```
+          kubectl apply -f repo.yaml
+   ```
+   
    Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
-
- #### 4. Create a Service Account and give it permissions to access the repo.
+  
+ #### 2. Create a Service Account and give it permissions to access the repo.
    ```
           # gitops-iam.yaml
 
@@ -298,12 +304,12 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
               kind: Project
               external: projects/PROJECT_ID
    ```
- #### 5. Deploy the manifests
+ #### 3. Deploy the manifests
    ```
           kubectl apply -f gitops-iam.yaml
    ```
 
- #### 6. Config the config sync instance.
+ #### 4. Config the config sync instance.
    ```
           # root-sync.yaml
 
@@ -322,13 +328,13 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
               gcpServiceAccountEmail: config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
    ```
 
- #### 7. Deploy the Config Sync Manifest
+ #### 5. Deploy the Config Sync Manifest
    ```
           kubectl apply -f root-sync.yaml
           kubectl wait --for condition=established --timeout=10s crd/rootsyncs.configsync.gke.io
    ```
 
- #### 8. Push Configs to Git
+ #### 6. Push Configs to Git
    ```
           gcloud source repos clone my-lz-repo
           cd my-lz-repo
