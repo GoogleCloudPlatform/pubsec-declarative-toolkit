@@ -135,19 +135,19 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
 
-    Details: https://kpt.dev/reference/cli/pkg/get/
+ Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### 3. Set Organization Hierarchy
 
-    Modifiy `environments/common/hierarchy.yaml` if required. 
+ Modifiy `environments/common/hierarchy.yaml` if required. 
 
 ### 4. Customize Package
 
-    Edit `setters.yaml` with the relevant information. 
+ Edit `setters.yaml` with the relevant information. 
 
-    Emails used for groups should be exist in iam/groups before running the script.
+ Emails used for groups should be exist in iam/groups before running the script.
 
-    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.  
+ Project Number and Project ID for the management project will be for the project that the config controller instance runs in.  
 
     | Name | Default | Description |
     | --- | --- | --- |
@@ -165,32 +165,32 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     | log-reader | group@domain.com | Group email to get log reader permissions |
     | organization-viewer| group@domain.com | Group email to get org viewer permissions |
 
-    **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
+ **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
 
 ## Deployment
 
-    This solution can be deployed in a few different ways depending on the behavior you want. 
+ This solution can be deployed in a few different ways depending on the behavior you want. 
     - kpt
     - GitOps
       - [Git](#git)
       - [OCI](#oci)
 
 
-    Deploying through `kpt` is a more traditional push approach to deploying the infrastructure. This will deploy the infrastructure resources into the target cluster similar to how `kubectl` operates. Some of the deployment advantages `kpt` offers is the ability to use functions live `render` to populate variables in the configuration and `gatekeeper` which allows us to validate policy before deployment. 
+ Deploying through `kpt` is a more traditional push approach to deploying the infrastructure. This will deploy the infrastructure resources into the target cluster similar to how `kubectl` operates. Some of the deployment advantages `kpt` offers is the ability to use functions live `render` to populate variables in the configuration and `gatekeeper` which allows us to validate policy before deployment. 
 
-    When deploying resources `kpt` will wait for all resources to deploy before finishing, `kpt` also provides annotations such as [depends-on](https://kpt.dev/reference/annotations/depends-on/) that allow us to order the deployment of resources. 
+ When deploying resources `kpt` will wait for all resources to deploy before finishing, `kpt` also provides annotations such as [depends-on](https://kpt.dev/reference/annotations/depends-on/) that allow us to order the deployment of resources. 
 
-    GitOps allows us to connect our cluster to a "source of truth" and deploy from that. To do this we use [Anthos Config Management](https://cloud.google.com/anthos/config-management), which is pre-installed in Config Controller, and this allows us to target either a [Git Repository](https://cloud.google.com/anthos-config-management/docs/concepts/configs) or [OCI Artifact](https://cloud.google.com/anthos-config-management/docs/how-to/publish-config-registry) (Container). 
+ GitOps allows us to connect our cluster to a "source of truth" and deploy from that. To do this we use [Anthos Config Management](https://cloud.google.com/anthos/config-management), which is pre-installed in Config Controller, and this allows us to target either a [Git Repository](https://cloud.google.com/anthos-config-management/docs/concepts/configs) or [OCI Artifact](https://cloud.google.com/anthos-config-management/docs/how-to/publish-config-registry) (Container). 
     
-    The benefit to this method is we now have an additional reconciliation process to ensure the deployed state matches our desired state or "source of truth". This also allows for improved automation and removes the need to run `kpt live apply` to deploy resources.
+ The benefit to this method is we now have an additional reconciliation process to ensure the deployed state matches our desired state or "source of truth". This also allows for improved automation and removes the need to run `kpt live apply` to deploy resources.
 
  ### kpt
     
-    Before deploying with `kpt` you will need to add `constraints.yaml` to the `.krmignore` file. This is due to needing to have the `constraintstemplate` resources deployed into the instance before the policy `constraint` can be deployed. Once the `constrainttemplates` have been deployed you can remove `constraints.yaml` from the `.krmignore` file and redeploy. This is not needed with either gitops deployment options.
+ Before deploying with `kpt` you will need to add `constraints.yaml` to the `.krmignore` file. This is due to needing to have the `constraintstemplate` resources deployed into the instance before the policy `constraint` can be deployed. Once the `constrainttemplates` have been deployed you can remove `constraints.yaml` from the `.krmignore` file and redeploy. This is not needed with either gitops deployment options.
 
-    Before running the `kpt` commands for the first time you will need to initialize the `kpt` package locally. You will only need to do this once after you initially get the `kpt` package
+ Before running the `kpt` commands for the first time you will need to initialize the `kpt` package locally. You will only need to do this once after you initially get the `kpt` package
 
-    The following commands assume the `landing-zone` package is in your currently directory. If you are in the `landing-zone` directory you can remove omit the `landing-zone` argument from the commands.
+ The following commands assume the `landing-zone` package is in your currently directory. If you are in the `landing-zone` directory you can remove omit the `landing-zone` argument from the commands.
 
     ```
     kpt live init landing-zone --namespace config-control
@@ -201,25 +201,25 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     kpt live apply landing-zone --reconcile-timeout=2m --output=table
     ```
 
-    The section looks like the following and can either be commented out or deleted.
+ The section looks like the following and can either be commented out or deleted.
     ```
     billingAccountRef:
         # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
         external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
     ```
 
-    This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI. If you do not remove this section the project will fail to create.
+ This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI. If you do not remove this section the project will fail to create.
 
-    You can view the status of any deployed object by running `kubectl get gcp` when connected to the Config Controller instance. If an object is pending or is displaying an error you can investigate by copying the name of the object and running the describe command.
+ You can view the status of any deployed object by running `kubectl get gcp` when connected to the Config Controller instance. If an object is pending or is displaying an error you can investigate by copying the name of the object and running the describe command.
 
-    For example `kubectl describe storagebucket.storage.cnrm.cloud.google.com/audit-sink-audit-prj-12345`.
+ For example `kubectl describe storagebucket.storage.cnrm.cloud.google.com/audit-sink-audit-prj-12345`.
 
  ## GitOps 
  ### Git
 
-      Deploy Infrastructure via GitOps using Anthos Config Management
+   Deploy Infrastructure via GitOps using Anthos Config Management
 
-      To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located [here](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops)
+   To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located [here](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops)
 
  #### 1. Create Source Control Service (skip this if not using Cloud Repositories)
           ```
@@ -246,7 +246,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
             namespace: config-control
           ```
 
-      Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
+   Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
 
  #### 4. Create a Service Account and give it permissions to access the repo.
           ```
@@ -325,7 +325,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
           cd my-lz-repo
           ```
 
-          Modify the `setters.yaml` file and apply the changes.
+    Modify the `setters.yaml` file and apply the changes.
 
           ```
           kpt fn render
@@ -339,24 +339,24 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
  ### OCI
 
-      Before we deploy via OCI we have a few things we'll need to do to prepare our environment.
+   Before we deploy via OCI we have a few things we'll need to do to prepare our environment.
 
-      First we'll need to create an artifact registry to store our OCI artifacts.
+   First we'll need to create an artifact registry to store our OCI artifacts.
 
-      Let's set some environment variables to start
+   Let's set some environment variables to start
       ```
       export PROJECT_ID=PROJECT_ID
       export AR_REPO_NAME=REPO_NAME
       export GSA_NAME="config-management-oci"
       ```
 
-      Enable Artifact Registry
+   Enable Artifact Registry
       ```
       gcloud services enable artifactregistry.googleapis.com \
       --project=${PROJECT_ID}
       ```
 
-      Create a new repository
+   Create a new repository
       ```
       gcloud artifacts repositories create ${AR_REPO_NAME} \
       --repository-format=docker \
@@ -365,14 +365,14 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       --project=${PROJECT_ID}
       ```
 
-      Create a Service Account for Config Management to Access the Artifact Repository.
+   Create a Service Account for Config Management to Access the Artifact Repository.
 
       ```
       gcloud iam service-accounts create $GSA_NAME \
       --project=${PROJECT_ID}
       ```
 
-      Assign it the read permissions
+   Assign it the read permissions
       ```
       gcloud artifacts repositories add-iam-policy-binding ${AR_REPO_NAME} \
       --member "serviceAccount:${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" \
@@ -380,37 +380,37 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       --role "roles/artifactregistry.reader"
       ```
 
-      Allow the SA to be accessed by the Root Sync Service account.
+   Allow the SA to be accessed by the Root Sync Service account.
       ```
       gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
       --role roles/iam.workloadIdentityUser \
       --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler-landing-zone]"
       ```
 
-      #### Push Config Image to the repository
+  #### Push Config Image to the repository
 
-      ##### Install crane and login to Artifact Registry
+  ##### Install crane and login to Artifact Registry
 
       ```
       go install github.com/google/go-containerregistry/cmd/crane@latest
       crane auth login northamerica-northeast1-docker.pkg.dev  -u oauth2accesstoken -p "$(gcloud auth print-access-token)"
       ```
 
-      #### Render the Configs
+  #### Render the Configs
 
-      At this point we'll want to update our `setters.yaml` with the appropriate values and render the solution configurations using `kpt`.
+   At this point we'll want to update our `setters.yaml` with the appropriate values and render the solution configurations using `kpt`.
 
       ```
       kpt fn render landing-zone
       ``` 
 
-      Once that has completed we can build our OCI Artifact with the crane CLI.
+   Once that has completed we can build our OCI Artifact with the crane CLI.
 
       ```
       crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/lz-test:v1
       ```
 
-      Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
+   Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
 
       ```
       cat <<EOF>> lz-oci.yaml
@@ -430,58 +430,57 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       EOF
       ```
 
-      Apply it to the target cluster.
+   Apply it to the target cluster.
       ```
       kubectl apply -f lz-oci.yaml
       ```
 
-   #### Clean Up
+ #### Clean Up
 
-      Follow the below steps to delete the provisioned infrastructure and Config Controller instances.
+   Follow the below steps to delete the provisioned infrastructure and Config Controller instances.
 
-      If you want the deployed resources to live on and just destroy the Config Controller instance you can do so by running `gcloud anthos config controller instance-name --location instance-region`. This will remove the config controller instances but leave the resources it deployed untouched.
+   If you want the deployed resources to live on and just destroy the Config Controller instance you can do so by running `gcloud anthos config controller instance-name --location instance-region`. This will remove the config controller instances but leave the resources it deployed untouched.
 
-      To reacquire the resources you will need to redeploy a new instance and deploy the same configs to it. Config Controller should reattach to the previously deployed instances and start managing them again.
+   To reacquire the resources you will need to redeploy a new instance and deploy the same configs to it. Config Controller should reattach to the previously deployed instances and start managing them again.
 
-   #### kpt
+ #### kpt
 
-      First run either
+   First run either
       ```
       kpt live destroy
       ```
 
-      or
+   or
 
       ```
       kubectl delete gcp --all
       ```
 
-      Finally delete the Config Controller instance
+   Finally delete the Config Controller instance
 
       ```
       gcloud anthos config controller instance-name --location instance-region
       ```
 
-   #### OCI
-      First delete the Rootsync deployment. This will prevent the resources from self-healing.
+ #### OCI
+   First delete the Rootsync deployment. This will prevent the resources from self-healing.
 
       ```
       kubectl delete rootsync landing-zone -n config-management-system
       ```
 
-      Now we can delete our KCC resources from the Config Controller instance.
+   Now we can delete our KCC resources from the Config Controller instance.
 
       ```
       kubectl delete gcp --all -n config-control
       ```
 
-      Once the resources have been deleted you can delete the config controller instance .
+   Once the resources have been deleted you can delete the config controller instance .
       
-      If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
+   If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
 
       ```
       gcloud anthos config controller delete instance-name --location instance-region
       ```
-
 
  ## Cloud Deploy (future)
