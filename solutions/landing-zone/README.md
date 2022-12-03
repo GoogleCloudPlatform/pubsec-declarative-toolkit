@@ -140,7 +140,9 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
 
 ### 2. Fetch the package
 
-  `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
+  ```
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  ```
 
  Details: https://kpt.dev/reference/cli/pkg/get/
 
@@ -150,7 +152,7 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
 
 ### 4. Customize Package
 
- Edit `setters.yaml` with the relevant information. 
+ Edit `[setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/setters.yaml)` with the relevant information. 
 
  Emails used for groups should be exist in iam/groups before running the script.
 
