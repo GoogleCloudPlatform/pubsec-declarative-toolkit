@@ -151,19 +151,19 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
   | Name | Default | Description |
   | --- | --- | --- |
-  | billing-id | "0000000000" | Billing ID used with created projects |
-  | org-id | "0000000000" | Target Organization ID |
-  | management-project-id | management-project-12345  | ID of the Project where the Config Controller instance is located |
-  | management-project-number | "0000000000" |  [Number](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) of the Project where the Config Controller instance is location |
-  | net-host-prj-nonprod-id | net-host-prj-nonprod-12345 | ID to be used for the Non-Prod Network Host Project |
-  | net-host-prj-prod-id | net-host-prj-prod-12345 | ID to be used for the Prod Network Host Project |
-  | net-perimeter-prj-common-id | net-per-prj-common-12345 | ID to be used for the Common Network Perimeter Host Project |
-  | audit-prj-id | audit-prj-id-12345 | ID to be used for the Audit Project |
-  | guardrails-project-id | guardrails-project-12345 | ID to be used for the Guardrails Project |
-  | audit-viewer | group@domain.com | Group email to get audit viewer permissions |
-  | log-writer | group@domain.com | Group email to get log writer permissions |
-  | log-reader | group@domain.com | Group email to get log reader permissions |
-  | organization-viewer| group@domain.com | Group email to get org viewer permissions |
+  | billing-id | "0123456-0123456-0123456" | Billing ID used with created projects |
+  | org-id | "01234567890" | Target Organization ID |
+  | management-project-id | management-project-**12345**  | ID of the Project where the Config Controller instance is located |
+  | management-project-number | "0123456789012" |  [Number](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) of the Project where the Config Controller instance is location |
+  | net-host-prj-nonprod-id | net-host-prj-nonprod-**12345** | ID to be used for the Non-Prod Network Host Project |
+  | net-host-prj-prod-id | net-host-prj-prod-**12345** | ID to be used for the Prod Network Host Project |
+  | net-perimeter-prj-common-id | net-per-prj-common-**12345** | ID to be used for the Common Network Perimeter Host Project |
+  | audit-prj-id | audit-prj-id-**12345** | ID to be used for the Audit Project |
+  | guardrails-project-id | guardrails-project-**12345** | ID to be used for the Guardrails Project |
+  | audit-viewer | group@yourorg.com | Group email to get audit viewer permissions |
+  | log-writer | group@yourorg.com | Group email to get log writer permissions |
+  | log-reader | group@yourorg.com | Group email to get log reader permissions |
+  | organization-viewer| group@yourorg.com | Group email to get org viewer permissions |
 
  **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.  Replace the **12345** with an appropriate distinct postfix - like your org/domain name first char in reverse.
 
