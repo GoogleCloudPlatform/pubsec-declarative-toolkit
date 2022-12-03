@@ -86,7 +86,7 @@ The following resources will be deployed.
 
 To deploy this Landing Zone you will first need to create a Bootstrap project with a Config Controller instance.
 
-0. Set Default Logging Storage Location.
+### 0. Set Default Logging Storage Location.
 
     This command will ensure that the default logging buckets that are generated with a new project (organization wide) are set to the selected region instead of the default location `global`.
 
@@ -101,7 +101,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     ```
 
 
-1. Deploy Bootstrap
+### 1. Deploy Bootstrap
 
     This bootstrap assume you have a [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) instance provisioned already. If you do not you can follow either the [quickstart](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) guide or the [detailed install guide](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) for advanced users (this is recommended for experienced users).
     
@@ -131,17 +131,17 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     Deploying without Billing Account User role is possible but will require a user who does to manually add the billing account to the project. To do this you will need to remove the Billing Section of any deployed project (projects can be found in the following directories `common/projects`,`nonprod/projects`, `prod/projects`). Once the project is created the user with the Billing User will be able to add the billing id to the generated projects in the [manage billing page](https://console.cloud.google.com/billing).
 
-2. Fetch the package
+### 2. Fetch the package
 
     `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone`
 
     Details: https://kpt.dev/reference/cli/pkg/get/
 
-3. Set Organization Hierarchy
+### 3. Set Organization Hierarchy
 
     Modifiy `environments/common/hierarchy.yaml` if required. 
 
-4. Customize Package
+### 4. Customize Package
 
     Edit `setters.yaml` with the relevant information. 
 
@@ -167,7 +167,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     **Note on Project IDs**: All IDs should be universally unique, Must be 6 to 30 characters in length, can only contain lowercase letters, numbers, and hyphens. Must start with a letter. Cannot end with a hyphen. Cannot be in use or previously used; this includes deleted projects. Cannot contain restricted strings, such as google and ssl.
 
-   ## Deployment
+## Deployment
 
     This solution can be deployed in a few different ways depending on the behavior you want. 
     - kpt
@@ -184,7 +184,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     
     The benefit to this method is we now have an additional reconciliation process to ensure the deployed state matches our desired state or "source of truth". This also allows for improved automation and removes the need to run `kpt live apply` to deploy resources.
 
-    ### kpt
+ ### kpt
     
     Before deploying with `kpt` you will need to add `constraints.yaml` to the `.krmignore` file. This is due to needing to have the `constraintstemplate` resources deployed into the instance before the policy `constraint` can be deployed. Once the `constrainttemplates` have been deployed you can remove `constraints.yaml` from the `.krmignore` file and redeploy. This is not needed with either gitops deployment options.
 
@@ -214,14 +214,14 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
     For example `kubectl describe storagebucket.storage.cnrm.cloud.google.com/audit-sink-audit-prj-12345`.
 
-    ## GitOps 
-    ### Git
+ ## GitOps 
+ ### Git
 
       Deploy Infrastructure via GitOps using Anthos Config Management
 
       To start you will need a git repo, for this guide we will be using Cloud Repositories but you could easily use Gitlab, or Github. The instructions have been modified from the config controller setup guide located [here](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops)
 
-      1. Create Source Control Service (skip this if not using Cloud Repositories)
+ #### 1. Create Source Control Service (skip this if not using Cloud Repositories)
           ```
           # service.yaml
 
@@ -232,12 +232,12 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
             namespace: config-control
           ```
 
-      2. Apply the Manifest
+ #### 2. Apply the Manifest
           ```
           kubectl apply -f service.yaml
           kubectl wait -f service.yaml --for=condition=Ready
           ```
-      3. Create the Repo YAML
+ #### 3. Create the Repo YAML
           ```
           apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
           kind: SourceRepoRepository
@@ -248,7 +248,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       Now that we have a git repo set up we can configure the config controller instance to target it in order to deploy our infrastructure.
 
-      1. Create a Service Account and give it permissions to access the repo.
+ #### 4. Create a Service Account and give it permissions to access the repo.
           ```
           # gitops-iam.yaml
 
@@ -289,12 +289,12 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
               kind: Project
               external: projects/PROJECT_ID
           ```
-      2. Deploy the manifests
+ #### 5. Deploy the manifests
           ```
           kubectl apply -f gitops-iam.yaml
           ```
 
-      3. Config the config sync instance.
+ #### 6. Config the config sync instance.
           ```
           # root-sync.yaml
 
@@ -313,13 +313,13 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
               gcpServiceAccountEmail: config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
           ```
 
-      4. Deploy the Config Sync Manifest
+ #### 7. Deploy the Config Sync Manifest
           ```
           kubectl apply -f root-sync.yaml
           kubectl wait --for condition=established --timeout=10s crd/rootsyncs.configsync.gke.io
           ```
 
-      5. Push Configs to Git
+ #### 8. Push Configs to Git
           ```
           gcloud source repos clone my-lz-repo
           cd my-lz-repo
@@ -337,7 +337,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
           git push --set-upstream origin main
           ```
 
-    ### OCI
+ ### OCI
 
       Before we deploy via OCI we have a few things we'll need to do to prepare our environment.
 
@@ -435,7 +435,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       kubectl apply -f lz-oci.yaml
       ```
 
-      #### Clean Up
+   #### Clean Up
 
       Follow the below steps to delete the provisioned infrastructure and Config Controller instances.
 
@@ -443,7 +443,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
 
       To reacquire the resources you will need to redeploy a new instance and deploy the same configs to it. Config Controller should reattach to the previously deployed instances and start managing them again.
 
-      #### kpt
+   #### kpt
 
       First run either
       ```
@@ -462,7 +462,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       gcloud anthos config controller instance-name --location instance-region
       ```
 
-      #### OCI
+   #### OCI
       First delete the Rootsync deployment. This will prevent the resources from self-healing.
 
       ```
@@ -484,4 +484,4 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       ```
 
 
-    ## Cloud Deploy (future)
+ ## Cloud Deploy (future)
