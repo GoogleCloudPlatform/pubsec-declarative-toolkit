@@ -100,6 +100,14 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
     gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
+    Enable Required Services in the Management project
+
+    ```
+    gcloud services enable cloudbilling.googleapis.com \
+      --project=${PROJECT_ID}
+    gcloud services enable accesscontextmanager.googleapis.com \
+      --project=${PROJECT_ID}
+    ```
 
 1. Deploy Bootstrap
 
@@ -267,7 +275,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
             name: config-sync-wi
             namespace: config-control
           spec:
-            member: serviceAccount:PROJECT_ID.svc.id.goog[config-management-system/root-reconciler]
+            member: serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler]
             role: roles/iam.workloadIdentityUser
             resourceRef:
               apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -282,12 +290,12 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
             name: allow-configsync-sa-read-csr
             namespace: config-control
           spec:
-            member: serviceAccount:config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
+            member: serviceAccount:config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com
             role: roles/source.reader
             resourceRef:
               apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
               kind: Project
-              external: projects/PROJECT_ID
+              external: projects/${PROJECT_ID}
           ```
       2. Deploy the manifests
           ```
@@ -384,12 +392,12 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       ```
       gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
       --role roles/iam.workloadIdentityUser \
-      --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler-landing-zone]"
+      --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler]"
       ```
 
       #### Push Config Image to the repository
 
-      ##### Install crane and login to Artifact Registry
+      Install crane and login to Artifact Registry
 
       ```
       go install github.com/google/go-containerregistry/cmd/crane@latest
@@ -407,7 +415,7 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       Once that has completed we can build our OCI Artifact with the crane CLI.
 
       ```
-      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/lz-test:v1
+      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
       ```
 
       Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
@@ -417,13 +425,13 @@ To deploy this Landing Zone you will first need to create a Bootstrap project wi
       apiVersion: configsync.gke.io/v1beta1
       kind: RootSync
       metadata:
-        name: landing-zone
+        name: root-sync
         namespace: config-management-system
       spec:
         sourceFormat: unstructured
         sourceType: oci
         oci:
-          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/oci-test/lz-test:v1
+          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
           dir: environments
           auth: gcpserviceaccount
           gcpServiceAccountEmail: ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
