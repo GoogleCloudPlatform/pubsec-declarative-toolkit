@@ -90,6 +90,10 @@ if [[ "$CREATE_KCC" != false ]]; then
   endb=`date +%s`
   runtimeb=$((endb-startb))
   echo "Cluster create time: ${runtimeb} sec"
+
+  gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens config-control
 else
   gcloud config set project "${CC_PROJECT_ID}"
   echo "Switched to KCC project ${CC_PROJECT_ID}"
@@ -133,7 +137,7 @@ if [[ "$DELETE_KCC" != false ]]; then
   gcloud compute networks delete ${NETWORK} -q
 
   # disable billing before deletion - to preserve the project/billing quota
-  gcloud beta billing projects unlink ${CC_PROJECT_ID} 
+  gcloud alpha billing projects unlink ${CC_PROJECT_ID} 
   # delete cc project
   gcloud projects delete $CC_PROJECT_ID --quiet
 fi
