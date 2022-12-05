@@ -53,7 +53,8 @@ export SUBNET=pdt-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
 export CLUSTER=pdt-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
-export CC_PROJECT_ID=${KCC_PROJECT_ID}
+export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
+export CC_PROJECT_ID=${KCC_PROJECT_ID}-${CC_PROJECT_RAND}
 echo "CC_PROJECT_ID: $CC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
@@ -62,11 +63,18 @@ echo "BILLING_ID: ${BILLING_ID}"
 #ORGID=$(gcloud organizations list --format="get(name)" --filter=displayName=$DOMAIN)
 ORGID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
 echo "ORGID: ${ORGID}"
-
-# switch back to kcc project
-gcloud config set project "${CC_PROJECT_ID}"
-echo "Switched to KCC project ${CC_PROJECT_ID}"
+# switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
+  # switch back to/create kcc project - not in a folder
+  gcloud projects create $CC_PROJECT_ID --name="lz-kcc" --set-as-default
+  echo "Created KCC project: ${CC_PROJECT_ID}"
+  gcloud config set project "${CC_PROJECT_ID}"
+  # enable billing
+  gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
+  # enable apis
+  echo "Enabling APIs"
+  gcloud services enable  krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com
+  #compute.googleapis.com
   # create VPC
   echo "Create VPC: ${NETWORK}"
   gcloud compute networks create $NETWORK --subnet-mode=custom
@@ -82,13 +90,16 @@ if [[ "$CREATE_KCC" != false ]]; then
   endb=`date +%s`
   runtimeb=$((endb-startb))
   echo "Cluster create time: ${runtimeb} sec"
+else
+  gcloud config set project "${CC_PROJECT_ID}"
+  echo "Switched to KCC project ${CC_PROJECT_ID}"
 fi
   
   # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
 #USER="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 #echo "USER: ${USER}"
 ##ROLES=("roles/billing.projectManager" "roles/orgpolicy.policyAdmin" "roles/resourcemanager.folderCreator" "roles/resourcemanager.organizationViewer" "roles/resourcemanager.projectCreator" "roles/billing.projectManager" "roles/billing.viewer")
-#ROLES=("roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
+ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
 #for i in "${ROLES[@]}" ; do
   # requires iam.securityAdmin
   #ROLE=`gcloud organizations get-iam-policy $ORGID --filter="bindings.members:$USER" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
@@ -120,6 +131,11 @@ if [[ "$DELETE_KCC" != false ]]; then
   gcloud compute networks subnets delete ${SUBNET} --region=$REGION -q
   echo "deleting vpc ${NETWORK}"
   gcloud compute networks delete ${NETWORK} -q
+
+  # disable billing before deletion - to preserve the project/billing quota
+  gcloud beta billing projects unlink ${CC_PROJECT_ID} 
+  # delete cc project
+  gcloud projects delete $CC_PROJECT_ID --quiet
 fi
 
 end=`date +%s`
