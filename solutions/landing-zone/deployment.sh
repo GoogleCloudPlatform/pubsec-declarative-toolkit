@@ -26,10 +26,12 @@ example
 -c [create] true/false       : create deployment
 -l [landingzone] true false  : deploy landing zone
 -d [delete] true/false       : delete deployment
--p [KCC project] string      : target KCC project: iecontroller-lgz-1201
+-p [KCC project] string      : target KCC project: ie controller-lgz-1201
 EOF
 }
 
+# for eash of override - key/value pairs for constants - shared by all scripts
+source ./vars.sh
 
 deployment() {
   
@@ -45,13 +47,13 @@ echo "Start: ${start}"
 # Set Vars for Permissions application
 export MIDFIX=$UNIQUE
 echo "unique string: $MIDFIX"
-export REGION=northamerica-northeast1
-echo "REGION: $REGION"
-export NETWORK=pdt-${MIDFIX}-vpc
+#export REGION=northamerica-northeast1
+echo "REGION: $REGION" # defined in vars.sh
+export NETWORK=$PREFIX-${MIDFIX}-vpc
 echo "NETWORK: $NETWORK"
-export SUBNET=pdt-${MIDFIX}-sn
+export SUBNET=$PREFIX-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
-export CLUSTER=pdt-${MIDFIX}
+export CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
 export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
 export CC_PROJECT_ID=${KCC_PROJECT_ID}-${CC_PROJECT_RAND}
@@ -63,10 +65,11 @@ echo "BILLING_ID: ${BILLING_ID}"
 #ORGID=$(gcloud organizations list --format="get(name)" --filter=displayName=$DOMAIN)
 ORGID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
 echo "ORGID: ${ORGID}"
+
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
   # switch back to/create kcc project - not in a folder
-  gcloud projects create $CC_PROJECT_ID --name="lz-kcc" --set-as-default
+  gcloud projects create $CC_PROJECT_ID --name="${KCC_PROJECT_NAME}" --set-as-default
   echo "Created KCC project: ${CC_PROJECT_ID}"
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
@@ -80,7 +83,7 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud compute networks create $NETWORK --subnet-mode=custom
   # create subnet
   echo "Create subnet ${SUBNET} off VPC: ${NETWORK}"
-  gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.168.0.0/16 --region $REGION
+  gcloud compute networks subnets create $SUBNET --network $NETWORK --range $CIDR_KCC_VPC --region $REGION
 
   # create KCC cluster
   # 3 KCC clusters max per region with 25 vCPU default quota
