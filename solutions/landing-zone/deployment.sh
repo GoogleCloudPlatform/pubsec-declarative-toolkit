@@ -19,7 +19,7 @@ usage() {
   cat <<EOF
 Usage: $0 [PARAMs]
 example 
-./bootstrap.sh -b pubsec-declarative-agz -u pdt1 -c false -l true -d false -p controller-agz-1201
+./deployment.sh -b pubsec-declarative-agz -u pdt1 -c false -l true -d false -p controller-agz-1201
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
