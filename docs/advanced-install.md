@@ -62,22 +62,14 @@ gcloud alpha anthos config controller create $CLUSTER --location $REGION --netwo
 gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
 
-Verify the Config Controller Cluster is up
-```
-gcloud anthos config controller list
-NAME: pdt
-LOCATION: northamerica-northeast1
-STATE: RUNNING
-```
-
-## 8. Get Credentials
+### Get Credentials
 ```
 gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
 kubens config-control
 ```
 
-## 9. Assign Permissions to the config connector Service Account.
-
+## 8. Assign Permissions to the config connector Service Account.
+Note: ORG_ID will be set from step 
 ```
 export ORG_ID=$ORG_ID
 export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
@@ -105,15 +97,5 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
     --role "roles/billing.user"    
 ``` 
 
-## 10. Now you are ready to deploy a solution!
-see for example the [Landing Zone](/solutions/landing-zone) solution
-
-## 11. Development Operations: Delete the Config Controller Cluster
-Optional operation: In the CC cluster project
-```
-gcloud anthos config controller delete --location $REGION $CLUSTER --quiet
-```
-## 12. Development Operations: Re Create the Config Controller Cluster
-Optional Operation: Override the requireShieldedVm organization policy only on the CC project before re creating the CC cluster - by deferring to the Google Default over the inherited value. See https://console.cloud.google.com/iam-admin/orgpolicies/compute-requireOsLogin
-
-
+## 9. Now you are ready to deploy a solution!
+- see 
