@@ -593,6 +593,19 @@ See Identity Onboarding and Federation options at https://cloud.google.com/archi
 ## DI-39: Enable Security Command Center reporting of GKE KCC and Workload Clusters
 https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/pull/183
 
+## DI-40: Validate access context manager scoped policies for folders/projects is also CC/CRM supported as it is in the GCP API
+https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
+
+## DI-41: Security Controls Review
+- Add procedure for no MFA for [single break glass account](https://github.com/canada-ca/cloud-guardrails/blob/master/EN/01_Protect-Root-Account.md) (super admin level).  Note: It is highly recommended to continue to use MFA on all GCP accounts with a policy at the organization level that applies also to all users in the super admin group.  A physical KEY like the [titan](https://cloud.google.com/titan-security-key) can be used as an alternative.
+- Add a minimal network segmentation diagram
+- clean up/delete default VPC on PDT bootstrap project - post or pre KCC install
+- remove rdp/ssh/icmp ports
+- Verify IAP does not need SSH - turn it off then
+- close or make optional the egress SSH port - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/75
+- Detail priority logging/alerting to an email for Security Command Center 
+- Check the current allow on port 10255 (10250-10255 are usually for kubelet comms and required for K8S cluster comms)
+
 # Installation/Deployment
 
 ### Deployment Preparations
@@ -941,6 +954,20 @@ graph LR;
 - Starlark runtime (for yaml scripting - kpt/k8s) https://googlecontainertools.github.io/kpt/guides/producer/functions/starlark/
 - GoC Cloud Brokerage https://gc-cloud-services.canada.ca/s/cloud-fa-catalog?language=en_US&id=0010A000005vhilQAA
 - https://seroter.com/2021/08/18/using-the-new-google-cloud-config-controller-to-provision-and-manage-cloud-services-via-the-kubernetes-resource-model/
+
+
+# Meetings
+## 20221206: Ongoing validation
+[Design Issues](#di-41-security-controls-review)
+
+- Add procedure for no MFA for [single break glass account](https://github.com/canada-ca/cloud-guardrails/blob/master/EN/01_Protect-Root-Account.md) (super admin level).  Note: It is highly recommended to continue to use MFA on all GCP accounts with a policy at the organization level that applies also to all users in the super admin group.  A physical KEY like the [titan](https://cloud.google.com/titan-security-key) can be used as an alternative.
+- Add a minimal network segmentation diagram
+- clean up/delete default VPC on PDT bootstrap project - post or pre KCC install
+- remove rdp/ssh/icmp ports
+- Verify IAP does not need SSH - turn it off then
+- close or make optional the egress SSH port - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/75
+- Detail priority logging/alerting to an email for Security Command Center 
+- Check the current allow on port 10255 (10250-10255 are usually for kubelet comms and required for K8S cluster comms)
 
 
 # TODO - to integrate into this doc and the issue system
