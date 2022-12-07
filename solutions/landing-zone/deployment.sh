@@ -55,16 +55,22 @@ export SUBNET=$PREFIX-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
 export CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
-export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
-export CC_PROJECT_ID=${KCC_PROJECT_ID}-${CC_PROJECT_RAND}
+if [[ -z KCC_PROJECT_ID ]]; then
+  export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
+  export CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
+else
+  export CC_PROJECT_ID=${KCC_PROJECT_ID}
+fi
+
 echo "CC_PROJECT_ID: $CC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
 export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
 echo "BILLING_ID: ${BILLING_ID}"
 #ORGID=$(gcloud organizations list --format="get(name)" --filter=displayName=$DOMAIN)
-ORGID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
-echo "ORGID: ${ORGID}"
+ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
+echo "ORG_ID: ${ORG_ID}"
+export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
@@ -98,26 +104,33 @@ if [[ "$CREATE_KCC" != false ]]; then
   # set default kubectl namespace to avoid -n or --all-namespaces
   kubens config-control
 else
+  
   gcloud config set project "${CC_PROJECT_ID}"
   echo "Switched to KCC project ${CC_PROJECT_ID}"
 fi
   
+# Landing zone deployment
+# https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
+
+gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
+gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+
   # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
-#USER="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-#echo "USER: ${USER}"
-##ROLES=("roles/billing.projectManager" "roles/orgpolicy.policyAdmin" "roles/resourcemanager.folderCreator" "roles/resourcemanager.organizationViewer" "roles/resourcemanager.projectCreator" "roles/billing.projectManager" "roles/billing.viewer")
+export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+
+echo "SA_EMAIL: ${SA_EMAIL}"
 ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
-#for i in "${ROLES[@]}" ; do
+for i in "${ROLES[@]}" ; do
   # requires iam.securityAdmin
-  #ROLE=`gcloud organizations get-iam-policy $ORGID --filter="bindings.members:$USER" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
-  #if [ -z "$ROLE" ]
-    #then
-#      echo "Applying role $i to $USER"
-#      gcloud organizations add-iam-policy-binding $ORGID  --member=user:$USER --role=$i --quiet > /dev/null 1>&1
-    #else
-      #echo "Role $i already set on $USER"
-    #fi
-#done
+  #ROLE=`gcloud organizations get-iam-policy $ORG_ID --filter="bindings.members:$SA_EMAIL" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
+  #echo $ROLE
+  #if [ -z "$ROLE" ]; then
+      echo "Applying role $i to $SA_EMAIL"
+      gcloud organizations add-iam-policy-binding $ORG_ID  --member=serviceAccount:$SA_EMAIL --role=$i --quiet > /dev/null 1>&1
+  #else
+  #    echo "Role $i already set on $USER"
+  #fi
+done
  
   echo "List Clusters:"
   gcloud anthos config controller list
