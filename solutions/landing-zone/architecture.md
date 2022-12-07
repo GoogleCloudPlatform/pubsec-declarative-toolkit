@@ -943,6 +943,18 @@ graph LR;
 - https://seroter.com/2021/08/18/using-the-new-google-cloud-config-controller-to-provision-and-manage-cloud-services-via-the-kubernetes-resource-model/
 
 
+# Meetings
+## 20221206: Ongoing validation
+- Add procedure for no MFA for [single break glass account](https://github.com/canada-ca/cloud-guardrails/blob/master/EN/01_Protect-Root-Account.md) (super admin level).  Note: It is highly recommended to continue to use MFA on all GCP accounts with a policy at the organization level that applies also to all users in the super admin group.  A physical KEY like the [titan](https://cloud.google.com/titan-security-key) can be used as an alternative.
+- Add a minimal network segmentation diagram
+- clean up/delete default VPC on PDT bootstrap project - post or pre KCC install
+- remove rdp/ssh/icmp ports
+- Verify IAP does not need SSH - turn it off then
+- close or make optional the egress SSH port - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/75
+- Detail priority logging/alerting to an email for Security Command Center 
+- Check the current allow on port 10255 (10250-10255 are usually for kubelet comms and required for K8S cluster comms)
+
+
 # TODO - to integrate into this doc and the issue system
 20220913
 - Detail branching/PR/release/tagging strategy doc/procedures
