@@ -593,16 +593,6 @@ See Identity Onboarding and Federation options at https://cloud.google.com/archi
 ## DI-39: Enable Security Command Center reporting of GKE KCC and Workload Clusters
 https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/pull/183
 
-# Installation/Deployment
-
-### Deployment Preparations
-#### Cloud Identity Onboarding and Organization Domain Validation
-#### Billing Quota
-#### Project Quota
-#### Config Controller enabled GKE Cluster
-- follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
-
-
 ## DI-40: Validate access context manager scoped policies for folders/projects is also CC/CRM supported as it is in the GCP API
 https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
 
@@ -615,6 +605,17 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
 - close or make optional the egress SSH port - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/75
 - Detail priority logging/alerting to an email for Security Command Center 
 - Check the current allow on port 10255 (10250-10255 are usually for kubelet comms and required for K8S cluster comms)
+
+# Installation/Deployment
+
+### Deployment Preparations
+#### Cloud Identity Onboarding and Organization Domain Validation
+#### Billing Quota
+#### Project Quota
+#### Config Controller enabled GKE Cluster
+- follow https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone/README.md#usage
+
+
 
 ### Creating the Config Controller Cluster
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/33
@@ -957,6 +958,8 @@ graph LR;
 
 # Meetings
 ## 20221206: Ongoing validation
+[Design Issues](#di-41-security-controls-review)
+
 - Add procedure for no MFA for [single break glass account](https://github.com/canada-ca/cloud-guardrails/blob/master/EN/01_Protect-Root-Account.md) (super admin level).  Note: It is highly recommended to continue to use MFA on all GCP accounts with a policy at the organization level that applies also to all users in the super admin group.  A physical KEY like the [titan](https://cloud.google.com/titan-security-key) can be used as an alternative.
 - Add a minimal network segmentation diagram
 - clean up/delete default VPC on PDT bootstrap project - post or pre KCC install
