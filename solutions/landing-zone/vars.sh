@@ -19,4 +19,3 @@ REGION=northamerica-northeast1
 # used for vpc, subnet, KCC cluster
 PREFIX=pdt
 KCC_PROJECT_NAME=kcc-lz
-KCC_PROJECT_ID=controller
