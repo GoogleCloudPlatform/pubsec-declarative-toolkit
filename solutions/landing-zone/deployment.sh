@@ -55,14 +55,16 @@ export SUBNET=$PREFIX-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
 export CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
-if [[ -z KCC_PROJECT_ID ]]; then
+if [[ "$CREATE_KCC" != false ]]; then
   export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
   export CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
+  echo "Creating project: $CC_PROJECT_ID"
 else
   export CC_PROJECT_ID=${KCC_PROJECT_ID}
+  echo "Reusing project: $CC_PROJECT_ID"
 fi
 
-echo "CC_PROJECT_ID: $CC_PROJECT_ID"
+echo "CC_PROJECT_ID: $KCC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
 export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
@@ -75,15 +77,20 @@ export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
   # switch back to/create kcc project - not in a folder
-  gcloud projects create $CC_PROJECT_ID --name="${KCC_PROJECT_NAME}" --set-as-default
-  echo "Created KCC project: ${CC_PROJECT_ID}"
+  echo "CrEATING KCC project: ${CC_PROJECT_ID}"
+  gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
   gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
   # enable apis
   echo "Enabling APIs"
-  gcloud services enable  krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com
+  gcloud services enable krmapihosting.googleapis.com 
+  gcloud services enable container.googleapis.com
   #compute.googleapis.com
+  gcloud services enable cloudresourcemanager.googleapis.com 
+  gcloud services enable accesscontextmanager.googleapis.com 
+  gcloud services enable cloudbilling.googleapis.com
+
   # create VPC
   echo "Create VPC: ${NETWORK}"
   gcloud compute networks create $NETWORK --subnet-mode=custom
@@ -103,40 +110,81 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
   # set default kubectl namespace to avoid -n or --all-namespaces
   kubens config-control
-else
-  
-  gcloud config set project "${CC_PROJECT_ID}"
-  echo "Switched to KCC project ${CC_PROJECT_ID}"
-fi
-  
-# Landing zone deployment
-# https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
 
-gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
-gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
-
-  # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
-export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-
-echo "SA_EMAIL: ${SA_EMAIL}"
-ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
-for i in "${ROLES[@]}" ; do
-  # requires iam.securityAdmin
-  #ROLE=`gcloud organizations get-iam-policy $ORG_ID --filter="bindings.members:$SA_EMAIL" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
-  #echo $ROLE
-  #if [ -z "$ROLE" ]; then
-      echo "Applying role $i to $SA_EMAIL"
-      gcloud organizations add-iam-policy-binding $ORG_ID  --member=serviceAccount:$SA_EMAIL --role=$i --quiet > /dev/null 1>&1
-  #else
-  #    echo "Role $i already set on $USER"
-  #fi
-done
- 
   echo "List Clusters:"
   gcloud anthos config controller list
 
+else
+  echo "Switching to KCC project ${KCC_PROJECT_ID}"
+  gcloud config set project "${KCC_PROJECT_ID}"
+
+  gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens config-control
+  
+fi
+  
+
+if [[ "$DEPLOY_LZ" != false ]]; then
+  # Landing zone deployment
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
+
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
+  gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+
+  # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
+  export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+
+  echo "SA_EMAIL: ${SA_EMAIL}"
+  ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
+  for i in "${ROLES[@]}" ; do
+    # requires iam.securityAdmin
+    #ROLE=`gcloud organizations get-iam-policy $ORG_ID --filter="bindings.members:$SA_EMAIL" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
+    #echo $ROLE
+    #if [ -z "$ROLE" ]; then
+        echo "Applying role $i to $SA_EMAIL"
+        gcloud organizations add-iam-policy-binding $ORG_ID  --member=serviceAccount:$SA_EMAIL --role=$i --quiet > /dev/null 1>&1
+    #else
+    #    echo "Role $i already set on $USER"
+    #fi
+  done
+ 
+
+  # fetch the LZ
+  cd ../../../
+  # check for existing landing-zone
+
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  # cp the setters.yaml
+  cp pubsec-declarative-toolkit/solutions/landing-zone/setters.yaml landing-zone/ 
+  cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
+
+  echo "kpt live init"
+  kpt live init landing-zone --namespace config-control
+  echo "kpt fn render"
+  kpt fn render landing-zone
+  echo "kpt live apply"
+  kpt live apply landing-zone --reconcile-timeout=2m --output=table
+  echo "Wait 2 min"
+  sleep(2000)
+  count=$(kubectl get gcp | grep UpdateFailed | wc -l)
+  echo "UpdateFailed: $count"
+  count=$(kubectl get gcp | grep UpToDate | wc -l)
+  echo "UpToDate: $count"
+  kubectl get gcp
+
+
+fi
+
   # delete
 if [[ "$DELETE_KCC" != false ]]; then
+  echo "Deleting"
+  # stay in current dir
+  # will take up to 15-45 min and may hang
+  kpt live destroy landing-zone
+
+  # delete kpt pkg get
+  rm -rf landing-zone
   # https://cloud.google.com/sdk/gcloud/reference/anthos/config/controller/delete
   echo "Delete Cluster ${CLUSTER} in region ${REGION}"
   startd=`date +%s`
@@ -166,14 +214,15 @@ echo "Total Duration: ${runtime} sec"
 
 
   gcloud config set project "${BOOT_PROJECT_ID}"
-  echo "Switched back to boot project ${BOOT_PROJECT_ID}"  
+  echo "Switched back to boot project ${BOOT_PROJECT_ID}" 
+  # go back to the script dir
+  cd pubsec-declarative-toolkit/solutions/landing-zone 
 }
 
 UNIQUE=
 DEPLOY_LZ=false
 CREATE_KCC=false
 DELETE_KCC=false
-KCC_PROJECT_ID=
 BOOT_PROJECT_ID=
 
 while getopts ":b:u:c:l:d:p:" PARAM; do
