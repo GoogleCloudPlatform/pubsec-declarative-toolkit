@@ -30,6 +30,8 @@ example
 EOF
 }
 
+# set for michael@cloudshell:~/dev/pdt-oldev/obriensystems/pubsec-declarative-toolkit/solutions/landing-zone (kcc-lz-8597)$ ./deployment.sh -b pdt-oldev -u pdtoldev -c false -l true -d false -p kcc-lz-8597
+
 # for eash of override - key/value pairs for constants - shared by all scripts
 source ./vars.sh
 
@@ -154,19 +156,18 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   cd ../../../
   # check for existing landing-zone
 
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
   # cp the setters.yaml
   cp pubsec-declarative-toolkit/solutions/landing-zone/setters.yaml landing-zone/ 
   cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
   echo "kpt live init"
-  kpt live init landing-zone --namespace config-control
+  kpt live init landing-zone --namespace config-control --force
   echo "kpt fn render"
   kpt fn render landing-zone
   echo "kpt live apply"
   kpt live apply landing-zone --reconcile-timeout=2m --output=table
   echo "Wait 2 min"
-  sleep(2000)
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
   count=$(kubectl get gcp | grep UpToDate | wc -l)
@@ -180,7 +181,20 @@ fi
 if [[ "$DELETE_KCC" != false ]]; then
   echo "Deleting"
   # stay in current dir
-  # will take up to 15-45 min and may hang
+  # will take up to 15-45 min and may hang unless liens are removed
+  # 3 problematic projects
+  gcloud config set project audit-prj-id-oldv1
+  AUDIT_LIEN=$(gcloud alpha resource-manager liens list)
+  gcloud alpha resource-manager liens delete $AUDIT_LIEN
+
+  gcloud config set project net-host-prj-prod-oldv1
+  PROD_LIEN=$(gcloud alpha resource-manager liens list)
+  gcloud alpha resource-manager liens delete $PROD_LIEN
+
+  gcloud config set project net-host-prj-nonprod-oldv1
+  NONPROD_LIEN=$(gcloud alpha resource-manager liens list)
+  gcloud alpha resource-manager liens delete $NONPROD_LIEN
+
   kpt live destroy landing-zone
 
   # delete kpt pkg get
