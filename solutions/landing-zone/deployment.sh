@@ -160,8 +160,10 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   # fetch the LZ
   cd ../../../
   # check for existing landing-zone
-
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  # get main branch
+  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  # get specific canary branch
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone@canary landing-zone
   # cp the setters.yaml
   cp pubsec-declarative-toolkit/solutions/landing-zone/setters.yaml landing-zone/ 
   cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
