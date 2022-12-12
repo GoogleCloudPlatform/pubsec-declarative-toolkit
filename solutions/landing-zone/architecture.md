@@ -1056,6 +1056,7 @@ Notes
 - Forseti - Security inventory, monitoring, enforcement - https://forsetisecurity.org/
 - Tags on Storage Buckets - https://cloud.google.com/storage/docs/tags-and-labels#examples_for_attaching_tags_to_buckets
 - Private Service Connect and VPC Service Controls https://cloud.google.com/vpc/docs/configure-private-service-connect-services-controls
+- GKE Compact Placement (for reduced latency between pods) - https://cloud.google.com/kubernetes-engine/docs/how-to/compact-placement#overview
 
 
 - SCC enablement even for standard is required
