@@ -282,7 +282,7 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
             name: config-sync-wi
             namespace: config-control
           spec:
-            member: serviceAccount:PROJECT_ID.svc.id.goog[config-management-system/root-reconciler]
+            member: serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler]
             role: roles/iam.workloadIdentityUser
             resourceRef:
               apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -297,7 +297,7 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
             name: allow-configsync-sa-read-csr
             namespace: config-control
           spec:
-            member: serviceAccount:config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
+            member: serviceAccount:config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com
             role: roles/source.reader
             resourceRef:
               apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -321,11 +321,11 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
           spec:
             sourceFormat: unstructured
             git:
-              repo: https://source.developers.google.com/p/PROJECT_ID/r/REPO_NAME
+              repo: https://source.developers.google.com/p/${PROJECT_ID}/r/REPO_NAME
               branch: REPO_BRANCH
               dir: REPO_PATH
               auth: gcpserviceaccount
-              gcpServiceAccountEmail: config-sync-sa@PROJECT_ID.iam.gserviceaccount.com
+              gcpServiceAccountEmail: config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com
    ```
 
  #### 5. Deploy the Config Sync Manifest
@@ -397,8 +397,8 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
    ```
       gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
       --role roles/iam.workloadIdentityUser \
-      --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler-landing-zone]"
-   ```
+      --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler]"
+      ```
 
   #### Push Config Image to the repository
 
@@ -419,9 +419,9 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
 
    Once that has completed we can build our OCI Artifact with the crane CLI.
 
-   ```
-      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/lz-test:v1
-   ```
+      ```
+      crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
+      ```
 
    Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
 
@@ -430,13 +430,13 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
       apiVersion: configsync.gke.io/v1beta1
       kind: RootSync
       metadata:
-        name: landing-zone
+        name: root-sync
         namespace: config-management-system
       spec:
         sourceFormat: unstructured
         sourceType: oci
         oci:
-          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/oci-test/lz-test:v1
+          image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
           dir: environments
           auth: gcpserviceaccount
           gcpServiceAccountEmail: ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
