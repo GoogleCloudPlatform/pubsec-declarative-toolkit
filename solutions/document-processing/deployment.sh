@@ -100,12 +100,34 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud services list --enabled | grep NAME
 
   echo "Enabling APIs"
+  # DocAI
+  gcloud services enable documentai.googleapis.com
+  # AutoML
+  # NLP API
+  # (cloud) Healthcare NLP API - https://cloud.google.com/healthcare-api/docs/how-tos/nlp
+  gcloud services enable healthcare.googleapis.com
+  # vertex AI api
+  gcloud services enable aiplatform.googleapis.com
+  # artifact registry ok
+  #cloud storage
+  gcloud services enable notebooks.googleapis.com
+  gcloud services enable dataflow.googleapis.com
+
+  # CSR (up from AR) (for cloud run) ok
+
+  # app engine ok
+
+  # BigQuery ok
+  #gcloud services enable bigquerymigration.googleapis.com
+  #gcloud services enable bigquery.googleapis.com
+  #gcloud services enable bigquerystorage.googleapis.com
   #gcloud services enable krmapihosting.googleapis.com 
   gcloud services enable container.googleapis.com
   #compute.googleapis.com
-  gcloud services enable cloudresourcemanager.googleapis.com 
-  gcloud services enable accesscontextmanager.googleapis.com 
+  #gcloud services enable cloudresourcemanager.googleapis.com 
+  #gcloud services enable accesscontextmanager.googleapis.com 
   gcloud services enable cloudbilling.googleapis.com
+
 
   echo "API's after"
   gcloud services list --enabled | grep NAME
