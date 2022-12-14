@@ -18,8 +18,10 @@ set -e
 usage() {
   cat <<EOF
 Usage: $0 [PARAMs]
-example 
-./deployment.sh -b pubsec-declarative-agz -u pdt1 -c false -l true -d false -p controller-agz-1201
+example create 2min (notice the -d false)
+root_@cloudshell:~/pubsec-declarative-toolkit/solutions/document-processing (pdt-tgz)$ ./deployment.sh -b pdt-tgz -u pdt2 -c true -l false -d false
+example delete 20sec (notice the -c false and the previous -p project id)
+root_@cloudshell:~/pubsec-declarative-toolkit/solutions/document-processing (pdt-tgz)$ ./deployment.sh -b pdt-tgz -u pdt2 -c false -l false -d true -p kcc-lz-9672
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
@@ -36,7 +38,6 @@ EOF
 source ./vars.sh
 
 deployment() {
-  
   echo "Date: $(date)"
   echo "Timestamp: $(date +%s)"
   echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -d $DELETE_KCC -p $KCC_PROJECT_ID"
@@ -76,15 +77,28 @@ ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tai
 echo "ORG_ID: ${ORG_ID}"
 export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
+
+# enable permissions on existing user
+#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/iam.serviceAccountTokenCreator --quiet > /dev/null 1>&1
+#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/orgpolicy.policyAdmin --quiet > /dev/null 1>&1
+#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.folderAdmin --quiet > /dev/null 1>&1
+#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.organizationAdmin --quiet > /dev/null 1>&1
+#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.projectCreator --quiet > /dev/null 1>&1
+#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/billing.projectManager --quiet > /dev/null 1>&1
+
+
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
   # switch back to/create kcc project - not in a folder
-  echo "CrEATING KCC project: ${CC_PROJECT_ID}"
+  echo "Creating KCC project: ${CC_PROJECT_ID}"
   gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
   gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
   # enable apis
+  echo "API's before"
+  gcloud services list --enabled | grep NAME
+
   echo "Enabling APIs"
   #gcloud services enable krmapihosting.googleapis.com 
   gcloud services enable container.googleapis.com
@@ -92,6 +106,9 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud services enable cloudresourcemanager.googleapis.com 
   gcloud services enable accesscontextmanager.googleapis.com 
   gcloud services enable cloudbilling.googleapis.com
+
+  echo "API's after"
+  gcloud services list --enabled | grep NAME
 
   # create VPC
   #echo "Create VPC: ${NETWORK}"
@@ -178,11 +195,59 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   #kubectl get gcp
 fi
 
+
+
+
+ # delete
+if [[ "$DELETE_KCC" != false ]]; then
+  echo "Deleting ${CC_PROJECT_ID}"
+  # stay in current dir
+  # will take up to 15-45 min and may hang unless liens are removed
+  # 3 problematic projects
+  #gcloud config set project audit-prj-id-oldv1
+  #AUDIT_LIEN=$(gcloud alpha resource-manager liens list)
+  #gcloud alpha resource-manager liens delete $AUDIT_LIEN
+
+  #gcloud config set project net-host-prj-prod-oldv1
+  #PROD_LIEN=$(gcloud alpha resource-manager liens list)
+  #gcloud alpha resource-manager liens delete $PROD_LIEN
+
+  #gcloud config set project net-host-prj-nonprod-oldv1
+  #NONPROD_LIEN=$(gcloud alpha resource-manager liens list)
+  #gcloud alpha resource-manager liens delete $NONPROD_LIEN
+
+  #kpt live destroy landing-zone
+
+  # delete kpt pkg get
+  #rm -rf landing-zone
+  # https://cloud.google.com/sdk/gcloud/reference/anthos/config/controller/delete
+  #echo "Delete Cluster ${CLUSTER} in region ${REGION}"
+  #startd=`date +%s`
+  # note: cluster name is krmapihost-$CLUSTER
+  #gcloud anthos config controller delete --location $REGION $CLUSTER --quiet
+  #endd=`date +%s`
+  #runtimed=$((endd-startd))
+  #echo "Cluster delete time: ${runtimed} sec"
+
+  # delete VPC (routes and firewalls will be deleted as well)
+  #echo "deleting subnet ${SUBNET}"
+  #gcloud compute networks subnets delete ${SUBNET} --region=$REGION -q
+  #echo "deleting vpc ${NETWORK}"
+  #gcloud compute networks delete ${NETWORK} -q
+
+  # disable billing before deletion - to preserve the project/billing quota
+  echo "disable billing on - and delete ${CC_PROJECT_ID}"
+  gcloud alpha billing projects unlink ${CC_PROJECT_ID} 
+  # delete cc project
+  gcloud projects delete $CC_PROJECT_ID --quiet
+fi
+
   gcloud config set project "${BOOT_PROJECT_ID}"
   echo "Switched back to boot project ${BOOT_PROJECT_ID}" 
   # go back to the script dir
-  cd pubsec-declarative-toolkit/solutions/document-processing 
+  ##cd pubsec-declarative-toolkit/solutions/document-processing 
 }
+
 
 UNIQUE=
 DEPLOY_LZ=false
