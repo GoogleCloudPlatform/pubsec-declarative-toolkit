@@ -19,9 +19,9 @@ usage() {
   cat <<EOF
 Usage: $0 [PARAMs]
 example create 2min (notice the -d false)
-root_@cloudshell:~/pubsec-declarative-toolkit/solutions/document-processing (pdt-tgz)$ ./deployment.sh -b pdt-tgz -u pdt2 -c true -l false -d false
+root_@cloudshell:~/pubsec-declarative-toolkit/solutions/document-processing (pdt-tgz)$ ./deployment.sh -b pdt-tgz -u pdt2 -c true -l false -d false -e user-email
 example delete 20sec (notice the -c false and the previous -p project id)
-root_@cloudshell:~/pubsec-declarative-toolkit/solutions/document-processing (pdt-tgz)$ ./deployment.sh -b pdt-tgz -u pdt2 -c false -l false -d true -p kcc-lz-9672
+root_@cloudshell:~/pubsec-declarative-toolkit/solutions/document-processing (pdt-tgz)$ ./deployment.sh -b pdt-tgz -u pdt2 -c false -l false -d true -e user-email -p kcc-lz-9672
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
@@ -37,10 +37,29 @@ EOF
 # for eash of override - key/value pairs for constants - shared by all scripts
 source ./vars.sh
 
+
+getrole()
+{
+    array=( iam.serviceAccountTokenCreator roles/resourcemanager.folderAdmin roles/resourcemanager.organizationAdmin orgpolicy.policyAdmin resourcemanager.projectCreator billing.projectManager )
+    for i in "${array[@]}"
+    do
+	    echo "$i"
+        ROLE=`gcloud organizations get-iam-policy $1 --filter="bindings.members:$2" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
+        if [ -z "$ROLE" ]
+        then
+            echo "roles/$i role missing"
+            exit 1
+        else
+            echo "${ROLE} role set OK on super admin account"
+        fi  
+done
+}
+
+
 deployment() {
   echo "Date: $(date)"
   echo "Timestamp: $(date +%s)"
-  echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -d $DELETE_KCC -p $KCC_PROJECT_ID"
+  echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -d $DELETE_KCC -e $USER_EMAIL -p $KCC_PROJECT_ID"
   # reset project from KCC project - if rerunning script or after an error
   gcloud config set project "${BOOT_PROJECT_ID}"
   echo "Switched back to boot project ${BOOT_PROJECT_ID}"
@@ -67,6 +86,8 @@ else
   echo "Reusing project: $CC_PROJECT_ID"
 fi
 
+exit 1
+
 echo "CC_PROJECT_ID: $KCC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 #gcloud config list --format json | jq .core.project | sed 's/"//g'
@@ -80,15 +101,6 @@ echo "ORG_ID: ${ORG_ID}"
 export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
 
-# enable permissions on existing user
-#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/iam.serviceAccountTokenCreator --quiet > /dev/null 1>&1
-#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/orgpolicy.policyAdmin --quiet > /dev/null 1>&1
-#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.folderAdmin --quiet > /dev/null 1>&1
-#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.organizationAdmin --quiet > /dev/null 1>&1
-#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.projectCreator --quiet > /dev/null 1>&1
-#gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/billing.projectManager --quiet > /dev/null 1>&1
-
-
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
   # switch back to/create kcc project - not in a folder
@@ -97,6 +109,19 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
   gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
+
+
+
+# add IAM permissions for restricted dev user
+# check expiry https://cloud.google.com/sdk/gcloud/reference/projects/add-iam-policy-binding
+
+echo "Adding roles to project for user: ${USER_EMAIL}"
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/ml.admin --quiet > /dev/null 1>&1
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/aiplatform.admin --quiet > /dev/null 1>&1
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/billing.projectManager --quiet > /dev/null 1>&1
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/iam.serviceAccountTokenCreator --quiet > /dev/null 1>&1
+
+
   # enable apis
   echo "API's before"
   gcloud services list --enabled | grep NAME
@@ -111,7 +136,7 @@ if [[ "$CREATE_KCC" != false ]]; then
   # vertex AI api
   gcloud services enable aiplatform.googleapis.com
   # artifact registry ok
-  #cloud storage
+  # cloud storage ok
   gcloud services enable notebooks.googleapis.com
   gcloud services enable dataflow.googleapis.com
 
@@ -299,6 +324,9 @@ while getopts ":b:u:c:l:d:p:" PARAM; do
     d)
       DELETE_KCC=${OPTARG}
       ;;
+    e)
+      USER_EMAIL=${OPTARG}
+      ;;
     p)
       KCC_PROJECT_ID=${OPTARG}
       ;;  
@@ -309,7 +337,7 @@ while getopts ":b:u:c:l:d:p:" PARAM; do
   esac
 done
 
-#  echo "Options are: -c true/false (create kcc), -l true/false (deploy landing zone) -d true/false (delete kcc) -p kcc-project-id"
+#  echo "Options are: -c true/false (create kcc), -l true/false (deploy landing zone) -d true/false (delete kcc) -e user-email -p kcc-project-id"
 
 
 if [[ -z $UNIQUE ]]; then
@@ -317,5 +345,5 @@ if [[ -z $UNIQUE ]]; then
   exit 1
 fi
 
-deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_KCC $DEPLOY_LZ $DELETE_KCC $KCC_PROJECT_ID
+deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_KCC $DEPLOY_LZ $DELETE_KCC $USER_EMAIL $KCC_PROJECT_ID
 printf "**** Done ****\n"

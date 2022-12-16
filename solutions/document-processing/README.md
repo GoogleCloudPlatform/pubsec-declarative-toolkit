@@ -22,13 +22,13 @@ cd gcloud
 export BOOT_PROJECT_ID=pdt-tgz
 export UNIQUE_PREFIX=user-mo
 gcloud config set project $BOOT_PROJECT_ID
-./deployment.sh -b $BOOT_PROJECT_ID -u UNIQUE_PREFIX -c true -l false -d false
+./deployment.sh -b $BOOT_PROJECT_ID -u UNIQUE_PREFIX -c true -l false -e user@domain.com -d false
 ```
 
 #### Deleting a project
 - where kcc-lz-883 is the last created project id
 ```
-./deployment.sh -b pdt-tgz -u user-mo -c false -l false -d true -p kcc-lz-883
+./deployment.sh -b pdt-tgz -u user-mo -c false -l false -d true -e user@domain.com -p kcc-lz-883
 ```
 ## Refereneces
 - https://cloud.google.com/config-connector/docs/overview
