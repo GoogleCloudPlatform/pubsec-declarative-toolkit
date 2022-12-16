@@ -69,6 +69,8 @@ fi
 
 echo "CC_PROJECT_ID: $KCC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+#gcloud config list --format json | jq .core.project | sed 's/"//g'
+# We pass in the project id so we can switch back from potentially another transient project
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
 export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
 echo "BILLING_ID: ${BILLING_ID}"
@@ -268,6 +270,9 @@ fi
   echo "Switched back to boot project ${BOOT_PROJECT_ID}" 
   # go back to the script dir
   ##cd pubsec-declarative-toolkit/solutions/document-processing 
+
+echo "Use the following command to switch to your new project"
+echo "gcloud config set project ${CC_PROJECT_ID}"
 }
 
 
