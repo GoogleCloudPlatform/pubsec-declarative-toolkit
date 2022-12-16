@@ -86,8 +86,6 @@ else
   echo "Reusing project: $CC_PROJECT_ID"
 fi
 
-exit 1
-
 echo "CC_PROJECT_ID: $KCC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 #gcloud config list --format json | jq .core.project | sed 's/"//g'
@@ -307,7 +305,7 @@ CREATE_KCC=false
 DELETE_KCC=false
 BOOT_PROJECT_ID=
 
-while getopts ":b:u:c:l:d:p:" PARAM; do
+while getopts ":b:u:c:l:d:e:p:" PARAM; do
   case $PARAM in
     b)
       BOOT_PROJECT_ID=${OPTARG}
