@@ -3,6 +3,31 @@
 ## Description
 This packge contains the minimal set of infrastructure needed to help with a document processing environment.
 
+## Architecture
+- paraphrasing from original architecture diagram from internal AI CE team under S.A.
+
+```mermaid
+graph LR;
+  style GCP-Services-Flow fill:#44f,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
+  %% mapped and documented
+
+  Cloud-Storage-0 --> Document-AI
+  Cloud-Storage-0-->BigQuery-0
+  #BigQuery-0
+  DocAI-Warehouse-->Cloud-Storage-1
+  Cloud-Storage-1-->Cloud-Functions
+  Cloud-Functions-->Data-Loss-Prevention
+  Data-Loss-Prevention-->BigQuery-1
+  BigQuery-1-->UI?
+  UI?
+  CSR
+  CloudBuild
+  CloudRun
+  ArtifactRegistry
+  
+```
+
+
 ## Usage
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/220
 - clone the repo from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit
