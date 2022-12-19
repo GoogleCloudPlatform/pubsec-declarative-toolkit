@@ -19,5 +19,3 @@
       Override `source-base` files by using a file with the same path and name inside the `source-customization` folder.
       
       For example, to override the `landing-zone/setters.yaml` for the `dev` environment, you will need to create a file `source-customization/dev/landing-zone/setters.yaml`. When the `hydrate.sh` is executed, it will replace/overlay files from `source-base` with the files from `source-customization` when rendering the files for the `dev` environment.
-
-

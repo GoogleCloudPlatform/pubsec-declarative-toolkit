@@ -97,6 +97,12 @@ This step-by-step procedure deploys :
 
 1.  Private Service Connect to access Google's API
     ```
+    # enable logging for dns 
+    gcloud dns policies create dnspolicy1 \
+    --networks=$NETWORK \
+    --enable-logging \
+    --description="dns policy to enable logging"
+
     # private ip for apis
     gcloud compute addresses create apis-private-ip \
     --global \
