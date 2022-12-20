@@ -3,6 +3,23 @@
 ## Description
 This packge contains the minimal set of infrastructure needed to help with a document processing environment.
 
+## Cloning the Repository
+Run the following to open the shell and auto clone the repo into the cloudshell_open directory off your shell user directory. 
+
+[![Open this project in Google Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit&page=editor&tutorial=README.md)
+
+CD into the solutions folder
+
+```
+cd cloudshell_open/pubsec-declarative-toolkit/solutions/document-processing/gcloud
+```
+
+Switch to the canary branch
+
+```
+git checkout canary
+```
+
 ## Architecture
 - paraphrasing from original architecture diagram from internal AI CE team under S.A.
 
