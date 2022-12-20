@@ -114,6 +114,9 @@ if [[ "$CREATE_KCC" != false ]]; then
 # check expiry https://cloud.google.com/sdk/gcloud/reference/projects/add-iam-policy-binding
 
 echo "Adding roles to project for user: ${USER_EMAIL}"
+# owner for now
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/owner --quiet > /dev/null 1>&1
+
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/ml.admin --quiet > /dev/null 1>&1
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/aiplatform.admin --quiet > /dev/null 1>&1
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/billing.projectManager --quiet > /dev/null 1>&1
@@ -139,8 +142,26 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
   gcloud services enable dataflow.googleapis.com
 
   # CSR (up from AR) (for cloud run) ok
+  gcloud services enable sourcerepo.googleapis.com
+  gcloud services enable artifactregistry.googleapis.com
+
+
+  # cr
+  gcloud services enable containerregistry.googleapis.com
 
   # app engine ok
+
+  # compute
+  gcloud services enable compute.googleapis.com
+
+  # run
+  gcloud services enable run.googleapis.com
+  gcloud services enable cloudapis.googleapis.com 
+  gcloud services enable cloudbuild.googleapis.com 
+  gcloud services enable storage-component.googleapis.com 
+  gcloud services enable cloudkms.googleapis.com 
+  gcloud services enable logging.googleapis.com 
+  gcloud services enable cloudfunctions.googleapis.com
 
   # BigQuery ok
   #gcloud services enable bigquerymigration.googleapis.com
@@ -153,9 +174,25 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
   #gcloud services enable accesscontextmanager.googleapis.com 
   gcloud services enable cloudbilling.googleapis.com
 
-
+  # sas
+  #Add	Artifact Registry Service Agent	 service-374013806670@gcp-sa-artifactregistry.iam.gserviceaccount.com		
+  #Add	Cloud Run Service Agent	 service-374013806670@serverless-robot-prod.iam.gserviceaccount.com	
+   
   echo "API's after"
   gcloud services list --enabled | grep NAME
+
+
+   # create csr, ar
+   git config --global credential.'https://source.developers.google.com'.helper gcloud.sh
+   gcloud source repos create reference-code
+   # cd
+   #git push google main
+   
+   # enable csr role
+   #gcloud source repos set-iam-policy REPOSITORY_NAME POLICY_FILE
+
+   # ar
+   gcloud artifacts repositories create reference-code --location=northamerica-northeast1 --repository-format=docker
 
   # create VPC
   #echo "Create VPC: ${NETWORK}"
@@ -179,6 +216,24 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 
   #echo "List Clusters:"
   #gcloud anthos config controller list
+
+
+   # cloud run instance
+#   gcloud beta run deploy traffic-generation-target \
+#--image=northamerica-northeast1-docker.pkg.dev/traffic-os/traffic-generation-target/traffic-generation-target@sha256:dc34cd9de43dbda8fddce647d54d79a49718391c4032453aa17c28716fc215e5 \
+#--allow-unauthenticated \
+#--service-account=25019029317-compute@developer.gserviceaccount.com \
+#--timeout=30 \
+#--cpu=2 \
+#--memory=4Gi \
+#--execution-environment=gen2 \
+#--region=northamerica-northeast1 \
+#--project=traffic-os
+
+   # deploy to vpc public subnet
+   #gcloud compute instances create traffic-target-public --project=traffic-os --zone=northamerica-northeast1-a --machine-type=e2-medium --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --service-account=25019029317-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/cloud-platform --tags=http-server,https-server --create-disk=auto-delete=yes,boot=yes,device-name=traffic-target-public,image=projects/debian-cloud/global/images/debian-11-bullseye-v20220519,mode=rw,size=10,type=projects/traffic-os/zones/us-central1-a/diskTypes/pd-balanced --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+
+
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
   gcloud config set project "${KCC_PROJECT_ID}"
