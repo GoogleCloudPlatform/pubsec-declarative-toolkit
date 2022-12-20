@@ -264,6 +264,8 @@ Allowlists are defined by workload and security profile.  Dev may have cloud-int
 
 # Design Issues
 
+- Triage issues list - https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3Avalidate_with_v2
+
 pending
 - 20220923: adjust billing text in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/dev/solutions/landing-zone#kpt
 
