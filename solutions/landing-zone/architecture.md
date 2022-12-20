@@ -607,6 +607,12 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
 - Check the current allow on port 10255 (10250-10255 are usually for kubelet comms and required for K8S cluster comms)
 - 
 
+
+## DI-42: ComputeForwardingRule - serviceDirectoryRegistrations doesn't support region
+- 20221219
+- https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/754
+
+
 # Installation/Deployment
 
 ### Deployment Preparations
