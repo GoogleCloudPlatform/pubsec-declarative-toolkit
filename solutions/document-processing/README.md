@@ -28,9 +28,9 @@ graph LR;
   style GCP-Services-Flow fill:#44f,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
   %% mapped and documented
 
-  Cloud-Storage-0 --> Document-AI
+  Cloud-Storage-0-->Document-AI
   Cloud-Storage-0-->BigQuery-0
-  #BigQuery-0
+  Document-AI-->DocAI-Warehouse
   DocAI-Warehouse-->Cloud-Storage-1
   Cloud-Storage-1-->Cloud-Functions
   Cloud-Functions-->Data-Loss-Prevention
