@@ -8,12 +8,16 @@ Config Controller is a hosted service to provision and orchestrate Anthos, GKE, 
 
 This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variants that best fit your requirements. It also uses multiples least privilege core GCP service account which are linked to distinct kubernetes namespaces using workload identity. 
 
+# Implementation
+
+You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **Shared Services Canada**, providing a good level of details on how they have implemented this landing zone solution to host workloads from any of the 43 departments of the Government of Canada.
+
 # Organization
 
 This Landing Zone v2 assumes that the different required environments known as Sandbox, Development, User Acceptance and Testing, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
 
 ## Single GCP organization
-TODO: 
+![img](img/single-org.png)
 
 ## Multiple GCP organizations
 ![img](img/multi-org.png)
