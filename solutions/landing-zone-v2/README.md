@@ -6,7 +6,7 @@ Config Controller is a hosted service to provision and orchestrate Anthos, GKE, 
 
 ![img](img/ACM.png)
 
-This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variants that best fit your requirements. It also uses multiples least privilege core GCP service account which are linked to distinct kubernetes namespaces using workload identity. 
+This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variants that best fit your requirements. It also uses multiples least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity. 
 
 # Implementation
 
@@ -22,7 +22,6 @@ This Landing Zone v2 assumes that the different required environments known as S
 ## Multiple GCP organizations
 ![img](img/multi-org.png)
 
-
 # Folder Structure
 ## The sandbox landing zone contains the following folder structure.
 
@@ -35,11 +34,13 @@ This Landing Zone v2 assumes that the different required environments known as S
 # Setup
 
 To deploy this Landing Zone you will need to:
-  1. Complete the bootstrap procedure.
-  2. Create your landing zone.
-  3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci.
+  1. [Complete the bootstrap procedure.](#1-complete-the-boostrap-procedure)
+  2. [Create your landing zone.](#2-create-your-landing-zone)
+  3. [Deploy the infrastructure using either kpt or gitops-git or gitops-oci.](#3-deploy-the-infrastructure-using-either-kpt-or-gitops-git-or-gitops-oci)
+  4. [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
+  5. [Perform the post deployment steps](#5-perform-the-post-deployment-steps)
 
-# 1. Complete the boostrap procedure 
+# 1. Complete the boostrap procedure
 
 ## Requirements
 1. Cloud identity has been deployed
@@ -67,42 +68,38 @@ To deploy this Landing Zone you will need to:
 - VPC firewall rules.
 - A config controller cluster.
 - IAM permission for the "Yakima" service account.
-- The K8S secret to access the repository.
-- The initial root-sync.yaml.
-- Grant billing user role to projects-sa service account.
-
 
 ## Initial Organization configuration
 
 1. Define environment variables
-    ```
-    CLUSTER=<cluster-name>
-    REGION=northamerica-northeast1
-    PROJECT_ID=<project-id>
-    LZ_FOLDER_NAME=<env>-<landing zone name>
-    NETWORK=<vpc-name>
-    SUBNET=<subnet-name>
-    ORG_ID=<your_org_id>
-    ROOT_FOLDER_ID=<your_folder_id> # This one is only required if not deploying at the org level. See option 2 below. (ex. for testing)
-    BILLING_ID=XXXXX-XXXXX-XXXXX
-    GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
-    TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    ```bash
+    export CLUSTER=<cluster-name>
+    export REGION=northamerica-northeast1
+    export PROJECT_ID=<project-id>
+    export LZ_FOLDER_NAME=<env>-<landing zone name>
+    export NETWORK=<vpc-name>
+    export SUBNET=<subnet-name>
+    export ORG_ID=<your_org_id>
+    export ROOT_FOLDER_ID=<your_folder_id> # This one is only required if not deploying at the org level. Ex. for testing. See option 2 when executing the Config Controller project and cluster below
+    export BILLING_ID=XXXXX-XXXXX-XXXXX
+    export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
+    export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
 
 1. Set Default Logging Storage Location.
 
     This command will ensure that the default logging buckets that are generated with a new project (organization wide) are set to the selected region instead of the default location `global`.  
-    ```
+    ```bash
     gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 1. Create the Organization level Access Context Manager policy
+    
     There can only be one organization level ACM policy per organization
-    ```
+    ```bash
     # Validate if an ACM policy exist
     gcloud access-context-manager policies list --organization=${ORG_ID}
 
     # To create an ACM policy that applies to the entire organization, run:
-
     gcloud access-context-manager policies create \
       --organization=organizations/${ORG_ID} --title="My Policy"
     ```
@@ -111,39 +108,41 @@ To deploy this Landing Zone you will need to:
 
 1. Create LZ folder
     ### Option 1 - Org level folder
-    ```
+    ```bash
     FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME --organization=$ORG_ID --format="value(name)" --quiet | cut -d "/" -f 2)
     ```
     ### Option 2 - Folder in a Folder
-    ```
+    ```bash
     FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
     ```
 1. Create config controller project
     ### Option 1 - Org level Project
-    ```
+    ```bash
     gcloud projects create $PROJECT_ID --set-as-default --organization=$ORG_ID
     ```
     ### Option 2 - Project in a Folder
-    ```
+    ```bash
     gcloud projects create $PROJECT_ID --set-as-default --folder=$ROOT_FOLDER_ID
     ```
 1. Enable Billing
-    ```
+    ```bash
     gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID 
     ```
 1. Set the project ID
-    ```
+    ```bash
     gcloud config set project $PROJECT_ID
     ```
 1. Enable the required services
-    ```
+    ```bash
     gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
     ```
 
 1. Create network
-    ```
+    ```bash
+    # VPC
     gcloud compute networks create $NETWORK --subnet-mode=custom
 
+    # Subnet
     gcloud compute networks subnets create $SUBNET  \
     --network $NETWORK \
     --range 192.168.0.0/16 \
@@ -158,7 +157,7 @@ To deploy this Landing Zone you will need to:
     ```
 
 1.  Private Service Connect to access Google's API
-    ```
+    ```bash
     # enable logging for dns 
     gcloud dns policies create dnspolicy1 \
     --networks=$NETWORK \
@@ -204,8 +203,8 @@ To deploy this Landing Zone you will need to:
     ```
 
 1. Create firewall rules
-    ```
-    # Allow egress to AZDO (optionnal) - should be revised periodically
+    ```bash
+    # Allow egress to AZDO (optionnal) - should be revised periodically - https://learn.microsoft.com/en-us/azure/devops/organizations/security/allow-list-ip-url?view=azure-devops&tabs=IP-V4#ip-addresses-and-range-restrictions
     gcloud compute firewall-rules create allow-egress-azure --action ALLOW --rules tcp:22,tcp:443 --destination-ranges 13.107.6.0/24,13.107.9.0/24,13.107.42.0/24,13.107.43.0/24 --direction EGRESS --priority 5000 --network $NETWORK --enable-logging
 
     # Allow egress to Github (optionnal) - should be revised periodically - https://api.github.com/meta
@@ -223,16 +222,16 @@ To deploy this Landing Zone you will need to:
     TODO: TBD
 
     ### GKE Standard
-    ```
+    ```bash
     gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET 
     ```
-1. Get Credentials
-    ```
+1. Get Kubernetes Credentials
+    ```bash
     gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
     kubens config-control
     ```
 1. Set permissions for "Yakima" (Google managed) service account
-    ```
+    ```bash
     gcloud anthos config controller get-credentials $CLUSTER --location $REGION 
 
     export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
@@ -256,7 +255,7 @@ To deploy this Landing Zone you will need to:
   1. Well done !!! You have completed the Bootstrap procedure
 
 
-# 2. Create your landing zone 
+# 2. Create your landing zone
 
 ## Fetch the packages
 
@@ -266,43 +265,45 @@ You will be running the following commands from a linux machine. GCP Cloud Shell
 We will be using kpt to obtain the packages. For more information on the `kpt get` command, please refer to this link : https://kpt.dev/reference/cli/pkg/get/
 
 1. Get the landing zone package
-    ```
+    ```bash
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2/landing-zone@main ./landing-zone
     ```
 1. Get the hierarchy package
     - Sandbox
-      ```
+      ```bash
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-sandbox@main ./landing-zone/hierarchy
       ```
 
     - DEV, UAT, PROD
-      ```
+      ```bash
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main ./landing-zone/hierarchy
       ```
 1. Get the gatekeeper policies package
-    ```
+    ```bash
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@main ./landing-zone/gatekeeper-policies
     ```
 1. Get the organization policies package
-    ```
+    ```bash
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/org-policies@main ./landing-zone/org-policies
     ```
 1. Get the logging package
+    
     TODO: TBD
 1. etc.
     
-## Customize Packages
+1. Customize Packages
 
- Review and customize all packages `setters.yaml` with the configuration of your landing zone. 
+    Review and customize all packages `setters.yaml` with the unique configuration of your landing zone. 
 
+1. Well done !!! You have completed the landing zone creation
 
-## Deployment
+# 3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
 
  This solution can be deployed in a few different ways depending on the behavior you want. 
-  - kpt
+  - [kpt](#kpt)
   - GitOps
-    - [Git](#git)
-    - [OCI](#oci)
+    - [Git](#gitops---git)
+    - [OCI](#gitops---oci)
 
 
  Deploying through `kpt` is a more traditional push approach to deploying the infrastructure. This will deploy the infrastructure resources into the target cluster similar to how `kubectl` operates. Some of the deployment advantages `kpt` offers is the ability to use functions live `render` to populate variables in the configuration and `gatekeeper` which allows us to validate policy before deployment. 
@@ -319,19 +320,19 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
 
  Before running the `kpt` commands for the first time you will need to initialize the `kpt` package locally. You will only need to do this once after you initially get the `kpt` package
 
- The following commands assume the `landing-zone-v2` package is in your currently directory. If you are in the `landing-zone-v2` directory you can remove omit the `landing-zone-v2` argument from the commands.
+ The following commands assume the `landing-zone` package is in your currently directory. If you are in the `landing-zone` directory you can remove omit the `landing-zone` argument from the commands.
 
-  ```
-    kpt live init landing-zone-v2 --namespace config-control
+  ```bash
+    kpt live init landing-zone --namespace config-control
   ```
 
-  ```
-    kpt fn render landing-zone-v2
-    kpt live apply landing-zone-v2 --reconcile-timeout=2m --output=table
+  ```bash
+    kpt fn render landing-zone
+    kpt live apply landing-zone --reconcile-timeout=2m --output=table
   ```
 
  The section around billing that looks like the following and can either be commented out or deleted.
-  ```
+  ```bash
     billingAccountRef:
         # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
         external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
@@ -362,14 +363,14 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
 Now that we have a git repo set up we can configure the Config Controller's ConfigSync operator to observe it in order to deploy our infrastructure.
 
 1. Create `git-creds` secret with the required value to access the git repository
-    ```
+    ```bash
     kubectl create secret generic git-creds --namespace="config-management-system" --from-literal=username=${GIT_USERNAME} --from-literal=token=${TOKEN}
     ```
 
 1. Configure the `RootSync` object
 
     Create a file using the example below
-    ```
+    ```yaml
     cat <<EOF>> root-sync.yaml
     apiVersion: configsync.gke.io/v1beta1
     kind: RootSync
@@ -390,25 +391,25 @@ Now that we have a git repo set up we can configure the Config Controller's Conf
     ```
 
 1. Deploy the Config Sync Manifest
-    ```
+    ```bash
     kubectl apply -f root-sync.yaml
     kubectl wait --for condition=established --timeout=10s crd/rootsyncs.configsync.gke.io
     ```
 
 1. Clone the empty repo created earlier
-    ```
+    ```bash
     git clone <REPO_URL>
     cd <REPO_FOLDER>
     ```
 1. Copy your landing zone folder to this new repo
 
 1. Hydrate files
-    ```
+    ```bash
     kpt fn render
     ```
 
 1. Push landing zone to Git
-    ```
+    ```bash
     # Checkout the main branch
     git checkout -b main
     # Review changes 
@@ -420,7 +421,7 @@ Now that we have a git repo set up we can configure the Config Controller's Conf
     # Push your changes to origin
     git push --set-upstream origin main
     ```
-1. Congratulations !!! you have completed the GitOps - Git configuration
+1. **Congratulations** !!! you have completed the GitOps - Git configuration
 
  ## GitOps - OCI
 
@@ -430,20 +431,20 @@ Before we deploy via OCI we have a few things we'll need to do to prepare our en
 First we'll need to create an artifact registry to store our OCI artifacts.
 
 1. Let's set some environment variables to start
-    ```
+    ```bash
     export PROJECT_ID=<PROJECT_ID>
     export AR_REPO_NAME=<REPO_NAME>
     export GSA_NAME="config-management-oci"
     ```
 
 1. Enable Artifact Registry
-    ```
+    ```bash
     gcloud services enable artifactregistry.googleapis.com \
     --project=${PROJECT_ID}
     ```
 
 1. Create a new repository
-    ```
+    ```bash
     gcloud artifacts repositories create ${AR_REPO_NAME} \
     --repository-format=docker \
     --location=northamerica-northeast1 \
@@ -452,12 +453,12 @@ First we'll need to create an artifact registry to store our OCI artifacts.
     ```
 
 1. Create a Service Account for Config Management to Access the Artifact Repository.
-    ```
+    ```bash
     gcloud iam service-accounts create $GSA_NAME --project=${PROJECT_ID}
     ```
 
 1. Assign it the read permissions
-    ```
+    ```bash
     gcloud artifacts repositories add-iam-policy-binding ${AR_REPO_NAME} \
     --member "serviceAccount:${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" \
     --location northamerica-northeast1 \
@@ -465,7 +466,7 @@ First we'll need to create an artifact registry to store our OCI artifacts.
     ```
 
 1. Allow the SA to be accessed by the Root Sync Service account.
-    ```
+    ```bash
     gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
     --role roles/iam.workloadIdentityUser \
     --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler]"
@@ -474,25 +475,26 @@ First we'll need to create an artifact registry to store our OCI artifacts.
 ### Push Config Image to the repository
 
 1. Install crane and login to Artifact Registry
-    ```
+    ```bash
     go install github.com/google/go-containerregistry/cmd/crane@latest
     crane auth login northamerica-northeast1-docker.pkg.dev  -u oauth2accesstoken -p "$(gcloud auth print-access-token)"
     ```
 
 1. Render the Configs
 
-    ```
-    kpt fn render landing-zone-v2
+    ```bash
+    kpt fn render landing-zone
     ``` 
 
 1. Once that has completed we can build our OCI Artifact with the crane CLI.
-    ```
+    ```bash
     crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
     ```
 
+### ConfigSync
 1. Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
 
-    ```
+    ```yaml
     cat <<EOF>> lz-oci.yaml
     apiVersion: configsync.gke.io/v1beta1
     kind: RootSync
@@ -511,25 +513,25 @@ First we'll need to create an artifact registry to store our OCI artifacts.
     ```
 
 1. Apply it to the target cluster.
-    ```
+    ```bash
     kubectl apply -f lz-oci.yaml
     ```
-1. Congratulations !!! you have completed the GitOps - OCI configuration
+1. **Congratulations** !!! you have completed the GitOps - OCI configuration
 
-# Validating landing zone deployment
+# 4. Validate the landing zone deployment
 
-```
+```bash
 nomos status --contexts gke_${PROJECT_ID}_northamerica-northeast1_krmapihost-${CLUSTER}
 ```
 
-# Post deployment
+# 5. Perform the post-deployment steps
 ## Grant billing account user role
 
 1. **WAIT** until the GCP Service Account `projects-sa` has been created. 
     - K8S resource name is `iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa`
 
 1. Grant billing account user role to projects-sa (repeat this step on all billing account used in the landing zone)
-    ```
+    ```bash
     gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" \
       --member "serviceAccount:projects-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
       --role "roles/billing.user"
@@ -545,32 +547,32 @@ To reacquire the resources you will need to redeploy a new instance and deploy t
 ## kpt
 
 First run either
-```
+```bash
 kpt live destroy
 ```
 
 or
 
-```
+```bash
 kubectl delete gcp --all
 ```
 
 Finally delete the Config Controller instance
 
-```
+```bash
 gcloud anthos config controller instance-name --location instance-region
 ```
 
 ## OCI
 First delete the Rootsync deployment. This will prevent the resources from self-healing.
 
-```
+```bash
 kubectl delete rootsync landing-zone -n config-management-system
 ```
 
 Now we can delete our KCC resources from the Config Controller instance.
 
-```
+```bash
 kubectl delete gcp --all -n config-control
 ```
 
@@ -578,6 +580,6 @@ Once the resources have been deleted you can delete the config controller instan
   
 If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
 
-```
+```bash
 gcloud anthos config controller delete instance-name --location instance-region
 ```
