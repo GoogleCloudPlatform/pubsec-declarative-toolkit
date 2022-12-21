@@ -34,7 +34,7 @@ EOF
 
 # set for michael@cloudshell:~/dev/pdt-oldev/obriensystems/pubsec-declarative-toolkit/solutions/landing-zone (kcc-lz-8597)$ ./deployment.sh -b pdt-oldev -u pdtoldev -c false -l true -d false -p kcc-lz-8597
 
-# for eash of override - key/value pairs for constants - shared by all scripts
+# for ease of override - key/value pairs for constants - shared by all scripts
 source ./vars.sh
 
 
@@ -120,7 +120,34 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/ml.admin --quiet > /dev/null 1>&1
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/aiplatform.admin --quiet > /dev/null 1>&1
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/billing.projectManager --quiet > /dev/null 1>&1
+# for SA impersonation
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/iam.serviceAccountTokenCreator --quiet > /dev/null 1>&1
+
+# Service Account permissions - switch from member=user to serviceAccount
+# https://gcp.permissions.cloud/predefinedroles
+# AutoML Editor
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/automl.editor --quiet > /dev/null 1>&1
+
+# BigQuery Data Editor
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
+
+# BigQuery Job User
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
+
+# BigQuery User
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=bigquery.user --quiet > /dev/null 1>&1
+
+# Document AI Administrator
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/documentai.admin --quiet > /dev/null 1>&1
+
+# Document AI Editor (not required)
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/documentai.editor --quiet > /dev/null 1>&1
+
+# Storage Admin
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
+
+# Vertex AI Custom Code Service Agent
+
 
 
   # enable apis
