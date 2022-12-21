@@ -13,11 +13,38 @@ Navigate to the [Usage section](#usage)
 
 ## Architecture
 - paraphrasing from original architecture diagram from internal AI CE team under S.A.
-
+### Current Use Case
 ```mermaid
 graph LR;
   style GCP-Services-Flow fill:#44f,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
   %% mapped and documented
+
+  User-Trigger-->Cloud-Storage
+  Cloud-Storage-->CloudRun
+  CSR-->CloudBuild
+  
+  ArtifactRegistry-->DockerImage
+  CloudBuild-->ArtifactRegistry
+  DockerImage-->CloudRun
+  CloudRun-->DocAI-Form-Parser
+  CloudRun-->DocAI-Custom-ML-Model-0
+  CloudRun-->DocAI-Custom-ML-Model-1
+  DocAI-Form-Parser-->NLP-API
+  NLP-API-->BigQuery
+  DocAI-Custom-ML-Model-0-->BigQuery
+  DocAI-Custom-ML-Model-1-->BigQuery
+  BigQuery-->UI
+  UI-->BigQuery
+  
+```
+
+
+### Alternate Use Case - deprecated
+```mermaid
+graph LR;
+  style GCP-Services-Flow fill:#44f,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
+  %% mapped and documented
+
 
   Cloud-Storage-0-->Document-AI
   Cloud-Storage-0-->BigQuery-0
