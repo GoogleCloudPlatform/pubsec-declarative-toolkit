@@ -147,6 +147,7 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
 
 # Vertex AI Custom Code Service Agent
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/aiplatform.customCodeServiceAgent --quiet > /dev/null 1>&1
 
 
 
