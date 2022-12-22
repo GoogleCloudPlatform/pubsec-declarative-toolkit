@@ -135,7 +135,7 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
 
 # BigQuery User
-gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=bigquery.user --quiet > /dev/null 1>&1
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.user --quiet > /dev/null 1>&1
 
 # Document AI Administrator
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/documentai.admin --quiet > /dev/null 1>&1
@@ -147,7 +147,7 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
 
 # Vertex AI Custom Code Service Agent
-gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/aiplatform.customCodeServiceAgent --quiet > /dev/null 1>&1
+#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/aiplatform.customCodeServiceAgent --quiet > /dev/null 1>&1
 
 
 
