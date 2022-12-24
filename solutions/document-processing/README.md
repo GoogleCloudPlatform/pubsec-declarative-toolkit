@@ -74,7 +74,7 @@ graph LR;
 - Cloud Identity accounts that will receive the provisioned project must have been created by the Super Admin already
 
 ### KCC - via Kubernetes Config Controller
-
+- Reference CRDs for GCP services: https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount and https://cloud.google.com/config-connector/docs/how-to/getting-started
 ### Gcloud - via sh script
 
 #### CD into the solutions folder
