@@ -1,3 +1,3 @@
 manifest: true
 handleGHRelease: true
-branch: release-please
+primaryBranch: release-please
