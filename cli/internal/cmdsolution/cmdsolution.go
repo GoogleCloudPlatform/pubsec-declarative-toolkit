@@ -106,7 +106,7 @@ func getGitHubRaw(url string, branch string, subFolder string, file string) (str
 	
 	subFolder = strings.TrimSuffix(subFolder, "/")
 
-	reg := regexp.MustCompile(`^https://github.com/([a-zA-Z0-9-/]*)`)
+	reg := regexp.MustCompile(`^https://github\\.com/([a-zA-Z0-9-/]*)`)
 	res := reg.FindStringSubmatch(url)
 
 	// If the repo is private then a token can be passed in the URL to get access to the solutions file
