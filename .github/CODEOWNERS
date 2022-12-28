@@ -1,0 +1,6 @@
+# Global Reviewers
+# review when someone opens a pull request.
+*       @cartyc @fmichaelobrien
+
+# Solution Reviewers
+solutions/* @davelanglois-ssc @alaincormier-ssc
