@@ -2,5 +2,8 @@
 # review when someone opens a pull request.
 *       @cartyc @fmichaelobrien
 
+# CLI Reviewers
+cli/*   @shaunmitchellve
+
 # Solution Reviewers
 solutions/* @davelanglois-ssc @alaincormier-ssc
