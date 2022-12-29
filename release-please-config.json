@@ -1,0 +1,19 @@
+{
+  "packages": {
+    "solutions/landing-zone": {
+      "package-name": "landing-zone",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "solutions/guardrails": {
+      "package-name": "guardrails",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "solutions/landing-zone-namespaced": {
+      "package-name": "landing-zone-namespaced",
+      "changelog-path": "CHANGELOG.md"
+    }
+  },
+  "bootstrap-sha": "638cf1a666e2e05394371b2eb9223fc9d539ada0",
+  "release-type": "krm-blueprint",
+  "bump-minor-pre-major": true
+}
