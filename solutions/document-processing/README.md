@@ -15,6 +15,10 @@ export ROOT_DIR=~/docproc
 cd $ROOT_DIR
 git clone https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git
 ```
+- switch to the canary branch
+```
+git checkout canary
+```
 
 ### Preparation for CSR
 - copy the internal repository zip into your cloud shell editor in the root project directory "ROOT_DIR" and unzip it
