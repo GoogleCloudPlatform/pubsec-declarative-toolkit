@@ -46,9 +46,10 @@ graph LR;
   ArtifactRegistry-->DockerImage
   CloudBuild-->ArtifactRegistry
   DockerImage-->CloudRun
-  CloudRun-->DocAI-Form-Parser
-  CloudRun-->DocAI-Custom-ML-Model-0
-  CloudRun-->DocAI-Custom-ML-Model-1
+  Cloud-Run-->DocAI-Form-Parser
+  Cloud-Run-->DocAI-Custom-ML-Model-0
+  Cloud-Run-->DocAI-Custom-ML-Model-1
+  Cloud-Run-->Email
   DocAI-Form-Parser-->NLP-API
   NLP-API-->BigQuery
   DocAI-Custom-ML-Model-0-->BigQuery
