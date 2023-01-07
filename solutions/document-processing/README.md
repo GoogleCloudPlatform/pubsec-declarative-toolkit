@@ -90,10 +90,24 @@ graph LR;
 - navigate/cd to the directory /solutions/document-processing
 
 ### Prerequisites
-- You must have GCP Organization Administrator or Owner role level privileges
+#### IAM
+- You must have GCP Organization Administrator or Owner role level privileges to run this script
 - Your GCP account must have increased quotas for [billing/project](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-onboarding.md#quota-increase) association - if generating more than 5 projects in the organization
-- Cloud Identity accounts that will receive the provisioned project must have been created by the Super Admin already
+- Restricted role developer Cloud Identity accounts that will receive the provisioned project must have been created by the Super Admin already
+- User role Cloud Identity accounts will be required for read only access
 
+##### IAM - Organization Administrator
+##### IAM - Folder level Admin
+- ability to create projects - Folder Admin
+- ability to associate billing with projects - Project Billing Manager
+##### IAM - Project Level Owner
+- Restricted to a particular project
+- has ability to enable any service
+
+##### IAM - Project Level Limited Developer
+- limited to a 1 or more projects
+- cannot enable services
+- 
 ### KCC - via Kubernetes Config Controller
 - Reference CRDs for GCP services: https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount and https://cloud.google.com/config-connector/docs/how-to/getting-started
 ### Gcloud - via sh script
