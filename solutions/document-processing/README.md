@@ -17,6 +17,7 @@ git clone https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git
 ```
 - switch to the canary branch
 ```
+cd pubsec-declarative-toolkit/solutions/document-processing
 git checkout canary
 ```
 
