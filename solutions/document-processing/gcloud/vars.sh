@@ -1,6 +1,6 @@
 
 #!/bin/bash
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,58 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CIDR_KCC_VPC=192.168.0.0/16
-REGION=northamerica-northeast1
+###
+# UPDATE
+# root of current project dir
+export ROOT_DIR=~/docproc-old
+# generated project prefix
+export KCC_PROJECT_NAME=docai-gen
 # used for vpc, subnet, KCC cluster
-PREFIX=pdt
-KCC_PROJECT_NAME=kcc-lz
+export PREFIX=pdt
+#KCC_PROJECT_NAME=
+# increment/verify
+export CSR_NAME=docproc3
+# directory inside this current repo from where we run scripts
+export GITHUB_GCLOUD_REPO_DIR=pubsec-declarative-toolkit/solutions/document-processing/gcloud
+###
+
+###
+# DERIVED - do not edit
+# current project - not the target project
+export PROJECT_ID=$DEVSHELL_PROJECT_ID
+# current project - not the target project
+#export BOOT_PROJECT_ID=$PROJECT_ID
+export BOOT_PROJECT_ID=docproc-old
+
+###
+
+### INVARIANT
+# dir/name of internal source repo
+#export SRC_REPO=docproc
+export SRC_REPO=bank-of-anthos
+export REPO_TREE_DEPTH_FOR_CD_UP=../../../../
+# after the fact - post service enablement - 2nd one
+# not required
+export CLOUD_BUILD_SA=880919021125@cloudbuild.gserviceaccount.com
+
+
+export TEMP_REPO_DIR=temp0
+
+export REGION=us-central1
+export NETWORK=$REGION
+export SUBNET=$NETWORK-sn
+#export NETWORK=default
+#export SUBNET=default
+
+export ZONE=$REGION-a
+export VPC=$NETWORK-vpc
+
+export CIDR_VPC=192.168.0.0/16
+# see cloud build yamls
+export GKE_PROD=gke-prod
+export GATEWAY_NS=istio-gateway
+export BRANCH_PROD=main
+export CLOUDBUILD_TRIGGER_PROD_MAIN=prod-main
+
+# enable compute.googleapis.com first
+#gcloud config set compute/zone ${ZONE}
