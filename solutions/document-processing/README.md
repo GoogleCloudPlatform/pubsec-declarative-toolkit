@@ -5,11 +5,31 @@ This packge contains the minimal set of infrastructure needed to help with a doc
 
 ## Quickstart
 ### Cloning the Repository
-Run the following to open the shell and auto clone the repo into the cloudshell_open directory off your shell user directory. 
+- navigate/create a project directory in cloud shell
+```
+mkdir ~/docproc
+export ROOT_DIR=~/docproc
+```
+- clone https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit
+```
+cd $ROOT_DIR
+git clone https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git
+```
+- switch to the canary branch
+```
+cd pubsec-declarative-toolkit/solutions/document-processing
+git checkout canary
+```
 
-[![Open this project in Google Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit&page=editor&tutorial=README.md)
+### Preparation for CSR
+- copy the internal repository zip into your cloud shell editor in the root project directory "ROOT_DIR" and unzip it
 
-Navigate to the [Usage section](#usage)
+```
+cd ~/$ROOT_DIR
+unzip docproc.zip
+```
+- adjust environment variables in vars.sh to point to your repo dir - ie: $CSR_DIR=$ROOT_DIR/docproc
+- The Cloud Source Repository will be created from this directory
 
 ## Architecture
 - paraphrasing from original architecture diagram from internal AI CE team under S.A.
@@ -26,9 +46,10 @@ graph LR;
   ArtifactRegistry-->DockerImage
   CloudBuild-->ArtifactRegistry
   DockerImage-->CloudRun
-  CloudRun-->DocAI-Form-Parser
-  CloudRun-->DocAI-Custom-ML-Model-0
-  CloudRun-->DocAI-Custom-ML-Model-1
+  Cloud-Run-->DocAI-Form-Parser
+  Cloud-Run-->DocAI-Custom-ML-Model-0
+  Cloud-Run-->DocAI-Custom-ML-Model-1
+  Cloud-Run-->Email
   DocAI-Form-Parser-->NLP-API
   NLP-API-->BigQuery
   DocAI-Custom-ML-Model-0-->BigQuery
@@ -69,10 +90,24 @@ graph LR;
 - navigate/cd to the directory /solutions/document-processing
 
 ### Prerequisites
-- You must have GCP Organization Administrator or Owner role level privileges
+#### IAM
+- You must have GCP Organization Administrator or Owner role level privileges to run this script
 - Your GCP account must have increased quotas for [billing/project](https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-onboarding.md#quota-increase) association - if generating more than 5 projects in the organization
-- Cloud Identity accounts that will receive the provisioned project must have been created by the Super Admin already
+- Restricted role developer Cloud Identity accounts that will receive the provisioned project must have been created by the Super Admin already
+- User role Cloud Identity accounts will be required for read only access
 
+##### IAM - Organization Administrator
+##### IAM - Folder level Admin
+- ability to create projects - Folder Admin
+- ability to associate billing with projects - Project Billing Manager
+##### IAM - Project Level Owner
+- Restricted to a particular project
+- has ability to enable any service
+
+##### IAM - Project Level Limited Developer
+- limited to a 1 or more projects
+- cannot enable services
+- 
 ### KCC - via Kubernetes Config Controller
 - Reference CRDs for GCP services: https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount and https://cloud.google.com/config-connector/docs/how-to/getting-started
 ### Gcloud - via sh script
