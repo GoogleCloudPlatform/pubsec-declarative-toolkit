@@ -58,33 +58,64 @@ getrole()
 done
 }
 
+## Inventory
+# GCS bucket: online_mode
+# GCS bucket: json_metadata
+# BQ: table: FinalTable
+# BQ: table: FinalConfTable
+# BQ: table: TransactionBable
+# SA: 
+
 create_once_only() {
 
   ## backup dir
   echo "create backup dir in private/anthos/gcloud dir"
   pwd
   #mkdir backup
-  echo "switching to src internal repo up 2 directories in ${REPO_TREE_DEPTH_FOR_CD_UP}${SRC_REPO}"
-  #cd $REPO_TREE_DEPTH_FOR_CD_UP
-  #$SRC_REPO
-  #mkdir $TEMP_REPO_DIR
-  #cd $TEMP_REPO_DIR
-  # temporary migrate repo
-  #git clone https://github.com/cloud-quickstart/bank-of-anthos.git
-  #cd $SRC_REPO
-  # go back
-  #cd ../$GITHUB_GCLOUD_REPO_DIR
-  # see below
-  #create_csr
-  #create_monolith_vm
-
-  #exit 1
+  #echo "switching to src internal repo up 2 directories in ${REPO_TREE_DEPTH_FOR_CD_UP}${SRC_REPO}"
 }
 
 create_service_accounts() {
-  echo "Create service accounts"
-  #gcloud iam service-accounts create $SERVICE_ACCOUNT_M4A_INSTALL --project=$PROJECT_ID
-  #gcloud iam service-accounts create $SERVICE_ACCOUNT_M4A_CE_SRC --project=$PROJECT_ID
+  SA_EMAIL=$SERVICE_ACCOUNT_MAIN@$CC_PROJECT_ID.iam.gserviceaccount.com
+  echo "Create service account: $SA_EMAIL"  
+  gcloud iam service-accounts create $SERVICE_ACCOUNT_MAIN --project=$CC_PROJECT_ID
+
+  #gcloud iam service-accounts create "${$SERVICE_ACCOUNT_MAIN}" --display-name "docproc SA" --project=${CC_PROJECT_ID} --quiet
+  SA_EMAIL=`gcloud iam service-accounts list --project="${CC_PROJECT_ID}" --filter=${SERVICE_ACCOUNT_MAIN} --format="value(email)"`
+  echo "Email: $SA_EMAIL"
+# Service Account permissions - switch from member=user to serviceAccount
+# https://gcp.permissions.cloud/predefinedroles
+# AutoML Editor
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/automl.editor --quiet > /dev/null 1>&1
+
+# BigQuery Data Editor
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
+
+# BigQuery Job User
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
+
+# BigQuery User
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/bigquery.user --quiet > /dev/null 1>&1
+
+# Document AI Administrator
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/documentai.admin --quiet > /dev/null 1>&1
+
+# Document AI Editor (not required)
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/documentai.editor --quiet > /dev/null 1>&1
+
+# Storage Admin
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
+
+# Vertex AI Custom Code Service Agent
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/aiplatform.customCodeServiceAgent --quiet > /dev/null 1>&1
+
+}
+
+delete_service_accounts() {
+  echo "Delete service accounts - keep generated ones"
+  SA_EMAIL=$SERVICE_ACCOUNT_MAIN@$CC_PROJECT_ID.iam.gserviceaccount.com
+  echo "Delete SA: $SA_EMAIL"
+  gcloud iam service-accounts delete $SA_EMAIL --project=$CC_PROJECT_ID --quiet
 }
 
 deploy_gke() {
@@ -192,34 +223,7 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 #gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/aiplatform.admin --quiet > /dev/null 1>&1
 #gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/billing.projectManager --quiet > /dev/null 1>&1
 # for SA impersonation
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/iam.serviceAccountTokenCreator --quiet > /dev/null 1>&1
-
-# Service Account permissions - switch from member=user to serviceAccount
-# https://gcp.permissions.cloud/predefinedroles
-# AutoML Editor
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/automl.editor --quiet > /dev/null 1>&1
-
-# BigQuery Data Editor
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
-
-# BigQuery Job User
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.dataEditor --quiet > /dev/null 1>&1
-
-# BigQuery User
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/bigquery.user --quiet > /dev/null 1>&1
-
-# Document AI Administrator
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/documentai.admin --quiet > /dev/null 1>&1
-
-# Document AI Editor (not required)
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/documentai.editor --quiet > /dev/null 1>&1
-
-# Storage Admin
-#gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
-
-# Vertex AI Custom Code Service Agent
-##gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/aiplatform.customCodeServiceAgent --quiet > /dev/null 1>&1
-
+gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL --role=roles/iam.serviceAccountTokenCreator --quiet > /dev/null 1>&1
 
    # enable apis
    echo "Enabling APIs"
@@ -401,6 +405,8 @@ delete_cloudbuild() {
 create_csr() {
    echo "Creating CSR"
    cd $REPO_TREE_DEPTH_FOR_CD_UP
+   mkdir $CSR_ROOT
+   cd $CSR_ROOT
    # create csr, ar
    # https://cloud.google.com/source-repositories/docs/adding-repositories-as-remotes
    # validated
@@ -408,12 +414,10 @@ create_csr() {
    gcloud source repos create $CSR_NAME
    # unvalidated
 
-   git clone https://github.com/GoogleCloudPlatform/bank-of-anthos.git
+   echo "cloning for CSR repo https://github.com/GoogleCloudPlatform/$SRC_REPO"
+   git clone https://github.com/GoogleCloudPlatform/$SRC_REPO.git
    cd $SRC_REPO
 
-   # manually
-   #gcloud init && git config --global credential.https://source.developers.google.com.helper gcloud.sh
-   #git remote add google https://source.developers.google.com/p/anthos-old/r/cymbal-bank-repo
    git remote add google https://source.developers.google.com/p/$CC_PROJECT_ID/r/$CSR_NAME
    #git push google master
    #git push google main   
@@ -424,15 +428,15 @@ create_csr() {
    #git branch $BRANCH_DEV
    #git push -u google $BRANCH_DEV
 
-   git checkout main
+   git checkout $CSR_BRANCH_OTHER_THAN_MAIN
    # copy artifacts (will be in both branches)
    cp ../$GITHUB_GCLOUD_REPO_DIR/assets/main/cloudbuild-prod-main.yaml .
    git add .
    git commit -m "triple cloud build main"
-   git push google main
+   git push google $CSR_BRANCH_OTHER_THAN_MAIN
    # enable csr role
    #gcloud source repos set-iam-policy $CSR_NAME POLICY_FILE
-   cd ../$GITHUB_GCLOUD_REPO_DIR
+   cd ../../$GITHUB_GCLOUD_REPO_DIR
 }
 
 delete_csr() {
@@ -442,7 +446,10 @@ delete_csr() {
   # delete repo
   echo "Delete temp repo $SRC_REPO"
   cd $REPO_TREE_DEPTH_FOR_CD_UP
+  cd $CSR_ROOT
   rm -rf $SRC_REPO
+  cd ..
+  rm -rf $CSR_ROOT
   #rm -rf ../../../$TEMP_REPO_DIR
   # delete triggers done in delete_cloudbuild before
   # get back
@@ -510,7 +517,8 @@ else
   echo "Reusing project: $CC_PROJECT_ID"
 fi
 
-echo "CC_PROJECT_ID: $KCC_PROJECT_ID"
+echo "CC_PROJECT_ID: $CC_PROJECT_ID"
+echo "passed in KCC_PROJECT_ID: $KCC_PROJECT_ID"
 #export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 #gcloud config list --format json | jq .core.project | sed 's/"//g'
 # We pass in the project id so we can switch back from potentially another transient project
@@ -546,13 +554,13 @@ if [[ "$CREATE_KCC" != false ]]; then
   create_service_accounts  
   create_csr
   create_ar 
-  create_cluster_prod
+ # create_cluster_prod
   create_cloudbuild_prod
   #trigger_prod_main_build
-  asm_cluster_prod
-  istio_injection_prod
-  install_gateway_prod
-  trigger_prod_main_build
+ # asm_cluster_prod
+ # istio_injection_prod
+ # install_gateway_prod
+ # trigger_prod_main_build
 
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
@@ -576,7 +584,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
 
   SA = "SA-${KCC_PROJECT_ID}"
   gcloud iam service-accounts create "${SA}" --display-name "${SA} service account" --project=${KCC_PROJECT_ID} --quiet
-  act=`gcloud iam service-accounts list --project="${KCC_PROJECT_ID}" --filter=tfadmin --format="value(email)"`
+  act=`gcloud iam service-accounts list --project="${KCC_PROJECT_ID}" --filter=SA-${KCC_PROJECT_ID} --format="value(email)"`
 
   echo "SA_EMAIL: ${SA}"
   #ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
@@ -594,20 +602,21 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   done
 fi
 
-  #asm_cluster_prod
-  #istio_injection_prod
-  #install_gateway_prod
+
+  #create_service_accounts  
+  #create_csr
+  #create_ar
 
  # delete
 if [[ "$DELETE_KCC" != false ]]; then
   echo "Deleting ${CC_PROJECT_ID}"
-   delete_clusters
-   #delete_istio_registration
+ #  delete_clusters
+ #  delete_istio_registration
    delete_cloudbuild
    delete_ar
    delete_csr
    delete_vpc
-   #delete_service_accounts
+   delete_service_accounts
    delete_all
 
   # disable billing before deletion - to preserve the project/billing quota
