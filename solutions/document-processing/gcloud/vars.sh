@@ -25,6 +25,7 @@ export PREFIX=pdt
 #KCC_PROJECT_NAME=
 # increment/verify
 export CSR_NAME=docproc3
+export AR_NAME=$CSR_NAME
 # directory inside this current repo from where we run scripts
 export GITHUB_GCLOUD_REPO_DIR=pubsec-declarative-toolkit/solutions/document-processing/gcloud
 # no underscores
