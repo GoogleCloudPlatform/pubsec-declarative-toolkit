@@ -392,12 +392,15 @@ trigger_prod_main_build() {
   echo "trigger_prod_main_build"
   # commit to main branch
   cd $REPO_TREE_DEPTH_FOR_CD_UP
+  cd $CSR_ROOT
   cd $SRC_REPO
   git checkout $CSR_BRANCH_OTHER_THAN_MAIN
-  cp ../$GITHUB_GCLOUD_REPO_DIR/assets/empty_stub.sh empty1_stub.sh
-  git add empty1_stub.sh
-  git commit -m "trigger prod"
-  git push google CSR_BRANCH_OTHER_THAN_MAIN
+  export FILE_RAND=$(shuf -i 0-10000 -n 1)
+  cp ../../$GITHUB_GCLOUD_REPO_DIR/assets/empty_stub.sh empty${FILE_RAND}_stub.sh
+  echo "copy random file empty${FILE_RAND}_stub.sh"
+  git add empty${FILE_RAND}_stub.sh
+  git commit -m "trigger prod with ${FILE_RAND}"
+  git push google $CSR_BRANCH_OTHER_THAN_MAIN
   #git checkout main
   cd ../../$GITHUB_GCLOUD_REPO_DIR
 }
@@ -624,6 +627,7 @@ fi
   #create_ar
   #create_cloudbuild_prod
   #delete_cloudbuild_prod
+  trigger_prod_main_build
 
 
 # delete
