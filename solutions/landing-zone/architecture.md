@@ -192,6 +192,10 @@ GCP Compute and GKE (Google Kubernetes Engine) benefit from secure [Shielded VMs
 #### Intrusion Detection System
 GCP IDS (Intrusion Detection System Service) (based on the Palo Alto security appliance) - https://cloud.google.com/intrusion-detection-system handles Malware, Spyware and Command-and-Control attacks. Intra- and inter-VPC communication is monitored. Network-based threat data for threat investigation and correlation can be generated including intrusion tracking and response.
 
+Q: real time packet inspection/blocking - not just packet mirroring with detection/alerting?
+Yes in IDS with static routes
+https://cloud.google.com/blog/products/networking/using-packet-mirroring-with-ids
+
 In addition for Chrome based clients we have BeyondCorp zero trust capabilities.
 
 #### Security Command Center
