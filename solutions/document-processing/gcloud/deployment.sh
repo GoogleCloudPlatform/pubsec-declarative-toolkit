@@ -439,6 +439,15 @@ create_csr() {
    cd ../../$GITHUB_GCLOUD_REPO_DIR
 }
 
+remote_rebase_csr() {
+   cd $REPO_TREE_DEPTH_FOR_CD_UP
+   cd $CSR_ROOT
+   # gui version - use git merge origin/canary otherwise
+   git pull origin
+   git push google $CSR_BRANCH_OTHER_THAN_MAIN
+   cd ../../$GITHUB_GCLOUD_REPO_DIR
+}
+
 delete_csr() {
   # delete CSR - cannot reuse name for 7d
   echo "Delete CSR dir $CSR_NAME"
