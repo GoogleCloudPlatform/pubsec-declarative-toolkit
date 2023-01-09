@@ -27,22 +27,27 @@ export PREFIX=pdt
 export CSR_NAME=docproc3
 # directory inside this current repo from where we run scripts
 export GITHUB_GCLOUD_REPO_DIR=pubsec-declarative-toolkit/solutions/document-processing/gcloud
+# no underscores
+export SERVICE_ACCOUNT_MAIN=service-account-main
+# current project - not the target project
+#export BOOT_PROJECT_ID=$PROJECT_ID
+export BOOT_PROJECT_ID=docproc-old
 ###
 
 ###
 # DERIVED - do not edit
 # current project - not the target project
 export PROJECT_ID=$DEVSHELL_PROJECT_ID
-# current project - not the target project
-#export BOOT_PROJECT_ID=$PROJECT_ID
-export BOOT_PROJECT_ID=docproc-old
-
 ###
 
 ### INVARIANT
 # dir/name of internal source repo
 #export SRC_REPO=docproc
-export SRC_REPO=bank-of-anthos
+export SRC_REPO=pubsec-declarative-toolkit
+# branch under use
+export CSR_BRANCH_OTHER_THAN_MAIN=canary
+# subfolder off root to hold CSR from github
+export CSR_ROOT=csr
 export REPO_TREE_DEPTH_FOR_CD_UP=../../../../
 # after the fact - post service enablement - 2nd one
 # not required
