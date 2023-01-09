@@ -69,7 +69,7 @@ done
 create_once_only() {
 
   ## backup dir
-  echo "create backup dir in private/anthos/gcloud dir"
+  echo "create backup dir "
   pwd
   #mkdir backup
   #echo "switching to src internal repo up 2 directories in ${REPO_TREE_DEPTH_FOR_CD_UP}${SRC_REPO}"
@@ -543,7 +543,7 @@ echo "passed in KCC_PROJECT_ID: $KCC_PROJECT_ID"
 # We pass in the project id so we can switch back from potentially another transient project
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
 export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///')
-echo "BILLING_ID: ${BILLING_ID}"
+#echo "BILLING_ID: ${BILLING_ID}"
 #ORGID=$(gcloud organizations list --format="get(name)" --filter=displayName=$DOMAIN)
 ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
 echo "ORG_ID: ${ORG_ID}"
@@ -575,7 +575,7 @@ if [[ "$CREATE_KCC" != false ]]; then
   create_ar 
  # create_cluster_prod
   create_cloudbuild_prod
-  #trigger_prod_main_build
+  trigger_prod_main_build
  # asm_cluster_prod
  # istio_injection_prod
  # install_gateway_prod
@@ -627,7 +627,7 @@ fi
   #create_ar
   #create_cloudbuild_prod
   #delete_cloudbuild_prod
-  trigger_prod_main_build
+  #trigger_prod_main_build
 
 
 # delete
