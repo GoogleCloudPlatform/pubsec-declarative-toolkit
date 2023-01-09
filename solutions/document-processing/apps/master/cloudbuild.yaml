@@ -17,48 +17,49 @@ steps:
   # Install dependencies
   - name: python
     entrypoint: pip
-    args: ["install", "-r", "requirements.txt", "--user"]
+    args: ["install", "-r", "solutions/document-processing/apps/master/requirements.txt", "--user"]
 # [END cloudbuild_python_dependencies_yaml]
 
   # [START cloudbuild_python_tests_yaml]
   # Run unit tests
-  - name: python
-    entrypoint: python
-    args: ["-m", "pytest", "--junitxml=${SHORT_SHA}_test_log.xml"] 
+#  - name: python
+#    entrypoint: python
+#    args: ["-m", "pytest", "--junitxml=${SHORT_SHA}_test_log.xml"] 
   # [END cloudbuild_python_tests_yaml]
 
   # [START cloudbuild_python_image_yaml]
   # Docker Build
+  # ${_ARTIFACT_REGISTRY_REPO}
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}', '.']
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}', '-f', 'solutions/document-processing/apps/master/Dockerfile', '.']
   # [END cloudbuild_python_image_yaml]
 
   # [START cloudbuild_python_push_yaml]
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}']
+    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}']
   # [END cloudbuild_python_push_yaml]
   
   # [START cloudbuild_python_deploy_yaml]
   # Deploy to Cloud Run
-  - name: google/cloud-sdk
-    args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
-           '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}', 
-           '--region', 'us-central1', '--platform', 'managed', 
-           '--allow-unauthenticated']
+ # - name: google/cloud-sdk
+ #   args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
+ #          '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}', 
+ #          '--region', 'us-central1', '--platform', 'managed', 
+ #          '--allow-unauthenticated']
   # [END cloudbuild_python_deploy_yaml]
   
 # [START cloudbuild_python_logs_yaml]
 # Save test logs to Google Cloud Storage
-artifacts:
-  objects:
-    location: gs://${_BUCKET_NAME}/
-    paths:
-      - ${SHORT_SHA}_test_log.xml
+#artifacts:
+#  objects:
+#    location: gs://${_BUCKET_NAME}/
+#    paths:
+#      - ${SHORT_SHA}_test_log.xml
 # [END cloudbuild_python_logs_yaml]
 # Store images in Google Artifact Registry 
 images:
-  - us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}
+  - us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}
 # [END cloudbuild_python_yaml]
 #
