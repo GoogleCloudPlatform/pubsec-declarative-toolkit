@@ -377,10 +377,15 @@ create_cloudbuild_prod() {
   # https://cloud.google.com/build/docs/deploying-builds/deploy-gke
   # working so far without a service account set
   # PROD MAIN create cloud build trigger (simultaneous dev/prod gke cluster builds - should do dev first)
-  gcloud beta builds triggers create cloud-source-repositories --repo=$CSR_NAME --branch-pattern=main --name="${CLOUDBUILD_TRIGGER_PROD_MAIN}" --build-config=cloudbuild-prod-main.yaml
+  #cloud beta builds triggers create cloud-source-repositories --repo=$CSR_NAME --branch-pattern=main --name="${CLOUDBUILD_TRIGGER_PROD_MAIN}" --build-config=cloudbuild-prod-main.yaml
   
   #gcloud builds submit --region=$REGION --project=$PROJECT_ID --config build-config
   #gcloud alpha builds trigger create cloud-source-repositories --trigger-config=cloudbuild.yaml --project=$PROJECT_ID
+
+  # https://github.com/GoogleCloudPlatform/cloud-build-samples/blob/main/python-example-flask/cloudbuild.yaml
+  gcloud beta builds triggers create cloud-source-repositories --repo=$CSR_NAME --branch-pattern=$CSR_BRANCH_OTHER_THAN_MAIN --name="${CLOUDBUILD_TRIGGER_PROD_MAIN}" --build-config=solutions/document-processing/apps/master/cloudbuild.yaml
+  
+  
 }
 
 trigger_prod_main_build() {
@@ -388,16 +393,16 @@ trigger_prod_main_build() {
   # commit to main branch
   cd $REPO_TREE_DEPTH_FOR_CD_UP
   cd $SRC_REPO
-  git checkout main
+  git checkout $CSR_BRANCH_OTHER_THAN_MAIN
   cp ../$GITHUB_GCLOUD_REPO_DIR/assets/empty_stub.sh empty1_stub.sh
   git add empty1_stub.sh
   git commit -m "trigger prod"
-  git push google main
-  git checkout main   
-  cd ../$../$GITHUB_GCLOUD_REPO_DIR
+  git push google CSR_BRANCH_OTHER_THAN_MAIN
+  #git checkout main
+  cd ../../$GITHUB_GCLOUD_REPO_DIR
 }
 
-delete_cloudbuild() {
+delete_cloudbuild_prod() {
   echo "delete Cloud Build triggers"
   gcloud beta builds triggers delete $CLOUDBUILD_TRIGGER_PROD_MAIN
 }
@@ -442,6 +447,8 @@ create_csr() {
 remote_rebase_csr() {
    cd $REPO_TREE_DEPTH_FOR_CD_UP
    cd $CSR_ROOT
+   echo "Current git remotes:"
+   git remote
    # gui version - use git merge origin/canary otherwise
    git pull origin
    git push google $CSR_BRANCH_OTHER_THAN_MAIN
@@ -470,7 +477,7 @@ create_ar() {
    # enable csr role
    #gcloud source repos set-iam-policy REPOSITORY_NAME POLICY_FILE
    # ar
-   #gcloud artifacts repositories create reference-code --location=northamerica-northeast1 --repository-format=docker
+   gcloud artifacts repositories create $AR_NAME --location=$REGION --repository-format=docker
 }
 
 delete_ar() {
@@ -615,13 +622,16 @@ fi
   #create_service_accounts  
   #create_csr
   #create_ar
+  #create_cloudbuild_prod
+  #delete_cloudbuild_prod
 
- # delete
+
+# delete
 if [[ "$DELETE_KCC" != false ]]; then
   echo "Deleting ${CC_PROJECT_ID}"
  #  delete_clusters
  #  delete_istio_registration
-   delete_cloudbuild
+   delete_cloudbuild_prod
    delete_ar
    delete_csr
    delete_vpc
