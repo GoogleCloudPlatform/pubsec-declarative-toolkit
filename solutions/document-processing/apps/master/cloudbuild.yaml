@@ -43,7 +43,7 @@ steps:
   # [START cloudbuild_python_push_yaml]
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}']
+    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_AR_NAME}/dp-master:${SHORT_SHA}']
   # [END cloudbuild_python_push_yaml]
   
   # [START cloudbuild_python_deploy_yaml]
@@ -67,7 +67,7 @@ steps:
 # [END cloudbuild_python_logs_yaml]
 # Store images in Google Artifact Registry 
 images:
-  - us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}
+  - us-central1-docker.pkg.dev/${PROJECT_ID}/${_AR_NAME}/dp-master:${SHORT_SHA}
     # ["gcr.io/$PROJECT_ID/magellan-nbi:latest"]
 #  - us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:latest
 # [END cloudbuild_python_yaml]
