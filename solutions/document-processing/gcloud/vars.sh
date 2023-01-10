@@ -16,6 +16,7 @@
 
 ###
 # UPDATE
+export REGION=us-central1
 # root of current project dir
 export ROOT_DIR=~/docproc-old
 # generated project prefix
@@ -26,13 +27,18 @@ export PREFIX=pdt
 # increment/verify
 export CSR_NAME=docproc3
 export AR_NAME=$CSR_NAME
-# directory inside this current repo from where we run scripts
-export GITHUB_GCLOUD_REPO_DIR=pubsec-declarative-toolkit/solutions/document-processing/gcloud
+export CLOUD_RUN_MASTER_NAME=dp-master
+export DOCKER_MASTER_IMAGE_NAME=dp-master
 # no underscores
 export SERVICE_ACCOUNT_MAIN=service-account-main
 # current project - not the target project
 #export BOOT_PROJECT_ID=$PROJECT_ID
 export BOOT_PROJECT_ID=docproc-old
+###
+
+### APP SPECIFIC
+export GCS_BUCKET=${CSR_NAME}-bucket
+export HOSTPATH_MASTER=0.0.0.0
 ###
 
 ###
@@ -45,19 +51,16 @@ export PROJECT_ID=$DEVSHELL_PROJECT_ID
 # dir/name of internal source repo
 #export SRC_REPO=docproc
 export SRC_REPO=pubsec-declarative-toolkit
+# directory inside this current repo from where we run scripts
+export GITHUB_GCLOUD_REPO_DIR=${SRC_REPO}/solutions/document-processing/gcloud
+
 # branch under use
 export CSR_BRANCH_OTHER_THAN_MAIN=canary
 # subfolder off root to hold CSR from github
 export CSR_ROOT=csr
 export REPO_TREE_DEPTH_FOR_CD_UP=../../../../
-# after the fact - post service enablement - 2nd one
-# not required
-export CLOUD_BUILD_SA=880919021125@cloudbuild.gserviceaccount.com
-
 
 export TEMP_REPO_DIR=temp0
-
-export REGION=us-central1
 export NETWORK=$REGION
 export SUBNET=$NETWORK-sn
 #export NETWORK=default

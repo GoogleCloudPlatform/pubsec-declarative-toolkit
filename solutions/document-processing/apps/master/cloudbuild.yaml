@@ -43,11 +43,13 @@ steps:
   
   # [START cloudbuild_python_deploy_yaml]
   # Deploy to Cloud Run
- # - name: google/cloud-sdk
- #   args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
- #          '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}', 
- #          '--region', 'us-central1', '--platform', 'managed', 
- #          '--allow-unauthenticated']
+  # AR_NAME
+  # DOCKER_MASTER_IMAGE_NAME
+  #- name: google/cloud-sdk
+  #  args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
+  #         '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}', 
+  #         '--region', 'us-central1', '--platform', 'managed', 
+  #         '--allow-unauthenticated']
   # [END cloudbuild_python_deploy_yaml]
   
 # [START cloudbuild_python_logs_yaml]
@@ -61,5 +63,7 @@ steps:
 # Store images in Google Artifact Registry 
 images:
   - us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}
+    # ["gcr.io/$PROJECT_ID/magellan-nbi:latest"]
+#  - us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:latest
 # [END cloudbuild_python_yaml]
 #
