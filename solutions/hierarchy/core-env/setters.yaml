@@ -17,7 +17,6 @@ kind: ConfigMap
 metadata:
   name: setters
   annotations:
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
     config.kubernetes.io/local-config: "true"
 data:
   lz-folder-id: '0000000000'

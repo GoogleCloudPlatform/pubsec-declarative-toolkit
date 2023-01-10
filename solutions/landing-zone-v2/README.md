@@ -44,7 +44,7 @@ To deploy this Landing Zone you will need to:
 
 ## Requirements
 1. Cloud identity has been deployed
-1. GCP IAM persmissions for the account executing this procedure:
+1. GCP IAM permissions for the account executing this procedure:
    - Org level:
       - Organization Admin
       - Folder Admin
@@ -218,6 +218,9 @@ To deploy this Landing Zone you will need to:
     ```
 
 1. Create anthos config controller cluster
+
+    You can set optional parameters like `--man-block`, which lets you specify a CIDR range to allow IP addresses in those ranges access to the Kubernetes control plane for additional security. For the full list of options, refer to the [gcloud anthos config controller create](https://cloud.google.com/sdk/gcloud/reference/anthos/config/controller/create) documentation.
+
     ### GKE Autopilot - Fully managed cluster
     TODO: TBD
 

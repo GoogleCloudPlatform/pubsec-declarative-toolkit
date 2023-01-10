@@ -20,7 +20,6 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     config.kubernetes.io/local-config: "true"
-    internal.kpt.dev/upstream-identifier: 'blueprints.cloud.google.com|ProjectServiceSet|config-control|management-project-id'
 spec:
   services:
     - cloudbilling.googleapis.com
