@@ -17,7 +17,7 @@ git clone https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git
 ```
 - switch to the canary branch
 ```
-cd pubsec-declarative-toolkit/solutions/document-processing
+cd pubsec-declarative-toolkit/solutions/document-processing/gcloud
 git checkout canary
 ```
 
@@ -31,6 +31,30 @@ unzip docproc.zip
 - adjust environment variables in vars.sh to point to your repo dir - ie: $CSR_DIR=$ROOT_DIR/docproc
 - The Cloud Source Repository will be created from this directory
 
+Switch the project to the bootstrap project
+```
+gcloud config set project docproc-old
+```
+### Runnng the PoC
+
+- flip the create flag to true
+```
+./deployment.sh -u pdt -c true -l false -d false
+```
+Note the generated project id and switch to it
+```
+gcloud config set project docai-gen-4083
+```
+### Adjusting the Poc
+- flip both the create and delete flags to false - add functions to rerun in between the create/delete sections
+```
+./deployment.sh -u pdt -c false -l false -d false -p docai-gen-4083
+```
+### Removing the Poc
+- flip the delete flag to true and add the -p project id
+```
+./deployment.sh -u pdt -c false -l false -d true -p docai-gen-4083
+```
 ## Architecture
 - paraphrasing from original architecture diagram from internal AI CE team under S.A.
 ### Current Use Case

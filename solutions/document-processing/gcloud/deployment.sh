@@ -385,7 +385,7 @@ create_cloudbuild_prod() {
   # https://github.com/GoogleCloudPlatform/cloud-build-samples/blob/main/python-example-flask/cloudbuild.yaml
   gcloud beta builds triggers create cloud-source-repositories --repo=$CSR_NAME --branch-pattern=$CSR_BRANCH_OTHER_THAN_MAIN --name="${CLOUDBUILD_TRIGGER_PROD_MAIN}" --substitutions=_AR_NAME="${AR_NAME}",_NODE_VERSION_2="v6.9.5" --build-config=solutions/document-processing/apps/master/cloudbuild.yaml
   
-  
+  #add image name
 }
 
 trigger_prod_main_build() {
@@ -485,7 +485,7 @@ create_ar() {
 delete_ar() {
     echo "delete ar"
     # test
-    gcloud artifacts repositories delete $AR_NAME --location=$REGION
+    gcloud artifacts repositories delete $AR_NAME --location=$REGION --quiet
 }
 
 create_cloudrun() {
