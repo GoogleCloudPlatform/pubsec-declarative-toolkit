@@ -479,13 +479,41 @@ create_ar() {
    echo "create ar"
    # enable csr role
    #gcloud source repos set-iam-policy REPOSITORY_NAME POLICY_FILE
-   # ar
    gcloud artifacts repositories create $AR_NAME --location=$REGION --repository-format=docker
 }
 
 delete_ar() {
     echo "delete ar"
+    # test
+    gcloud artifacts repositories delete $AR_NAME --location=$REGION
 }
+
+create_cloudrun() {
+    echo "create cloud run"
+    # Get service account via project mumber env
+gcloud run deploy ${CLOUD_RUN_MASTER_NAME} \
+--image=${REGION}-docker.pkg.dev/${CC_PROJECT_ID}/${AR_NAME}/${CLOUD_RUN_MASTER_NAME}@sha256:19c7e0c35c47a2a408bde8d9a54402cbad94c46b5421f1b17bdf4f4b27010e60 \
+--allow-unauthenticated \
+--service-account=${PROJECT_NUMBER}-compute@developer.gserviceaccount.com \
+--min-instances=1 \
+--max-instances=10 \
+--set-env-vars=GCS_BUCKET=${GCSBUCKET}=bucket,HOSTPATH=${HOSTPATH_MASTER} \
+--no-cpu-throttling \
+--execution-environment=gen2 \
+--region=${REGION} \
+--project=${CC_PROJECT_ID}
+
+# get master cloud run url
+export CLOUD_RUN_MASTER_URL=$(gcloud run services describe $CLOUD_RUN_MASTER_NAME --platform managed --region $REGION --format 'value(status.url)')
+echo "Cloud Run URL for $CLOUD_RUN_MASTER_NAME: ${CLOUD_RUN_MASTER_URL}"
+}
+
+delete_cloudrun() {
+    echo "delete cloud run"
+    gcloud run services delete $CLOUD_RUN_MASTER_NAME --region=$REGION --quiet
+}
+
+
 
 delete_all() {
   # delete service accounts
@@ -563,9 +591,12 @@ if [[ "$CREATE_KCC" != false ]]; then
 # check expiry https://cloud.google.com/sdk/gcloud/reference/projects/add-iam-policy-binding
 
   # get GKE/ASM ids
-  export PROJECT_NUMBER=$(gcloud projects describe ${CC_PROJECT_ID} --format="value(projectNumber)")
+  # get project number
+  export PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+  #export PROJECT_NUMBER=$(gcloud projects describe ${CC_PROJECT_ID} --format="value(projectNumber)")
   export WORKLOAD_POOL=${CC_PROJECT_ID}.svc.id.goog
   export MESH_ID="proj-${CC_PROJECT_NUMBER}"
+
 
   create_roles_services
   create_vpc
@@ -580,6 +611,8 @@ if [[ "$CREATE_KCC" != false ]]; then
  # istio_injection_prod
  # install_gateway_prod
  # trigger_prod_main_build
+  create_cloudrun
+
 
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
@@ -628,11 +661,12 @@ fi
   #create_cloudbuild_prod
   #delete_cloudbuild_prod
   #trigger_prod_main_build
-
+  #create_cloudrun
 
 # delete
 if [[ "$DELETE_KCC" != false ]]; then
   echo "Deleting ${CC_PROJECT_ID}"
+   delete_cloudrun
  #  delete_clusters
  #  delete_istio_registration
    delete_cloudbuild_prod
