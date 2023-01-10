@@ -5,7 +5,8 @@ https://github.com/canada-ca/cloud-guardrails
 * n/a to this package
 
 ## Guardrail 2 - Global Admins should be secured
-* AC-3(7) - Role policies for accounts are being set in this package. The "Editor" role is granted to a customizable user, group or service account.
+* AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL :
+    Role policies for accounts are being set in this package. The "Editor" role is granted to a customizable user, group or service account through `setters.yaml`.
 
 ## Guardrail 4 - CBS access to billing should be granted
 * n/a to this package

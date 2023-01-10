@@ -20,6 +20,7 @@ metadata:
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/${project-id}-compute
 spec:
   resourceID: global-vpc1-vpc # kpt-set: global-vpc1-vpc
   description: Sandbox VPC
