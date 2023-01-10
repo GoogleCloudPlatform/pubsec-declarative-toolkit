@@ -31,8 +31,13 @@ steps:
   # Docker Build
   # ${_ARTIFACT_REGISTRY_REPO}
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/docproc3/dp-master:${SHORT_SHA}', '-f', 'solutions/document-processing/apps/master/Dockerfile', '.']
+    #env:
+    #  - 'CSR_REPO=${_CSR_REPO}'
+    args: ['build',
+           '--build-arg',
+           'AR_NAME=${_AR_NAME}', 
+           '-t', 
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/${_AR_NAME}/dp-master:${SHORT_SHA}', '-f', 'solutions/document-processing/apps/master/Dockerfile', '.']
   # [END cloudbuild_python_image_yaml]
 
   # [START cloudbuild_python_push_yaml]

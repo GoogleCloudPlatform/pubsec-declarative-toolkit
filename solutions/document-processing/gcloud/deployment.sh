@@ -383,7 +383,7 @@ create_cloudbuild_prod() {
   #gcloud alpha builds trigger create cloud-source-repositories --trigger-config=cloudbuild.yaml --project=$PROJECT_ID
 
   # https://github.com/GoogleCloudPlatform/cloud-build-samples/blob/main/python-example-flask/cloudbuild.yaml
-  gcloud beta builds triggers create cloud-source-repositories --repo=$CSR_NAME --branch-pattern=$CSR_BRANCH_OTHER_THAN_MAIN --name="${CLOUDBUILD_TRIGGER_PROD_MAIN}" --build-config=solutions/document-processing/apps/master/cloudbuild.yaml
+  gcloud beta builds triggers create cloud-source-repositories --repo=$CSR_NAME --branch-pattern=$CSR_BRANCH_OTHER_THAN_MAIN --name="${CLOUDBUILD_TRIGGER_PROD_MAIN}" --substitutions=_AR_NAME="${AR_NAME}",_NODE_VERSION_2="v6.9.5" --build-config=solutions/document-processing/apps/master/cloudbuild.yaml
   
   
 }
@@ -497,7 +497,7 @@ gcloud run deploy ${CLOUD_RUN_MASTER_NAME} \
 --service-account=${PROJECT_NUMBER}-compute@developer.gserviceaccount.com \
 --min-instances=1 \
 --max-instances=10 \
---set-env-vars=GCS_BUCKET=${GCSBUCKET}=bucket,HOSTPATH=${HOSTPATH_MASTER} \
+--set-env-vars=GCS_BUCKET=${GCSBUCKET=default},HOSTPATH=${HOSTPATH_MASTER=default} \
 --no-cpu-throttling \
 --execution-environment=gen2 \
 --region=${REGION} \
