@@ -20,7 +20,7 @@
       config.kubernetes.io/local-config: 'true'      
   spec:
     databaseVersion: MYSQL_5_7
-    region: us-central1
+    region: northamerica-northeast1 # kpt-set: ${region}
     settings:
       tier: db-f1-micro
       ipConfiguration:
