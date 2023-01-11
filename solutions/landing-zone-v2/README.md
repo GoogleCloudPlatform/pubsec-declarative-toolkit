@@ -269,7 +269,7 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
 
 1. Get the landing zone package
     ```bash
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2/landing-zone@main ./landing-zone
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main ./landing-zone
     ```
 1. Get the hierarchy package
     - Sandbox
