@@ -12,7 +12,7 @@ data "template_file" "setup-active-fgt-instance" {
     active_port3_ip          = var.active_port3_ip
     active_port4_ip          = var.active_port4_ip
     mask                     = var.mask
-    passive_hb_ip            = var.passive_port3_ip // Passive Sync (HeartBeat) IP
+    passive_hb_ip            = var.passive_port4_ip // Passive Sync (HeartBeat) IP
     subnet_cidr_port1        = var.subnet_cidrs[0]
     subnet_cidr_port2        = var.subnet_cidrs[1]
     subnet_cidr_port3        = var.subnet_cidrs[2]
@@ -40,7 +40,7 @@ data "template_file" "setup-passive-fgt-instance" {
     subnet_cidr_port2        = var.subnet_cidrs[1]
     subnet_cidr_port3        = var.subnet_cidrs[2]
     subnet_cidr_port4        = var.subnet_cidrs[3]
-    active_hb_ip             = var.active_port3_ip // Active Sync (HeartBeat) IP
+    active_hb_ip             = var.active_port4_ip // Active Sync (HeartBeat) IP
     internal_loadbalancer_ip = google_compute_address.internal_address.address
     elb_ip1                  = module.static-ip-elb1.static_ip
     elb_ip2                  = module.static-ip-elb2.static_ip

@@ -54,11 +54,19 @@ config router static
       set dst ${cidrhost(subnet_cidr_port2, 1)}/32
       set device "port2"
     next
-
+    edit 12
+      set dst ${subnet_cidr_port3}
+      set device "port3"
+      set gateway ${cidrhost(subnet_cidr_port3, 1)}
+    next
+    edit 22
+      set dst ${cidrhost(subnet_cidr_port3, 1)}/32
+      set device "port3"
+    next
 end
 config system interface
     edit port1
-        set description "public"
+        set description "external"
         set mode static
         set ip ${active_port1_ip}/32
         unset allowaccess
@@ -75,7 +83,7 @@ config system interface
         end
     next
     edit port2
-        set description "private"
+        set description "internal"
         unset allowaccess
         set mode static
         set ip ${active_port2_ip}/32
@@ -88,10 +96,10 @@ config system interface
         end
     next
     edit "port3"
-        set allowaccess ping
+        unset allowaccess
         set mode static
         set ip ${active_port3_ip}/32
-        set description "hasync"
+        set description "onprem"
     next
     edit "port4"
         set mode static
@@ -99,11 +107,17 @@ config system interface
         set ip ${active_port4_ip}/32
         set description "management"
     next
+    edit "probe"
+        set vdom "root"
+        set ip 169.254.255.100 255.255.255.255
+        set allowaccess probe-response
+        set type loopback
+next
 end
 config system ha
     set group-name "gcp-group"
     set mode a-p
-    set hbdev "port3" 50
+    set hbdev "port4" 50
     set session-pickup enable
     set ha-mgmt-status enable
     config ha-mgmt-interfaces
@@ -123,4 +137,10 @@ config system sdn-connector
         set type gcp
         set ha-status enable
     next
+end
+
+config system dns
+  set primary 169.254.169.254
+  set protocol cleartext
+  unset secondary
 end

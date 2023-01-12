@@ -1,13 +1,13 @@
 provider "google" {
   version     = "3.49.0"
-  credentials = file(var.credentials_file_path)
+#  credentials = file(var.credentials_file_path)
   project     = var.project
   region      = var.region
 }
 
 provider "google-beta" {
   version     = "3.49.0"
-  credentials = file(var.credentials_file_path)
+#  credentials = file(var.credentials_file_path)
   project     = var.project
   region      = var.region
 }
@@ -116,20 +116,19 @@ resource "google_compute_instance_template" "active" {
     boot         = false
     disk_size_gb = 30
   }
-  # Public Network
+  # external Network
   network_interface {
     network    = module.vpc.vpc_networks[0]
     subnetwork = module.subnet.subnets[0]
-    # access_config {}
   }
 
-  # Private Network
+  # internal Network
   network_interface {
     network    = module.vpc.vpc_networks[1]
     subnetwork = module.subnet.subnets[1]
   }
 
-  # HA Sync Network
+  # on-premise Network
   network_interface {
     network    = module.vpc.vpc_networks[2]
     subnetwork = module.subnet.subnets[2]
@@ -139,8 +138,6 @@ resource "google_compute_instance_template" "active" {
   network_interface {
     network    = module.vpc.vpc_networks[3]
     subnetwork = module.subnet.subnets[3]
-    access_config {
-    }
   }
 
   # Metadata to bootstrap FGT
@@ -182,20 +179,19 @@ resource "google_compute_instance_template" "passive" {
     boot         = false
     disk_size_gb = 30
   }
-  # Public Network
+  # external Network
   network_interface {
     network    = module.vpc.vpc_networks[0]
     subnetwork = module.subnet.subnets[0]
-    # access_config {}
   }
 
-  # Private Network
+  # internal Network
   network_interface {
     network    = module.vpc.vpc_networks[1]
     subnetwork = module.subnet.subnets[1]
   }
 
-  # HA Sync Network
+  # on premise Network
   network_interface {
     network    = module.vpc.vpc_networks[2]
     subnetwork = module.subnet.subnets[2]
@@ -205,8 +201,6 @@ resource "google_compute_instance_template" "passive" {
   network_interface {
     network    = module.vpc.vpc_networks[3]
     subnetwork = module.subnet.subnets[3]
-    access_config {
-    }
   }
 
   # Metadata to bootstrap FGT
@@ -255,7 +249,6 @@ resource "google_compute_instance_from_template" "active_fgt_instance" {
     network_ip = var.active_port4_ip
     network    = module.vpc.vpc_networks[3]
     subnetwork = module.subnet.subnets[3]
-    access_config {}
   }
 }
 
@@ -282,8 +275,7 @@ resource "google_compute_instance_from_template" "passive_fgt_instance" {
   network_interface {
     network_ip = var.passive_port4_ip
     network    = module.vpc.vpc_networks[3]
-    subnetwork = module.subnet.subnets[3]
-    access_config {}
+    subnetwork = module.subnet.subnets[3]  
   }
 
   depends_on = [google_compute_instance_from_template.active_fgt_instance]
@@ -315,6 +307,27 @@ resource "google_compute_instance_group" "umig_passive" {
 }
 
 #########################
+# Management VM
+#########################
+
+resource "google_compute_instance" "vm_management" {
+  name         = "management-vm-${module.random.random_string}"
+  machine_type = "n2-standard-2"
+  zone         = element(data.google_compute_zones.available.names, 0)
+  
+  boot_disk {
+    initialize_params {
+      image = "windows-cloud/windows-2022"
+    }
+  }
+
+  network_interface {
+    network       = module.vpc.vpc_networks[3]
+    subnetwork    = module.subnet.subnets[3]   
+  }
+}
+
+#########################
 # Internal Load Balancer
 #########################
 resource "google_compute_address" "internal_address" {
@@ -335,6 +348,7 @@ resource "google_compute_forwarding_rule" "internal_load_balancer" {
   all_ports             = true
   network               = module.vpc.vpc_networks[1]
   subnetwork            = module.subnet.subnets[1]
+  allow_global_access   = true
 }
 
 resource "google_compute_region_backend_service" "internal_load_balancer_backend" {
@@ -353,6 +367,10 @@ resource "google_compute_region_backend_service" "internal_load_balancer_backend
   health_checks = [
     google_compute_health_check.int_lb_health_check.id
   ]
+  # present in gcp tutorial
+  #   connection_tracking_policy {
+  #   connection_persistence_on_unhealthy_backends = "NEVER_PERSIST"
+  # }
 }
 
 # Health Check
