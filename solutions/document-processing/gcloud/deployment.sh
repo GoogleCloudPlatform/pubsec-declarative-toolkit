@@ -513,6 +513,53 @@ delete_cloudrun() {
     gcloud run services delete $CLOUD_RUN_MASTER_NAME --region=$REGION --quiet
 }
 
+# https://cloud.google.com/document-ai/docs/overview
+create_document_ai_endpoint() {
+    # form from https://www.cloudskillsboost.google/focuses/21028?parent=catalog
+    # sample data
+    gsutil cp gs://cloud-training/gsp924/$DOCAI_EXAMPLE_FORM .
+    # export processor id
+    export PROCESSOR_ID=b595e437c3bdfb09
+    # setup authentication
+#    export PROJECT_ID=$(gcloud config get-value core/project)
+
+    export LOCATION="us"
+
+    gcloud iam service-accounts create $DOCAI_SA_NAME --display-name $DOCAI_SA_NAME
+    gcloud projects add-iam-policy-binding ${CC_PROJECT_ID} --member="serviceAccount:$DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com" --role="roles/documentai.apiUser" --quiet
+    gcloud iam service-accounts keys create $DOCAI_SA_NAME.json --iam-account  $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com
+    export GOOGLE_APPLICATION_CREDENTIALS="$PWD/${DOCAI_SA_NAME}.json"
+    echo $GOOGLE_APPLICATION_CREDENTIALS
+    echo '{"inlineDocument": {"mimeType": "application/pdf","content": "' > temp.json
+    base64 $DOCAI_EXAMPLE_FORM >> temp.json
+    echo '"}}' >> temp.json
+    cat temp.json | tr -d \\n > request.json
+
+    # get processor types
+    #curl -X GET \
+    #    -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
+    #    -H "Content-Type: application/json; charset=utf-8" \
+    #    -d @request.json \
+    #    https://${LOCATION}-documentai.googleapis.com/v1/projects/${CC_PROJECT_ID}/locations/${LOCATION}:fetchProcessorTypes
+    # create processor
+    # https://cloud.google.com/document-ai/docs/create-processor
+    # todo
+
+    curl -X POST \
+        -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
+        -H "Content-Type: application/json; charset=utf-8" \
+        -d @request.json \
+        https://${LOCATION}-documentai.googleapis.com/v1/projects/${CC_PROJECT_ID}/locations/${LOCATION}/processors/${PROCESSOR_ID}:process > output.json
+        #https://${LOCATION}-documentai.googleapis.com/v1beta3/projects/${CC_PROJECT_ID}/locations/${LOCATION}/processors/${PROCESSOR_ID}:process > output.json
+    # prediction endpoint from console
+    #    https://us-documentai.googleapis.com/v1/projects/682344552258/locations/us/processors/b595e437c3bdfb09:process
+    cat output.json | jq -r ".document.text"
+}
+
+delete_document_ai_endpoint() {
+    echo "Delete docai service account"
+    gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
+}
 
 
 delete_all() {
@@ -529,6 +576,7 @@ delete_all() {
   rm -rf asmcli
   rm -rf backup/*
   rm -rf backup
+  rm -rf *.pdf
 
   echo "Date: $(date)"
 }
@@ -612,7 +660,9 @@ if [[ "$CREATE_KCC" != false ]]; then
  # install_gateway_prod
  # trigger_prod_main_build
   create_cloudrun
+  create_document_ai_endpoint
 
+# cp extra/email/app.yaml docai-pipeline/Email/
 
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
@@ -662,10 +712,13 @@ fi
   #delete_cloudbuild_prod
   #trigger_prod_main_build
   #create_cloudrun
+  delete_document_ai_endpoint
+  create_document_ai_endpoint
 
 # delete
 if [[ "$DELETE_KCC" != false ]]; then
   echo "Deleting ${CC_PROJECT_ID}"
+   delete_document_ai_endpoint
    delete_cloudrun
  #  delete_clusters
  #  delete_istio_registration

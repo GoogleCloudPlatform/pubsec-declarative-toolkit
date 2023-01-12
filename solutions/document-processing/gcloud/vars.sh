@@ -31,6 +31,9 @@ export CLOUD_RUN_MASTER_NAME=dp-master
 export DOCKER_MASTER_IMAGE_NAME=dp-master
 # no underscores
 export SERVICE_ACCOUNT_MAIN=service-account-main
+export DOCAI_SA_NAME=document-ai-service-account
+export DOCAI_EXAMPLE_FORM=health-intake-form.pdf
+
 # current project - not the target project
 #export BOOT_PROJECT_ID=$PROJECT_ID
 export BOOT_PROJECT_ID=docproc-old
