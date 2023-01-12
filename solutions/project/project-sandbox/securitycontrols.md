@@ -14,7 +14,7 @@ https://github.com/canada-ca/cloud-guardrails
 ## Guardrail 8 - Network segmentation should be configured
 * AC‑4 - INFORMATION FLOW ENFORCEMENT
     
-    TBD
+Default access to the Internet is removed, and replaced with one requiring specific tagging to pass traffic (no unintentional access to the Internet). Implements 3 zones as per ITSG-22, no default communications between them (specific firewall rules will need to be created based on need). Logging enabled. 
 
 * SC‑7 - BOUNDARY PROTECTION:
   
