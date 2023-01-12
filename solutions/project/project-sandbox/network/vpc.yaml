@@ -26,4 +26,4 @@ spec:
   description: Sandbox VPC
   routingMode: REGIONAL
   autoCreateSubnetworks: false # SC-7
-  deleteDefaultRoutesOnCreate: true # SC-7(5)
+  deleteDefaultRoutesOnCreate: true # AC-4, SC-7(5)
