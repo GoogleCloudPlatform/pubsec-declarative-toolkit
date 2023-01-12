@@ -30,4 +30,4 @@ jobs:
         run: pwd && ls
       - name: nomos vet landing-zone
         run: |
-          docker run -v $PWD:/landing-zone gcr.io/config-management-release/nomos:stable nomos vet --no-api-server-check --source-format unstructured --path /landing-zone/landing-zone/environments
+          docker run -v $PWD:/landing-zone gcr.io/config-management-release/nomos:v1.13.1 nomos vet --no-api-server-check --source-format unstructured --path /landing-zone/landing-zone/environments
