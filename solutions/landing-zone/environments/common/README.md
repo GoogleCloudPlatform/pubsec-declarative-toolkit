@@ -6,14 +6,13 @@ The following services will be deployed
 
 | Resource | Name | Location|
 | --- | --- |  --- |
-| ResourceHierarchy | landing-zone-heirarchy | `hiearchy.yaml` |
+| ResourceHierarchy | landing-zone-hierarchy | `hierarchy.yaml` |
 | LoggingLogSink | audit-bucket-sink | `audit/audit-bucket.yaml` |
 | StorageBucket | audit-${audit-prj-id} | `audit/audit-bucket.yaml` |
-|  IAMPolicyMember | billing-iam-member | `audit/billing-iam-member.yaml` |
+| IAMPolicyMember | billing-iam-member | `audit/billing-iam-member.yaml` |
 | IAMServiceAccount | billing-service-account | `audit/billing-service-account.yaml` |
 | IAMPolicyMember | audit-viewer | `audit/iam.yaml` |
 | IAMPolicyMember | log-reader | `audit/iam.yaml` |
-| StorageBucket | log-bucket-${audit-prj-id} | `audit/log-bucket.yaml` |
 | IAMPolicyMember | log-writer | `audit/log-writer-iam.yaml` |
 | ComputeFirewall | allow-egress-internet-pr | `firewall/private-perimeter-firewall.yaml` |
 | ComputeFirewall | allow-ssh-ingress | `firewall/private-perimeter-firewall.yaml` |

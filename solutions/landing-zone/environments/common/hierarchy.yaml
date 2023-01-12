@@ -15,13 +15,13 @@
 apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
-  name: landing-zone-heirarchy
+  name: landing-zone-hierarchy
   namespace: config-control
   annotations:
     config.kubernetes.io/local-config: 'true'
 spec:
   parentRef:
-    kind: Organization # Optional: Folder. If deploying to a folder change 'external' to the target folder id.
+    kind: Organization # Optional: Folder. If set, also change 'external' below to the target folder id and remove the 'kpt-set' comment.
     external: test-organization # kpt-set: ${org-id}
   config:
     - Infrastructure:

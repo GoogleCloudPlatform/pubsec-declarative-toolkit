@@ -14,7 +14,7 @@
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: # kpt-merge: guardrails/pubsub-logsink
+metadata: 
   name: pubsub-logsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -32,7 +32,7 @@ spec:
 # PubSub Instance
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
-metadata: # kpt-merge: guardrails/logginglogsink-org
+metadata:
   name: logginglogsink-org
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -41,25 +41,20 @@ metadata: # kpt-merge: guardrails/logginglogsink-org
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/bq-audit-data-viewer
+kind: IAMPartialPolicy
+metadata:
   name: pubsub-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/apply-time-mutation: |
-      - sourceRef:
-          apiVersion: v1beta1
-          group: logging.cnrm.cloud.google.com
-          kind: LoggingLogSink
-          name: pubsub-logsink
-          namespace: config-control
-        sourcePath: $.status.writerIdentity
-        targetPath: $.spec.member
-        token: ${logging-writerIdentity}
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/pubsub-logsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/pubsub-logsink
 spec:
-  member: ${logging-writerIdentity}
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: project-id # kpt-set: ${guardrails-project-id}
-  role: roles/pubsub.admin
+    apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+    kind: PubSubTopic
+    name: logginglogsink-org
+  bindings:
+    - role: roles/pubsub.editor
+      members:
+        - memberFrom: 
+            logSinkRef: 
+              name: pubsub-logsink

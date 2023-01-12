@@ -5,7 +5,7 @@ This package is used to generate the folder structure to be used for your enviro
 
 The default configuration will generate a single folder named `guardrails`
 
-Additional folders can be added by modifying the `hiearchy.yaml` file and adding the desired structure. 
+Additional folders can be added by modifying the `hierarchy.yaml` file and adding the desired structure. 
 
 For example the folowing structure would generate a folder for guardrails and a team folder with 2 sub-directories for deployment environments.
 
