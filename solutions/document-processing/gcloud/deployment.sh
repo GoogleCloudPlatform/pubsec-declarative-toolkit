@@ -571,13 +571,13 @@ delete_document_ai_endpoint() {
     echo "Getting processor id"
     curl -X GET \
       -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-      "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors" > processor-list.json
+      "https://$DOCAI_LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$DOCAI_LOCATION/processors" > processor-list.json
 
     export PROCESSOR_ID=$(cat processor-list.json | jq -r ".processors[0].name" | sed 's/projects\/.*\///g')
     echo "Deleting document ai processor: $PROCESSOR_ID"
     curl -X DELETE \
       -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-      "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors/$PROCESSOR_ID"
+      "https://$DOCAI_LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$DOCAI_LOCATION/processors/$PROCESSOR_ID"
 
 }
 
@@ -603,7 +603,7 @@ delete_all() {
   rm -rf backup/*
   rm -rf backup
   rm -rf *.pdf
-  rm ${REPO_TREE_DEPTH_FOR_CD_UP}$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
+  rm -rf ${REPO_TREE_DEPTH_FOR_CD_UP}$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
   echo "Date: $(date)"
 }
 
