@@ -310,7 +310,7 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
   #Kubernetes Engine Developer
 
   # build krm resources export from project
-   gcloud servcies enable cloudasset.googleapis.com
+   gcloud services enable cloudasset.googleapis.com
 }
 
 istio_injection_prod() {
@@ -413,6 +413,9 @@ trigger_prod_main_build() {
   git push google $CSR_BRANCH_OTHER_THAN_MAIN
   #git checkout main
   cd ../../$GITHUB_GCLOUD_REPO_DIR
+  # trigger cloud run deploy or wait for the build
+  echo "Wait for cloud build to finish - 1 min"
+  sleep 60
 }
 
 delete_cloudbuild_prod() {
@@ -500,9 +503,12 @@ delete_ar() {
 
 create_cloudrun() {
     echo "create cloud run"
+    # just in case we run in isolation
+    export PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
     # Get service account via project mumber env
+    # TODO get labeled image
 gcloud run deploy ${CLOUD_RUN_MASTER_NAME} \
---image=${REGION}-docker.pkg.dev/${CC_PROJECT_ID}/${AR_NAME}/${CLOUD_RUN_MASTER_NAME}@sha256:19c7e0c35c47a2a408bde8d9a54402cbad94c46b5421f1b17bdf4f4b27010e60 \
+--image=${REGION}-docker.pkg.dev/${CC_PROJECT_ID}/${AR_NAME}/${CLOUD_RUN_MASTER_NAME} \
 --allow-unauthenticated \
 --service-account=${PROJECT_NUMBER}-compute@developer.gserviceaccount.com \
 --min-instances=1 \
@@ -529,29 +535,13 @@ create_document_ai_endpoint() {
     # form from https://www.cloudskillsboost.google/focuses/21028?parent=catalog
     # sample data
     gsutil cp gs://cloud-training/gsp924/$DOCAI_EXAMPLE_FORM .
-    #gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
-   #sleep 5
-   #gcloud iam service-accounts create $DOCAI_SA_NAME --display-name $DOCAI_SA_NAME
-   #sleep 10
-   #gcloud projects add-iam-policy-binding ${CC_PROJECT_ID} --member="serviceAccount:$DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com" --role="roles/documentai.apiUser" --quiet
-   #sleep 10
-   #gcloud iam service-accounts keys create $DOCAI_SA_NAME.json --iam-account  $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com
-   #sleep 10
-   #gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
-#exit 1
+ 
     # setup authentication
     export GOOGLE_APPLICATION_CREDENTIALS="$PWD/${DOCAI_SA_NAME}.json"
     echo '{"inlineDocument": {"mimeType": "application/pdf","content": "' > temp.json
     base64 $DOCAI_EXAMPLE_FORM >> temp.json
     echo '"}}' >> temp.json
     cat temp.json | tr -d \\n > request.json
-
-    # get processor types
-    #curl -X GET \
-    #    -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
-    #    -H "Content-Type: application/json; charset=utf-8" \
-    #    -d @request.json \
-    #    https://${LOCATION}-documentai.googleapis.com/v1beta3/projects/${CC_PROJECT_ID}/locations/${LOCATION}:fetchProcessorTypes
 
     # create processor
     # https://cloud.google.com/document-ai/docs/create-processor
@@ -566,7 +556,6 @@ EOF
       -d @create_processor.json \
       "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors" > create-processor-results.json
 
-    
     # remove everything except the last /*
     export PROCESSOR_ID=$(cat create-processor-results.json | jq -r ".name" | sed 's/projects\/.*\///g')
     echo "processor ID: $PROCESSOR_ID"
@@ -614,9 +603,7 @@ delete_all() {
   rm -rf backup/*
   rm -rf backup
   rm -rf *.pdf
-  rm ${REPO_TREE_DEPTH_FOR_CD_UP}/$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
-  rm -rf *.json
-  rm -rf *.pdf
+  rm ${REPO_TREE_DEPTH_FOR_CD_UP}$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
   echo "Date: $(date)"
 }
 
@@ -759,7 +746,7 @@ fi
   #trigger_prod_main_build
   #create_cloudrun
   #delete_document_ai_endpoint
-  #create_document_ai_endpoint
+  create_document_ai_endpoint
 
 # delete
 if [[ "$DELETE_KCC" != false ]]; then
