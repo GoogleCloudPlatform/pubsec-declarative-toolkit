@@ -109,6 +109,11 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$
 # Vertex AI Custom Code Service Agent
 gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=serviceAccount:$SA_EMAIL --role=roles/aiplatform.customCodeServiceAgent --quiet > /dev/null 1>&1
 
+   echo "Create document-ai service account: $$DOCAI_SA_NAME in project: $CC_PROJECT_ID - if moved - sleep 15s before using"
+   gcloud iam service-accounts create $DOCAI_SA_NAME --display-name $DOCAI_SA_NAME
+   gcloud projects add-iam-policy-binding ${CC_PROJECT_ID} --member="serviceAccount:$DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com" --role="roles/documentai.apiUser" --quiet
+   gcloud iam service-accounts keys create $DOCAI_SA_NAME.json --iam-account  $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com
+ 
 }
 
 delete_service_accounts() {
@@ -116,6 +121,8 @@ delete_service_accounts() {
   SA_EMAIL=$SERVICE_ACCOUNT_MAIN@$CC_PROJECT_ID.iam.gserviceaccount.com
   echo "Delete SA: $SA_EMAIL"
   gcloud iam service-accounts delete $SA_EMAIL --project=$CC_PROJECT_ID --quiet
+  echo "Delete docai service account: $DOCAI_SA_NAME"
+  gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
 }
 
 deploy_gke() {
@@ -227,7 +234,7 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
 
    # enable apis
    echo "Enabling APIs"
-    # DocAI
+  # DocAI - US/EU only
   gcloud services enable documentai.googleapis.com
   # AutoML
   # NLP API
@@ -301,6 +308,9 @@ gcloud projects add-iam-policy-binding $CC_PROJECT_ID  --member=user:$USER_EMAIL
   #Add	Artifact Registry Service Agent	 service-374013806670@gcp-sa-artifactregistry.iam.gserviceaccount.com		
   #Add	Cloud Run Service Agent	 service-374013806670@serverless-robot-prod.iam.gserviceaccount.com	
   #Kubernetes Engine Developer
+
+  # build krm resources export from project
+   gcloud servcies enable cloudasset.googleapis.com
 }
 
 istio_injection_prod() {
@@ -514,22 +524,23 @@ delete_cloudrun() {
 }
 
 # https://cloud.google.com/document-ai/docs/overview
+# US/EU only
 create_document_ai_endpoint() {
     # form from https://www.cloudskillsboost.google/focuses/21028?parent=catalog
     # sample data
     gsutil cp gs://cloud-training/gsp924/$DOCAI_EXAMPLE_FORM .
-    # export processor id
-    export PROCESSOR_ID=b595e437c3bdfb09
+    #gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
+   #sleep 5
+   #gcloud iam service-accounts create $DOCAI_SA_NAME --display-name $DOCAI_SA_NAME
+   #sleep 10
+   #gcloud projects add-iam-policy-binding ${CC_PROJECT_ID} --member="serviceAccount:$DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com" --role="roles/documentai.apiUser" --quiet
+   #sleep 10
+   #gcloud iam service-accounts keys create $DOCAI_SA_NAME.json --iam-account  $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com
+   #sleep 10
+   #gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
+#exit 1
     # setup authentication
-#    export PROJECT_ID=$(gcloud config get-value core/project)
-
-    export LOCATION="us"
-
-    gcloud iam service-accounts create $DOCAI_SA_NAME --display-name $DOCAI_SA_NAME
-    gcloud projects add-iam-policy-binding ${CC_PROJECT_ID} --member="serviceAccount:$DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com" --role="roles/documentai.apiUser" --quiet
-    gcloud iam service-accounts keys create $DOCAI_SA_NAME.json --iam-account  $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com
     export GOOGLE_APPLICATION_CREDENTIALS="$PWD/${DOCAI_SA_NAME}.json"
-    echo $GOOGLE_APPLICATION_CREDENTIALS
     echo '{"inlineDocument": {"mimeType": "application/pdf","content": "' > temp.json
     base64 $DOCAI_EXAMPLE_FORM >> temp.json
     echo '"}}' >> temp.json
@@ -540,27 +551,53 @@ create_document_ai_endpoint() {
     #    -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
     #    -H "Content-Type: application/json; charset=utf-8" \
     #    -d @request.json \
-    #    https://${LOCATION}-documentai.googleapis.com/v1/projects/${CC_PROJECT_ID}/locations/${LOCATION}:fetchProcessorTypes
+    #    https://${LOCATION}-documentai.googleapis.com/v1beta3/projects/${CC_PROJECT_ID}/locations/${LOCATION}:fetchProcessorTypes
+
     # create processor
     # https://cloud.google.com/document-ai/docs/create-processor
-    # todo
+cat <<EOF >create_processor.json
+{ "type": "$DOCAI_PROCESSOR_TYPE", "displayName": "$DOCAI_PROCESSOR_DISPLAY_NAME" }
+EOF
 
+    echo "creating document ai processor..."
     curl -X POST \
-        -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
-        -H "Content-Type: application/json; charset=utf-8" \
-        -d @request.json \
-        https://${LOCATION}-documentai.googleapis.com/v1/projects/${CC_PROJECT_ID}/locations/${LOCATION}/processors/${PROCESSOR_ID}:process > output.json
-        #https://${LOCATION}-documentai.googleapis.com/v1beta3/projects/${CC_PROJECT_ID}/locations/${LOCATION}/processors/${PROCESSOR_ID}:process > output.json
-    # prediction endpoint from console
-    #    https://us-documentai.googleapis.com/v1/projects/682344552258/locations/us/processors/b595e437c3bdfb09:process
+      -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+      -H "Content-Type: application/json; charset=utf-8" \
+      -d @create_processor.json \
+      "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors" > create-processor-results.json
+
+    
+    # remove everything except the last /*
+    export PROCESSOR_ID=$(cat create-processor-results.json | jq -r ".name" | sed 's/projects\/.*\///g')
+    echo "processor ID: $PROCESSOR_ID"
+ 
+    export PROJECT_ID=$(gcloud config get-value core/project)
+    echo "docia URL: https://${DOCAI_LOCATION}-documentai.googleapis.com/v1beta3/projects/${CC_PROJECT_ID}/locations/${DOCAI_LOCATION}/processors/${PROCESSOR_ID}:process"
+    curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @request.json https://${DOCAI_LOCATION}-documentai.googleapis.com/v1beta3/projects/${CC_PROJECT_ID}/locations/${DOCAI_LOCATION}/processors/${PROCESSOR_ID}:process > output.json
     cat output.json | jq -r ".document.text"
 }
 
 delete_document_ai_endpoint() {
-    echo "Delete docai service account"
-    gcloud iam service-accounts delete $DOCAI_SA_NAME@${CC_PROJECT_ID}.iam.gserviceaccount.com --project=$CC_PROJECT_ID --quiet
+    # https://cloud.google.com/document-ai/docs/create-processor#documentai_fetch_processor_types-drest
+    echo "Getting processor id"
+    curl -X GET \
+      -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+      "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors" > processor-list.json
+
+    export PROCESSOR_ID=$(cat processor-list.json | jq -r ".processors[0].name" | sed 's/projects\/.*\///g')
+    echo "Deleting document ai processor: $PROCESSOR_ID"
+    curl -X DELETE \
+      -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+      "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors/$PROCESSOR_ID"
+
 }
 
+bulk_resources_export_to_krm() {
+    sudo apt-get install google-cloud-sdk-config-connector
+    #gcloud services enable cloudasset.googleapis.com
+    mkdir ${REPO_TREE_DEPTH_FOR_CD_UP}/$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
+    gcloud beta resource-config bulk-export --path=${REPO_TREE_DEPTH_FOR_CD_UP}/$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
+}
 
 delete_all() {
   # delete service accounts
@@ -577,7 +614,9 @@ delete_all() {
   rm -rf backup/*
   rm -rf backup
   rm -rf *.pdf
-
+  rm ${REPO_TREE_DEPTH_FOR_CD_UP}/$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
+  rm -rf *.json
+  rm -rf *.pdf
   echo "Date: $(date)"
 }
 
@@ -704,6 +743,13 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   done
 fi
 
+#multiip subnet fortigate image to see whole subnet - no static routing - simpler
+#mmt vm needs internet - to free up a port
+#mgg tinerface resefvation - cannot use port 4 for polc
+
+#fort 2 should have 3.3 switch
+#shut 20 min 2nd node each night after first
+
 
   #create_service_accounts  
   #create_csr
@@ -712,8 +758,8 @@ fi
   #delete_cloudbuild_prod
   #trigger_prod_main_build
   #create_cloudrun
-  delete_document_ai_endpoint
-  create_document_ai_endpoint
+  #delete_document_ai_endpoint
+  #create_document_ai_endpoint
 
 # delete
 if [[ "$DELETE_KCC" != false ]]; then
@@ -793,3 +839,5 @@ fi
 
 deployment $UNIQUE $CREATE_KCC $DEPLOY_LZ $DELETE_KCC $USER_EMAIL $KCC_PROJECT_ID
 printf "**** Done ****\n"
+
+# 20220112: found https://github.com/GoogleCloudPlatform/document-ai-samples
