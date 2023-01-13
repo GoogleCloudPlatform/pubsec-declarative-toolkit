@@ -31,6 +31,10 @@ export CLOUD_RUN_MASTER_NAME=dp-master
 export DOCKER_MASTER_IMAGE_NAME=dp-master
 # no underscores
 export SERVICE_ACCOUNT_MAIN=service-account-main
+# US/EU only
+export DOCAI_LOCATION="us"
+export DOCAI_PROCESSOR_TYPE=FORM_PARSER_PROCESSOR
+export DOCAI_PROCESSOR_DISPLAY_NAME=form-parser-processor
 export DOCAI_SA_NAME=document-ai-service-account
 export DOCAI_EXAMPLE_FORM=health-intake-form.pdf
 
@@ -79,5 +83,8 @@ export GATEWAY_NS=istio-gateway
 export BRANCH_PROD=main
 export CLOUDBUILD_TRIGGER_PROD_MAIN=prod-main
 
+# for bulk export api - GCP services to KRM yaml for Kubernetes Config Connector
+# https://cloud.google.com/sdk/gcloud/reference/beta/resource-config/bulk-export
+export RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR=_krm_export
 # enable compute.googleapis.com first
 #gcloud config set compute/zone ${ZONE}
