@@ -554,7 +554,7 @@ EOF
       -H "Authorization: Bearer $(gcloud auth print-access-token)" \
       -H "Content-Type: application/json; charset=utf-8" \
       -d @create_processor.json \
-      "https://$LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$LOCATION/processors" > create-processor-results.json
+      "https://$DOCAI_LOCATION-documentai.googleapis.com/v1/projects/$CC_PROJECT_ID/locations/$DOCAI_LOCATION/processors" > create-processor-results.json
 
     # remove everything except the last /*
     export PROCESSOR_ID=$(cat create-processor-results.json | jq -r ".name" | sed 's/projects\/.*\///g')
@@ -584,8 +584,8 @@ delete_document_ai_endpoint() {
 bulk_resources_export_to_krm() {
     sudo apt-get install google-cloud-sdk-config-connector
     #gcloud services enable cloudasset.googleapis.com
-    mkdir ${REPO_TREE_DEPTH_FOR_CD_UP}/$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
-    gcloud beta resource-config bulk-export --path=${REPO_TREE_DEPTH_FOR_CD_UP}/$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
+    mkdir ${REPO_TREE_DEPTH_FOR_CD_UP}$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
+    gcloud beta resource-config bulk-export --path=${REPO_TREE_DEPTH_FOR_CD_UP}$RESOURCE_CONFIG_BULK_EXPORT_TO_KRM_SUBDIR
 }
 
 delete_all() {
@@ -687,6 +687,7 @@ if [[ "$CREATE_KCC" != false ]]; then
  # trigger_prod_main_build
   create_cloudrun
   create_document_ai_endpoint
+  bulk_resources_export_to_krm
 
 # cp extra/email/app.yaml docai-pipeline/Email/
 
@@ -730,14 +731,6 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   done
 fi
 
-#multiip subnet fortigate image to see whole subnet - no static routing - simpler
-#mmt vm needs internet - to free up a port
-#mgg tinerface resefvation - cannot use port 4 for polc
-
-#fort 2 should have 3.3 switch
-#shut 20 min 2nd node each night after first
-
-
   #create_service_accounts  
   #create_csr
   #create_ar
@@ -746,11 +739,12 @@ fi
   #trigger_prod_main_build
   #create_cloudrun
   #delete_document_ai_endpoint
-  create_document_ai_endpoint
+  #create_document_ai_endpoint
+  #bulk_resources_export_to_krm
 
 # delete
 if [[ "$DELETE_KCC" != false ]]; then
-  echo "Deleting ${CC_PROJECT_ID}"
+   echo "Deleting ${CC_PROJECT_ID}"
    delete_document_ai_endpoint
    delete_cloudrun
  #  delete_clusters
