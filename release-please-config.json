@@ -2,16 +2,42 @@
   "packages": {
     "solutions/landing-zone": {
       "package-name": "landing-zone",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "tag-separator": "/",
+      "prerelease": true
     },
     "solutions/guardrails": {
       "package-name": "guardrails",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "tag-separator": "/",
+      "prerelease": true
+      
     },
-    "solutions/landing-zone-namespaced": {
-      "package-name": "landing-zone-namespaced",
-      "changelog-path": "CHANGELOG.md"
-    }
+    "solutions/landing-zone-v2": {
+      "package-name": "landing-zone-v2",
+      "changelog-path": "CHANGELOG.md",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/org-policies": {
+      "package-name": "org-policies",
+      "changelog-path": "CHANGELOG.md",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/heirarchy": {
+      "package-name": "heirarchy",
+      "changelog-path": "CHANGELOG.md",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/gatekeeper-policies": {
+      "package-name": "gatekeeper-policies",
+      "changelog-path": "CHANGELOG.md",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+
   },
   "bootstrap-sha": "638cf1a666e2e05394371b2eb9223fc9d539ada0",
   "release-type": "krm-blueprint",
