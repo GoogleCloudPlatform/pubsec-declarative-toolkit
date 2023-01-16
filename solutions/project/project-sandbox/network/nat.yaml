@@ -17,7 +17,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata:
   name: project-id-nane1-nat # kpt-set: ${project-id}-nane1-nat
-  namespace: networking # kpt-set: ${namespace}
+  namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/project-id-nane1-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/${project-id}-nane1-router
@@ -34,7 +34,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata:
   name: project-id-nane1-router # kpt-set: ${project-id}-nane1-router
-  namespace: networking # kpt-set: ${namespace}
+  namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
@@ -50,7 +50,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata:
   name: project-id-nane2-nat # kpt-set: ${project-id}-nane2-nat
-  namespace: networking # kpt-set: ${namespace}
+  namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/project-id-nane2-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/${project-id}-nane2-router
@@ -67,7 +67,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata:
   name: project-id-nane2-router # kpt-set: ${project-id}-nane2-router
-  namespace: networking # kpt-set: ${namespace}
+  namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc

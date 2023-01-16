@@ -11,9 +11,8 @@ This package should only be deployed within a sandbox landing zone.
 
 |         Name          |          Value          | Type | Count |
 |-----------------------|-------------------------|------|-------|
-| billing-id            | AAAAAA-BBBBBB-CCCCCC    | str  |     1 |
-| namespace             | networking              | str  |     4 |
-| project-editor        | group:team1@example.com  | str  |     1 |
+| project-billing-id    | AAAAAA-BBBBBB-CCCCCC    | str  |     1 |
+| project-editor        | group:team1@example.com | str  |     1 |
 | project-id            | xxdmu-team1-projectname | str  |    40 |
 | project-parent-folder | project-parent-folder   | str  |     1 |
 

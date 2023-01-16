@@ -22,7 +22,7 @@ https://github.com/canada-ca/cloud-guardrails
 
 * SC‑7(5) -BOUNDARY PROTECTION | DENY BY DEFAULT / ALLOW BY EXCEPTION:
 
-    GCP VPC comes with default ingress deny all rule and a default egress allow all rule. This package replaces the default route to access the internet with a default route that requires that resources configure a network tag "internet-route" to be able to access the internet. This implement "deny by default" for internet access.
+    GCP VPC comes with default ingress deny all rule and a default egress allow all rule. This package replaces the default route to access the internet with a default route that requires that resources configure a network tag "internet-route" to be able to access the internet. This implements "deny by default" for internet access.
 
 ## Guardrail 12 - Marketplace should be locked down to only approved software
 * n/a to this package

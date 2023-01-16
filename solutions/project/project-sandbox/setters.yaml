@@ -20,7 +20,7 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   # Billing Account ID to be associated with this project
-  billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
 
   # GCP folder to use as parent to this project, lowercase K8S resource name
   project-parent-folder: project-parent-folder
