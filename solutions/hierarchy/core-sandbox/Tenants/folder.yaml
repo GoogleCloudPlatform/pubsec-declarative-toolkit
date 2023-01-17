@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-kind: ConfigMap
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
 metadata:
-  name: setters
-  annotations:
-    config.kubernetes.io/local-config: "true"
-data:
-  # This key will define the core-parent-folder value to use in admin folders sub-package 
-  core-parent-folder: testing
+  name: tenants
+  namespace: hierarchy
+spec:
+  displayName: Tenants
+  folderRef:
+    external: '0000000000' # kpt-set: ${lz-folder-id}
