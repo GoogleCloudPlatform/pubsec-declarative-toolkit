@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: networking.common-services-infrastructure
+  name: common-services-infrastructure
   namespace: hierarchy
 spec:
   displayName: Common Services Infrastructure
   folderRef:
-    name: networking
+    external: '0000000000' # kpt-set: ${lz-folder-id}

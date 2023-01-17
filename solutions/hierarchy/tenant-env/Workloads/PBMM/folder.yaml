@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: networking.perimeter
+  name: tenants.tenant1.workloads.pbmm # kpt-set: tenants.${tenant-name}.workloads.pbmm
   namespace: hierarchy
 spec:
-  displayName: Perimeter
+  displayName: PBMM
   folderRef:
-    name: networking
+    name: tenants.tenant1.workloads # kpt-set: tenants.${tenant-name}.workloads

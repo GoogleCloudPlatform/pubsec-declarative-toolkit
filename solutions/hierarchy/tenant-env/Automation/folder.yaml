@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: workloads
+  name: tenants.tenant1.automation # kpt-set: tenants.${tenant-name}.automation
   namespace: hierarchy
 spec:
-  displayName: Workloads
+  displayName: Automation
   folderRef:
-    external: '0000000000' # kpt-set: ${lz-folder-id}
+    name: tenants.tenant1 # kpt-set: tenants.${tenant-name}

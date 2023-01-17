@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: networking.workloads-infrastructure
+  name: tenants.tenant1.workloads.unclass # kpt-set: tenants.${tenant-name}.workloads.unclass
   namespace: hierarchy
 spec:
-  displayName: Workloads Infrastructure
+  displayName: Unclass
   folderRef:
-    name: networking
+    name: tenants.tenant1.workloads # kpt-set: tenants.${tenant-name}.workloads
