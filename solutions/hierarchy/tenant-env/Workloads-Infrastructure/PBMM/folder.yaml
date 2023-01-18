@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: workloads
+  name: tenants.tenant1.workloads-infrastructure.pbmm # kpt-set: tenants.${tenant-name}.workloads-infrastructure.pbmm
   namespace: hierarchy
 spec:
-  displayName: Workloads
+  displayName: PBMM
   folderRef:
-    external: '0000000000' # kpt-set: ${lz-folder-id}
+    name: tenants.tenant1.workloads-infrastructure # kpt-set: tenants.${tenant-name}.workloads-infrastructure
