@@ -21,3 +21,4 @@ metadata:
 data:
   admin-name: 'admin1' # lowercase only
   admin-displayname: 'Admin1'
+  admin-owner: 'user:admin1@example.com'
