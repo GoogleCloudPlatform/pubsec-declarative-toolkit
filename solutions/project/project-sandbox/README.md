@@ -29,7 +29,7 @@ This package has no sub-packages.
 | networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouter     | project-id-nane1-router           | networking |
 | networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouterNAT  | project-id-nane2-nat              | networking |
 | networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouter     | project-id-nane2-router           | networking |
-| networking/route.yaml  | compute.cnrm.cloud.google.com/v1beta1         | ComputeRoute      | project-id-internet-route         | networking |
+| networking/route.yaml  | compute.cnrm.cloud.google.com/v1beta1         | ComputeRoute      | project-id-internet-egress-route  | networking |
 | networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-paz-snet    | networking |
 | networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-apprz-snet  | networking |
 | networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-datarz-snet | networking |
