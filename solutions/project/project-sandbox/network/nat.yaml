@@ -22,7 +22,7 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/project-id-nane1-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/${project-id}-nane1-router
 spec:
-  resourceID: nane1-nat # kpt-set: nane1-nat
+  resourceID: nane1-nat
   natIpAllocateOption: AUTO_ONLY
   region: northamerica-northeast1
   routerRef:
@@ -39,7 +39,7 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
-  resourceID: nane1-router # kpt-set: nane1-router
+  resourceID: nane1-router
   description: northamerica-northeast1 router
   networkRef:
     name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
@@ -55,7 +55,7 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/project-id-nane2-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/${project-id}-nane2-router
 spec:
-  resourceID: nane2-nat # kpt-set: nane2-nat
+  resourceID: nane2-nat
   natIpAllocateOption: AUTO_ONLY
   region: northamerica-northeast2
   routerRef:
@@ -72,7 +72,7 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
-  resourceID: nane2-router # kpt-set: nane2-router
+  resourceID: nane2-router
   description: northamerica-northeast2 router
   networkRef:
     name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
