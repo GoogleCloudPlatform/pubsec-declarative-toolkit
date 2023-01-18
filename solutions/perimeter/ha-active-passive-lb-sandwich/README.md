@@ -47,7 +47,13 @@ This template deploys 2 Fortigate instances in an Active-Passive HA cluster betw
 ## How do you run these examples?
 
 1. Install [Terraform](https://www.terraform.io/).
-1. Open `variables.tf`,  and fill in required variables that don't have a default. (CREDENTIALS, GCP_PROJECT, SERVICE_ACCOUNT_EMAIL, IMAGE, LICENSE_FILE)
+1. Open `variables.tf`,  and fill in required variables that don't have a default. (CREDENTIALS, GCP_PROJECT, SERVICE_ACCOUNT (email), IMAGE, LICENSE_FILE)
+```
+# generate json credentials via
+export SA_NAME=fortigatesdn-ro
+gcloud iam service-accounts keys create $SA_NAME.json --iam-account  $SA_NAME@${GCP_PROJECT_ID}.iam.gserviceaccount.com
+
+```
 1. Run `terraform get`.
 1. Run `terraform init`.
 1. Run `terraform plan`.
