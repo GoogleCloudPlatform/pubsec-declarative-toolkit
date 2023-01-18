@@ -618,7 +618,9 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
 - 20221219
 - https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/754
 
-
+## DI-43: KCC Generated ID usage in other resource expressions
+- 20230117
+- We cannot use an expression that requires a value from another kcc resource (Dave) - for example in IAM policy conditions ie: folder id not avail at kcc create time
 # Installation/Deployment
 
 ### Deployment Preparations
