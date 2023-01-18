@@ -12,6 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Grant GCP role Organization Viewer to Tenant's user group
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: tenants.tenant1-organization-viewer-permissions # kpt-set: tenants.${tenant-name}-organization-viewer-permissions
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/resourcemanager.organizationViewer
+  member: tenant1-folderviewer # kpt-set: ${tenant-folderviewer}
+---
 # Grant GCP role Folder Viewer on Tenant's folder to Tenant's user group
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
