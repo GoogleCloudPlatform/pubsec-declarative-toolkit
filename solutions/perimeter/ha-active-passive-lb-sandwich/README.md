@@ -2,7 +2,7 @@
 
 This template deploys 2 Fortigate instances in an Active-Passive HA cluster between two load balancers ("load balancer sandwich" pattern). LB Sandwich design enables use of multiple public IPs and provides faster, configurable failover times. HA multi-zone deployments provide 99.99% Compute Engine SLA.
 
-![Image of HA Active/Passive](/GCP/examples/ha-active-passive-lb-sandwich/HA-A-P-Sandwich.png)
+![Image of HA Active/Passive](HA-A-P-Sandwich.png)
 
 
 ## Resources included in this Example
