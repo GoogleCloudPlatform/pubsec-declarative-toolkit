@@ -8,7 +8,7 @@
     ```
 1. Get the hierarchy/admin-sandbox package
     ```
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/admin-sandbox@main ./landing-zone/hierarchy/Testing/<admin name>
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/admin-sandbox@main ./landing-zone/hierarchy/Testing/Admins/<admin name>
     ```
 1. Customize the setters.yaml file
 
