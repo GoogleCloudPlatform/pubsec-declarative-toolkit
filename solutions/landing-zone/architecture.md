@@ -502,6 +502,11 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 ### Cloud Deploy Pipelines
 Investigate use of [Cloud Deploy](https://cloud.google.com/deploy) as a pipeline layer in both the infrastructure and workload deployment automation.
 
+Cloud Deploy is certified for the ISO-2700 series
+- https://cloud.google.com/security/compliance/iso-27001
+- https://cloud.google.com/security/compliance/iso-27017
+- https://cloud.google.com/security/compliance/iso-27018
+
 <img width="1348" alt="Screen Shot 2022-09-30 at 9 19 38 AM" src="https://user-images.githubusercontent.com/94715080/193278579-5241ba61-114a-4fbc-b80b-9d2be37292af.png">
 
 Follow quickstart on https://cloud.google.com/deploy/docs/deploy-app-run
