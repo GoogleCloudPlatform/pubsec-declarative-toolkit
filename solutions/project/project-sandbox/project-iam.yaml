@@ -12,13 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-kind: ConfigMap
+# Grant GCP role Editor to project-editor
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
 metadata:
-  name: setters
+  name: project-id-editor-permissions # kpt-set: ${project-id}-editor-permissions
+  namespace: projects
   annotations:
-    config.kubernetes.io/local-config: "true"
-data:
-  tenant-name: 'tenant1' # lowercase only
-  tenant-displayname: 'Tenant1'
-  tenant-folderviewer: 'group:tenant1@example.com'
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/editor
+  member: project-editor # kpt-set: ${project-editor}

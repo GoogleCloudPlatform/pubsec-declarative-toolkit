@@ -9,19 +9,12 @@
 1. Get the hierarchy/tenant package
    - Sandbox
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Workloads/<tenant name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>
       ```
 
    - DEV, UAT, PROD
       ```
-      # Automation
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Automation/<tenant name>
-
-      # Workloads
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Workloads/<tenant name>
-
-      # Workloads-Infrastructure
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Networking/Workloads-Infrastructure/<tenant name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Tenants/<tenant name>
       ```
 
 1. Add tenant Host Project(s) and Shared VPC

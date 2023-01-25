@@ -21,3 +21,4 @@ metadata:
 data:
   tenant-name: 'tenant1' # lowercase only
   tenant-displayname: 'Tenant1'
+  tenant-folderviewer: 'group:tenant1@example.com'

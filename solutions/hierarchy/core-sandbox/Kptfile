@@ -10,7 +10,3 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml
-    - image: 'gcr.io/kpt-fn/apply-setters:v0.2'
-      configPath: ./Testing/setters.yaml
-    - image: 'gcr.io/kpt-fn/apply-setters:v0.2'
-      configPath: ./Workloads/setters.yaml
