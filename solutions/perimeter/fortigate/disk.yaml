@@ -1,0 +1,39 @@
+---
+# Log disk
+# Create FortiGate instances with secondary logdisks and configuration. Everything 2 times (active + passive)
+# resource "google_compute_disk" "logdisk" {
+#   count                  = 2
+
+#   name                   = "${var.prefix}disk-logdisk${count.index+1}-${local.zones_short[count.index]}"
+#   size                   = 30
+#   type                   = "pd-ssd"
+#   zone                   = local.zones[count.index]
+# }
+# Primary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeDisk
+metadata:
+  name: fgt-primary-logdisk
+  namespace: networking
+spec:
+  resourceID: fgt-primary-logdisk
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+  size: 30
+  type: pd-ssd
+  location: northamerica-northeast1-a
+---
+# Secondary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeDisk
+metadata:
+  name: fgt-secondary-logdisk
+  namespace: networking
+spec:
+  resourceID: fgt-secondary-logdisk
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+  size: 30
+  type: pd-ssd
+  location: northamerica-northeast1-b
+---

@@ -15,12 +15,14 @@
 # VPC - External
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
-metadata:
+metadata: # kpt-merge: networking/project-id-global-external-vpc
   name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/${project-id}-compute
+    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeNetwork|networking|project-id-global-external-vpc'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   resourceID: global-external-vpc
   description: External VPC
@@ -31,12 +33,14 @@ spec:
 # VPC - Internal
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
-metadata:
+metadata: # kpt-merge: networking/project-id-global-internal-vpc
   name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/${project-id}-compute
+    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeNetwork|networking|project-id-global-internal-vpc'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   resourceID: global-internal-vpc
   description: Internal VPC
@@ -47,12 +51,14 @@ spec:
 # VPC - Management
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
-metadata:
+metadata: # kpt-merge: networking/project-id-global-mgmt-vpc
   name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/${project-id}-compute
+    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeNetwork|networking|project-id-global-mgmt-vpc'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   resourceID: global-mgmt-vpc
   description: Management VPC
@@ -63,12 +69,14 @@ spec:
 # VPC - Transit
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
-metadata:
+metadata: # kpt-merge: networking/project-id-global-transit-vpc
   name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/${project-id}-compute
+    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeNetwork|networking|project-id-global-transit-vpc'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   resourceID: global-transit-vpc
   description: Transit VPC

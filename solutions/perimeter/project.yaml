@@ -15,11 +15,13 @@
 # Project
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
-metadata:
+metadata: # kpt-merge: projects/project-id
   name: project-id # kpt-set: ${project-id}
   namespace: projects
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
+    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|Project|projects|project-id'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   name: project-id # kpt-set: ${project-id}
   billingAccountRef:

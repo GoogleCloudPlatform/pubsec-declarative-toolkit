@@ -1,0 +1,109 @@
+---
+# External allow all
+# TODO: limit rule and use target filtering
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-allow-external
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: allow-external
+  allow:
+  - protocol: all
+  direction: INGRESS
+  networkRef:
+    name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+  sourceRanges:
+  - 0.0.0.0/0
+---
+# External Load Balancers health checks
+# https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
+# TODO: confirm port 8443 requirement
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-elb-allow-health-checks-to-fortigate
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: elb-allow-health-checks-to-fortigate
+  allow:
+    - protocol: tcp
+      ports:
+       - "8008"
+       - "8443"
+  networkRef:
+    name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+  sourceRanges:
+  - "35.191.0.0/16"
+  - "130.211.0.0/22"
+  targetServiceAccounts:
+  - name: fortigatesdn-ro
+---
+# Internal allow all
+# TODO: limit rule and use target filtering
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-allow-internal
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: allow-internal
+  allow:
+  - protocol: all
+  direction: INGRESS
+  networkRef:
+    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+  sourceRanges:
+  - 0.0.0.0/0
+---
+# Internal Load Balancers health checks
+# https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
+# TODO: confirm port 8443 requirement
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-ilb-allow-health-checks-to-fortigate
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: ilb-allow-health-checks-to-fortigate
+  allow:
+    - protocol: tcp
+      ports:
+       - "8008"
+       - "8443"
+  networkRef:
+    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+  sourceRanges:
+  - "35.191.0.0/16"
+  - "130.211.0.0/22"
+  targetServiceAccounts:
+  - name: fortigatesdn-ro
+---
+# Enable traffic on mgmt network for fortigates HA
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-allow-fortigates-ha
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: allow-fortigates-ha
+  direction: INGRESS
+  allow:
+    - protocol: all
+  networkRef:
+    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+  sourceServiceAccounts:
+  - name: fortigatesdn-ro
+  targetServiceAccounts:
+  - name: fortigatesdn-ro
+---

@@ -1,0 +1,214 @@
+## Active Passive Cluster - Secondary Node
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeInstance
+metadata:
+  name: fgt-secondary-instance
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: fgt-secondary-instance
+  description: Fortigate Secondary Instance
+  machineType: n2-standard-4
+  zone: northamerica-northeast1-b
+  canIpForward: true
+  scheduling:
+    automaticRestart: true
+    onHostMaintenance: MIGRATE
+    preemptible: false
+  serviceAccount:
+    serviceAccountRef:
+      name: fortigatesdn-ro
+    scopes:
+    - cloud-platform
+  
+  # Create a new boot disk from an image
+  bootDisk:
+    autoDelete: true
+    deviceName: persistent-disk-0
+    initializeParams:
+      type: pd-ssd
+      sourceImageRef:
+        external: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-722-20221004-001-w-license
+  
+  # Logging Disk from existing resource
+  attachedDisk:
+  - sourceDiskRef:
+      name: fgt-secondary-logdisk
+  
+  networkInterface:
+  # External
+  - name: nic0
+    networkRef:
+      name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+    subnetworkRef:
+      name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+    networkIpRef:
+      name: fgt-secondary-ext-address
+      kind: ComputeAddress
+  # Internal
+  - name: nic1
+    networkRef:
+      name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+    subnetworkRef:
+      name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+    networkIpRef:
+      name: fgt-secondary-int-address
+      kind: ComputeAddress
+  # Transit
+  - name: nic2
+    networkRef:
+      name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+    subnetworkRef:
+      name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+    networkIpRef:
+      name: fgt-secondary-transit-address
+      kind: ComputeAddress
+  # MGMT
+  - name: nic3
+    networkRef:
+      name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+    subnetworkRef:
+      name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+    networkIpRef:
+      name: fgt-secondary-mgmt-address
+      kind: ComputeAddress
+  
+  tags:
+  - internet-egress-route
+  
+  # Metadata to enable serial console and bootstrap FGT
+  metadata:
+  - key: serial-port-enable
+    value: "TRUE"
+  - key: user-data
+    value: |
+      config system global
+          set hostname "fgt-ap-secondary"
+          set admintimeout 60
+      end
+      config system admin
+          edit "admin"
+              set password fortinet
+          next
+      end
+      config router static
+          edit 10
+              set device "port1"
+              set gateway 172.31.200.1
+          next
+          edit 11
+            set dst 172.31.200.0/24
+            set device "port1"
+            set gateway 172.31.200.1
+          next
+          edit 12
+              set dst 35.191.0.0 255.255.0.0
+              set comment "health check"
+              set gateway 172.31.200.1
+              set device "port1"
+          next
+          edit 13
+              set dst 130.211.0.0 255.255.252.0
+              set comment "health check"
+              set gateway 172.31.200.1
+              set device "port1"
+          next
+          edit 20
+            set dst 172.31.201.1/32
+            set device "port2"
+          next
+          edit 21
+            set dst 172.31.201.0/24
+            set device "port2"
+            set gateway 172.31.201.1
+          next
+          edit 22
+              set dst 35.191.0.0 255.255.0.0
+              set comment "health check"
+              set gateway 172.31.201.1
+              set device "port2"
+          next
+          edit 23
+              set dst 130.211.0.0 255.255.252.0
+              set comment "health check"
+              set gateway 172.31.201.1
+              set device "port2"
+          next
+          edit 30
+              set dst 172.31.203.1/32
+              set device "port3"
+          next
+          edit 31
+            set dst 172.31.203.0/24
+            set device "port3"
+            set gateway 172.31.203.1
+          next
+      end
+      config system probe-response
+          set mode http-probe
+          set http-probe-value OK
+      end
+      config system interface
+        edit port1
+              set description "external"
+              set mode static
+              set ip 172.31.200.11/32
+              unset allowaccess
+          next
+          edit port2
+              set description "internal"
+              unset allowaccess
+              set mode static
+              set ip 172.31.201.11/32
+          next
+          edit "port3"
+              set description "transit"
+              unset allowaccess
+              set mode static
+              set ip 172.31.203.11/32
+          next
+          edit "port4"
+              set description "management"
+              set mode static
+              set allowaccess ping https ssh fgfm
+              set ip 172.31.202.11/32
+          next
+          edit "probe"
+              set vdom "root"
+              set ip 169.254.255.100 255.255.255.255
+              set allowaccess probe-response
+              set type loopback
+          next
+      end
+      config system ha
+          set group-name "fgt-ap-group"
+          set mode a-p
+          set hbdev "port4" 50
+          set session-pickup enable
+          set ha-mgmt-status enable
+          config ha-mgmt-interfaces
+              edit 1
+                  set interface "port4"
+                  set gateway 172.31.202.1
+              next
+          end
+          set override enable
+          set priority 100
+          set unicast-hb enable
+          set unicast-hb-peerip 172.31.202.10
+          set unicast-hb-netmask 255.255.255.0
+      end
+      config system sdn-connector
+          edit "gcp"
+              set type gcp
+              set ha-status enable
+          next
+      end
+      config system dns
+        set primary 169.254.169.254
+        set protocol cleartext
+        unset secondary
+      end
+---

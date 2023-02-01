@@ -15,12 +15,14 @@
 # Cloud NAT northamerica-northeast1
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
-metadata:
+metadata: # kpt-merge: networking/project-id-nane1-external-nat
   name: project-id-nane1-external-nat # kpt-set: ${project-id}-nane1-external-nat
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/project-id-nane1-external-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeRouter/${project-id}-nane1-external-router
+    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeRouterNAT|networking|project-id-nane1-external-nat'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   resourceID: nane1-external-nat
   natIpAllocateOption: AUTO_ONLY
@@ -32,12 +34,14 @@ spec:
 # Cloud Router northamerica-northeast1
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
-metadata:
+metadata: # kpt-merge: networking/project-id-nane1-external-router
   name: project-id-nane1-external-router # kpt-set: ${project-id}-nane1-external-router
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-external-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-external-vpc
+    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeRouter|networking|project-id-nane1-external-router'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   resourceID: nane1-external-router
   description: northamerica-northeast1 External VPC router

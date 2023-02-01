@@ -1,0 +1,94 @@
+---
+# Health Check
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeHealthCheck
+metadata:
+  name: http-8008-hc
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  location: northamerica-northeast1
+  httpHealthCheck:
+    port: 8008
+  checkIntervalSec: 3
+  timeoutSec: 2
+  unhealthyThreshold: 3
+---
+# Backend Service
+# resource "google_compute_region_backend_service" "ilb_bes" {
+#   provider               = google-beta
+#   name                   = "${var.prefix}bes-ilb-trust-${local.region_short}"
+#   region                 = var.region
+#   network                = data.google_compute_subnetwork.subnets[1].network
+
+#   backend {
+#     group                = google_compute_instance_group.fgt-umigs[0].self_link
+#   }
+#   backend {
+#     group                = google_compute_instance_group.fgt-umigs[1].self_link
+#   }
+
+#   health_checks          = [google_compute_region_health_check.health_check.self_link]
+#   connection_tracking_policy {
+#     connection_persistence_on_unhealthy_backends = "NEVER_PERSIST"
+#   }
+# }
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeBackendService
+metadata:
+  name: ilb-bes
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: ilb-bes
+  location: northamerica-northeast1
+  networkRef:
+    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+  backend:
+  - group:
+      instanceGroupRef:
+        name: fgt-primary-umig
+  - group:
+      instanceGroupRef:
+        name: fgt-secondary-umig
+  healthChecks:
+  - healthCheckRef:
+      name: http-8008-hc
+  connectionTrackingPolicy:
+    connectionPersistenceOnUnhealthyBackends: "NEVER_PERSIST"
+---
+# Forwarding Rule
+#   resource "google_compute_forwarding_rule" "ilb_fwd_rule" {
+#   name                   = "${var.prefix}fwdrule-ilb-trust-${local.region_short}"
+#   region                 = var.region
+#   network                = data.google_compute_subnetwork.subnets[1].network
+#   subnetwork             = data.google_compute_subnetwork.subnets[1].id
+#   ip_address             = google_compute_address.ilb.address
+#   all_ports              = true
+#   load_balancing_scheme  = "INTERNAL"
+#   backend_service        = google_compute_region_backend_service.ilb_bes.self_link
+#   allow_global_access    = true
+# }
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: ilb-fwdrule
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  location: northamerica-northeast1
+  networkRef:
+    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+  subnetworkRef:
+    name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+  ipAddress:
+    addressRef:
+      name: ilb-address
+  allPorts: true
+  loadBalancingScheme: "INTERNAL"
+  backendServiceRef:
+    name: ilb-bes
+  allowGlobalAccess: true

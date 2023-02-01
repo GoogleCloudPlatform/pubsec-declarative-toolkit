@@ -1,0 +1,18 @@
+# Organization Role
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMCustomRole
+metadata:
+  name: fortigatesdnreader
+  namespace: config-control
+  annotations:
+    cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
+spec:
+  resourceID: FortigateSdnReader
+  title: FortiGate SDN Connector Role (read-only)
+  permissions:
+  - container.nodes.list
+  - container.pods.list
+  - container.services.list
+  - compute.instances.list
+  - compute.zones.list
+  - container.clusters.list

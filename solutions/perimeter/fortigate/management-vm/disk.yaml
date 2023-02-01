@@ -1,0 +1,14 @@
+# Persistent data disk
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeDisk
+metadata:
+  name: mgmt-datadisk
+  namespace: networking
+spec:
+  resourceID: mgmt-datadisk
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
+  size: 30
+  type: pd-ssd
+  location: northamerica-northeast1-a
+---

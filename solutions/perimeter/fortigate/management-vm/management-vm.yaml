@@ -1,0 +1,52 @@
+# Management VM
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeInstance
+metadata:
+  name: management-instance
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: management-instance
+  description: Perimeter Management VM
+  machineType: n2-standard-2
+  zone: northamerica-northeast1-a
+  scheduling:
+    automaticRestart: true
+    onHostMaintenance: MIGRATE
+  shieldedInstanceConfig:
+    enableIntegrityMonitoring: true
+    enableVtpm: true
+  serviceAccount:
+    serviceAccountRef:
+      name: managementvm
+    scopes:
+    - cloud-platform
+
+  # Create a new boot disk from an image
+  bootDisk:
+    autoDelete: true
+    deviceName: persistent-disk-0
+    initializeParams:
+      size: 50
+      type: pd-standard
+      # project/family
+      # gcloud compute images list
+      sourceImageRef:
+        external: windows-cloud/windows-2022
+ 
+  # Data Disk from existing resource
+  attachedDisk:
+  - sourceDiskRef:
+      name: mgmt-datadisk
+
+  networkInterface:
+  - name: nic0
+    networkRef:
+      name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+    subnetworkRef:
+      name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+
+  # TODO: Schedule
+  # resourcePolicies:
+  # - name: TBD

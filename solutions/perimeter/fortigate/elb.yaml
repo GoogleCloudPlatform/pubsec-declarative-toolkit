@@ -1,0 +1,35 @@
+### External Load Balancer ###
+# Target Pool
+# resource "google_compute_target_pool" "default" {
+#   name = "${var.name}-elb-pool-${module.random.random_string}"
+
+#   health_checks = [
+#     google_compute_http_health_check.ext_lb_health_check.name
+#   ]
+# }
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeTargetPool
+metadata:
+  name: elb-pool
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  region: northamerica-northeast1
+  healthChecks:
+  - httpHealthCheckRef:
+      name: http-8008-httphc
+---
+# Health Check
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeHTTPHealthCheck
+metadata:
+  name: http-8008-httphc
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  checkIntervalSec: 3
+  timeoutSec: 2
+  unhealthyThreshold: 3
+  port: 8008

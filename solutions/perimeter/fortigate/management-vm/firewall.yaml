@@ -1,0 +1,45 @@
+# MGMT VPC
+---
+# IAP to Management VM - RDP
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-iap-allow-rdp-to-managementvm
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: iap-allow-rdp-to-managementvm
+  allow:
+    - protocol: tcp
+      ports:
+       - "3389"
+  networkRef:
+    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+  sourceRanges:
+  - "35.235.240.0/20"
+  targetServiceAccounts:
+  - name: managementvm
+---
+# Management VM to Fortigates - ICMP and TCP SSH, HTTPS
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: computefirewall-managementvm-allow-ssh-https-to-fortigates
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: managementvm-allow-ssh-https-to-fortigates
+  allow:
+    - protocol: tcp
+      ports:
+       - "22"
+       - "443"
+    - protocol: icmp
+  networkRef:
+    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+  sourceServiceAccounts:
+  - name: managementvm
+  targetServiceAccounts:
+  - name: fortigatesdn-ro
