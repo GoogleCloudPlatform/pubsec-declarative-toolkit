@@ -1,7 +1,13 @@
 # Security Controls Mappings
-my edit
+
+
+
+WARNING - use the following up to date security controls document in the PBMM repo
+
 See corresponding Terraform based PBMM security controls Mappings - https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-security-controls.md
 
+
+# deprecated
 The purpose of this document is to detail the relationship/coverage/evidence between ITSG-33 security controls and corresponding GCP services.
 
 [ITSG-33 Security Controls Grid](#security-controls) | [Google Cloud Platform Services - Mapped to Controls](#google-cloud-services)
