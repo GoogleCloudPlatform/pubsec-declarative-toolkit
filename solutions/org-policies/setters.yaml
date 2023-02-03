@@ -1,0 +1,57 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  #############
+  # General Settings Values
+  #############
+  org-id: "0000000000"
+  lz-folder-id: '0000000000'
+  management-project-id: management-project-12345 
+  #############
+  # Org Policies
+  # The following are Settings for some org policies
+  #
+  # a list of allowed trusted image projects, see YAML file for more info:
+  # organization/compute-trusted-image-projects.yaml
+  # this setting can be left as default or modified as required
+  allowed-trusted-image-projects: |
+    - "projects/cos-cloud"
+  # a list of allowed essential contact domains, see YAML file for more info:
+  # organization/essentialcontacts-allowed-contact-domains.yaml
+  # this setting MUST be changed
+  allowed-contact-domains: |
+    - "@example.com"
+  # a list of directory customer IDs from which users can be added to IAM policies, see YAML file for more info:
+  # organization/iam-allowed-policy-member-domains.yaml
+  # this setting MUST be changed to include the GCP org's directory ID and any other directory containing users that will need IAM roles assigned
+  allowed-policy-domain-members: |
+    - "DIRECTORY_CUSTOMER_ID"
+  # a list of allowed projects, folders, networks for VPC peering, see YAML file for more info:
+  # organization/compute-restrict-vpc-peering.yaml
+  # this setting MUST be changed to include the management project ID
+  allowed-vpc-peering: |
+    - "under:projects/MANAGEMENT_PROJECT_ID"
+  # a list of allowed projects, folders, networks where VMs can IP forward, see YAML file for more info:
+  # organization/compute-vm-can-ip-forward.yaml
+  # this setting MUST be changed to include the management project ID
+  allowed-vm-can-ip-forward: |
+    - "under:projects/MANAGEMENT_PROJECT_ID"
+  #############
