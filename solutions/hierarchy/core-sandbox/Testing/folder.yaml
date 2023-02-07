@@ -18,6 +18,6 @@ metadata:
   name: testing
   namespace: hierarchy
 spec:
-  displayName: Testing
+  displayName: tests
   folderRef:
     external: '0000000000' # kpt-set: ${lz-folder-id}

@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: tenants.tenant1.workloads # kpt-set: tenants.${tenant-name}.workloads
+  name: clients.client1.applications # kpt-set: clients.${tenant-name}.applications
   namespace: hierarchy
 spec:
-  displayName: Workloads
+  displayName: applications
   folderRef:
-    name: tenants.tenant1 # kpt-set: tenants.${tenant-name}
+    name: clients.client1 # kpt-set: clients.${tenant-name}

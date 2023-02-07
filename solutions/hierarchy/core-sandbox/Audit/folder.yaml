@@ -18,6 +18,6 @@ metadata:
   name: audit
   namespace: hierarchy
 spec:
-  displayName: Audit
+  displayName: audits
   folderRef:
     external: '0000000000' # kpt-set: ${lz-folder-id}

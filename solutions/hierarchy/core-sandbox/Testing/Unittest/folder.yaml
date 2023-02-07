@@ -18,6 +18,6 @@ metadata:
   name: testing.unittest
   namespace: hierarchy
 spec:
-  displayName: Unittest
+  displayName: unittests
   folderRef:
     name: testing

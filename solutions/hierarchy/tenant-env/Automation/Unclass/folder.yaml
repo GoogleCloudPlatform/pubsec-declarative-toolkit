@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: tenants.tenant1.automation.unclass # kpt-set: tenants.${tenant-name}.automation.unclass
+  name: clients.client1.automation.unclass # kpt-set: clients.${client-name}.automation.unclass
   namespace: hierarchy
 spec:
-  displayName: Unclass
+  displayName: unclass
   folderRef:
-    name: tenants.tenant1.automation # kpt-set: tenants.${tenant-name}.automation
+    name: clients.client1.automation # kpt-set: clients.${client-name}.automation

@@ -18,6 +18,6 @@ metadata:
   name: perimeter
   namespace: hierarchy
 spec:
-  displayName: Perimeter
+  displayName: perimeter
   folderRef:
     external: '0000000000' # kpt-set: ${lz-folder-id}
