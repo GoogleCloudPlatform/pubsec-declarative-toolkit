@@ -2,6 +2,6 @@
     "solutions/guardrails": "0.0.1",
     "solutions/landing-zone-v2": "0.0.1",
     "solutions/org-policies": "0.0.1",
-    "solutions/heirarchy": "0.0.1",
+    "solutions/hierarchy": "0.0.1",
     "solutions/gatekeeper-policies": "0.0.1"
 }

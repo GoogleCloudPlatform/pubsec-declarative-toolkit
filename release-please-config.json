@@ -1,45 +1,41 @@
 {
+  "bootstrap-sha": "638cf1a666e2e05394371b2eb9223fc9d539ada0",
+  "release-type": "krm-blueprint",
+  "include-v-in-tag": false,
+  "changelog-path": "CHANGELOG.md",
+  "bump-minor-pre-major": true,
   "packages": {
     "solutions/landing-zone": {
-      "package-name": "landing-zone",
-      "changelog-path": "CHANGELOG.md",
+      "package-name": "solutions/landing-zone",
       "tag-separator": "/",
       "prerelease": true
     },
     "solutions/guardrails": {
-      "package-name": "guardrails",
-      "changelog-path": "CHANGELOG.md",
+      "package-name": "solutions/guardrails",
       "tag-separator": "/",
       "prerelease": true
       
     },
     "solutions/landing-zone-v2": {
-      "package-name": "landing-zone-v2",
-      "changelog-path": "CHANGELOG.md",
+      "package-name": "solutions/landing-zone-v2",
       "tag-separator": "/",
-      "prerelease": true
+      "prerelease": true,
+      
     },
     "solutions/org-policies": {
-      "package-name": "org-policies",
-      "changelog-path": "CHANGELOG.md",
+      "package-name": "solutions/org-policies",
       "tag-separator": "/",
       "prerelease": true
     },
-    "solutions/heirarchy": {
-      "package-name": "heirarchy",
-      "changelog-path": "CHANGELOG.md",
+    "solutions/hierarchy": {
+      "package-name": "solutions/hierarchy",
       "tag-separator": "/",
       "prerelease": true
     },
     "solutions/gatekeeper-policies": {
-      "package-name": "gatekeeper-policies",
-      "changelog-path": "CHANGELOG.md",
+      "package-name": "solutions/gatekeeper-policies",
       "tag-separator": "/",
       "prerelease": true
-    },
-
-  },
-  "bootstrap-sha": "638cf1a666e2e05394371b2eb9223fc9d539ada0",
-  "release-type": "krm-blueprint",
-  "bump-minor-pre-major": true
+    }
+  }
 }
