@@ -175,6 +175,7 @@ spec:
               unset allowaccess
               set mode static
               set ip 172.31.201.10/32
+              set explicit-web-proxy enable
               set secondary-IP enable
               # IP from internal load balancer
               config secondaryip

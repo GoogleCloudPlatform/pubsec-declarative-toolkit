@@ -85,6 +85,7 @@
             set srcaddr "all"
             # update with proper address object
             set dstaddr "project1-workload1"
+            set schedule "always"
             set service "HTTP"
             set utm-status enable
             set ssl-ssh-profile "certificate-inspection"
