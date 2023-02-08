@@ -21,14 +21,12 @@
 # SC-7 BOUNDARY PROTECTION
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
-metadata: # kpt-merge: networking/project-id-nane1-external-paz-snet
-  name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+metadata:
+  name: perimeter-nane1-external-paz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-external-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-external-vpc
-    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeSubnetwork|networking|project-id-nane1-external-paz-snet'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-external-vpc
 spec:
   resourceID: nane1-external-paz-snet
   ipCidrRange: 172.31.200.0/24
@@ -36,7 +34,7 @@ spec:
   description: northamerica-northeast1 PAZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+    name: perimeter-global-external-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -46,14 +44,12 @@ spec:
 # SC-7 BOUNDARY PROTECTION
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
-metadata: # kpt-merge: networking/project-id-nane1-internal-paz-snet
-  name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+metadata:
+  name: perimeter-nane1-internal-paz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-internal-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-internal-vpc
-    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeSubnetwork|networking|project-id-nane1-internal-paz-snet'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-internal-vpc
 spec:
   resourceID: nane1-internal-paz-snet
   ipCidrRange: 172.31.201.0/24
@@ -61,7 +57,7 @@ spec:
   description: northamerica-northeast1 PAZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+    name: perimeter-global-internal-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -71,14 +67,12 @@ spec:
 # SC-7 BOUNDARY PROTECTION
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
-metadata: # kpt-merge: networking/project-id-nane1-mgmt-rz-snet
-  name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+metadata:
+  name: perimeter-nane1-mgmt-rz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-mgmt-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-mgmt-vpc
-    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeSubnetwork|networking|project-id-nane1-mgmt-rz-snet'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-mgmt-vpc
 spec:
   resourceID: nane1-mgmt-rz-snet
   ipCidrRange: 172.31.202.0/24
@@ -86,7 +80,7 @@ spec:
   description: northamerica-northeast1 RZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+    name: perimeter-global-mgmt-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -96,14 +90,12 @@ spec:
 # SC-7 BOUNDARY PROTECTION
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
-metadata: # kpt-merge: networking/project-id-nane1-transit-paz-snet
-  name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+metadata:
+  name: perimeter-nane1-transit-paz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-transit-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-transit-vpc
-    internal.kpt.dev/upstream-identifier: 'compute.cnrm.cloud.google.com|ComputeSubnetwork|networking|project-id-nane1-transit-paz-snet'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-transit-vpc
 spec:
   resourceID: nane1-transit-paz-snet
   ipCidrRange: 172.31.203.0/24
@@ -111,7 +103,7 @@ spec:
   description: northamerica-northeast1 PAZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+    name: perimeter-global-transit-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5

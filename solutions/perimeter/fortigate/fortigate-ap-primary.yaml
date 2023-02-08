@@ -3,10 +3,10 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeInstance
 metadata:
-  name: fgt-primary-instance
+  name: perimeter-fgt-primary-instance
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-primary-instance
   description: Fortigate Primary Instance
@@ -19,9 +19,13 @@ spec:
     preemptible: false
   serviceAccount:
     serviceAccountRef:
-      name: fortigatesdn-ro
+      name: perimeter-fortigatesdn-sa
     scopes:
     - cloud-platform
+  
+  # TODO: Schedule
+  # resourcePolicies:
+  # - name: TBD
   
   # Create a new boot disk from an image
   bootDisk:
@@ -30,49 +34,49 @@ spec:
     initializeParams:
       type: pd-ssd
       sourceImageRef:
-        external: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-722-20221004-001-w-license
+        external: image-path # kpt-set: ${fgt-primary-image}
   
   # Logging Disk from existing resource
   attachedDisk:
   - sourceDiskRef:
-      name: fgt-primary-logdisk
+      name: perimeter-fgt-primary-log-disk
   
   networkInterface:
   # External
   - name: nic0
     networkRef:
-      name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+      name: perimeter-global-external-vpc
     subnetworkRef:
-      name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+      name: perimeter-nane1-external-paz-snet
     networkIpRef:
-      name: fgt-primary-ext-address
+      name: perimeter-fgt-primary-ext-address
       kind: ComputeAddress
   # Internal
   - name: nic1
     networkRef:
-      name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+      name: perimeter-global-internal-vpc
     subnetworkRef:
-      name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+      name: perimeter-nane1-internal-paz-snet
     networkIpRef:
-      name: fgt-primary-int-address
+      name: perimeter-fgt-primary-int-address
       kind: ComputeAddress
   # Transit
   - name: nic2
     networkRef:
-      name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+      name: perimeter-global-transit-vpc
     subnetworkRef:
-      name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+      name: perimeter-nane1-transit-paz-snet
     networkIpRef:
-      name: fgt-primary-transit-address
+      name: perimeter-fgt-primary-transit-address
       kind: ComputeAddress
   # MGMT
   - name: nic3
     networkRef:
-      name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+      name: perimeter-global-mgmt-vpc
     subnetworkRef:
-      name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+      name: perimeter-nane1-mgmt-rz-snet
     networkIpRef:
-      name: fgt-primary-mgmt-address
+      name: perimeter-fgt-primary-mgmt-address
       kind: ComputeAddress
 
   tags:
@@ -82,11 +86,14 @@ spec:
   metadata:
   - key: serial-port-enable
     value: "TRUE"
+  - key: license
+    value: LICENSE # kpt-set: ${fgt-primary-license}
   - key: user-data
     value: |
       config system global
           set hostname "fgt-ap-primary"
           set admintimeout 60
+          set timezone 12
       end
       config system admin
           edit "admin"
@@ -136,6 +143,12 @@ spec:
               set gateway 172.31.201.1
               set device "port2"
           next
+          edit 24
+              set dst 10.0.0.0 255.0.0.0
+              set comment "route to all spokes"
+              set gateway 172.31.201.1
+              set device "port2"
+          next
           edit 30
               set dst 172.31.203.1/32
               set device "port3"
@@ -163,6 +176,7 @@ spec:
               set mode static
               set ip 172.31.201.10/32
               set secondary-IP enable
+              # IP from internal load balancer
               config secondaryip
                   edit 1
                       set ip 172.31.201.5 255.255.255.255
@@ -219,6 +233,15 @@ spec:
         set protocol cleartext
         unset secondary
       end
+      # explicit proxy for APPRZ and DATARZ workloads
+      config system settings
+          set gui-explicit-proxy enable
+      end
+      config web-proxy explicit
+          set status enable
+          set http-incoming-port 8080
+          set https-incoming-port 8080
+      end
 ---
 # # Instance Template
 # # Instance from Instance template was not functionning. The problem was that eventhough the 
@@ -231,7 +254,7 @@ spec:
 #   name: fgt-primary-template
 #   namespace: networking
 #   annotations:
-#     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+#     cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 # spec:
 #   resourceID: fgt-primary-template
 #   description: Fortigate Primary Instance Template
@@ -247,7 +270,7 @@ spec:
 #     scopes:
 #     - https://www.googleapis.com/auth/cloud-platform
 #     serviceAccountRef:
-#       name: fortigatesdn-ro
+#       name: perimeter-fortigatesdn-sa
 #   disk:
 #     # Create a new boot disk from an image
 #   - autoDelete: true
@@ -259,28 +282,28 @@ spec:
 #     # Logging Disk from existing resource
 #   - autoDelete: false
 #     sourceDiskRef:
-#       name: fgt-primary-logdisk
+#       name: perimeter-fgt-primary-log-disk
 #   networkInterface:
 #   - name: nic0
 #     networkRef:
-#       name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+#       name: perimeter-global-external-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+#       name: perimeter-nane1-external-paz-snet
 #   - name: nic1
 #     networkRef:
-#       name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+#       name: perimeter-global-internal-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+#       name: perimeter-nane1-internal-paz-snet
 #   - name: nic2
 #     networkRef:
-#       name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+#       name: perimeter-global-transit-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+#       name: perimeter-nane1-transit-paz-snet
 #   - name: nic3
 #     networkRef:
-#       name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+#       name: perimeter-global-mgmt-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+#       name: perimeter-nane1-mgmt-rz-snet
 #   tags:
 #   - internet-egress-route
 #   # Metadata to bootstrap FGT
@@ -288,7 +311,7 @@ spec:
 #   - key: serial-port-enable
 #     value: "TRUE"
 #   - key: user-data
-#     value: "config system global\r\n    set hostname \"fgt-ap-primary\"\r\n    set admintimeout 60\r\nend\r\nconfig system admin\r\n    edit \"admin\"\r\n        set password fortinet\r\n    next\r\nend\r\nconfig router static\r\n    edit 10\r\n        set device \"port1\"\r\n        set gateway 172.31.200.1\r\n    next\r\n    edit 11\r\n      set dst 172.31.200.0/24\r\n      set device \"port1\"\r\n      set gateway 172.31.200.1\r\n    next\r\n    edit 12\r\n        set dst 35.191.0.0 255.255.0.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.200.1\r\n        set device \"port1\"\r\n    next\r\n    edit 13\r\n        set dst 130.211.0.0 255.255.252.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.200.1\r\n        set device \"port1\"\r\n    next\r\n    edit 20\r\n      set dst 172.31.201.1/32\r\n      set device \"port2\"\r\n    next\r\n    edit 21\r\n      set dst 172.31.201.0/24\r\n      set device \"port2\"\r\n      set gateway 172.31.201.1\r\n    next\r\n    edit 22\r\n        set dst 35.191.0.0 255.255.0.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.201.1\r\n        set device \"port2\"\r\n    next\r\n    edit 23\r\n        set dst 130.211.0.0 255.255.252.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.201.1\r\n        set device \"port2\"\r\n    next\r\n    edit 30\r\n        set dst 172.31.203.1/32\r\n        set device \"port3\"\r\n    next\r\n    edit 31\r\n      set dst 172.31.203.0/24\r\n      set device \"port3\"\r\n      set gateway 172.31.203.1\r\n    next\r\n    edit 40\r\n        set dst 172.31.202.1/32\r\n        set device \"port4\"\r\n    next\r\n    edit 41\r\n      set dst 172.31.202.0/24\r\n      set device \"port4\"\r\n      set gateway 172.31.202.1\r\n    next\r\nend\r\nconfig system probe-response\r\n    set mode http-probe\r\n    set http-probe-value OK\r\nend\r\nconfig system interface\r\n   edit port1\r\n        set description \"external\"\r\n        set mode static\r\n        set ip 172.31.200.10/32\r\n        unset allowaccess\r\n        set secondary-IP enable\r\n# TODO: secondary ip\r\n        config secondaryip\r\n            edit 1\r\n                set ip 34.95.6.50 255.255.255.255\r\n                set allowaccess probe-response\r\n            next\r\n            edit 2\r\n                set ip 34.95.1.243 255.255.255.255\r\n                set allowaccess probe-response\r\n            next\r\n\r\n        end\r\n    next\r\n    edit port2\r\n        set description \"internal\"\r\n        unset allowaccess\r\n        set mode static\r\n        set ip 172.31.201.10/32\r\n        set secondary-IP enable\r\n# TODO: secondary ip\r\n        config secondaryip\r\n            edit 1\r\n                set ip 172.21.1.5 255.255.255.255\r\n                set allowaccess probe-response\r\n            next\r\n        end\r\n    next\r\n    edit \"port3\"\r\n        set description \"transit\"\r\n        unset allowaccess\r\n        set mode static\r\n        set ip 172.31.203.10/32\r\n    next\r\n    edit \"port4\"\r\n        set description \"management\"\r\n        set mode static\r\n        set allowaccess ping https ssh fgfm\r\n        set ip 172.31.202.10/32\r\n    next\r\n    edit \"probe\"\r\n        set vdom \"root\"\r\n        set ip 169.254.255.100 255.255.255.255\r\n        set allowaccess probe-response\r\n        set type loopback\r\n    next\r\nend\r\nconfig system ha\r\n    set group-name \"fgt-ap-group\"\r\n    set mode a-p\r\n    set hbdev \"port4\" 50\r\n    set session-pickup enable\r\n    set ha-mgmt-status enable\r\n    config ha-mgmt-interfaces\r\n        edit 1\r\n            set interface \"port4\"\r\n            set gateway 172.31.202.1\r\n        next\r\n    end\r\n    set override enable\r\n    set priority 100\r\n    set unicast-hb enable\r\n    set unicast-hb-peerip 172.31.202.11\r\n    set unicast-hb-netmask 255.255.255.0\r\nend\r\nconfig system sdn-connector\r\n    edit \"gcp\"\r\n        set type gcp\r\n        set ha-status enable\r\n    next\r\nend\r\nconfig system dns\r\n  set primary 169.254.169.254\r\n  set protocol cleartext\r\n  unset secondary\r\nend"
+#     value: "config system global\r\n    set hostname \"fgt-ap-primary\"\r\n    set admintimeout 60\r\nend\r\nconfig system admin\r\n    edit \"admin\"\r\n        set password fortinet\r\n    next\r\nend\r\nconfig router static\r\n    edit 10\r\n        set device \"port1\"\r\n        set gateway 172.31.200.1\r\n    next\r\n    edit 11\r\n      set dst 172.31.200.0/24\r\n      set device \"port1\"\r\n      set gateway 172.31.200.1\r\n    next\r\n    edit 12\r\n        set dst 35.191.0.0 255.255.0.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.200.1\r\n        set device \"port1\"\r\n    next\r\n    edit 13\r\n        set dst 130.211.0.0 255.255.252.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.200.1\r\n        set device \"port1\"\r\n    next\r\n    edit 20\r\n      set dst 172.31.201.1/32\r\n      set device \"port2\"\r\n    next\r\n    edit 21\r\n      set dst 172.31.201.0/24\r\n      set device \"port2\"\r\n      set gateway 172.31.201.1\r\n    next\r\n    edit 22\r\n        set dst 35.191.0.0 255.255.0.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.201.1\r\n        set device \"port2\"\r\n    next\r\n    edit 23\r\n        set dst 130.211.0.0 255.255.252.0\r\n        set comment \"health check\"\r\n        set gateway 172.31.201.1\r\n        set device \"port2\"\r\n    next\r\n    edit 30\r\n        set dst 172.31.203.1/32\r\n        set device \"port3\"\r\n    next\r\n    edit 31\r\n      set dst 172.31.203.0/24\r\n      set device \"port3\"\r\n      set gateway 172.31.203.1\r\n    next\r\n    edit 40\r\n        set dst 172.31.202.1/32\r\n        set device \"port4\"\r\n    next\r\n    edit 41\r\n      set dst 172.31.202.0/24\r\n      set device \"port4\"\r\n      set gateway 172.31.202.1\r\n    next\r\nend\r\nconfig system probe-response\r\n    set mode http-probe\r\n    set http-probe-value OK\r\nend\r\nconfig system interface\r\n   edit port1\r\n        set description \"external\"\r\n        set mode static\r\n        set ip 172.31.200.10/32\r\n        unset allowaccess\r\n        next\r\n    edit port2\r\n        set description \"internal\"\r\n        unset allowaccess\r\n        set mode static\r\n        set ip 172.31.201.10/32\r\n        set secondary-IP enable\r\n        config secondaryip\r\n            edit 1\r\n                set ip 172.21.1.5 255.255.255.255\r\n                set allowaccess probe-response\r\n            next\r\n        end\r\n    next\r\n    edit \"port3\"\r\n        set description \"transit\"\r\n        unset allowaccess\r\n        set mode static\r\n        set ip 172.31.203.10/32\r\n    next\r\n    edit \"port4\"\r\n        set description \"management\"\r\n        set mode static\r\n        set allowaccess ping https ssh fgfm\r\n        set ip 172.31.202.10/32\r\n    next\r\n    edit \"probe\"\r\n        set vdom \"root\"\r\n        set ip 169.254.255.100 255.255.255.255\r\n        set allowaccess probe-response\r\n        set type loopback\r\n    next\r\nend\r\nconfig system ha\r\n    set group-name \"fgt-ap-group\"\r\n    set mode a-p\r\n    set hbdev \"port4\" 50\r\n    set session-pickup enable\r\n    set ha-mgmt-status enable\r\n    config ha-mgmt-interfaces\r\n        edit 1\r\n            set interface \"port4\"\r\n            set gateway 172.31.202.1\r\n        next\r\n    end\r\n    set override enable\r\n    set priority 100\r\n    set unicast-hb enable\r\n    set unicast-hb-peerip 172.31.202.11\r\n    set unicast-hb-netmask 255.255.255.0\r\nend\r\nconfig system sdn-connector\r\n    edit \"gcp\"\r\n        set type gcp\r\n        set ha-status enable\r\n    next\r\nend\r\nconfig system dns\r\n  set primary 169.254.169.254\r\n  set protocol cleartext\r\n  unset secondary\r\nend"
 # ---
 # # Compute Instance from template
 # # resource "google_compute_instance_from_template" "active_fgt_instance" {
@@ -323,7 +346,7 @@ spec:
 #   name: fgt-primary-instance
 #   namespace: networking
 #   annotations:
-#     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+#     cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 # spec:
 #   zone: northamerica-northeast1-a
 #   instanceTemplateRef:
@@ -335,29 +358,29 @@ spec:
 #       kind: ComputeAddress
 #     stackType: "IPV4_ONLY"
 #     subnetworkRef:
-#       name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+#       name: perimeter-nane1-external-paz-snet
 #     # Internal
 #   - networkIpRef:
 #       name: fgt-primary-int-address
 #       kind: ComputeAddress
 #     # networkRef:
-#     #   name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+#     #   name: perimeter-global-internal-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+#       name: perimeter-nane1-internal-paz-snet
 #     # Transit
 #   - networkIpRef:
 #       name: fgt-primary-transit-address
 #       kind: ComputeAddress
 #     # networkRef:
-#     #   name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+#     #   name: perimeter-global-transit-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+#       name: perimeter-nane1-transit-paz-snet
 #     # MGMT
 #   - networkIpRef:
 #       name: fgt-primary-mgmt-address
 #       kind: ComputeAddress
 #     # networkRef:
-#     #   name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+#     #   name: perimeter-global-mgmt-vpc
 #     subnetworkRef:
-#       name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+#       name: perimeter-nane1-mgmt-rz-snet
 # ---

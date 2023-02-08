@@ -1,109 +1,105 @@
 ---
 # External allow all
-# TODO: limit rule and use target filtering
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-allow-external
+  name: perimeter-allow-external-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: allow-external
+  resourceID: allow-external-fwr
   allow:
   - protocol: all
   direction: INGRESS
   networkRef:
-    name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+    name: perimeter-global-external-vpc
   sourceRanges:
   - 0.0.0.0/0
 ---
 # External Load Balancers health checks
 # https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
-# TODO: confirm port 8443 requirement
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-elb-allow-health-checks-to-fortigate
+  name: perimeter-elb-allow-health-checks-to-fortigate-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: elb-allow-health-checks-to-fortigate
+  resourceID: elb-allow-health-checks-to-fortigate-fwr
   allow:
     - protocol: tcp
       ports:
        - "8008"
-       - "8443"
   networkRef:
-    name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+    name: perimeter-global-external-vpc
   sourceRanges:
   - "35.191.0.0/16"
   - "130.211.0.0/22"
   targetServiceAccounts:
-  - name: fortigatesdn-ro
+  - name: perimeter-fortigatesdn-sa
 ---
-# Internal allow all
-# TODO: limit rule and use target filtering
+# Internal allow spokes to fortigates
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-allow-internal
+  name: perimeter-allow-spokes-to-fortigates-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: allow-internal
+  resourceID: allow-spokes-to-fortigates-fwr
   allow:
   - protocol: all
   direction: INGRESS
   networkRef:
-    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+    name: perimeter-global-internal-vpc
   sourceRanges:
-  - 0.0.0.0/0
+  - 10.0.0.0/8
+  targetServiceAccounts:
+  - name: perimeter-fortigatesdn-sa
 ---
 # Internal Load Balancers health checks
 # https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
-# TODO: confirm port 8443 requirement
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-ilb-allow-health-checks-to-fortigate
+  name: perimeter-ilb-allow-health-checks-to-fortigate-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: ilb-allow-health-checks-to-fortigate
+  resourceID: ilb-allow-health-checks-to-fortigate-fwr
   allow:
     - protocol: tcp
       ports:
        - "8008"
-       - "8443"
   networkRef:
-    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+    name: perimeter-global-internal-vpc
   sourceRanges:
   - "35.191.0.0/16"
   - "130.211.0.0/22"
   targetServiceAccounts:
-  - name: fortigatesdn-ro
+  - name: perimeter-fortigatesdn-sa
 ---
 # Enable traffic on mgmt network for fortigates HA
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-allow-fortigates-ha
+  name: perimeter-allow-fortigates-ha-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: allow-fortigates-ha
+  resourceID: allow-fortigates-ha-fwr
   direction: INGRESS
   allow:
     - protocol: all
   networkRef:
-    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+    name: perimeter-global-mgmt-vpc
   sourceServiceAccounts:
-  - name: fortigatesdn-ro
+  - name: perimeter-fortigatesdn-sa
   targetServiceAccounts:
-  - name: fortigatesdn-ro
+  - name: perimeter-fortigatesdn-sa
 ---

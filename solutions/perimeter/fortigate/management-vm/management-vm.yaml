@@ -2,10 +2,10 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeInstance
 metadata:
-  name: management-instance
+  name: perimeter-management-instance
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: management-instance
   description: Perimeter Management VM
@@ -19,10 +19,14 @@ spec:
     enableVtpm: true
   serviceAccount:
     serviceAccountRef:
-      name: managementvm
+      name: perimeter-managementvm-sa
     scopes:
     - cloud-platform
 
+  # TODO: Schedule
+  # resourcePolicies:
+  # - name: TBD
+  
   # Create a new boot disk from an image
   bootDisk:
     autoDelete: true
@@ -38,15 +42,11 @@ spec:
   # Data Disk from existing resource
   attachedDisk:
   - sourceDiskRef:
-      name: mgmt-datadisk
+      name: perimeter-mgmt-data-disk
 
   networkInterface:
   - name: nic0
     networkRef:
-      name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+      name: perimeter-global-mgmt-vpc
     subnetworkRef:
-      name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
-
-  # TODO: Schedule
-  # resourcePolicies:
-  # - name: TBD
+      name: perimeter-nane1-mgmt-rz-snet

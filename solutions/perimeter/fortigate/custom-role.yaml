@@ -1,13 +1,18 @@
 # Organization Role
+#
+# AC-3(7) - Settings for roles and privs assigned
+#
+# AC-5 - Settings for roles and what org roles correspond to Fortigate roles
+#
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMCustomRole
 metadata:
-  name: fortigatesdnreader
+  name: perimeter-fortigatesdnreader-role
   namespace: config-control
   annotations:
     cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
 spec:
-  resourceID: FortigateSdnReader
+  resourceID: FortigateSdnViewer
   title: FortiGate SDN Connector Role (read-only)
   permissions:
   - container.nodes.list

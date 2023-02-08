@@ -15,17 +15,17 @@
 # Grant GCP role Service Account Admin to GCP networking-sa
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-networkadmin-permissions
+metadata:
   name: networking-sa-serviceaccountadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: project-id # kpt-set: ${project-id}
+    external: perimeter-project-id # kpt-set: ${perimeter-project-id}
   role: roles/iam.serviceAccountAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -36,29 +36,29 @@ metadata:
   name: networking-sa-serviceaccountuser-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: project-id # kpt-set: ${project-id}
+    external: perimeter-project-id # kpt-set: ${perimeter-project-id}
   role: roles/iam.serviceAccountUser
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role Compute Instance Admin v1 to GCP networking-sa
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/networking-sa-networkadmin-permissions
+metadata:
   name: networking-sa-computeinstanceadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: project-id # kpt-set: ${project-id}
+    external: perimeter-project-id # kpt-set: ${perimeter-project-id}
   role: roles/compute.instanceAdmin.v1
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com

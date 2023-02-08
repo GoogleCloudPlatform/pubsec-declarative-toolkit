@@ -11,37 +11,35 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-primary-ext-address
+  name: perimeter-fgt-primary-ext-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-primary-ext-address
   address: 172.31.200.10
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+    name: perimeter-nane1-external-paz-snet
 ---
 # Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-secondary-ext-address
+  name: perimeter-fgt-secondary-ext-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-secondary-ext-address
   address: 172.31.200.11
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+    name: perimeter-nane1-external-paz-snet
 ---
 # Fortigate Internal IP reservation
 # resource "google_compute_address" "int_priv" {
@@ -56,37 +54,35 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-primary-int-address
+  name: perimeter-fgt-primary-int-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-primary-int-address
   address: 172.31.201.10
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+    name: perimeter-nane1-internal-paz-snet
 ---
 # Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-secondary-int-address
+  name: perimeter-fgt-secondary-int-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-secondary-int-address
   address: 172.31.201.11
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+    name: perimeter-nane1-internal-paz-snet
 ---
 # Fortigate MGMT IP reservation
 # resource "google_compute_address" "mgmt_priv" {
@@ -101,37 +97,35 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-primary-mgmt-address
+  name: perimeter-fgt-primary-mgmt-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-primary-mgmt-address
   address: 172.31.202.10
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+    name: perimeter-nane1-mgmt-rz-snet
 ---
 # Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-secondary-mgmt-address
+  name: perimeter-fgt-secondary-mgmt-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-secondary-mgmt-address
   address: 172.31.202.11
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+    name: perimeter-nane1-mgmt-rz-snet
 ---
 # Fortigate Transit IP reservation
 # resource "google_compute_address" "transit_priv" {
@@ -146,37 +140,35 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-primary-transit-address
+  name: perimeter-fgt-primary-transit-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-primary-transit-address
   address: 172.31.203.10
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+    name: perimeter-nane1-transit-paz-snet
 ---
 # Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: fgt-secondary-transit-address
+  name: perimeter-fgt-secondary-transit-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-secondary-transit-address
   address: 172.31.203.11
   addressType: INTERNAL
   location: northamerica-northeast1
-  networkTier: PREMIUM
   purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+    name: perimeter-nane1-transit-paz-snet
 ---
 # Internal Load Balancer IP Reservation
 # resource "google_compute_address" "ilb" {
@@ -188,17 +180,15 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: ilb-address
+  name: perimeter-ilb-address
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: ilb-address
   address: 172.31.201.5
   addressType: INTERNAL
   location: northamerica-northeast1
-  # networkTier: PREMIUM
-  # purpose: GCE_ENDPOINT
   subnetworkRef:
-    name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+    name: perimeter-nane1-internal-paz-snet
 ---

@@ -1,34 +1,33 @@
 ### External Load Balancer ###
 # Target Pool
-# resource "google_compute_target_pool" "default" {
-#   name = "${var.name}-elb-pool-${module.random.random_string}"
-
-#   health_checks = [
-#     google_compute_http_health_check.ext_lb_health_check.name
-#   ]
-# }
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeTargetPool
 metadata:
-  name: elb-pool
+  name: perimeter-elb-pool
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
+  resourceID: elb-pool
   region: northamerica-northeast1
+  sessionAffinity: NONE
+  instances:
+  - name: perimeter-fgt-primary-instance
+  - name: perimeter-fgt-secondary-instance
   healthChecks:
   - httpHealthCheckRef:
-      name: http-8008-httphc
+      name: perimeter-http-8008-httphc
 ---
 # Health Check
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeHTTPHealthCheck
 metadata:
-  name: http-8008-httphc
+  name: perimeter-http-8008-httphc
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
+  resourceID: http-8008-httphc
   checkIntervalSec: 3
   timeoutSec: 2
   unhealthyThreshold: 3

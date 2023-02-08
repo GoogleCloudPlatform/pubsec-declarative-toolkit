@@ -3,10 +3,10 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeInstance
 metadata:
-  name: fgt-secondary-instance
+  name: perimeter-fgt-secondary-instance
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-secondary-instance
   description: Fortigate Secondary Instance
@@ -19,9 +19,13 @@ spec:
     preemptible: false
   serviceAccount:
     serviceAccountRef:
-      name: fortigatesdn-ro
+      name: perimeter-fortigatesdn-sa
     scopes:
     - cloud-platform
+  
+  # TODO: Schedule
+  # resourcePolicies:
+  # - name: TBD
   
   # Create a new boot disk from an image
   bootDisk:
@@ -30,49 +34,49 @@ spec:
     initializeParams:
       type: pd-ssd
       sourceImageRef:
-        external: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-722-20221004-001-w-license
+        external: image-path # kpt-set: ${fgt-secondary-image}
   
   # Logging Disk from existing resource
   attachedDisk:
   - sourceDiskRef:
-      name: fgt-secondary-logdisk
+      name: perimeter-fgt-secondary-log-disk
   
   networkInterface:
   # External
   - name: nic0
     networkRef:
-      name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+      name: perimeter-global-external-vpc
     subnetworkRef:
-      name: project-id-nane1-external-paz-snet # kpt-set: ${project-id}-nane1-external-paz-snet
+      name: perimeter-nane1-external-paz-snet
     networkIpRef:
-      name: fgt-secondary-ext-address
+      name: perimeter-fgt-secondary-ext-address
       kind: ComputeAddress
   # Internal
   - name: nic1
     networkRef:
-      name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+      name: perimeter-global-internal-vpc
     subnetworkRef:
-      name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+      name: perimeter-nane1-internal-paz-snet
     networkIpRef:
-      name: fgt-secondary-int-address
+      name: perimeter-fgt-secondary-int-address
       kind: ComputeAddress
   # Transit
   - name: nic2
     networkRef:
-      name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+      name: perimeter-global-transit-vpc
     subnetworkRef:
-      name: project-id-nane1-transit-paz-snet # kpt-set: ${project-id}-nane1-transit-paz-snet
+      name: perimeter-nane1-transit-paz-snet
     networkIpRef:
-      name: fgt-secondary-transit-address
+      name: perimeter-fgt-secondary-transit-address
       kind: ComputeAddress
   # MGMT
   - name: nic3
     networkRef:
-      name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+      name: perimeter-global-mgmt-vpc
     subnetworkRef:
-      name: project-id-nane1-mgmt-rz-snet # kpt-set: ${project-id}-nane1-mgmt-rz-snet
+      name: perimeter-nane1-mgmt-rz-snet
     networkIpRef:
-      name: fgt-secondary-mgmt-address
+      name: perimeter-fgt-secondary-mgmt-address
       kind: ComputeAddress
   
   tags:
@@ -82,11 +86,14 @@ spec:
   metadata:
   - key: serial-port-enable
     value: "TRUE"
+  - key: license
+    value: LICENSE # kpt-set: ${fgt-secondary-license}
   - key: user-data
     value: |
       config system global
           set hostname "fgt-ap-secondary"
           set admintimeout 60
+          set timezone 12
       end
       config system admin
           edit "admin"
@@ -133,6 +140,12 @@ spec:
           edit 23
               set dst 130.211.0.0 255.255.252.0
               set comment "health check"
+              set gateway 172.31.201.1
+              set device "port2"
+          next
+          edit 24
+              set dst 10.0.0.0 255.0.0.0
+              set comment "route to all spokes"
               set gateway 172.31.201.1
               set device "port2"
           next
@@ -210,5 +223,14 @@ spec:
         set primary 169.254.169.254
         set protocol cleartext
         unset secondary
+      end
+      # explicit proxy for APPRZ and DATARZ workloads
+      config system settings
+          set gui-explicit-proxy enable
+      end
+      config web-proxy explicit
+          set status enable
+          set http-incoming-port 8080
+          set https-incoming-port 8080
       end
 ---

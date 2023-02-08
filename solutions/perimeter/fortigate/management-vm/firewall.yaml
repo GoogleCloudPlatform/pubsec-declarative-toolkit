@@ -4,33 +4,33 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-iap-allow-rdp-to-managementvm
+  name: perimeter-iap-allow-rdp-to-managementvm-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: iap-allow-rdp-to-managementvm
+  resourceID: iap-allow-rdp-to-managementvm-fwr
   allow:
     - protocol: tcp
       ports:
        - "3389"
   networkRef:
-    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+    name: perimeter-global-mgmt-vpc
   sourceRanges:
   - "35.235.240.0/20"
   targetServiceAccounts:
-  - name: managementvm
+  - name: perimeter-managementvm-sa
 ---
 # Management VM to Fortigates - ICMP and TCP SSH, HTTPS
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: computefirewall-managementvm-allow-ssh-https-to-fortigates
+  name: perimeter-managementvm-allow-ssh-https-to-fortigates-fwr
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
-  resourceID: managementvm-allow-ssh-https-to-fortigates
+  resourceID: managementvm-allow-ssh-https-to-fortigates-fwr
   allow:
     - protocol: tcp
       ports:
@@ -38,8 +38,8 @@ spec:
        - "443"
     - protocol: icmp
   networkRef:
-    name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+    name: perimeter-global-mgmt-vpc
   sourceServiceAccounts:
-  - name: managementvm
+  - name: perimeter-managementvm-sa
   targetServiceAccounts:
-  - name: fortigatesdn-ro
+  - name: perimeter-fortigatesdn-sa

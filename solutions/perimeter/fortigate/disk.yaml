@@ -13,12 +13,12 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeDisk
 metadata:
-  name: fgt-primary-logdisk
+  name: perimeter-fgt-primary-log-disk
   namespace: networking
 spec:
-  resourceID: fgt-primary-logdisk
+  resourceID: fgt-primary-log-disk
   projectRef:
-    external: project-id # kpt-set: ${project-id}
+    external: perimeter-project-id # kpt-set: ${perimeter-project-id}
   size: 30
   type: pd-ssd
   location: northamerica-northeast1-a
@@ -27,12 +27,12 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeDisk
 metadata:
-  name: fgt-secondary-logdisk
+  name: perimeter-fgt-secondary-log-disk
   namespace: networking
 spec:
-  resourceID: fgt-secondary-logdisk
+  resourceID: fgt-secondary-log-disk
   projectRef:
-    external: project-id # kpt-set: ${project-id}
+    external: perimeter-project-id # kpt-set: ${perimeter-project-id}
   size: 30
   type: pd-ssd
   location: northamerica-northeast1-b

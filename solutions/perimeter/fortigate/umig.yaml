@@ -13,26 +13,26 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeInstanceGroup
 metadata:
-  name: fgt-primary-umig
+  name: perimeter-fgt-primary-umig
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-primary-umig
   zone: northamerica-northeast1-a
   instances:
-  - name: fgt-primary-instance
+  - name: perimeter-fgt-primary-instance
 ---
 # Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeInstanceGroup
 metadata:
-  name: fgt-secondary-umig
+  name: perimeter-fgt-secondary-umig
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: fgt-secondary-umig
   zone: northamerica-northeast1-b
   instances:
-  - name: fgt-secondary-instance
+  - name: perimeter-fgt-secondary-instance

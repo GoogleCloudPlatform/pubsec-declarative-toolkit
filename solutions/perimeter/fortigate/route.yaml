@@ -1,0 +1,18 @@
+# Internal VPC - route 0.0.0.0/0 through Internal Load Balancer
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRoute
+metadata:
+  name: perimeter-internal-vpc-internet-egress-route
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-internal-vpc
+spec:
+  resourceID: internal-internet-egress-route
+  description: "route to the internet"
+  destRange: 0.0.0.0/0
+  priority: 100
+  networkRef:
+    name: perimeter-global-internal-vpc
+  nextHopILBRef:
+    name: perimeter-ilb-fwdrule

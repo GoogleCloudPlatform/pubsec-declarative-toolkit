@@ -15,28 +15,24 @@
 # Compute API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: projects/project-id-compute
-  name: project-id-compute # kpt-set: ${project-id}-compute
+metadata:
+  name: perimeter-project-id-compute # kpt-set: ${perimeter-project-id}-compute
   namespace: projects
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    internal.kpt.dev/upstream-identifier: 'serviceusage.cnrm.cloud.google.com|Service|projects|project-id-compute'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: compute.googleapis.com
 ---
 # DNS API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: projects/project-id-dns
-  name: project-id-dns # kpt-set: ${project-id}-dns
+metadata:
+  name: perimeter-project-id-dns # kpt-set: ${perimeter-project-id}-dns
   namespace: projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    internal.kpt.dev/upstream-identifier: 'serviceusage.cnrm.cloud.google.com|Service|projects|project-id-dns'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: dns.googleapis.com

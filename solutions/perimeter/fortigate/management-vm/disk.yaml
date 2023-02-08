@@ -2,12 +2,12 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeDisk
 metadata:
-  name: mgmt-datadisk
+  name: perimeter-mgmt-data-disk
   namespace: networking
 spec:
-  resourceID: mgmt-datadisk
+  resourceID: mgmt-data-disk
   projectRef:
-    external: project-id # kpt-set: ${project-id}
+    external: perimeter-project-id # kpt-set: ${perimeter-project-id}
   size: 30
   type: pd-ssd
   location: northamerica-northeast1-a

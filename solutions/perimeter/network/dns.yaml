@@ -15,75 +15,67 @@
 # Enable DNS logging on External VPC
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSPolicy
-metadata: # kpt-merge: networking/project-id-external-logging-dnspolicy
-  name: project-id-external-logging-dnspolicy # kpt-set: ${project-id}-external-logging-dnspolicy
+metadata:
+  name: perimeter-external-logging-dnspolicy
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-external-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-external-vpc
-    internal.kpt.dev/upstream-identifier: 'dns.cnrm.cloud.google.com|DNSPolicy|networking|project-id-external-logging-dnspolicy'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-external-vpc
 spec:
   resourceID: external-logging-dnspolicy
   description: "DNS policy to enable logging on External VPC"
   enableLogging: true
   networks:
     - networkRef:
-        name: project-id-global-external-vpc # kpt-set: ${project-id}-global-external-vpc
+        name: perimeter-global-external-vpc
 ---
 # Enable DNS logging on Internal VPC
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSPolicy
-metadata: # kpt-merge: networking/project-id-internal-logging-dnspolicy
-  name: project-id-internal-logging-dnspolicy # kpt-set: ${project-id}-internal-logging-dnspolicy
+metadata:
+  name: perimeter-internal-logging-dnspolicy
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-internal-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-internal-vpc
-    internal.kpt.dev/upstream-identifier: 'dns.cnrm.cloud.google.com|DNSPolicy|networking|project-id-internal-logging-dnspolicy'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-internal-vpc
 spec:
   resourceID: internal-logging-dnspolicy
   description: "DNS policy to enable logging on Internal VPC"
   enableLogging: true
   networks:
     - networkRef:
-        name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+        name: perimeter-global-internal-vpc
 ---
 # Enable DNS logging on Management VPC
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSPolicy
-metadata: # kpt-merge: networking/project-id-mgmt-logging-dnspolicy
-  name: project-id-mgmt-logging-dnspolicy # kpt-set: ${project-id}-mgmt-logging-dnspolicy
+metadata:
+  name: perimeter-mgmt-logging-dnspolicy
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-mgmt-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-mgmt-vpc
-    internal.kpt.dev/upstream-identifier: 'dns.cnrm.cloud.google.com|DNSPolicy|networking|project-id-mgmt-logging-dnspolicy'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-mgmt-vpc
 spec:
   resourceID: mgmt-logging-dnspolicy
   description: "DNS policy to enable logging on Management VPC"
   enableLogging: true
   networks:
     - networkRef:
-        name: project-id-global-mgmt-vpc # kpt-set: ${project-id}-global-mgmt-vpc
+        name: perimeter-global-mgmt-vpc
 ---
 # Enable DNS logging on Transit VPC
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSPolicy
-metadata: # kpt-merge: networking/project-id-transit-logging-dnspolicy
-  name: project-id-transit-logging-dnspolicy # kpt-set: ${project-id}-transit-logging-dnspolicy
+metadata:
+  name: perimeter-transit-logging-dnspolicy
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-transit-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-transit-vpc
-    internal.kpt.dev/upstream-identifier: 'dns.cnrm.cloud.google.com|DNSPolicy|networking|project-id-transit-logging-dnspolicy'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/perimeter-global-transit-vpc
 spec:
   resourceID: transit-logging-dnspolicy
   description: "DNS policy to enable logging on Transit VPC"
   enableLogging: true
   networks:
     - networkRef:
-        name: project-id-global-transit-vpc # kpt-set: ${project-id}-global-transit-vpc
+        name: perimeter-global-transit-vpc

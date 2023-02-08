@@ -3,11 +3,12 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeHealthCheck
 metadata:
-  name: http-8008-hc
+  name: perimeter-http-8008-hc
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
+  resourceID: http-8008-hc
   location: northamerica-northeast1
   httpHealthCheck:
     port: 8008
@@ -37,25 +38,25 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeBackendService
 metadata:
-  name: ilb-bes
+  name: perimeter-ilb-bes
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
   resourceID: ilb-bes
   location: northamerica-northeast1
   networkRef:
-    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+    name: perimeter-global-internal-vpc
   backend:
   - group:
       instanceGroupRef:
-        name: fgt-primary-umig
+        name: perimeter-fgt-primary-umig
   - group:
       instanceGroupRef:
-        name: fgt-secondary-umig
+        name: perimeter-fgt-secondary-umig
   healthChecks:
   - healthCheckRef:
-      name: http-8008-hc
+      name: perimeter-http-8008-hc
   connectionTrackingPolicy:
     connectionPersistenceOnUnhealthyBackends: "NEVER_PERSIST"
 ---
@@ -74,21 +75,22 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
-  name: ilb-fwdrule
+  name: perimeter-ilb-fwdrule
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
 spec:
+  resourceID: ilb-fwdrule
   location: northamerica-northeast1
   networkRef:
-    name: project-id-global-internal-vpc # kpt-set: ${project-id}-global-internal-vpc
+    name: perimeter-global-internal-vpc
   subnetworkRef:
-    name: project-id-nane1-internal-paz-snet # kpt-set: ${project-id}-nane1-internal-paz-snet
+    name: perimeter-nane1-internal-paz-snet
   ipAddress:
     addressRef:
-      name: ilb-address
+      name: perimeter-ilb-address
   allPorts: true
   loadBalancingScheme: "INTERNAL"
   backendServiceRef:
-    name: ilb-bes
+    name: perimeter-ilb-bes
   allowGlobalAccess: true
