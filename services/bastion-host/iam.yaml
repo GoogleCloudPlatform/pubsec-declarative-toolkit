@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,9 +23,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   annotations:
-    cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: PROJECT_ID  # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: kpt-fn
-  name: BASTION_SA_NAME # kpt-set: ${bastion-sa-name}
+  name: BASTION_SA_NAME  # kpt-set: ${bastion-sa-name}
   namespace: config-control
 spec:
   displayName: Bastion Host SA
@@ -37,12 +38,12 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn-live
 spec:
-  member: group:admins@example.com # kpt-set: group:${bastion-admins}
+  member: group:admins@example.com  # kpt-set: group:${bastion-admins}
   role: roles/iap.tunnelResourceAccessor
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: PROJECT_ID # kpt-set: ${project-id}
+    external: PROJECT_ID  # kpt-set: ${project-id}
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -52,12 +53,12 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn-live
 spec:
-  member: group:admins@example.com # kpt-set: group:${bastion-admins}
+  member: group:admins@example.com  # kpt-set: group:${bastion-admins}
   role: roles/compute.instanceAdmin.v1
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: PROJECT_ID # kpt-set: ${project-id}
+    external: PROJECT_ID  # kpt-set: ${project-id}
 ---
 #
 # Add all the required role for IAP administration
@@ -71,9 +72,9 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn-live
 spec:
-  member: group:admins@example.com # kpt-set: group:${bastion-admins}
+  member: group:admins@example.com  # kpt-set: group:${bastion-admins}
   role: roles/compute.osAdminLogin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: PROJECT_ID # kpt-set: ${project-id}
+    external: PROJECT_ID  # kpt-set: ${project-id}

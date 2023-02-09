@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +20,10 @@ kind: StarlarkRun
 metadata:
   name: sql_apply_time_mutation
   annotations:
-    config.kubernetes.io/local-config: "true"
+    config.kubernetes.io/local-config: 'true'
 params:
   toMatch:
-    config.kubernetes.io/apply-time-mutation: "true"
+    config.kubernetes.io/apply-time-mutation: 'true'
   # Update the following 2 keys with the namespace in your KCC instance that the resources will be created in and that there is an
   # SA in the target project for. The default is config-control.
   # Also update the name of the SQL Instance key with the name you want to call your SQL Instance

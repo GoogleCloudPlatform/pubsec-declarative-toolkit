@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,24 +16,24 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: k8s-viewer
-  namespace: config-control # kpt-set: ${project-namespace}
+  namespace: config-control  # kpt-set: ${project-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${gke-viewer}
+  member: group:email@domain.com  # kpt-set: group:${gke-viewer}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: sandbox # kpt-set: ${project-id}
+    external: sandbox  # kpt-set: ${project-id}
   role: roles/container.clusterViewer
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: k8s-admin
-  namespace: config-control # kpt-set: ${project-namespace}
+  namespace: config-control  # kpt-set: ${project-namespace}
 spec:
-  member: group:email@domain.com # kpt-set: group:${gke-admin}
+  member: group:email@domain.com  # kpt-set: group:${gke-admin}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: sandbox # kpt-set: ${project-id}
+    external: sandbox  # kpt-set: ${project-id}
   role: roles/container.admin

@@ -1,7 +1,7 @@
 ---
 name: guardrails-validation
 on:
-  push:
+  push: null
     # paths:
     #   - solutions/guardrails/**
 jobs:

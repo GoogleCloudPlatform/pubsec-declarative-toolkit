@@ -395,7 +395,7 @@ kind: ResourceManagerPolicy
 metadata:
   name: disable-guest-attribute-access
   namespace: config-control  # kpt-set: ${management-namespace}
-  labels:
+  labels: null
 spec:
   constraint: constraints/compute.disableGuestAttributesAccess
   booleanPolicy:

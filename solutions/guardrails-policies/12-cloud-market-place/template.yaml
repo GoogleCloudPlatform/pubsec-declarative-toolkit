@@ -40,5 +40,5 @@ spec:
           input.review.object.spec.bindings[_].role == marketplacerole
           msg := sprintf("Binding disallowed, has marketplace role %s", [input.review.object.metadata.name])
         }
----
+--- null
 ...

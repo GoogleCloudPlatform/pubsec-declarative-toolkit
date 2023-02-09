@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +16,14 @@
 # This allows IAMMemberPolicy in this project's namespace to reference the project in the projects namespace.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata: # kpt-merge: projects/cnrm-project-viewer-project-id
-  name: cnrm-project-viewer-MY_AWESOME_PROJECT_0000 # kpt-set: cnrm-project-viewer-${project-id}
+metadata:  # kpt-merge: projects/cnrm-project-viewer-project-id
+  name: cnrm-project-viewer-MY_AWESOME_PROJECT_0000  # kpt-set: cnrm-project-viewer-${project-id}
   namespace: config-control
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
 subjects:
-  - name: cnrm-controller-manager-MY_AWESOME_PROJECT_0000 # kpt-set: cnrm-controller-manager-${project-id}
+  - name: cnrm-controller-manager-MY_AWESOME_PROJECT_0000  # kpt-set: cnrm-controller-manager-${project-id}
     namespace: cnrm-system
     kind: ServiceAccount

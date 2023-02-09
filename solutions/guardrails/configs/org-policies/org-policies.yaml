@@ -196,7 +196,7 @@ spec:
   listPolicy:
     allow:
       all: true
-      values:
+      values: null
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: '0000000000'  # kpt-set: ${org-id}  

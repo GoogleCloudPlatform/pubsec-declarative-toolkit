@@ -27,5 +27,5 @@ subjects:
   - name: cnrm-controller-manager-project-id  # kpt-set: cnrm-controller-manager-${management-namespace}
     namespace: cnrm-system
     kind: ServiceAccount
----
+--- null
 ...

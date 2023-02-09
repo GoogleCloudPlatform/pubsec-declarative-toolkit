@@ -82,5 +82,5 @@ spec:
           not input.review.object.spec.autoCreateSubnetworks == false
           msg := sprintf("Subnets will be created automatically %s", [input.review.object.metadata.name])
         }        
----
+--- null
 ...

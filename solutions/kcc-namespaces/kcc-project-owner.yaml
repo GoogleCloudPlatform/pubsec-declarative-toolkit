@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,18 +15,18 @@
 # Grant KCC owner of this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: projects/kcc-project-id-owners-permissions
-  name: kcc-MY_AWESOME_PROJECT_0000-owners-permissions # kpt-set: kcc-${project-id}-owners-permissions
+metadata:  # kpt-merge: projects/kcc-project-id-owners-permissions
+  name: kcc-MY_AWESOME_PROJECT_0000-owners-permissions  # kpt-set: kcc-${project-id}-owners-permissions
   namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1,kpt-fn-live
-    cnrm.cloud.google.com/project-id: MGMT_PROJECT_ID_0000 # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/project-id: MGMT_PROJECT_ID_0000  # kpt-set: ${management-project-id}
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: MY_AWESOME_PROJECT_0000 # kpt-set: ${project-id}
+    external: MY_AWESOME_PROJECT_0000  # kpt-set: ${project-id}
   bindings:
     - role: roles/owner
       members:
-        - member: serviceAccount:kcc-MY_AWESOME_PROJECT_0000@MGMT_PROJECT_ID_0000.iam.gserviceaccount.com # kpt-set: serviceAccount:kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
+        - member: serviceAccount:kcc-MY_AWESOME_PROJECT_0000@MGMT_PROJECT_ID_0000.iam.gserviceaccount.com  # kpt-set: serviceAccount:kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com

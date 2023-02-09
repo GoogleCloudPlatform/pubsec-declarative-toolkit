@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +14,15 @@
 # limitations under the License.
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:  # kpt-merge: /setters
   name: setters
   annotations:
-    config.kubernetes.io/local-config: "true"
+    config.kubernetes.io/local-config: 'true'
 data:
   management-namespace: config-control
   # This is the project-id where config controller resides
-  management-project-id: MGMT_PROJECT_ID_0000 # arete-prompt
+  management-project-id: MGMT_PROJECT_ID_0000  # arete-prompt
   # This is the project-id where you want KCC to deploy resource to
-  project-id: MY_AWESOME_PROJECT_0000 # arete-prompt
+  project-id: MY_AWESOME_PROJECT_0000  # arete-prompt
   # This user or group will have access to the create resources in the project namespace within kcc
-  admin-user: admins@example.com # arete-prompt
+  admin-user: admins@example.com  # arete-prompt

@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,15 +20,15 @@ metadata:
   name: bastion-host
   namespace: config-control
   labels:
-    os-config-management: "true"
+    os-config-management: 'true'
   annotations:
-    cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${project-id}
-    cnrm.cloud.google.com/allow-stopping-for-update: "true"
+    cnrm.cloud.google.com/project-id: PROJECT_ID  # kpt-set: ${project-id}
+    cnrm.cloud.google.com/allow-stopping-for-update: 'true'
     cnrm.cloud.google.com/blueprint: kpt-fn-live
 spec:
   description: Bastion host
   machineType: n1-standard-1
-  zone: GCP_REGION-c # kpt-set: ${region}-c
+  zone: GCP_REGION-c  # kpt-set: ${region}-c
   bootDisk:
     autoDelete: true
     initializeParams:
@@ -37,26 +38,24 @@ spec:
         external: ubuntu-os-cloud/ubuntu-1804-lts
   networkInterface:
     - subnetworkRef:
-        external: SUBNET_NAME # kpt-set: ${subnet-name}
-      subnetworkProject: PROJECT_ID # kpt-set: ${project-id}
+        external: SUBNET_NAME  # kpt-set: ${subnet-name}
+      subnetworkProject: PROJECT_ID  # kpt-set: ${project-id}
   serviceAccount:
     serviceAccountRef:
-      name: BASTION_SA_NAME # kpt-set: ${bastion-sa-name}
+      name: BASTION_SA_NAME  # kpt-set: ${bastion-sa-name}
       namespace: config-control
-    scopes:
-      - https://www.googleapis.com/auth/cloud-platform
+    scopes: [https://www.googleapis.com/auth/cloud-platform]
   shieldedInstanceConfig:
     enableIntegrityMonitoring: true
     enableSecureBoot: true
   metadata:
     - key: enable-oslogin
-      value: "TRUE"
+      value: 'TRUE'
     - key: enable-osconfig
-      value: "TRUE"
+      value: 'TRUE'
     - key: enable-guest-attributes
-      value: "TRUE"
-  tags:
-    - allow-ssh
+      value: 'TRUE'
+  tags: [allow-ssh]
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
@@ -64,19 +63,17 @@ metadata:
   name: bastion-host-allow-ssh
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: PROJECT_ID  # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: kpt-fn-live
 spec:
   allow:
     - protocol: tcp
-      ports:
-        - "22"
+      ports: ['22']
   networkRef:
-    external: NETWORK_NAME # kpt-set: ${network-name}
-  sourceTags:
-    - allow-ssh
-  sourceRanges: 
-    - 35.235.240.0/20 # This range contains all IP addresses that IAP uses for TCP forwarding.
+    external: NETWORK_NAME  # kpt-set: ${network-name}
+  sourceTags: [allow-ssh]
+  sourceRanges:
+    - 35.235.240.0/20  # This range contains all IP addresses that IAP uses for TCP forwarding.
   priority: 1000
 ---
 # Create a Cloud NAT for the bastion host to be able to pull setup libraries from public
@@ -89,7 +86,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
 spec:
-  region: GCP_REGION # kpt-set: ${region}
+  region: GCP_REGION  # kpt-set: ${region}
   routerRef:
     external: nat-router
   natIpAllocateOption: AUTO_ONLY

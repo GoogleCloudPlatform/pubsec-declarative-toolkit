@@ -55,5 +55,5 @@ spec:
         allowedResource(resource, allowed) {
           resource == allowed[_]
         }
----
+--- null
 ...

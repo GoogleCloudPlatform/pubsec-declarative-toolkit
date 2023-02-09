@@ -22,5 +22,5 @@ metadata:
     resource-group: prod
   name: computesharedvpchostproject-sample
   namespace: config-control
----
+--- null
 ...

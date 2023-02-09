@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +17,12 @@ kind: SQLInstance
 metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn-live
-    cnrm.cloud.google.com/project-id: CHANGE-PROJECTID # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: CHANGE-PROJECTID  # kpt-set: ${project-id}
   name: sql-instance
   namespace: CHANGE-NAMESPACE
 spec:
   databaseVersion: POSTGRES_13
-  region: us-central1 # kpt-set: ${region}
+  region: us-central1  # kpt-set: ${region}
   settings:
     activationPolicy: ALWAYS
     availabilityType: ZONAL
@@ -31,7 +32,7 @@ spec:
     ipConfiguration:
       ipv4Enabled: false
       privateNetworkRef:
-        external: default # kpt-set: ${network-name}
+        external: default  # kpt-set: ${network-name}
     tier: db-custom-2-7680
 ---
 apiVersion: sql.cnrm.cloud.google.com/v1beta1
@@ -39,8 +40,8 @@ kind: SQLDatabase
 metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn-live
-    cnrm.cloud.google.com/project-id: CHANGE-PROJECTID # kpt-set: ${project-id}
-  name: my-sql-db # kpt-set: ${sql-db-name}
+    cnrm.cloud.google.com/project-id: CHANGE-PROJECTID  # kpt-set: ${project-id}
+  name: my-sql-db  # kpt-set: ${sql-db-name}
   namespace: CHANGE-NAMESPACE
 spec:
   charset: UTF8
@@ -54,8 +55,8 @@ kind: SQLUser
 metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn-live
-    cnrm.cloud.google.com/project-id: CHANGE-PROJECTID # kpt-set: ${project-id}
-  name: my-sql-user # kpt-set: ${sql-user}
+    cnrm.cloud.google.com/project-id: CHANGE-PROJECTID  # kpt-set: ${project-id}
+  name: my-sql-user  # kpt-set: ${sql-user}
   namespace: CHANGE-NAMESPACE
 spec:
   instanceRef:
@@ -65,5 +66,5 @@ spec:
     valueFrom:
       secretKeyRef:
         key: password
-        name: my-sql-password-secret # kpt-set: ${sql-password-secret-name}
+        name: my-sql-password-secret  # kpt-set: ${sql-password-secret-name}
   type: BUILT_IN

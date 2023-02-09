@@ -37,5 +37,5 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
 spec:
   resourceID: dns.googleapis.com
----
+--- null
 ...

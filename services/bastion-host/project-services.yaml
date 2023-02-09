@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,15 +12,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: ProjectServiceSet
 metadata:
   name: gpc-project-services
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/deletion-policy: "true"
-    config.kubernetes.io/local-config: "true"
+    cnrm.cloud.google.com/deletion-policy: 'true'
+    config.kubernetes.io/local-config: 'true'
 spec:
   services:
     - compute.googleapis.com
@@ -27,4 +27,4 @@ spec:
     - oslogin.googleapis.com
     - iap.googleapis.com
     - osconfig.googleapis.com
-  projectID: PROJECT_ID # kpt-set: ${project-id}
+  projectID: PROJECT_ID  # kpt-set: ${project-id}

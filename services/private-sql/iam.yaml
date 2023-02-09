@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +34,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: CHANGE-PROJECTID # kpt-set: ${project-id}
+    external: CHANGE-PROJECTID  # kpt-set: ${project-id}
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -57,4 +58,4 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: CHANGE-PROJECTID # kpt-set: ${project-id}
+    external: CHANGE-PROJECTID  # kpt-set: ${project-id}

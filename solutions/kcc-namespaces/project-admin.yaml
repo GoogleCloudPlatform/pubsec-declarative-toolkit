@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +16,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: project-admin
-  namespace: MY_AWESOME_PROJECT_0000 # kpt-set: ${project-id}
+  namespace: MY_AWESOME_PROJECT_0000  # kpt-set: ${project-id}
 roleRef:
   kind: ClusterRole
   name: cnrm-admin
   apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: User
-  name: admins@example.com # kpt-set: ${admin-user}
-  apiGroup: rbac.authorization.k8s.io
+  - kind: User
+    name: admins@example.com  # kpt-set: ${admin-user}
+    apiGroup: rbac.authorization.k8s.io

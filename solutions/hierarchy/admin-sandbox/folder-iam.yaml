@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,48 +18,48 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: admins.admin1-admin-folder-admin-permissions # kpt-set: admins.${admin-name}-admin-folder-admin-permissions
+  name: admins.admin1-admin-folder-admin-permissions  # kpt-set: admins.${admin-name}-admin-folder-admin-permissions
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: testing.admins.admin1 # kpt-set: testing.admins.${admin-name}
+    name: testing.admins.admin1  # kpt-set: testing.admins.${admin-name}
   role: roles/resourcemanager.folderAdmin
-  member: admin-owner # kpt-set: ${admin-owner}
+  member: admin-owner  # kpt-set: ${admin-owner}
 ---
 # Grant GCP role Project Creator on Admin's folder to admin
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: admins.admin1-admin-project-creator-permissions # kpt-set: admins.${admin-name}-admin-project-creator-permissions
+  name: admins.admin1-admin-project-creator-permissions  # kpt-set: admins.${admin-name}-admin-project-creator-permissions
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: testing.admins.admin1 # kpt-set: testing.admins.${admin-name}
+    name: testing.admins.admin1  # kpt-set: testing.admins.${admin-name}
   role: roles/resourcemanager.projectCreator
-  member: admin-owner # kpt-set: ${admin-owner}
+  member: admin-owner  # kpt-set: ${admin-owner}
 ---
 # Grant GCP role Owner on Admin's folder to admin
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: admins.admin1-admin-owner-permissions # kpt-set: admins.${admin-name}-admin-owner-permissions
+  name: admins.admin1-admin-owner-permissions  # kpt-set: admins.${admin-name}-admin-owner-permissions
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: testing.admins.admin1 # kpt-set: testing.admins.${admin-name}
+    name: testing.admins.admin1  # kpt-set: testing.admins.${admin-name}
   role: roles/owner
-  member: admin-owner # kpt-set: ${admin-owner}
+  member: admin-owner  # kpt-set: ${admin-owner}

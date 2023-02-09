@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,13 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: tenants.tenant1.automation.unclass # kpt-set: tenants.${tenant-name}.automation.unclass
+  name: tenants.tenant1.automation.unclass  # kpt-set: tenants.${tenant-name}.automation.unclass
   namespace: hierarchy
 spec:
   displayName: Unclass
   folderRef:
-    name: tenants.tenant1.automation # kpt-set: tenants.${tenant-name}.automation
+    name: tenants.tenant1.automation  # kpt-set: tenants.${tenant-name}.automation

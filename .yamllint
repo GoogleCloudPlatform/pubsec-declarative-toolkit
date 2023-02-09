@@ -3,7 +3,7 @@ rules:
   comments:
     require-starting-space: true
     ignore-shebangs: true
-    min-spaces-from-content: 1
+    min-spaces-from-content: 2
   document-start:
     present: true
   line-length:

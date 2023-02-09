@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +15,7 @@
 # Create namespace in the Kubernetes cluster to manage KCC resources in this project
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /project-id
-  name: MY_AWESOME_PROJECT_0000 # kpt-set: ${project-id}
+metadata:  # kpt-merge: /project-id
+  name: MY_AWESOME_PROJECT_0000  # kpt-set: ${project-id}
   annotations:
-    cnrm.cloud.google.com/project-id: MY_AWESOME_PROJECT_0000 # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: MY_AWESOME_PROJECT_0000  # kpt-set: ${project-id}

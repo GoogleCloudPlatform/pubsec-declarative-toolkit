@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +18,8 @@ metadata:
   name: gpc-project-services
   namespace: CHANGE-NAMESPACE
   annotations:
-    cnrm.cloud.google.com/deletion-policy: "true"
-    config.kubernetes.io/local-config: "true"
+    cnrm.cloud.google.com/deletion-policy: 'true'
+    config.kubernetes.io/local-config: 'true'
 spec:
-  services:
-    - sqladmin.googleapis.com
-    - servicenetworking.googleapis.com
-  projectID: CHANGE-PROJECTID # kpt-set: ${project-id}
+  services: [sqladmin.googleapis.com, servicenetworking.googleapis.com]
+  projectID: CHANGE-PROJECTID  # kpt-set: ${project-id}

@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,24 +12,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: osconfig.cnrm.cloud.google.com/v1beta1
 kind: OSConfigOSPolicyAssignment
 metadata:
   name: bastion-config
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/project-id: PROJECT_ID # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: PROJECT_ID  # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: kpt-fn-live
 spec:
-  description: Configure the Bastion host with the required software to administer GKE clusters
+  description: Configure the Bastion host with the required software to administer
+    GKE clusters
   projectRef:
-    external: PROJECT_ID # kpt-set: ${project-id}
+    external: PROJECT_ID  # kpt-set: ${project-id}
   instanceFilter:
     inclusionLabels:
       - labels:
-          os-config-management: "true"
-  location: GCP_REGION-c # kpt-set: ${region}-c
+          os-config-management: 'true'
+  location: GCP_REGION-c  # kpt-set: ${region}-c
   osPolicies:
     - id: bastion-host-policy
       mode: ENFORCEMENT
@@ -42,8 +43,7 @@ spec:
                   uri: https://apt.kubernetes.io/
                   archiveType: DEB
                   distribution: kubernetes-xenial
-                  components:
-                    - main
+                  components: [main]
                   gpgKey: https://packages.cloud.google.com/apt/doc/apt-key.gpg
             - id: install-pkg
               pkg:
@@ -62,7 +62,8 @@ spec:
                   script: '[ -f /usr/bin/kpt ] && exit 100 || exit 101'
                 enforce:
                   interpreter: SHELL
-                  script: wget https://github.com/GoogleContainerTools/kpt/releases/download/v1.0.0-beta.13/kpt_linux_amd64 -O /usr/bin/kpt && chmod +x /usr/bin/kpt && exit 100
+                  script: wget https://github.com/GoogleContainerTools/kpt/releases/download/v1.0.0-beta.13/kpt_linux_amd64
+                    -O /usr/bin/kpt && chmod +x /usr/bin/kpt && exit 100
   rollout:
     disruptionBudget:
       percent: 100

@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,16 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: setters
 data:
-  project-id: PROJECT_ID # Project ID that will host Climate Engine GKE Cluster
-  region: GCP_REGION # The region that the resources will be created in
-  network-name: NETWORK_NAME # The name of the VPC that the Climate Engine GKE Cluster will create oncd ..
-  subnet-name: SUBNET_NAME # The name of the Subnet that the GKE cluster will pull it's internal IPs from
-  cloud-router: CLOUD_ROUTER_NAME # The name of the cloud router on the network
-  bastion-sa-name: BASTION_SA_NAME # Service Account name that you want to create for the Bation Host VM
-  bastion-admins: admins@example.com # Which group of users are allowed to login to the bastion host
+  project-id: PROJECT_ID  # Project ID that will host Climate Engine GKE Cluster
+  region: GCP_REGION  # The region that the resources will be created in
+  network-name: NETWORK_NAME  # The name of the VPC that the Climate Engine GKE Cluster will create oncd ..
+  subnet-name: SUBNET_NAME  # The name of the Subnet that the GKE cluster will pull it's internal IPs from
+  cloud-router: CLOUD_ROUTER_NAME  # The name of the cloud router on the network
+  bastion-sa-name: BASTION_SA_NAME  # Service Account name that you want to create for the Bation Host VM
+  bastion-admins: admins@example.com  # Which group of users are allowed to login to the bastion host

@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,17 +12,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-viewer
+metadata:  # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-viewer
   name: gkemetering-bq-viewer
-  namespace: config-control # kpt-set: ${project-namespace}
+  namespace: config-control  # kpt-set: ${project-namespace}
 spec:
   # replace ${PROJECT_ID?} with your project name
-  member: group:email@domain.com # kpt-set: group:${gke-admin}
+  member: group:email@domain.com  # kpt-set: group:${gke-admin}
   role: roles/bigquery.dataViewer
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: sandbox # kpt-set: ${project-id}
+    external: sandbox  # kpt-set: ${project-id}

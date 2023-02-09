@@ -50,5 +50,5 @@ spec:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
----
+--- null
 ...

@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +16,14 @@
 # GKE Metering BQ
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
+metadata:  # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-bq-data
   annotations:
-    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-00000" # kpt-set: ${project-id}
+    cnrm.cloud.google.com/delete-contents-on-destroy: 'true'
+    cnrm.cloud.google.com/project-id: sandbox-00000  # kpt-set: ${project-id}
   name: gkemetering
-  namespace: config-control # kpt-set: ${project-namespace}
+  namespace: config-control  # kpt-set: ${project-namespace}
 spec:
   defaultTableExpirationMs: 3600000
-  description: "BigQuery Dataset Sample"
+  description: BigQuery Dataset Sample
   friendlyName: gke-metering-dataset
-  location: northamerica-northeast1 # kpt-set: ${region}
+  location: northamerica-northeast1  # kpt-set: ${region}

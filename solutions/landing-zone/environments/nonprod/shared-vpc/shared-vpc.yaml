@@ -22,5 +22,5 @@ metadata:
   namespace: config-control
   labels:
     resource-group: nonprod
----
+--- null
 ...
