@@ -17,6 +17,7 @@ spec:
     automaticRestart: true
     onHostMaintenance: MIGRATE
     preemptible: false
+  # AC-2(A) service account is attached to Google Compute Engine
   serviceAccount:
     serviceAccountRef:
       name: perimeter-fortigatesdn-sa
@@ -84,6 +85,7 @@ spec:
 
   # Metadata to enable serial console and bootstrap FGT
   metadata:
+  # AC-17(1) - Serial console is accessible from the gcp console (console.cloud.google.com) and requires a specific set of IAM permissions.
   - key: serial-port-enable
     value: "TRUE"
   - key: license
@@ -92,13 +94,19 @@ spec:
     value: |
       config system global
           set hostname "fgt-ap-primary"
+          set pre-login-banner enable
           set admintimeout 60
           set timezone 12
       end
       config system admin
+          # AC-2(A) - The Fortigates/FortiOS comes with a default local `admin` account.
           edit "admin"
               set password fortinet
           next
+      end
+      config system replacemsg admin "pre_admin-disclaimer-text"
+          set buffer "Acceptable Use Policy
+      WARNING: This is a private computer system. Unauthorized access or use is prohibited and subject to prosecution and/or disciplinary action. All use of this system constitutes consent to monitoring at all times and users are not entitled to any expectation of privacy. If monitoring reveals possible evidence of violation of criminal statutes, this evidence and any other related information, including identification information about the user, may be provided to law enforcement officials. If monitoring reveals violations of security regulations or unauthorized use, employees who violate security regulations or make unauthorized use of this system are subject to appropriate disciplinary action."
       end
       config router static
           edit 10
@@ -164,6 +172,7 @@ spec:
           set http-probe-value OK
       end
       config system interface
+        # AC-17(100) - allowaccess for managing the fortigate using SSH and HTTPS is only permitted on port4 (mgmt)
         edit port1
               set description "external"
               set mode static

@@ -5,7 +5,7 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: "A perimeter project that implements the Hub from the Hub and Spoke network design. \nThis package should NOT be deployed within a sandbox landing zone.\n"
+  description: "A perimeter project that implements the Hub from the Hub and Spoke network design. \nThis package is NOT required within a sandbox landing zone.\n"
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

@@ -17,6 +17,7 @@ spec:
   shieldedInstanceConfig:
     enableIntegrityMonitoring: true
     enableVtpm: true
+  # AC-2(A) service account is attached to Google Compute Engine
   serviceAccount:
     serviceAccountRef:
       name: perimeter-managementvm-sa

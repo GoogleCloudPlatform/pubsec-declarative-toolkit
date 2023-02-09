@@ -1,6 +1,8 @@
 # MGMT VPC
 ---
 # IAP to Management VM - RDP
+# AC-17(1) - Users are forced to use IAP Desktop to access (via RDP) the management Google Compute Engine in order to access and manage the Fortigate appliance through SSH or HTTPS.
+# AC-17(3) - Users are forced to use IAP Desktop to access (via RDP) the management Google Compute Engine in order to access and manage the Fortigate appliance through SSH or HTTPS.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
@@ -22,6 +24,9 @@ spec:
   - name: perimeter-managementvm-sa
 ---
 # Management VM to Fortigates - ICMP and TCP SSH, HTTPS
+# AC-17(1) - Users are forced to use IAP Desktop to access (via RDP) the management Google Compute Engine in order to access and manage the Fortigate appliance through SSH or HTTPS.
+# AC-17(3) - Users are forced to use IAP Desktop to access (via RDP) the management Google Compute Engine in order to access and manage the Fortigate appliance through SSH or HTTPS.
+# AC-17(100) - Managing the fortigate using SSH and HTTPS is only permitted from the management Google Compute Engine
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:

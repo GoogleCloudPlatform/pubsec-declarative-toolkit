@@ -6,7 +6,7 @@
 
     ```bash
     
-    export SA_NAME=fortigatesdn-ro
+    export SA_NAME=fortigatesdn-sa
     
     gcloud iam roles create FortigateSdnReader --project=$GCP_PROJECT_ID \
       --title="FortiGate SDN Connector Role (read-only)" \

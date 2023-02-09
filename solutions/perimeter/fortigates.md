@@ -1,10 +1,6 @@
 # Fortigates
 
-## Performance tuning 
-
-- [gVNIC](https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/gcp-administration-guide/967571/deploying-a-gvnic-interface)
-
-- [dpdk](https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/gcp-administration-guide/214328/google-cloud-dpdk-support)
+Recommended read : [Fortigate - GCP Administration Guide](https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/gcp-administration-guide/736375/about-fortigate-vm-for-gcp)
 
 ## Images
 
@@ -26,3 +22,9 @@ To find image for specific version use command like below
 ```
 gcloud compute images list --project fortigcp-project-001 --filter="name ~ fortinet-fgt- AND status:READY" --format="get(selfLink)"
 ```
+
+## Performance tuning
+
+- [gVNIC](https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/gcp-administration-guide/967571/deploying-a-gvnic-interface)
+
+- [dpdk](https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/gcp-administration-guide/214328/google-cloud-dpdk-support)

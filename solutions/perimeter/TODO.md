@@ -37,6 +37,7 @@
     gcpd sdn connector gcp start updating
     gcpd sdn connector gcp got empty project list, trying sdn update from metadata project: dldmu-dl-perimeter2
     ```
+- &#9744; Fortigate HA is not synchronising secondary ip of interfaces. Meanwhile, secondary ip have to be configured on both fortigates.
 
 
 ## KPT Setters :
