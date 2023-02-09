@@ -25,5 +25,5 @@ data:
   #
   # Please change the values below
   #
-  tenant_code: ^(aa|bb|cc)
+  client_code: ^(aa|bb|cc)
   env_code: d # (d = dev, p = production, s = sandbox, u = uat)

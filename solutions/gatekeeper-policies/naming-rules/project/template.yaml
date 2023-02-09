@@ -27,8 +27,8 @@ spec:
         openAPIV3Schema:
           type: object
           properties:
-            tenant_code:
-              description: Tenant code REGEX Naming convention.
+            client_code:
+              description: client code REGEX Naming convention.
               type: string
             env_code:
               description: Environment code REGEX Naming convention.
@@ -65,18 +65,18 @@ spec:
           message := sprintf("Project '%s' has a name that is '%s' chars long which is less than the required '%s'", [asset.metadata.name, object_length])
         }
         # Project name must contain only letters, numbers, hyphens, spaces, or exclamation points.
-        # Project name must start with the tenant code/shortname followed by the multi-region code (m), the classification code (u = Unclassified, a = Protected A, b = Protected B), the owner short name, and a descriptive project name.
+        # Project name must start with the client code/shortname followed by the multi-region code (m), the classification code (u = Unclassified, a = Protected A, b = Protected B), the owner short name, and a descriptive project name.
         # We will no longer be able to support camel case - see https://cloud.google.com/anthos-config-management/docs/reference/errors#knv1036
         # <dept code><CSP region><classification>-<owner>-<project>-[<scope>]
         # example: zzmu-pe-auditbunker
         #
-        # tenant code validation (tenant_code)
+        # client code validation (client_code)
         violation[{"msg": message}] {
           asset := input.review.object
           asset.kind == "Project"
-          tenant_code = input.parameters.tenant_code
-          not re_match(tenant_code, asset.metadata.name)
-          message := sprintf("Project '%s' does not match meet naming requirements: The tenant code is incorrect.", [asset.metadata.name])
+          client_code = input.parameters.client_code
+          not re_match(client_code, asset.metadata.name)
+          message := sprintf("Project '%s' does not match meet naming requirements: The client code is incorrect.", [asset.metadata.name])
         }
         # Environment code validation (env_code)
         violation[{"msg": message}] {

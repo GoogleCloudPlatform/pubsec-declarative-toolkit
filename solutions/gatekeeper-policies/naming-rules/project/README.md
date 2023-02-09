@@ -6,7 +6,7 @@ This naming policy evaluates each project's name using a series of regular expre
 
 | Name | Description |
 | -------- | --------- |
-| Tenant code | Two-character code representing a tenant. Multiple tenants can be supported by using a regex that evaluates multiple codes such as this: '^(aa\|bb\|cc)' |
+| client code | Two-character code representing a client. Multiple clients can be supported by using a regex that evaluates multiple codes such as this: '^(aa\|bb\|cc)' |
 | Environment code  | One character code representing the environment for the project: `d = dev, p = production, s = sandbox, u = uat`    |
 | Region code  | Projects that are not created in specific zones fall into the global/multi-region resource category and are allocated the `m` letter code. Region and zonal resources support the `k` code for northamerica-northeast1 or `l` code for northamerica-northeast2  |
 | Classification code  | The project's data classification code or rating: `u = unclassified, a = protected A, b = protected B`  |
@@ -49,8 +49,8 @@ Details: https://kpt.dev/reference/cli/pkg/tree/
 
 It contains the following parameters:
 
-- tenant_code: Set via `setters.yaml`
-- env_code: Set via `setters.yaml`. Contains the tenant_code + env_code from `setters.yaml` as `${tenant_code}${env_code}`
+- client_code: Set via `setters.yaml`
+- env_code: Set via `setters.yaml`. Contains the client_code + env_code from `setters.yaml` as `${client_code}${env_code}`
 - region_code: Hardcoded as the letter `m`
 - class_code: Hardcoded as the following string: `(u|a|b)-`
 - user_defined_string: Hardcoded as the following string: `'^[a-z][a-z0-9-]*[a-z0-9]$'`
@@ -59,7 +59,7 @@ It contains the following parameters:
 
 Contains the following parameters as properties:
 
-- tenant_code
+- client_code
 - env_code
 - region_code
 - class_code
@@ -69,14 +69,14 @@ Contains the following parameters as properties:
 
 It contains the following parameters:
 
-- `tenant_code`
+- `client_code`
 
 - `env_code`
 
 ```
 Important Notice
 
-You must change the tenant_code value to align with your needs. The env_code must also be changed to reflect your deployment environment.
+You must change the client_code value to align with your needs. The env_code must also be changed to reflect your deployment environment.
 
 ```
 ### suite.yaml

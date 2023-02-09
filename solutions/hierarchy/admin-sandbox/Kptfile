@@ -5,7 +5,7 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: Creates an admin folder underneath testing.admins
+  description: Creates an admin folder underneath tests.admins
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

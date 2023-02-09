@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: testing.admins.admin1 # kpt-set: testing.admins.${admin-name}
+  name: tests.admins.admin1 # kpt-set: tests.admins.${admin-name}
   namespace: hierarchy
 spec:
   displayName: admin1 # kpt-set: ${admin-displayname}
   folderRef:
-    name: testing.admins
+    name: tests.admins

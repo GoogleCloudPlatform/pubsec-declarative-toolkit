@@ -10,7 +10,7 @@ Assign roles to approved GC stakeholders to enable enterprise visibility. Roles 
 
 ### Validation
 - Confirm presence of GC enterprise role-based accounts created by Department for GC approved stakeholders.
-- Confirm that accounts have appropriate read access to Departmental tenant environment.
+- Confirm that accounts have appropriate read access to Departmental client environment.
 
 ### How this policy helps.
 Policy validates named accounts are created and using a customrole with the following permissions

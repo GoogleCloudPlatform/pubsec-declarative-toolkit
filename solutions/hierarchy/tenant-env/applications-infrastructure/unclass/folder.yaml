@@ -18,6 +18,6 @@ metadata:
   name: clients.client1.applications-infrastructure.unclass # kpt-set: clients.${client-name}.applications-infrastructure.unclass
   namespace: hierarchy
 spec:
-  displayName: Unclass
+  displayName: unclass
   folderRef:
     name: clients.client1.applications-infrastructure # kpt-set: clients.${client-name}.applications-infrastructure
