@@ -43,7 +43,7 @@
       end
       ```
     - build web filter profile
-      ```
+      ```fortios
       config webfilter profile
           edit "whitelist"
               config web
@@ -55,43 +55,45 @@
       ```
 1. Firewall policy to allow traffic from port2/spoke resource to port1/internet
    - SPOKE PAZ resources - direct connection
-    ```
-    config firewall policy
-        edit 0
-            set name "allow workload1 to internet"
-            set srcintf "port2"
-            set dstintf "port1"
-            set action accept
-            # update with proper address object
-            set srcaddr "workload1"
-            set dstaddr "all"
-            set schedule "always"
-            set service "HTTP" "HTTPS"
-            set utm-status enable
-            set ssl-ssh-profile "certificate-inspection"
-            set webfilter-profile "whitelist"
-            set logtraffic all
-            # NAT will use port1 ip
-            set nat enable
-            set comments "allow access from project-id workload1 to internet with urlfilter"
-        next
-    end
-    ```
+      ```fortios
+      config firewall policy
+          edit 0
+              set name "allow workload1 to internet"
+              set srcintf "port2"
+              set dstintf "port1"
+              set action accept
+              # update with proper address object
+              set srcaddr "workload1"
+              set dstaddr "all"
+              set schedule "always"
+              set service "HTTP" "HTTPS"
+              set utm-status enable
+              set ssl-ssh-profile "certificate-inspection"
+              set webfilter-profile "whitelist"
+              set logtraffic all
+              # NAT will use port1 ip
+              set nat enable
+              set comments "allow access from project-id workload1 to internet with urlfilter"
+          next
+      end
+      ```
     - SPOKE APPRZ and DATARZ resources - proxy connection
-    config firewall proxy-policy
-        edit 1
-            set name "allow workload1 to internet"
-            set proxy explicit-web
-            set dstintf "port1"
-            set srcaddr "workload1"
-            set dstaddr "all"
-            set service "webproxy"
-            set action accept
-            set schedule "always"
-            set logtraffic all
-            set utm-status enable
-            set ssl-ssh-profile "certificate-inspection"
-            set webfilter-profile "whitelist"
-            set comments "allow access from project-id workload1 to internet with urlfilter"
-        next
-    end
+      ```fortios
+      config firewall proxy-policy
+          edit 1
+              set name "allow workload1 to internet"
+              set proxy explicit-web
+              set dstintf "port1"
+              set srcaddr "workload1"
+              set dstaddr "all"
+              set service "webproxy"
+              set action accept
+              set schedule "always"
+              set logtraffic all
+              set utm-status enable
+              set ssl-ssh-profile "certificate-inspection"
+              set webfilter-profile "whitelist"
+              set comments "allow access from project-id workload1 to internet with urlfilter"
+          next
+      end
+      ```

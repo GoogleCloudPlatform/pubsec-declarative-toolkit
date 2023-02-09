@@ -16,7 +16,7 @@
     end
     ```
 2. Firewall policy to allow traffic from port2/spoke resource to port2/common services
-    ```
+    ```fortios
     config firewall policy
         edit 0
             set name "allow workload1 to common services service1"
