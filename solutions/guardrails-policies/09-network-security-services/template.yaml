@@ -28,7 +28,7 @@ spec:
         kind: LimitEgressTraffic
   targets:
     - target: admission.k8s.gatekeeper.sh
-      rego: |4-
+      rego: |-
         package limitegresstraffic
         has_key(obj, field){
           obj[field]
