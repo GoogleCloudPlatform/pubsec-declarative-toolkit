@@ -41,4 +41,5 @@ spec:
   listPolicy:
     allow:
       values: [under:folders/FOLDER_ID]  # kpt-set: ${allowed-vpc-peering}
-  organizationRef: external: '0000000000'  # kpt-set: ${org-id}
+  organizationRef: 
+    external: '0000000000'  # kpt-set: ${org-id}
