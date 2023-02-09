@@ -23,9 +23,9 @@
 #
 # This list constraint defines the set of domains that email addresses added to Essential Contacts can have.
 # By default, email addresses with any domain can be added to Essential Contacts.
-# The allowed/denied list must specify one or more domains of the form @example.com. 
-# If this constraint is active and configured with allowed values, 
-# only email addresses with a suffix matching one of the entries from the 
+# The allowed/denied list must specify one or more domains of the form @example.com.
+# If this constraint is active and configured with allowed values,
+# only email addresses with a suffix matching one of the entries from the
 # list of allowed domains can be added in Essential Contacts.
 #
 #########

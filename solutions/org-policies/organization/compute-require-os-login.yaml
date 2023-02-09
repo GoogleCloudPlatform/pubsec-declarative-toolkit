@@ -21,9 +21,9 @@
 #
 # Constraint: constraints/compute.requireOsLogin
 #
-# This boolean constraint, when set to true, enables OS Login on all newly created Projects. 
-# All VM instances created in new projects will have OS Login enabled. 
-# On new and existing projects, this constraint prevents metadata updates that disable OS 
+# This boolean constraint, when set to true, enables OS Login on all newly created Projects.
+# All VM instances created in new projects will have OS Login enabled.
+# On new and existing projects, this constraint prevents metadata updates that disable OS
 # Login at the project or instance level.
 #
 #########

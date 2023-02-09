@@ -20,9 +20,9 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 # Constraint: constraints/compute.disableNestedVirtualization
-# 
-# This boolean constraint disables hardware-accelerated nested 
-# virtualization for all Compute Engine VMs belonging to the 
+#
+# This boolean constraint disables hardware-accelerated nested
+# virtualization for all Compute Engine VMs belonging to the
 # organization, project, or folder where this constraint is set to True.
 #
 #########

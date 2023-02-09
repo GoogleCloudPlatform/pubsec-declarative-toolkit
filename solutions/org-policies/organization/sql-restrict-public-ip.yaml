@@ -20,9 +20,9 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 # Constraint: constraints/sql.restrictPublicIp
-# 
-# This boolean constraint restricts configuring Public IP on 
-# Cloud SQL instances where this constraint is set to True. 
+#
+# This boolean constraint restricts configuring Public IP on
+# Cloud SQL instances where this constraint is set to True.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
