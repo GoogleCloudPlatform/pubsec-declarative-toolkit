@@ -21,9 +21,9 @@
 #
 # Constraint: constraints/storage.uniformBucketLevelAccess
 #
-# This boolean constraint requires buckets to use uniform bucket-level access 
+# This boolean constraint requires buckets to use uniform bucket-level access
 # where this constraint is set to True. Any new bucket in the Organization resource
-# must have uniform bucket-level access enabled, and no existing buckets in the 
+# must have uniform bucket-level access enabled, and no existing buckets in the
 # organization resource can disable uniform bucket-level access.
 #
 #########

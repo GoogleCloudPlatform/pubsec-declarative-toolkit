@@ -49,7 +49,7 @@ spec:
   networkRef:
     name: sandbox-net  # kpt-set: ${network-name}
   subnetworkRef:
-    name: sandbox-subnet  # kpt-set: ${subnetwork-name}  
+    name: sandbox-subnet  # kpt-set: ${subnetwork-name}
   networkingMode: VPC_NATIVE
   notificationConfig:
     pubsub:

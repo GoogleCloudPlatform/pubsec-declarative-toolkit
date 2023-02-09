@@ -20,13 +20,13 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 # Constraint: constraints/storage.publicAccessPrevention
-# 
-# Secure your Cloud Storage data from public exposure by 
-# enforcing public access prevention. This governance policy 
-# prevents existing and future resources from being accessed 
-# via the public internet by disabling and blocking ACLs and 
+#
+# Secure your Cloud Storage data from public exposure by
+# enforcing public access prevention. This governance policy
+# prevents existing and future resources from being accessed
+# via the public internet by disabling and blocking ACLs and
 # IAM permissions that grant access to allUsers and allAuthenticatedUsers.
-# Enforce this policy on the entire organization (recommended), 
+# Enforce this policy on the entire organization (recommended),
 # specific projects, or specific folders to ensure no data is publicly exposed.
 #
 #########

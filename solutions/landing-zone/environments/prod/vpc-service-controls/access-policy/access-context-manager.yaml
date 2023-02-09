@@ -10,7 +10,7 @@ metadata:  # kpt-merge: prod/serviceperimeterdep1
   namespace: config-control
 spec:
   accessPolicyRef:
-    # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
+    # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy
     name: orgaccesspolicy
   title: Service Perimeter Prod ACL1
   basic:

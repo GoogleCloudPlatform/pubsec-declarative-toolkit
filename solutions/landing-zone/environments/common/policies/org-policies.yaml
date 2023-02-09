@@ -44,7 +44,7 @@ spec:
 #########
 #
 # Constraint: constraints/compute.disableVpcExternalIpv6
-# This boolean constraint, when set to True, disables the 
+# This boolean constraint, when set to True, disables the
 # creation of or update to subnetworks with a stack_type of IPV4_IPV6 and ipv6_access_type of EXTERNAL.
 #
 #########
@@ -67,8 +67,8 @@ spec:
 #########
 #
 # Constraint: constraints/compute.requireShieldedVm
-# This boolean constraint, when set to True, requires that all new Compute Engine VM instances 
-# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled. 
+# This boolean constraint, when set to True, requires that all new Compute Engine VM instances
+# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled.
 # Secure Boot can be disabled after creation, if desired. Existing running instances will continue to work as usual.
 #
 #########
@@ -110,7 +110,7 @@ spec:
       values: [projects/debian-cloud, projects/cos-cloud]  # kpt-set: ${allowed-images}
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: '0000000000'  # kpt-set: ${org-id}   
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -135,7 +135,7 @@ spec:
       all: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: '0000000000'  # kpt-set: ${org-id}          
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -157,15 +157,15 @@ spec:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: '0000000000'  # kpt-set: ${org-id}              
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
 # Constraint: constraints/compute.restrictVpcPeering
-# This list constraint defines the set of VPC networks 
+# This list constraint defines the set of VPC networks
 # that are allowed to be peered with the VPC networks belonging to this project, folder, or organization.
-# The allowed/denied list of networks must be identified in the form: 
-# under:organizations/ORGANIZATION_ID, under:folders/FOLDER_ID, under:projects/PROJECT_ID, 
+# The allowed/denied list of networks must be identified in the form:
+# under:organizations/ORGANIZATION_ID, under:folders/FOLDER_ID, under:projects/PROJECT_ID,
 # or projects/PROJECT_ID/global/networks/NETWORK_NAME.
 #
 #########
@@ -185,15 +185,15 @@ spec:
       values: [under:folders/FOLDER_ID]
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: '0000000000'  # kpt-set: ${org-id}  
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
 # Constraint: constraints/storage.uniformBucketLevelAccess
-# 
-# This boolean constraint requires buckets to use uniform bucket-level access 
+#
+# This boolean constraint requires buckets to use uniform bucket-level access
 # where this constraint is set to True. Any new bucket in the Organization resource
-# must have uniform bucket-level access enabled, and no existing buckets in the 
+# must have uniform bucket-level access enabled, and no existing buckets in the
 # organization resource can disable uniform bucket-level access.
 #
 #########
@@ -216,10 +216,10 @@ spec:
 #########
 #
 # Constraint: constraints/compute.requireOsLogin
-# 
-# This boolean constraint, when set to true, enables OS Login on all newly created Projects. 
-# All VM instances created in new projects will have OS Login enabled. 
-# On new and existing projects, this constraint prevents metadata updates that disable OS 
+#
+# This boolean constraint, when set to true, enables OS Login on all newly created Projects.
+# All VM instances created in new projects will have OS Login enabled.
+# On new and existing projects, this constraint prevents metadata updates that disable OS
 # Login at the project or instance level.
 #
 #########
@@ -243,8 +243,8 @@ spec:
 #
 # Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
 #
-# This list constraint defines 
-# the set of load balancer types which can be created for an organization, 
+# This list constraint defines
+# the set of load balancer types which can be created for an organization,
 # folder, or project. Every load balancer type to be allowed or denied must be listed explicitly.
 #
 # Options: INTERNAL, EXTERNAL, INTERNAL_TCP_UDP, INTERNAL_HTTP_HTTPS, EXTERNAL_NETWORK_TCP_UDP
@@ -275,9 +275,9 @@ spec:
 #
 # This list constraint defines the set of domains that email addresses added to Essential Contacts can have.
 # By default, email addresses with any domain can be added to Essential Contacts.
-# The allowed/denied list must specify one or more domains of the form @example.com. 
-# If this constraint is active and configured with allowed values, 
-# only email addresses with a suffix matching one of the entries from the 
+# The allowed/denied list must specify one or more domains of the form @example.com.
+# If this constraint is active and configured with allowed values,
+# only email addresses with a suffix matching one of the entries from the
 # list of allowed domains can be added in Essential Contacts.
 #
 #########
@@ -303,7 +303,7 @@ spec:
 #
 # Constraint: constraints/iam.allowedPolicyMemberDomains
 #
-# This list constraint defines one or more Cloud Identity or 
+# This list constraint defines one or more Cloud Identity or
 # Google Workspace customer IDs whose principals can be added to IAM policies.
 # To get instructions workspace ID make sure you are logged in as the admin user for admin.google.com
 # In your Google Admin console (at admin.google.com)...
@@ -332,9 +332,9 @@ spec:
 #########
 #
 # Constraint: constraints/compute.disableSerialPortAccess
-# 
-# This boolean constraint disables serial port access to 
-# Compute Engine VMs belonging to the organization, project, 
+#
+# This boolean constraint disables serial port access to
+# Compute Engine VMs belonging to the organization, project,
 # or folder where this constraint is set to True.
 #
 #########
@@ -358,10 +358,10 @@ spec:
 #
 # Constraint: constraints/compute.vmCanIpForward
 # This list constraint defines the set of VM instances that can enable IP forwarding.
-# By default, any VM can enable IP forwarding in any virtual network. 
-# VM instances must be specified in the form: 
-# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID, 
-# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+# By default, any VM can enable IP forwarding in any virtual network.
+# VM instances must be specified in the form:
+# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,
+# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -379,14 +379,14 @@ spec:
       values: [projects/PROJECT_ID]  # kpt-set: ${can-ip-forward}
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: '0000000000'  # kpt-set: ${org-id} 
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
 # Constraint: constraints/compute.disableGuestAttributesAccess
-# 
-# This boolean constraint disables Compute Engine API access 
-# to the Guest Attributes of Compute Engine VMs belonging 
+#
+# This boolean constraint disables Compute Engine API access
+# to the Guest Attributes of Compute Engine VMs belonging
 # to the organization, project, or folder where this constraint is set to True.
 #
 #########
@@ -407,9 +407,9 @@ spec:
 #########
 #
 # Constraint: constraints/compute.disableNestedVirtualization
-# 
-# This boolean constraint disables hardware-accelerated nested 
-# virtualization for all Compute Engine VMs belonging to the 
+#
+# This boolean constraint disables hardware-accelerated nested
+# virtualization for all Compute Engine VMs belonging to the
 # organization, project, or folder where this constraint is set to True.
 #
 #########
@@ -431,9 +431,9 @@ spec:
 ##################
 #
 # Constraint: constraints/compute.restrictXpnProjectLienRemoval
-# 
-# This boolean constraint restricts the set of users that can 
-# remove a Shared VPC project lien without organization-level 
+#
+# This boolean constraint restricts the set of users that can
+# remove a Shared VPC project lien without organization-level
 # permission where this constraint is set to True.
 #
 #########
@@ -455,9 +455,9 @@ spec:
 #########
 #
 # Constraint: constraints/sql.restrictPublicIp
-# 
-# This boolean constraint restricts configuring Public IP on 
-# Cloud SQL instances where this constraint is set to True. 
+#
+# This boolean constraint restricts configuring Public IP on
+# Cloud SQL instances where this constraint is set to True.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -478,13 +478,13 @@ spec:
 #########
 #
 # Constraint: constraints/storage.publicAccessPrevention
-# 
-# Secure your Cloud Storage data from public exposure by 
-# enforcing public access prevention. This governance policy 
-# prevents existing and future resources from being accessed 
-# via the public internet by disabling and blocking ACLs and 
+#
+# Secure your Cloud Storage data from public exposure by
+# enforcing public access prevention. This governance policy
+# prevents existing and future resources from being accessed
+# via the public internet by disabling and blocking ACLs and
 # IAM permissions that grant access to allUsers and allAuthenticatedUsers.
-# Enforce this policy on the entire organization (recommended), 
+# Enforce this policy on the entire organization (recommended),
 # specific projects, or specific folders to ensure no data is publicly exposed.
 #
 #########
@@ -506,11 +506,11 @@ spec:
 #########
 #
 # Constraint: constraints/storage.publicAccessPrevention
-# 
-# This boolean constraint skips the creation of the default network and related resources 
-# during Google Cloud Platform Project resource creation where this constraint is set to 
+#
+# This boolean constraint skips the creation of the default network and related resources
+# during Google Cloud Platform Project resource creation where this constraint is set to
 # True. By default, a default network and supporting resources are automatically created
-# when creating a Project resource. 
+# when creating a Project resource.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

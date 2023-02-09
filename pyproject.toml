@@ -6,3 +6,4 @@ line_length = 80
 none_representation = "null"
 explicit_start = true
 comments_min_spaces_from_content = 2
+quote_keys_and_basic_values = false

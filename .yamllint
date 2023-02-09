@@ -1,4 +1,6 @@
 ---
+extends: default
+
 rules:
   comments:
     require-starting-space: true
@@ -8,6 +10,7 @@ rules:
     present: true
   line-length:
     max: 80
+    level: warning
     allow-non-breakable-words: true
     allow-non-breakable-inline-mappings: false
   empty-lines:

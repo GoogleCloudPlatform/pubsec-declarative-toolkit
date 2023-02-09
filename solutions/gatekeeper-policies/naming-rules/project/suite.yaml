@@ -28,7 +28,7 @@ tests:
         object: tests/project_allowed.yaml
         assertions:
           - violations: 'no'
-  # Not allowed  
+  # Not allowed
       - name: notallowed
         object: tests/project_not_allowed.yaml
         assertions:

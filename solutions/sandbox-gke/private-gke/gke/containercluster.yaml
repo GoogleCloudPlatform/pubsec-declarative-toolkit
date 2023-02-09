@@ -67,7 +67,7 @@ spec:
     enablePrivateNodes: true
     masterIpv4CidrBlock: 172.16.0.0/28
   subnetworkRef:
-    name: sandbox-subnet  # kpt-set: ${subnetwork-name}  
+    name: sandbox-subnet  # kpt-set: ${subnetwork-name}
   verticalPodAutoscaling:
     enabled: true
   workloadIdentityConfig:

@@ -21,7 +21,8 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: 'false'
     config.kubernetes.io/local-config: 'true'
     cnrm.cloud.google.com/disable-dependent-services: 'true'
-    config.kubernetes.io/depends-on: /namespace/config-control/Project/project-id  # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${guardrails-project-id},iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${guardrails-project-id}-service-usage 
+    config.kubernetes.io/depends-on: /namespace/config-control/Project/project-id
+      # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${guardrails-project-id},iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   services:  # list of services to generate
     - bigquery.googleapis.com

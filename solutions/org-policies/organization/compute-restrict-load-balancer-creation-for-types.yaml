@@ -21,8 +21,8 @@
 #
 # Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
 #
-# This list constraint defines 
-# the set of load balancer types which can be created for an organization, 
+# This list constraint defines
+# the set of load balancer types which can be created for an organization,
 # folder, or project. Every load balancer type to be allowed or denied must be listed explicitly.
 #
 # Options: INTERNAL, EXTERNAL, INTERNAL_TCP_UDP, INTERNAL_HTTP_HTTPS, EXTERNAL_NETWORK_TCP_UDP
