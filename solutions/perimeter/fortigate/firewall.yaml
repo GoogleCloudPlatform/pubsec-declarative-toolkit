@@ -55,6 +55,7 @@ spec:
   direction: INGRESS
   networkRef:
     name: perimeter-global-internal-vpc
+  # TODO: once IP space is finalized, re-adjust this value to maybe allow only PAZ subnets
   sourceRanges:
   - 10.0.0.0/8
   targetServiceAccounts:

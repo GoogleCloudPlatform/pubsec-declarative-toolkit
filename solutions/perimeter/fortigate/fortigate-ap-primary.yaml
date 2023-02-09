@@ -180,7 +180,11 @@ spec:
               # IP from internal load balancer
               config secondaryip
                   edit 1
-                      set ip 172.31.201.5 255.255.255.255
+                      set ip 172.31.201.30 255.255.255.255
+                      set allowaccess probe-response
+                  next
+                  edit 2
+                      set ip 172.31.201.35 255.255.255.255
                       set allowaccess probe-response
                   next
               end

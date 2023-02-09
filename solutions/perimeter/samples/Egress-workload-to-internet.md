@@ -58,7 +58,7 @@
     ```
     config firewall policy
         edit 0
-            set name "allow workload1 to internet - http and https"
+            set name "allow workload1 to internet"
             set srcintf "port2"
             set dstintf "port1"
             set action accept

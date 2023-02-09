@@ -94,3 +94,28 @@ spec:
   backendServiceRef:
     name: perimeter-ilb-bes
   allowGlobalAccess: true
+---
+# Explicit proxy
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: perimeter-ilb-proxy-fwdrule
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: perimeter-project-id # kpt-set: ${perimeter-project-id}
+spec:
+  resourceID: ilb-proxy-fwdrule
+  location: northamerica-northeast1
+  networkRef:
+    name: perimeter-global-internal-vpc
+  subnetworkRef:
+    name: perimeter-nane1-internal-paz-snet
+  ipAddress:
+    addressRef:
+      name: perimeter-ilb-proxy-address
+  ports:
+  - "8080"
+  loadBalancingScheme: "INTERNAL"
+  backendServiceRef:
+    name: perimeter-ilb-bes
+  allowGlobalAccess: true
