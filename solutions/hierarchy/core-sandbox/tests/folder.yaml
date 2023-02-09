@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: testing.unittest
+  name: tests
   namespace: hierarchy
 spec:
-  displayName: unittests
+  displayName: tests
   folderRef:
-    name: testing
+    external: '0000000000' # kpt-set: ${lz-folder-id}

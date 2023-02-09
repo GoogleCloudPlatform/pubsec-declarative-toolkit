@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: common-services
+  name: audits
   namespace: hierarchy
 spec:
-  displayName: services
+  displayName: audits
   folderRef:
     external: '0000000000' # kpt-set: ${lz-folder-id}

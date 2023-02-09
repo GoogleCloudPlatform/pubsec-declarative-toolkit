@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: clients.client1.automation.pbmm # kpt-set: clients.${client-name}.automation.pbmm
+  name: tests.unittest
   namespace: hierarchy
 spec:
-  displayName: pbmm
+  displayName: unittests
   folderRef:
-    name: clients.client1.automation # kpt-set: clients.${client-name}.automation
+    name: tests

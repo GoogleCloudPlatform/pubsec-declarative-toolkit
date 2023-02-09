@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: clients.client1.applications # kpt-set: clients.${tenant-name}.applications
+  name: clients
   namespace: hierarchy
 spec:
-  displayName: applications
+  displayName: clients
   folderRef:
-    name: clients.client1 # kpt-set: clients.${tenant-name}
+    external: '0000000000' # kpt-set: ${lz-folder-id}

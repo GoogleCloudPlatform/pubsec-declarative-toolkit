@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: clients.client1.automation # kpt-set: clients.${client-name}.automation
+  name: clients.client1.auto.pbmm # kpt-set: clients.${client-name}.auto.pbmm
   namespace: hierarchy
 spec:
-  displayName: auto
+  displayName: pbmm
   folderRef:
-    name: clients.client1 # kpt-set: clients.${client-name}
+    name: clients.client1.auto # kpt-set: clients.${client-name}.auto
