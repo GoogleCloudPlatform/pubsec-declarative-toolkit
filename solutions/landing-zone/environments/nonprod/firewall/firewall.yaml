@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
@@ -21,21 +21,19 @@ metadata:
   namespace: nonprod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+    cnrm.cloud.google.com/project-id: ${HOST_PROJECT_ID?}  # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   allow:
     - protocol: TCP
     - protocol: UDP
   direction: EGRESS
-  destinationRanges:
-  - "0.0.0.0/0"
+  destinationRanges: [0.0.0.0/0]
   priority: 1000
   logConfig:
     metadata: EXCLUDE_ALL_METADATA
   networkRef:
     name: nonprod-sharedvpc
-  targetTags:
-  - "allow-egress-internet"
+  targetTags: [allow-egress-internet]
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
@@ -46,19 +44,16 @@ metadata:
   namespace: nonprod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+    cnrm.cloud.google.com/project-id: ${HOST_PROJECT_ID?}  # kpt-set: ${net-host-prj-nonprod-id}
 spec:
   allow:
     - protocol: TCP
-      ports: 
-      - "22"
+      ports: ['22']
   direction: INGRESS
-  destinationRanges:
-  - "0.0.0.0/0"
+  destinationRanges: [0.0.0.0/0]
   priority: 1000
   logConfig:
     metadata: INCLUDE_ALL_METADATA
   networkRef:
     name: nonprod-sharedvpc
-  targetTags:
-  - "allow-ssh"
+  targetTags: [allow-ssh]

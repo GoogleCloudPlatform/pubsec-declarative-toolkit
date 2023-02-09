@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,17 +28,16 @@
 # This exception is for the GKE cluster nodes in the management project.  Config Controller sets up GKE with standard VM.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: compute-require-shielded-vm-except-mgt-project
   namespace: policies
   labels:
-    guardrail: "false"
+    guardrail: 'false'
 spec:
-  constraint: "constraints/compute.requireShieldedVm"
+  constraint: constraints/compute.requireShieldedVm
   booleanPolicy:
     enforced: false
   projectRef:
-    external: "0000000000" # kpt-set: ${management-project-id}
+    external: '0000000000'  # kpt-set: ${management-project-id}

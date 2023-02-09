@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: NamingPolicyProject
 metadata:
@@ -19,13 +19,11 @@ metadata:
 spec:
   match:
     kinds:
-      - apiGroups:
-          - '*'
-        kinds:
-          - Project
+      - apiGroups: ['*']
+        kinds: [Project]
   parameters:
-    tenant_code: ^(aa|bb|cc) # kpt-set: ${tenant_code}
-    env_code: d # kpt-set: ${tenant_code}${env_code}
+    tenant_code: ^(aa|bb|cc)  # kpt-set: ${tenant_code}
+    env_code: d  # kpt-set: ${tenant_code}${env_code}
     region_code: m
     class_code: (u|a|b)-
-    user_defined_string: '^[a-z][a-z0-9-]*[a-z0-9]$'
+    user_defined_string: ^[a-z][a-z0-9-]*[a-z0-9]$

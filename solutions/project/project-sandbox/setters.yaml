@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,22 +12,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: setters
   annotations:
-    config.kubernetes.io/local-config: "true"
+    config.kubernetes.io/local-config: 'true'
 data:
   # Billing Account ID to be associated with this project
-  project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  project-billing-id: AAAAAA-BBBBBB-CCCCCC
 
   # GCP folder to use as parent to this project, lowercase K8S resource name
   project-parent-folder: project-parent-folder
 
   # user, group or serviceAccount with editor role at project level
-  project-editor: "group:team1@example.com"
+  project-editor: group:team1@example.com
 
   # Naming Convention for project-id : <tenant-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters

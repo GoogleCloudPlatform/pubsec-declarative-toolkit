@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,23 +27,21 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-resource-locations
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrails-enforced: guardrail-05
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/gcp.resourceLocations"
+  constraint: constraints/gcp.resourceLocations
   listPolicy:
     allow:
       all: false
-      values: # kpt-set: ${allowed-regions}
-        - northamerica-northeast1
-        - northamerica-northeast2
+      values: [northamerica-northeast1, northamerica-northeast2]  # kpt-set: ${allowed-regions}
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -55,19 +54,19 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-vpc-external-ipv6
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-09
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.disableVpcExternalIpv6"
+  constraint: constraints/compute.disableVpcExternalIpv6
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -81,18 +80,18 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: require-shielded-vm
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.requireShieldedVm"
+  constraint: constraints/compute.requireShieldedVm
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -106,22 +105,20 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: require-trusted-images
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.trustedImageProjects"
+  constraint: constraints/compute.trustedImageProjects
   listPolicy:
     allow:
       all: true
-      values: # kpt-set: ${allowed-images}
-        - "projects/debian-cloud"
-        - "projects/cos-cloud"
+      values: [projects/debian-cloud, projects/cos-cloud]  # kpt-set: ${allowed-images}
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}   
+    external: '0000000000'  # kpt-set: ${org-id}   
 ---
 #########
 #
@@ -135,20 +132,20 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-vm-external-access
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
     guardrail-enforced: guardrail-09
-    guardrail: "true"
+    guardrail: 'true'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.vmExternalIpAccess"
+  constraint: constraints/compute.vmExternalIpAccess
   listPolicy:
     deny:
       all: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}          
+    external: '0000000000'  # kpt-set: ${org-id}          
 ---
 #########
 #
@@ -160,19 +157,19 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-serviceaccount-key-creation
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-02
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/iam.disableServiceAccountKeyCreation"
+  constraint: constraints/iam.disableServiceAccountKeyCreation
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}              
+    external: '0000000000'  # kpt-set: ${org-id}              
 ---
 #########
 #
@@ -188,21 +185,21 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-peering
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-09
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.restrictVpcPeering"
+  constraint: constraints/compute.restrictVpcPeering
   listPolicy:
     allow:
       all: true
       values:
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}  
+    external: '0000000000'  # kpt-set: ${org-id}  
 ---
 #########
 #
@@ -218,19 +215,19 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: uniform-bucket-level-access
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-02
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/storage.uniformBucketLevelAccess"
+  constraint: constraints/storage.uniformBucketLevelAccess
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -246,19 +243,19 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-os-login
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-06
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.requireOsLogin"
+  constraint: constraints/compute.requireOsLogin
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -276,22 +273,21 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-loadbalancer-creation-types
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-06
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
+  constraint: constraints/compute.restrictLoadBalancerCreationForTypes
   listPolicy:
     allow:
       all: true
-      values: # kpt-set: ${allowed-loadbalancers}
-        - INTERNAL
+      values: [INTERNAL]  # kpt-set: ${allowed-loadbalancers}
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -309,20 +305,20 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: allowed-contact-domains
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-02
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/essentialcontacts.allowedContactDomains"
+  constraint: constraints/essentialcontacts.allowedContactDomains
   listPolicy:
     allow:
       all: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -340,14 +336,14 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: allowed-policy-member-domain
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-06
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/iam.allowedPolicyMemberDomains"
+  constraint: constraints/iam.allowedPolicyMemberDomains
   listPolicy:
     allow:
       all: true
@@ -355,7 +351,7 @@ spec:
       #  - "asdasda"
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -370,19 +366,19 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-serial-port-access
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrails-02
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.disableSerialPortAccess"
+  constraint: constraints/compute.disableSerialPortAccess
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #######
 #
@@ -398,21 +394,21 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: vm-can-ip-forward
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.vmCanIpForward"
+  constraint: constraints/compute.vmCanIpForward
   listPolicy:
     allow:
       all: true
-      # values: # kpt-set: ${can-ip-forward}
+      # values:  # kpt-set: ${can-ip-forward}
       # - projects/PROJECT_ID
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id} 
+    external: '0000000000'  # kpt-set: ${org-id} 
 ---
 #########
 #
@@ -427,18 +423,18 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-guest-attribute-access
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.disableGuestAttributesAccess"
+  constraint: constraints/compute.disableGuestAttributesAccess
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -453,18 +449,18 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: disable-nested-virtualization
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.disableNestedVirtualization"
+  constraint: constraints/compute.disableNestedVirtualization
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 ##################
 #
@@ -479,18 +475,18 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-vpc-lien-removal
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/compute.restrictXpnProjectLienRemoval"
+  constraint: constraints/compute.restrictXpnProjectLienRemoval
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -504,18 +500,18 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: restrict-sql-public-ip
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/sql.restrictPublicIp"
+  constraint: constraints/sql.restrictPublicIp
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 #
@@ -534,15 +530,15 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: storage-public-access-prevention
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   labels:
-    guardrail: "false"
+    guardrail: 'false'
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-sa-policy-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${management-project-id}-org-policyadmin
 spec:
-  constraint: "constraints/storage.publicAccessPrevention"
+  constraint: constraints/storage.publicAccessPrevention
   booleanPolicy:
     enforced: true
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

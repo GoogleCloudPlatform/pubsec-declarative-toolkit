@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,17 +25,16 @@
 # Cloud SQL instances where this constraint is set to True. 
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: sql-restrict-public-ip
   namespace: policies
   labels:
-    guardrail: "false"
+    guardrail: 'false'
 spec:
-  constraint: "constraints/sql.restrictPublicIp"
+  constraint: constraints/sql.restrictPublicIp
   booleanPolicy:
     enforced: true
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

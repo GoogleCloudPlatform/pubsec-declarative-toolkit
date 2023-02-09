@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,15 +17,15 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-audit-data-viewer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  member: group:email@email.com # kpt-set: group:${audit-data-viewer-group}
+  member: group:email@email.com  # kpt-set: group:${audit-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/bigquery.resourceViewer
 ---
 # BigQuery Audit Log User
@@ -32,15 +33,15 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-audit-data-user
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  member: group:email@email.com # kpt-set: group:${audit-data-group}
+  member: group:email@email.com  # kpt-set: group:${audit-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -48,15 +49,15 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-billing-data-user
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  member: group:email@email.com # kpt-set: group:${billing-data-group}
+  member: group:email@email.com  # kpt-set: group:${billing-data-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/bigquery.user
 ---
 # Billing Big Query User
@@ -64,15 +65,15 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-billing-data-viewer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  member: group:email@email.com # kpt-set: group:${billing-data-viewer-group}
+  member: group:email@email.com  # kpt-set: group:${billing-data-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/bigquery.resourceViewer
 ---
 # Billing Console Viewer
@@ -80,29 +81,29 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: billing-console-viewer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  member: group:email@email.com # kpt-set: group:${billing-console-viewer-group}
+  member: group:email@email.com  # kpt-set: group:${billing-console-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
-  role: "roles/billing.viewer"
+    external: '0000000000'  # kpt-set: ${org-id}
+  role: roles/billing.viewer
 ---
 # Asset Inventory Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: asset-inventory-viewer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
-  member: group:email@email.com # kpt-set: group:${asset-viewer-group}
+  member: group:email@email.com  # kpt-set: group:${asset-viewer-group}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
-  role: "roles/cloudasset.viewer"
+    external: '0000000000'  # kpt-set: ${org-id}
+  role: roles/cloudasset.viewer

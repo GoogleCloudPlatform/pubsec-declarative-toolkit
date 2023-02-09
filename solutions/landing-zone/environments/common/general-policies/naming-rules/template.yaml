@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +14,7 @@
 # limitations under the License.
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
-metadata: # kpt-merge: /datalocation
+metadata:  # kpt-merge: /datalocation
   name: namingpolicy
   annotations:
     description: Naming Enforcement Policy
@@ -67,6 +68,5 @@ spec:
           rule != ""
           asset.metadata.name != ""
           not re_match(rule, asset.metadata.name)
-
           message := sprintf("Project '%s' does not match meet naming requirements '%s'", [asset.metadata.name, rule])
         }

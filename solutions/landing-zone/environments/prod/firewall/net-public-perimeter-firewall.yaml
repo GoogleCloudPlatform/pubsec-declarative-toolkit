@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,21 +12,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-  apiVersion: compute.cnrm.cloud.google.com/v1beta1
-  kind: ComputeFirewall
-  metadata:
-    labels:
-      resource-group: prod
-    name: computefirewall-sample-deny
-    namespace: prod
-    annotations:
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  labels:
+    resource-group: prod
+  name: computefirewall-sample-deny
+  namespace: prod
+  annotations:
       # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-      cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
-  spec:
-    deny:
-      - protocol: icmp
-    networkRef:
-      name: prod-sharedvpc
-    sourceTags:
-    - "web"
+    cnrm.cloud.google.com/project-id: ${HOST_PROJECT_ID?}  # kpt-set: ${net-host-prj-prod-id}
+spec:
+  deny:
+    - protocol: icmp
+  networkRef:
+    name: prod-sharedvpc
+  sourceTags: [web]

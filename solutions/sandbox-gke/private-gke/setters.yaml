@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,21 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:  # kpt-merge: /setters
   name: setters
 data:
-  routing-mode: REGIONAL # REGIONAL or GLOBAL
-  mtu: "1460" # Range can be between 1460 and 1500 bytes
+  routing-mode: REGIONAL  # REGIONAL or GLOBAL
+  mtu: '1460'  # Range can be between 1460 and 1500 bytes
   subnet-cidr: 10.2.0.0/16
-  log-aggregation-interval: INTERVAL_5_SEC # Possible Values ["INTERVAL_5_SEC", "INTERVAL_30_SEC", "INTERVAL_1_MIN", "INTERVAL_5_MIN", "INTERVAL_10_MIN", "INTERVAL_15_MIN"]
-  flow-sampling: "0.5" # Value must be between 0 and 1
-  log-metadata: INCLUDE_ALL_METADATA # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
-  # log-metadatafields: | # Use if CUSTOM_METADATA is used for `log-metadata`
+  log-aggregation-interval: INTERVAL_5_SEC  # Possible Values ["INTERVAL_5_SEC", "INTERVAL_30_SEC", "INTERVAL_1_MIN", "INTERVAL_5_MIN", "INTERVAL_10_MIN", "INTERVAL_15_MIN"]
+  flow-sampling: '0.5'  # Value must be between 0 and 1
+  log-metadata: INCLUDE_ALL_METADATA  # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
+  # log-metadatafields: |  # Use if CUSTOM_METADATA is used for `log-metadata`
   #   - test 
-  private-google-access: "true"
+  private-google-access: 'true'
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16
   cluster-description: dev-cluster
@@ -55,7 +55,7 @@ data:
   # Anthos Values
   #
   ######
-  acm-version: 1.10.0 # Anthos Config Management Version https://cloud.google.com/anthos/config-management
+  acm-version: 1.10.0  # Anthos Config Management Version https://cloud.google.com/anthos/config-management
   location: northamerica-northeast1
   gke-pod-range-name: clusterrange
   gke-services-range-name: servicesrange
@@ -74,6 +74,6 @@ data:
   # Creates a Private GKE Cluster with 1 Node Pool
   #
   ######
-  project-id: sandbox-00000 # Must be globally unique
+  project-id: sandbox-00000  # Must be globally unique
   project-namespace: config-control
   subnetwork-name: gke-subnet

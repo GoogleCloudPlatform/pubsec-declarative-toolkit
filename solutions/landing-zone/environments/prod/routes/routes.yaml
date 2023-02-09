@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,20 +12,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRoute
 metadata:
   name: egress-internet-prod
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
+    cnrm.cloud.google.com/project-id: ${HOST_PROJECT_ID?}  # kpt-set: ${net-host-prj-prod-id}
   labels:
     resource-group: prod
 spec:
-  description: "route through IGW to access internet"
+  description: route through IGW to access internet
   destRange: 0.0.0.0/0
-  nextHopGateway: "default-internet-gateway"
+  nextHopGateway: default-internet-gateway
   networkRef:
     name: prod-sharedvpc
   priority: 0
@@ -33,5 +33,4 @@ spec:
   #   external: name
   # nextHopVPNTunnelRef:
   #   external: name
-  tags:
-  - "egress-inet"
+  tags: [egress-inet]

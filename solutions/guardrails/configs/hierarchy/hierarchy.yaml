@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,18 +12,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
   name: guardrails-resource-hierarchy
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
     config.kubernetes.io/local-config: 'true'
 spec:
   parentRef:
     kind: Organization
-    external: "test-organization" # kpt-set: ${org-id}
+    external: test-organization  # kpt-set: ${org-id}
   config:
-    - guardrails:
-        - null
+    - guardrails: [null]

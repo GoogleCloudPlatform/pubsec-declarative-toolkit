@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,12 +14,12 @@
 # limitations under the License.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
-metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
-  name: sandbox-net # kpt-set: ${network-name}
-  namespace: sandbox # kpt-set: ${project-namespace}
+metadata:  # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-net
+  name: sandbox-net  # kpt-set: ${network-name}
+  namespace: sandbox  # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: sandbox-000000  # kpt-set: ${project-id}  
 spec:
   autoCreateSubnetworks: false
-  routingMode: REGIONAL # kpt-set: ${routing-mode}
-  mtu: 1460 # kpt-set: ${mtu}
+  routingMode: REGIONAL  # kpt-set: ${routing-mode}
+  mtu: 1460  # kpt-set: ${mtu}

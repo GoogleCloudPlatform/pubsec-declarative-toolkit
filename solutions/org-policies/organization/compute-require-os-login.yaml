@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,18 +27,17 @@
 # Login at the project or instance level.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: compute-require-os-login
   namespace: policies
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-06
 spec:
-  constraint: "constraints/compute.requireOsLogin"
+  constraint: constraints/compute.requireOsLogin
   booleanPolicy:
     enforced: true
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

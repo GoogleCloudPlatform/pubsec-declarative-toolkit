@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +19,10 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: hierarchy-sa
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   displayName: hierarchy-sa
 ---
@@ -31,27 +32,27 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-folderadmin-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
+    external: '123456789012'  # kpt-set: ${lz-folder-id}
   role: roles/resourcemanager.folderAdmin
-  member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: hierarchy-sa-workload-identity-binding
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     name: hierarchy-sa
@@ -60,7 +61,7 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]  # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
 ---
 # K8S namespace
 apiVersion: v1
@@ -68,7 +69,7 @@ kind: Namespace
 metadata:
   name: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 ---
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
@@ -77,9 +78,9 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
-  googleServiceAccount: hierarchy-sa@management-project-id.iam.gserviceaccount.com # kpt-set: hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
+  googleServiceAccount: hierarchy-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant viewer role on the hierarchy namespace to projects K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
@@ -88,7 +89,7 @@ metadata:
   name: allow-hierarchy-resource-reference-from-projects
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -105,7 +106,7 @@ metadata:
   name: allow-hierarchy-resource-reference-from-policies
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole

@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +19,10 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: networking-sa
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   displayName: networking-sa
 ---
@@ -31,68 +32,68 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: networking-sa-networkadmin-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
+    external: '123456789012'  # kpt-set: ${lz-folder-id}
   role: roles/compute.networkAdmin
-  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role Security Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: networking-sa-security-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
+    external: '123456789012'  # kpt-set: ${lz-folder-id}
   role: roles/compute.securityAdmin
-  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role DNS Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: networking-sa-dns-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
+    external: '123456789012'  # kpt-set: ${lz-folder-id}
   role: roles/dns.admin
-  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role ACM Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: networking-sa-service-control-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
+    external: '123456789012'  # kpt-set: ${lz-folder-id}
   role: roles/accesscontextmanager.policyAdmin
-  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role Shared VPC Admin to GCP SA
 # needs to be set at the org level because of org policy "constraints/compute.restrictXpnProjectLienRemoval"
@@ -100,27 +101,27 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: networking-sa-xpnadmin-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: '123456789012'  # kpt-set: ${org-id}
   role: roles/compute.xpnAdmin
-  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: networking-sa-workload-identity-binding
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     name: networking-sa
@@ -129,7 +130,7 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-networking] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]  # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
 ---
 # K8S namespace
 apiVersion: v1
@@ -137,7 +138,7 @@ kind: Namespace
 metadata:
   name: networking
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 ---
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
@@ -146,6 +147,6 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
-  googleServiceAccount: networking-sa@management-project-id.iam.gserviceaccount.com # kpt-set: networking-sa@${management-project-id}.iam.gserviceaccount.com
+  googleServiceAccount: networking-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: networking-sa@${management-project-id}.iam.gserviceaccount.com

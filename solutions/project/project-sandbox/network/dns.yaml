@@ -1,3 +1,4 @@
+---
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,15 +17,15 @@
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSPolicy
 metadata:
-  name: project-id-logging-dnspolicy # kpt-set: ${project-id}-logging-dnspolicy
+  name: project-id-logging-dnspolicy  # kpt-set: ${project-id}-logging-dnspolicy
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: logging-dnspolicy
-  description: "DNS policy to enable logging"
+  description: DNS policy to enable logging
   enableLogging: true
   networks:
     - networkRef:
-        name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+        name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc

@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,22 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
-metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
-  name: nat-sandbox-net # kpt-set: nat-${cluster-name}-net
-  namespace: sandbox # kpt-set: ${project-namespace}
+metadata:  # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
+  name: nat-sandbox-net  # kpt-set: nat-${cluster-name}-net
+  namespace: sandbox  # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: sandbox-000000  # kpt-set: ${project-id}  
 spec:
   natIpAllocateOption: AUTO_ONLY
-  region: us-central1 # kpt-set: ${region}
+  region: us-central1  # kpt-set: ${region}
   routerRef:
-    name: router-sandbox-net # kpt-set: router-${network-name}
+    name: router-sandbox-net  # kpt-set: router-${network-name}
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
-  - subnetworkRef:
-      name: sandbox-subnet # kpt-set: ${subnetwork-name}
-    sourceIpRangesToNat:
-    - ALL_IP_RANGES
+    - subnetworkRef:
+        name: sandbox-subnet  # kpt-set: ${subnetwork-name}
+      sourceIpRangesToNat: [ALL_IP_RANGES]

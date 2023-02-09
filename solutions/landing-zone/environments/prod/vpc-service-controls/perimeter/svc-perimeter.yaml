@@ -31,7 +31,7 @@
 #     # List of projects to be included in this perimeter
 #     resources:
 #     - projectRef:
-#         name: ${project-id} # kpt-set: ${project-id}
+#         name: ${project-id}  # kpt-set: ${project-id}
 #     # List of restricted services
 #     restrictedServices:
 #     - "storage.googleapis.com"

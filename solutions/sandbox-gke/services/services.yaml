@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +15,19 @@
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: ProjectServiceSet
 metadata:
-  name: guardrails-project-services # kpt-set: ${project-id}-services
-  namespace: config-control # kpt-set: ${project-namespace}
+  name: guardrails-project-services  # kpt-set: ${project-id}-services
+  namespace: config-control  # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/deletion-policy: "false"
-    config.kubernetes.io/local-config: "true"
-    cnrm.cloud.google.com/disable-dependent-services: "true"
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/my-demo-guardrails-controller-services-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-services-admin
+    cnrm.cloud.google.com/deletion-policy: 'false'
+    config.kubernetes.io/local-config: 'true'
+    cnrm.cloud.google.com/disable-dependent-services: 'true'
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/my-demo-guardrails-controller-services-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-services-admin
 spec:
-  services: # list of services to generate
+  services:  # list of services to generate
     - compute.googleapis.com
     - bigquery.googleapis.com
     - pubsub.googleapis.com
     - container.googleapis.com
     - binaryauthorization.googleapis.com
     - artifactregistry.googleapis.com
-  projectID: sandbox-00000 # kpt-set: ${project-id}
+  projectID: sandbox-00000  # kpt-set: ${project-id}

@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,17 +26,16 @@
 # to the organization, project, or folder where this constraint is set to True.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: compute-disable-guest-attribute-access
   namespace: policies
   labels:
-    guardrail: "false"
+    guardrail: 'false'
 spec:
-  constraint: "constraints/compute.disableGuestAttributesAccess"
+  constraint: constraints/compute.disableGuestAttributesAccess
   booleanPolicy:
     enforced: true
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

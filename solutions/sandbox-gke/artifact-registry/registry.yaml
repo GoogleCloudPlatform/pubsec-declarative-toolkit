@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +16,13 @@ apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
 kind: ArtifactRegistryRepository
 metadata:
   name: container-registry
-  namespace: sandbox # kpt-set: ${project-namespace}
+  namespace: sandbox  # kpt-set: ${project-namespace}
   labels:
     environment: sandbox
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/v1beta1/namespaces/config-control/Service/my-demo-guardrails-controller-services-artifactregistry # kpt-set: serviceusage.cnrm.cloud.google.com/v1beta1/namespaces/${project-namespace}/Service/${project-id}-services-artifactregistry
+    cnrm.cloud.google.com/project-id: sandbox-000000  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/v1beta1/namespaces/config-control/Service/my-demo-guardrails-controller-services-artifactregistry  # kpt-set: serviceusage.cnrm.cloud.google.com/v1beta1/namespaces/${project-namespace}/Service/${project-id}-services-artifactregistry
 spec:
-  description: "Example Container Registry"
+  description: Example Container Registry
   format: DOCKER
-  location: us-northamerica-northeast1 # kpt-set: ${region}
+  location: us-northamerica-northeast1  # kpt-set: ${region}

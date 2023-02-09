@@ -1,11 +1,12 @@
+---
 markdown: kramdown
 relative_links:
   enabled: true
 include:
-- config-connector.markdown
-- getting-started.md
-- governance.md
-- issues.markdown.md
-- solutions.md
-- index.md
+  - config-connector.markdown
+  - getting-started.md
+  - governance.md
+  - issues.markdown.md
+  - solutions.md
+  - index.md
 theme: jekyll-theme-cayman

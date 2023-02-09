@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,25 +14,25 @@
 # limitations under the License.
 apiVersion: binaryauthorization.cnrm.cloud.google.com/v1beta1
 kind: BinaryAuthorizationPolicy
-metadata: # kpt-merge: config-control/binauth-allowed-repos
+metadata:  # kpt-merge: config-control/binauth-allowed-repos
   name: binauth-allowed-repos
-  namespace: config-control # kpt-set: ${project-namespace}
+  namespace: config-control  # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "${project-id}" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${project-id}-binauth-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-binauth-admin
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    cnrm.cloud.google.com/project-id: ${project-id}  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/${project-id}-binauth-admin  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-binauth-admin
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn-live
 spec:
   admissionWhitelistPatterns:
-    - namePattern: "gcr.io/google_containers/*"
-    - namePattern: "gcr.io/google-containers/*"
-    - namePattern: "k8s.gcr.io/*"
-    - namePattern: "gke.gcr.io/*"
-    - namePattern: "gcr.io/stackdriver-agents/*"
-    - namePattern: "gcr.io/google-samples/*"
-    - namePattern: "northamerica-northeast1-docker.pkg.dev/${project-id}/container-registry" # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
+    - namePattern: gcr.io/google_containers/*
+    - namePattern: gcr.io/google-containers/*
+    - namePattern: k8s.gcr.io/*
+    - namePattern: gke.gcr.io/*
+    - namePattern: gcr.io/stackdriver-agents/*
+    - namePattern: gcr.io/google-samples/*
+    - namePattern: northamerica-northeast1-docker.pkg.dev/${project-id}/container-registry  # kpt-set: ${region}-docker.pkg.dev/${project-id}/container-registry
   defaultAdmissionRule:
-    enforcementMode: "ENFORCED_BLOCK_AND_AUDIT_LOG"
-    evaluationMode: "ALWAYS_ALLOW"
+    enforcementMode: ENFORCED_BLOCK_AND_AUDIT_LOG
+    evaluationMode: ALWAYS_ALLOW
   globalPolicyEvaluationMode: ENABLE
   projectRef:
-    external: ${project-id} # kpt-set: ${project-id}
+    external: ${project-id}  # kpt-set: ${project-id}

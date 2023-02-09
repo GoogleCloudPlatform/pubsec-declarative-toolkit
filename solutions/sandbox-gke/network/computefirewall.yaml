@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,52 +18,51 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   name: nist-firewall-deny
-  namespace: sandbox # kpt-set: ${project-namespace}
+  namespace: sandbox  # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: sandbox-000000 # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: sandbox-000000  # kpt-set: ${project-id}
 spec:
   deny:
     - protocol: tcp
       ports:
-        - "9090"
-        - "7000-7001"
-        - "7199"
-        - "8888"
-        - "9160"
-        - "61620-61621"
-        - "9200"
-        - "9300"
-        - "21"
-        - "80"
-        - "389"
-        - "636"
-        - "11211"
-        - "11214-11215"
-        - "27017-27019"
-        - "3306"
-        - "137-139"
-        - "1521"
-        - "2483-2484"
-        - "110"
-        - "5432"
-        - "3389"
-        - "6379"
-        - "25"
-        - "22"
-        - "23"
+        - '9090'
+        - 7000-7001
+        - '7199'
+        - '8888'
+        - '9160'
+        - 61620-61621
+        - '9200'
+        - '9300'
+        - '21'
+        - '80'
+        - '389'
+        - '636'
+        - '11211'
+        - 11214-11215
+        - 27017-27019
+        - '3306'
+        - 137-139
+        - '1521'
+        - 2483-2484
+        - '110'
+        - '5432'
+        - '3389'
+        - '6379'
+        - '25'
+        - '22'
+        - '23'
     - protocol: udp
       ports:
-        - "445"
-        - "53"
-        - "389"
-        - "11211"
-        - "11214-11215"
-        - "137-139"
-        - "2483-2484"
-        - "5432"
-        - "3389"
+        - '445'
+        - '53'
+        - '389'
+        - '11211'
+        - 11214-11215
+        - 137-139
+        - 2483-2484
+        - '5432'
+        - '3389'
     - protocol: sctp
-      ports:
-        - "22"
+      ports: ['22']
   networkRef:
-    name: sandbox-net # kpt-set: ${network-name}
+    name: sandbox-net  # kpt-set: ${network-name}

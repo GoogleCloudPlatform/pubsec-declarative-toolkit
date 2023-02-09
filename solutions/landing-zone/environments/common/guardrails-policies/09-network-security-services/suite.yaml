@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,31 +12,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
-metadata: # kpt-merge: /limitegresstraffic
+metadata:  # kpt-merge: /limitegresstraffic
   name: limitegresstraffic
   annotations:
     config.kubernetes.io/local-config: 'true'
 tests:
-- name: limitegresstraffic
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: gke-private
-    object: tests/gke-test.yaml
-    assertions:
-    - violations: yes
-  - name: cloudsql-private
-    object: tests/cloudsql-test.yaml
-    assertions:
-    - violations: no
-  - name: cloudstorage-private
-    object: tests/cloudstorage-test.yaml
-    assertions:
-    - violations: no
-  - name: subnet-autocreate
-    object: tests/network-test.yaml
-    assertions:
-    - violations: no
+  - name: limitegresstraffic
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      - name: gke-private
+        object: tests/gke-test.yaml
+        assertions:
+          - violations: true
+      - name: cloudsql-private
+        object: tests/cloudsql-test.yaml
+        assertions:
+          - violations: false
+      - name: cloudstorage-private
+        object: tests/cloudstorage-test.yaml
+        assertions:
+          - violations: false
+      - name: subnet-autocreate
+        object: tests/network-test.yaml
+        assertions:
+          - violations: false

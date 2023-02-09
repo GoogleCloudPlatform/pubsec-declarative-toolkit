@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,28 +12,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   labels:
-    label-one: "value-one"
+    label-one: value-one
   name: allow-egress-internet-pu
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-prm-prj-common-12345 # kpt-set: ${net-perimeter-prj-common-id}
+    cnrm.cloud.google.com/project-id: net-prm-prj-common-12345  # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   description: Allow egress to the internet
   direction: EGRESS
   deny:
     - protocol: icmp
     - protocol: udp
-  sourceRanges:
-    - 0.0.0.0/0
+  sourceRanges: [0.0.0.0/0]
   networkRef:
     name: public-perimeter
-  targetTags:
-    - "allow-egress-internet-pu"
+  targetTags: [allow-egress-internet-pu]
   priority: 1000
   disabled: false
   logConfig:
@@ -42,24 +40,21 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   labels:
-    label-one: "value-one"
+    label-one: value-one
   name: allow-ssh-ingressp
   namespace: common
   annotations:
-    cnrm.cloud.google.com/project-id: net-prm-prj-common-12345 # kpt-set: ${net-perimeter-prj-common-id}
+    cnrm.cloud.google.com/project-id: net-prm-prj-common-12345  # kpt-set: ${net-perimeter-prj-common-id}
 spec:
   description: Allow SSH Connections from the internet
   direction: INGRESS
   deny:
     - protocol: tcp
-      ports: 
-      - "22"
-  sourceRanges:
-    - 0.0.0.0/0
+      ports: ['22']
+  sourceRanges: [0.0.0.0/0]
   networkRef:
     name: public-perimeter
-  targetTags:
-    - "allow-ssh"
+  targetTags: [allow-ssh]
   priority: 1000
   disabled: false
   logConfig:

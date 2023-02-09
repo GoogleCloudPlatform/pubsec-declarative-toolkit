@@ -1,17 +1,14 @@
 ---
-name: 'Yaml Linting'
+name: Yaml Linting
 on:
   pull_request:
-    paths:
-      - '**.yaml'
-      - '**.yml'
+    paths: ['**.yaml', '**.yml']
 jobs:
   yamllint:
-    name: 'Yamllint'
+    name: Yamllint
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
+      - name: Checkout
         uses: actions/checkout@v3
-      - name: 'Yamllint'
+      - name: Yamllint
         uses: ibiqlik/action-yamllint@v3
-...

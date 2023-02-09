@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,13 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: limitegresstraffic
   annotations:
-    description: Establish external and internal network perimeters and monitor network traffic.
+    description: Establish external and internal network perimeters and monitor network
+      traffic.
     reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/09_Network-Security-Services.md
     related-security-controls: AC-3, AC-4, SC-5, SC-7, SC-7(5), SI-3, SI-3(7), SI-4
 spec:
@@ -29,7 +30,6 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |-
         package limitegresstraffic
-
         has_key(obj, field){
           obj[field]
         }
@@ -58,7 +58,6 @@ spec:
           not has_key(input.review.object.spec.settings, "ipConfiguration")
           msg := sprintf("CloudSql is not Private %s", [input.review.object.metadata.name])
         }
-
         violation[{"msg":msg}] {
           input.review.kind.kind == "SQLInstance"
           not has_key(input.review.object.spec.settings.ipConfiguration, "privateNetworkRef")
@@ -71,7 +70,6 @@ spec:
           not has_key(input.review.object.spec, "publicAccessPrevention")
           msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
         }
-
         violation[{"msg":msg}] {
           input.review.kind.kind == "StorageBucket"
           not input.review.object.spec.publicAccessPrevention == "enforced"

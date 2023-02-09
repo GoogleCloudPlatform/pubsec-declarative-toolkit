@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +16,15 @@
 # GKE Metering BQ
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
-metadata: # kpt-merge: sandbox/gkemetering
+metadata:  # kpt-merge: sandbox/gkemetering
   annotations:
-    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/config-control/Service/bigquery,iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-bigquery-admin # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/${project-namespace}/Service/${project-id}-services-bigquery,iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-bigquery-admin
-  name: gkemetering # kpt-set: ${cluster-name}gkemetering
-  namespace: sandbox # kpt-set: ${project-namespace}
+    cnrm.cloud.google.com/delete-contents-on-destroy: 'true'
+    cnrm.cloud.google.com/project-id: sandbox-000000  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/config-control/Service/bigquery,iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-bigquery-admin  # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/${project-namespace}/Service/${project-id}-services-bigquery,iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-bigquery-admin
+  name: gkemetering  # kpt-set: ${cluster-name}gkemetering
+  namespace: sandbox  # kpt-set: ${project-namespace}
 spec:
   defaultTableExpirationMs: 3600000
-  description: "BigQuery Dataset Sample" # kpt-set: ${cluster-name}-gkemetering
+  description: BigQuery Dataset Sample  # kpt-set: ${cluster-name}-gkemetering
   friendlyName: gke-metering-dataset
-  location: us-central1 # kpt-set: ${region}
+  location: us-central1  # kpt-set: ${region}

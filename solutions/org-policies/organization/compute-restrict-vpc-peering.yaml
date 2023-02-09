@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,20 +28,17 @@
 # or projects/PROJECT_ID/global/networks/NETWORK_NAME.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: compute-restrict-vpc-peering
   namespace: policies
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-09
 spec:
-  constraint: "constraints/compute.restrictVpcPeering"
+  constraint: constraints/compute.restrictVpcPeering
   listPolicy:
     allow:
-      values: # kpt-set: ${allowed-vpc-peering}
-      - under:folders/FOLDER_ID
-  organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+      values: [under:folders/FOLDER_ID]  # kpt-set: ${allowed-vpc-peering}
+  organizationRef: external: '0000000000'  # kpt-set: ${org-id}

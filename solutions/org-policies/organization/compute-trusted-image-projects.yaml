@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,19 +26,17 @@
 #
 # List public images: gcloud compute images list
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: compute-trusted-image-projects
   namespace: policies
   labels:
-    guardrail: "false"
+    guardrail: 'false'
 spec:
-  constraint: "constraints/compute.trustedImageProjects"
+  constraint: constraints/compute.trustedImageProjects
   listPolicy:
     allow:
-      values: # kpt-set: ${allowed-trusted-image-projects}
-        - "projects/cos-cloud"
+      values: [projects/cos-cloud]  # kpt-set: ${allowed-trusted-image-projects}
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

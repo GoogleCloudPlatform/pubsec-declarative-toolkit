@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,20 +29,18 @@
 # list of allowed domains can be added in Essential Contacts.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: essentialcontacts-allowed-contact-domains
   namespace: policies
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-02
 spec:
-  constraint: "constraints/essentialcontacts.allowedContactDomains"
+  constraint: constraints/essentialcontacts.allowedContactDomains
   listPolicy:
     allow:
-      values: # kpt-set: ${allowed-contact-domains}
-        - "@example.com"
+      values: ['@example.com']  # kpt-set: ${allowed-contact-domains}
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

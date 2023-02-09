@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,68 +16,68 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: project-id # kpt-set: ${guardrails-project-id}
-  namespace: config-control # kpt-set: ${management-namespace}
+  name: project-id  # kpt-set: ${guardrails-project-id}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/project-id: config-controller-project  # kpt-set: ${management-project-id}
 spec:
-  displayName: project-id # kpt-set: ${guardrails-project-id}
+  displayName: project-id  # kpt-set: ${guardrails-project-id}
 ---
 # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: project-id-sa-workload-identity-binding # kpt-set: ${guardrails-project-id}-sa-workload-identity-binding
-  namespace: config-control # kpt-set: ${management-namespace}
+  name: project-id-sa-workload-identity-binding  # kpt-set: ${guardrails-project-id}-sa-workload-identity-binding
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: config-controller-project # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/project-id: config-controller-project  # kpt-set: ${management-project-id}
 spec:
   resourceRef:
-    name: project-id # kpt-set: ${guardrails-project-id}
+    name: project-id  # kpt-set: ${guardrails-project-id}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:config-controller-project.svc.id.goog[cnrm-system/cnrm-controller-manager-guardrails] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${guardrails-namespace}]
+        - member: serviceAccount:config-controller-project.svc.id.goog[cnrm-system/cnrm-controller-manager-guardrails]  # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${guardrails-namespace}]
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: config-controller-project-org-policyadmin # kpt-set: ${management-project-id}-org-policyadmin
-  namespace: config-control # kpt-set: ${management-namespace}
+  name: config-controller-project-org-policyadmin  # kpt-set: ${management-project-id}-org-policyadmin
+  namespace: config-control  # kpt-set: ${management-namespace}
 spec:
-  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com  # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/orgpolicy.policyAdmin
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: config-controller-project-sa-logging-admin # kpt-set: ${management-project-id}-sa-logging-admin
-  namespace: config-control # kpt-set: ${management-namespace}
+  name: config-controller-project-sa-logging-admin  # kpt-set: ${management-project-id}-sa-logging-admin
+  namespace: config-control  # kpt-set: ${management-namespace}
 spec:
-  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com  # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/logging.admin
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
-metadata: # kpt-merge: config-control/guardrails-bq-admin
-  name: config-controller-project-sa-role-admin # kpt-set: ${guardrails-project-id}-sa-role-admin
-  namespace: config-control # kpt-set: ${management-namespace}
+metadata:  # kpt-merge: config-control/guardrails-bq-admin
+  name: config-controller-project-sa-role-admin  # kpt-set: ${guardrails-project-id}-sa-role-admin
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg-fn-live'
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn-live
 spec:
-  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+  member: serviceAccount:service-0000000000@gcp-sa-yakima.iam.gserviceaccount.com  # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
   role: roles/iam.organizationRoleAdmin

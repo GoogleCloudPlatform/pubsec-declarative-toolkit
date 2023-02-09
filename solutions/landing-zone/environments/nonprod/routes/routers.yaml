@@ -19,7 +19,7 @@
 #   namespace: config-controller
 #   annotations:
 #     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-#     cnrm.cloud.google.com/project-id: non-prod-project-id # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: non-prod-project-id  # kpt-set: ${net-host-prj-nonprod-id}
 # spec:
 #   networkRef:
 #     name: nonprod-sharedvpc

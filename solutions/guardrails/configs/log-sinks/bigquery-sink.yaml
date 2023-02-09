@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,18 +18,18 @@ apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
   name: bigquery-logsink
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: bigquery.cnrm.cloud.google.com/namespaces/guardrails/BigQueryDataset/bigquerylogginglogsink # kpt-set: bigquery.cnrm.cloud.google.com/namespaces/${management-namespace}/BigQueryDataset/bigquerylogginglogsink,resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
+    config.kubernetes.io/depends-on: bigquery.cnrm.cloud.google.com/namespaces/guardrails/BigQueryDataset/bigquerylogginglogsink  # kpt-set: bigquery.cnrm.cloud.google.com/namespaces/${management-namespace}/BigQueryDataset/bigquerylogginglogsink,resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   destination:
     bigQueryDatasetRef:
       name: bigquerylogginglogsink
-      namespace: guardrails # kpt-set: ${management-namespace}
+      namespace: guardrails  # kpt-set: ${management-namespace}
   includeChildren: true
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 # Big Query Instance
@@ -36,30 +37,30 @@ apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata:
   name: bigquerylogginglogsink
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/delete-contents-on-destroy: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id},serviceusage.cnrm.cloud.google.com/namespaces/${management-namespace}/Service/guardrails-project-services-bigquery
+    cnrm.cloud.google.com/delete-contents-on-destroy: 'true'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id  # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id},serviceusage.cnrm.cloud.google.com/namespaces/${management-namespace}/Service/guardrails-project-services-bigquery
 spec:
   location: northamerica-northeast1
   projectRef:
-    external: project-id # kpt-set: ${guardrails-project-id}
+    external: project-id  # kpt-set: ${guardrails-project-id}
 ---
 # BigQuery Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: 
+metadata:
   name: bq-sink-writer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/bigquery-logsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/bigquery-logsink
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/bigquery-logsink  # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/bigquery-logsink
 spec:
   resourceRef:
     kind: Project
-    name: guardrails-project-id # kpt-set: ${guardrails-project-id}
+    name: guardrails-project-id  # kpt-set: ${guardrails-project-id}
   bindings:
     - role: roles/bigquery.dataOwner
       members:
-        - memberFrom: 
+        - memberFrom:
             logSinkRef:
               name: bigquery-logsink

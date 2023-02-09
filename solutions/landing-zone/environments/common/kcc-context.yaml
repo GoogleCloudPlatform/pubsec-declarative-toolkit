@@ -14,40 +14,40 @@
 
 # apiVersion: core.cnrm.cloud.google.com/v1beta1
 # kind: ConfigConnectorContext
-# metadata: # kpt-merge: project-id/configconnectorcontext.core.cnrm.cloud.google.com
+# metadata:  # kpt-merge: project-id/configconnectorcontext.core.cnrm.cloud.google.com
 #   name: common-context
-#   namespace: config-control # kpt-set: ${management-namespace}
+#   namespace: config-control  # kpt-set: ${management-namespace}
 #   annotations:
 #     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1,kpt-fn-live
 # spec:
-#   googleServiceAccount: kcc-MY_AWESOME_PROJECT_0000@MGMT_PROJECT_ID_0000.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
+#   googleServiceAccount: kcc-MY_AWESOME_PROJECT_0000@MGMT_PROJECT_ID_0000.iam.gserviceaccount.com  # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
 # ---
 # # Create GCP ServiceAccount for use by KCC to manage resources in this project
 # apiVersion: iam.cnrm.cloud.google.com/v1beta1
 # kind: IAMServiceAccount
-# metadata: # kpt-merge: config-control/kcc-project-id
-#   name: kcc-MY_AWESOME_PROJECT_0000 # kpt-set: kcc-${project-id}
-#   namespace: config-control # kpt-set: ${management-namespace}
+# metadata:  # kpt-merge: config-control/kcc-project-id
+#   name: kcc-MY_AWESOME_PROJECT_0000  # kpt-set: kcc-${project-id}
+#   namespace: config-control  # kpt-set: ${management-namespace}
 #   annotations:
 #     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1,kpt-fn-live
-#     cnrm.cloud.google.com/project-id: MGMT_PROJECT_ID_0000 # kpt-set: ${management-project-id}
+#     cnrm.cloud.google.com/project-id: MGMT_PROJECT_ID_0000  # kpt-set: ${management-project-id}
 # spec:
-#   displayName: kcc-MY_AWESOME_PROJECT_0000 # kpt-set: kcc-${project-id}
+#   displayName: kcc-MY_AWESOME_PROJECT_0000  # kpt-set: kcc-${project-id}
 # ---
 # # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 # apiVersion: iam.cnrm.cloud.google.com/v1beta1
 # kind: IAMPartialPolicy
-# metadata: # kpt-merge: config-control/project-id-sa-workload-identity-binding
-#   name: MY_AWESOME_PROJECT_0000-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
-#   namespace: config-control # kpt-set: ${management-namespace}
+# metadata:  # kpt-merge: config-control/project-id-sa-workload-identity-binding
+#   name: MY_AWESOME_PROJECT_0000-sa-workload-identity-binding  # kpt-set: ${project-id}-sa-workload-identity-binding
+#   namespace: config-control  # kpt-set: ${management-namespace}
 #   annotations:
 #     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1,kpt-fn-live
 # spec:
 #   resourceRef:
-#     name: kcc-MY_AWESOME_PROJECT_0000 # kpt-set: kcc-${management-project-id}
+#     name: kcc-MY_AWESOME_PROJECT_0000  # kpt-set: kcc-${management-project-id}
 #     apiVersion: iam.cnrm.cloud.google.com/v1beta1
 #     kind: IAMServiceAccount
 #   bindings:
 #     - role: roles/iam.workloadIdentityUser
 #       members:
-#         - member: serviceAccount:MGMT_PROJECT_ID_0000.svc.id.goog[cnrm-system/cnrm-controller-manager-MY_AWESOME_PROJECT_0000] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${management-project-id}]
+#         - member: serviceAccount:MGMT_PROJECT_ID_0000.svc.id.goog[cnrm-system/cnrm-controller-manager-MY_AWESOME_PROJECT_0000]  # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${management-project-id}]

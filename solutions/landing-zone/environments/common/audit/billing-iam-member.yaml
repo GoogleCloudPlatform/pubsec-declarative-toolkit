@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -20,10 +20,11 @@ metadata:
   labels:
     resource-group: common
 spec:
-  member: serviceAccount:billing-service-account@${PROJECT_ID?}.iam.gserviceaccount.com # kpt-set: serviceAccount:billing-service-account@${audit-prj-id}.iam.gserviceaccount.com
+  member: serviceAccount:billing-service-account@${PROJECT_ID?}.iam.gserviceaccount.com  # kpt-set: serviceAccount:billing-service-account@${audit-prj-id}.iam.gserviceaccount.com
   role: roles/logging.viewAccessor
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: Audit # kpt-set: ${audit-prj-id}
+    name: Audit  # kpt-set: ${audit-prj-id}
 ---
+...

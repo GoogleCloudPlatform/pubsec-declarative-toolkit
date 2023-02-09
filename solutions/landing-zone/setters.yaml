@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,10 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:  # kpt-merge: /setters
   name: setters
 data:
   #############
@@ -23,14 +23,14 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   #############
-  billing-id: "0123456-0123456-0123456"
-  org-id: "0000000000"
+  billing-id: 0123456-0123456-0123456
+  org-id: '0000000000'
   #############
   # Management Project
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard
-  management-project-id: management-project-12345 
-  management-project-number: "0123456789012"
+  management-project-id: management-project-12345
+  management-project-number: '0123456789012'
   #############
   # Project  IDs
   # These are the IDs for the projects that will be created by the LZ script

@@ -16,6 +16,6 @@
 # kind: ConfigConnectorContext
 # metadata:
 #   name: configconnectorcontext.core.cnrm.cloud.google.com
-#   namespace: guardrails # kpt-set: ${guardrails-namespace}
+#   namespace: guardrails  # kpt-set: ${guardrails-namespace}
 # spec:
-#   googleServiceAccount: my-super-guardrails@config-controller.iam.gserviceaccount.com # kpt-set: ${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com
+#   googleServiceAccount: my-super-guardrails@config-controller.iam.gserviceaccount.com  # kpt-set: ${guardrails-project-id}@${management-project-id}.iam.gserviceaccount.com

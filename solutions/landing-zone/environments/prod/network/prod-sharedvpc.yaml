@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
@@ -19,7 +19,7 @@ metadata:
   namespace: prod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
+    cnrm.cloud.google.com/project-id: ${HOST_PROJECT_ID?}  # kpt-set: ${net-host-prj-prod-id}
   labels:
     resource-group: prod
 spec:
@@ -36,7 +36,7 @@ metadata:
   namespace: prod
   annotations:
     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-    cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-prod-id}
+    cnrm.cloud.google.com/project-id: ${HOST_PROJECT_ID?}  # kpt-set: ${net-host-prj-prod-id}
 spec:
   ipCidrRange: 10.10.20.0/24
   region: northamerica-northeast1

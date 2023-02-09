@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,13 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: setters
   annotations:
-    config.kubernetes.io/local-config: "true"
+    config.kubernetes.io/local-config: 'true'
 data:
   #############
   # General Settings Values
@@ -25,15 +25,15 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   #############
-  billing-id: "0000000000"
-  org-id: "0000000000"
+  billing-id: '0000000000'
+  org-id: '0000000000'
   lz-folder-id: '0000000000'
   #############
   # Management Project
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard
   management-project-id: management-project-12345
-  management-project-number: "0000000000"
+  management-project-number: '0000000000'
   management-namespace: config-control
   #############
   # Project  IDs

@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +19,10 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: policies-sa
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   displayName: policies-sa
 ---
@@ -31,27 +32,27 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: policies-sa-orgpolicyadmin-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: '123456789012'  # kpt-set: ${org-id}
   role: roles/orgpolicy.policyAdmin
-  member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:policies-sa@${management-project-id}.iam.gserviceaccount.com
+  member: serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: serviceAccount:policies-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: policies-sa-workload-identity-binding
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/project-id: management-project-id  # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
   resourceRef:
     name: policies-sa
@@ -60,7 +61,7 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-policies]
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies]  # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-policies]
 ---
 # K8S namespace
 apiVersion: v1
@@ -68,7 +69,7 @@ kind: Namespace
 metadata:
   name: policies
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 ---
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
@@ -77,6 +78,6 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: policies
   annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
+    cnrm.cloud.google.com/ignore-clusterless: 'true'
 spec:
-  googleServiceAccount: policies-sa@management-project-id.iam.gserviceaccount.com # kpt-set: policies-sa@${management-project-id}.iam.gserviceaccount.com
+  googleServiceAccount: policies-sa@management-project-id.iam.gserviceaccount.com  # kpt-set: policies-sa@${management-project-id}.iam.gserviceaccount.com

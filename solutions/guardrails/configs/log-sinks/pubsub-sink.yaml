@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +15,19 @@
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: 
+metadata:
   name: pubsub-logsink
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: pubsub.cnrm.cloud.google.com/namespaces/guardrails/PubSubTopic/logginglogsink-org # kpt-set: pubsub.cnrm.cloud.google.com/namespaces/${management-namespace}/PubSubTopic/logginglogsink-org,resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
+    config.kubernetes.io/depends-on: pubsub.cnrm.cloud.google.com/namespaces/guardrails/PubSubTopic/logginglogsink-org  # kpt-set: pubsub.cnrm.cloud.google.com/namespaces/${management-namespace}/PubSubTopic/logginglogsink-org,resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   destination:
     pubSubTopicRef:
       name: logginglogsink-org
-      namespace: guardrails # kpt-set: ${management-namespace}
+      namespace: guardrails  # kpt-set: ${management-namespace}
   includeChildren: true
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 #########
 # PubSub Instance
@@ -34,19 +35,19 @@ apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:
   name: logginglogsink-org
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${guardrails-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id  # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: pubsub-sink-writer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/pubsub-logsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/pubsub-logsink
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/pubsub-logsink  # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/pubsub-logsink
 spec:
   resourceRef:
     apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
@@ -55,6 +56,6 @@ spec:
   bindings:
     - role: roles/pubsub.editor
       members:
-        - memberFrom: 
-            logSinkRef: 
+        - memberFrom:
+            logSinkRef:
               name: pubsub-logsink

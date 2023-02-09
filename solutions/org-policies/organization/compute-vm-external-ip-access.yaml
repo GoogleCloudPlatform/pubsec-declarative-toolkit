@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,19 +26,18 @@
 # in the form: projects/PROJECT_ID/zones/ZONE/instances/INSTANCE
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: compute-vm-external-ip-access
   namespace: policies
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrail-enforced: guardrail-09
 spec:
-  constraint: "constraints/compute.vmExternalIpAccess"
+  constraint: constraints/compute.vmExternalIpAccess
   listPolicy:
     deny:
       all: true
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

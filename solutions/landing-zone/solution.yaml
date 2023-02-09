@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,54 +17,54 @@ kind: Config
 metadata:
   name: kcc-landing-zone
   annotations:
-    config.kubernetes.io/local-config: "true"
+    config.kubernetes.io/local-config: 'true'
 deploy:
   stage:
     infra:
       requires:
-        useConfigConnectorSA: "true"
+        useConfigConnectorSA: 'true'
         iam:
-          - role: "roles/resourcemanager.folderAdmin"
+          - role: roles/resourcemanager.folderAdmin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/resourcemanager.projectCreator"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/resourcemanager.projectCreator
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/resourcemanager.projectDeleter"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/resourcemanager.projectDeleter
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/iam.securityAdmin"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/iam.securityAdmin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/orgpolicy.policyAdmin"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/orgpolicy.policyAdmin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/serviceusage.serviceUsageConsumer"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/serviceusage.serviceUsageConsumer
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/billing.user"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/billing.user
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/accesscontextmanager.policyAdmin"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/accesscontextmanager.policyAdmin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/compute.xpnAdmin"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/compute.xpnAdmin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/iam.serviceAccountAdmin"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/iam.serviceAccountAdmin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
-          - role: "roles/logging.admin"
+              level: organization
+              id: org-id  # kpt-set: ${org-id}
+          - role: roles/logging.admin
             resource:
-              level: "organization"
-              id: "org-id" # kpt-set: ${org-id}
+              level: organization
+              id: org-id  # kpt-set: ${org-id}

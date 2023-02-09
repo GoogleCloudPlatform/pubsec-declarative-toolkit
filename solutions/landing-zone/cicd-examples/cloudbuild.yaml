@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,9 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 steps:
-- name: 'gcr.io/config-management-release/nomos'
-  args: ['vet', '--no-api-server-check', '--clusters', '""']
-- name: 'gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.19'
-  args: ['fn', 'render', '.']
+  - name: gcr.io/config-management-release/nomos
+    args: [vet, --no-api-server-check, --clusters, '""']
+  - name: gcr.io/kpt-dev/kpt-gcloud:v1.0.0-beta.19
+    args: [fn, render, .]

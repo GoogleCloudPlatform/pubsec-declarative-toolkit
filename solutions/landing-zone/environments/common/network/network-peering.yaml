@@ -18,16 +18,16 @@
 #   name: common-mgmt-perimeter-peer
 #   namespace: common
 #   annotations:
-#     cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
+#     cnrm.cloud.google.com/project-id: net-perimeter-prj  # kpt-set: ${net-perimeter-prj-common-id}
 #   labels:
 #     resource-group: common
 # spec:
 #   exportCustomRoutes: false
 #   importCustomRoutes: false
 #   networkRef:
-#     name: privperimvpc # Production Host Project Name
+#     name: privperimvpc  # Production Host Project Name
 #   peerNetworkRef:
-#     name: computenetworkpeering-dep2 # Production VPC Name
+#     name: computenetworkpeering-dep2  # Production VPC Name
 # ---
 # apiVersion: compute.cnrm.cloud.google.com/v1beta1
 # kind: ComputeNetworkPeering
@@ -35,16 +35,16 @@
 #   name: common-network-peering
 #   namespace: common
 #   annotations:
-#     cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
+#     cnrm.cloud.google.com/project-id: net-perimeter-prj  # kpt-set: ${net-perimeter-prj-common-id}
 #   labels:
 #     resource-group: common
 # spec:
 #   exportCustomRoutes: false
 #   importCustomRoutes: false
 #   networkRef:
-#     name: privperimvpc # kpt-set: ${net-host-prj-prod-id}
+#     name: privperimvpc  # kpt-set: ${net-host-prj-prod-id}
 #   peerNetworkRef:
-#     name: computenetworkpeering-dep2 # Production VPC Name
+#     name: computenetworkpeering-dep2  # Production VPC Name
 # ---
 # apiVersion: compute.cnrm.cloud.google.com/v1beta1
 # kind: ComputeNetworkPeering
@@ -52,7 +52,7 @@
 #   name: common-prv-prm-peer
 #   namespace: common
 #   annotations:
-#     cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
+#     cnrm.cloud.google.com/project-id: net-perimeter-prj  # kpt-set: ${net-perimeter-prj-common-id}
 #   labels:
 #     resource-group: common
 # spec:
@@ -69,7 +69,7 @@
 #   name: public-networkpeerin
 #   namespace: common
 #   annotations:
-#     cnrm.cloud.google.com/project-id: net-perimeter-prj # kpt-set: ${net-perimeter-prj-common-id}
+#     cnrm.cloud.google.com/project-id: net-perimeter-prj  # kpt-set: ${net-perimeter-prj-common-id}
 #   labels:
 #     resource-group: common
 # spec:

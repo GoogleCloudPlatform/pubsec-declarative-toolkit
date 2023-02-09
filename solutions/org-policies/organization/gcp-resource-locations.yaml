@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,21 +24,20 @@
 # This list constraint defines the set of locations where location-based GCP resources can be created.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
   name: gcp-restrict-resource-locations
   namespace: policies
   labels:
-    guardrail: "true"
+    guardrail: 'true'
     guardrails-enforced: guardrail-05
 spec:
-  constraint: "constraints/gcp.resourceLocations"
+  constraint: constraints/gcp.resourceLocations
   listPolicy:
     allow:
       values:
-        - "in:northamerica-northeast1-locations"
-        - "in:northamerica-northeast2-locations"
+        - in:northamerica-northeast1-locations
+        - in:northamerica-northeast2-locations
   organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

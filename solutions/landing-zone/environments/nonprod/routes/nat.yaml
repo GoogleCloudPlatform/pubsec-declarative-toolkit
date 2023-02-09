@@ -18,13 +18,13 @@
 #   name: nonprod-nat
 #   namespace: config-control
 #   annotations:
-#     cnrm.cloud.google.com/project-id: net-host-prj-nonprod-12348 # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: net-host-prj-nonprod-12348  # kpt-set: ${net-host-prj-nonprod-id}
 # spec:
 #   region: northamerica-northeast1
 #   routerRef:
 #     name: nonprod-nat-router
 #   natIpAllocateOption: AUTO_ONLY
-#   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS # ALL_SUBNETWORKS_ALL_IP_RANGES
+#   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS  # ALL_SUBNETWORKS_ALL_IP_RANGES
 #   subnetwork:
 #   - sourceIpRangesToNat:
 #       - ALL_IP_RANGES
@@ -37,7 +37,7 @@
 #   name: nonprod-nat-router
 #   namespace: config-control
 #   annotations:
-#     cnrm.cloud.google.com/project-id: net-host-prj-nonprod-12348 # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: net-host-prj-nonprod-12348  # kpt-set: ${net-host-prj-nonprod-id}
 # spec:
 #   description: Non Prod NAT Router
 #   region: northamerica-northeast1

@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,53 +17,53 @@ apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
   name: storage-logsink
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/0000000000-logginglogsink-dpt # kpt-set: storage.cnrm.cloud.google.com/namespaces/${management-namespace}/StorageBucket/${org-id}-logginglogsink-${department-code},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${guardrails-project-id}
+    config.kubernetes.io/depends-on: storage.cnrm.cloud.google.com/namespaces/guardrails/StorageBucket/0000000000-logginglogsink-dpt  # kpt-set: storage.cnrm.cloud.google.com/namespaces/${management-namespace}/StorageBucket/${org-id}-logginglogsink-${department-code},resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/${guardrails-project-id}
 spec:
   destination:
     storageBucketRef:
       # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-      name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
-      namespace: guardrails # kpt-set: ${management-namespace}
+      name: 0000000000-logginglogsink-goc  # kpt-set: ${org-id}-logginglogsink-${department-code}
+      namespace: guardrails  # kpt-set: ${management-namespace}
   includeChildren: true
   filter: logName:cloudaudit.googleapis.com
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}
 ---
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
 metadata:
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
-  namespace: config-control # kpt-set: ${management-namespace}
+  name: 0000000000-logginglogsink-goc  # kpt-set: ${org-id}-logginglogsink-${department-code}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/force-destroy: "true"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${guardrails-project-id}
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
+    cnrm.cloud.google.com/force-destroy: 'true'
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${guardrails-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/config-control/Project/guardrails-project-id  # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${management-namespace}/Project/${guardrails-project-id}
 spec:
   location: northamerica-northeast1
   storageClass: REGIONAL
   uniformBucketLevelAccess: true
-  publicAccessPrevention: "enforced"
+  publicAccessPrevention: enforced
 ---
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: 
+metadata:
   name: storage-sink-writer
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/storage-logsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/storage-logsink
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/config-control/LoggingLogSink/storage-logsink  # kpt-set: logging.cnrm.cloud.google.com/namespaces/${management-namespace}/LoggingLogSink/storage-logsink
 spec:
   resourceRef:
     apiVersion: storage.cnrm.cloud.google.com/v1beta1
     kind: StorageBucket
-    name: 0000000000-logginglogsink-goc # kpt-set: ${org-id}-logginglogsink-${department-code}
+    name: 0000000000-logginglogsink-goc  # kpt-set: ${org-id}-logginglogsink-${department-code}
   bindings:
     - role: roles/storage.objectCreator
       members:
-        - memberFrom: 
-            logSinkRef: 
+        - memberFrom:
+            logSinkRef:
               name: storage-logsink

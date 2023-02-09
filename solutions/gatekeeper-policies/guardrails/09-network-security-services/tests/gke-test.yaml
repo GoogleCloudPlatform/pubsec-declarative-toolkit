@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,40 +12,39 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
   name: sandbox
   annotations:
-    config.kubernetes.io/local-config: 'true'    
+    config.kubernetes.io/local-config: 'true'
 spec:
-  description: dev-cluster # kpt-set: ${cluster-description}
+  description: dev-cluster  # kpt-set: ${cluster-description}
   enableBinaryAuthorization: true
   enableIntranodeVisibility: true
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
-    clusterSecondaryRangeName: clusterrange # kpt-set: ${gke-pod-range-name}
-    servicesSecondaryRangeName: servicesrange # kpt-set: ${gke-services-range-name}
-  location: northamerica-northeast1 # kpt-set: ${region}
+    clusterSecondaryRangeName: clusterrange  # kpt-set: ${gke-pod-range-name}
+    servicesSecondaryRangeName: servicesrange  # kpt-set: ${gke-services-range-name}
+  location: northamerica-northeast1  # kpt-set: ${region}
   maintenancePolicy:
     dailyMaintenanceWindow:
       startTime: 01:00
   masterAuthorizedNetworksConfig:
-    cidrBlocks: # kpt-set: ${auth-network}
+    cidrBlocks:  # kpt-set: ${auth-network}
       - cidrBlock: 0.0.0.0/32
         displayName: private-net
   networkPolicy:
     enabled: true
   networkRef:
-    name: gke-net # kpt-set: ${network-name}
+    name: gke-net  # kpt-set: ${network-name}
   networkingMode: VPC_NATIVE
   notificationConfig:
     pubsub:
       enabled: true
       topicRef:
-        name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
+        name: sandbox-pubsub  # kpt-set: ${cluster-name}-pubsub
   resourceUsageExportConfig:
     bigqueryDestination:
       datasetId: gkemetering

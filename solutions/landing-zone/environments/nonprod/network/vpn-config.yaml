@@ -19,7 +19,7 @@
 #   namespace: nonprod
 #   annotations:
 #     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}"  # kpt-set: ${net-host-prj-nonprod-id}
 #   labels:
 #     resource-group: nonprod
 # spec:
@@ -35,7 +35,7 @@
 #   namespace: nonprod
 #   annotations:
 #     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}"  # kpt-set: ${net-host-prj-nonprod-id}
 #   labels:
 #     label-one: "value-one"
 # spec:
@@ -52,7 +52,7 @@
 #   namespace: nonprod
 #   annotations:
 #     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}"  # kpt-set: ${net-host-prj-nonprod-id}
 #   labels:
 #     resource-group: nonprod
 # spec:
@@ -77,7 +77,7 @@
 #   namespace: nonprod
 #   annotations:
 #     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}"  # kpt-set: ${net-host-prj-nonprod-id}
 #   labels:
 #     resource-group: nonprod
 # spec:
@@ -95,7 +95,7 @@
 #   namespace: nonprod
 #   annotations:
 #     # Replace ${HOST_PROJECT_ID?} with the ID of a Shared VPC host project to associate.
-#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}" # kpt-set: ${net-host-prj-nonprod-id}
+#     cnrm.cloud.google.com/project-id: "${HOST_PROJECT_ID?}"  # kpt-set: ${net-host-prj-nonprod-id}
 #   labels:
 #     resource-group: nonprod
 # spec:
@@ -108,4 +108,4 @@
 #   routerRef:
 #     name: computerouterpeer-dep
 #   routerInterfaceRef:
-#     name: nonprod-router-int 
+#     name: nonprod-router-int

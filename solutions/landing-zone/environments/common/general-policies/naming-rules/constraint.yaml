@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +14,12 @@
 # limitations under the License.
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: NamingPolicy
-metadata: # kpt-merge: /datalocation
+metadata:  # kpt-merge: /datalocation
   name: namingpolicy
 spec:
   match:
     kinds:
-      - apiGroups:
-          - '*'
-        kinds:
-          - '*'
+      - apiGroups: ['*']
+        kinds: ['*']
   parameters:
     namingConvention: '' # Regex Pattern ie '^[a-z][a-z0-9-]*[a-z0-9]$'

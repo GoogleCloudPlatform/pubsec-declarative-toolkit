@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,11 +25,11 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: project-id-nane1-vpc1-paz-snet # kpt-set: ${project-id}-nane1-vpc1-paz-snet
+  name: project-id-nane1-vpc1-paz-snet  # kpt-set: ${project-id}-nane1-vpc1-paz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: nane1-vpc1-paz-snet
   ipCidrRange: 10.1.1.0/24
@@ -36,7 +37,7 @@ spec:
   description: northamerica-northeast1 PAZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -47,11 +48,11 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: project-id-nane1-vpc1-apprz-snet # kpt-set: ${project-id}-nane1-vpc1-apprz-snet
+  name: project-id-nane1-vpc1-apprz-snet  # kpt-set: ${project-id}-nane1-vpc1-apprz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: nane1-vpc1-apprz-snet
   ipCidrRange: 10.1.2.0/24
@@ -59,7 +60,7 @@ spec:
   description: northamerica-northeast1 APPRZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -70,11 +71,11 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: project-id-nane1-vpc1-datarz-snet # kpt-set: ${project-id}-nane1-vpc1-datarz-snet
+  name: project-id-nane1-vpc1-datarz-snet  # kpt-set: ${project-id}-nane1-vpc1-datarz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: nane1-vpc1-datarz-snet
   ipCidrRange: 10.1.3.0/24
@@ -82,7 +83,7 @@ spec:
   description: northamerica-northeast1 DATARZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -93,11 +94,11 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: project-id-nane2-vpc1-paz-snet # kpt-set: ${project-id}-nane2-vpc1-paz-snet
+  name: project-id-nane2-vpc1-paz-snet  # kpt-set: ${project-id}-nane2-vpc1-paz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: nane2-vpc1-paz-snet
   ipCidrRange: 10.2.1.0/24
@@ -105,7 +106,7 @@ spec:
   description: northamerica-northeast2 PAZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -116,11 +117,11 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: project-id-nane2-vpc1-apprz-snet # kpt-set: ${project-id}-nane2-vpc1-apprz-snet
+  name: project-id-nane2-vpc1-apprz-snet  # kpt-set: ${project-id}-nane2-vpc1-apprz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: nane2-vpc1-apprz-snet
   ipCidrRange: 10.2.2.0/24
@@ -128,7 +129,7 @@ spec:
   description: northamerica-northeast2 APPRZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
@@ -139,11 +140,11 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: project-id-nane2-vpc1-datarz-snet # kpt-set: ${project-id}-nane2-vpc1-datarz-snet
+  name: project-id-nane2-vpc1-datarz-snet  # kpt-set: ${project-id}-nane2-vpc1-datarz-snet
   namespace: networking
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+    cnrm.cloud.google.com/project-id: project-id  # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc  # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: nane2-vpc1-datarz-snet
   ipCidrRange: 10.2.3.0/24
@@ -151,7 +152,7 @@ spec:
   description: northamerica-northeast2 DATARZ subnet
   privateIpGoogleAccess: true
   networkRef:
-    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    name: project-id-global-vpc1-vpc  # kpt-set: ${project-id}-global-vpc1-vpc
   logConfig:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5

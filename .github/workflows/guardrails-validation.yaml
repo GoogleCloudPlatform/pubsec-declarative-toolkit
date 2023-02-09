@@ -1,3 +1,4 @@
+---
 name: guardrails-validation
 on:
   push:
@@ -8,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v1  
+        uses: actions/checkout@v1
       - name: kpt fn render guardrails
         run: |
           docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.19 fn render /app/solutions/guardrails
-      - name: 'Upload Solution Artifact'
+      - name: Upload Solution Artifact
         uses: actions/upload-artifact@v3
         with:
           name: lz-render
@@ -29,5 +30,5 @@ jobs:
       - name: dir check
         run: pwd && ls
       - name: nomos vet guardrails
-        run: |
+        run: |-
           docker run -v $PWD:/guardrails gcr.io/config-management-release/nomos:v1.13.1 nomos vet --no-api-server-check --source-format unstructured --path /guardrails/guardrails/configs

@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,10 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:  # kpt-merge: /setters
   name: setters
 data:
   ######
@@ -23,23 +23,22 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   ######
-  billing-id: "0000000000"
-  org-id: "0000000000"
-  department-code: "goc"
+  billing-id: '0000000000'
+  org-id: '0000000000'
+  department-code: goc
   ######
   # Guardrails Project Values
   # This is the project where the guardrails resources will be deployed into
   # Most likely a new project
   #
-  guardrails-project-id: project-id # Must be globally unique and max 30 characters
+  guardrails-project-id: project-id  # Must be globally unique and max 30 characters
   guardrails-namespace: config-control
   #### Management Project
   # This is the project where the config controller instance lives
   #
   management-project-id: config-controller-project
   management-namespace: config-control
-  management-project-number: "000000000000" # You can can this by running gcloud projects list --format="table(projectNumber)" --filter="management-project-id" <-- replace with management project id
-  
+  management-project-number: '000000000000'  # You can can this by running gcloud projects list --format="table(projectNumber)" --filter="management-project-id" <-- replace with management project id
   ##########
   # Required to be compliant with Guardrails 04 - Enterprise Monitoring
   # Create role-based account to enable enterprise monitoring and visibility
@@ -54,4 +53,3 @@ data:
   billing-data-group: email@email.com
   billing-data-viewer-group: email@email.com
   billing-console-viewer-group: email@email.com
-

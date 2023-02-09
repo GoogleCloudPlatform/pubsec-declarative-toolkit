@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +18,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
 metadata:
   name: org-audit-logs
-  namespace: config-control # kpt-set: ${management-namespace}
+  namespace: config-control  # kpt-set: ${management-namespace}
   annotations:
-    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/guardrails-project-id-service-usage  # kpt-set: iam.cnrm.cloud.google.com/namespaces/${management-namespace}/IAMPolicyMember/${guardrails-project-id}-service-usage
 spec:
   service: allServices
   auditLogConfigs:
@@ -28,4 +29,4 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
+    external: '0000000000'  # kpt-set: ${org-id}

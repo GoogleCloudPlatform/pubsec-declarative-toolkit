@@ -1,3 +1,4 @@
+---
 # Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
 metadata:
@@ -19,11 +19,11 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: 'true'
 tests:
-- name: datalocation
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: example-allowed
-    object: private-gke/gke/containercluster.yaml
-    assertions:
-    - violations: no
+  - name: datalocation
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      - name: example-allowed
+        object: private-gke/gke/containercluster.yaml
+        assertions:
+          - violations: false

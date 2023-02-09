@@ -1,3 +1,4 @@
+---
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +17,14 @@ kind: Config
 metadata:
   name: sandbox-gke
   annotations:
-    config.kubernetes.io/local-config: "true"
+    config.kubernetes.io/local-config: 'true'
 deploy:
   stage:
     infra:
       requires:
-        useConfigConnectorSA: "true"
+        useConfigConnectorSA: 'true'
         iam:
-          - role: "roles/owner"
+          - role: roles/owner
             resource:
-              level: "project"
-              id: "project-id" # kpt-set: ${project-id}
+              level: project
+              id: project-id  # kpt-set: ${project-id}
