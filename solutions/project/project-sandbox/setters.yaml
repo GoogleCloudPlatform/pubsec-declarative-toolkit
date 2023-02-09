@@ -28,6 +28,6 @@ data:
   # user, group or serviceAccount with editor role at project level
   project-editor: "group:team1@example.com"
 
-  # Naming Convention for project-id : <client-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
+  # Naming Convention for project-id : <tenant-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters
   project-id: xxdmu-team1-projectname
