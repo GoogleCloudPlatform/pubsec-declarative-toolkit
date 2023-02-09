@@ -6,8 +6,6 @@ rules:
     min-spaces-from-content: 1
   document-start:
     present: true
-  document-end:
-    present: false
   line-length:
     max: 80
     allow-non-breakable-words: true
