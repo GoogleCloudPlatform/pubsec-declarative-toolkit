@@ -1,13 +1,20 @@
-# Fortigate External IP reservation
-# resource "google_compute_address" "ext_priv" {
-#   count                  = 2
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-#   name                   = "${var.prefix}ip${count.index+1}-untrust-${local.region_short}"
-#   region                 = var.region
-#   address_type           = "INTERNAL"
-#   subnetwork             = data.google_compute_subnetwork.subnets[0].id
-# }
-# Primary
+# IP reservation
+## Fortigate External IP reservation
+## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -24,7 +31,7 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-external-paz-snet
 ---
-# Secondary
+## Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -41,16 +48,8 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-external-paz-snet
 ---
-# Fortigate Internal IP reservation
-# resource "google_compute_address" "int_priv" {
-#   count                  = 2
-
-#   name                   = "${var.prefix}ip${count.index+1}-trust-${local.region_short}"
-#   region                 = var.region
-#   address_type           = "INTERNAL"
-#   subnetwork             = data.google_compute_subnetwork.subnets[1].id
-# }
-# Primary
+## Fortigate Internal IP reservation
+## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -67,7 +66,7 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-internal-paz-snet
 ---
-# Secondary
+## Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -84,16 +83,8 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-internal-paz-snet
 ---
-# Fortigate MGMT IP reservation
-# resource "google_compute_address" "mgmt_priv" {
-#   count                  = 2
-
-#   name                   = "${var.prefix}ip${count.index+1}-mgmt-${local.region_short}"
-#   region                 = var.region
-#   address_type           = "INTERNAL"
-#   subnetwork             = data.google_compute_subnetwork.subnets[3].id
-# }
-# Primary
+## Fortigate MGMT IP reservation
+## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -110,7 +101,7 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-mgmt-rz-snet
 ---
-# Secondary
+## Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -127,16 +118,8 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-mgmt-rz-snet
 ---
-# Fortigate Transit IP reservation
-# resource "google_compute_address" "transit_priv" {
-#   count                  = 2
-
-#   name                   = "${var.prefix}ip${count.index+1}-transit-${local.region_short}"
-#   region                 = var.region
-#   address_type           = "INTERNAL"
-#   subnetwork             = data.google_compute_subnetwork.subnets[1].id
-# }
-# Primary
+## Fortigate Transit IP reservation
+## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -153,7 +136,7 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-transit-paz-snet
 ---
-# Secondary
+## Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -170,13 +153,7 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-transit-paz-snet
 ---
-# Internal Load Balancer IP Reservation
-# resource "google_compute_address" "ilb" {
-#   name                   = "${var.prefix}ip-ilb-trust-${local.region_short}"
-#   region                 = var.region
-#   address_type           = "INTERNAL"
-#   subnetwork             = data.google_compute_subnetwork.subnets[1].id
-# }
+## Internal Load Balancer IP Reservation
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
@@ -192,7 +169,7 @@ spec:
   subnetworkRef:
     name: perimeter-nane1-internal-paz-snet
 ---
-# Internal Load Balancer - explicit proxy - IP Reservation
+## Internal Load Balancer - explicit proxy - IP Reservation
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:

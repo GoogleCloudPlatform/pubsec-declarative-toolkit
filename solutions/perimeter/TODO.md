@@ -16,29 +16,43 @@
 
 - &#9745; explicit proxy - required for apprz and datarz workloads
 
-- &#9744; ERROR - GCP SDN connector not working
-    ```
-    # debug logs from fortigate
-    GCP guest environment update
-    GCP update done
-    In HA primary state
-    gcpd config not found.
-    gcpd curl error:28
-    gcpd sdn connector gcp get zones list failed
-    gcpd reap child pid: 3953
-    exec pgcpd sdn connector gcp prepare to update
-    gcpd get token
-    gcpd metadata url: http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token
-    gcpd metadata result:200
-    Token expires in: 2095 seconds
-    gcpd metadata url: http://169.254.169.254/computeMetadata/v1/project/project-id
-    gcpd metadata result:200
-    gcpd got project id from metadata: dldmu-dl-perimeter2
-    gcpd sdn connector gcp start updating
-    gcpd sdn connector gcp got empty project list, trying sdn update from metadata project: dldmu-dl-perimeter2
+- &#9744; GCP SDN connector not working. The connection is initiated from the fortigate mgmt interface. It requires access to the Google API public endpoint. The mgmt VPC has no route to the internet in order to meet security controls. 
+One option could be to :
+    - create a PSC targetting "all-apis" on the internal VPC
+    - create a dns zone for googleapis.com with a wildcard record that forwards the traffic to the PSC
+    - establish VPC peering between mgmt and internal VPC
+    - add a route for 0.0.0.0/0 on the mgmt VPC
+    - create firewall rule allowing access from fortigate SA to PSC
+    
+    Once functionnal, Fortigate administrators have to add each project for which they want to see dynamic objects created to this section.
+    ```fortios
+      config system sdn-connector
+          edit "gcp"
+              set type gcp
+              set ha-status enable
+              config gcp-project-list
+                  edit "project-id1"
+                  next
+                  edit "project-id2"
+                  next
+              end
+          next
+      end
     ```
 - &#9744; Fortigate HA is not synchronising secondary ip of interfaces. Meanwhile, secondary ip have to be configured on both fortigates.
-
+config secondaryip
+            edit 1
+                set ip 172.31.201.30 255.255.255.255
+                set allowaccess probe-response
+            next
+            edit 2
+                set ip 172.31.201.35 255.255.255.255
+                set allowaccess probe-response
+            next
+        end
+  VIP ilbhc
+  service probe
+  policy ilbhc
 
 ## KPT Setters :
 - &#9745; fortigate images (primary and secondary,, in case you want to run your primary with a license and the secondary with PAY-AS-YOU-GO)

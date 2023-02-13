@@ -1,5 +1,19 @@
-## Active Passive Cluster - Secondary Node
----
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Active Passive Cluster - Secondary Node
+## Compute Instance
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeInstance
 metadata:
@@ -172,12 +186,12 @@ spec:
           set http-probe-value OK
       end
       config system interface
-        # AC-17(100) - allowaccess for managing the fortigate using SSH and HTTPS is only permitted on port4 (mgmt)
-        edit port1
+          # AC-17(100) - allowaccess for managing the fortigate using SSH and HTTPS is only permitted on port4 (mgmt)
+          edit port1
               set description "external"
+              unset allowaccess
               set mode static
               set ip 172.31.200.11/32
-              unset allowaccess
           next
           edit port2
               set description "internal"
@@ -186,15 +200,9 @@ spec:
               set ip 172.31.201.11/32
               set explicit-web-proxy enable
               set secondary-IP enable
-              # IP from internal load balancer
               config secondaryip
                   edit 1
-                      set ip 172.31.201.30 255.255.255.255
-                      set allowaccess probe-response
-                  next
-                  edit 2
                       set ip 172.31.201.35 255.255.255.255
-                      set allowaccess probe-response
                   next
               end
           next
@@ -206,14 +214,16 @@ spec:
           next
           edit "port4"
               set description "management"
-              set mode static
+              # AC-17(3) - HTTPS and SSH management access is only enabled on the mgmt interface
               set allowaccess ping https ssh fgfm
+              set mode static
               set ip 172.31.202.11/32
           next
           edit "probe"
               set vdom "root"
-              set ip 169.254.255.100 255.255.255.255
+              set description "health check probe"
               set allowaccess probe-response
+              set ip 169.254.255.100 255.255.255.255
               set type loopback
           next
       end
@@ -256,4 +266,3 @@ spec:
           set http-incoming-port 8080
           set https-incoming-port 8080
       end
----

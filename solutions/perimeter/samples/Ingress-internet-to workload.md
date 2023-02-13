@@ -44,25 +44,42 @@
 
 ## Fortigate
 
-1. Port1 IP with probe-response access
+1. Address object for external load balancer health check
     ```fortios
-    config system interface
-        edit "port1"
-            set secondary-IP enable
-            config secondaryip
-                edit 0
-                    # update with external ip from reservation
-                    set ip 35.203.63.54 255.255.255.255
-                    set allowaccess probe-response
-                next
-            end
+    config firewall vip
+        edit "project1-workload1-healthcheck-vip"
+            # update with external ip from reservation
+            set extip 35.203.63.54
+            # fortigate probe interface ip
+            set mappedip "169.254.255.100"
+            set extintf "port1"
+            set portforward enable
+            set extport 8008
+            set mappedport 8008
         next
     end
     ```
-2. VIP object
+
+2. Policy for external load balancer health check
+    ```fortios
+    config firewall policy
+        edit 0
+            set name "project1-workload1-healthcheck"
+            set srcintf "port1"
+            set dstintf "probe"
+            set action accept
+            set srcaddr "all"
+            set dstaddr "project1-workload1-healthcheck-vip"
+            set schedule "always"
+            set service "PROBE"
+            set comment "This policy forwards external load balancer health check to the probe loopback interface"
+        next
+    end
+    ```
+3. VIP object for workload1
     ```fortios
     config firewall vip
-        edit "project1-workload1"
+        edit "project1-workload1-vip"
             # update with external ip from reservation
             set extip 35.203.63.54
             # update with workload1 ip
@@ -84,7 +101,7 @@
             set action accept
             set srcaddr "all"
             # update with proper address object
-            set dstaddr "project1-workload1"
+            set dstaddr "project1-workload1-vip"
             set schedule "always"
             set service "HTTP"
             set utm-status enable

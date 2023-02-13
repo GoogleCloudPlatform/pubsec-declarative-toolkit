@@ -5,11 +5,11 @@
 1. Address Object for the spoke workload1 and for the common service - Could be available using the GCP SDN connector
     ```fortios
     config firewall address
-        edit "workload1"
+        edit "project1-workload1-addr"
             set associated-interface "port2"
             set subnet 10.1.1.2 255.255.255.255
         next
-        edit "service1"
+        edit "service1-addr"
             set associated-interface "port2"
             set subnet 10.20.1.2 255.255.255.255
         next
@@ -24,9 +24,9 @@
             set dstintf "port2"
             set action accept
             # update with proper address object
-            set srcaddr "workload1"
+            set srcaddr "project1-workload1-addr"
             # update with proper address object
-            set dstaddr "service1"
+            set dstaddr "service1-addr"
             set schedule "always"
             set service "HTTP"
             set utm-status enable

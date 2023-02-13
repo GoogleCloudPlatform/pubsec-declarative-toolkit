@@ -5,8 +5,9 @@
 1. Address Object for the spoke resource - Could be available using the GCP SDN connector
     ```fortios
     config firewall address
-        edit "workload1"
+        edit "project1-workload1-addr"
             set associated-interface "port2"
+            # update with workload1 ip
             set subnet 10.1.1.2 255.255.255.255
         next
     end
@@ -63,7 +64,7 @@
               set dstintf "port1"
               set action accept
               # update with proper address object
-              set srcaddr "workload1"
+              set srcaddr "project1-workload1-addr"
               set dstaddr "all"
               set schedule "always"
               set service "HTTP" "HTTPS"
@@ -80,11 +81,11 @@
     - SPOKE APPRZ and DATARZ resources - proxy connection
       ```fortios
       config firewall proxy-policy
-          edit 1
+          edit 0
               set name "allow workload1 to internet"
               set proxy explicit-web
               set dstintf "port1"
-              set srcaddr "workload1"
+              set srcaddr "project1-workload1-addr"
               set dstaddr "all"
               set service "webproxy"
               set action accept
