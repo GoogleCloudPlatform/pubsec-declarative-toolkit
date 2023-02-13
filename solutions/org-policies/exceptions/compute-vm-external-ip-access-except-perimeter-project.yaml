@@ -41,6 +41,6 @@ spec:
   listPolicy:
     allow:
       value: # kpt-set: ${allowed-vm-external-ip-access}
-        - projects/PROJECT_ID
+        - projects/PROJECT_ID/zones/ZONE/instances/INSTANCE
   projectRef:
     external: "0000000000" # kpt-set: ${perimeter-project-id}
