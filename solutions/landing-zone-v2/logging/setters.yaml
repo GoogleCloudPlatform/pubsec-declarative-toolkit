@@ -1,0 +1,40 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  #############
+  # General Settings Values
+  #
+  # The following are Settings for the environment to bootstrap with
+  #
+  #############
+  billing-id: "0000000000"
+  org-id: "0000000000"
+  #############
+  # Audit Project ID
+  # The audit project should exist prior to deploying the logging solution package
+  management-project-id: management-project-12345
+  audit-prj-id: audit-prj-id-12345
+  #############
+  # Groups
+  # Permissions will be assigned to the specified group email
+  # TODO Add permissions for BigQuery Data Viewer and BigQuery JobUser
+  bigquery-data-viewer: group@domain.com
+  bigquery-job-user: group@domain.com
