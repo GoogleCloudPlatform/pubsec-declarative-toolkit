@@ -29,9 +29,14 @@ spec:
   scheduling:
     automaticRestart: true
     onHostMaintenance: MIGRATE
+  
+  # Shielded VM
+  # https://cloud.google.com/shielded-vm/
   shieldedInstanceConfig:
     enableIntegrityMonitoring: true
+    enableSecureBoot: true
     enableVtpm: true
+  
   # AC-2(A) service account is attached to Google Compute Engine
   serviceAccount:
     serviceAccountRef:
@@ -52,6 +57,7 @@ spec:
       type: pd-standard
       # project/family
       # gcloud compute images list
+      # Or you can use a CIS hardened image https://console.cloud.google.com/launcher/details/cis-public/cis-windows-server-2022-level-1?utm_source=website
       sourceImageRef:
         external: windows-cloud/windows-2022
  
