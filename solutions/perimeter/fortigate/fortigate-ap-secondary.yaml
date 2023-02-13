@@ -31,6 +31,7 @@ spec:
     automaticRestart: true
     onHostMaintenance: MIGRATE
     preemptible: false
+
   # AC-2(A) - service account is attached to Google Compute Engine
   serviceAccount:
     serviceAccountRef:

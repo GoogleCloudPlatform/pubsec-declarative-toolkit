@@ -32,8 +32,11 @@ data:
   # a list of allowed trusted image projects, see YAML file for more info:
   # organization/compute-trusted-image-projects.yaml
   # this setting can be left as default or modified as required
+  # fortigcp-project-001 and windows-cloud are required for the perimeter project
   allowed-trusted-image-projects: |
     - "projects/cos-cloud"
+    - "projects/fortigcp-project-001"
+    - "projects/windows-cloud"
   # a list of allowed essential contact domains, see YAML file for more info:
   # organization/essentialcontacts-allowed-contact-domains.yaml
   # this setting MUST be changed
@@ -56,4 +59,7 @@ data:
   allowed-vm-can-ip-forward: |
     - "under:projects/MANAGEMENT_PROJECT_ID"
     - "under:projects/PERIMETER_PROJECT_ID"
+  allowed-vm-external-ip-access: |
+    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-a/instances/fgt-primary-instance"
+    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-b/instances/fgt-secondary-instance"
   #############
