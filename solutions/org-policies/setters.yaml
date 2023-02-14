@@ -49,17 +49,12 @@ data:
     - "DIRECTORY_CUSTOMER_ID"
   # a list of allowed projects, folders, networks for VPC peering, see YAML file for more info:
   # organization/compute-restrict-vpc-peering.yaml
-  # this setting MUST be changed to include the management project ID and perimeter project ID
+  # this setting MUST be changed to include the management project ID
   allowed-vpc-peering: |
     - "under:projects/MANAGEMENT_PROJECT_ID"
-    - "under:projects/PERIMETER_PROJECT_ID"
   # a list of allowed projects, folders, networks where VMs can IP forward, see YAML file for more info:
   # organization/compute-vm-can-ip-forward.yaml
-  # this setting MUST be changed to include the management project ID and perimeter project ID
+  # this setting MUST be changed to include the management project ID
   allowed-vm-can-ip-forward: |
     - "under:projects/MANAGEMENT_PROJECT_ID"
-    - "under:projects/PERIMETER_PROJECT_ID"
-  allowed-vm-external-ip-access: |
-    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-a/instances/fgt-primary-instance"
-    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-b/instances/fgt-secondary-instance"
   #############

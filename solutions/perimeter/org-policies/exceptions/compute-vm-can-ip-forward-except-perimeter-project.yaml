@@ -18,33 +18,30 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
+# Constraint: constraints/compute.vmCanIpForward
 #
-# This list constraint defines 
-# the set of load balancer types which can be created for an organization, 
-# folder, or project. Every load balancer type to be allowed or denied must be listed explicitly.
+# This list constraint defines the set of VM instances that can enable IP forwarding.
+# By default, any VM can enable IP forwarding in any virtual network. 
+# VM instances must be specified in the form: 
+# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID, 
+# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
 #
-# Options: INTERNAL, EXTERNAL, INTERNAL_TCP_UDP, INTERNAL_HTTP_HTTPS, EXTERNAL_NETWORK_TCP_UDP
-# EXTERNAL_TCP_PROXY, EXTERNAL_SSL_PROXY, EXTERNAL_HTTP_HTTPS, EXTERNAL_MANAGED_HTTP_HTTPS
-#
-# This exception is for the External load balancers in the perimeter project.
+# This exception is to allow the Fortigate VM in the perimeter project to forward traffic.
 #
 #########
 
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-restrict-load-balancer-creation-for-types-except-perimeter-project
+  name: compute-vm-can-ip-forward-except-perimeter-project
   namespace: policies
   labels:
-    guardrail: "true"
-    guardrail-enforced: guardrail-06
+    guardrail: "false"
 spec:
-  constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
+  constraint: "constraints/compute.vmCanIpForward"
   listPolicy:
     allow:
-      values:
-        - INTERNAL
-        - EXTERNAL
+      values: # kpt-set: ${allowed-vm-external-ip-access}
+        - "projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME"
   projectRef:
     external: "0000000000" # kpt-set: ${perimeter-project-id}

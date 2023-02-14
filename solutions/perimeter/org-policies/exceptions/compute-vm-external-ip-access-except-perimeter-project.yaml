@@ -24,7 +24,7 @@
 # The allowed/denied list of VM instances must be identified by the VM instance name,
 # in the form: projects/PROJECT_ID/zones/ZONE/instances/INSTANCE
 #
-# This exception is for the Fortigate VM in the perimeter project.
+# This exception is to allow the Fortigate VM in the perimeter project to have external IP addresses.
 #
 #########
 
@@ -41,6 +41,6 @@ spec:
   listPolicy:
     allow:
       value: # kpt-set: ${allowed-vm-external-ip-access}
-        - projects/PROJECT_ID/zones/ZONE/instances/INSTANCE
+        - "projects/PROJECT_ID/zones/ZONE/instances/INSTANCE"
   projectRef:
     external: "0000000000" # kpt-set: ${perimeter-project-id}

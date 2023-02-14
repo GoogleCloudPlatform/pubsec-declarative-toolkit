@@ -18,28 +18,33 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.disableSerialPortAccess
+# Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
 #
-# This boolean constraint disables serial port access to
-# Compute Engine VMs belonging to the organization, project,
-# or folder where this constraint is set to True.
+# This list constraint defines 
+# the set of load balancer types which can be created for an organization, 
+# folder, or project. Every load balancer type to be allowed or denied must be listed explicitly.
 #
-# This exception is for the fortigates VM in the perimeter project.
-# Serial console access is critical for troubleshooting the appliance.
+# Options: INTERNAL, EXTERNAL, INTERNAL_TCP_UDP, INTERNAL_HTTP_HTTPS, EXTERNAL_NETWORK_TCP_UDP
+# EXTERNAL_TCP_PROXY, EXTERNAL_SSL_PROXY, EXTERNAL_HTTP_HTTPS, EXTERNAL_MANAGED_HTTP_HTTPS
+#
+# This exception is to allow Internal and External load balancers in the perimeter project.
 #
 #########
 
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-disable-serial-port-access
+  name: compute-restrict-load-balancer-creation-for-types-except-perimeter-project
   namespace: policies
   labels:
     guardrail: "true"
-    guardrail-enforced: guardrail-02
+    guardrail-enforced: guardrail-06
 spec:
-  constraint: "constraints/compute.disableSerialPortAccess"
-  booleanPolicy:
-    enforced: false
+  constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
+  listPolicy:
+    allow:
+      values:
+        - in:INTERNAL
+        - in:EXTERNAL
   projectRef:
     external: "0000000000" # kpt-set: ${perimeter-project-id}
