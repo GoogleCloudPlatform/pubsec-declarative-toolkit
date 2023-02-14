@@ -37,20 +37,6 @@ spec:
       OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
       OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
 ---
-# TODO move or replace in landing-zone-v2/namepsace
-# IAM organization permissions for logging SA
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: logging-sa-org-permissions
-  namespace: config-control
-spec:
-  member: serviceAccount:logging-sa@management-project-12345.iam.gserviceaccount.com # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
-  role: roles/logging.admin
-  resourceRef:
-    kind: Organization
-    external: "0000000000" # kpt-set: ${org-id}
----
 # Organization sink Security logs: Cloud Audit and Access Transparency Logs
 # Destination: BigQuery dataset hosted inside audit project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
