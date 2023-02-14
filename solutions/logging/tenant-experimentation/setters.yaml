@@ -19,17 +19,11 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  #############
-  # General Settings Values
-  #
-  # The following are Settings for the environment to bootstrap with
-  #
-  #############
-  billing-id: "0000000000"
-  org-id: "0000000000"
+  tenant-name: 'tenant1' # lowercase only
+  tenant-displayname: 'Tenant1'
+  tenant-folderviewer: 'group:tenant1@example.com'
   #############
   # Audit Project ID
-  management-project-id: management-project-12345
   audit-prj-id: audit-prj-id-12345
   #############
   # LoggingLogBucket retention settings
@@ -42,9 +36,3 @@ data:
   # BigQueryDataset table retention setting
   # Dataset retention period of 365 days in milliseconds
   default-table-expiration: 31536000000
-  #############
-  # Groups
-  # Permissions will be assigned to the specified group email
-  # TODO Add permissions for BigQuery Data Viewer and BigQuery JobUser
-  bigquery-data-viewer: group@domain.com
-  bigquery-job-user: group@domain.com

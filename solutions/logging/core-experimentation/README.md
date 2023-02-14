@@ -1,5 +1,5 @@
 # Logging Solution
 
-A package for the logging solution
+A package for the core-experimentation logging solution
 
 ## TODO

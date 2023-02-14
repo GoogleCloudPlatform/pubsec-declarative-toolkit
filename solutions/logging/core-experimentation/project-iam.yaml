@@ -24,7 +24,7 @@ metadata:
 spec:
   resourceRef:
     kind: Project
-    external: audit-prj-id # kpt-set: ${audit-prj-id}
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
   bindings:
     - role: roles/logging.bucketWriter
       members:

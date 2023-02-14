@@ -12,28 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Folder sink for Platform and Component logs of Testing Resources
-# Destination: Cloud Logging bucket hosted inside audit project
+# Folder sink for Platform and Component logs of Tenant Resources
+# Destination: cloud logging bucket inside audit project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
   # TODO
-  # core-platform-component-log-bucket-folder-sink or
-  # platform-component-log-core-bucket-folder-sink
-  name: platform-component-log-bucket-folder-sink
+  # tenant1-platform-component-log-bucket-folder-sink or
+  # platform-component-log-tenant1-bucket-folder-sink
+  name: platform-component-log-tenant1-bucket-folder-sink # kpt-set: platform-component-log-${tenant-name}-bucket-folder-sink
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
 spec:
   folderRef:
-    name: testing
+    name: tenants.tenant1 # kpt-set: tenants.${tenant-name}
     namespace: hierarchy
   includeChildren: true
   destination:
     loggingLogBucketRef:
-      external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-component-log-bucket
-  description: Folder sink for Platform and Component logs of Testing Resources
-  # No inclusion filter. Includes Platform and Component logs
+      external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/${tenant-name}-platform-component-log-bucket
+  description: Folder sink for Tenant Platform and Component logs # kpt-set: Folder sink for ${tenant-displayname} Platform and Component logs
+  # Includes the following types of logs:
+  # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S)
+  filter: |-
+      LOG_ID("dns.googleapis.com/dns_queries")
+      OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
+      OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
+      OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
+      OR (LOG_ID("requests") AND resource.type="http_load_balancer")
   # Excludes all Security logs: Cloud Audit and Access Transparency Logs
   # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
@@ -46,46 +53,53 @@ spec:
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
       name: exclude-security-logs
 ---
-# Folder sink for Platform and Component logs of Testing Resources
+# Folder sink for Platform and Component logs of Tenant Resources
 # Destination: BigQuery dataset hosted inside audit project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
   # TODO
-  # core-platform-component-log-bucket-folder-sink or
-  # platform-component-log-core-bucket-folder-sink
-  name: platform-component-log-bq-folder-sink
+  # tenant1-platform-component-log-bucket-folder-sink or
+  # platform-component-log-tenant1-bucket-folder-sink
+  name: platform-component-log-tenant1-bq-folder-sink # kpt-set: platform-component-log-${tenant-name}-bq-folder-sink
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   folderRef:
-    name: testing
+    name: tenants.tenant1 # kpt-set: tenants.${tenant-name}
     namespace: hierarchy
   includeChildren: true
   destination:
     bigQueryDatasetRef:
-      name: platformcomponenttestinglogs
+      name: platformcomponenttenant1logs # kpt-set: platformcomponent${tenant-name}logs
       namespace: logging
-  description: Folder sink for Platform and Component logs of Testing Resources
-  # No inclusion filter. Includes Platform and Component logs
+  description: Folder sink for Platform and Component logs of Tenant Resources
+  # Includes the following types of logs:
+  # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S)
+  filter: |-
+      LOG_ID("dns.googleapis.com/dns_queries")
+      OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
+      OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
+      OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
+      OR (LOG_ID("requests") AND resource.type="http_load_balancer")
   # Excludes all Security logs: Cloud Audit and Access Transparency Logs
   # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
-    - description: Exclude Security Logs
+    - description: Exclude cloud audit logs
       disabled: false
       filter: |-
         LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
         OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
         OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
-      name: exclude-security-logs
+      name: exclude-audit-logs
 ---
-# BigQuery Instance for Platform and Component logs of Testing Resources
+# Big Query Instance for Tenant Platform and Component logs
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata:
-  name: platformcomponenttestinglogs
+  name: platformcomponenttenant1logs # kpt-set: platformcomponent${tenant-name}logs
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
@@ -93,6 +107,6 @@ spec:
   location: northamerica-northeast1
   projectRef:
     external: audit-prj-id # kpt-set: ${audit-prj-id}
-  # Dataset retention period of 365 days in milliseconds
+  # Dataset retention period of 365 days
   defaultTableExpirationMs: 31536000000 # kpt-set: ${default-table-expiration}
-  description: Dataset for Platform and Component logs of Testing resources
+  description: Dataset for tenant1 Platform and Component logs # kpt-set: Dataset for ${tenant-displayname} Platform and Component logs
