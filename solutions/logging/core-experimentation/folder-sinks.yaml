@@ -31,7 +31,7 @@ spec:
       external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-component-log-bucket
   description: Folder sink for Platform and Component logs of Testing Resources
   # No inclusion filter. Includes Platform and Component logs
-  # Excludes all audit logs
+  # Excludes all Security logs: Cloud Audit and Access Transparency Logs
   # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
     - description: Exclude Security logs
@@ -41,7 +41,7 @@ spec:
         OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
         OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
-      name: exclude-audit-logs
+      name: exclude-security-logs
 ---
 # Folder sink for Platform and Component logs of Testing Resources
 # Destination: BigQuery dataset hosted inside audit project
@@ -63,17 +63,17 @@ spec:
       namespace: logging
   description: Folder sink for Platform and Component logs of Testing Resources
   # No inclusion filter. Includes Platform and Component logs
-  # Excludes all audit logs
+  # Excludes all Security logs: Cloud Audit and Access Transparency Logs
   # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
-    - description: Exclude Cloud Audit Logs
+    - description: Exclude Security Logs
       disabled: false
       filter: |-
         LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
         OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
         OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
-      name: exclude-audit-logs
+      name: exclude-security-logs
 ---
 # BigQuery Instance for Platform and Component logs of Testing Resources
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
