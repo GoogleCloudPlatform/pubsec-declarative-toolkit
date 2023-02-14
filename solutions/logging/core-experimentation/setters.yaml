@@ -29,9 +29,15 @@ data:
   org-id: "0000000000"
   #############
   # Audit Project ID
-  # The audit project should exist prior to deploying the logging solution package
   management-project-id: management-project-12345
   audit-prj-id: audit-prj-id-12345
+  #############
+  # LoggingLogBucket retention settings
+  # Set the number of days to retain logs in Cloud Logging buckets
+  # Set the lock mechanism on the bucket to: true or false
+  # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
+  retention-in-days: 1
+  retention-locking-policy: false 
   #############
   # Groups
   # Permissions will be assigned to the specified group email
