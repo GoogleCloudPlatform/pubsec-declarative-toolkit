@@ -28,7 +28,7 @@ spec:
   includeChildren: true
   destination:
     loggingLogBucketRef:
-      external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-log-bucket
+      external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-component-log-bucket
   description: Folder sink for Platform and Component logs of Testing Resources
   # No inclusion filter. Includes Platform and Component logs
   # Excludes all audit logs

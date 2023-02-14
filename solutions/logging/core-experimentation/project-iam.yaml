@@ -38,7 +38,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: platform-and-component-log-bucket-permissions
+  name: platform-component-log-bucket-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
