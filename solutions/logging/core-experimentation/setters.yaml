@@ -37,7 +37,11 @@ data:
   # Set the lock mechanism on the bucket to: true or false
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
   retention-in-days: 1
-  retention-locking-policy: false 
+  retention-locking-policy: false
+  #############
+  # BigQueryDataset table retention setting
+  # Dataset retention period of 365 days in milliseconds
+  default-table-expiration: 31536000000 
   #############
   # Groups
   # Permissions will be assigned to the specified group email

@@ -1,0 +1,130 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Logs Bucket writer IAM permissions
+# Binds the generated Writer identity from the LoggingLogSink to the audit project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: audit-log-bucket-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-fn
+spec:
+  resourceRef:
+    kind: Project
+    external: audit-prj-id # kpt-set: ${audit-prj-id}
+  bindings:
+    - role: roles/logging.bucketWriter
+      members:
+        - memberFrom:
+            logSinkRef:
+              name: audit-log-bucket-sink
+              namespace: logging
+---
+# Logs Bucket writer IAM permissions
+# Binds the generated Writer identity from the LoggingLogSink to the audit project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: platform-and-component-log-bucket-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-fn
+spec:
+  resourceRef:
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+  bindings:
+    - role: roles/logging.bucketWriter
+      members:
+        - memberFrom:
+            logSinkRef:
+              name: platform-component-log-bucket-folder-sink
+              namespace: logging
+---
+# BigQuery Log Writer IAM permissions
+# Binds the generated Writer identity from the LoggingLogSink to the audit project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: bq-audit-sink-writer-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+spec:
+  resourceRef:
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+  bindings:
+    - role: roles/bigquery.dataOwner
+      members:
+        - memberFrom:
+            logSinkRef:
+              name: audit-log-bq-sink
+              namespace: logging
+---
+# BigQuery Data Viewer
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-audit-sink-log-viewer-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
+spec:
+  member: 'group@domain.com' # kpt-set: ${bigquery-data-viewer}
+  role: roles/bigquery.dataViewer
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+---
+# BigQuery Job User
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-audit-sink-job-user-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
+spec:
+  member: 'group@domain.com' # kpt-set: ${bigquery-job-user}
+  role: roles/bigquery.jobUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+---
+# BigQuery log writer permissions
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: platform-component-log-bq-folder-sink-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn'
+spec:
+  resourceRef:
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+  bindings:
+    - role: roles/bigquery.dataOwner
+      members:
+        - memberFrom:
+            logSinkRef:
+              name: platform-component-log-bq-folder-sink
+              namespace: logging
+---
+# TODO Configure read-only permissions

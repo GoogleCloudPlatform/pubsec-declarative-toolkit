@@ -17,7 +17,7 @@
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: audit-log-org-sink
+  name: audit-log-bucket-sink
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
@@ -28,6 +28,7 @@ spec:
   destination:
     loggingLogBucketRef:
       external: audit-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/audit-log-bucket
+  description: Organization sink for Security Logs
   # Includes only Security logs: Cloud Audit and Access Transparency Logs
   # TODO - Should we include Data Access audit logs
   filter: |-
@@ -36,26 +37,7 @@ spec:
       OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
       OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
 ---
-# Logs Bucket writer IAM permissions
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
-metadata:
-  name: audit-log-bucket-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
-spec:
-  resourceRef:
-    kind: Project
-    external: audit-prj-id # kpt-set: ${audit-prj-id}
-  bindings:
-    - role: roles/logging.bucketWriter
-      members:
-        - memberFrom:
-            logSinkRef:
-              name: audit-log-org-sink
-              namespace: logging
----
+# TODO move or replace in landing-zone-v2/namepsace
 # IAM organization permissions for logging SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -84,7 +66,7 @@ spec:
   includeChildren: true
   destination:
     bigQueryDatasetRef:
-      name: auditlogs
+      name: securitylogs
       namespace: logging
   # Includes only Security logs: Cloud Audit and Access Transparency Logs
   # TODO - Should we include Data Access audit logs
@@ -94,11 +76,11 @@ spec:
       OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
       OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
 ---
-# Big Query Instance
+# Big Query Instance for Security Logs
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata:
-  name: auditlogs
+  name: securitylogs
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
@@ -106,58 +88,6 @@ spec:
   location: northamerica-northeast1
   projectRef:
     external: audit-prj-id # kpt-set: ${audit-prj-id}
-  # Dataset retention period of 365 days
-  defaultTableExpirationMs: 31536000000
+  # Dataset retention period of 365 days in milliseconds
+  defaultTableExpirationMs: 31536000000 # kpt-set: ${default-table-expiration}
   description: Dataset for Security Logs
----
-# BigQuery Log Writer
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
-metadata:
-  name: bq-audit-sink-writer-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
-spec:
-  resourceRef:
-    kind: Project
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
-  bindings:
-    - role: roles/bigquery.dataOwner
-      members:
-        - memberFrom:
-            logSinkRef:
-              name: audit-log-org-bq-sink
-              namespace: logging
----
-# BigQuery Data Viewer
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: bq-audit-sink-log-viewer-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
-spec:
-  member: 'group@domain.com' # kpt-set: ${bigquery-data-viewer}
-  role: roles/bigquery.dataViewer
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
----
-# BigQuery Job User
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: bq-audit-sink-job-user-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
-spec:
-  member: 'group@domain.com' # kpt-set: ${bigquery-job-user}
-  role: roles/bigquery.jobUser
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}

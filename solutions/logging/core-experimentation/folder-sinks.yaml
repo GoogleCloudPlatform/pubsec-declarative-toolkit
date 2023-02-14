@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Folder sink for Platform and Component logs
-# Destination: cloud logging bucket inside audit project
+# Folder sink for Platform and Component logs of Testing Resources
+# Destination: Cloud Logging bucket hosted inside audit project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: platform-component-log-folder-sink
+  name: platform-component-log-bucket-folder-sink
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
@@ -28,12 +28,13 @@ spec:
   includeChildren: true
   destination:
     loggingLogBucketRef:
-      external: logging.googleapis.com/projects/replace/locations/northamerica-northeast1/buckets/nonaudit-platform-log-bucket # TODO configure setters
-  description: Folder sink for Testing resources to cloud log bucket
-  # No inclusion filter. Includes all nonaudit platform logs
+      external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-log-bucket
+  description: Folder sink for Platform and Component logs of Testing Resources
+  # No inclusion filter. Includes Platform and Component logs
   # Excludes all audit logs
+  # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
-    - description: Exclude cloud audit logs
+    - description: Exclude Security logs
       disabled: false
       filter: |-
         LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
@@ -42,33 +43,12 @@ spec:
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
       name: exclude-audit-logs
 ---
-# Logs Bucket writer IAM permissions
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
-metadata:
-  name: nonaudit-platform-testing-log-bucket-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
-spec:
-  resourceRef:
-    kind: Project
-    external: projects/replace # TODO configure setters
-  bindings:
-    - role: roles/logging.bucketWriter
-      members:
-        - memberFrom:
-            logSinkRef:
-              name: nonaudit-platform-testing-log-bucket-folder-sink
-              namespace: logging
----
-# TODO: Should be BigQuery resources be moved to the source-base/landing-zone/hierarchy/Audit/ folder?
-# Folder sink for nonaudit platform logs of resources under the Testing folder
-# Destination: BigQuery dataset inside audit project
+# Folder sink for Platform and Component logs of Testing Resources
+# Destination: BigQuery dataset hosted inside audit project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: nonaudit-platform-testing-log-bq-folder-sink
+  name: platform-component-log-bq-folder-sink
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
@@ -79,10 +59,12 @@ spec:
   includeChildren: true
   destination:
     bigQueryDatasetRef:
-      name: nonauditplatformtestinglogs
+      name: platformcomponenttestinglogs
       namespace: logging
-  # No inclusion filter. Includes all nonaudit platform logs
+  description: Folder sink for Platform and Component logs of Testing Resources
+  # No inclusion filter. Includes Platform and Component logs
   # Excludes all audit logs
+  # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
     - description: Exclude Cloud Audit Logs
       disabled: false
@@ -93,40 +75,18 @@ spec:
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
       name: exclude-audit-logs
 ---
-# Big Query Instance for Testing folder resources non-audit platform logs
+# BigQuery Instance for Platform and Component logs of Testing Resources
 apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
 kind: BigQueryDataset
 metadata:
-  name: nonauditplatformtestinglogs
+  name: platformcomponenttestinglogs
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:
   location: northamerica-northeast1
   projectRef:
-    external: replace # TODO configure setters
-  # Dataset retention period of 365 days
-  defaultTableExpirationMs: 31536000000
-  description: Testing non-audit platform logs
----
-# BigQuery log writer permissions
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
-metadata:
-  name: non-audit-platform-testing-log-sink-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
-spec:
-  resourceRef:
-    kind: Project
-    external: projects/replace # TODO configure setters
-  bindings:
-    - role: roles/bigquery.dataOwner
-      members:
-        - memberFrom:
-            logSinkRef:
-              name: nonaudit-platform-testing-log-bq-folder-sink
-              namespace: logging
----
-# TODO Configure read-only permissions
+    external: audit-prj-id # kpt-set: ${audit-prj-id}
+  # Dataset retention period of 365 days in milliseconds
+  defaultTableExpirationMs: 31536000000 # kpt-set: ${default-table-expiration}
+  description: Dataset for Platform and Component logs of Testing resources
