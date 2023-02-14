@@ -17,7 +17,7 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: audit-log-bucket-permissions
+  name: audit-log-bucket-writer-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
@@ -38,7 +38,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: platform-component-log-bucket-permissions
+  name: platform-component-log-bucket-writer-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
@@ -59,7 +59,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: bq-audit-sink-writer-permissions
+  name: audit-log-bq-data-owner-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
@@ -75,39 +75,8 @@ spec:
               name: audit-log-bq-sink
               namespace: logging
 ---
-# BigQuery Data Viewer
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: bq-audit-sink-log-viewer-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
-spec:
-  member: 'group@domain.com' # kpt-set: ${bigquery-data-viewer}
-  role: roles/bigquery.dataViewer
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
----
-# BigQuery Job User
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: bq-audit-sink-job-user-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
-spec:
-  member: 'group@domain.com' # kpt-set: ${bigquery-job-user}
-  role: roles/bigquery.jobUser
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
----
-# BigQuery log writer permissions
+# BigQuery Log Writer IAM permissions
+# Binds the generated Writer identity from the LoggingLogSink to the audit project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -127,4 +96,42 @@ spec:
               name: platform-component-log-bq-folder-sink
               namespace: logging
 ---
-# TODO Configure read-only permissions
+# BigQuery Data Viewer
+# BigQuery Datasets and its tables are mutable and its data must be protected
+# This permission can help protect the BigQuery security log dataset and its tables
+# BigQuery Datasets used to store security logs should have restricted access 
+# Binds the configured group to the security log dataset hosted in the audit project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: audit-log-bq-data-viewer-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
+spec:
+  member: 'group@domain.com' # kpt-set: ${bigquery-data-viewer}
+  role: roles/bigquery.dataViewer
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+---
+# BigQuery Job User
+# BigQuery Datasets and its tables are mutable and its data must be protected
+# This permission can help protect the BigQuery security log dataset and its tables
+# BigQuery Datasets used to store security logs should have restricted access 
+# Binds the configured group to the security log dataset hosted in the audit project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: audit-log-bq-job-user-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
+spec:
+  member: 'group@domain.com' # kpt-set: ${bigquery-job-user}
+  role: roles/bigquery.jobUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
