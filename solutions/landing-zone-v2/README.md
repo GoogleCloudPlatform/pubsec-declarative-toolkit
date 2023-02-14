@@ -25,7 +25,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 # Folder Structure
 ## The experimentation landing zone contains the following folder structure.
 
-![img](img/folders-sandbox.png)
+![img](img/folders-experimentation.png)
 
 ## The Dev, UAT and Prod landing zones contain the following folder structure.
 
