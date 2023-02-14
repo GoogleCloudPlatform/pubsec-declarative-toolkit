@@ -20,5 +20,4 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   client-name: 'client1' # lowercase only
-  client-displayname: 'client1'
   client-folderviewer: 'group:client1@example.com'
