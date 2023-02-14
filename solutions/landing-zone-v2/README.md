@@ -14,7 +14,7 @@ You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/
 
 # Organization
 
-This Landing Zone v2 assumes that the different required environments known as Sandbox, Development, User Acceptance and Testing, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
+This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, User Acceptance and Testing, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
 
 ## Single GCP organization
 ![img](img/single-org.png)
@@ -23,7 +23,7 @@ This Landing Zone v2 assumes that the different required environments known as S
 ![img](img/multi-org.png)
 
 # Folder Structure
-## The sandbox landing zone contains the following folder structure.
+## The experimentation landing zone contains the following folder structure.
 
 ![img](img/folders-sandbox.png)
 
@@ -272,9 +272,9 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main ./landing-zone
     ```
 1. Get the hierarchy package
-    - Sandbox
+    - Experimentation
       ```bash
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-sandbox@main ./landing-zone/hierarchy
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-experimentation@main ./landing-zone/hierarchy
       ```
 
     - DEV, UAT, PROD

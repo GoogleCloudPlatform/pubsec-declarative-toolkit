@@ -1,4 +1,4 @@
-# client Onboarding
+# Client Onboarding
 
 ## Add client folder(s) to the landing zone repository
 
@@ -7,9 +7,9 @@
     cd <LZ_FOLDER>
     ```
 1. Get the hierarchy/client package
-   - Sandbox
+   - Experimentation
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-sandbox@main ./landing-zone/hierarchy/clients/<client name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-experimentation@main ./landing-zone/hierarchy/clients/<client name>
       ```
 
    - DEV, UAT, PROD
