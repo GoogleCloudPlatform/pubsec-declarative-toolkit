@@ -1,1 +1,12 @@
-# TODO
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: core-experimentation-logging-package
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: Package to deploy core-experimentation logging solution
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
