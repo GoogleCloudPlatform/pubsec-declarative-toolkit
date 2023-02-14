@@ -13,14 +13,12 @@
     "solutions/guardrails": {
       "package-name": "solutions/guardrails",
       "tag-separator": "/",
-      "prerelease": true
-      
+      "prerelease": true 
     },
     "solutions/landing-zone-v2": {
       "package-name": "solutions/landing-zone-v2",
       "tag-separator": "/",
-      "prerelease": true,
-      
+      "prerelease": true  
     },
     "solutions/org-policies": {
       "package-name": "solutions/org-policies",
