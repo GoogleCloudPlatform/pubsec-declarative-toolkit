@@ -21,10 +21,7 @@ The information system enforces a role-based access control policy over defined 
 Role policies for accounts are being set in this package
 * Settings for roles and privs assigned (only for GCP custom role allowing access to SDN)
 
-# TBD by Craig/Aaron
-AC-5 - SEPARATION OF DUTIES
-
-Settings for roles and what org roles correspond to FortiGate roles
+* Settings for roles and what org roles correspond to FortiGate roles
 
 ### AC-17(1), REMOTE ACCESS | AUTOMATED MONITORING / CONTROL
 The information system monitors and controls remote access methods.
