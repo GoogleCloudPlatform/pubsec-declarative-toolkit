@@ -80,7 +80,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: platform-component-log-bq-folder-sink-permissions
+  name: platform-component-log-bq-writer-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
