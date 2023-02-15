@@ -2,6 +2,89 @@
 
 A package to deploy the core-experimentation logging solution inside the experimentation landing-zone.
 
+## Core-Experimentation Logging Solution Overview
+
+This package deploys the following resources:
+
+- Log bucket for Security Logs (Cloud Audit and Access Transparency logs)
+
+    - Retention in Days configurable via setters.yaml
+
+        ```yaml
+        retention-in-days: 1
+        ```
+    - Retention locking policy configurable via setters.yaml
+
+        ```yaml
+        retention-locking-policy: false
+        ```
+- Log bucket for platform and component logs for resources under the `Testing` folder
+
+    - Retention in Days configurable via setters.yaml
+
+        ```yaml
+        retention-in-days: 1
+        ```
+    - Retention locking policy configurable via setters.yaml
+        ```yaml
+        retention-locking-policy: false
+        ```
+- BigQuery Dataset Security Logs (Cloud Audit and Access Transparency logs)
+
+    - Table expiration configurable via setters.yaml
+
+        ```yaml
+        defaultTableExpirationMs: 31536000000
+        ```
+
+- BigQuery Dataset for platform and component logs for resources under the `Testing` folder
+
+    - Table expiration (milliseconds) configurable via setters.yaml
+
+        ```yaml
+        defaultTableExpirationMs: 31536000000
+        ```
+
+- Organizational log sink for Security Logs (Cloud Audit and Access Transparency logs)
+
+    - Include all child resources is enabled:
+
+        ```yaml
+        includeChildren: true
+        ```
+
+    - Destionations: Log bucket and BigQuery Dataset
+
+    - Includes only Security logs: Cloud Audit and Access Transparency Logs
+
+        ```yaml
+          filter: |-
+            LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
+            OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
+            OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
+            OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")    
+        ```
+
+- Folder log sink for platform and component logs for resources under the `Testing` folder
+
+    - Destionations: Log bucket and BigQuery Dataset
+
+    - No inclusion filter. Includes all Platform and Component logs
+
+    - Excludes all Security logs: Cloud Audit and Access Transparency Logs
+
+        ```yaml
+          exclusions:
+            - description: Exclude Security logs
+              disabled: false
+              filter: |-
+                LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
+                OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
+                OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
+                OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
+              name: exclude-security-logs
+        ```
+
 ## Package Contents
 
 `kpt pkg tree`
@@ -34,7 +117,7 @@ A table listing the GCP resources deployed by this logging solution package:
 
 | File                       | Resource Kind    | Namespace/metadata Name                                   | Description                                                                                                 |
 | -------------------------- | ---------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| cloud-logging-buckets.yaml | LoggingLogBucket | logging/audit-log-bucket                                  | Log bucket for organization security logs (Audit and Access Transparancy Logs)                              |
+| cloud-logging-buckets.yaml | LoggingLogBucket | logging/audit-log-bucket                                  | Log bucket for organization security logs (Audit and Access Transparency Logs)                              |
 | cloud-logging-buckets.yaml | LoggingLogBucket | logging/platform-component-log-bucket                     | Log Bucket for platform and component logs                                                                  |
 | folder-sinks.yaml          | LoggingLogSink   | logging/platform-component-log-bq-folder-sink             | Folder sink for platform and component logs to BigQuery Dataset                                             |
 | folder-sinks.yaml          | LoggingLogSink   | logging/platform-component-log-bucket-folder-sink         | Folder sink for platform and component logs to Log Bucket                                                   |
