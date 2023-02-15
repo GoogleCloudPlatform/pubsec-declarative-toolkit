@@ -53,5 +53,3 @@ spec:
             logSinkRef:
               name: platform-component-log-tenant1-bq-folder-sink # kpt-set: platform-component-log-${tenant-name}-bq-folder-sink
               namespace: logging
----
-# TODO Configure tenant access to BigQuery dataset (roles/bigquery.dataViewer + roles/bigquery.jobUser)
