@@ -43,7 +43,7 @@ spec:
   constraint: "constraints/compute.restrictVpcPeering"
   listPolicy:
     allow:
-      values: # kpt-set: ${allowed-restrict-vpc-peering}
+      values: # kpt-set: ${project-allowed-restrict-vpc-peering}
         - under:organizations/ORGANIZATION_ID
   projectRef:
     external: "0000000000" # kpt-set: ${perimeter-project-id}

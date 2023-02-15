@@ -40,7 +40,7 @@ spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:
     allow:
-      values: # kpt-set: ${allowed-vm-external-ip-access}
+      values: # kpt-set: ${project-allowed-vm-external-ip-access}
         - "projects/PROJECT_ID/zones/ZONE/instances/INSTANCE"
   projectRef:
     external: "0000000000" # kpt-set: ${perimeter-project-id}
