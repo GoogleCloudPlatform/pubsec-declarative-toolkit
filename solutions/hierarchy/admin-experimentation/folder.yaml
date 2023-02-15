@@ -18,6 +18,6 @@ metadata:
   name: tests.admins.admin1 # kpt-set: tests.admins.${admin-name}
   namespace: hierarchy
 spec:
-  displayName: admin1 # kpt-set: ${admin-displayname}
+  displayName: admin1 # kpt-set: ${admin-name}
   folderRef:
     name: tests.admins
