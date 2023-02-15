@@ -22,7 +22,6 @@ Package "tenant-experimentation"
 
 A table listing the GCP resources deployed by this logging solution package:
 
-
 | File                      | Resource         | Kind Namespace/Metadata Name                                      | Description                                                                                                 |
 | ------------------------- | ---------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | cloud-logging-bucket.yaml | LoggingLogBucket | logging/platform-component-tenant1-log-bucket                     | Log Bucket for platform and component logs                                                                  |
