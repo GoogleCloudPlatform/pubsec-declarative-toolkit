@@ -31,7 +31,7 @@ spec:
   includeChildren: true
   destination:
     loggingLogBucketRef:
-      external: platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/${tenant-name}-platform-component-log-bucket
+      external: platform-component-tenant1-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-component-${tenant-name}-log-bucket
   description: Folder sink for Tenant Platform and Component logs # kpt-set: Folder sink for ${tenant-displayname} Platform and Component logs
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S)
@@ -86,7 +86,7 @@ spec:
   # Excludes all Security logs: Cloud Audit and Access Transparency Logs
   # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
-    - description: Exclude cloud audit logs
+    - description: Exclude Security logs
       disabled: false
       filter: |-
         LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
