@@ -1,11 +1,11 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
-# project-sandbox
+# project-experimentation
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
-A sandbox project with a secured network. 
-This package should only be deployed within a sandbox landing zone.
+An experimentation project with a secured network. 
+This package should only be deployed within the experimentation landing zone.
 
 ## Setters
 
@@ -59,14 +59,14 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./project-sandbox/"
+    cd "./project-experimentation/"
     ```
 
 1.  Edit the function config file(s):
