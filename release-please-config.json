@@ -5,15 +5,35 @@
   "include-v-in-tag": false,
   "changelog-path": "CHANGELOG.md",
   "packages": {
-    "solutions/landing-zone": {
-      "package-name": "solutions/landing-zone",
+    "solutions/gatekeeper-policies": {
+      "package-name": "solutions/gatekeeper-policies",
       "tag-separator": "/",
       "prerelease": true
     },
-    "solutions/guardrails": {
-      "package-name": "solutions/guardrails",
+    "solutions/hierarchy/admin-experimentation": {
+      "package-name": "solutions/hierarchy/admin-experimentation",
       "tag-separator": "/",
-      "prerelease": true 
+      "prerelease": true
+    },
+    "solutions/hierarchy/client-env": {
+      "package-name": "solutions/hierarchy/client-env",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/client-experimentation": {
+      "package-name": "solutions/hierarchy/client-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/core-env": {
+      "package-name": "solutions/hierarchy/core-env",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/core-experimentation": {
+      "package-name": "solutions/hierarchy/core-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
     },
     "solutions/landing-zone-v2": {
       "package-name": "solutions/landing-zone-v2",
@@ -25,13 +45,8 @@
       "tag-separator": "/",
       "prerelease": true
     },
-    "solutions/hierarchy": {
-      "package-name": "solutions/hierarchy",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/gatekeeper-policies": {
-      "package-name": "solutions/gatekeeper-policies",
+    "solutions/project/project-experimentation": {
+      "package-name": "solutions/project/project-experimentation",
       "tag-separator": "/",
       "prerelease": true
     }
