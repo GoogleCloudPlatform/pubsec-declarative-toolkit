@@ -1,11 +1,11 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: tenant-experimentation-logging-package
+  name: client-experimentation-logging-package
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: Package to deploy tenant-experimentation logging solution
+  description: Package to deploy client-experimentation logging solution
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

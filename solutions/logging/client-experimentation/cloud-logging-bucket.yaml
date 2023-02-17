@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Cloud Logging bucket for Tenant Platform and Component logs
+# Cloud Logging bucket for client Platform and Component logs
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
-  name: platform-component-tenant1-log-bucket # kpt-set: platform-component-${tenant-name}-log-bucket
+  name: platform-component-client1-log-bucket # kpt-set: platform-component-${client-name}-log-bucket
   namespace: logging
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
@@ -24,6 +24,6 @@ spec:
   projectRef:
     external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
   location: northamerica-northeast1
-  description: Cloud Logging bucket for Tenant Platform and Component logs # kpt-set: Cloud Logging bucket for ${tenant-displayname} Platform and Component logs
+  description: Cloud Logging bucket for client Platform and Component logs # kpt-set: Cloud Logging bucket for ${client-displayname} Platform and Component logs
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}

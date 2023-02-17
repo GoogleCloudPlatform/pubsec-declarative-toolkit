@@ -1,6 +1,6 @@
-# Tenant-Experimentation Logging Solution Package
+# Client-Experimentation Logging Solution Package
 
-A package to deploy the tenant-experimentation logging solution inside the experimentation landing-zone.
+A package to deploy the client-experimentation logging solution inside the experimentation landing-zone.
 
 ## Package Contents
 
@@ -8,10 +8,10 @@ A package to deploy the tenant-experimentation logging solution inside the exper
 
 ```
 Package "client-experimentation"
-├── [Kptfile]  Kptfile tenant-experimentation-logging-package
-├── [cloud-logging-bucket.yaml]  LoggingLogBucket logging/platform-component-tenant1-log-bucket
-├── [folder-sinks.yaml]  LoggingLogSink logging/platform-component-log-tenant1-bucket-folder-sink
-├── [project-iam.yaml]  IAMPartialPolicy projects/platform-component-log-tenant1-bucket-writer-permissions
+├── [Kptfile]  Kptfile client-experimentation-logging-package
+├── [cloud-logging-bucket.yaml]  LoggingLogBucket logging/platform-component-client1-log-bucket
+├── [folder-sinks.yaml]  LoggingLogSink logging/platform-component-log-client1-bucket-folder-sink
+├── [project-iam.yaml]  IAMPartialPolicy projects/platform-component-log-client1-bucket-writer-permissions
 └── [setters.yaml]  ConfigMap setters
 ```
 
@@ -21,6 +21,6 @@ A table listing the GCP resources deployed by this logging solution package:
 
 | File                      | Resource         | Kind Namespace/Metadata Name                                      | Description                                                                                                 |
 | ------------------------- | ---------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| cloud-logging-bucket.yaml | LoggingLogBucket | logging/platform-component-tenant1-log-bucket                     | Log Bucket for platform and component logs                                                                  |
-| folder-sinks.yaml         | LoggingLogSink   | logging/platform-component-log-tenant1-bucket-folder-sink         | Folder sink for platform and component logs to Log Bucket                                                   |
-| project-iam.yaml          | IAMPartialPolicy | projects/platform-component-log-tenant1-bucket-writer-permissions | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |
+| cloud-logging-bucket.yaml | LoggingLogBucket | logging/platform-component-client1-log-bucket                     | Log Bucket for platform and component logs                                                                  |
+| folder-sinks.yaml         | LoggingLogSink   | logging/platform-component-log-client1-bucket-folder-sink         | Folder sink for platform and component logs to Log Bucket                                                   |
+| project-iam.yaml          | IAMPartialPolicy | projects/platform-component-log-client1-bucket-writer-permissions | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |

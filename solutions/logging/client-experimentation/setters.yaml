@@ -19,9 +19,9 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  tenant-name: 'tenant1' # lowercase only
-  tenant-displayname: 'Tenant1'
-  tenant-folderviewer: 'group:tenant1@example.com'
+  client-name: 'client1' # lowercase only
+  client-displayname: 'Client1'
+  client-folderviewer: 'group:client1@example.com'
   #############
   # Audit Project ID
   audit-prj-id: audit-prj-id-12345

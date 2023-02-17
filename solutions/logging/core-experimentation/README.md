@@ -2,6 +2,8 @@
 
 A package to deploy the core-experimentation logging solution inside the experimentation landing-zone.
 
+**`Note:`** This package must be deployed before the `client-experimentation` logging package.
+
 # Core-Experimentation Logging Solution Overview
 
 This package deploys the following resources:
@@ -30,7 +32,7 @@ This package deploys the following resources:
         retention-locking-policy: false
         ```
 
-- Organizational log sinks for Security Logs (Cloud Audit and Access Transparency logs)
+- Organizational log sink for Security Logs (Cloud Audit and Access Transparency logs)
 
     - Include all child resources is enabled:
 
@@ -38,7 +40,7 @@ This package deploys the following resources:
         includeChildren: true
         ```
 
-    - Destionation: Log bucket
+    - Destionation: Log bucket hosted inside the audit project
 
     - Includes only Security logs: Cloud Audit and Access Transparency Logs
 
@@ -52,7 +54,7 @@ This package deploys the following resources:
 
 - Folder log sinks for platform and component logs for resources under the `Testing` folder
 
-    - Destionation: Log bucket
+    - Destionation: Log bucket hosted inside the audit project
 
     - No inclusion filter. Includes all Platform and Component logs
 

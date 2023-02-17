@@ -17,7 +17,7 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: platform-component-log-tenant1-bucket-writer-permissions # kpt-set: platform-component-log-${tenant-name}-bucket-writer-permissions
+  name: platform-component-log-client1-bucket-writer-permissions # kpt-set: platform-component-log-${client-name}-bucket-writer-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/blueprint: kpt-fn
@@ -30,5 +30,5 @@ spec:
       members:
         - memberFrom:
             logSinkRef:
-              name: platform-component-log-tenant1-bucket-folder-sink # kpt-set: platform-component-log-${tenant-name}-bucket-folder-sink
+              name: platform-component-log-client1-bucket-folder-sink # kpt-set: platform-component-log-${client-name}-bucket-folder-sink
               namespace: logging
