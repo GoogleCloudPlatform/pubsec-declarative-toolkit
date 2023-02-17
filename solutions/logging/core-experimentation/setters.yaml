@@ -39,12 +39,3 @@ data:
   retention-locking-policy: false
   retention-in-days: 1
   #############
-  # BigQueryDataset table retention setting
-  # Dataset retention period of 365 days in milliseconds
-  default-table-expiration: 31536000000
-  #############
-  # Groups
-  # Permissions will be assigned to the specified group email
-  # TODO Add permissions for BigQuery Data Viewer and BigQuery JobUser
-  bigquery-data-viewer: group@domain.com
-  bigquery-job-user: group@domain.com

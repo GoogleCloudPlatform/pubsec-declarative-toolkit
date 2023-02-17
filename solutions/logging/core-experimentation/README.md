@@ -2,7 +2,7 @@
 
 A package to deploy the core-experimentation logging solution inside the experimentation landing-zone.
 
-## Core-Experimentation Logging Solution Overview
+# Core-Experimentation Logging Solution Overview
 
 This package deploys the following resources:
 
@@ -29,9 +29,9 @@ This package deploys the following resources:
         ```yaml
         retention-locking-policy: false
         ```
-- BigQuery Dataset Security Logs (Cloud Audit and Access Transparency logs)
+- BigQuery Dataset for Security Logs (Cloud Audit and Access Transparency logs)
 
-    - Table expiration configurable via setters.yaml
+    - Table expiration (in milliseconds) configurable via setters.yaml
 
         ```yaml
         defaultTableExpirationMs: 31536000000
@@ -39,13 +39,13 @@ This package deploys the following resources:
 
 - BigQuery Dataset for platform and component logs for resources under the `Testing` folder
 
-    - Table expiration (milliseconds) configurable via setters.yaml
+    - Table expiration (in milliseconds) configurable via setters.yaml
 
         ```yaml
         defaultTableExpirationMs: 31536000000
         ```
 
-- Organizational log sink for Security Logs (Cloud Audit and Access Transparency logs)
+- Organizational log sinks for Security Logs (Cloud Audit and Access Transparency logs)
 
     - Include all child resources is enabled:
 
@@ -65,7 +65,7 @@ This package deploys the following resources:
             OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")    
         ```
 
-- Folder log sink for platform and component logs for resources under the `Testing` folder
+- Folder log sinks for platform and component logs for resources under the `Testing` folder
 
     - Destionations: Log bucket and BigQuery Dataset
 
@@ -85,9 +85,21 @@ This package deploys the following resources:
               name: exclude-security-logs
         ```
 
-## Package Contents
+# Usage
+## Fetch the package
 
-`kpt pkg tree`
+```
+kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-experimentation
+```
+
+Details: https://kpt.dev/reference/cli/pkg/get/
+
+View package content
+kpt pkg tree guardrails-policies Details: https://kpt.dev/reference/cli/pkg/tree/
+
+# Package Contents
+
+`kpt pkg tree core-experimentation`
 
 ```
 Package "core-experimentation"
