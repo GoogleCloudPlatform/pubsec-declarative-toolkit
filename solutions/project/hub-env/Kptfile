@@ -5,7 +5,7 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: "A hub project that implements the Hub from the Hub and Spoke network design. \nThis package is NOT required within an experimentation landing zone.\n"
+  description: "A project that implements the Hub functionality from the Hub and Spoke network design. \nThis package is NOT required within an experimentation landing zone.\n"
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
