@@ -1,0 +1,16 @@
+# This config file is used by the kpt function search-replace.
+# It replaces the token TOKEN_ADMIN_PASSWORD found in the fortigate yaml files
+# with the value defined in data.put-value
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-replace-fn-config
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  by-path: spec.**.value
+  by-value-regex: ^([\s\S]*)(TOKEN_ADMIN_PASSWORD)([\s\S]*)$
+  # Modify the value "fgt-admin-password" below to customize the admin password of the fortigate appliances
+  # make sure you keep the prefix ${1} and the suffix ${3}
+  # TODO: fix this to support a value defined in the setters.yaml. A kpt set using this string "${1}${fgt-admin-password}${3}" fails because "${string}" is a reserved function pattern
+  put-value: ${1}fgt-admin-password${3}

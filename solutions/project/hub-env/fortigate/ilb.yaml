@@ -1,0 +1,110 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Internal Load Balancer
+## Health Check
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeHealthCheck
+metadata:
+  name: hub-http-8008-hc
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/networking-sa-computeinstanceadmin-permissions
+spec:
+  resourceID: http-8008-hc
+  location: northamerica-northeast1
+  httpHealthCheck:
+    port: 8008
+  checkIntervalSec: 3
+  timeoutSec: 2
+  unhealthyThreshold: 3
+---
+## Backend Service
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeBackendService
+metadata:
+  name: hub-ilb-bes
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeInstanceGroup/hub-fgt-primary-umig
+spec:
+  resourceID: ilb-bes
+  location: northamerica-northeast1
+  networkRef:
+    name: hub-global-internal-vpc
+  backend:
+  - group:
+      instanceGroupRef:
+        name: hub-fgt-primary-umig
+  - group:
+      instanceGroupRef:
+        name: hub-fgt-secondary-umig
+  healthChecks:
+  - healthCheckRef:
+      name: hub-http-8008-hc
+  connectionTrackingPolicy:
+    connectionPersistenceOnUnhealthyBackends: "NEVER_PERSIST"
+---
+## Forwarding Rule
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: hub-ilb-fwdrule
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeBackendService/hub-ilb-bes
+spec:
+  resourceID: ilb-fwdrule
+  location: northamerica-northeast1
+  networkRef:
+    name: hub-global-internal-vpc
+  subnetworkRef:
+    name: hub-nane1-internal-paz-snet
+  ipAddress:
+    addressRef:
+      name: hub-ilb-address
+  allPorts: true
+  loadBalancingScheme: "INTERNAL"
+  backendServiceRef:
+    name: hub-ilb-bes
+  allowGlobalAccess: true
+---
+## Explicit proxy
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: hub-ilb-proxy-fwdrule
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeBackendService/hub-ilb-bes
+spec:
+  resourceID: ilb-proxy-fwdrule
+  location: northamerica-northeast1
+  networkRef:
+    name: hub-global-internal-vpc
+  subnetworkRef:
+    name: hub-nane1-internal-paz-snet
+  ipAddress:
+    addressRef:
+      name: hub-ilb-proxy-address
+  ports:
+  - "8080"
+  loadBalancingScheme: "INTERNAL"
+  backendServiceRef:
+    name: hub-ilb-bes
+  allowGlobalAccess: true
