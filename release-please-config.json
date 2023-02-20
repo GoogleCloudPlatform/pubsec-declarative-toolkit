@@ -38,7 +38,7 @@
     "solutions/landing-zone-v2": {
       "package-name": "solutions/landing-zone-v2",
       "tag-separator": "/",
-      "prerelease": true  
+      "prerelease": true
     },
     "solutions/org-policies": {
       "package-name": "solutions/org-policies",
@@ -47,6 +47,11 @@
     },
     "solutions/project/project-experimentation": {
       "package-name": "solutions/project/project-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/project/hub-env": {
+      "package-name": "solutions/project/hub-env",
       "tag-separator": "/",
       "prerelease": true
     }

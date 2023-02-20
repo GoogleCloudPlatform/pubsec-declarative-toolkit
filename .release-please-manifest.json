@@ -7,5 +7,6 @@
     "solutions/hierarchy/core-experimentation": "0.0.1",
     "solutions/landing-zone-v2": "0.0.1",
     "solutions/org-policies": "0.0.1",
-    "solutions/project/project-experimentation": "0.0.1"
+    "solutions/project/project-experimentation": "0.0.1",
+    "solutions/project/hub-env": "0.0.1"
 }
