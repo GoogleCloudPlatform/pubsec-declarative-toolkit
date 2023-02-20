@@ -68,3 +68,45 @@ spec:
     external: hub-project-id # kpt-set: ${hub-project-id}
   role: roles/compute.instanceAdmin.v1
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role IAP-Secured Tunnel User to hub admin
+# Required for IAP
+# AC-3(7)
+# AC-17(1)
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: hub-admin-iaptunnelresourceaccessor-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/hub-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${hub-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: hub-project-id # kpt-set: ${hub-project-id}
+  role: roles/iap.tunnelResourceAccessor
+  member: "group:group@domain.com" # kpt-set: ${hub-admin}
+---
+# Grant GCP role Compute Instance Admin v1 to hub admin
+# Required for IAP
+# AC-3(7)
+# AC-17(1)
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: hub-admin-computeinstanceadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/hub-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${hub-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: hub-project-id # kpt-set: ${hub-project-id}
+  role: roles/compute.instanceAdmin.v1
+  member: "group:group@domain.com" # kpt-set: ${hub-admin}
