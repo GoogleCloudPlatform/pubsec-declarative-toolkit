@@ -1,0 +1,33 @@
+# Grant GCP role Editor on management project to GCP config-control-sa a.k.a yakima
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: config-control-sa-management-project-editor-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: management-project-id # kpt-set: ${management-project-id}
+  role: roles/editor
+  member: "serviceAccount:service-management-project-number@gcp-sa-yakima.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+---
+# Grant GCP role Service Account Admin on management project to GCP config-control-sa a.k.a yakima
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: config-control-sa-management-project-serviceaccountadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: management-project-id # kpt-set: ${management-project-id}
+  role: roles/iam.serviceAccountAdmin
+  member: "serviceAccount:service-management-project-number@gcp-sa-yakima.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
