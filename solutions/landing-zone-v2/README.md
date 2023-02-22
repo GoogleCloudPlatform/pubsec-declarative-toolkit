@@ -235,7 +235,7 @@ To deploy this Landing Zone you will need to:
     ```
 1. Set permissions for "Yakima" (Google managed) service account
     ```bash
-    gcloud anthos config controller get-credentials $CLUSTER --location $REGION 
+    gcloud anthos config controller get-credentials $CLUSTER --location $REGION
 
     export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
         -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
@@ -244,16 +244,6 @@ To deploy this Landing Zone you will need to:
       --member="serviceAccount:${SA_EMAIL}" \
       --role=roles/resourcemanager.organizationAdmin \
       --condition=None
-      
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-      --member "serviceAccount:${SA_EMAIL}" \
-      --role "roles/editor" \
-      --project "${PROJECT_ID}"
-
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-      --member "serviceAccount:${SA_EMAIL}" \
-      --role "roles/iam.serviceAccountAdmin" \
-      --project "${PROJECT_ID}"
     ```
   1. Well done !!! You have completed the Bootstrap procedure
 
