@@ -56,35 +56,15 @@ spec:
               name: platform-component-log-bucket-folder-sink
               namespace: logging
 ---
-# Data access logs enabled on the Testing folder
+# Enable data access log configuration on the audit project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
 metadata:
-  name: data-access-logs-testing-folder
+  name: audit-project-data-access-log-config
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn'
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/testing
-spec:
-  service: allServices
-  auditLogConfigs:
-    - logType: ADMIN_READ
-    - logType: DATA_READ
-    - logType: DATA_WRITE
-  resourceRef:
-    kind: Project
-    external: audit-prj-id # kpt-set: ${audit-prj-id}
-    namespace: projects
----
-# Data access logs enabled on the Audit folder
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMAuditConfig
-metadata:
-  name: data-access-logs-audit-folder
-  namespace: hierarchy
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/audit
 spec:
   service: allServices
   auditLogConfigs:
