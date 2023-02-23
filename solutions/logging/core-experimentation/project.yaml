@@ -21,6 +21,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: 'false'
     cnrm.cloud.google.com/blueprint: kpt-pkg-fn
+    config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/hierarchy/IAMAuditConfig/data-access-logs-audit-folder
 spec:
   name: audit-prj-id # kpt-set: ${audit-prj-id}
   folderRef:
