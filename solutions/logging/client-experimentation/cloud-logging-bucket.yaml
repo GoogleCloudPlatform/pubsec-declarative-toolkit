@@ -19,7 +19,7 @@ metadata:
   name: platform-component-client1-log-bucket # kpt-set: platform-component-${client-name}-log-bucket
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
 spec:
   projectRef:
     external: projects/audit-prj-id # kpt-set: ${audit-prj-id}

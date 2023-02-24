@@ -20,7 +20,6 @@ metadata:
   name: audit-log-bucket-sink
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
     config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/audit-log-bucket
 spec:
   organizationRef:

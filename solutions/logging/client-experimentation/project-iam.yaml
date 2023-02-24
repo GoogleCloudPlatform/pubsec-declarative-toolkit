@@ -20,7 +20,7 @@ metadata:
   name: platform-component-log-client1-bucket-writer-permissions # kpt-set: platform-component-log-${client-name}-bucket-writer-permissions
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
 spec:
   resourceRef:
     kind: Project

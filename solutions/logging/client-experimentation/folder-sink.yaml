@@ -20,7 +20,7 @@ metadata:
   name: platform-component-log-client1-bucket-folder-sink # kpt-set: platform-component-log-${client-name}-bucket-folder-sink
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-component-client1-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-component-${client-name}-log-bucket
 spec:
   folderRef:
     name: clients.client1 # kpt-set: clients.${client-name}
@@ -39,12 +39,12 @@ spec:
       OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
       OR (LOG_ID("requests") AND resource.type="http_load_balancer")
   # Excludes all Security logs: Cloud Audit and Access Transparency Logs
-  # TODO - If we include Data Access audit logs then we should add to exclusion filter
   exclusions:
     - description: Exclude Security logs
       disabled: false
       filter: |-
         LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
+        OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
         OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
         OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
         OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")

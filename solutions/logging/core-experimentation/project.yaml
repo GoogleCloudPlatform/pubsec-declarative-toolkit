@@ -20,7 +20,6 @@ metadata:
   namespace: projects
   annotations:
     cnrm.cloud.google.com/auto-create-network: 'false'
-    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
 spec:
   name: audit-prj-id # kpt-set: ${audit-prj-id}
   folderRef:

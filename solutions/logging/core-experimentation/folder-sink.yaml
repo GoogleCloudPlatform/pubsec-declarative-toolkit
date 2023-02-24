@@ -23,7 +23,6 @@ metadata:
   name: platform-component-log-bucket-folder-sink
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
     config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-component-log-bucket
 spec:
   folderRef:

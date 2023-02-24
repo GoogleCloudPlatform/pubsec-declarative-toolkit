@@ -19,7 +19,6 @@ metadata:
   name: audit-log-bucket
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
 spec:
   projectRef:

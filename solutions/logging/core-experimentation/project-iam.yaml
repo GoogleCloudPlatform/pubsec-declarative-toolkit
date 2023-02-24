@@ -20,7 +20,6 @@ metadata:
   name: audit-log-bucket-writer-permissions
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
 spec:
   resourceRef:
@@ -42,7 +41,6 @@ metadata:
   name: platform-component-log-bucket-writer-permissions
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
 spec:
   resourceRef:
@@ -63,7 +61,6 @@ metadata:
   name: audit-project-data-access-log-config
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/testing
 spec:
   service: allServices
