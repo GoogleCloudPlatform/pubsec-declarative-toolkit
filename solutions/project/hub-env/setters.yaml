@@ -32,14 +32,14 @@ data:
   # org-policies/exceptions/compute-vm-external-ip-access-except-hub-project.yaml
   # this setting MUST be changed to include the hub project ID
   project-allowed-vm-external-ip-access: |
-    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-a/instances/fgt-primary-instance"
-    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-b/instances/fgt-secondary-instance"
+    - "projects/HUB_PROJECT_ID/zones/northamerica-northeast1-a/instances/fgt-primary-instance"
+    - "projects/HUB_PROJECT_ID/zones/northamerica-northeast1-b/instances/fgt-secondary-instance"
   # This list constraint defines the set of VM instances that can enable IP forwarding., see YAML file for more info:
   # org-policies/exceptions/compute-vm-can-ip-forward-except-hub-project.yaml
   # this setting MUST be changed to include the hub project ID
   project-allowed-vm-can-ip-forward: |
-    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-a/instances/fgt-primary-instance"
-    - "projects/PERIMETER_PROJECT_ID/zones/northamerica-northeast1-b/instances/fgt-secondary-instance"
+    - "projects/HUB_PROJECT_ID/zones/northamerica-northeast1-a/instances/fgt-primary-instance"
+    - "projects/HUB_PROJECT_ID/zones/northamerica-northeast1-b/instances/fgt-secondary-instance"
 
   #################
   # Fortigate
@@ -52,10 +52,14 @@ data:
   # Having disctinct images allows one to use a Licensed Fortigate for the primary and a Pay-as-you-Go license for the secondary
   # and run the secondary just a couple of minutes each day for synching purposes thus obtaining an affordable cold standby.
   fgt-primary-image: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
+  
+  # replace the word LICENSE below with the actual license value. Not required if using the Pay-as-you-Go image.
   fgt-primary-license: |
     LICENSE
 
   # Secondary
   fgt-secondary-image: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
+  
+  # replace the word LICENSE below with the actual license value. Not required if using the Pay-as-you-Go image.
   fgt-secondary-license: |
     LICENSE

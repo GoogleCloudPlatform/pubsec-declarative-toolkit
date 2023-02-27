@@ -12,5 +12,8 @@ data:
   by-value-regex: ^([\s\S]*)(TOKEN_ADMIN_PASSWORD)([\s\S]*)$
   # Modify the value "fgt-admin-password" below to customize the admin password of the fortigate appliances
   # make sure you keep the prefix ${1} and the suffix ${3}
+  # ${} represent regex capture group, in this case...
+  # ${1} = all characters before TOKEN_ADMIN_PASSWORD
+  # ${3} = all characters after TOKEN_ADMIN_PASSWORD
   # TODO: fix this to support a value defined in the setters.yaml. A kpt set using this string "${1}${fgt-admin-password}${3}" fails because "${string}" is a reserved function pattern
   put-value: ${1}fgt-admin-password${3}

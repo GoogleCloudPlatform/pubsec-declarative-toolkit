@@ -11,12 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-##################################
+#########
 # All subnets have :
 # - logging enabled for flow logs https://cloud.google.com/vpc/docs/using-flow-logs
 # - private google access enabled https://cloud.google.com/vpc/docs/private-google-access
-##################################
+#########
 # VPC External - Subnet PAZ northamerica-northeast1
 # SC-7 BOUNDARY PROTECTION
 apiVersion: compute.cnrm.cloud.google.com/v1beta1

@@ -32,7 +32,6 @@ data:
   # a list of allowed trusted image projects, see YAML file for more info:
   # organization/compute-trusted-image-projects.yaml
   # this setting can be left as default or modified as required
-  # fortigcp-project-001 and windows-cloud are required for the perimeter project
   allowed-trusted-image-projects: |
     - "projects/cos-cloud"
   # a list of allowed essential contact domains, see YAML file for more info:

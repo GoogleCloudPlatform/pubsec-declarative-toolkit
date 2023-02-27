@@ -11,9 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 # IP reservation
-## Fortigate External IP reservation
+## Fortigate External VPC IP reservation
 ## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
@@ -50,7 +50,7 @@ spec:
   subnetworkRef:
     name: hub-nane1-external-paz-snet
 ---
-## Fortigate Internal IP reservation
+## Fortigate Internal VPC IP reservation
 ## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
@@ -87,7 +87,7 @@ spec:
   subnetworkRef:
     name: hub-nane1-internal-paz-snet
 ---
-## Fortigate MGMT IP reservation
+## Fortigate MGMT VPC IP reservation
 ## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
@@ -124,7 +124,7 @@ spec:
   subnetworkRef:
     name: hub-nane1-mgmt-rz-snet
 ---
-## Fortigate Transit IP reservation
+## Fortigate Transit VPC IP reservation
 ## Primary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
