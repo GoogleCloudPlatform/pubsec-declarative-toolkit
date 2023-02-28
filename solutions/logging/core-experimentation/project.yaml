@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Audit project for security logs (Cloud Audit and Access Transparency Logs) and Platform and Component logs
+# Audit project for security logs (Cloud Audit and Access Transparency Logs), Platform and Component logs, and Data Access Logs
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
@@ -23,7 +23,7 @@ metadata:
 spec:
   name: audit-prj-id # kpt-set: ${audit-prj-id}
   folderRef:
-    name: audit
+    name: audits
     namespace: hierarchy
   billingAccountRef:
     external: "0000000000" # kpt-set: ${billing-id}
