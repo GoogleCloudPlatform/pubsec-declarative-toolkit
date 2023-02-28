@@ -1,0 +1,10 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  admin-name: 'admin1' # lowercase only
+  admin-owner: 'user:admin1@example.com'

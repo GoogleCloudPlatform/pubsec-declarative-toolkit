@@ -1,0 +1,10 @@
+
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  name: clients.client1.auto # kpt-set: clients.${client-name}.auto
+  namespace: hierarchy
+spec:
+  displayName: auto
+  folderRef:
+    name: clients.client1 # kpt-set: clients.${client-name}

@@ -22,8 +22,8 @@ spec:
       - apiGroups: ['*']
         kinds: [Project]
   parameters:
-    tenant_code: ^(aa|bb|cc)  # kpt-set: ${tenant_code}
-    env_code: d  # kpt-set: ${tenant_code}${env_code}
+    client_code: ^(aa|bb|cc) # kpt-set: ${client_code}
+    env_code: d # kpt-set: ${client_code}${env_code}
     region_code: m
     class_code: (u|a|b)-
     user_defined_string: ^[a-z][a-z0-9-]*[a-z0-9]$

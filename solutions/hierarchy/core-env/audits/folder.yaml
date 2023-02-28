@@ -12,18 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: ConfigMap
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
 metadata:
-  name: setters
-  annotations:
-    config.kubernetes.io/local-config: 'true'
-data:
-  #########
-  # Project naming constraints values
-  #########
-  #
-  # Please change the values below
-  #
-  client_code: ^(aa|bb|cc)
-  env_code: d # (d = dev, p = production, e = experimentation, u = uat)
+  name: audits
+  namespace: hierarchy
+spec:
+  displayName: audits
+  folderRef:
+    external: '0000000000'  # kpt-set: ${lz-folder-id}
