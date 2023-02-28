@@ -1,4 +1,4 @@
-
-  # Naming Convention for project-id : <client-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
-  # Max 30 characters
-  project-id: xxemu-team1-projectname
+---
+# Naming Convention for project-id : <client-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
+# Max 30 characters
+project-id: xxemu-team1-projectname
