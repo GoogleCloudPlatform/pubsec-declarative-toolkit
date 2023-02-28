@@ -1,0 +1,19 @@
+---
+name: Yaml Syntax Validation
+on:
+  pull_request:
+    paths: ['**.yaml', '**.yml']
+jobs:
+  run-npm-install:
+    name: Yaml Syntax Validation Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: npm install
+        run: |
+          npm install yaml-validator
+      - name: validate
+        run: |
+          find . -iname '*.yaml' -exec yaml-validator "{}" \;
+...
