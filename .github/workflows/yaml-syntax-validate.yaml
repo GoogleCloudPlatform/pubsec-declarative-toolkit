@@ -15,5 +15,5 @@ jobs:
           npm install --global yaml-validator
       - name: validate
         run: |
-          find . -iname '*.yaml' -print0 -exec yaml-validator "{}" +
+          find . -iname '*.yaml' -exec yaml-validator "{}" +
 ...
