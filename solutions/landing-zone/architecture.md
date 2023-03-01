@@ -342,6 +342,7 @@ Security Command Center (Standard and Premium) is what Google uses to secure Goo
 ## DI-16: Validate DNS flows for bidirectional cloud to ground
 ## DI-17: GC-CAP infrastructure - Internet to Cloud
 ## DI-18: GC-TIP infrastructure - Ground to Cloud
+- tag: SCED/SC2G
 Including [GCP Dedicated Interconnect](https://cloud.google.com/network-connectivity/docs/interconnect/concepts/dedicated-overview) and IPSEC / MACSEC [VPN](https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview)
 ## DI-19: Bastion Access per security zone
 - IAP and private connect
@@ -384,6 +385,7 @@ https://console.cloud.google.com/networking/peering/list?orgonly=true&project=os
 
 <img width="1577" alt="Screen Shot 2022-10-07 at 10 42 21 AM" src="https://user-images.githubusercontent.com/94715080/194580619-6690a1e7-dfcb-470d-9987-aae7099020d7.png">
 #### Alternatives
+- tag: SCED/SC2G
 Investigate alternatives like VPN tunnelling (essentially GC-TIP but internal).  Looks at above L4 network separation via namespaces (K8S to start).
 Look at verifying that the shared VPC model (analog to the Transit Gateway from 2019) does not have network separation even though we can use 1:1 project/subnet pairing as an alternative.
 #### Decision
@@ -448,6 +450,7 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 - <img width="561" alt="Screen Shot 2022-11-28 at 3 18 17 PM" src="https://user-images.githubusercontent.com/94715080/204372702-2384b18d-1b23-400c-a30a-70cc2d29f70d.png">
 - <img width="567" alt="Screen Shot 2022-11-28 at 3 18 47 PM" src="https://user-images.githubusercontent.com/94715080/204372774-6007f1e6-8c35-44a9-a5e9-c5baa7058dfe.png">
 - Other criteria for NGFW HA cluster mapping is around the 25 limit on peering https://cloud.google.com/architecture/architecture-centralized-network-appliances-on-google-cloud#choosing_an_option_for_attaching_network_segments . The backup to the limitation via VPN will also reduce the egress bandwidth as a fallback option.
+- tag: SCED/SC2G
 - There is also the NGFW policy question / org
 - We will need to monitor the egress traffic in this distributed/org setup to see if the cost/org is justified
 
@@ -1001,6 +1004,7 @@ graph LR;
 - - 
 - Detail Canary CD and ATO traffic generation app with UAT/Firewall config to both exercise the LZ and demo serverless/IaaS/PaaS workload example
 - Unclassified/Classified separation of Profile 3/5/6 workloads via VPC separation
+- tag: SCED/SC2G
 - SC2G GC-TIP Dev test version of IPSEC VPN (leave out interconnect for cost) - for cloud to ground workload testing (IE: DB on prem, app on CSP)
 - SC2G prepare DNS flows in prep for 30d prior WIF (workload intake form) per workload - have example shared PaaS and custom IaaS/SaaS flows
 - CCCS project and zoning for logging agent placement and traffic flows
