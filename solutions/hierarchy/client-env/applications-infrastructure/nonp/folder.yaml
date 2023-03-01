@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,20 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: NamingPolicyProject
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
 metadata:
-  name: namingpolicyproject
+  name: clients.client1.applications-infrastructure.unclass # kpt-set: clients.${client-name}.applications-infrastructure.unclass
+  namespace: hierarchy
 spec:
-  match:
-    kinds:
-      - apiGroups:
-          - '*'
-        kinds:
-          - Project
-  parameters:
-    client_code: ^(aa|bb|cc) # kpt-set: ${client_code}
-    env_code: d # kpt-set: ${client_code}${env_code}
-    region_code: m
-    class_code: (u|a|b)-
-    user_defined_string: '^[a-z][a-z0-9-]*[a-z0-9]$'
+  displayName: nonp
+  folderRef:
+    name: clients.client1.applications-infrastructure # kpt-set: clients.${client-name}.applications-infrastructure
