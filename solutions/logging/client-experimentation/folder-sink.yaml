@@ -13,14 +13,14 @@
 # limitations under the License.
 
 # Folder sink for Platform and Component logs of Client Resources
-# Destination: cloud logging bucket inside audit project
+# Destination: cloud logging bucket inside logging project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: platform-component-log-client1-bucket-folder-sink # kpt-set: platform-component-log-${client-name}-bucket-folder-sink
+  name: platform-and-component-log-client1-log-sink # kpt-set: platform-and-component-log-${client-name}-log-sink
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-component-client1-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-component-${client-name}-log-bucket
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-client1-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-${client-name}-log-bucket
 spec:
   folderRef:
     name: clients.client1 # kpt-set: clients.${client-name}
@@ -30,7 +30,7 @@ spec:
     loggingLogBucketRef:
       # destination.loggingLogBucketRef
       # Only `external` field is supported to configure the reference.
-      external: platform-component-client1-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/platform-component-${client-name}-log-bucket
+      external: platform-and-component-client1-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
   description: Folder sink for Client Platform and Component logs # kpt-set: Folder sink for ${client-displayname} Platform and Component logs
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S)
@@ -40,7 +40,7 @@ spec:
       OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
       OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
       OR (LOG_ID("requests") AND resource.type="http_load_balancer")
-  # Excludes all Security logs: Cloud Audit and Access Transparency Logs
+  # Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
   exclusions:
     - description: Exclude Security logs
       disabled: false

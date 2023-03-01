@@ -56,7 +56,7 @@ spec:
               name: platform-and-component-log-sink
               namespace: logging
 ---
-# Enable data access log configuration on the audit project
+# Enable data access log configuration on the logging project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
 metadata:
