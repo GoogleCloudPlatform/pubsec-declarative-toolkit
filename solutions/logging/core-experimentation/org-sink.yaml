@@ -27,6 +27,8 @@ spec:
   includeChildren: true
   destination:
     loggingLogBucketRef:
+      # destination.loggingLogBucketRef
+      # Only `external` field is supported to configure the reference.
       external: security-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/logging-log-bucket
   description: Organization sink for Security Logs
   # Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
