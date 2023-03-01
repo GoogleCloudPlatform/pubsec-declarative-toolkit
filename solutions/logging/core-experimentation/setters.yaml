@@ -28,9 +28,9 @@ data:
   billing-id: "0000000000"
   org-id: "0000000000"
   #############
-  # Audit Project ID
+  # Logging Project ID
   management-project-id: management-project-12345
-  audit-prj-id: audit-prj-id-12345
+  logging-prj-id: logging-prj-id-12345
   #############
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets

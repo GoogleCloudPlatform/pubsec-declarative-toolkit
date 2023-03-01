@@ -16,13 +16,13 @@
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
-  name: audit-log-bucket
+  name: security-log-bucket
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
 spec:
   projectRef:
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+    external: projects/logging-prj-id # kpt-set: ${logging-prj-id}
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
   locked: false # kpt-set: ${retention-locking-policy}
@@ -35,11 +35,10 @@ metadata:
   name: platform-component-log-bucket
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: kpt-fn
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${audit-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
 spec:
   projectRef:
-    external: projects/audit-prj-id # kpt-set: ${audit-prj-id}
+    external: projects/logging-prj-id # kpt-set: ${logging-prj-id}
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
   locked: false # kpt-set: ${retention-locking-policy}

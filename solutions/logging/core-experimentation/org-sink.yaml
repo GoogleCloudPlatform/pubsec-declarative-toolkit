@@ -12,25 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Organization sink Security logs: Cloud Audit and Access Transparency Logs
-# Destination: Cloud Logging bucket hosted inside audit project
+# Organization sink for Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+# Destination: Cloud Logging bucket hosted inside logging project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: audit-log-bucket-sink
+  name: security-log-sink
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/audit-log-bucket
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/security-log-bucket
 spec:
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
   includeChildren: true
   destination:
     loggingLogBucketRef:
-      external: audit-log-bucket # kpt-set: logging.googleapis.com/projects/${audit-prj-id}/locations/northamerica-northeast1/buckets/audit-log-bucket
+      external: security-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/logging-log-bucket
   description: Organization sink for Security Logs
-  # Includes only Security logs: Cloud Audit and Access Transparency Logs
-  # TODO - Should we include Data Access audit logs
+  # Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
   filter: |-
       LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
       OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
