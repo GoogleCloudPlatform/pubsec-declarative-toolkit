@@ -12,4 +12,3 @@ jobs:
           command: manifest
           package-name: release-please-action
           signoff: "Name <pubsec-declarative-toolkit-bot@google.com>"
-          token: "PUBSECBOTTOKEN"
