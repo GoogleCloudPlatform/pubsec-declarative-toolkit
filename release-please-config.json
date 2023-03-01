@@ -4,8 +4,6 @@
   "bump-minor-pre-major": true,
   "include-v-in-tag": false,
   "changelog-path": "CHANGELOG.md",
-  "signoff": "Name <pubsec-declarative-toolkit-bot@google.com>",
-  "token": "PUBSECBOTTOKEN",
   "packages": {
     "solutions/gatekeeper-policies": {
       "package-name": "solutions/gatekeeper-policies",
