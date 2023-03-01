@@ -11,5 +11,5 @@ jobs:
         with:
           command: manifest
           package-name: release-please-action
-          token: GITHUB_TOKEN
+          token: secrets.GITHUB_TOKEN
           # signoff: "Name <pubsec-declarative-toolkit-bot@google.com>"
