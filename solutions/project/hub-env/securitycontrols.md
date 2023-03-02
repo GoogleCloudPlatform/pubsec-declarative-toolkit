@@ -16,7 +16,7 @@ Address which types of accounts are in use
 # Technical Controls - P1
 
 ### AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
-The information system enforces a role-based access control policy over defined subjects and objects and controls access based upon
+The information system enforces a role-based access control policy over defined subjects and objects and controls access based upon organization-defined roles and users authorized to assume such roles.
 
 Role policies for accounts are being set in this package
 * Settings for roles and privs assigned (only for GCP custom role allowing access to SDN)
