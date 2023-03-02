@@ -104,7 +104,7 @@ audit project log bucket.
         - logType: DATA_WRITE
       resourceRef:
         kind: Project
-        external: audit-prj-id # kpt-set: ${audit-prj-id}
+        external: audit-prj-id # kpt-set: ${logging-prj-id}
         namespace: projects
     ```
 - IAM permission to allow the service account tied to the organization sink to write logs into the security log bucket
