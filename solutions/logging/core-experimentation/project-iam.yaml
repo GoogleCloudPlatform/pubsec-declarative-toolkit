@@ -61,7 +61,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
 metadata:
   name: logging-project-data-access-log-config
-  namespace: hierarchy
+  namespace: projects
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
 spec:
