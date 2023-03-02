@@ -27,7 +27,7 @@ spec:
     namespace: projects
   destination:
     loggingLogBucketRef:
-      external: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-component-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-component-log-bucket
+      external: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-log-bucket
   # The following setting is required
   # You must set unique_writer_identity to true if you wish to publish logs across projects
   uniqueWriterIdentity: true

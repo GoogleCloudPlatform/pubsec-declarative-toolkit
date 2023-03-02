@@ -129,12 +129,12 @@ Details: https://kpt.dev/reference/cli/pkg/tree/
 Package "core-experimentation"
 ├── [Kptfile]  Kptfile core-experimentation-logging-package
 ├── [cloud-logging-buckets.yaml]  LoggingLogBucket logging/audit-log-bucket
-├── [cloud-logging-buckets.yaml]  LoggingLogBucket logging/platform-component-log-bucket
-├── [folder-sink.yaml]  LoggingLogSink logging/platform-component-log-bucket-folder-sink
+├── [cloud-logging-buckets.yaml]  LoggingLogBucket logging/platform-and-component-log-bucket
+├── [folder-sink.yaml]  LoggingLogSink logging/platform-and-component-log-bucket-folder-sink
 ├── [org-sink.yaml]  LoggingLogSink logging/audit-log-bucket-sink
 ├── [project-iam.yaml]  IAMAuditConfig hierarchy/audit-project-data-access-log-config
 ├── [project-iam.yaml]  IAMPartialPolicy projects/audit-log-bucket-writer-permissions
-├── [project-iam.yaml]  IAMPartialPolicy projects/platform-component-log-bucket-writer-permissions
+├── [project-iam.yaml]  IAMPartialPolicy projects/platform-and-component-log-bucket-writer-permissions
 ├── [project.yaml]  Project projects/audit-prj-id
 └── [setters.yaml]  ConfigMap setters
 ```
@@ -146,10 +146,10 @@ A table listing the GCP resources deployed by this logging solution package:
 | File                       | Resource Kind    | Namespace/metadata Name                                   | Description                                                                                                 |
 | -------------------------- | ---------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | cloud-logging-buckets.yaml | LoggingLogBucket | logging/audit-log-bucket                                  | Log bucket for organization security logs (Audit and Access Transparency Logs)                              |
-| cloud-logging-buckets.yaml | LoggingLogBucket | logging/platform-component-log-bucket                     | Log Bucket for platform and component logs                                                                  |
-| folder-sink.yaml          | LoggingLogSink   | logging/platform-component-log-bucket-folder-sink         | Folder sink for platform and component logs to Log Bucket                                                   |
+| cloud-logging-buckets.yaml | LoggingLogBucket | logging/platform-and-component-log-bucket                     | Log Bucket for platform and component logs                                                                  |
+| folder-sink.yaml          | LoggingLogSink   | logging/platform-and-component-log-bucket-folder-sink         | Folder sink for platform and component logs to Log Bucket                                                   |
 | org-sink.yaml             | LoggingLogSink   | logging/audit-log-bucket-sink                             | Organization sink for security logs to Log Bucket                                                           |
 | project-iam.yaml           | IAMPartialPolicy | projects/audit-project-data-access-log-config              | Enables data access logging       |
 | project-iam.yaml           | IAMPartialPolicy | projects/audit-log-bucket-writer-permissions              | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |
-| project-iam.yaml           | IAMPartialPolicy | projects/platform-component-log-bucket-writer-permissions | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |
+| project-iam.yaml           | IAMPartialPolicy | projects/platform-and-component-log-bucket-writer-permissions | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |
 | project.yaml               | Project          | projects/audit-prj-id                                     | Creates the audit project                                                                                   |
