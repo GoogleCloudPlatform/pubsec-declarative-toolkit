@@ -198,7 +198,7 @@ spec:
           set http-probe-value OK
       end
       config system interface
-          # AC-17(100) - allowaccess for managing the fortigate using SSH and HTTPS is only permitted on port4 (mgmt)
+          # AC-17(100) - The allowaccess setting which enables access to the fortigate is configured to only allow SSH and HTTPS on port4 (mgmt)
           edit port1
               set description "external"
               unset allowaccess

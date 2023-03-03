@@ -4,7 +4,8 @@
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
-A project that implements the Hub functionality from the Hub and Spoke network design. 
+Landing zone v2 subpackage.
+A project that implements the Hub functionality from the Hub and Spoke network design.
 This package is NOT required within an experimentation landing zone.
 
 ## Setters
