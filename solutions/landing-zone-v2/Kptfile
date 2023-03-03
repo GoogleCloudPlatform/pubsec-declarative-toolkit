@@ -5,7 +5,10 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: public sector declarative toolkit - landing zone v2 solution
+  description: |
+    public sector declarative toolkit - landing zone v2 solution
+
+    [Deploy a landing zone v2](../../docs/landing-zone-v2/README.md).
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
