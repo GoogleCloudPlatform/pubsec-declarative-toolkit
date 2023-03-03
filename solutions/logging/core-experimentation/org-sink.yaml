@@ -31,8 +31,7 @@ spec:
       # Only `external` field is supported to configure the reference.
       external: security-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/logging-log-bucket
   description: Organization sink for Security Logs
-  # AU-2 AUDITABLE EVENTS
-  # AU-12(A), AU-12(C)
+  # AU-2, AU-12(A), AU-12(C)
   # Includes Security logs: Cloud Audit, Access Transparency, and Data Access Logs
   # Security logs help you answer "who did what, where, and when"
   #
