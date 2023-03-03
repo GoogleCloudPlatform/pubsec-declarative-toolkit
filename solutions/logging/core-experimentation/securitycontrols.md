@@ -3,7 +3,6 @@
 # AC-3 ACCESS ENFORCEMENT
 ## AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL 
 - Write access to the logs is constrained by IAM permissions to just the log sinks.
-- The generated writer identity of log sinks to the logging project
 
 This control should be added to project-iam.yaml. Lines 15/16 already have a good explanation of
 what’s happening so just add the AC-3(7) tag around there)
