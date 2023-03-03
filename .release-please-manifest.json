@@ -1,11 +1,11 @@
 {
-    "solutions/gatekeeper-policies": "0.0.1",
-    "solutions/hierarchy/admin-experimentation": "0.0.1",
-    "solutions/hierarchy/client-env": "0.0.1",
-    "solutions/hierarchy/client-experimentation": "0.0.1",
-    "solutions/hierarchy/core-env": "0.0.1",
-    "solutions/hierarchy/core-experimentation": "0.0.1",
-    "solutions/landing-zone-v2": "0.0.1",
-    "solutions/org-policies": "0.0.1",
-    "solutions/project/project-experimentation": "0.0.1"
+    "solutions/gatekeeper-policies": "0.0.2",
+    "solutions/hierarchy/admin-experimentation": "0.0.2",
+    "solutions/hierarchy/client-env": "0.0.2",
+    "solutions/hierarchy/client-experimentation": "0.0.2",
+    "solutions/hierarchy/core-env": "0.1.0",
+    "solutions/hierarchy/core-experimentation": "0.0.2",
+    "solutions/landing-zone-v2": "0.1.0",
+    "solutions/org-policies": "0.0.2",
+    "solutions/project/project-experimentation": "0.0.2"
 }
