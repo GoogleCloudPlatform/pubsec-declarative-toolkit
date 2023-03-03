@@ -14,6 +14,7 @@
 
 # Logs Bucket writer IAM permissions 
 # Binds the generated Writer identity from the LoggingLogSink to the logging project
+# AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -26,6 +27,7 @@ spec:
     kind: Project
     name: projects/logging-prj-id # kpt-set: ${logging-prj-id}
     namespace: projects
+  # AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
   bindings:
     - role: roles/logging.bucketWriter
       members:

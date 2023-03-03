@@ -13,6 +13,8 @@
 # limitations under the License.
 
 # Cloud Logging bucket for Security logs: Cloud Audit, Access Transparency Logs, and Data Access Logs
+# Logs are routed using a log sink to a central logging project into a dedicated log bucket
+# AU-4(1) AU-9(2)
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
@@ -26,6 +28,8 @@ spec:
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
+  # Implement retention policy and retention locking policy
+  # AU-9 PROTECTION OF AUDIT INFORMATION
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}
 ---
@@ -43,5 +47,8 @@ spec:
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
+  # Implement retention policy and retention locking policy
+  # AU-9 PROTECTION OF AUDIT INFORMATION
+  # AU-11 AUDIT RECORD RETENTION
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}

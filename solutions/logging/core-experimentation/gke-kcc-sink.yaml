@@ -23,8 +23,7 @@ metadata:
     config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-log-bucket
 spec:
   projectRef:
-    name: projects/logging-prj-id # kpt-set: ${logging-prj-id}
-    namespace: projects
+    external: management-project-12345 # kpt-set: ${management-project-id}
   destination:
     loggingLogBucketRef:
       external: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-log-bucket
@@ -32,8 +31,16 @@ spec:
   # You must set unique_writer_identity to true if you wish to publish logs across projects
   uniqueWriterIdentity: true
   description: Project sink for Platform and Component logs of the GKE KCC Landing Zone Cluster
+  # AU-2 AUDITABLE EVENTS
+  # AU-12(A), AU-12(C)
   # No inclusion filter. Includes all Platform and Component logs
-  # Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  # Google Cloud platform logs are service-specific logs
+  # For a list of all supported Google Cloud Logging API Services visit https://cloud.google.com/logging/docs/api/platform-logs
+  # Also includes the following types of logs:
+  # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
+  # These logs are not enabled by default. They are enabled inside the client-experimentation package:
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-experimentation
+  # Excludes: Cloud Audit, Access Transparency, and Data Access Logs
   exclusions:
     - description: Exclude Security logs
       disabled: false
@@ -46,6 +53,7 @@ spec:
       name: exclude-security-logs
 ---
 # Disable the _Default log bucket sink in the GKE KCC Cluster's management project
+# This prevents duplication of logs
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:

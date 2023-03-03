@@ -32,8 +32,12 @@ spec:
       # Only `external` field is supported to configure the reference.
       external: platform-and-component-client1-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
   description: Folder sink for Client Platform and Component logs # kpt-set: Folder sink for ${client-displayname} Platform and Component logs
+  # AU-2 AUDITABLE EVENTS
+  # AU-12(A), AU-12(C)
   # Includes the following types of logs:
-  # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S)
+  # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
+  # These logs are not enabled by default. They are enabled inside the client-experimentation package:
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-experimentation
   filter: |-
       LOG_ID("dns.googleapis.com/dns_queries")
       OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
