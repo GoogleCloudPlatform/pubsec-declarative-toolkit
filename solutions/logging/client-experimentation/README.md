@@ -1,6 +1,7 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # client-experimentation-logging-package
 
+
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 **`Note:`** The [core-experimentation](../core-experimentation/) package must be deployed before deploying the `client-experimentation` logging package.
 
@@ -11,11 +12,10 @@ Package to deploy client-experimentation logging solution
 
 |           Name           |           Value           | Type | Count |
 |--------------------------|---------------------------|------|-------|
-| audit-prj-id             | audit-prj-id-12345        | str  |     0 |
 | client-displayname       | Client1                   | str  |     2 |
 | client-folderviewer      | group:client1@example.com | str  |     0 |
 | client-name              | client1                   | str  |     5 |
-| logging-prj-id           | ${logging-prj-id}         | str  |     4 |
+| logging-prj-id           | logging-prj-id-12345      | str  |     4 |
 | retention-in-days        |                         1 | int  |     1 |
 | retention-locking-policy | false                     | bool |     1 |
 
