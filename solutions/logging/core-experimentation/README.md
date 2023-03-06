@@ -165,25 +165,24 @@ This package deploys the following resources:
 - Data access log configuration enables data access log collection on the logging project. Logs are routed the the logging project `security-log-bucket` log bucket.
 
     ```yaml
-    # Enable data access log configuration on the loging project
-    apiVersion: iam.cnrm.cloud.google.com/v1beta1
-    kind: IAMAuditConfig
-    metadata:
-      name: audit-project-data-access-log-config
-      namespace: hierarchy
-      annotations:
-        cnrm.cloud.google.com/blueprint: 'kpt-fn'
-        config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/testing
-    spec:
-      service: allServices
-      auditLogConfigs:
-        - logType: ADMIN_READ
-        - logType: DATA_READ
-        - logType: DATA_WRITE
-      resourceRef:
-        kind: Project
-        external: logging-prj-id # kpt-set: ${logging-prj-id}
-        namespace: projects
+  # Enable data access log configuration on the logging project
+  apiVersion: iam.cnrm.cloud.google.com/v1beta1
+  kind: IAMAuditConfig
+  metadata:
+    name: logging-project-data-access-log-config
+    namespace: projects
+    annotations:
+      config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+  spec:
+    service: allServices
+    auditLogConfigs:
+      - logType: ADMIN_READ
+      - logType: DATA_READ
+      - logType: DATA_WRITE
+    resourceRef:
+      kind: Project
+      name: logging-prj-id # kpt-set: ${logging-prj-id}
+      namespace: projects
     ```
 
 - IAM permission to allow the service account tied to the organization sink to write logs into the security log bucket
