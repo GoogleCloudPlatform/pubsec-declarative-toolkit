@@ -105,7 +105,7 @@ This package deploys the following resources:
 
 - Folder log sink for platform and component logs for resources under the `clients` folder
 
-    - Destionation: Log bucket hosted inside the logging project
+    - Destination: Log bucket hosted inside the logging project
 
     - Includes the following types of logs:
         - Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S)

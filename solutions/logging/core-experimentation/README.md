@@ -127,7 +127,7 @@ This package deploys the following resources:
         includeChildren: true
         ```
 
-    - Destionation: Log bucket hosted inside the loging project
+    - Destination: Log bucket hosted inside the loging project
 
     - Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
