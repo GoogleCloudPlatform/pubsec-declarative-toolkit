@@ -1,5 +1,9 @@
 # Security Controls
 
+
+<mark>**TODO: This document requires refinement.**</mark>
+
+
 # AC-3 ACCESS ENFORCEMENT
 ## AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL 
 AC-3(7) – Write access to the logs is constrained by IAM permissions to just the log sinks.
