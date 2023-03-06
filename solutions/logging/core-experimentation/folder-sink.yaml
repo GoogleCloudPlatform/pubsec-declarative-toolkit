@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+######
 # Folder sink for Platform and Component logs of Tests Resources
 # Destination: Cloud Logging bucket hosted inside logging project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
