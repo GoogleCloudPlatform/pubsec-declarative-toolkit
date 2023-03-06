@@ -1,19 +1,106 @@
-# Core-Experimentation Logging Solution Package
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+# core-experimentation-logging-package
 
-A package to deploy the core-experimentation logging solution inside the experimentation landing-zone.
 
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 **`Note:`** This package must be deployed before the `client-experimentation` logging package.
 
-# Core-Experimentation Logging Solution Overview
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
+Package to deploy core-experimentation logging solution
+
+## Setters
+
+|           Name           |          Value           | Type | Count |
+|--------------------------|--------------------------|------|-------|
+| billing-id               |               0000000000 | str  |     1 |
+| logging-prj-id           | logging-prj-id-12345     | str  |    17 |
+| management-project-id    | management-project-12345 | str  |     2 |
+| org-id                   |               0000000000 | str  |     1 |
+| retention-in-days        |                        1 | int  |     2 |
+| retention-locking-policy | false                    | bool |     2 |
+
+## Sub-packages
+
+This package has no sub-packages.
+
+## Resources
+
+|            File            |                  APIVersion                   |       Kind       |                                 Name                                 | Namespace |
+|----------------------------|-----------------------------------------------|------------------|----------------------------------------------------------------------|-----------|
+| cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | security-log-bucket                                                  | logging   |
+| cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | platform-and-component-log-bucket                                    | logging   |
+| folder-sink.yaml           | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-log-sink                                      | logging   |
+| gke-kcc-sink.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | gke-kcc-cluster-platform-and-component-log-sink                      | logging   |
+| gke-kcc-sink.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | gke-kcc-cluster-disable-default-bucket                               | logging   |
+| org-sink.yaml              | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | security-log-sink                                                    | logging   |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | security-log-bucket-writer-permissions                               | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | platform-and-component-log-bucket-writer-permissions                 | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | gke-kcc-cluster-platform-and-component-log-bucket-writer-permissions | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMAuditConfig   | logging-project-data-access-log-config                               | projects  |
+| project.yaml               | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project          | logging-prj-id                                                       | projects  |
+
+## Resource References
+
+- [IAMAuditConfig](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamauditconfig)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
+- [LoggingLogBucket](https://cloud.google.com/config-connector/docs/reference/resource-docs/logging/logginglogbucket)
+- [LoggingLogSink](https://cloud.google.com/config-connector/docs/reference/resource-docs/logging/logginglogsink)
+- [Project](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/project)
+
+## Usage
+
+1.  Clone the package:
+    ```shell
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-experimentation@${VERSION}
+    ```
+    Replace `${VERSION}` with the desired repo branch or tag
+    (for example, `main`).
+
+1.  Move into the local package:
+    ```shell
+    cd ".//solutions/logging/core-experimentation/"
+    ```
+
+1.  Edit the function config file(s):
+    - setters.yaml
+
+1.  Execute the function pipeline
+    ```shell
+    kpt fn render
+    ```
+
+1.  Initialize the resource inventory
+    ```shell
+    kpt live init --namespace ${NAMESPACE}
+    ```
+    Replace `${NAMESPACE}` with the namespace in which to manage
+    the inventory ResourceGroup (for example, `config-control`).
+
+1.  Apply the package resources to your cluster
+    ```shell
+    kpt live apply
+    ```
+
+1.  Wait for the resources to be ready
+    ```shell
+    kpt live status --output table --poll-until current
+    ```
+
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
+
+# core-experimentation-logging-package - continued
+**TODO:** Move documentation to docs repo?
+
+## Core-Experimentation Logging Solution Overview
 
 This package deploys the following resources:
 
-- Log bucket for Security Logs (Cloud Audit and Access Transparency logs)
+- Log bucket for Security Logs (Cloud Audit, Access Transparency logs, and Data Access Logs)
 
     - Retention in Days configurable via setters.yaml
 
         ```yaml
-        retention-in-days: 365
+        retention-in-days: 1
         ```
     - Retention locking policy configurable via setters.yaml
 
@@ -25,14 +112,14 @@ This package deploys the following resources:
     - Retention in Days configurable via setters.yaml
 
         ```yaml
-        retention-in-days: 365
+        retention-in-days: 1
         ```
     - Retention locking policy configurable via setters.yaml
         ```yaml
         retention-locking-policy: true
         ```
 
-- Organizational log sink for Security Logs (Cloud Audit and Access Transparency logs)
+- Organizational log sink for Security Logs (Cloud Audit, Access Transparency, and Data Access Logs)
 
     - Include all child resources is enabled:
 
@@ -40,9 +127,9 @@ This package deploys the following resources:
         includeChildren: true
         ```
 
-    - Destionation: Log bucket hosted inside the audit project
+    - Destionation: Log bucket hosted inside the loging project
 
-    - Includes only Security logs: Cloud Audit and Access Transparency Logs
+    - Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
         ```yaml
           filter: |-
@@ -57,11 +144,11 @@ This package deploys the following resources:
 
 - Folder log sink for platform and component logs for resources under the `tests` folder
 
-    - Destionation: Log bucket hosted inside the audit project
+    - Destionation: Log bucket hosted inside the loging project
 
     - No inclusion filter. Includes all Platform and Component logs
 
-    - Excludes all Security logs: Cloud Audit and Access Transparency Logs
+    - Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
         ```yaml
           exclusions:
@@ -75,19 +162,10 @@ This package deploys the following resources:
                 OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
               name: exclude-security-logs
         ```
-
-```
-# TODO: Revise how data access logs should be enabled. Per Folder or Project?
-        Perhaps it should be configured at the folder level since the data access log config should reside inside
-        the logging package. The only requirement to use folder ref is that any projects under the folder requires
-        a depends-on annotation.
-```
-
-- Data access log configuration enables data access log collection on the audit project. Logs are routed the the
-audit project log bucket.
+- Data access log configuration enables data access log collection on the logging project. Logs are routed the the logging project `security-log-bucket` log bucket.
 
     ```yaml
-    # Enable data access log configuration on the audit project
+    # Enable data access log configuration on the loging project
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMAuditConfig
     metadata:
@@ -104,52 +182,9 @@ audit project log bucket.
         - logType: DATA_WRITE
       resourceRef:
         kind: Project
-        external: audit-prj-id # kpt-set: ${logging-prj-id}
+        external: logging-prj-id # kpt-set: ${logging-prj-id}
         namespace: projects
     ```
+
 - IAM permission to allow the service account tied to the organization sink to write logs into the security log bucket
 - IAM permission to allow the service account tied to the folder sink to write logs into the platform and component log bucket
-
-## Usage
-### Fetch the package
-
-```
-kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-experimentation
-```
-
-Details: https://kpt.dev/reference/cli/pkg/get/
-
-### View package content
-
-`kpt pkg tree core-experimentation`
-
-Details: https://kpt.dev/reference/cli/pkg/tree/
-
-```
-Package "core-experimentation"
-├── [Kptfile]  Kptfile core-experimentation-logging-package
-├── [cloud-logging-buckets.yaml]  LoggingLogBucket logging/audit-log-bucket
-├── [cloud-logging-buckets.yaml]  LoggingLogBucket logging/platform-and-component-log-bucket
-├── [folder-sink.yaml]  LoggingLogSink logging/platform-and-component-log-bucket-folder-sink
-├── [org-sink.yaml]  LoggingLogSink logging/audit-log-bucket-sink
-├── [project-iam.yaml]  IAMAuditConfig hierarchy/audit-project-data-access-log-config
-├── [project-iam.yaml]  IAMPartialPolicy projects/audit-log-bucket-writer-permissions
-├── [project-iam.yaml]  IAMPartialPolicy projects/platform-and-component-log-bucket-writer-permissions
-├── [project.yaml]  Project projects/audit-prj-id
-└── [setters.yaml]  ConfigMap setters
-```
-
-## Deployed Google Cloud Platform Resources
-
-A table listing the GCP resources deployed by this logging solution package:
-
-| File                       | Resource Kind    | Namespace/metadata Name                                   | Description                                                                                                 |
-| -------------------------- | ---------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| cloud-logging-buckets.yaml | LoggingLogBucket | logging/audit-log-bucket                                  | Log bucket for organization security logs (Audit and Access Transparency Logs)                              |
-| cloud-logging-buckets.yaml | LoggingLogBucket | logging/platform-and-component-log-bucket                     | Log Bucket for platform and component logs                                                                  |
-| folder-sink.yaml          | LoggingLogSink   | logging/platform-and-component-log-bucket-folder-sink         | Folder sink for platform and component logs to Log Bucket                                                   |
-| org-sink.yaml             | LoggingLogSink   | logging/audit-log-bucket-sink                             | Organization sink for security logs to Log Bucket                                                           |
-| project-iam.yaml           | IAMPartialPolicy | projects/audit-project-data-access-log-config              | Enables data access logging       |
-| project-iam.yaml           | IAMPartialPolicy | projects/audit-log-bucket-writer-permissions              | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |
-| project-iam.yaml           | IAMPartialPolicy | projects/platform-and-component-log-bucket-writer-permissions | IAM permission to allow log sink service account to write logs to the Log Bucket in the audit project       |
-| project.yaml               | Project          | projects/audit-prj-id                                     | Creates the audit project                                                                                   |
