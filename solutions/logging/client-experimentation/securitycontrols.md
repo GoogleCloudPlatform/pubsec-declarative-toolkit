@@ -1,8 +1,5 @@
 # Security Controls
-
-
-<mark>**TODO: This document requires refinement.**</mark>
-
+> TODO: This document requires refinement.
 
 # AC-3 ACCESS ENFORCEMENT
 ## AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL 
