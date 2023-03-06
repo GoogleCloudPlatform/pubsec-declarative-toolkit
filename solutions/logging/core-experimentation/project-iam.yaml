@@ -100,3 +100,8 @@ spec:
     kind: Project
     name: logging-prj-id # kpt-set: ${logging-prj-id}
     namespace: projects
+---
+# TODO
+# IAMPolicyMember 
+# IAM role to enable Access Transparency Admin (roles/axt.admin) through the logging project
+# https://cloud.google.com/cloud-provider-access-management/access-transparency/docs/enable
