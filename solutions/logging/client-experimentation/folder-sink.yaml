@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+######
 # Folder sink for Platform and Component logs of Client Resources
 # Destination: cloud logging bucket inside logging project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
@@ -38,11 +38,11 @@ spec:
   # These logs are not enabled by default. They are enabled inside the client-experimentation package:
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-experimentation
   filter: |-
-      LOG_ID("dns.googleapis.com/dns_queries")
-      OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
-      OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
-      OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
-      OR (LOG_ID("requests") AND resource.type="http_load_balancer")
+    LOG_ID("dns.googleapis.com/dns_queries")
+    OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
+    OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
+    OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
+    OR (LOG_ID("requests") AND resource.type="http_load_balancer")
   # Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
   exclusions:
     - description: Exclude Security logs
