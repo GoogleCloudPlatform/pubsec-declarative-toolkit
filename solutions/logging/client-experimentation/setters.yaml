@@ -21,7 +21,6 @@ metadata:
 data:
   client-name: 'client1' # lowercase only
   client-displayname: 'Client1'
-  client-folderviewer: 'group:client1@example.com'
   #############
   # logging Project ID
   logging-prj-id: logging-prj-id-12345

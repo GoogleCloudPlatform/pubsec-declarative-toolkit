@@ -13,7 +13,6 @@ Package to deploy client-experimentation logging solution
 |           Name           |           Value           | Type | Count |
 |--------------------------|---------------------------|------|-------|
 | client-displayname       | Client1                   | str  |     2 |
-| client-folderviewer      | group:client1@example.com | str  |     0 |
 | client-name              | client1                   | str  |     5 |
 | logging-prj-id           | logging-prj-id-12345      | str  |     4 |
 | retention-in-days        |                         1 | int  |     1 |
