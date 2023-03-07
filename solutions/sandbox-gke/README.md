@@ -51,7 +51,7 @@ The following fields are exposed in `setters.yaml`
 | gke-admin | group@email.com | |
 | gke-viewer | group@email.com | |
 | machineType | e2-standard-4 | |
-| region | us-central1 | |
+| region | northamerica-northeast1 | |
 4. To populate the template with the `setters` inputs run `kpt fn render`.
 
 

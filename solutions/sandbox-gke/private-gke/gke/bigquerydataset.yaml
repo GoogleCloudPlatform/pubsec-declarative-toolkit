@@ -20,10 +20,10 @@ metadata: # kpt-merge: sandbox/gkemetering
     cnrm.cloud.google.com/delete-contents-on-destroy: "true"
     cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/config-control/Service/bigquery,iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-bigquery-admin # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/${project-namespace}/Service/${project-id}-services-bigquery,iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-bigquery-admin
-  name: gkemetering # kpt-set: ${cluster-name}gkemetering
+  name: sandboxgkemetering
   namespace: sandbox # kpt-set: ${project-namespace}
 spec:
   defaultTableExpirationMs: 3600000
-  description: "BigQuery Dataset Sample" # kpt-set: ${cluster-name}-gkemetering
+  description: "BigQuery Dataset Sample" # kpt-set: sandbox-${cluster-name}-gkemetering
   friendlyName: gke-metering-dataset
-  location: us-central1 # kpt-set: ${region}
+  location: northamerica-northeast1 # kpt-set: ${region}
