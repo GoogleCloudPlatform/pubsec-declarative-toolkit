@@ -1,0 +1,56 @@
+{
+  "bootstrap-sha": "638cf1a666e2e05394371b2eb9223fc9d539ada0",
+  "release-type": "krm-blueprint",
+  "bump-minor-pre-major": true,
+  "include-v-in-tag": false,
+  "changelog-path": "CHANGELOG.md",
+  "signoff": "Name <pubsec-declarative-toolkit-bot@google.com>",
+  "token": "PUBSECBOTTOKEN",
+  "packages": {
+    "solutions/gatekeeper-policies": {
+      "package-name": "solutions/gatekeeper-policies",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/admin-experimentation": {
+      "package-name": "solutions/hierarchy/admin-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/client-env": {
+      "package-name": "solutions/hierarchy/client-env",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/client-experimentation": {
+      "package-name": "solutions/hierarchy/client-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/core-env": {
+      "package-name": "solutions/hierarchy/core-env",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/hierarchy/core-experimentation": {
+      "package-name": "solutions/hierarchy/core-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/landing-zone-v2": {
+      "package-name": "solutions/landing-zone-v2",
+      "tag-separator": "/",
+      "prerelease": true  
+    },
+    "solutions/org-policies": {
+      "package-name": "solutions/org-policies",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/project/project-experimentation": {
+      "package-name": "solutions/project/project-experimentation",
+      "tag-separator": "/",
+      "prerelease": true
+    }
+  }
+}
