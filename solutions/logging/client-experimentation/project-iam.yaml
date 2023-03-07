@@ -24,7 +24,7 @@ metadata:
 spec:
   resourceRef:
     kind: Project
-    name: projects/logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-prj-id # kpt-set: ${logging-prj-id}
     namespace: projects
   # AC-3(7) - Write access to the logging buckets is limited by IAM to just the identities of the log sinks configured to send logs to the buckets (set at the logging project level)
   bindings:
