@@ -57,7 +57,7 @@ spec:
         name: sandbox-pubsub # kpt-set: ${cluster-name}-pubsub
   resourceUsageExportConfig:
     bigqueryDestination:
-      datasetId: sandboxgkemetering # kpt-set: ${cluster-name}gkemetering
+      datasetId: sandboxgkemetering
     enableNetworkEgressMetering: true
     enableResourceConsumptionMetering: true
   podSecurityPolicyConfig:
