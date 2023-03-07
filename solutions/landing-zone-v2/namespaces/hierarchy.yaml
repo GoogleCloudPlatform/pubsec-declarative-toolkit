@@ -124,7 +124,6 @@ metadata:
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
-    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|RoleBinding|hierarchy|allow-hierarchy-resource-reference-from-config-control'
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
