@@ -119,7 +119,7 @@ subjects:
 # Grant viewer role on the hierarchy namespace to config-control K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata: # kpt-merge: hierarchy/allow-hierarchy-resource-reference-from-config-control
+metadata:
   name: allow-hierarchy-resource-reference-from-config-control
   namespace: hierarchy
   annotations:
