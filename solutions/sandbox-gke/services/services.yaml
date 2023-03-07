@@ -17,7 +17,7 @@ metadata:
   name: guardrails-project-services # kpt-set: ${project-id}-services
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/deletion-policy: "false"
+    cnrm.cloud.google.com/deletion-policy: "abandon"
     config.kubernetes.io/local-config: "true"
     cnrm.cloud.google.com/disable-dependent-services: "true"
     config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/config-control/IAMPolicyMember/my-demo-guardrails-controller-services-admin # kpt-set: iam.cnrm.cloud.google.com/namespaces/${project-namespace}/IAMPolicyMember/${project-id}-services-admin
