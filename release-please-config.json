@@ -42,6 +42,16 @@
       "tag-separator": "/",
       "prerelease": true  
     },
+    "solutions/logging/client-experimentation": {
+      "package-name": "solutions/logging/client-experimentation",
+      "tag-separator": "/",
+      "prerelease": true  
+    },
+    "solutions/logging/core-experimentation": {
+      "package-name": "solutions/logging/core-experimentation",
+      "tag-separator": "/",
+      "prerelease": true  
+    },
     "solutions/org-policies": {
       "package-name": "solutions/org-policies",
       "tag-separator": "/",
