@@ -24,7 +24,7 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
 spec:
   projectRef:
-    name: projects/logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-prj-id # kpt-set: ${logging-prj-id}
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for client Platform and Component logs # kpt-set: Cloud Logging bucket for ${client-displayname} Platform and Component logs
