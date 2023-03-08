@@ -10,6 +10,7 @@ extends: relaxed
 
 rules:
   line-length: disable
+  new-line-at-end-of-file: disable
 
 # yaml-files:
 #   - '*.yaml'
