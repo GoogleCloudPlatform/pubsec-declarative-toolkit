@@ -7,13 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  solutions-render:
+  render-and-validate:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v1
       
-      - name: kpt fn render all solutions
+      - name: 'Render All Solutions - kpt fn render'
         run: |
           # remove the arete solutions.yaml, it fails rendering because it doens't have an 'apiVersion' defined
           rm solutions/solutions.yaml
@@ -24,18 +24,14 @@ jobs:
           # render the entire solutions folder
           docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 fn render /app/solutions --truncate-output=false
       
-      - name: 'Upload Solution Artifact'
+      - name: 'Upload Rendered Solutions Artifact'
         uses: actions/upload-artifact@v3
         with:
           name: all-solutions-render
           path: ./solutions
           retention-days: 1
-  
-  solutions-validate:
-    runs-on: ubuntu-latest
-    needs: solutions-render
-    steps:
-      - name: Download Solutions
+
+      - name: 'Download Rendered Solutions Artifact'
         uses: actions/download-artifact@v3
         with:
           name: all-solutions-render
@@ -45,4 +41,4 @@ jobs:
       
       - name: nomos vet all solutions
         run: |
-          docker run -v $PWD:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions
+          docker run -v $PWD/solutions:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions
