@@ -1,11 +1,9 @@
 ---
 ###########################################
 # The rules used for linting all yaml files
-# combination of sample configuration files from:
 # https://github.com/github/super-linter/blob/main/TEMPLATES/.yaml-lint.yml
 # https://yamllint.readthedocs.io/en/stable/configuration.html
 ###########################################
-
 extends: relaxed
 
 rules:

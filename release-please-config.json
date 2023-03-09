@@ -51,9 +51,6 @@
       "package-name": "solutions/project/project-experimentation",
       "tag-separator": "/",
       "prerelease": true
-    },
-    "solutions/kcc-namespaces": {
-      "package-name": "solutions/kcc-namespaces"
     }
   }
 }

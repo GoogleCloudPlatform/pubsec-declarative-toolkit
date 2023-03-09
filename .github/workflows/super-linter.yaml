@@ -31,15 +31,37 @@ jobs:
 
       ################################
       # Run Linter against code base
-      # the default configuration file directory is '.github/linters'
-      # it can be modified with LINTER_RULES_PATH
+      # each step will run even if one fails
+      # this is accomplished with the 'if: ${{ success() || failure() }}'
       ################################
-      - name: Lint Code Base
+      - name: Lint YAML
+        if: ${{ success() || failure() }}
         uses: github/super-linter/slim@v4
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: cli/.*
-          # VALIDATE_MARKDOWN: true
+          LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_YAML: true
           YAML_CONFIG_FILE: .yaml-lint-config.yaml
+      
+      - name: Lint Bash
+        if: ${{ success() || failure() }}
+        uses: github/super-linter/slim@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: cli/.*
+          LINTER_RULES_PATH: .github/linter-rules
+          VALIDATE_BASH: true
+      
+      - name: Lint Markdown
+        if: ${{ success() || failure() }}
+        uses: github/super-linter/slim@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: cli/.*
+          LINTER_RULES_PATH: .github/linter-rules
+          VALIDATE_MARKDOWN: true
+          MARKDOWN_CONFIG_FILE: .markdown-lint-config.yaml
