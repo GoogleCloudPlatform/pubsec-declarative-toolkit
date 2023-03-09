@@ -17,7 +17,8 @@ jobs:
       
       - name: 'Validate v2 Solutions'
         run: |
-          # set kpt and nomos to run with docker
+          # set kpt and nomos to run with docker in /workspace working directory
+          # note: starting with nomos ~v1.14.1, the image as an entrypoint to the 'nomos' command, only need to pass the parameters
           KPT="docker run -v $PWD:/workspace -w /workspace -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27"
           NOMOS="docker run -v $PWD:/workspace -w /workspace gcr.io/config-management-release/nomos:v1.14.2"
 
@@ -25,10 +26,12 @@ jobs:
           for pkg in $(jq -r '.packages | keys[]' release-please-config.json)
           do
             echo -e "\n##########\n## Validating '${pkg}' \n##########\n"
-            echo "Running 'kpt fn render ${pkg}' ..."
-            ${KPT} fn render ${pkg} --truncate-output=false
+            echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
+            
+            echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
+            ${KPT} fn eval -i kubeval:v0.3.0 ${pkg} --truncate-output=false -- ignore_missing_schemas=true strict=true
 
-            echo "Running 'nomos vet ${pkg}' ..."
+            echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
             ${NOMOS} vet --no-api-server-check --source-format unstructured --path ${pkg}
           done
           
