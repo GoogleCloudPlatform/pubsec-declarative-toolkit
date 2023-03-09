@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - solutions/**
+  pull_request:
+    branches: [main]
 jobs:
   solutions-render:
     runs-on: ubuntu-latest
