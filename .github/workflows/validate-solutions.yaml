@@ -9,15 +9,22 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: kpt fn render
+      
+      - name: kpt fn render all solutions
         run: |
+          # initialize the entire solutions folder as a kpt package
+          docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 pkg init /app/solutions
+          
+          # render the entire solutions folder
           docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 fn render /app/solutions
+      
       - name: 'Upload Solution Artifact'
         uses: actions/upload-artifact@v3
         with:
           name: all-solutions-render
           path: ./solutions
           retention-days: 1
+  
   solutions-validate:
     runs-on: ubuntu-latest
     needs: solutions-render
@@ -26,8 +33,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: all-solutions-render
+      
       - name: dir check
         run: pwd && ls
+      
       - name: nomos vet all solutions
         run: |
           docker run -v $PWD:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions
