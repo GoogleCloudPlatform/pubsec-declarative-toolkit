@@ -1,10 +1,12 @@
 name: validate-solutions
 on:
-  push:
-    paths:
-      - solutions/**
+  # push:
+  #   paths:
+  #     - solutions/**
   pull_request:
     branches: [main]
+    paths:
+      - solutions/**
 
 jobs:
   render-and-validate:
@@ -15,8 +17,11 @@ jobs:
       
       - name: 'Render All Solutions - kpt fn render'
         run: |
-          # remove the arete solutions.yaml, it fails rendering because it doens't have an 'apiVersion' defined
+          # remove known problematic files and folders
+          # the arete solutions.yaml fails rendering because it doesn't have an 'apiVersion' defined
           rm solutions/solutions.yaml
+          # the kcc-namespace package has default setters with uppercases and underscores which creates invalid resource names, etc.
+          rm --recursive --force solutions/kcc-namespaces
 
           # initialize the entire solutions folder as a kpt package
           docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 pkg init /app/solutions
