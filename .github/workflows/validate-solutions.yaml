@@ -26,7 +26,9 @@ jobs:
           for pkg in $(jq -r '.packages | keys[]' release-please-config.json)
           do
             echo -e "\n##########\n## Validating '${pkg}' \n##########\n"
+            
             echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
+            ${KPT} fn render ${pkg} --truncate-output=false
             
             echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
             ${KPT} fn eval -i kubeval:v0.3.0 ${pkg} --truncate-output=false -- ignore_missing_schemas=true strict=true
