@@ -15,35 +15,53 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
       
-      - name: 'Render All Solutions - kpt fn render'
+      - name: 'Validate v2 Solutions'
         run: |
-          # remove known problematic files and folders
-          # the arete solutions.yaml fails rendering because it doesn't have an 'apiVersion' defined
-          rm solutions/solutions.yaml
-          # the kcc-namespace package has default setters with uppercases and underscores which creates invalid resource names, etc.
-          rm --recursive --force solutions/kcc-namespaces
+          # set kpt and nomos to run with docker
+          KPT="docker run -v $PWD:/workspace -w /workspace -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27"
+          NOMOS="docker run -v $PWD:/workspace -w /workspace gcr.io/config-management-release/nomos:v1.14.2"
 
-          # initialize the entire solutions folder as a kpt package
-          docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 pkg init /app/solutions
+          # loop through each solutions using the packages defined in the release please manifest
+          for pkg in $(jq -r '.packages | keys[]' release-please-config.json)
+          do
+            echo -e "\n##########\n## Validating '${pkg}' \n##########\n"
+            echo "Running 'kpt fn render ${pkg}' ..."
+            ${KPT} fn render ${pkg} --truncate-output=false
+
+            echo "Running 'nomos vet ${pkg}' ..."
+            ${NOMOS} vet --no-api-server-check --source-format unstructured --path ${pkg}
+          done
           
-          # render the entire solutions folder
-          docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 fn render /app/solutions --truncate-output=false
       
-      - name: 'Upload Rendered Solutions Artifact'
-        uses: actions/upload-artifact@v3
-        with:
-          name: all-solutions-render
-          path: ./solutions
-          retention-days: 1
+      # - name: 'Render All Solutions - kpt fn render'
+      #   run: |
+      #     # remove known problematic files and folders
+      #     # the arete solutions.yaml fails rendering because it doesn't have an 'apiVersion' defined
+      #     rm solutions/solutions.yaml
+      #     # the kcc-namespace package has default setters with uppercases and underscores which creates invalid resource names, etc.
+      #     rm --recursive --force solutions/kcc-namespaces
 
-      - name: 'Download Rendered Solutions Artifact'
-        uses: actions/download-artifact@v3
-        with:
-          name: all-solutions-render
+      #     # initialize the entire solutions folder as a kpt package
+      #     docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 pkg init /app/solutions
+          
+      #     # render the entire solutions folder
+      #     docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 fn render /app/solutions --truncate-output=false
       
-      - name: dir check
-        run: pwd && ls
+      # - name: 'Upload Rendered Solutions Artifact'
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: all-solutions-render
+      #     path: ./solutions
+      #     retention-days: 1
+
+      # - name: 'Download Rendered Solutions Artifact'
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: all-solutions-render
       
-      - name: nomos vet all solutions
-        run: |
-          docker run -v $PWD/solutions:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions
+      # - name: dir check
+      #   run: pwd && ls
+      
+      # - name: nomos vet all solutions
+      #   run: |
+      #     docker run -v $PWD/solutions:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions
