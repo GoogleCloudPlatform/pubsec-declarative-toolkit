@@ -39,7 +39,7 @@ metadata:
   labels:
     resource-group: common
   # StorageBucket names must be globally unique. Replace ${PROJECT_ID?} with your project ID.
-  name: audit-sink-${project-id} # kpt-set: audit-${audit-prj-id}
+  name: audit-sink-audit-prj-id # kpt-set: audit-${audit-prj-id}
   namespace: common
 spec:
   lifecycleRule:
@@ -74,7 +74,7 @@ spec:
   resourceRef:
     apiVersion: storage.cnrm.cloud.google.com/v1beta1
     kind: StorageBucket
-    name: audit-sink-${project-id} # kpt-set: audit-${audit-prj-id}
+    name: audit-sink-audit-prj-id # kpt-set: audit-${audit-prj-id}
   bindings:
     - role: roles/storage.objectCreator
       members:

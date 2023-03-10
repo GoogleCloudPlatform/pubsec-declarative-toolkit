@@ -18,7 +18,6 @@ metadata:
   name: cloudmarketplaceconfig
   annotations:
     config.kubernetes.io/local-config: 'true'
-    config.kubernetes.io/local-config: 'true'      
 tests:
 - name: limitegresstraffic
   template: template.yaml
