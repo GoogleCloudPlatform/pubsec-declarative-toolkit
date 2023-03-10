@@ -1,0 +1,48 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# VPC Peering
+# Local
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetworkPeering
+metadata:
+  name: project-id-to-hub-peer # kpt-set: ${project-id}-to-hub-peer
+  namespace: networking
+spec:
+  resourceID: project-id-to-hub-peer # kpt-set: ${project-id}-to-hub-peer
+  exportCustomRoutes: false
+  importCustomRoutes: true
+  exportSubnetRoutesWithPublicIp: false
+  importSubnetRoutesWithPublicIp: true
+  networkRef:
+    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+  peerNetworkRef:
+    name: perimeter-global-internal-vpc
+---
+# Remote - Hub
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetworkPeering
+metadata:
+  name: hub-to-project-id-peer # kpt-set: hub-to-${project-id}-peer
+  namespace: networking
+spec:
+  resourceID: hub-to-project-id-peer # kpt-set: hub-to-${project-id}-peer
+  exportCustomRoutes: true
+  importCustomRoutes: false
+  exportSubnetRoutesWithPublicIp: true
+  importSubnetRoutesWithPublicIp: false
+  networkRef:
+    name: perimeter-global-internal-vpc
+  peerNetworkRef:
+    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
