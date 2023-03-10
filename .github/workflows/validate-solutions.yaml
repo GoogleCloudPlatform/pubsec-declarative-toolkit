@@ -26,8 +26,8 @@ jobs:
           # loop through each solutions package defined in the release please manifest
           # for pkg in $(jq -r '.packages | keys[]' release-please-config.json | sort)
 
-          # find all Kptfile in solutions/, extract its directory name and sort in reverse to render subpackages first
-          for pkg in $(find solutions -name Kptfile -exec dirname {} \; | sort --reverse)
+          # find all Kptfile in solutions/, extract its directory name and sort to render top-level packages first
+          for pkg in $(find solutions -name Kptfile -exec dirname {} \; | sort)
           do
             echo -e "\n##############################\n## Validating '${pkg}' \n##############################"
 
