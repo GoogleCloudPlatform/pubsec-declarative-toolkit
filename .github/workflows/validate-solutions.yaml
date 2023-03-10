@@ -1,5 +1,6 @@
-name: validate-v2-solutions
+name: validate-solutions
 on:
+  # disable normal push trigger to avoid running duplicates during PRs
   # push:
   #   paths:
   #     - solutions/**
@@ -23,9 +24,12 @@ jobs:
           NOMOS="docker run -v $PWD:/workspace -w /workspace gcr.io/config-management-release/nomos:v1.14.2"
 
           # loop through each solutions package defined in the release please manifest
-          for pkg in $(jq -r '.packages | keys[]' release-please-config.json)
+          # for pkg in $(jq -r '.packages | keys[]' release-please-config.json | sort)
+
+          # find all Kptfile in solutions/, extract its directory name and sort in reverse to render subpackages first
+          for pkg in $(find solutions -name Kptfile -exec dirname {} \; | sort --reverse)
           do
-            echo -e "\n##############################\n## Validating '${pkg}' \n##############################\n"
+            echo -e "\n##############################\n## Validating '${pkg}' \n##############################"
 
             echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
             ${KPT} fn render ${pkg} --truncate-output=false
@@ -37,6 +41,8 @@ jobs:
             echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
             ${NOMOS} vet --no-api-server-check --source-format unstructured --path ${pkg}
           done
+
+          echo -e "\n##############################\n## Validation Complete \n##############################"
           
       
       # - name: 'Render All Solutions - kpt fn render'
