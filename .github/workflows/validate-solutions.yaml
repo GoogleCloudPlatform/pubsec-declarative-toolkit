@@ -16,7 +16,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
       
-      - name: 'Validate v2 Solutions'
+      - name: 'Validate All Solutions Packages'
         run: |
           # set kpt and nomos to run with docker in /workspace working directory
           # note: starting with nomos ~v1.14.1, the image as an entrypoint to the 'nomos' command (only need to pass the parameters)
