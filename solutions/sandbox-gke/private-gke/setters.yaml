@@ -16,6 +16,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata: # kpt-merge: /setters
   name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
 data:
   routing-mode: REGIONAL # REGIONAL or GLOBAL
   mtu: "1460" # Range can be between 1460 and 1500 bytes
