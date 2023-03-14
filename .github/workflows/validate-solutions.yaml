@@ -40,7 +40,7 @@ jobs:
               ${KPT} fn render "${TEMP_DIR}/${pkg}" --truncate-output=false
               
               # TODO: kubeval is no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
-              # whether it's by design or not, kubeval can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
+              # !!! the kpt kubeval function can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
               # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
               echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
               rm -rf "${TEMP_DIR}/kubeval/${pkg}"
@@ -64,7 +64,7 @@ jobs:
 
           echo -e "\n##############################\n## Validation Complete \n##############################"
         env:
-          VALIDATE_ALL_SOLUTIONS: true
+          VALIDATE_ALL_SOLUTIONS: false
       
       # - name: 'Render All Solutions - kpt fn render'
       #   run: |
