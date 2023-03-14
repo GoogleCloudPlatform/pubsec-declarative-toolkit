@@ -11,34 +11,35 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 #########
 #
 # GCP Organization Policies
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.vmCanIpForward
+# Constraint: constraints/compute.disableSerialPortAccess
 #
-# This list constraint defines the set of VM instances that can enable IP forwarding.
-# By default, any VM can enable IP forwarding in any virtual network. 
-# VM instances must be specified in the form: 
-# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID, 
-# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+# This boolean constraint disables serial port access to
+# Compute Engine VMs belonging to the organization, project,
+# or folder where this constraint is set to True.
+#
+# This exception is for the fortigates VM in the hub project.
+# Serial console access is critical for troubleshooting the appliance.
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-vm-can-ip-forward
+  name: compute-disable-serial-port-access-except-hub-project
   namespace: policies
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/hub-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${hub-project-id}
   labels:
-    guardrail: "false"
+    guardrail: "true"
+    guardrail-enforced: guardrail-02
 spec:
-  constraint: "constraints/compute.vmCanIpForward"
-  listPolicy:
-    deny:
-      all: true
-  organizationRef:
-    external: "0000000000" # kpt-set: ${org-id}
+  constraint: "constraints/compute.disableSerialPortAccess"
+  booleanPolicy:
+    enforced: false
+  projectRef:
+    external: "0000000000" # kpt-set: ${hub-project-id}
