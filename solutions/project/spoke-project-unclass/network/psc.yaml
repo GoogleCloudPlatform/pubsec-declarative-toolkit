@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+#Compute Address for PSC
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:  
@@ -19,10 +21,9 @@ metadata:
   annotations:
       cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
       config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
-      cnrm.cloud.google.com/blueprint: 'kpt-fn'
 spec:  
   addressType: INTERNAL
-  description: a test global address
+  description: PSC endpoint IP address
   location: global
   ipVersion: IPV4
   purpose: PRIVATE_SERVICE_CONNECT
@@ -37,7 +38,6 @@ kind: ComputeForwardingRule
 metadata:
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
   name: endpoint1
   namespace: networking
 spec:

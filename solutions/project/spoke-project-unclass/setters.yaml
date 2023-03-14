@@ -26,9 +26,15 @@ data:
   # Naming Convention for project-id : <tenant-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters
   project-id: xxdmu-admin1-projectname
+  # Subnet IP range for PAZ in northamerica-northeast1
   nane1-paz-snet: 10.1.1.0/24
+  # Subnet IP range for APPRZ in northamerica-northeast1
   nane1-apprz-snet: 10.1.2.0/24
+  # Subnet IP range for DATARZ in northamerica-northeast1
   nane1-datarz-snet: 10.1.3.0/24
+  # Subnet IP range for PAZ in northamerica-northeast2
   nane2-paz-snet: 10.2.1.0/24
+  # Subnet IP range for APPRZ in northamerica-northeast2
   nane2-apprz-snet: 10.2.2.0/24
+  # Subnet IP range for DATARZ in northamerica-northeast2
   nane2-datarz-snet: 10.2.3.0/24

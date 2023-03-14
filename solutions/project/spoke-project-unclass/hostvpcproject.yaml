@@ -1,8 +1,0 @@
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSharedVPCHostProject
-metadata:
-  name: project-id-host-vpc # kpt-set: ${project-id}-host-vpc
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/blueprint: 'kpt-fn'
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
