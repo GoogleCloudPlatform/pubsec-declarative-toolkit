@@ -1,6 +1,6 @@
 ---
 ###########################################
-# The rules used for linting all yaml files
+# The rules used for linting all markdown files
 # https://github.com/github/super-linter/blob/main/TEMPLATES/.markdown-lint.yml
 # https://github.com/DavidAnson/markdownlint
 ###########################################

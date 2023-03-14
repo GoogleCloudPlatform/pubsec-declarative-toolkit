@@ -32,33 +32,39 @@ jobs:
           do
             echo -e "\n##############################\n## Validating '${pkg}' \n##############################"
 
-            echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
-            mkdir -p "${TEMP_DIR}/${pkg}"
-            cp -rf "${pkg}/." "${TEMP_DIR}/${pkg}"
-            ${KPT} fn render "${TEMP_DIR}/${pkg}" --truncate-output=false
-            
-            # TODO: kubeval no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
-            # whether it's by design or not, kubeval can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
-            # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
-            echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
-            rm -rf "${TEMP_DIR}/kubeval/${pkg}"
-            ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false -- ignore_missing_schemas=true strict=true
+            # check if the package was modified (exit code not 0), or if the flag to validate all is set
+            if ! git diff origin/main --quiet --exit-code -- ${pkg} || [[ "${VALIDATE_ALL_SOLUTIONS}" == "true" ]] ; then
+              echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
+              mkdir -p "${TEMP_DIR}/${pkg}"
+              cp -rf "${pkg}/." "${TEMP_DIR}/${pkg}"
+              ${KPT} fn render "${TEMP_DIR}/${pkg}" --truncate-output=false
+              
+              # TODO: kubeval is no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
+              # whether it's by design or not, kubeval can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
+              # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
+              echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
+              rm -rf "${TEMP_DIR}/kubeval/${pkg}"
+              ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false -- ignore_missing_schemas=true strict=true
 
-            # # remove local configs (setters, Kptfile, etc) to avoid duplicate resources
-            # echo -e "\n## Removing local config resources ..."
-            # ${KPT} fn eval "${TEMP_DIR}/${pkg}" --image="gcr.io/kpt-fn/remove-local-config-resources:v0.1" --truncate-output=false
+              # # remove local configs (setters, Kptfile, etc) to avoid duplicate resources
+              # echo -e "\n## Removing local config resources ..."
+              # ${KPT} fn eval "${TEMP_DIR}/${pkg}" --image="gcr.io/kpt-fn/remove-local-config-resources:v0.1" --truncate-output=false
 
-            echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
-            ${NOMOS} vet --no-api-server-check --source-format unstructured --path "${TEMP_DIR}/${pkg}"
+              echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
+              ${NOMOS} vet --no-api-server-check --source-format unstructured --path "${TEMP_DIR}/${pkg}"
 
-            rm -rf "${TEMP_DIR}/${pkg}"
+              rm -rf "${TEMP_DIR}/${pkg}"
+            else
+              echo "No modification detected for the package, skipping."
+            fi
           done
 
           # cleanup
           rm -rf "${TEMP_DIR}"
 
           echo -e "\n##############################\n## Validation Complete \n##############################"
-          
+        env:
+          VALIDATE_ALL_SOLUTIONS: 'false'
       
       # - name: 'Render All Solutions - kpt fn render'
       #   run: |
