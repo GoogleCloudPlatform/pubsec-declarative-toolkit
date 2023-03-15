@@ -62,6 +62,11 @@
       "tag-separator": "/",
       "prerelease": true
     },
+    "solutions/project/spoke-project-unclass": {
+      "package-name": "solutions/project/spoke-project-unclass",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/project/hub-env": {
       "package-name": "solutions/project/hub-env",
       "tag-separator": "/",

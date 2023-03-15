@@ -11,17 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 #Compute Address for PSC
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
-metadata:  
+metadata:
   name: apis-private-ip
   namespace: networking
   annotations:
-      cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-      config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
-spec:  
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+spec:
   addressType: INTERNAL
   description: PSC endpoint IP address
   location: global
@@ -45,9 +45,9 @@ spec:
     addressRef:
       name: apis-private-ip
       namespace: networking
-    # loadBalancingScheme must be disabled using loadBalancingScheme: ""  
-    # googleapi: Error 400: Invalid value for field 'resource.loadBalancingScheme': 'EXTERNAL'.   
-    # Invalid field set in Private Service Connect Forwarding Rule. This field should not be set., invalid
+      # loadBalancingScheme must be disabled using loadBalancingScheme: ""  
+      # googleapi: Error 400: Invalid value for field 'resource.loadBalancingScheme': 'EXTERNAL'.   
+      # Invalid field set in Private Service Connect Forwarding Rule. This field should not be set., invalid
   loadBalancingScheme: ""
   location: global
   networkRef:
