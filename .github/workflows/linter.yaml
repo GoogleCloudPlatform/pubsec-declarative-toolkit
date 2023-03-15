@@ -44,7 +44,7 @@ jobs:
           LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_YAML: true
           YAML_CONFIG_FILE: .yaml-lint-config.yaml
-      
+
       - name: Lint Bash
         if: ${{ success() || failure() }}
         uses: github/super-linter/slim@v4
@@ -54,7 +54,7 @@ jobs:
           FILTER_REGEX_EXCLUDE: cli/.*
           LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_BASH: true
-      
+
       - name: Lint Markdown
         if: ${{ success() || failure() }}
         uses: github/super-linter/slim@v4

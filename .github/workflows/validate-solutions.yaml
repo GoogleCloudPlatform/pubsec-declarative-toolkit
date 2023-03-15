@@ -24,9 +24,6 @@ jobs:
           NOMOS="docker run -v $PWD:/workspace -w /workspace gcr.io/config-management-release/nomos:v1.14.2"
           TEMP_DIR='temp-workspace'
 
-          # loop through each solutions package defined in the release please manifest
-          # for pkg in $(jq -r '.packages | keys[]' release-please-config.json | sort)
-
           # find all Kptfile in solutions/, extract its directory name and sort
           for pkg in $(find solutions -name Kptfile -exec dirname {} \; | sort)
           do
@@ -34,11 +31,13 @@ jobs:
 
             # check if the package was modified (git diff exit code not 0), or if the flag to validate all is set
             if ! git diff origin/main --quiet --exit-code -- ${pkg} || [[ "${VALIDATE_ALL_SOLUTIONS}" == "true" ]] ; then
-              echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
+              # create temporary directory to copy the package
               mkdir -p "${TEMP_DIR}/${pkg}"
               cp -rf "${pkg}/." "${TEMP_DIR}/${pkg}"
+
+              echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"              
               ${KPT} fn render "${TEMP_DIR}/${pkg}" --truncate-output=false
-              
+
               # TODO: kubeval is no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
               # !!! the kpt kubeval function can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
               # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
@@ -65,7 +64,7 @@ jobs:
           echo -e "\n##############################\n## Validation Complete \n##############################"
         env:
           VALIDATE_ALL_SOLUTIONS: false
-      
+
       # - name: 'Render All Solutions - kpt fn render'
       #   run: |
       #     # remove known problematic files and folders
