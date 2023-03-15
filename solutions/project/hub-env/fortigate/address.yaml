@@ -1,0 +1,196 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# IP reservation
+## Fortigate External VPC IP reservation
+## Primary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-primary-ext-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-external-paz-snet
+spec:
+  resourceID: fgt-primary-ext-address
+  address: 172.31.200.10
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-external-paz-snet
+---
+## Secondary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-secondary-ext-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-external-paz-snet
+spec:
+  resourceID: fgt-secondary-ext-address
+  address: 172.31.200.11
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-external-paz-snet
+---
+## Fortigate Internal VPC IP reservation
+## Primary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-primary-int-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-internal-paz-snet
+spec:
+  resourceID: fgt-primary-int-address
+  address: 172.31.201.10
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-internal-paz-snet
+---
+## Secondary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-secondary-int-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-internal-paz-snet
+spec:
+  resourceID: fgt-secondary-int-address
+  address: 172.31.201.11
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-internal-paz-snet
+---
+## Fortigate MGMT VPC IP reservation
+## Primary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-primary-mgmt-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-mgmt-rz-snet
+spec:
+  resourceID: fgt-primary-mgmt-address
+  address: 172.31.202.10
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-mgmt-rz-snet
+---
+## Secondary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-secondary-mgmt-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-mgmt-rz-snet
+spec:
+  resourceID: fgt-secondary-mgmt-address
+  address: 172.31.202.11
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-mgmt-rz-snet
+---
+## Fortigate Transit VPC IP reservation
+## Primary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-primary-transit-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-transit-paz-snet
+spec:
+  resourceID: fgt-primary-transit-address
+  address: 172.31.203.10
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-transit-paz-snet
+---
+## Secondary
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-fgt-secondary-transit-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-transit-paz-snet
+spec:
+  resourceID: fgt-secondary-transit-address
+  address: 172.31.203.11
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  purpose: GCE_ENDPOINT
+  subnetworkRef:
+    name: hub-nane1-transit-paz-snet
+---
+## Internal Load Balancer IP Reservation
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-ilb-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-internal-paz-snet
+spec:
+  resourceID: ilb-address
+  address: 172.31.201.30
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  subnetworkRef:
+    name: hub-nane1-internal-paz-snet
+---
+## Internal Load Balancer - explicit proxy - IP Reservation
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: hub-ilb-proxy-address
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeSubnetwork/hub-nane1-internal-paz-snet
+spec:
+  resourceID: ilb-proxy-address
+  address: 172.31.201.35
+  addressType: INTERNAL
+  location: northamerica-northeast1
+  subnetworkRef:
+    name: hub-nane1-internal-paz-snet
