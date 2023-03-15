@@ -43,7 +43,8 @@ metadata:
 spec:
   ipAddress:
     addressRef:
-      external: 10.255.255.254
+      name: apis-private-ip
+      namespace: networking
     # loadBalancingScheme must be disabled using loadBalancingScheme: ""  
     # googleapi: Error 400: Invalid value for field 'resource.loadBalancingScheme': 'EXTERNAL'.   
     # Invalid field set in Private Service Connect Forwarding Rule. This field should not be set., invalid

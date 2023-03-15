@@ -111,23 +111,6 @@ spec:
   role: roles/serviceusage.serviceUsageAdmin
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role compute XPN Admin to GCP SA
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: projects-sa-xpnadmin-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-spec:
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
-  role: roles/compute.xpnAdmin
-  member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:projects-sa@${management-project-id}.iam.gserviceaccount.com
----
 # Grant GCP role Billing User to GCP SA
 # This role cannot be defined at a folder level. It can only be set at the org level.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
