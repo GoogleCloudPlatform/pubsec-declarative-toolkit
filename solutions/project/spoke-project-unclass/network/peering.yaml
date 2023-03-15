@@ -19,6 +19,8 @@ kind: ComputeNetworkPeering
 metadata:
   name: project-id-to-hub-peer # kpt-set: ${project-id}-to-hub-peer
   namespace: networking
+  annotations:
+      config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: project-id-to-hub-peer # kpt-set: ${project-id}-to-hub-peer
   exportCustomRoutes: false
@@ -36,6 +38,8 @@ kind: ComputeNetworkPeering
 metadata:
   name: hub-to-project-id-peer # kpt-set: hub-to-${project-id}-peer
   namespace: networking
+  annotations:
+      config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-internal-vpc
 spec:
   resourceID: hub-to-project-id-peer # kpt-set: hub-to-${project-id}-peer
   exportCustomRoutes: true
