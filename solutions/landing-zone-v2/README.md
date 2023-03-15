@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # KRM Landing Zone v2
 
 This solution uses [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to deploy and manage the GCP infrastructure. 
@@ -398,181 +399,135 @@ Now that we have a git repo set up we can configure the Config Controller's Conf
 
 1. Hydrate files
     ```bash
+=======
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+# landing-zone
+
+
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
+public sector declarative toolkit - landing zone v2 solution
+
+[Deploy a landing zone v2](../../docs/landing-zone-v2/README.md).
+
+## Setters
+
+|            Name             |           Value            | Type | Count |
+|-----------------------------|----------------------------|------|-------|
+| audit-prj-id                | audit-prj-id-12345         | str  |     0 |
+| audit-viewer                | group@domain.com           | str  |     0 |
+| billing-id                  |                 0000000000 | str  |     0 |
+| guardrails-project-id       | guardrails-project-12345   | str  |     0 |
+| log-reader                  | group@domain.com           | str  |     0 |
+| log-writer                  | group@domain.com           | str  |     0 |
+| lz-folder-id                |                 0000000000 | str  |    12 |
+| management-namespace        | config-control             | str  |    26 |
+| management-project-id       | management-project-12345   | str  |    52 |
+| management-project-number   |                 0000000000 | str  |     0 |
+| net-host-prj-nonprod-id     | net-host-prj-nonprod-12345 | str  |     0 |
+| net-host-prj-prod-id        | net-host-prj-prod-12345    | str  |     0 |
+| net-perimeter-prj-common-id | net-per-prj-common-12345   | str  |     0 |
+| org-id                      |                 0000000000 | str  |     3 |
+| organization-viewer         | group@domain.com           | str  |     0 |
+
+## Sub-packages
+
+This package has no sub-packages.
+
+## Resources
+
+|            File            |              APIVersion              |          Kind          |                       Name                        |   Namespace    |
+|----------------------------|--------------------------------------|------------------------|---------------------------------------------------|----------------|
+| namespaces/hierarchy.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | hierarchy-sa                                      | config-control |
+| namespaces/hierarchy.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | hierarchy-sa-folderadmin-permissions              | config-control |
+| namespaces/hierarchy.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | hierarchy-sa-workload-identity-binding            | config-control |
+| namespaces/hierarchy.yaml  | v1                                   | Namespace              | hierarchy                                         |                |
+| namespaces/hierarchy.yaml  | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | hierarchy      |
+| namespaces/hierarchy.yaml  | rbac.authorization.k8s.io/v1         | RoleBinding            | allow-hierarchy-resource-reference-from-projects  | hierarchy      |
+| namespaces/hierarchy.yaml  | rbac.authorization.k8s.io/v1         | RoleBinding            | allow-hierarchy-resource-reference-from-policies  | hierarchy      |
+| namespaces/logging.yaml    | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | logging-sa                                        | config-control |
+| namespaces/logging.yaml    | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | logging-sa-logadmin-permissions                   | config-control |
+| namespaces/logging.yaml    | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | logging-sa-bigqueryadmin-permissions              | config-control |
+| namespaces/logging.yaml    | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | logging-sa-workload-identity-binding              | config-control |
+| namespaces/logging.yaml    | v1                                   | Namespace              | logging                                           |                |
+| namespaces/logging.yaml    | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | logging        |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | networking-sa                                     | config-control |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | networking-sa-networkadmin-permissions            | config-control |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | networking-sa-security-permissions                | config-control |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | networking-sa-dns-permissions                     | config-control |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | networking-sa-service-control-permissions         | config-control |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | networking-sa-xpnadmin-permissions                | config-control |
+| namespaces/networking.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | networking-sa-workload-identity-binding           | config-control |
+| namespaces/networking.yaml | v1                                   | Namespace              | networking                                        |                |
+| namespaces/networking.yaml | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | networking     |
+| namespaces/policies.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | policies-sa                                       | config-control |
+| namespaces/policies.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | policies-sa-orgpolicyadmin-permissions            | config-control |
+| namespaces/policies.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | policies-sa-workload-identity-binding             | config-control |
+| namespaces/policies.yaml   | v1                                   | Namespace              | policies                                          |                |
+| namespaces/policies.yaml   | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | policies       |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | projects-sa                                       | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectiamadmin-permissions           | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectcreator-permissions            | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectmover-permissions              | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectdeleter-permissions            | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-serviceusageadmin-permissions         | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-billinguser-permissions               | config-control |
+| namespaces/projects.yaml   | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | projects-sa-workload-identity-binding             | config-control |
+| namespaces/projects.yaml   | v1                                   | Namespace              | projects                                          |                |
+| namespaces/projects.yaml   | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | projects       |
+| namespaces/projects.yaml   | rbac.authorization.k8s.io/v1         | RoleBinding            | allow-projects-resource-reference-from-logging    | projects       |
+| namespaces/projects.yaml   | rbac.authorization.k8s.io/v1         | RoleBinding            | allow-projects-resource-reference-from-networking | projects       |
+| namespaces/projects.yaml   | rbac.authorization.k8s.io/v1         | RoleBinding            | allow-projects-resource-reference-from-policies   | projects       |
+| services.yaml              | blueprints.cloud.google.com/v1alpha1 | ProjectServiceSet      | management-project-id                             | config-control |
+
+## Resource References
+
+- ProjectServiceSet
+- [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
+- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
+- [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#namespace-v1-core)
+- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#rolebinding-v1-rbac-authorization-k8s-io)
+
+## Usage
+
+1.  Clone the package:
+    ```shell
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@${VERSION}
+    ```
+    Replace `${VERSION}` with the desired repo branch or tag
+    (for example, `main`).
+
+1.  Move into the local package:
+    ```shell
+    cd "./landing-zone/"
+    ```
+
+1.  Edit the function config file(s):
+    - setters.yaml
+
+1.  Execute the function pipeline
+    ```shell
+>>>>>>> main
     kpt fn render
     ```
 
-1. Push landing zone to Git
-    ```bash
-    # Checkout the main branch
-    git checkout -b main
-    # Review changes 
-    git diff
-    # Prepare your commit by staging the files
-    git add . 
-    # Commit your changes
-    git commit -m "<MEANINGFULL MESSAGE GOES HERE>"
-    # Push your changes to origin
-    git push --set-upstream origin main
+1.  Initialize the resource inventory
+    ```shell
+    kpt live init --namespace ${NAMESPACE}
     ```
-1. **Congratulations** !!! you have completed the GitOps - Git configuration
+    Replace `${NAMESPACE}` with the namespace in which to manage
+    the inventory ResourceGroup (for example, `config-control`).
 
- ## GitOps - OCI
-
-Before we deploy via OCI we have a few things we'll need to do to prepare our environment.
-
-### Artifact Registry
-First we'll need to create an artifact registry to store our OCI artifacts.
-
-1. Let's set some environment variables to start
-    ```bash
-    export PROJECT_ID=<PROJECT_ID>
-    export AR_REPO_NAME=<REPO_NAME>
-    export GSA_NAME="config-management-oci"
+1.  Apply the package resources to your cluster
+    ```shell
+    kpt live apply
     ```
 
-1. Enable Artifact Registry
-    ```bash
-    gcloud services enable artifactregistry.googleapis.com \
-    --project=${PROJECT_ID}
+1.  Wait for the resources to be ready
+    ```shell
+    kpt live status --output table --poll-until current
     ```
 
-1. Create a new repository
-    ```bash
-    gcloud artifacts repositories create ${AR_REPO_NAME} \
-    --repository-format=docker \
-    --location=northamerica-northeast1 \
-    --description="Config Sync OCI repo" \
-    --project=${PROJECT_ID}
-    ```
-
-1. Create a Service Account for Config Management to Access the Artifact Repository.
-    ```bash
-    gcloud iam service-accounts create $GSA_NAME --project=${PROJECT_ID}
-    ```
-
-1. Assign it the read permissions
-    ```bash
-    gcloud artifacts repositories add-iam-policy-binding ${AR_REPO_NAME} \
-    --member "serviceAccount:${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" \
-    --location northamerica-northeast1 \
-    --role "roles/artifactregistry.reader"
-    ```
-
-1. Allow the SA to be accessed by the Root Sync Service account.
-    ```bash
-    gcloud iam service-accounts add-iam-policy-binding ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
-    --role roles/iam.workloadIdentityUser \
-    --member "serviceAccount:${PROJECT_ID}.svc.id.goog[config-management-system/root-reconciler]"
-    ```
-
-### Push Config Image to the repository
-
-1. Install crane and login to Artifact Registry
-    ```bash
-    go install github.com/google/go-containerregistry/cmd/crane@latest
-    crane auth login northamerica-northeast1-docker.pkg.dev  -u oauth2accesstoken -p "$(gcloud auth print-access-token)"
-    ```
-
-1. Render the Configs
-
-    ```bash
-    kpt fn render landing-zone
-    ``` 
-
-1. Once that has completed we can build our OCI Artifact with the crane CLI.
-    ```bash
-    crane append -f <(tar -f - -c .) -t northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
-    ```
-
-### ConfigSync
-1. Now that our Landing Zone Artifact has been built we can create a `RootSync` object which will tell the Config Management service where to find the Configs for deployment.
-
-    ```yaml
-    cat <<EOF>> lz-oci.yaml
-    apiVersion: configsync.gke.io/v1beta1
-    kind: RootSync
-    metadata:
-      name: root-sync
-      namespace: config-management-system
-    spec:
-      sourceFormat: unstructured
-      sourceType: oci
-      oci:
-        image: northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/${AR_REPO_NAME}/landing-zone:v1
-        dir: environments
-        auth: gcpserviceaccount
-        gcpServiceAccountEmail: ${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
-    EOF
-    ```
-
-1. Apply it to the target cluster.
-    ```bash
-    kubectl apply -f lz-oci.yaml
-    ```
-1. **Congratulations** !!! you have completed the GitOps - OCI configuration
-
-# 4. Validate the landing zone deployment
-
-```bash
-nomos status --contexts gke_${PROJECT_ID}_northamerica-northeast1_krmapihost-${CLUSTER}
-```
-
-# 5. Perform the post-deployment steps
-## Grant billing account user role
-
-1. **WAIT** until the GCP Service Account `projects-sa` has been created. 
-    - K8S resource name is `iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa`
-
-1. Grant billing account user role to projects-sa (repeat this step on all billing account used in the landing zone)
-    ```bash
-    gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" \
-      --member "serviceAccount:projects-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
-      --role "roles/billing.user"
-    ```
-# Clean Up
-
-Follow the below steps to delete the provisioned infrastructure and Config Controller instances.
-
-If you want the deployed resources to live on and just destroy the Config Controller instance you can do so by running `gcloud anthos config controller instance-name --location instance-region`. This will remove the config controller instances but leave the resources it deployed untouched.
-
-To reacquire the resources you will need to redeploy a new instance and deploy the same configs to it. Config Controller should reattach to the previously deployed instances and start managing them again.
-
-## kpt
-
-First run either
-```bash
-kpt live destroy
-```
-
-or
-
-```bash
-kubectl delete gcp --all
-```
-
-Finally delete the Config Controller instance
-
-```bash
-gcloud anthos config controller instance-name --location instance-region
-```
-
-## OCI
-First delete the Rootsync deployment. This will prevent the resources from self-healing.
-
-```bash
-kubectl delete rootsync landing-zone -n config-management-system
-```
-
-Now we can delete our KCC resources from the Config Controller instance.
-
-```bash
-kubectl delete gcp --all -n config-control
-```
-
-Once the resources have been deleted you can delete the config controller instance .
-  
-If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
-
-```bash
-gcloud anthos config controller delete instance-name --location instance-region
-```
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->

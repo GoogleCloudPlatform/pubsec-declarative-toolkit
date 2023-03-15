@@ -1,0 +1,16 @@
+# Grant GCP role Organization Role Admin to GCP config-control-sa a.k.a yakima
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: config-control-sa-orgroleadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/iam.organizationRoleAdmin
+  member: "serviceAccount:service-management-project-number@gcp-sa-yakima.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
