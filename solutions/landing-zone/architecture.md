@@ -21,6 +21,11 @@ Expand on https://cloud.google.com/architecture/landing-zones/decide-network-des
 Google Cloud Architecture slides templates - https://cloud.google.com/icons specifically the Google Slides tempate for 2022 in https://docs.google.com/presentation/d/1fD1AwQo4E9Un6012zyPEb7NvUAGlzF6L-vo5DbUe4NQ/edit. 
 We will keep the source for the diagrams in an invite-only shared folder at https://docs.google.com/presentation/d/1Ztqn7G2rWFlssVwC7r5Xl-WFSFCbVo6MoHJffrXScmw/edit#slide=id.ga472c7d3d1_3_834 with deprecated sandbox versions at the older https://docs.google.com/presentation/d/19B3gdZ1ukrRekEFQ1UIWsZJJi4ElABzziKEkPnS54uI/edit#slide=id.gff25b70edb_0_0
 
+### Google Cloud Networking - Design Patterns
+- This slide deck is ok for public use (all details are in public) - it is copied from an internally maintained slide deck (the following copy is last modified 20230109)
+- By invitation sharing
+https://docs.google.com/presentation/d/13sjT2tJ4yLIYGRREE3wBrylB1OvcEMpKdquVuJB_nX4/edit?resourcekey=0-N3DruQaiutFvZ98HTT7-vQ#slide=id.g1c9693172e2_0_5
+
 ## Deliverables
 ### SC2G Deliverables
 #### CDD: Conceptual Design Document
