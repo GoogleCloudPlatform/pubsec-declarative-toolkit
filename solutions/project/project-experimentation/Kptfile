@@ -5,7 +5,9 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: "An experimentation project with a secured network. \nThis package should only be deployed within a experimentation landing zone.\n"
+  description: |
+   An experimentation project with a secured network.
+   This package should only be deployed within a experimentation landing zone.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
