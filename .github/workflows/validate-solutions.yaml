@@ -46,9 +46,9 @@ jobs:
               rm -rf "${TEMP_DIR}/kubeval/${pkg}"
               ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false -- ignore_missing_schemas=true strict=false
 
-              # # remove local configs (setters, Kptfile, etc) to avoid duplicate resources
-              # echo -e "\n## Removing local config resources ..."
-              # ${KPT} fn eval "${TEMP_DIR}/${pkg}" --image="gcr.io/kpt-fn/remove-local-config-resources:v0.1" --truncate-output=false
+              # remove local configs (setters, Kptfile, etc) to avoid duplicate resources
+              echo -e "\n## Removing 'local-config' resources ..."
+              ${KPT} fn eval "${TEMP_DIR}/${pkg}" --image="gcr.io/kpt-fn/remove-local-config-resources:v0.1" --truncate-output=false
 
               echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
               ${NOMOS} vet --no-api-server-check --source-format unstructured --path "${TEMP_DIR}/${pkg}"

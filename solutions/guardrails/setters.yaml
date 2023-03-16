@@ -39,7 +39,6 @@ data:
   management-project-id: config-controller-project
   management-namespace: config-control
   management-project-number: "000000000000" # You can can this by running gcloud projects list --format="table(projectNumber)" --filter="management-project-id" <-- replace with management project id
-
   ##########
   # Required to be compliant with Guardrails 04 - Enterprise Monitoring
   # Create role-based account to enable enterprise monitoring and visibility
@@ -54,4 +53,3 @@ data:
   billing-data-group: email@email.com
   billing-data-viewer-group: email@email.com
   billing-console-viewer-group: email@email.com
-

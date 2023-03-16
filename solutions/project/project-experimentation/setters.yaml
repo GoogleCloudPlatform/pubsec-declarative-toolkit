@@ -21,13 +21,10 @@ metadata:
 data:
   # Billing Account ID to be associated with this project
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
-
   # GCP folder to use as parent to this project, lowercase K8S resource name
   project-parent-folder: project-parent-folder
-
   # user, group or serviceAccount with editor role at project level
   project-editor: "group:team1@example.com"
-
   # Naming Convention for project-id : <client-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters
   project-id: xxemu-team1-projectname
