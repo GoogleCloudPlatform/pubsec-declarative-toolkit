@@ -14,7 +14,7 @@ You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/
 
 # Organization
 
-This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, User Acceptance and Testing, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
+This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, PreProduction, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
 
 ## Single GCP organization
 ![img](img/single-org.png)
@@ -27,7 +27,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 
 ![img](img/folders-experimentation.png)
 
-## The Dev, UAT and Prod landing zones contain the following folder structure.
+## The Dev, PreProd and Prod landing zones contain the following folder structure.
 
 ![img](img/folders-env.png)
 
@@ -247,12 +247,7 @@ To deploy this Landing Zone you will need to:
       
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${SA_EMAIL}" \
-      --role "roles/editor" \
-      --project "${PROJECT_ID}"
-
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-      --member "serviceAccount:${SA_EMAIL}" \
-      --role "roles/iam.serviceAccountAdmin" \
+      --role "roles/serviceusage.serviceUsageConsumer" \
       --project "${PROJECT_ID}"
     ```
   1. Well done !!! You have completed the Bootstrap procedure
@@ -277,7 +272,7 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-experimentation@main ./landing-zone/hierarchy
       ```
 
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
       ```bash
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main ./landing-zone/hierarchy
       ```
