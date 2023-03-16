@@ -10,9 +10,10 @@ yaml-files:
   - '*.yaml'
   - '*.yml'
 
-# ignore yaml files in the .github folder, super-linter will still look at them but yamllint will ignore
+# ignore yaml files in these folders, super-linter will still look at them but yamllint will ignore
 ignore: |
   .github/
+  docs/
 
 rules:
   braces: disable

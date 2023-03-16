@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 #########
 #
 # GCP Organization Policies
@@ -34,7 +34,6 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:

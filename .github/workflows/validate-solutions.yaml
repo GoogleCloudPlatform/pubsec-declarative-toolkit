@@ -41,9 +41,10 @@ jobs:
               # TODO: kubeval is no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
               # !!! the kpt kubeval function can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
               # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
+              # strict can't be set to true until CRD schemas are updated
               echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
               rm -rf "${TEMP_DIR}/kubeval/${pkg}"
-              ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false -- ignore_missing_schemas=true strict=true
+              ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false -- ignore_missing_schemas=true strict=false
 
               # # remove local configs (setters, Kptfile, etc) to avoid duplicate resources
               # echo -e "\n## Removing local config resources ..."
@@ -64,36 +65,3 @@ jobs:
           echo -e "\n##############################\n## Validation Complete \n##############################"
         env:
           VALIDATE_ALL_SOLUTIONS: false
-
-      # - name: 'Render All Solutions - kpt fn render'
-      #   run: |
-      #     # remove known problematic files and folders
-      #     # the arete solutions.yaml fails rendering because it doesn't have an 'apiVersion' defined
-      #     rm solutions/solutions.yaml
-      #     # the kcc-namespace package has default setters with uppercases and underscores which creates invalid resource names, etc.
-      #     rm --recursive --force solutions/kcc-namespaces
-
-      #     # initialize the entire solutions folder as a kpt package
-      #     docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 pkg init /app/solutions
-
-      #     # render the entire solutions folder
-      #     docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 fn render /app/solutions --truncate-output=false
-
-      # - name: 'Upload Rendered Solutions Artifact'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: all-solutions-render
-      #     path: ./solutions
-      #     retention-days: 1
-
-      # - name: 'Download Rendered Solutions Artifact'
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: all-solutions-render
-
-      # - name: dir check
-      #   run: pwd && ls
-
-      # - name: nomos vet all solutions
-      #   run: |
-      #     docker run -v $PWD/solutions:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions
