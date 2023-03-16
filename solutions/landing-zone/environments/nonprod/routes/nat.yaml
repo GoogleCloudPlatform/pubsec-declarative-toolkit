@@ -28,8 +28,8 @@
 #   subnetwork:
 #   - sourceIpRangesToNat:
 #       - ALL_IP_RANGES
-#     subnetworkRef: 
-#       name: nonprod-gke-subnet      
+#     subnetworkRef:
+#       name: nonprod-gke-subnet
 # ---
 # apiVersion: compute.cnrm.cloud.google.com/v1beta1
 # kind: ComputeRouter

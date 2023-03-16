@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      
+
       - name: 'Validate Solutions Packages'
         run: |
           # set kpt and nomos to run with docker in /workspace working directory
@@ -35,7 +35,7 @@ jobs:
               mkdir -p "${TEMP_DIR}/${pkg}"
               cp -rf "${pkg}/." "${TEMP_DIR}/${pkg}"
 
-              echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"              
+              echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
               ${KPT} fn render "${TEMP_DIR}/${pkg}" --truncate-output=false
 
               # TODO: kubeval is no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
@@ -75,10 +75,10 @@ jobs:
 
       #     # initialize the entire solutions folder as a kpt package
       #     docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 pkg init /app/solutions
-          
+
       #     # render the entire solutions folder
       #     docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27 fn render /app/solutions --truncate-output=false
-      
+
       # - name: 'Upload Rendered Solutions Artifact'
       #   uses: actions/upload-artifact@v3
       #   with:
@@ -90,10 +90,10 @@ jobs:
       #   uses: actions/download-artifact@v3
       #   with:
       #     name: all-solutions-render
-      
+
       # - name: dir check
       #   run: pwd && ls
-      
+
       # - name: nomos vet all solutions
       #   run: |
       #     docker run -v $PWD/solutions:/solutions gcr.io/config-management-release/nomos:v1.14.2 vet --no-api-server-check --source-format unstructured --path /solutions

@@ -19,9 +19,9 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 # Constraint: constraints/compute.disableGuestAttributesAccess
-# 
-# This boolean constraint disables Compute Engine API access 
-# to the Guest Attributes of Compute Engine VMs belonging 
+#
+# This boolean constraint disables Compute Engine API access
+# to the Guest Attributes of Compute Engine VMs belonging
 # to the organization, project, or folder where this constraint is set to True.
 #
 #########

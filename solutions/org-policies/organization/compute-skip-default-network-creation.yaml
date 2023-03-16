@@ -19,11 +19,11 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 # Constraint: constraints/storage.skipDefaultNetworkCreation
-# 
-# This boolean constraint skips the creation of the default network and related resources 
-# during Google Cloud Platform Project resource creation where this constraint is set to 
+#
+# This boolean constraint skips the creation of the default network and related resources
+# during Google Cloud Platform Project resource creation where this constraint is set to
 # True. By default, a default network and supporting resources are automatically created
-# when creating a Project resource. 
+# when creating a Project resource.
 #
 #########
 

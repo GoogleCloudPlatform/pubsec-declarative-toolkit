@@ -20,8 +20,8 @@
 #
 # Constraint: constraints/compute.disableSerialPortAccess
 #
-# This boolean constraint disables serial port access to 
-# Compute Engine VMs belonging to the organization, project, 
+# This boolean constraint disables serial port access to
+# Compute Engine VMs belonging to the organization, project,
 # or folder where this constraint is set to True.
 #
 #########

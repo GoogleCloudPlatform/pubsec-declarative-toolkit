@@ -10,19 +10,13 @@ yaml-files:
   - '*.yaml'
   - '*.yml'
 
+# ignore yaml files in the .github folder, super-linter will still look at them but yamllint will ignore
+ignore: |
+  .github/
+
 rules:
-  braces:
-    level: warning
-    min-spaces-inside: 0
-    max-spaces-inside: 0
-    min-spaces-inside-empty: 1
-    max-spaces-inside-empty: 5
-  brackets:
-    level: warning
-    min-spaces-inside: 0
-    max-spaces-inside: 0
-    min-spaces-inside-empty: 1
-    max-spaces-inside-empty: 5
+  braces: disable
+  brackets: disable
   colons:
     level: warning
     max-spaces-before: 0
@@ -34,12 +28,15 @@ rules:
     max-spaces-after: 1
   comments:
     level: error
+    require-starting-space: true
+    ignore-shebangs: true
     min-spaces-from-content: 1
   comments-indentation:
     level: error
   document-end: disable
   # disable document-start, some kpt functions remove the document start
   document-start: disable
+  # no empty lines permitted to minimize rendering issues
   empty-lines:
     level: error
     max: 0

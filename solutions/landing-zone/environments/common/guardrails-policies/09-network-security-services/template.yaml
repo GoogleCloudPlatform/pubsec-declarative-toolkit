@@ -40,7 +40,7 @@ spec:
           input.review.kind.kind == "ContainerCluster"
           not has_key(input.review.object.spec, "privateClusterConfig")
           msg := sprintf("GKE is not Private %s", [input.review.object.metadata.name])
-        }          
+        }
 
         # Ensure Services do not configure External IPs
         # IE Private GKE Cluster
@@ -70,7 +70,7 @@ spec:
           input.review.kind.kind == "StorageBucket"
           not has_key(input.review.object.spec, "publicAccessPrevention")
           msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
-        }        
+        }
 
         violation[{"msg":msg}] {
           input.review.kind.kind == "StorageBucket"

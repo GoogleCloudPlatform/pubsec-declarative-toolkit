@@ -18,7 +18,7 @@ metadata: # kpt-merge: ${NAMESPACE}/computerouternat-sample-forallsubnets
   name: nat-sandbox-net # kpt-set: nat-${cluster-name}-net
   namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
 spec:
   natIpAllocateOption: AUTO_ONLY
   region: us-central1 # kpt-set: ${region}

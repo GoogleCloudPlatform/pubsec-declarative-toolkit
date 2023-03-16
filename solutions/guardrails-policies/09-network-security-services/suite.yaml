@@ -38,4 +38,4 @@ tests:
   - name: subnet-autocreate
     object: tests/network-test.yaml
     assertions:
-    - violations: no    
+    - violations: no

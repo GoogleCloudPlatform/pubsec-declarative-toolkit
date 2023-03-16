@@ -29,7 +29,7 @@ spec:
   basic:
     conditions:
       - regions:
-        - CA 
+        - CA
         # devicePolicy:
         #   allowedDeviceManagementLevels:
         #   - ""
@@ -42,7 +42,7 @@ spec:
         #   requireAdminApproval: false
         #   requireCorpOwned: false
         #   requireScreenLock: false
-        # ipSubnetworks: 
+        # ipSubnetworks:
         # - subnetwork-name
         # requiredAccessLevels:
         # - name: access-level

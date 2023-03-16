@@ -52,7 +52,7 @@ spec:
   direction: INGRESS
   deny:
     - protocol: tcp
-      ports: 
+      ports:
       - "22"
   sourceRanges:
     - 0.0.0.0/32

@@ -75,7 +75,7 @@ spec:
     external: NETWORK_NAME # kpt-set: ${network-name}
   sourceTags:
     - allow-ssh
-  sourceRanges: 
+  sourceRanges:
     - 35.235.240.0/20 # This range contains all IP addresses that IAP uses for TCP forwarding.
   priority: 1000
 ---

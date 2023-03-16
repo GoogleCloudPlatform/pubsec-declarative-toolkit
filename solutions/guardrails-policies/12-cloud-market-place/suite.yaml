@@ -34,4 +34,4 @@ tests:
   - name: marketplace-role-partial-policy
     object: tests/iam_partial_policy.yaml
     assertions:
-    - violations: yes        
+    - violations: yes

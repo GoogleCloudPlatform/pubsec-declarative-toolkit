@@ -21,10 +21,10 @@
 # Constraint: constraints/compute.vmCanIpForward
 #
 # This list constraint defines the set of VM instances that can enable IP forwarding.
-# By default, any VM can enable IP forwarding in any virtual network. 
-# VM instances must be specified in the form: 
-# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID, 
-# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME. 
+# By default, any VM can enable IP forwarding in any virtual network.
+# VM instances must be specified in the form:
+# organizations/ORGANIZATION_ID, folders/FOLDER_ID, projects/PROJECT_ID,
+# or projects/PROJECT_ID/zones/ZONE/instances/INSTANCE-NAME.
 #
 #########
 

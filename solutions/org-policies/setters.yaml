@@ -24,7 +24,7 @@ data:
   #############
   org-id: "0000000000"
   lz-folder-id: '0000000000'
-  management-project-id: management-project-12345 
+  management-project-id: management-project-12345
   #############
   # Org Policies
   # The following are Settings for some org policies

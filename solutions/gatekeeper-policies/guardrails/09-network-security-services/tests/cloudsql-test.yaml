@@ -17,7 +17,7 @@
   metadata:
     name: sqlinstance-sample-private-ip
     annotations:
-      config.kubernetes.io/local-config: 'true'      
+      config.kubernetes.io/local-config: 'true'
   spec:
     databaseVersion: MYSQL_5_7
     region: northamerica-northeast1 # kpt-set: ${region}

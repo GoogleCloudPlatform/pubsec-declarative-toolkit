@@ -10,7 +10,7 @@ name: Lint Code Base
 on:
   pull_request:
     branches: [main]
-  
+
   workflow_dispatch:
 
 jobs:
@@ -42,23 +42,28 @@ jobs:
           VALIDATE_YAML: true
           YAML_CONFIG_FILE: .yaml-lint-config.yaml
 
+      # the linter-rules file for bash (.shellcheckrc) needs to exists in the repo's root
+      # use 'SHELLCHECK_OPTS' instead to ignore certain errors and/or add command options
+      # https://github.com/koalaman/shellcheck/blob/master/shellcheck.1.md
       - name: Lint Bash
         if: ${{ success() || failure() }}
         uses: github/super-linter/slim@v4
         env:
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: cli/.*
-          LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_BASH: true
+          SHELLCHECK_OPTS: "--severity=info"
 
-      - name: Lint Markdown
-        if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
-        env:
-          VALIDATE_ALL_CODEBASE: true
-          DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: cli/.*
-          LINTER_RULES_PATH: .github/linter-rules
-          VALIDATE_MARKDOWN: true
-          MARKDOWN_CONFIG_FILE: .markdown-lint-config.yaml
+      # # TODO: remove comments when ready for markdown linting
+      # # set VALIDATE_ALL_CODEBASE to false before merging
+      # - name: Lint Markdown
+      #   if: ${{ success() || failure() }}
+      #   uses: github/super-linter/slim@v4
+      #   env:
+      #     VALIDATE_ALL_CODEBASE: true
+      #     DEFAULT_BRANCH: main
+      #     FILTER_REGEX_EXCLUDE: cli/.*
+      #     LINTER_RULES_PATH: .github/linter-rules
+      #     VALIDATE_MARKDOWN: true
+      #     MARKDOWN_CONFIG_FILE: .markdown-lint-config.yaml

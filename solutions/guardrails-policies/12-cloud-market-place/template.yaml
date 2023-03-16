@@ -27,7 +27,7 @@ spec:
         kind: CloudMarketPlaceConfig
   targets:
     - target: admission.k8s.gatekeeper.sh
-      rego: |-  
+      rego: |-
         package cloudmarketplaceconfig
 
         marketplacerole := "roles/cloudprivatecatalogproducer.admin"

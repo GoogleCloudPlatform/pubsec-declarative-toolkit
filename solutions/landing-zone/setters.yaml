@@ -29,7 +29,7 @@ data:
   # Management Project
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard
-  management-project-id: management-project-12345 
+  management-project-id: management-project-12345
   management-project-number: "0123456789012"
   #############
   # Project  IDs

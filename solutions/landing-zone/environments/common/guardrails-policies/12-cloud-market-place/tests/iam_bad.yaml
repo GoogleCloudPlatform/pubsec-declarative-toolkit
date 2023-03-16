@@ -17,7 +17,7 @@ kind: IAMPolicyMember
 metadata:
   name: iampolicymember-sample-pubsubadmin
   annotations:
-    config.kubernetes.io/local-config: 'true'      
+    config.kubernetes.io/local-config: 'true'
 spec:
   member: serviceAccount:iampolicymember-dep-pubsub@project_id.iam.gserviceaccount.com
   role: roles/cloudprivatecatalogproducer.admin

@@ -20,7 +20,7 @@
 #
 # Constraint: constraints/compute.disableVpcExternalIpv6
 #
-# This boolean constraint, when set to True, disables the 
+# This boolean constraint, when set to True, disables the
 # creation of or update to subnetworks with a stack_type of IPV4_IPV6 and ipv6_access_type of EXTERNAL.
 #
 #########

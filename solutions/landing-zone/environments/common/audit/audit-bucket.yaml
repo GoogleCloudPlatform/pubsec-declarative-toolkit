@@ -78,6 +78,6 @@ spec:
   bindings:
     - role: roles/storage.objectCreator
       members:
-        - memberFrom: 
-            logSinkRef: 
+        - memberFrom:
+            logSinkRef:
               name: audit-bucket-sink

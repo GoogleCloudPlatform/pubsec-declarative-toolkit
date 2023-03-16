@@ -19,9 +19,9 @@
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
 # Constraint: constraints/compute.restrictXpnProjectLienRemoval
-# 
-# This boolean constraint restricts the set of users that can 
-# remove a Shared VPC project lien without organization-level 
+#
+# This boolean constraint restricts the set of users that can
+# remove a Shared VPC project lien without organization-level
 # permission where this constraint is set to True.
 #
 #########

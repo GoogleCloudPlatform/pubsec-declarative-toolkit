@@ -27,4 +27,4 @@ spec:
   services:
     - logging.googleapis.com
     - compute.googleapis.com
-  projectID: proj1 # kpt-set: ${net-host-prj-prod-id}   
+  projectID: proj1 # kpt-set: ${net-host-prj-prod-id}

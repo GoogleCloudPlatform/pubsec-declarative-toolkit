@@ -50,5 +50,5 @@ source: |-
       resource["spec"]["instanceRef"]["namespace"] = namespace
     elif kind == "ServiceNetworkingConnection":
       resource["spec"]["reservedPeeringRanges"][0]["namespace"] = namespace
-                
+
     resource["metadata"]["namespace"] = namespace

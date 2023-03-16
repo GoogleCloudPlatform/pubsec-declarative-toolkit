@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v1  
+        uses: actions/checkout@v1
       - name: kpt fn render guardrails
         run: |
           docker run -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.19 fn render /app/solutions/guardrails
