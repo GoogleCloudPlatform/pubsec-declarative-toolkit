@@ -19,17 +19,17 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: 'true'
 tests:
-- name: namingpolicyprojecttests
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  # Allowed
-  - name: allowed
-    object: tests/project_allowed.yaml
-    assertions:
-    - violations: 'no'
-  # Not allowed
-  - name: notallowed
-    object: tests/project_not_allowed.yaml
-    assertions:
-    - violations: 'yes'
+  - name: namingpolicyprojecttests
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      # Allowed
+      - name: allowed
+        object: tests/project_allowed.yaml
+        assertions:
+          - violations: 'no'
+      # Not allowed
+      - name: notallowed
+        object: tests/project_not_allowed.yaml
+        assertions:
+          - violations: 'yes'

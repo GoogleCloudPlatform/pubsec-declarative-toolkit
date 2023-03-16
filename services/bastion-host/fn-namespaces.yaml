@@ -18,8 +18,8 @@ metadata:
   name: namespace-config
 namespace: config-control # The KCC Namespace that will contain the resource definitions and SA account that access to the project
 additionalNamespaceFields:
-- group: compute.cnrm.cloud.google.com
-  version: v1beta1
-  kind: ComputeInstance
-  path: spec/serviceAccount/serviceAccountRef/namespace
-  create: true
+  - group: compute.cnrm.cloud.google.com
+    version: v1beta1
+    kind: ComputeInstance
+    path: spec/serviceAccount/serviceAccountRef/namespace
+    create: true
