@@ -7,10 +7,10 @@ metadata:
 data:
   # Billing Account ID to be associated with this project
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
-  
+
   # GCP folder to use as parent to this project, lowercase K8S resource name
   project-parent-folder: project-parent-folder
-  
+
   # Naming Convention for project-id : <tenant-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters
   hub-project-id: xxdmu-admin1-projectname
@@ -52,14 +52,14 @@ data:
   # Having disctinct images allows one to use a Licensed Fortigate for the primary and a Pay-as-you-Go license for the secondary
   # and run the secondary just a couple of minutes each day for synching purposes thus obtaining an affordable cold standby.
   fgt-primary-image: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
-  
+
   # replace the word LICENSE below with the actual license value. Not required if using the Pay-as-you-Go image.
   fgt-primary-license: |
     LICENSE
 
   # Secondary
   fgt-secondary-image: projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
-  
+
   # replace the word LICENSE below with the actual license value. Not required if using the Pay-as-you-Go image.
   fgt-secondary-license: |
     LICENSE

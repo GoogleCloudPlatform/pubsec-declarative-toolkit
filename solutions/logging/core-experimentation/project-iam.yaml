@@ -102,6 +102,6 @@ spec:
     namespace: projects
 ---
 # TODO
-# IAMPolicyMember 
+# IAMPolicyMember
 # IAM role to enable Access Transparency Admin (roles/axt.admin) through the logging project
 # https://cloud.google.com/cloud-provider-access-management/access-transparency/docs/enable

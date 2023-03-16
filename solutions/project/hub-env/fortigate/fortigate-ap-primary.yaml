@@ -34,18 +34,18 @@ spec:
     onHostMaintenance: MIGRATE
     preemptible: false
     provisioningModel: STANDARD
-  
+
   # AC-2(A) service account is attached to Google Compute Engine
   serviceAccount:
     serviceAccountRef:
       name: hub-fortigatesdn-sa
     scopes:
     - cloud-platform
-  
+
   # TODO: Schedule
   # resourcePolicies:
   # - name: TBD
-  
+
   # Create a new boot disk from an image
   bootDisk:
     autoDelete: true
@@ -56,13 +56,13 @@ spec:
       type: pd-ssd
       sourceImageRef:
         external: image-path # kpt-set: ${fgt-primary-image}
-  
+
   # Logging Disk from existing resource
   attachedDisk:
   - sourceDiskRef:
       name: hub-fgt-primary-log-disk
     mode: READ_WRITE
-  
+
   networkInterface:
   # External
   - name: nic0

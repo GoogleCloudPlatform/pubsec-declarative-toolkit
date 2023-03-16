@@ -41,11 +41,11 @@ spec:
       name: hub-fortigatesdn-sa
     scopes:
     - cloud-platform
-  
+
   # TODO: Schedule
   # resourcePolicies:
   # - name: TBD
-  
+
   # Create a new boot disk from an image
   bootDisk:
     autoDelete: true
@@ -56,7 +56,7 @@ spec:
       type: pd-ssd
       sourceImageRef:
         external: image-path # kpt-set: ${fgt-secondary-image}
-  
+
   # Logging Disk from existing resource
   attachedDisk:
   - sourceDiskRef:
@@ -104,10 +104,10 @@ spec:
     networkIpRef:
       name: hub-fgt-secondary-mgmt-address
       kind: ComputeAddress
-  
+
   tags:
   - internet-egress-route
-  
+
   # Metadata to enable serial console and bootstrap FGT
   metadata:
   # AC-17(1) - Serial console is accessible from the gcp console (console.cloud.google.com) and requires a specific set of IAM permissions.
