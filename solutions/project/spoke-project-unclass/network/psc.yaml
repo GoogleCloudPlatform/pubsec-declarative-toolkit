@@ -43,11 +43,11 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
-  description: Forwarding rule for Private Service Connect endpoint for Google API
+  # TODO: bug: errors when defining description field
+  # description: "Private Service Connect endpoint for Google API"
   ipAddress:
     addressRef:
-      name: apis-private-ip
-      namespace: networking
+      name: project-id-psc-apis-ip # kpt-set: ${project-id}-psc-apis-ip
   # loadBalancingScheme must be disabled using loadBalancingScheme: ""
   # googleapi: Error 400: Invalid value for field 'resource.loadBalancingScheme': 'EXTERNAL'
   # Invalid field set in Private Service Connect Forwarding Rule. This field should not be set., invalid
@@ -55,7 +55,8 @@ spec:
   location: global
   networkRef:
     external: https://www.googleapis.com/compute/beta/projects/project-id/global/networks/global-vpc1-vpc # kpt-set: https://www.googleapis.com/compute/beta/projects/${project-id}/global/networks/global-vpc1-vpc
-  resourceID: psc-apis-fw
+  # The forwarding rule name for PSC Google APIs must be an 1-20 characters string with lowercase letters and numbers and must start with a letter
+  resourceID: pscapisfw
   target:
     targetHTTPProxyRef:
       external: all-apis
