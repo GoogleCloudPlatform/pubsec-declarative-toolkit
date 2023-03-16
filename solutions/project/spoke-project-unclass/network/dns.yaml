@@ -23,23 +23,24 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: logging-dnspolicy
-  description: "DNS policy to enable logging"
+  description: "Enable DNS logging"
   enableLogging: true
   networks:
     - networkRef:
         name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
 ---
-# Private dns zone for googleapis.com
+# Private DNS zone for googleapis.com
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
-  name: project-id-googleapis # kpt-set: ${project-id}-googleapis
+  name: project-id-googleapis-dns # kpt-set: ${project-id}-googleapis-dns
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
-  description: "dns zone for googleapis"
+  description: "Private DNS zone for googleapis.com"
+  resourceID: googleapis-dns
   dnsName: "googleapis.com."
   visibility: private
   privateVisibilityConfig:
@@ -47,97 +48,101 @@ spec:
       - networkRef:
           name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
 ---
-# googleapis.com record-set googleapis.com.
+# Record Set for googleapis.com in googleapis.com DNS zone
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: project-id-googleapis-root-record-set # kpt-set: ${project-id}-googleapis-root-record-set
+  name: project-id-googleapis-rset # kpt-set: ${project-id}-googleapis-rset
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
+  resourceID: googleapis-rset
+  description: Record Set for googleapis.com in googleapis.com dns zone
   name: "googleapis.com."
   type: "A"
   ttl: 300
   managedZoneRef:
-    name: project-id-googleapis # kpt-set: ${project-id}-googleapis
-    namespace: networking
+    name: project-id-googleapis-dns # kpt-set: ${project-id}-googleapis-dns
   rrdatas:
   - "10.255.255.254"
 ---
-# googleapis.com record-set *.googleapis.com.
+# Record Set for wildcard in googleapis.com DNS zone
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: project-id-googleapis-wildcard-record-set # kpt-set: ${project-id}-googleapis-wildcard-record-set
+  name: project-id-googleapis-wildcard-rset # kpt-set: ${project-id}-googleapis-wildcard-rset
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
+  resourceID: googleapis-wildcard-rset
+  description: Record Set for wildcard in googleapis.com DNS zone
   name: "*.googleapis.com."
   type: "CNAME"
   ttl: 300
   managedZoneRef:
-    name: project-id-googleapis # kpt-set: ${project-id}-googleapis
-    namespace: networking
+    name: project-id-googleapis-dns # kpt-set: ${project-id}-googleapis-dns
   rrdatas:
   - "googleapis.com."
 ---
-# Private dns zone for gcr.io
+# Private DNS zone for gcr.io
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
-  name: project-id-gcrio # kpt-set: ${project-id}-gcrio
+  name: project-id-gcrio-dns # kpt-set: ${project-id}-gcrio-dns
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
-  description: "dns zone for gcr.io"
+  description: "Private DNS zone for gcr.io"
+  resourceID: gcrio-dns
   dnsName: "gcr.io."
   visibility: private
   privateVisibilityConfig:
     networks:
       - networkRef:
           name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
-          namespace: networking
 ---
-# gcr.io record-set gcr.io
+# Record Set for gcr.io in gcr.io DNS zone
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: project-id-gcrio-root-record-set # kpt-set: ${project-id}-gcrio-root-record-set
+  name: project-id-gcrio-rset # kpt-set: ${project-id}-gcrio-rset
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
+  resourceID: gcrio-rset
+  description: "Record Set for gcr.io in gcr.io DNS zone"
   name: "gcr.io."
   type: "A"
   ttl: 300
   managedZoneRef:
-    name: project-id-gcrio # kpt-set: ${project-id}-gcrio
-    namespace: networking
+    name: project-id-gcrio-dns # kpt-set: ${project-id}-gcrio-dns
   rrdatas:
   - "10.255.255.254"
 ---
-# gcr.io record-set *.gcr.io.
+# Record Set for wildcard in gcr.io DNS zone
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: project-id-gcrio-wildcard-record-set # kpt-set: ${project-id}-gcrio-wildcard-record-set
+  name: project-id-gcrio-wildcard-rset # kpt-set: ${project-id}-gcrio-wildcard-record-set
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
+  resourceID: gcrio-wildcard-rset
+  description: Record Set for wildcard in gcr.io DNS zone
   name: "*.gcr.io."
   type: "CNAME"
   ttl: 300
   managedZoneRef:
-    name: project-id-gcrio # kpt-set: ${project-id}-gcrio
-    namespace: networking
+    name: project-id-gcrio-dns # kpt-set: ${project-id}-gcrio-dns
   rrdatas:
   - "gcr.io."

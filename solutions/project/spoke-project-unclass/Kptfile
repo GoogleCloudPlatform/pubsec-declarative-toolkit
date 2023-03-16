@@ -6,8 +6,9 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: |
-    A shared vpc project that implements the Spoke from the Hub and Spoke network design.
-    This package should NOT be deployed within a sandbox landing zone.
+    Landing zone v2 subpackage.
+    A shared vpc project that implements the Spoke for unclassified data from the Hub and Spoke network design.
+    This package is NOT required within an experimentation landing zone.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

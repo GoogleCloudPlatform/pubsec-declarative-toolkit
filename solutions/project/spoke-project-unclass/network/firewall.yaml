@@ -12,18 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Firewall
-## Enable traffic on mgmt network for fortigates HA
-## AC-3(7) use of SA account with limited permissions
+# Default egress deny all
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: spoke-default-egress-deny
+  name: project-id-default-egress-deny-fwr # kpt-set: ${project-id}-default-egress-deny-fwr
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
+  resourceID: default-egress-deny-fwr
   direction: EGRESS
   priority: 65535
   deny:
@@ -31,15 +30,17 @@ spec:
   networkRef:
     name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
 ---
+# Egress allow traffic to Private Service Connect endpoint for Google API access
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: spoke-psc-egress-allow
+  name: project-id-egress-allow-psc-fwr # kpt-set: ${project-id}-egress-allow-psc-fwr
   namespace: networking
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
+  resourceID: egress-allow-psc-fwr
   direction: EGRESS
   priority: 1000
   allow:
