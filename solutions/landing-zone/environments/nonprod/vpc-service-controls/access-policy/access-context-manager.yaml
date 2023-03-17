@@ -30,4 +30,4 @@ spec:
   basic:
     conditions:
       - regions:
-        - CA
+          - CA

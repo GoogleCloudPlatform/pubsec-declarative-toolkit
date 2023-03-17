@@ -29,25 +29,25 @@ spec:
   basic:
     conditions:
       - regions:
-        - CA
-        # devicePolicy:
-        #   allowedDeviceManagementLevels:
-        #   - ""
-        #   allowedEncryptionStatuses:
-        #   - ""
-        #   osConstraints:
-        #   - minimumVersion: ""
-        #     osType: OS_UNSPECIFIED
-        #     requireVerifiedChromeOs: false
-        #   requireAdminApproval: false
-        #   requireCorpOwned: false
-        #   requireScreenLock: false
-        # ipSubnetworks:
-        # - subnetwork-name
-        # requiredAccessLevels:
-        # - name: access-level
-        #   namespace: string
-        #   external: name
-        # members:
-        # - user: username
-        # negate: true
+          - CA
+          # devicePolicy:
+          #   allowedDeviceManagementLevels:
+          #   - ""
+          #   allowedEncryptionStatuses:
+          #   - ""
+          #   osConstraints:
+          #   - minimumVersion: ""
+          #     osType: OS_UNSPECIFIED
+          #     requireVerifiedChromeOs: false
+          #   requireAdminApproval: false
+          #   requireCorpOwned: false
+          #   requireScreenLock: false
+          # ipSubnetworks:
+          # - subnetwork-name
+          # requiredAccessLevels:
+          # - name: access-level
+          #   namespace: string
+          #   external: name
+          # members:
+          # - user: username
+          # negate: true
