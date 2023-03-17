@@ -21,6 +21,6 @@ roleRef:
   name: cnrm-admin
   apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: User
-  name: admins@example.com # kpt-set: ${admin-user}
-  apiGroup: rbac.authorization.k8s.io
+  - kind: User
+    name: admins@example.com # kpt-set: ${admin-user}
+    apiGroup: rbac.authorization.k8s.io

@@ -21,8 +21,8 @@ metadata:
 description: "KCC Test Deployment"
 serialPipeline:
   stages:
-  - targetId: prod
-    profiles: []
+    - targetId: prod
+      profiles: []
 ---
 apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target

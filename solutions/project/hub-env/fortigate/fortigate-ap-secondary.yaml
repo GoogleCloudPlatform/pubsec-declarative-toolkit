@@ -39,7 +39,7 @@ spec:
     serviceAccountRef:
       name: hub-fortigatesdn-sa
     scopes:
-    - cloud-platform
+      - cloud-platform
   # TODO: Schedule
   # resourcePolicies:
   # - name: TBD
@@ -55,219 +55,219 @@ spec:
         external: image-path # kpt-set: ${fgt-secondary-image}
   # Logging Disk from existing resource
   attachedDisk:
-  - sourceDiskRef:
-      name: hub-fgt-secondary-log-disk
-    mode: READ_WRITE
+    - sourceDiskRef:
+        name: hub-fgt-secondary-log-disk
+      mode: READ_WRITE
   networkInterface:
-  # External
-  - name: nic0
-    stackType: IPV4_ONLY
-    networkRef:
-      name: hub-global-external-vpc
-    subnetworkRef:
-      name: hub-nane1-external-paz-snet
-    networkIpRef:
-      name: hub-fgt-secondary-ext-address
-      kind: ComputeAddress
-  # Internal
-  - name: nic1
-    stackType: IPV4_ONLY
-    networkRef:
-      name: hub-global-internal-vpc
-    subnetworkRef:
-      name: hub-nane1-internal-paz-snet
-    networkIpRef:
-      name: hub-fgt-secondary-int-address
-      kind: ComputeAddress
-  # Transit
-  - name: nic2
-    stackType: IPV4_ONLY
-    networkRef:
-      name: hub-global-transit-vpc
-    subnetworkRef:
-      name: hub-nane1-transit-paz-snet
-    networkIpRef:
-      name: hub-fgt-secondary-transit-address
-      kind: ComputeAddress
-  # MGMT
-  - name: nic3
-    stackType: IPV4_ONLY
-    networkRef:
-      name: hub-global-mgmt-vpc
-    subnetworkRef:
-      name: hub-nane1-mgmt-rz-snet
-    networkIpRef:
-      name: hub-fgt-secondary-mgmt-address
-      kind: ComputeAddress
+    # External
+    - name: nic0
+      stackType: IPV4_ONLY
+      networkRef:
+        name: hub-global-external-vpc
+      subnetworkRef:
+        name: hub-nane1-external-paz-snet
+      networkIpRef:
+        name: hub-fgt-secondary-ext-address
+        kind: ComputeAddress
+    # Internal
+    - name: nic1
+      stackType: IPV4_ONLY
+      networkRef:
+        name: hub-global-internal-vpc
+      subnetworkRef:
+        name: hub-nane1-internal-paz-snet
+      networkIpRef:
+        name: hub-fgt-secondary-int-address
+        kind: ComputeAddress
+    # Transit
+    - name: nic2
+      stackType: IPV4_ONLY
+      networkRef:
+        name: hub-global-transit-vpc
+      subnetworkRef:
+        name: hub-nane1-transit-paz-snet
+      networkIpRef:
+        name: hub-fgt-secondary-transit-address
+        kind: ComputeAddress
+    # MGMT
+    - name: nic3
+      stackType: IPV4_ONLY
+      networkRef:
+        name: hub-global-mgmt-vpc
+      subnetworkRef:
+        name: hub-nane1-mgmt-rz-snet
+      networkIpRef:
+        name: hub-fgt-secondary-mgmt-address
+        kind: ComputeAddress
   tags:
-  - internet-egress-route
+    - internet-egress-route
   # Metadata to enable serial console and bootstrap FGT
   metadata:
-  # AC-17(1) - Serial console is accessible from the gcp console (console.cloud.google.com) and requires a specific set of IAM permissions.
-  - key: serial-port-enable
-    value: "TRUE"
-  - key: license
-    value: LICENSE # kpt-set: ${fgt-secondary-license}
-  - key: user-data
-    value: |
-      config system global
-          set hostname "fgt-ap-secondary"
-          set pre-login-banner enable
-          set admintimeout 60
-          set timezone 12
-      end
-      config system admin
-          # AC-2(A) - The Fortigates/FortiOS comes with a default local `admin` account.
-          edit "admin"
-              # DO NOT modify this value, it will be updated with the value in the search-replace-config.yaml
-              set password TOKEN_ADMIN_PASSWORD
-          next
-      end
-      config system replacemsg admin "pre_admin-disclaimer-text"
-          set buffer "Acceptable Use Policy
-      WARNING: This is a private computer system. Unauthorized access or use is prohibited and subject to prosecution and/or disciplinary action. All use of this system constitutes consent to monitoring at all times and users are not entitled to any expectation of privacy. If monitoring reveals possible evidence of violation of criminal statutes, this evidence and any other related information, including identification information about the user, may be provided to law enforcement officials. If monitoring reveals violations of security regulations or unauthorized use, employees who violate security regulations or make unauthorized use of this system are subject to appropriate disciplinary action."
-      end
-      config router static
-          edit 10
+    # AC-17(1) - Serial console is accessible from the gcp console (console.cloud.google.com) and requires a specific set of IAM permissions.
+    - key: serial-port-enable
+      value: "TRUE"
+    - key: license
+      value: LICENSE # kpt-set: ${fgt-secondary-license}
+    - key: user-data
+      value: |
+        config system global
+            set hostname "fgt-ap-secondary"
+            set pre-login-banner enable
+            set admintimeout 60
+            set timezone 12
+        end
+        config system admin
+            # AC-2(A) - The Fortigates/FortiOS comes with a default local `admin` account.
+            edit "admin"
+                # DO NOT modify this value, it will be updated with the value in the search-replace-config.yaml
+                set password TOKEN_ADMIN_PASSWORD
+            next
+        end
+        config system replacemsg admin "pre_admin-disclaimer-text"
+            set buffer "Acceptable Use Policy
+        WARNING: This is a private computer system. Unauthorized access or use is prohibited and subject to prosecution and/or disciplinary action. All use of this system constitutes consent to monitoring at all times and users are not entitled to any expectation of privacy. If monitoring reveals possible evidence of violation of criminal statutes, this evidence and any other related information, including identification information about the user, may be provided to law enforcement officials. If monitoring reveals violations of security regulations or unauthorized use, employees who violate security regulations or make unauthorized use of this system are subject to appropriate disciplinary action."
+        end
+        config router static
+            edit 10
+                set device "port1"
+                set gateway 172.31.200.1
+            next
+            edit 11
+              set dst 172.31.200.0/24
               set device "port1"
               set gateway 172.31.200.1
-          next
-          edit 11
-            set dst 172.31.200.0/24
-            set device "port1"
-            set gateway 172.31.200.1
-          next
-          edit 12
-              set dst 35.191.0.0 255.255.0.0
-              set comment "health check"
-              set gateway 172.31.200.1
-              set device "port1"
-          next
-          edit 13
-              set dst 130.211.0.0 255.255.252.0
-              set comment "health check"
-              set gateway 172.31.200.1
-              set device "port1"
-          next
-          edit 20
-            set dst 172.31.201.1/32
-            set device "port2"
-          next
-          edit 21
-            set dst 172.31.201.0/24
-            set device "port2"
-            set gateway 172.31.201.1
-          next
-          edit 22
-              set dst 35.191.0.0 255.255.0.0
-              set comment "health check"
-              set gateway 172.31.201.1
+            next
+            edit 12
+                set dst 35.191.0.0 255.255.0.0
+                set comment "health check"
+                set gateway 172.31.200.1
+                set device "port1"
+            next
+            edit 13
+                set dst 130.211.0.0 255.255.252.0
+                set comment "health check"
+                set gateway 172.31.200.1
+                set device "port1"
+            next
+            edit 20
+              set dst 172.31.201.1/32
               set device "port2"
-          next
-          edit 23
-              set dst 130.211.0.0 255.255.252.0
-              set comment "health check"
-              set gateway 172.31.201.1
+            next
+            edit 21
+              set dst 172.31.201.0/24
               set device "port2"
-          next
-          edit 24
-              set dst 10.0.0.0 255.0.0.0
-              set comment "route to all spokes"
               set gateway 172.31.201.1
-              set device "port2"
-          next
-          edit 30
-              set dst 172.31.203.1/32
+            next
+            edit 22
+                set dst 35.191.0.0 255.255.0.0
+                set comment "health check"
+                set gateway 172.31.201.1
+                set device "port2"
+            next
+            edit 23
+                set dst 130.211.0.0 255.255.252.0
+                set comment "health check"
+                set gateway 172.31.201.1
+                set device "port2"
+            next
+            edit 24
+                set dst 10.0.0.0 255.0.0.0
+                set comment "route to all spokes"
+                set gateway 172.31.201.1
+                set device "port2"
+            next
+            edit 30
+                set dst 172.31.203.1/32
+                set device "port3"
+            next
+            edit 31
+              set dst 172.31.203.0/24
               set device "port3"
-          next
-          edit 31
-            set dst 172.31.203.0/24
-            set device "port3"
-            set gateway 172.31.203.1
-          next
-      end
-      config system probe-response
-          set mode http-probe
-          set http-probe-value OK
-      end
-      config system interface
-          # AC-17(100) - The allowaccess setting which enables access to the fortigate is configured to only allow SSH and HTTPS on port4 (mgmt)
-          edit port1
-              set description "external"
-              unset allowaccess
-              set mode static
-              set ip 172.31.200.11/32
-          next
-          edit port2
-              set description "internal"
-              unset allowaccess
-              set mode static
-              set ip 172.31.201.11/32
-              set explicit-web-proxy enable
-              set secondary-IP enable
-              config secondaryip
-                  edit 1
-                      set ip 172.31.201.35 255.255.255.255
-                  next
-              end
-          next
-          edit "port3"
-              set description "transit"
-              unset allowaccess
-              set mode static
-              set ip 172.31.203.11/32
-          next
-          edit "port4"
-              set description "management"
-              # AC-17(3) - HTTPS and SSH management access is only enabled on the mgmt interface
-              set allowaccess ping https ssh fgfm
-              set mode static
-              set ip 172.31.202.11/32
-          next
-          edit "probe"
-              set vdom "root"
-              set description "health check probe"
-              set allowaccess probe-response
-              set ip 169.254.255.100 255.255.255.255
-              set type loopback
-          next
-      end
-      config system ha
-          set group-name "fgt-ap-group"
-          set mode a-p
-          set hbdev "port4" 50
-          # session-pickup has impact on cpu and may be disabled to improve performance
-          set session-pickup enable
-          set ha-mgmt-status enable
-          config ha-mgmt-interfaces
-              edit 1
-                  set interface "port4"
-                  set gateway 172.31.202.1
-              next
-          end
-          set override enable
-          set priority 100
-          set unicast-hb enable
-          set unicast-hb-peerip 172.31.202.10
-          set unicast-hb-netmask 255.255.255.0
-      end
-      config system sdn-connector
-          edit "gcp"
-              set type gcp
-              set ha-status enable
-          next
-      end
-      config system dns
-        set primary 169.254.169.254
-        set protocol cleartext
-        unset secondary
-      end
-      # explicit proxy for APPRZ and DATARZ workloads
-      config system settings
-          set gui-explicit-proxy enable
-      end
-      config web-proxy explicit
-          set status enable
-          set http-incoming-port 8080
-          set https-incoming-port 8080
-      end
+              set gateway 172.31.203.1
+            next
+        end
+        config system probe-response
+            set mode http-probe
+            set http-probe-value OK
+        end
+        config system interface
+            # AC-17(100) - The allowaccess setting which enables access to the fortigate is configured to only allow SSH and HTTPS on port4 (mgmt)
+            edit port1
+                set description "external"
+                unset allowaccess
+                set mode static
+                set ip 172.31.200.11/32
+            next
+            edit port2
+                set description "internal"
+                unset allowaccess
+                set mode static
+                set ip 172.31.201.11/32
+                set explicit-web-proxy enable
+                set secondary-IP enable
+                config secondaryip
+                    edit 1
+                        set ip 172.31.201.35 255.255.255.255
+                    next
+                end
+            next
+            edit "port3"
+                set description "transit"
+                unset allowaccess
+                set mode static
+                set ip 172.31.203.11/32
+            next
+            edit "port4"
+                set description "management"
+                # AC-17(3) - HTTPS and SSH management access is only enabled on the mgmt interface
+                set allowaccess ping https ssh fgfm
+                set mode static
+                set ip 172.31.202.11/32
+            next
+            edit "probe"
+                set vdom "root"
+                set description "health check probe"
+                set allowaccess probe-response
+                set ip 169.254.255.100 255.255.255.255
+                set type loopback
+            next
+        end
+        config system ha
+            set group-name "fgt-ap-group"
+            set mode a-p
+            set hbdev "port4" 50
+            # session-pickup has impact on cpu and may be disabled to improve performance
+            set session-pickup enable
+            set ha-mgmt-status enable
+            config ha-mgmt-interfaces
+                edit 1
+                    set interface "port4"
+                    set gateway 172.31.202.1
+                next
+            end
+            set override enable
+            set priority 100
+            set unicast-hb enable
+            set unicast-hb-peerip 172.31.202.10
+            set unicast-hb-netmask 255.255.255.0
+        end
+        config system sdn-connector
+            edit "gcp"
+                set type gcp
+                set ha-status enable
+            next
+        end
+        config system dns
+          set primary 169.254.169.254
+          set protocol cleartext
+          unset secondary
+        end
+        # explicit proxy for APPRZ and DATARZ workloads
+        config system settings
+            set gui-explicit-proxy enable
+        end
+        config web-proxy explicit
+            set status enable
+            set http-incoming-port 8080
+            set https-incoming-port 8080
+        end

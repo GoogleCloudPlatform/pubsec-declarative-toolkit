@@ -28,4 +28,4 @@ spec:
   networkRef:
     name: prod-sharedvpc
   sourceTags:
-  - "web"
+    - "web"

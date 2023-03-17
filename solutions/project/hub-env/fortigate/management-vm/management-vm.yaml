@@ -42,7 +42,7 @@ spec:
     serviceAccountRef:
       name: hub-managementvm-sa
     scopes:
-    - cloud-platform
+      - cloud-platform
   # TODO: Schedule
   # resourcePolicies:
   # - name: TBD
@@ -60,11 +60,11 @@ spec:
         external: windows-cloud/windows-2022
   # Data Disk from existing resource
   attachedDisk:
-  - sourceDiskRef:
-      name: hub-mgmt-data-disk
+    - sourceDiskRef:
+        name: hub-mgmt-data-disk
   networkInterface:
-  - name: nic0
-    networkRef:
-      name: hub-global-mgmt-vpc
-    subnetworkRef:
-      name: hub-nane1-mgmt-rz-snet
+    - name: nic0
+      networkRef:
+        name: hub-global-mgmt-vpc
+      subnetworkRef:
+        name: hub-nane1-mgmt-rz-snet

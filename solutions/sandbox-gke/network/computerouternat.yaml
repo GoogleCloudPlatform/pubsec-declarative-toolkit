@@ -26,7 +26,7 @@ spec:
     name: router-sandbox-net # kpt-set: router-${network-name}
   sourceSubnetworkIpRangesToNat: LIST_OF_SUBNETWORKS
   subnetwork:
-  - subnetworkRef:
-      name: sandbox-subnet # kpt-set: ${subnetwork-name}
-    sourceIpRangesToNat:
-    - ALL_IP_RANGES
+    - subnetworkRef:
+        name: sandbox-subnet # kpt-set: ${subnetwork-name}
+      sourceIpRangesToNat:
+        - ALL_IP_RANGES

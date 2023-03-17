@@ -30,13 +30,13 @@ spec:
   allow:
     - protocol: tcp
       ports:
-       - "3389"
+        - "3389"
   networkRef:
     name: hub-global-mgmt-vpc
   sourceRanges:
-  - "35.235.240.0/20"
+    - "35.235.240.0/20"
   targetServiceAccounts:
-  - name: hub-managementvm-sa
+    - name: hub-managementvm-sa
 ---
 ## Management VM to Fortigates - ICMP and TCP SSH, HTTPS
 ## AC-17(1) - Users are forced to use IAP Desktop to access (via RDP) the management Google Compute Engine in order to access and manage the Fortigate appliance through SSH or HTTPS.
@@ -56,12 +56,12 @@ spec:
   allow:
     - protocol: tcp
       ports:
-       - "22"
-       - "443"
+        - "22"
+        - "443"
     - protocol: icmp
   networkRef:
     name: hub-global-mgmt-vpc
   sourceServiceAccounts:
-  - name: hub-managementvm-sa
+    - name: hub-managementvm-sa
   targetServiceAccounts:
-  - name: hub-fortigatesdn-sa
+    - name: hub-fortigatesdn-sa

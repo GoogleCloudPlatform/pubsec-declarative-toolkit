@@ -34,4 +34,4 @@ spec:
   # nextHopVPNTunnelRef:
   #   external: name
   tags:
-  - "egress-inet"
+    - "egress-inet"

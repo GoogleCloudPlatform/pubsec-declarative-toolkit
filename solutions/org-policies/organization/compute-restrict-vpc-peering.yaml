@@ -40,6 +40,6 @@ spec:
   listPolicy:
     allow:
       values: # kpt-set: ${allowed-vpc-peering}
-      - under:organizations/ORGANIZATION_ID
+        - under:organizations/ORGANIZATION_ID
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}

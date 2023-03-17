@@ -186,7 +186,7 @@ spec:
     allow:
       all: true # set to false to enable
       values:
-      - under:folders/FOLDER_ID
+        - under:folders/FOLDER_ID
   organizationRef:
     # Replace "${ORG_ID?}" with the numeric ID for your organization
     external: "0000000000" # kpt-set: ${org-id}

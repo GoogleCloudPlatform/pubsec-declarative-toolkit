@@ -53,7 +53,7 @@ spec:
   deny:
     - protocol: tcp
       ports:
-      - "22"
+        - "22"
   sourceRanges:
     - 0.0.0.0/32
   networkRef:
