@@ -53,6 +53,8 @@ spec:
   # Invalid field set in Private Service Connect Forwarding Rule. This field should not be set., invalid
   loadBalancingScheme: ""
   location: global
+  # TODO: bug: missing service directory registration with a specific region to avoid default us-central1 region.
+  # https://github.com/GoogleCloudPlatform/magic-modules/pull/7480
   networkRef:
     external: https://www.googleapis.com/compute/beta/projects/project-id/global/networks/global-vpc1-vpc # kpt-set: https://www.googleapis.com/compute/beta/projects/${project-id}/global/networks/global-vpc1-vpc
   # The forwarding rule name for PSC Google APIs must be an 1-20 characters string with lowercase letters and numbers and must start with a letter

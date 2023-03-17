@@ -22,6 +22,7 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${project-id}
 spec:
   resourceID: compute.googleapis.com
 ---
@@ -34,5 +35,6 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${project-id}
 spec:
   resourceID: dns.googleapis.com

@@ -23,6 +23,7 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: default-egress-deny-fwr
+  description: "Default egress deny all"
   direction: EGRESS
   priority: 65535
   deny:
@@ -41,9 +42,12 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
 spec:
   resourceID: egress-allow-psc-fwr
+  description: "Egress allow traffic to Private Service Connect endpoint for Google API access"
   direction: EGRESS
   priority: 1000
   allow:
     - protocol: all
+  destinationRanges:
+    - 10.255.255.254/32
   networkRef:
     name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
