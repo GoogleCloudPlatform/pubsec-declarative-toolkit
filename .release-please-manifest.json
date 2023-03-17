@@ -9,6 +9,7 @@
     "solutions/org-policies": "0.1.0",
     "solutions/project/project-experimentation": "0.0.2",
     "solutions/project/hub-env": "0.1.0",
+    "solutions/project/spoke-project-unclass": "0.0.1",
     "solutions/logging/client-experimentation": "0.1.0",
     "solutions/logging/core-experimentation": "0.1.0"
 }
