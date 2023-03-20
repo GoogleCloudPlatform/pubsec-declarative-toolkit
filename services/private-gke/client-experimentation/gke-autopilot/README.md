@@ -2,7 +2,7 @@
 
 These instructions will help you deploy a GKE Autopilot Cluster inside your project.
 
-> Pre-requisite: You must deploy an [autopilot](../../../kcc-deploy/kcc-autopilot/deploy-kcc-autopilot.sh) or [standard](../../../kcc-deploy/kcc-standard/deploy-kcc-standard.sh) Config Controller cluster before proceeding.
+> Pre-requisite: You must deploy an [autopilot](../../../private-kcc/client-experimentation/kcc-autopilot/deploy-kcc-autopilot.sh) or [standard](../../../private-kcc/client-experimentation/kcc-standard/deploy-kcc-standard.sh) Config Controller cluster before proceeding.
 
 ## Deployment Options
 
@@ -11,21 +11,16 @@ These instructions will help you deploy a GKE Autopilot Cluster inside your proj
 > The following steps require the kpt cli:
 > <br>https://kpt.dev/installation/kpt-cli
 
-You can quickly get started by changing the `project-id` value to your assigned project id. You can set other values as well.
+To quickly get started, change the following values inside the `setters.yaml` file:
 
-```yaml
-data:
-  # Please replace ${project-id} with your assigned project id
-  project-id: scemu-sp-testproj
-  project-namespace: config-control
-```
+- project-id
+- cluster-name
+- cluster-description
 
-Render the configuration files once your `project-id` has been set. To do this run the following command inside this folder `krm-resources/deploy/gke-autopilot`.
-
-Starting at the root of this repo run the following:
+Render the configuration files once your values have been set. Starting at the root of this repo run the following:
 
 ```sh
-cd krm-resources/deploy/gke-autopilot
+cd services/private-gke/client-experimentation/gke-autopilot
 kpt fn render
 ```
 
@@ -45,7 +40,7 @@ Package "gke":
 Successfully executed 1 function(s) in 1 package(s).
 ```
 
-You are now ready to deploy the GKE cluster using any of the following options.
+You are now ready to deploy the GKE Autopilot cluster using any of the following options.
 
 ### Option 1 - Using KPT
 
@@ -69,7 +64,7 @@ You can use the kpt cli:
 1. Starting at the root of this repo run the following command to initialize the config:
 
     ```sh
-    cd krm-resources/deploy/gke-autopilot
+    cd services/private-gke/client-experimentation/gke-autopilot
     kpt live init
     ```
 
@@ -117,11 +112,9 @@ You can use the kpt cli:
 
 1.  Your GKE cluster is now ready!
 
-> Destroy Instructions for GKE
-
 > These instructions does not delete the Config Controller cluster.
 
-1. Run this command inside `krm-resources/deploy/gke-autopilot`
+1. Run this command inside `services/private-gke/client-experimentation/gke-autopilot`
 
     ```sh
     kpt live destroy
@@ -157,7 +150,7 @@ You can use the kpt cli:
 
 1.  Your GKE cluster is now deleted!
 
-1. Manaually delete the file `resourcegroup.yaml` from the gke-autopilot folder.
+1. Manaually delete the file `resourcegroup.yaml` from the `gke-autopilot` folder.
 
     ```sh
     rm resourcegroup.yaml
@@ -170,14 +163,14 @@ Using the `kubectl` cli:
 
 **Steps**
 
-  > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the gke-autopilot folder.
+  > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the `gke-autopilot` folder.
 
-1. Run the following command to deploy the GKE Cluster and Node Pool manifests.
+1. Run the following command to deploy the GKE Autopilot Cluster.
 
     Starting at the root of this repo run the following:
 
     ```sh
-    cd krm-resources/deploy/gke-autopilot
+    cd services/private-gke/client-experimentation/gke-autopilot
     kubectl apply -f gke-autopilot.yaml
     ```
 
@@ -192,25 +185,21 @@ Using the `kubectl` cli:
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
 
-    From krm-resources/deploy/gke-autopilot:
-
     ```sh
     kubectl describe containercluster.container.cnrm.cloud.google.com/exp-cluster
     kubectl describe containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1
     ```
 
-1.  Deleting the GKE Cluster and Node Pool.
+1.  Deleting the GKE Autopilot Cluster.
 
-    > Destroy Instructions for GKE
-
-    > These instructions does not delete the Config Controller cluster. # TODO KCC deletion script/steps
-
-    From krm-resources/deploy/gke-autopilot run:
+    > These instructions does not delete the Config Controller cluster.
 
     > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
 
+    From services/private-gke/client-experimentation/gke-autopilot:
+
     ```sh
-    kubectl delete -f container-cluster.yaml; kubectl delete -f container-nodepool.yaml
+    kubectl delete -f gke-autopilot.yaml
     ```
 
     > Example result
@@ -222,13 +211,14 @@ Using the `kubectl` cli:
 
 ### Option 3 - Using Config Sync
 
-Config sync can be used to deploy GCP and GKE resources using manifest files in YAML format.
+Config sync is a GitOps service offered as part of Anthos and is built on an [open source core](https://github.com/GoogleContainerTools/kpt-config-sync). It's included in Config Controller.
 
-While deploying [Config Controller](https://cloud.google.com/config-connector/docs/reference/resource-docs/configcontroller/configcontrollerinstance) using config sync is currently in alpha and may change without notice, you can deploy GKE clusters including node pools.
+We can use Config Sync to manage GCP and GKE resources.
 
-https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster
+https://cloud.google.com/anthos-config-management/docs/config-sync-overview
+<br>https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview
+<br>https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster
 <br>https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containernodepool
-
 
 The following example will use a single `RootSync` configuration:
 <br>https://cloud.google.com/anthos-config-management/docs/how-to/multiple-repositories#manage-root-repos
@@ -236,73 +226,35 @@ The following example will use a single `RootSync` configuration:
 More information can be found here:
 <br>https://cloud.google.com/anthos-config-management/docs/config-sync-overview
 
-This example will use three `RootSync` manifest files, one to deploy the GKE Cluster and a worker node pool, one for Google Cloud resources and one for GKE resources.
-<br>
+#### RootSync example
 
-Example code will be hosted in an Azure DevOps repo. Google Cloud and GKE resources will be stored in seperate folders inside this repo.
+This example will use a [RootSync](../root-syncs/root-sync-gke-autopilot.yaml).
 
-This example will use the following folder structure.
+Change the following variables to match your Git Repo config.
 
-Starting at the root of this repo:
+CONFIG_SYNC_REPO
+<br>CONFIG_SYNC_DIR
 
-- Manifest files will be stored in krm-resources
-- GCP resource manifest files will be stored in krm-resources/deploy/gcp-resources
-  - The gke-autopilot can be deployed using config sync
-- GKE resource manifest files will be stored in krm-resources/deploy/gke-resources
-- RootSync manifests will be stored in krm-resources/root-syncs (Not managed by Config Sync)
-
-```console
-.
-├── README.md
-├── TODO.md
-├── kcc-deploy
-│   ├── README.md
-│   ├── common
-│   │   └── print-colors.sh
-│   ├── kcc-autopilot
-│   │   ├── README.md
-│   │   ├── deploy-kcc-autopilot.sh
-│   │   └── destroy-kcc-autopilot.sh
-│   └── kcc-standard
-│       ├── README.md
-│       ├── deploy-kcc-standard.sh
-│       └── destroy-kcc-standard.sh
-└── krm-resources
-    ├── README.md
-    ├── deploy
-    │   ├── README.md
-    │   ├── gcp-resources
-    │   │   └── examples
-    │   │       ├── README.md
-    │   │       └── storage-bucket.yaml
-    │   ├── gke-autopilot
-    │   │   ├── Kptfile
-    │   │   ├── README.md
-    │   │   ├── gke-autopilot.yaml
-    │   │   └── setters.yaml
-    │   ├── gke-resources
-    │   │   └── examples
-    │   │       └── hello-app
-    │   │           ├── README.md
-    │   │           ├── helloweb-deployment.yaml
-    │   │           ├── helloweb-hpa.yaml
-    │   │           ├── helloweb-ingress-static-ip.yaml
-    │   │           └── helloweb-service-load-balancer.yaml
-    │   └── gke-standard
-    │       ├── Kptfile
-    │       ├── README.md
-    │       ├── container-cluster.yaml
-    │       ├── container-nodepool.yaml
-    │       └── setters.yaml
-    └── root-syncs
-        ├── README.md
-        ├── root-sync-gcp-resources.yaml
-        ├── root-sync-gke-autopilot.yaml
-        ├── root-sync-gke-resources.yaml
-        └── root-sync-gke-standard.yaml
+```yaml
+# Root sync for GKE Autopilot Cluster
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: root-sync-git-gke-autopilot
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  override:
+  git:
+    repo: ${CONFIG_SYNC_REPO}
+    branch: main
+    dir: ${CONFIG_SYNC_DIR}
+    auth: token
+    secretRef:
+      name: git-creds
 ```
 
-Config sync status can be retrieved using the `nomos status` command.
+Once Config Sync is configured you get retrieve its status using the `nomos status` command.
 
 > Note: External IP redacted from output
 
@@ -317,22 +269,26 @@ Config sync status can be retrieved using the `nomos status` command.
 
 #### Implementing Config Sync
 
+> Warning: You can use Option 1 and 2 directly from a clone of this repo, but you will need to use a Git repo of your own for this step.
+
 The following will guide you during the setup of Config Sync.
 
 **Steps**
 
   > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the gke-autopilot folder.
 
+1. Copy the services/private-gke/client-experimentation folder to an empty repo or an existing one.
+
 1. Create a git-creds secret.
 
     You need to create a kubernetes secret that grants "code read" permission.
 
-    > Note: This example will use an Azure Devops Repo. Further info can be found on this site: https://cloud.google.com/anthos-config-management/docs/how-to/    installing-config-sync#git-creds-secret.
+    > Note: This example will use an Azure Devops Repo. Further info can be found on this site: https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#git-creds-secret.
 
 1. Configure the following environment variables:
 
     ```
-    export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
+    export GIT_USERNAME=<git username>
     export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
 
@@ -347,14 +303,35 @@ The following will guide you during the setup of Config Sync.
     ```console
     secret/git-creds created
     ```
+
+1. Change the following values inside the `setters.yaml` file:
+
+- project-id
+- cluster-name
+- cluster-description
+
+Render the configuration files once your values have been set. Starting at the root of this repo run the following:
+
+```sh
+cd services/private-gke/client-experimentation/gke-autopilot
+kpt fn render
+```
+
+1. Push your changes to your repo.
+
 #### Deploy GKE using Config Sync
 
-1. You can create a RootSync file for the GKE cluster using these instructions.
+1. Create a `RootSync` for the GKE Autopilot cluster.
 
-    root-sync-gke-autopilot.yaml
+    `root-sync-gke-autopilot.yaml`
+
+    Change the following variables to match your Git Repo config.
+
+    CONFIG_SYNC_REPO
+    <br>CONFIG_SYNC_DIR
 
     ```yaml
-    # Root sync for GKE Cluster
+    # Root sync for GKE Autopilot Cluster
     apiVersion: configsync.gke.io/v1beta1
     kind: RootSync
     metadata:
@@ -364,24 +341,24 @@ The following will guide you during the setup of Config Sync.
       sourceFormat: unstructured
       override:
       git:
-        repo: https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke
+        repo: ${CONFIG_SYNC_REPO}
         branch: main
-        dir: krm-resources/deploy/gke-autopilot
+        dir: ${CONFIG_SYNC_DIR}
         auth: token
         secretRef:
           name: git-creds
     ```
 
-1. Apply the root-sync-gke-autopilot.yaml. This will setup the config sync for the gke deployment. Run `nomos status` to check on the status of the RootSync. You can also refresh the status by polling the status using the `--poll` flag: `nomos status --poll=30s`
+1. Apply the root-sync-gke-autopilot.yaml. This will setup the config sync for the gke deployment. Run `nomos status` to check on the status of the RootSync. You can also refresh the status by polling the status using the `--poll` flag: `nomos status --poll=10s`
 
     Starting at the root of this repo run the following:
 
     ```sh
-    cd krm-resources/root-syncs
+    cd services/private-gke/client-experimentation/root-syncs/
     kubectl apply -f root-sync-gke-autopilot.yaml
     ```
 
-    Keep checking the status using `nomos status` or `nomos status --poll=30s`.
+    Keep checking the status using `nomos status` or `nomos status --poll=10s`.
 
     > Example output during deployment
 
@@ -412,77 +389,30 @@ The following will guide you during the setup of Config Sync.
        config-control   containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1   Current   516df4b
        default          configmap/setters
     ```
+
 1. Your GKE Cluster is ready!
 
 #### Destroy your GKE Cluster using Config Sync
 
 > These instructions does not delete the Config Controller cluster.
 
-1.    To delete entire cluster and node pool you can follow these steps.
+1.    To delete entire cluster you can follow these steps.
+
+      > WARNING: If you delete the cluster before the root sync, Config Sync will automatically reconcile and start re-deploying the cluster.
 
       Starting at the root of this repo run the following:
 
-      > WARNING: If you delete the cluster and node pool before the root sync, config sync will reconcile automatically and start re-deploy the cluster and node  ool.
-
       ```sh
-      cd krm-resources/root-syncs
+      cd services/private-gke/client-experimentation/root-syncs
       kubectl delete -f root-sync-gke-autopilot.yaml
       kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
       kubectl delete containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1
       ```
+
       > Expected result
+
       ```console
       rootsync.configsync.gke.io "root-sync-git-gke-autopilot" deleted
       containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
       containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 deleted
       ```
-
-### TODO
-1. Create a RootSync file for gcp resources in krm-resources/root-syncs
-
-    root-sync-gcp-resources.yaml
-
-    ```yaml
-    # Root sync for GCP Resources
-    apiVersion: configsync.gke.io/v1beta1
-    kind: RootSync
-    metadata:
-      name: root-sync-git-gcp-resources
-      namespace: config-management-system
-    spec:
-      sourceFormat: unstructured
-      override:
-      git:
-        repo: https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke
-        branch: main
-        dir: krm-resources/deploy/gcp-resources
-        auth: token
-        secretRef:
-          name: git-creds
-    ```
-
-1. Create a RootSync file for gke resources in krm-resources/root-syncs
-
-    `root-sync-gke-resources.yaml`
-
-    ```yaml
-    # Root sync for GKE Resources
-    apiVersion: configsync.gke.io/v1beta1
-    kind: RootSync
-    metadata:
-      name: root-sync-git-gke-resources
-      namespace: config-management-system
-    spec:
-      sourceFormat: unstructured
-      override:
-      git:
-        repo: https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke
-        branch: main
-        dir: krm-resources/deploy/gke-resources
-        auth: token
-        secretRef:
-          name: git-creds
-    ```
-
-1. Apply the
-

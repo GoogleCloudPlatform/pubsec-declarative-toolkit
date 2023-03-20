@@ -12,9 +12,7 @@ https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-
 
 ---
 
-
-# TODO revise the following
-While deploying [Config Controller](https://cloud.google.com/config-connector/docs/reference/resource-docs/configcontroller/configcontrollerinstance) using config sync is currently in alpha and may change without notice, you can deploy GKE Standard or Autopilot Clusters.
+Scripts are being used to build Config Controller Clusters since deploying [Config Controller Instances](https://cloud.google.com/config-connector/docs/reference/resource-docs/configcontroller/configcontrollerinstance) using existing Clusters is still in in alpha and may change without notice. This does not apply to GKE Clusters.
 
 https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster
 <br>https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containernodepool

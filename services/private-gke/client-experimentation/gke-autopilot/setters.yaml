@@ -42,8 +42,6 @@ data:
   auth-network: |
     - cidrBlock: 0.0.0.0/0
       displayName: private-net
-  gke-admin: group:client1@example.com
-  gke-viewer: group:client1@example.com
   ####
   #
   # Machine Type to be used for GKE Node Pool
