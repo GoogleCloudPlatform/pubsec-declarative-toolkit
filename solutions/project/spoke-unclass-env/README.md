@@ -29,32 +29,32 @@ This package has no sub-packages.
 
 ## Resources
 
-|         File          |                  APIVersion                   |            Kind             |                Name                 | Namespace  |
-|-----------------------|-----------------------------------------------|-----------------------------|-------------------------------------|------------|
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSPolicy                   | project-id-logging-dnspolicy        | networking |
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-googleapis-dns           | networking |
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-rset          | networking |
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-wildcard-rset | networking |
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-gcrio-dns                | networking |
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-rset               | networking |
-| network/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-wildcard-rset      | networking |
-| network/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-default-egress-deny-fwr  | networking |
-| network/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-egress-allow-psc-fwr     | networking |
-| network/peering.yaml  | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | project-id-to-hub-peer              | networking |
-| network/peering.yaml  | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | hub-to-project-id-peer              | networking |
-| network/psc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeAddress              | project-id-psc-apis-ip              | networking |
-| network/psc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeForwardingRule       | project-id-psc-apis-fw              | networking |
-| network/subnet.yaml   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-paz-snet      | networking |
-| network/subnet.yaml   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-apprz-snet    | networking |
-| network/subnet.yaml   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-datarz-snet   | networking |
-| network/subnet.yaml   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-paz-snet      | networking |
-| network/subnet.yaml   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-apprz-snet    | networking |
-| network/subnet.yaml   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-datarz-snet   | networking |
-| network/vpc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetwork              | project-id-global-vpc1-vpc          | networking |
-| project.yaml          | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                     | project-id                          | projects   |
-| project.yaml          | compute.cnrm.cloud.google.com/v1beta1         | ComputeSharedVPCHostProject | project-id-hostvpc                  | networking |
-| services.yaml         | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-compute                  | projects   |
-| services.yaml         | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-dns                      | projects   |
+|                 File                  |                  APIVersion                   |            Kind             |                Name                 | Namespace  |
+|---------------------------------------|-----------------------------------------------|-----------------------------|-------------------------------------|------------|
+| network/dnspolicy.yaml                | dns.cnrm.cloud.google.com/v1beta1             | DNSPolicy                   | project-id-logging-dnspolicy        | networking |
+| network/peering.yaml                  | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | project-id-to-hub-peer              | networking |
+| network/peering.yaml                  | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | hub-to-project-id-peer              | networking |
+| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-googleapis-dns           | networking |
+| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-rset          | networking |
+| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-wildcard-rset | networking |
+| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-gcrio-dns                | networking |
+| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-rset               | networking |
+| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-wildcard-rset      | networking |
+| network/psc/google-apis/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-default-egress-deny-fwr  | networking |
+| network/psc/google-apis/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-egress-allow-psc-fwr     | networking |
+| network/psc/google-apis/psc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeAddress              | project-id-psc-apis-ip              | networking |
+| network/psc/google-apis/psc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeForwardingRule       | project-id-psc-apis-fw              | networking |
+| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-paz-snet      | networking |
+| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-apprz-snet    | networking |
+| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-datarz-snet   | networking |
+| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-paz-snet      | networking |
+| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-apprz-snet    | networking |
+| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-datarz-snet   | networking |
+| network/vpc.yaml                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetwork              | project-id-global-vpc1-vpc          | networking |
+| project.yaml                          | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                     | project-id                          | projects   |
+| project.yaml                          | compute.cnrm.cloud.google.com/v1beta1         | ComputeSharedVPCHostProject | project-id-hostvpc                  | networking |
+| services.yaml                         | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-compute                  | projects   |
+| services.yaml                         | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-dns                      | projects   |
 
 ## Resource References
 
