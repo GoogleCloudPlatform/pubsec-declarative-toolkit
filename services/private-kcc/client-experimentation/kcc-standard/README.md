@@ -1,6 +1,6 @@
 # Deploy Config Controller Cluster - Standard
 
-Follow these instructions to deploy an Autopilot config controller instance.
+Follow these instructions to deploy a Standard Config Controller Cluster inside an experimentation landing-zone.
 
 ## bootstrap
 
@@ -33,7 +33,7 @@ Follow these instructions to deploy an Autopilot config controller instance.
     > **Note:** Run this command starting at the root of this repo:
 
     ```sh
-    cd kcc-deploy/kcc-standard
+    cd services/private-kcc/client-experimentation/kcc-standard
     bash deploy-kcc-standard.sh .env
     ```
 
@@ -44,6 +44,6 @@ Follow these instructions to deploy an Autopilot config controller instance.
     > **Note:** Run this command starting at the root of this repo:
 
     ```sh
-    cd kcc-deploy/kcc-standard
+    cd services/private-kcc/client-experimentation/kcc-standard
     bash destroy-kcc-standard.sh .env
     ```

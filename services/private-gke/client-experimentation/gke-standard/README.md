@@ -165,6 +165,19 @@ Using the `kubectl` cli:
 
   > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the `gke-standard` folder.
 
+To quickly get started, change the following value inside the `setters.yaml` file:
+
+- project-id
+- cluster-name
+- cluster-description
+
+Render the configuration files once your values have been set. Starting at the root of this repo run the following:
+
+```sh
+cd services/private-gke/client-experimentation/gke-autopilot
+kpt fn render
+```
+
 1. Run the following command to deploy the GKE Standard Cluster and Node Pool.
 
     Starting at the root of this repo run the following:

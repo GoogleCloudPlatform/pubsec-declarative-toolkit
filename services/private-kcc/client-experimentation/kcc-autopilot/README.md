@@ -35,7 +35,7 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
     > **Note:** Run this command starting at the root of this repo:
 
     ```sh
-    cd kcc-deploy/kcc-autopilot
+    cd services/private-kcc/client-experimentation/kcc-autopilot
     bash deploy-kcc-autopilot.sh .env
     ```
 
@@ -48,6 +48,6 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
     > **Note:** Run this command starting at the root of this repo:
 
     ```sh
-    cd kcc-deploy/kcc-autopilot
+    cd services/private-kcc/client-experimentation/kcc-autopilot
     bash destroy-kcc-autopilot.sh .env
     ```
