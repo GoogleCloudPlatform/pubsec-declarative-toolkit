@@ -1,0 +1,49 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# KCC container node pool
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-worker-pool-1
+  name: exp-cluster-wp-1 # kpt-set: ${cluster-name}-wp-1
+  namespace: config-control # kpt-set: ${project-namespace}
+  labels:
+    env: experimentation
+    cluster: experimentation
+  annotations:
+    cnrm.cloud.google.com/project-id: scemu-sp-kcc-exp # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: container.cnrm.cloud.google.com/namespaces/config-control/ContainerCluster/exp-cluster # kpt-set: container.cnrm.cloud.google.com/namespaces/${project-namespace}/ContainerCluster/${cluster-name}
+spec:
+  autoscaling:
+    maxNodeCount: 3
+    minNodeCount: 1
+  clusterRef:
+    name: exp-cluster # kpt-set: ${cluster-name}
+  initialNodeCount: 1
+  location: northamerica-northeast1 # kpt-set: ${location}
+  management:
+    autoRepair: true
+    autoUpgrade: true
+  nodeConfig:
+    diskSizeGb: 100
+    diskType: pd-standard
+    imageType: COS_CONTAINERD
+    labels:
+      env: experimentation
+      cluster: experimentation
+    machineType: e2-standard-2 # kpt-set: ${machineType}
+    oauthScopes:
+      - "https://www.googleapis.com/auth/logging.write"
+      - "https://www.googleapis.com/auth/monitoring"
+    preemptible: false
+    metadata: {}

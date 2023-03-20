@@ -1,0 +1,53 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# GKE Autopilot Cluster Setters
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
+data:
+  # Please replace ${project-id} with your assigned project id
+  project-id: project-id
+  project-namespace: config-control
+  ######
+  #
+  # GKE Experimentation Cluster Values
+  # Creates a Private GKE Cluster with 1 Node Pool
+  #
+  ######
+  location: northamerica-northeast1
+  cluster-description: experimentation autopilot gke cluster
+  cluster-name: exp-cluster
+  #####
+  #
+  # CIDR Range to be used for GKE Endpoint Access
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
+  #
+  #####
+  network-name: kcc-cluster-vpc
+  subnetwork-name: kcc-cluster-snet
+  auth-network: |
+    - cidrBlock: 0.0.0.0/0
+      displayName: private-net
+  gke-admin: group:client1@example.com
+  gke-viewer: group:client1@example.com
+  ####
+  #
+  # Machine Type to be used for GKE Node Pool
+  # https://cloud.google.com/compute/docs/machine-types
+  #
+  machineType: e2-standard-2
+  region: northamerica-northeast1
