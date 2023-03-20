@@ -1,0 +1,16 @@
+# Root sync for GCP resources
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: root-sync-git-gcp-resources
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  override:
+  git:
+    repo: https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke
+    branch: main
+    dir: krm-resources/deploy/gcp-resources
+    auth: token
+    secretRef:
+      name: git-creds
