@@ -35,4 +35,3 @@ spec:
         averageUtilization: 30
 # [END container_helloapp_horizontal_pod_autoscaler]
 # [END gke_manifests_helloweb_hpa_horizontalpodautoscaler_cpu]
----

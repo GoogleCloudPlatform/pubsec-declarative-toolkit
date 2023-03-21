@@ -32,4 +32,3 @@ spec:
     tier: web
 # [END container_helloapp_service_load_balancer]
 # [END gke_manifests_helloweb_service_load_balancer_service_helloweb]
----
