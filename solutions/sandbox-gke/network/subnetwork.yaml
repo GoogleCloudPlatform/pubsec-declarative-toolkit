@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}-subnet
   name: sandbox-subnet # kpt-set: ${subnetwork-name}
   namespace: sandbox # kpt-set: ${project-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}  
+    cnrm.cloud.google.com/project-id: "sandbox-000000" # kpt-set: ${project-id}
 spec:
   ipCidrRange: 10.2.0.0/16 # kpt-set: ${subnet-cidr}
   networkRef:

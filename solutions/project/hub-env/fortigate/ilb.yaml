@@ -46,15 +46,15 @@ spec:
   networkRef:
     name: hub-global-internal-vpc
   backend:
-  - group:
-      instanceGroupRef:
-        name: hub-fgt-primary-umig
-  - group:
-      instanceGroupRef:
-        name: hub-fgt-secondary-umig
+    - group:
+        instanceGroupRef:
+          name: hub-fgt-primary-umig
+    - group:
+        instanceGroupRef:
+          name: hub-fgt-secondary-umig
   healthChecks:
-  - healthCheckRef:
-      name: hub-http-8008-hc
+    - healthCheckRef:
+        name: hub-http-8008-hc
   connectionTrackingPolicy:
     connectionPersistenceOnUnhealthyBackends: "NEVER_PERSIST"
 ---
@@ -103,7 +103,7 @@ spec:
     addressRef:
       name: hub-ilb-proxy-address
   ports:
-  - "8080"
+    - "8080"
   loadBalancingScheme: "INTERNAL"
   backendServiceRef:
     name: hub-ilb-bes

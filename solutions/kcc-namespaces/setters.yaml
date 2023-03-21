@@ -20,8 +20,8 @@ metadata: # kpt-merge: /setters
 data:
   management-namespace: config-control
   # This is the project-id where config controller resides
-  management-project-id: MGMT_PROJECT_ID_0000 # arete-prompt
+  management-project-id: mgmt-project-id-0000 # arete-prompt
   # This is the project-id where you want KCC to deploy resource to
-  project-id: MY_AWESOME_PROJECT_0000 # arete-prompt
+  project-id: my-awesome-project-0000 # arete-prompt
   # This user or group will have access to the create resources in the project namespace within kcc
   admin-user: admins@example.com # arete-prompt

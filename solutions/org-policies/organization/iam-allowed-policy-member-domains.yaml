@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 #########
 #
 # GCP Organization Policies
@@ -20,7 +19,7 @@
 #
 # Constraint: constraints/iam.allowedPolicyMemberDomains
 #
-# This list constraint defines one or more Cloud Identity or 
+# This list constraint defines one or more Cloud Identity or
 # Google Workspace customer IDs whose principals can be added to IAM policies.
 # To get the workspace ID, log in to admin.google.com as an admin user
 # Go to Account settings > Profile.
@@ -28,13 +27,12 @@
 #
 # Alternatively, the 'gcloud organizations list' command can be used to see all organizations
 # for which you have the resourcemanager.organizations.get permission.
-# This command will return the DISPLAY_NAME, ID (Organization ID), and DIRECTORY_CUSTOMER_ID. 
+# This command will return the DISPLAY_NAME, ID (Organization ID), and DIRECTORY_CUSTOMER_ID.
 # The Google Workspace customer ID is the DIRECTORY_CUSTOMER_ID.
 #
 # https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains
 #
 #########
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:

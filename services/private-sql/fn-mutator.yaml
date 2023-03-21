@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 # A custom function that will update the SQL apply-time spec with the customer supplied
 # setters and update all KRMs with the proper namespace
 apiVersion: fn.kpt.dev/v1alpha1
@@ -50,5 +50,4 @@ source: |-
       resource["spec"]["instanceRef"]["namespace"] = namespace
     elif kind == "ServiceNetworkingConnection":
       resource["spec"]["reservedPeeringRanges"][0]["namespace"] = namespace
-                
     resource["metadata"]["namespace"] = namespace

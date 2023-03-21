@@ -29,7 +29,7 @@ spec:
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
   # Implement retention policy and retention locking policy
-  # AU-9, AU-11 - RetentionDays sets the policy where existing log content cannot be changed/deleted for the specificied number of days (from setters.yaml), locked setting means policy cannot be changed, ensuring immutability. 
+  # AU-9, AU-11 - RetentionDays sets the policy where existing log content cannot be changed/deleted for the specificied number of days (from setters.yaml), locked setting means policy cannot be changed, ensuring immutability.
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}
 ---
@@ -48,6 +48,6 @@ spec:
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
   # Implement retention policy and retention locking policy
-  # AU-9, AU-11 
+  # AU-9, AU-11
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}

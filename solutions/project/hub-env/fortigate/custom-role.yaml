@@ -27,9 +27,9 @@ spec:
   resourceID: FortigateSdnViewer
   title: FortiGate SDN Connector Role (read-only)
   permissions:
-  - container.nodes.list
-  - container.pods.list
-  - container.services.list
-  - compute.instances.list
-  - compute.zones.list
-  - container.clusters.list
+    - container.nodes.list
+    - container.pods.list
+    - container.services.list
+    - compute.instances.list
+    - compute.zones.list
+    - container.clusters.list
