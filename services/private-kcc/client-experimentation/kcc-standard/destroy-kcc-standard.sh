@@ -7,6 +7,12 @@
 # Bash safeties: exit on error, pipelines can't hide errors
 set -eo pipefail
 
+# get the directory of this script
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# source print-colors.sh for better readability of the script's outputs
+source "${SCRIPT_ROOT}/../common/print-colors.sh"
+
 if [ $# -eq 0 ]; then
     print_error "No input file provided.
 Usage: bash setup-kcc.sh PATH_TO_ENV_FILE"
@@ -26,7 +32,7 @@ kubens config-control
 
 # TODO Delete Yakima?
 # Export the yakima service account email before deleting the cluster
-export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
+SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
 # Delete Config controller
@@ -78,7 +84,7 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
   --project "${PROJECT_ID}"
 
 # Remove the iam.serviceAccountUser role to the default compute account
-export DEFAULT_COMPUTE_ACCOUNT=$(gcloud iam service-accounts list --filter='Compute Engine default' --format json |jq .[].email | sed 's/"//g')
+DEFAULT_COMPUTE_ACCOUNT=$(gcloud iam service-accounts list --filter='Compute Engine default' --format json |jq .[].email | sed 's/"//g')
 
 gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
   --member "serviceAccount:${DEFAULT_COMPUTE_ACCOUNT}" \

@@ -7,6 +7,12 @@
 # Bash safeties: exit on error, pipelines can't hide errors
 set -eo pipefail
 
+# get the directory of this script
+SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# source print-colors.sh for better readability of the script's outputs
+source "${SCRIPT_ROOT}/../common/print-colors.sh"
+
 if [ $# -eq 0 ]; then
     print_error "No input file provided.
 Usage: bash setup-kcc.sh PATH_TO_ENV_FILE"
@@ -19,7 +25,7 @@ source $1
 # Project should already be linked to a client billing account
 gcloud config set project $PROJECT_ID
 gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
-export PROJECT_NUM=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
+PROJECT_NUM=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
 
 # VPC
 gcloud compute networks create $NETWORK --subnet-mode=custom
@@ -102,7 +108,7 @@ gcloud anthos config controller get-credentials $CLUSTER_NAME --location $REGION
 kubens config-control
 
 # Export the yakima service account email
-export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
+SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
 # Assign the serviceusage.serviceUsageConsumer role to the yakima service account
@@ -121,7 +127,7 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 
 # Assign the iam.serviceAccountUser role to the default compute account
 # This is required to deploy the gke cluster
-export DEFAULT_COMPUTE_ACCOUNT=$(gcloud iam service-accounts list --filter='Compute Engine default' --format json |jq .[].email | sed 's/"//g')
+DEFAULT_COMPUTE_ACCOUNT=$(gcloud iam service-accounts list --filter='Compute Engine default' --format json |jq .[].email | sed 's/"//g')
 
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
   --member "serviceAccount:${DEFAULT_COMPUTE_ACCOUNT}" \
