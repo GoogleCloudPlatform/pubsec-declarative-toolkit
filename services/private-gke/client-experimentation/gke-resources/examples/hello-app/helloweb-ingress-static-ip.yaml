@@ -14,6 +14,7 @@
 #
 # [START container_helloapp_ingress]
 # [START gke_manifests_helloweb_ingress_static_ip_ingress_helloweb]
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -43,7 +44,7 @@ spec:
     app: hello
     tier: web
   ports:
-  - port: 8080
-    targetPort: 8080
+    - port: 8080
+      targetPort: 8080
 # [END gke_manifests_helloweb_ingress_static_ip_service_helloweb_backend]
 # [END container_helloapp_ingress]

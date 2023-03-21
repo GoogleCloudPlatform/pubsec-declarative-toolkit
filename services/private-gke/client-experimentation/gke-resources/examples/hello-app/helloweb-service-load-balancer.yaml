@@ -14,6 +14,7 @@
 #
 # [START gke_manifests_helloweb_service_load_balancer_service_helloweb]
 # [START container_helloapp_service_load_balancer]
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -24,8 +25,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
   selector:
     app: hello
     tier: web

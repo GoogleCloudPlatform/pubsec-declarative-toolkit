@@ -14,6 +14,7 @@
 #
 # [START gke_manifests_helloweb_hpa_horizontalpodautoscaler_cpu]
 # [START container_helloapp_horizontal_pod_autoscaler]
+---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -26,11 +27,11 @@ spec:
   minReplicas: 1
   maxReplicas: 5
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 30
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 30
 # [END container_helloapp_horizontal_pod_autoscaler]
 # [END gke_manifests_helloweb_hpa_horizontalpodautoscaler_cpu]

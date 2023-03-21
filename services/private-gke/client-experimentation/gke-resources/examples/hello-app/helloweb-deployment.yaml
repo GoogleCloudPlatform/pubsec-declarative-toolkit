@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Simple hello web deployment
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,11 +31,11 @@ spec:
         tier: web
     spec:
       containers:
-      - name: hello-app
-        # Image must be pulled from Container Registry
-        image: gcr.io/google-samples/hello-app:2.0
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            cpu: 200m
+        - name: hello-app
+          # Image must be pulled from Container Registry
+          image: gcr.io/google-samples/hello-app:2.0
+          ports:
+            - containerPort: 8080
+              resources:
+                requests:
+                  cpu: 200m
