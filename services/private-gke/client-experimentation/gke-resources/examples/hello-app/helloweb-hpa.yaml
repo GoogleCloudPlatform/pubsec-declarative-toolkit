@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
 # [START gke_manifests_helloweb_hpa_horizontalpodautoscaler_cpu]
 # [START container_helloapp_horizontal_pod_autoscaler]
 apiVersion: autoscaling/v2beta2
