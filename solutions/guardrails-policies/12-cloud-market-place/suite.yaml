@@ -11,28 +11,27 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
 metadata:
   name: cloudmarketplaceconfig
   annotations:
     config.kubernetes.io/local-config: 'true'
-    config.kubernetes.io/local-config: 'true'      
 tests:
-- name: limitegresstraffic
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  - name: marketplace-role
-    object: tests/iam.yaml
-    assertions:
-    - violations: no
-  - name: marketplace-role
-    object: tests/iam_bad.yaml
-    assertions:
-    - violations: yes
-  - name: marketplace-role-partial-policy
-    object: tests/iam_partial_policy.yaml
-    assertions:
-    - violations: yes        
+  - name: limitegresstraffic
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      - name: marketplace-role
+        object: tests/iam.yaml
+        assertions:
+          - violations: no
+      - name: marketplace-role
+        object: tests/iam_bad.yaml
+        assertions:
+          - violations: yes
+      - name: marketplace-role-partial-policy
+        object: tests/iam_partial_policy.yaml
+        assertions:
+          - violations: yes

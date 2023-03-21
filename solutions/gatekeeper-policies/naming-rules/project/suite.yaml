@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
 metadata:
@@ -19,17 +19,17 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: 'true'
 tests:
-- name: namingpolicyprojecttests
-  template: template.yaml
-  constraint: constraint.yaml
-  cases:
-  # Allowed
-  - name: allowed
-    object: tests/project_allowed.yaml
-    assertions:
-    - violations: 'no'
-  # Not allowed  
-  - name: notallowed
-    object: tests/project_not_allowed.yaml
-    assertions:
-    - violations: 'yes'
+  - name: namingpolicyprojecttests
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      # Allowed
+      - name: allowed
+        object: tests/project_allowed.yaml
+        assertions:
+          - violations: 'no'
+      # Not allowed
+      - name: notallowed
+        object: tests/project_not_allowed.yaml
+        assertions:
+          - violations: 'yes'

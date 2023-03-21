@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata: # kpt-merge: ${NAMESPACE}/${CLUSTER_NAME}
@@ -49,7 +49,7 @@ spec:
   networkRef:
     name: sandbox-net # kpt-set: ${network-name}
   subnetworkRef:
-    name: sandbox-subnet # kpt-set: ${subnetwork-name}  
+    name: sandbox-subnet # kpt-set: ${subnetwork-name}
   networkingMode: VPC_NATIVE
   notificationConfig:
     pubsub:
@@ -76,4 +76,4 @@ spec:
   nodeConfig:
     shieldedInstanceConfig:
       enableIntegrityMonitoring: true
-      enableSecureBoot: true      
+      enableSecureBoot: true

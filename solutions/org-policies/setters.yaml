@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -24,7 +24,7 @@ data:
   #############
   org-id: "0000000000"
   lz-folder-id: '0000000000'
-  management-project-id: management-project-12345 
+  management-project-id: management-project-12345
   #############
   # Org Policies
   # The following are Settings for some org policies
