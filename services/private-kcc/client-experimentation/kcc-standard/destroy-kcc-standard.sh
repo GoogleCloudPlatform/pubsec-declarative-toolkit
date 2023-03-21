@@ -18,20 +18,19 @@ fi
 source "$1"
 
 # Project should already be linked to a client billing account
-gcloud config set project $PROJECT_ID
-gcloud config set compute/region $REGION
+gcloud config set project "$PROJECT_ID"
+gcloud config set compute/region "$REGION"
 
 # Config controller get credentials
-gcloud anthos config controller get-credentials $CLUSTER_NAME --location $REGION
+gcloud anthos config controller get-credentials "$CLUSTER_NAME" --location "$REGION"
 kubens config-control
 
-# TODO Delete Yakima?
 # Export the yakima service account email before deleting the cluster
 SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
 # Delete Config controller
-gcloud anthos config controller delete $CLUSTER_NAME --location $REGION --quiet
+gcloud anthos config controller delete "$CLUSTER_NAME" --location "$REGION" --quiet
 
 # Delete firewall rules
 gcloud compute firewall-rules delete allow-egress-azure --quiet
@@ -41,9 +40,9 @@ gcloud compute firewall-rules delete deny-egress-internet --quiet
 
 # Delete DNS configuration
 gcloud dns record-sets delete gcr.io. --zone="gcrio" --type="A" --quiet
-gcloud dns record-sets delete *.gcr.io. --zone="gcrio" --type="CNAME" --quiet
+gcloud dns record-sets delete "*.gcr.io." --zone="gcrio" --type="CNAME" --quiet
 gcloud dns record-sets delete googleapis.com. --zone="googleapis" --type="A" --quiet
-gcloud dns record-sets delete *.googleapis.com. --zone="googleapis" --type="CNAME" --quiet
+gcloud dns record-sets delete "*.googleapis.com." --zone="googleapis" --type="CNAME" --quiet
 gcloud dns managed-zones delete gcrio --quiet
 gcloud dns managed-zones delete googleapis --quiet
 
@@ -51,16 +50,16 @@ gcloud dns managed-zones delete googleapis --quiet
 gcloud compute routers delete kcc-router --quiet
 
 # Delete private endpoint
-gcloud compute forwarding-rules delete endpoint1 --project=$PROJECT_ID --global --quiet
+gcloud compute forwarding-rules delete endpoint1 --project="$PROJECT_ID" --global --quiet
 
 # Delte private ip for apis
 gcloud compute addresses delete apis-private-ip --global --quiet
 
 # Subnet
-gcloud compute networks subnets delete $SUBNET --quiet
+gcloud compute networks subnets delete "$SUBNET" --quiet
 
 # VPC
-gcloud compute networks delete $NETWORK --quiet
+gcloud compute networks delete "$NETWORK" --quiet
 
 # Delete DNS remaining policy
 gcloud dns policies update dnspolicy1 --networks=
