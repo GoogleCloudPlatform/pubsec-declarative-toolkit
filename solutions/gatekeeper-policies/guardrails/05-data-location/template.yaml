@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -42,18 +42,15 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |-
         package datalocation
-
         violation[{"msg": message}] {
           asset := input.review.object
           not location_match(asset.spec.location, input.parameters.locations)
           not allowedResource(asset.kind, input.parameters.allowedServices)
           message := sprintf("Guardrail # 5: Resource %v ('%v') is located in '%v' when it is required to be in '%v'", [asset.kind, asset.metadata.name, asset.spec.location, input.parameters.locations])
         }
-
         location_match(str, pattern) {
           contains(str,pattern[_])
         }
-
         allowedResource(resource, allowed) {
           resource == allowed[_]
         }

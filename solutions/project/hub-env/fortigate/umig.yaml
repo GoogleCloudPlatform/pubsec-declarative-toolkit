@@ -26,7 +26,7 @@ spec:
   resourceID: fgt-primary-umig
   zone: northamerica-northeast1-a
   instances:
-  - name: hub-fgt-primary-instance
+    - name: hub-fgt-primary-instance
 ---
 ## Secondary
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
@@ -41,4 +41,4 @@ spec:
   resourceID: fgt-secondary-umig
   zone: northamerica-northeast1-b
   instances:
-  - name: hub-fgt-secondary-instance
+    - name: hub-fgt-secondary-instance

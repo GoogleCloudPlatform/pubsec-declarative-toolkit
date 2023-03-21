@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerAccessLevel
 metadata:
@@ -24,10 +24,10 @@ metadata:
     resource-group: nonprod
 spec:
   accessPolicyRef:
-    # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy 
+    # Replace "${ACCESS_POLICY_NUMBER}" with the numeric ID for your Access Policy
     name: orgaccesspolicy
   title: Non Prod Service Perimeter Dependency ACL1
   basic:
     conditions:
       - regions:
-        - CA
+          - CA
