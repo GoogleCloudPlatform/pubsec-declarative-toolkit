@@ -7,15 +7,13 @@
 # Bash safeties: exit on error, pipelines can't hide errors
 set -eo pipefail
 
-# get the directory of this script
-SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 if [ $# -eq 0 ]; then
     print_error "No input file provided.
 Usage: bash setup-kcc.sh PATH_TO_ENV_FILE"
     exit 1
 fi
 
+# shellcheck source=/dev/null
 # source the env file
 source "$1"
 
