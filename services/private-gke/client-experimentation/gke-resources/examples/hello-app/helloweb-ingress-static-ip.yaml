@@ -48,4 +48,3 @@ spec:
     targetPort: 8080
 # [END gke_manifests_helloweb_ingress_static_ip_service_helloweb_backend]
 # [END container_helloapp_ingress]
-
