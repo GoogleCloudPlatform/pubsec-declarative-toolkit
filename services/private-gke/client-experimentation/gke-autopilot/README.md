@@ -180,10 +180,7 @@ kpt fn render
 
 1. Run the following command to deploy the GKE Autopilot Cluster.
 
-    Starting at the root of this repo run the following:
-
     ```sh
-    cd services/private-gke/client-experimentation/gke-autopilot
     kubectl apply -f gke-autopilot.yaml
     ```
 
@@ -193,14 +190,12 @@ kpt fn render
 
     ```console
     containercluster.container.cnrm.cloud.google.com/exp-cluster created
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 created
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
 
     ```sh
     kubectl describe containercluster.container.cnrm.cloud.google.com/exp-cluster
-    kubectl describe containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1
     ```
 
 1.  Deleting the GKE Autopilot Cluster.
@@ -219,7 +214,6 @@ kpt fn render
 
     ```console
     containercluster.container.cnrm.cloud.google.com/exp-cluster deleted
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 deleted
     ```
 
 ### Option 3 - Using Config Sync
@@ -290,7 +284,7 @@ The following will guide you during the setup of Config Sync.
 
   > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the gke-autopilot folder.
 
-1. Copy the services/private-gke/client-experimentation folder to an empty repo or an existing one.
+1. Copy the services/private-gke/client-experimentation/gke-autopilot folder into an empty repo or an existing one.
 
 1. Create a git-creds secret.
 
@@ -339,6 +333,8 @@ kpt fn render
     `root-sync-gke-autopilot.yaml`
 
     Change the following variables to match your Git Repo config.
+
+    > The CONFIG_SYNC_DIR variable should be similar to services/private-gke/client-experimentation/gke-autopilot or services/private-gke/client-experimentation/.
 
     CONFIG_SYNC_REPO
     <br>CONFIG_SYNC_DIR
@@ -419,7 +415,6 @@ kpt fn render
       cd services/private-gke/client-experimentation/root-syncs
       kubectl delete -f root-sync-gke-autopilot.yaml
       kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
-      kubectl delete containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1
       ```
 
       > Expected result
@@ -427,5 +422,4 @@ kpt fn render
       ```console
       rootsync.configsync.gke.io "root-sync-git-gke-autopilot" deleted
       containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
-      containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 deleted
       ```

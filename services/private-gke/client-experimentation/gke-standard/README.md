@@ -180,10 +180,7 @@ kpt fn render
 
 1. Run the following command to deploy the GKE Standard Cluster and Node Pool.
 
-    Starting at the root of this repo run the following:
-
     ```sh
-    cd services/private-gke/client-experimentation/gke-standard
     kubectl apply -f container-cluster.yaml; kubectl apply -f container-nodepool.yaml
     ```
 
@@ -205,7 +202,7 @@ kpt fn render
 
 1.  Deleting the GKE Standard Cluster and Node Pool.
 
-    > These instructions does not delete the Config Controller cluster. # TODO KCC deletion script/steps
+    > These instructions does not delete the Config Controller cluster.
 
     > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
 
@@ -290,9 +287,7 @@ The following will guide you during the setup of Config Sync.
 
   > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the gke-autopilot folder.
 
-1. Prepare an empty repo or have one where you can store the following folder and its sub-folders.
-
-- services/private-gke/client-experimentation/
+1. Copy the services/private-gke/client-experimentation/gke-standard folder into an empty repo or an existing one.
 
 1. Create a git-creds secret.
 
@@ -339,6 +334,8 @@ kpt fn render
     `root-sync-gke-standard.yaml`
 
     Change the following variables to match your Git Repo config.
+
+    > The CONFIG_SYNC_DIR variable should be similar to services/private-gke/client-experimentation/gke-autopilot or services/private-gke/client-experimentation/.
 
     CONFIG_SYNC_REPO
     <br>CONFIG_SYNC_DIR
