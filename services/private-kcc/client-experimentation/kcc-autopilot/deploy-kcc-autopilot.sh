@@ -1,12 +1,11 @@
+#!/bin/bash
+
 ###########
 # Use this script to deploy an Autopilot Config Controller Cluster
 ##########
 
 # Bash safeties: exit on error, pipelines can't hide errors
 set -eo pipefail
-
-# get the directory of this script
-SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ $# -eq 0 ]; then
     print_error "No input file provided.
