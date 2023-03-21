@@ -10,9 +10,6 @@ set -eo pipefail
 # get the directory of this script
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# source print-colors.sh for better readability of the script's outputs
-source "${SCRIPT_ROOT}/../common/print-colors.sh"
-
 if [ $# -eq 0 ]; then
     print_error "No input file provided.
 Usage: bash setup-kcc.sh PATH_TO_ENV_FILE"
