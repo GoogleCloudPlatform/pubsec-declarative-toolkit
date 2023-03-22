@@ -49,7 +49,7 @@ spec:
   managedZoneRef:
     name: project-id-googleapis-dns # kpt-set: ${project-id}-googleapis-dns
   rrdatas:
-  - "10.255.255.254"
+    - "10.255.255.254"
 ---
 # Record Set for wildcard in googleapis.com DNS zone
 # SC-22
@@ -68,7 +68,7 @@ spec:
   managedZoneRef:
     name: project-id-googleapis-dns # kpt-set: ${project-id}-googleapis-dns
   rrdatas:
-  - "googleapis.com."
+    - "googleapis.com."
 ---
 # Private DNS zone for gcr.io
 # SC-22
@@ -107,7 +107,7 @@ spec:
   managedZoneRef:
     name: project-id-gcrio-dns # kpt-set: ${project-id}-gcrio-dns
   rrdatas:
-  - "10.255.255.254"
+    - "10.255.255.254"
 ---
 # Record Set for wildcard in gcr.io DNS zone
 # SC-22
@@ -126,4 +126,4 @@ spec:
   managedZoneRef:
     name: project-id-gcrio-dns # kpt-set: ${project-id}-gcrio-dns
   rrdatas:
-  - "gcr.io."
+    - "gcr.io."
