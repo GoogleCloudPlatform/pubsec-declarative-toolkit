@@ -27,11 +27,11 @@ spec:
   region: northamerica-northeast1
   sessionAffinity: NONE
   instances:
-  - name: hub-fgt-primary-instance
-  - name: hub-fgt-secondary-instance
+    - name: hub-fgt-primary-instance
+    - name: hub-fgt-secondary-instance
   healthChecks:
-  - httpHealthCheckRef:
-      name: hub-http-8008-httphc
+    - httpHealthCheckRef:
+        name: hub-http-8008-httphc
 ---
 ## Health Check
 apiVersion: compute.cnrm.cloud.google.com/v1beta1

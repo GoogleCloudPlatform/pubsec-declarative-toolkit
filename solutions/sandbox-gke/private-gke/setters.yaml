@@ -11,11 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: v1
 kind: ConfigMap
 metadata: # kpt-merge: /setters
   name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
 data:
   routing-mode: REGIONAL # REGIONAL or GLOBAL
   mtu: "1460" # Range can be between 1460 and 1500 bytes
@@ -24,7 +26,7 @@ data:
   flow-sampling: "0.5" # Value must be between 0 and 1
   log-metadata: INCLUDE_ALL_METADATA # Possible Values ["EXCLUDE_ALL_METADATA", "INCLUDE_ALL_METADATA", "CUSTOM_METADATA"]
   # log-metadatafields: | # Use if CUSTOM_METADATA is used for `log-metadata`
-  #   - test 
+  #   - test
   private-google-access: "true"
   gke-services-cidr: 10.3.0.0/16
   gke-pod-cidr: 10.4.0.0/16

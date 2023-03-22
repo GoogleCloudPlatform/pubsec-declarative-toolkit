@@ -25,12 +25,12 @@ metadata:
 spec:
   resourceID: allow-external-fwr
   allow:
-  - protocol: all
+    - protocol: all
   direction: INGRESS
   networkRef:
     name: hub-global-external-vpc
   sourceRanges:
-  - 0.0.0.0/0
+    - 0.0.0.0/0
 ---
 ## External Load Balancers health checks
 ## https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
@@ -48,14 +48,14 @@ spec:
   allow:
     - protocol: tcp
       ports:
-       - "8008"
+        - "8008"
   networkRef:
     name: hub-global-external-vpc
   sourceRanges:
-  - "35.191.0.0/16"
-  - "130.211.0.0/22"
+    - "35.191.0.0/16"
+    - "130.211.0.0/22"
   targetServiceAccounts:
-  - name: hub-fortigatesdn-sa
+    - name: hub-fortigatesdn-sa
 ---
 ## Internal allow spokes to fortigates
 ## AC-3(7) use of SA account with limited permissions
@@ -70,15 +70,15 @@ metadata:
 spec:
   resourceID: allow-spokes-to-fortigates-fwr
   allow:
-  - protocol: all
+    - protocol: all
   direction: INGRESS
   networkRef:
     name: hub-global-internal-vpc
   # TODO: once IP space is finalized, re-adjust this value to maybe allow only PAZ subnets
   sourceRanges:
-  - 10.0.0.0/8
+    - 10.0.0.0/8
   targetServiceAccounts:
-  - name: hub-fortigatesdn-sa
+    - name: hub-fortigatesdn-sa
 ---
 ## Internal Load Balancers health checks
 ## https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
@@ -96,14 +96,14 @@ spec:
   allow:
     - protocol: tcp
       ports:
-       - "8008"
+        - "8008"
   networkRef:
     name: hub-global-internal-vpc
   sourceRanges:
-  - "35.191.0.0/16"
-  - "130.211.0.0/22"
+    - "35.191.0.0/16"
+    - "130.211.0.0/22"
   targetServiceAccounts:
-  - name: hub-fortigatesdn-sa
+    - name: hub-fortigatesdn-sa
 ---
 ## Enable traffic on mgmt network for fortigates HA
 ## AC-3(7) use of SA account with limited permissions
@@ -123,6 +123,6 @@ spec:
   networkRef:
     name: hub-global-mgmt-vpc
   sourceServiceAccounts:
-  - name: hub-fortigatesdn-sa
+    - name: hub-fortigatesdn-sa
   targetServiceAccounts:
-  - name: hub-fortigatesdn-sa
+    - name: hub-fortigatesdn-sa
