@@ -97,6 +97,18 @@ gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
   --role "roles/krmapihosting.serviceAgent" \
   --project "${PROJECT_ID}"
 
+# Remove the GCP role Network Admin to the yakima service account
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+  --member "serviceAccount:${SA_EMAIL}" \
+  --role "roles/compute.networkAdmin" \
+  --project "${PROJECT_ID}"
+
+# Remove the GCP role Compute Security Admin to the yakima service account
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+  --member "serviceAccount:${SA_EMAIL}" \
+  --role "roles/compute.securityAdmin" \
+  --project "${PROJECT_ID}"
+
 # Disable services
 # Use --force flag to prevent COMMON_SU_SERVICE_HAS_USAGE Error
 gcloud services disable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com --force

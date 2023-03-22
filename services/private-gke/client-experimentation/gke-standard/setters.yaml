@@ -37,13 +37,16 @@ data:
   # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
   #
   #####
-  network-name: kcc-cluster-vpc
-  subnetwork-name: kcc-cluster-snet
+  network-name: gke-cluster-vpc
+  subnetwork-name: gke-cluster-snet
+  subnet-cidr: 10.2.0.0/16
   auth-network: |
     - cidrBlock: 0.0.0.0/0
       displayName: private-net
-  gke-admin: group:client1@example.com
-  gke-viewer: group:client1@example.com
+  gke-services-cidr: 10.3.0.0/16
+  gke-pod-cidr: 10.4.0.0/16
+  gke-pod-range-name: podrange
+  gke-services-range-name: servicesrange
   ####
   #
   # Machine Type to be used for GKE Node Pool

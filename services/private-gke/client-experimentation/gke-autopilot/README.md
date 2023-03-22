@@ -2,7 +2,7 @@
 
 These instructions will help you deploy a GKE Autopilot Cluster inside your project.
 
-> Pre-requisite: You must deploy an [autopilot](../../../private-kcc/client-experimentation/kcc-autopilot/deploy-kcc-autopilot.sh) or [standard](../../../private-kcc/client-experimentation/kcc-standard/deploy-kcc-standard.sh) Config Controller cluster before proceeding.
+> Pre-requisite: You must deploy an [autopilot](../../../private-kcc/client-experimentation/kcc-autopilot/deploy-kcc-autopilot.sh) or [standard](../../../private-kcc/client-experimentation/kcc-standard/deploy-kcc-standard.sh) Config Controller cluster before proceeding. Certain IAM permissions are applied using these scripts to give the yakima service account permissions to deploy the GKE required resources and clusters.
 
 ## Deployment Options
 
@@ -11,7 +11,7 @@ These instructions will help you deploy a GKE Autopilot Cluster inside your proj
 > The following steps require the kpt cli:
 > <br>https://kpt.dev/installation/kpt-cli
 
-To quickly get started, change the following values inside the `setters.yaml` file:
+To quickly get started, update the following values inside the `setters.yaml` file:
 
 - project-id
 - cluster-name
@@ -165,7 +165,7 @@ Using the `kubectl` cli:
 
   > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the `gke-autopilot` folder.
 
-To quickly get started, change the following value inside the `setters.yaml` file:
+To quickly get started, update the following value inside the `setters.yaml` file:
 
 - project-id
 - cluster-name
@@ -178,10 +178,11 @@ cd services/private-gke/client-experimentation/gke-autopilot
 kpt fn render
 ```
 
-1. Run the following command to deploy the GKE Autopilot Cluster.
+1. Run the following command inside the `services/private-gke/client-experimentation/` folder to deploy the GKE Autopilot Cluster.
 
     ```sh
-    kubectl apply -f gke-autopilot.yaml
+    cd ..
+    kubectl apply -f gke-autopilot --recursive
     ```
 
     > This step will take 5 minutes or more to complete.
@@ -190,31 +191,41 @@ kpt fn render
 
     ```console
     containercluster.container.cnrm.cloud.google.com/exp-cluster created
+    computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal created
+    computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc created
+    computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet created
+    resourcegroup.kpt.dev/inventory-95787803 created
+    configmap/setters created
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
 
     ```sh
-    kubectl describe containercluster.container.cnrm.cloud.google.com/exp-cluster
+    kubectl get gcp -A
     ```
 
-1.  Deleting the GKE Autopilot Cluster.
+1. Run the following command inside the `services/private-gke/client-experimentation/` folder to delete the GKE Autopilot Cluster.
 
     > These instructions does not delete the Config Controller cluster.
 
-    > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
-
-    From services/private-gke/client-experimentation/gke-autopilot:
-
     ```sh
-    kubectl delete -f gke-autopilot.yaml
+    kubectl delete -f gke-autopilot --recursive
     ```
+
+    > This step will take 5 minutes or more to complete.
 
     > Example result
 
     ```console
-    containercluster.container.cnrm.cloud.google.com/exp-cluster deleted
+    containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
+    computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
+    computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
+    computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
+    resourcegroup.kpt.dev "inventory-95787803" deleted
+    configmap "setters" deleted
     ```
+
+    > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
 
 ### Option 3 - Using Config Sync
 
@@ -311,7 +322,7 @@ The following will guide you during the setup of Config Sync.
     secret/git-creds created
     ```
 
-1. Change the following values inside the `setters.yaml` file:
+1. Update the following values inside the `setters.yaml` file:
 
 - project-id
 - cluster-name
@@ -360,10 +371,7 @@ kpt fn render
 
 1. Apply the root-sync-gke-autopilot.yaml. This will setup the config sync for the gke deployment. Run `nomos status` to check on the status of the RootSync. You can also refresh the status by polling the status using the `--poll` flag: `nomos status --poll=10s`
 
-    Starting at the root of this repo run the following:
-
     ```sh
-    cd services/private-gke/client-experimentation/root-syncs/
     kubectl apply -f root-sync-gke-autopilot.yaml
     ```
 
@@ -372,31 +380,34 @@ kpt fn render
     > Example output during deployment
 
     ```console
-    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
-    --------------------
-    <root>:root-sync-git-gke-cluster         https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/krm-resources/deploy/gke-cluster@main
-    SYNCED @ 2023-03-16 10:36:11 -0400 EDT   516df4b170a37d676498d3f84c9be804ec9a2063
-    Managed resources:
-       NAMESPACE        NAME                                                                    STATUS    SOURCEHASH
-       config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster   Current   516df4b
-          Update in progress
-       config-control   containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1   Current   516df4b
-          reference ContainerCluster config-control/exp-cluster is not ready
-       default   configmap/setters   Current   516df4b
+    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster-auto
+      --------------------
+      <root>:root-sync-git-gke-autopilot       https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/services/private-gke/_testing/gke-autopilot@main
+      SYNCED @ 2023-03-22 12:09:54 -0400 EDT   b3bc516c9cca782671a306c913e5b7a6890ebae0
+      Managed resources:
+         NAMESPACE        NAME                                                                      STATUS          SOURCEHASH
+         config-control   computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal   Current      b3bc516
+         config-control   computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc              Current      b3bc516
+         config-control   computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet          Current      b3bc516
+         config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster              InProgress   b3bc516
+            Update in progress
+         default   configmap/setters   Current   b3bc516
     ```
 
     > Example output of successful deployment
 
     ```console
-    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
-    --------------------
-    <root>:root-sync-git-gke-autopilot         https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/krm-resources/deploy/gke-cluster@main
-    SYNCED @ 2023-03-16 10:36:11 -0400 EDT   516df4b170a37d676498d3f84c9be804ec9a2063
-    Managed resources:
-       NAMESPACE        NAME                                                                          STATUS    SOURCEHASH
-       config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster         Current   516df4b
-       config-control   containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1   Current   516df4b
-       default          configmap/setters
+    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster-auto
+      --------------------
+      <root>:root-sync-git-gke-autopilot       https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/    gcp-stjeanl1-client-kcc-gke/services/private-gke/_testing/gke-autopilot@main
+      SYNCED @ 2023-03-22 12:09:54 -0400 EDT   b3bc516c9cca782671a306c913e5b7a6890ebae0
+      Managed resources:
+         NAMESPACE        NAME                                                                      STATUS    SOURCEHASH
+         config-control   computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal   Current   b3bc516
+         config-control   computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc              Current   b3bc516
+         config-control   computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet          Current   b3bc516
+         config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster              Current   b3bc516
+         default          configmap/setters                                                         Current   b3bc516
     ```
 
 1. Your GKE Cluster is ready!
@@ -409,12 +420,12 @@ kpt fn render
 
       > WARNING: If you delete the cluster before the root sync, Config Sync will automatically reconcile and start re-deploying the cluster.
 
-      Starting at the root of this repo run the following:
-
       ```sh
-      cd services/private-gke/client-experimentation/root-syncs
       kubectl delete -f root-sync-gke-autopilot.yaml
       kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
+      kubectl delete computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal
+      kubectl delete computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet
+      kubectl delete computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc
       ```
 
       > Expected result
@@ -422,4 +433,7 @@ kpt fn render
       ```console
       rootsync.configsync.gke.io "root-sync-git-gke-autopilot" deleted
       containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
+      computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
+      computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
+      computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
       ```

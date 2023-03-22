@@ -2,7 +2,7 @@
 
 These instructions will help you deploy a GKE Standard Cluster inside your project.
 
-> Pre-requisite: You must deploy an [autopilot](../../../private-kcc/client-experimentation/kcc-autopilot/deploy-kcc-autopilot.sh) or [standard](../../../private-kcc/client-experimentation/kcc-standard/deploy-kcc-standard.sh) Config Controller cluster before proceeding.
+> Pre-requisite: You must deploy an [autopilot](../../../private-kcc/client-experimentation/kcc-autopilot/deploy-kcc-autopilot.sh) or [standard](../../../private-kcc/client-experimentation/kcc-standard/deploy-kcc-standard.sh) Config Controller cluster before proceeding. Certain IAM permissions are applied using these scripts to give the yakima service account permissions to deploy the GKE required resources and clusters.
 
 ## Deployment Options
 
@@ -11,7 +11,7 @@ These instructions will help you deploy a GKE Standard Cluster inside your proje
 > The following steps require the kpt cli:
 > <br>https://kpt.dev/installation/kpt-cli
 
-To quickly get started, change the following values inside the `setters.yaml` file:
+To quickly get started, update the following values inside the `setters.yaml` file:
 
 - project-id
 - cluster-name
@@ -174,14 +174,15 @@ To quickly get started, change the following value inside the `setters.yaml` fil
 Render the configuration files once your values have been set. Starting at the root of this repo run the following:
 
 ```sh
-cd services/private-gke/client-experimentation/gke-autopilot
+cd services/private-gke/client-experimentation/gke-standard
 kpt fn render
 ```
 
-1. Run the following command to deploy the GKE Standard Cluster and Node Pool.
+1. Run the following command inside the `services/private-gke/client-experimentation/` folder to deploy the GKE Standard Cluster and Node Pool.
 
     ```sh
-    kubectl apply -f container-cluster.yaml; kubectl apply -f container-nodepool.yaml
+    cd ..
+    kubectl apply -f gke-standard --recursive
     ```
 
     > This step will take 5 minutes or more to complete.
@@ -189,35 +190,40 @@ kpt fn render
     > Example status result
 
     ```console
-    containercluster.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1 created
-    containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1 created
+    containercluster.container.cnrm.cloud.google.com/exp-cluster created
+    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 created
+    computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal created
+    computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc created
+    computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet created
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
 
     ```sh
-    kubectl describe containercluster.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1
-    kubectl describe containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1
+    kubectl get gcp -A
     ```
 
-1.  Deleting the GKE Standard Cluster and Node Pool.
+1. Run the following command inside the `services/private-gke/client-experimentation/` folder to delete the GKE Standard Cluster and Node Pool.
 
     > These instructions does not delete the Config Controller cluster.
 
-    > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
-
-    From services/private-gke/client-experimentation/gke-standard:
-
     ```sh
-    kubectl delete -f container-cluster.yaml; kubectl delete -f container-nodepool.yaml
+    kubectl delete -f gke-standard --recursive
     ```
 
-    > Example result
+    > This step will take 5 minutes or more to complete.
+
+    > Example status result
 
     ```console
-    containercluster.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1 deleted
-    containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1 deleted
+    containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
+    containernodepool.container.cnrm.cloud.google.com "exp-cluster-wp-1" deleted
+    computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
+    computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
+    computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
     ```
+
+    > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
 
 ### Option 3 - Using Config Sync
 
@@ -314,7 +320,7 @@ The following will guide you during the setup of Config Sync.
     secret/git-creds created
     ```
 
-1. Change the following values inside the `setters.yaml` file:
+1. Update the following values inside the `setters.yaml` file:
 
 - project-id
 - cluster-name
@@ -361,10 +367,7 @@ kpt fn render
 
 1. Apply the root-sync-gke-standard.yaml. This will setup the config sync for the gke deployment. Run `nomos status` to check on the status of the RootSync. You can also refresh the status by polling the status using the `--poll` flag: `nomos status --poll=10s`
 
-    Starting at the root of this repo run the following:
-
     ```sh
-    cd services/private-gke/client-experimentation/root-syncs/
     kubectl apply -f root-sync-gke-standard.yaml
     ```
 
@@ -373,31 +376,36 @@ kpt fn render
     > Example output during deployment
 
     ```console
-    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
-    --------------------
-    <root>:root-sync-git-gke-cluster         https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/krm-resources/deploy/gke-cluster@main
-    SYNCED @ 2023-03-16 10:36:11 -0400 EDT   516df4b170a37d676498d3f84c9be804ec9a2063
-    Managed resources:
-       NAMESPACE        NAME                                                                    STATUS    SOURCEHASH
-       config-control   containercluster.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1   Current   516df4b
-          Update in progress
-       config-control   containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1   Current   516df4b
-          reference ContainerCluster config-control/ssc-spc-exp-cluster1 is not ready
-       default   configmap/setters   Current   516df4b
+    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster-auto
+      --------------------
+      <root>:root-sync-git-gke-standard        https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/services/private-gke/_testing/   gke-standard@main
+      SYNCED @ 2023-03-22 12:47:20 -0400 EDT   092079e986fb0c1dfe67a8ebd2c407aa3f7b7e18
+      Managed resources:
+         NAMESPACE            NAME                                                                          STATUS    SOURCEHASH
+         config-control   computefirewall.compute.cnrm.cloud.google.com/    allow-gke-egress-internal   Current   092079e
+         config-control   computenetwork.compute.cnrm.cloud.google.com/   gke-cluster-vpc              Current   092079e
+         config-control   computesubnetwork.compute.cnrm.cloud.google.com/    gke-cluster-snet          Current   092079e
+         config-control   containercluster.container.cnrm.cloud.google.com/   exp-cluster              Current   092079e
+         config-control   containernodepool.container.cnrm.cloud.google.com/    exp-cluster-wp-1        Current   092079e
+            Update in progress
+         default   configmap/setters   Current   092079e
     ```
 
     > Example output of successful deployment
 
     ```console
-    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
-    --------------------
-    <root>:root-sync-git-gke-cluster         https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/krm-resources/deploy/gke-cluster@main
-    SYNCED @ 2023-03-16 10:36:11 -0400 EDT   516df4b170a37d676498d3f84c9be804ec9a2063
-    Managed resources:
-       NAMESPACE        NAME                                                                          STATUS    SOURCEHASH
-       config-control   containercluster.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1         Current   516df4b
-       config-control   containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1   Current   516df4b
-       default          configmap/setters
+    *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster-auto
+      --------------------
+      <root>:root-sync-git-gke-standard        https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/services/private-gke/_testing/gke-standard@main
+      SYNCED @ 2023-03-22 12:47:20 -0400 EDT      092079e986fb0c1dfe67a8ebd2c407aa3f7b7e18
+      Managed resources:
+         NAMESPACE        NAME                                                                      STATUS    SOURCEHASH
+         config-control   computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal   Current   092079e
+         config-control   computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc              Current   092079e
+         config-control   computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet          Current   092079e
+         config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster              Current   092079e
+         config-control   containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1        Current   092079e
+         default          configmap/setters                                                         Current   092079e
     ```
 
 1. Your GKE Cluster is ready!
@@ -413,14 +421,20 @@ kpt fn render
       > WARNING: If you delete the cluster and node pool before the root sync, Config Sync will automatically reconcile and start re-deploying the cluster and node pool.
 
       ```sh
-      cd services/private-gke/client-experimentation/root-syncs
       kubectl delete -f root-sync-gke-standard.yaml
-      kubectl delete containercluster.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1
-      kubectl delete containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1
+      kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
+      kubectl delete containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1
+      kubectl delete computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal
+      kubectl delete computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet
+      kubectl delete computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc
       ```
       > Expected result
+
       ```console
-      rootsync.configsync.gke.io "root-sync-git-gke-cluster" deleted
-      containercluster.container.cnrm.cloud.google.com "ssc-spc-exp-cluster1" deleted
-      containernodepool.container.cnrm.cloud.google.com/ssc-spc-exp-cluster1-wp-1 deleted
+      rootsync.configsync.gke.io "root-sync-git-gke-standard" deleted
+      containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
+      containernodepool.container.cnrm.cloud.google.com "exp-cluster-wp-1" deleted
+      computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
+      computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
+      computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
       ```

@@ -11,18 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
 # KCC container cluster
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
-  name: exp-cluster # kpt-set: ${cluster-name}
+  name: cluster-name # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${project-namespace}
   labels:
     env: experimentation
-    cluster: exp-cluster # kpt-set: ${cluster-name}
+    cluster: cluster-name # kpt-set: ${cluster-name}
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/depends-on: compute.cnrm.cloud.google.com/namespaces/config-control/ComputeNetwork/gke-cluster-snet # kpt-set: compute.cnrm.cloud.google.com/namespaces/${project-namespace}/ComputeNetwork/${subnetwork-name}
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -31,16 +33,14 @@ spec:
       enabled: true
     networkPolicyConfig:
       disabled: false
-  description: experimentation standard gke cluster # kpt-set: ${cluster-description}
+  description: cluster-description # kpt-set: ${cluster-description}
   enableBinaryAuthorization: true
   enableIntranodeVisibility: true
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
-    # Cluster Secondary Range name and CIDR will be auto-created
-    clusterSecondaryRangeName: ""
-    # Services Secondary Range name and CIDR will be auto-created
-    servicesSecondaryRangeName: ""
+    clusterSecondaryRangeName: podrange
+    servicesSecondaryRangeName: servicesrange
   location: northamerica-northeast1 # kpt-set: ${region}
   maintenancePolicy:
     dailyMaintenanceWindow:
@@ -52,7 +52,7 @@ spec:
   networkPolicy:
     enabled: true
   networkRef:
-    external: kcc-cluster-vpc # kpt-set: ${network-name}
+    external: network-name # kpt-set: ${network-name}
   networkingMode: VPC_NATIVE
   podSecurityPolicyConfig:
     enabled: false
@@ -65,8 +65,8 @@ spec:
     publicEndpoint: ""
     masterIpv4CidrBlock: 172.16.0.32/28
   subnetworkRef:
-    # Subnet must be externally referenced as it's scripted
-    external: projects/${project-id}/regions/northamerica-northeast1/subnetworks/${subnetwork-name} # kpt-set: projects/${project-id}/regions/northamerica-northeast1/subnetworks/${subnetwork-name}
+    name: subnetwork-name # kpt-set: ${subnetwork-name}
+    namespace: config-control # kpt-set: ${project-namespace}
   verticalPodAutoscaling:
     enabled: true
   workloadIdentityConfig:
@@ -79,4 +79,4 @@ spec:
       enableSecureBoot: true
     labels:
       env: experimentation
-      cluster: exp-cluster # kpt-set: ${cluster-name}
+      cluster: cluster-name # kpt-set: ${cluster-name}

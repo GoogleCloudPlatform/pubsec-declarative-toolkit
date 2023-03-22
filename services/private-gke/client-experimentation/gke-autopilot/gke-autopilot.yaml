@@ -11,21 +11,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
 # GKE Autopilot Cluster
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
-  name: exp-cluster # kpt-set: ${cluster-name}
+  name: cluster-name # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${project-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/depends-on: compute.cnrm.cloud.google.com/namespaces/${project-namespace}/ComputeNetwork/${subnetwork-name} # kpt-set: compute.cnrm.cloud.google.com/namespaces/${project-namespace}/ComputeNetwork/${subnetwork-name}
 spec:
   addonsConfig:
     configConnectorConfig:
       enabled: false
     dnsCacheConfig:
       enabled: true
-  description: experimentation autopilot gke cluster # kpt-set: ${cluster-description}
+  description: cluster-description # kpt-set: ${cluster-description}
   enableAutopilot: true
   binaryAuthorization:
     evaluationMode: PROJECT_SINGLETON_POLICY_ENFORCE
@@ -33,10 +35,8 @@ spec:
   enableShieldedNodes: true
   initialNodeCount: 1
   ipAllocationPolicy:
-    # Cluster Secondary Range name and CIDR will be auto-created
-    clusterSecondaryRangeName: ""
-    # Services Secondary Range name and CIDR will be auto-created
-    servicesSecondaryRangeName: ""
+    clusterSecondaryRangeName: podrange
+    servicesSecondaryRangeName: servicesrange
   location: northamerica-northeast1 # kpt-set: ${region}
   maintenancePolicy:
     dailyMaintenanceWindow:
@@ -59,8 +59,8 @@ spec:
     publicEndpoint: ""
     masterIpv4CidrBlock: 172.16.0.32/28
   subnetworkRef:
-    # Subnet must be externally referenced as it's scripted
-    external: projects/${project-id}/regions/northamerica-northeast1/subnetworks/${subnetwork-name} # kpt-set: projects/${project-id}/regions/northamerica-northeast1/subnetworks/${subnetwork-name}
+    name: subnetwork-name # kpt-set: ${subnetwork-name}
+    namespace: config-control # kpt-set: ${project-namespace}
   verticalPodAutoscaling:
     enabled: true
   workloadIdentityConfig:
