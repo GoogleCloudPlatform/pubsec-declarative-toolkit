@@ -38,3 +38,11 @@ data:
   nane2-apprz-snet: 10.2.2.0/24
   # Subnet IP range for DATARZ in northamerica-northeast2
   nane2-datarz-snet: 10.2.3.0/24
+  # Destination ranges for the default egress deny all firewall rule
+  firewall-default-egress-deny-all: |
+    - 10.1.1.0/24
+    - 10.1.2.0/24
+    - 10.1.3.0/24
+    - 10.2.1.0/24
+    - 10.2.2.0/24
+    - 10.2.3.0/24

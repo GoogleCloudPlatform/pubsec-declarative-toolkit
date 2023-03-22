@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # Private DNS zone for googleapis.com
+# SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
@@ -32,6 +33,7 @@ spec:
           name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
 ---
 # Record Set for googleapis.com in googleapis.com DNS zone
+# SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
@@ -50,6 +52,7 @@ spec:
   - "10.255.255.254"
 ---
 # Record Set for wildcard in googleapis.com DNS zone
+# SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
@@ -68,6 +71,7 @@ spec:
   - "googleapis.com."
 ---
 # Private DNS zone for gcr.io
+# SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
@@ -87,6 +91,7 @@ spec:
           name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
 ---
 # Record Set for gcr.io in gcr.io DNS zone
+# SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
@@ -105,6 +110,7 @@ spec:
   - "10.255.255.254"
 ---
 # Record Set for wildcard in gcr.io DNS zone
+# SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:

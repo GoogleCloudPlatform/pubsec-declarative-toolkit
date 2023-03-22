@@ -14,6 +14,7 @@
 #########
 # VPC Peering
 # Spoke to Hub
+# AC-4, AC-4(21), SC-7(C), SC-7(5)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetworkPeering
 metadata:
@@ -33,6 +34,7 @@ spec:
     name: hub-global-internal-vpc
 ---
 # Hub to Spoke
+# AC-4, AC-4(21), SC-7(C), SC-7(5)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetworkPeering
 metadata:

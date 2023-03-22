@@ -17,8 +17,7 @@
 # - private google access enabled https://cloud.google.com/vpc/docs/private-google-access
 #########
 # Subnet PAZ northamerica-northeast1
-# AC-4 Information flow enforcement - Subnet creation to segregate and force through ZIP for access
-# SC-7 BOUNDARY PROTECTION
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -41,7 +40,7 @@ spec:
     metadata: INCLUDE_ALL_METADATA
 ---
 # Subnet APPRZ northamerica-northeast1
-# SC-7 BOUNDARY PROTECTION
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -64,7 +63,7 @@ spec:
     metadata: INCLUDE_ALL_METADATA
 ---
 # Subnet DATARZ northamerica-northeast1
-# SC-7 BOUNDARY PROTECTION
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -87,7 +86,7 @@ spec:
     metadata: INCLUDE_ALL_METADATA
 ---
 # Subnet PAZ northamerica-northeast2
-# SC-7 BOUNDARY PROTECTION
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -110,7 +109,7 @@ spec:
     metadata: INCLUDE_ALL_METADATA
 ---
 # Subnet APPRZ northamerica-northeast2
-# SC-7 BOUNDARY PROTECTION
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -133,7 +132,7 @@ spec:
     metadata: INCLUDE_ALL_METADATA
 ---
 # Subnet DATARZ northamerica-northeast2
-# SC-7 BOUNDARY PROTECTION
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:

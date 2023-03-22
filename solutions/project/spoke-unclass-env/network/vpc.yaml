@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # VPC
+# AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
