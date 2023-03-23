@@ -1,5 +1,5 @@
-# Introduction 
-A package to create the core landing zone structure for DEV, UAT and PROD
+# Introduction
+A package to create the core landing zone structure for DEV, PREPROD and PROD
 
 # Usage
 Get the package by running the following, optionally setting the revision and destination folder:
