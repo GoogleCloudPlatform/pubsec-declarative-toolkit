@@ -38,3 +38,17 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${project-id}
 spec:
   resourceID: dns.googleapis.com
+---
+# Service Directory API
+# required for Private Service Connect
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-servicedirectory # kpt-set: ${project-id}-servicedirectory
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/disable-on-destroy: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${project-id}
+spec:
+  resourceID: servicedirectory.googleapis.com
