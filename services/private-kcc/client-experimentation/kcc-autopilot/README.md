@@ -1,6 +1,6 @@
 # Deploy Config Controller Cluster - Autopilot
 
-Follow these instructions to deploy an autopilot Config Controller Cluster inside an experimentation landing-zone.
+Follow these instructions to deploy an autopilot Config Controller Cluster inside a project.
 
 ## bootstrap
 

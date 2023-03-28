@@ -1,6 +1,6 @@
 # Deploy Config Controller Cluster - Standard
 
-Follow these instructions to deploy a Standard Config Controller Cluster inside an experimentation landing-zone.
+Follow these instructions to deploy a Standard Config Controller Cluster inside a project.
 
 ## bootstrap
 
