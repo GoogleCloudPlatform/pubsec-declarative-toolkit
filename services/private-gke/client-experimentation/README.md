@@ -2,8 +2,6 @@
 
 This folder contains the necessary files to deploy Standard and Autopilot GKE Clusters inside your experimentation landing-zone.
 
-Scripts are being used to build Config Controller Clusters since deploying [Config Controller Instances](https://cloud.google.com/config-connector/docs/reference/resource-docs/configcontroller/configcontrollerinstance) using existing Clusters is still in in alpha and may change without notice. This does not apply to GKE Clusters.
-
 ### GKE Autopilot Cluster
 
 You can deploy a GKE Autopilot Cluster using the instructions and krm resource manifest located inside the [gke-autopilot](gke-autopilot/) folder.

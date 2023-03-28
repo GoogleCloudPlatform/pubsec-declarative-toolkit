@@ -66,13 +66,13 @@ gcloud dns policies update dnspolicy1 --networks=
 gcloud dns policies delete dnspolicy1 --quiet
 
 # Remove the serviceusage.serviceUsageConsumer role to the yakima service account
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
   --member "serviceAccount:${SA_EMAIL}" \
   --role "roles/serviceusage.serviceUsageConsumer" \
   --project "${PROJECT_ID}"
 
 # Remove the container.clusterAdmin role to the yakima service account
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
   --member "serviceAccount:${SA_EMAIL}" \
   --role "roles/container.clusterAdmin" \
   --project "${PROJECT_ID}"
