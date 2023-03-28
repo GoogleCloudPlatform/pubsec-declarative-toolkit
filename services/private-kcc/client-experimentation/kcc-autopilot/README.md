@@ -18,7 +18,6 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
     export PROJECT_ID=projectid
     export NETWORK=kcc-cluster-vpc
     export SUBNET=kcc-cluster-snet
-    export BILLING_ID=AAAAAA-BBBBBB-CCCCCC
     ```
 
     |Variable|Description/Use|
@@ -28,7 +27,6 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
     | PROJECT_ID | The `project_id` where to deploy the KCC cluster.   |
     | NETWORK  | The name of the VPC network that will be created  |
     | SUBNET | The name of the subnet that will be deployed inside the VPC network |
-    | BILLING_ID  | Your client `billing_id`  |
 
 1. Execute the deployment script, specifying the environment file `.env`:
 

@@ -16,7 +16,6 @@ Follow these instructions to deploy a Standard Config Controller Cluster inside 
     export PROJECT_ID=projectid
     export NETWORK=kcc-cluster-vpc
     export SUBNET=kcc-cluster-snet
-    export BILLING_ID=AAAAAA-BBBBBB-CCCCCC
     ```
 
     |Variable|Description/Use|
@@ -26,7 +25,6 @@ Follow these instructions to deploy a Standard Config Controller Cluster inside 
     | PROJECT_ID | The `project_id` where to deploy the KCC cluster.   |
     | NETWORK  | The name of the VPC network that will be created  |
     | SUBNET | The name of the subnet that will be deployed inside the VPC network |
-    | BILLING_ID  | Your client `billing_id`  |
 
 - Execute the deployment script, specifying the environment file `.env`:
 
