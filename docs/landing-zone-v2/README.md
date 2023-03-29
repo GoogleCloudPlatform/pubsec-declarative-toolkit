@@ -14,7 +14,7 @@ You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/
 
 ## Organization
 
-This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, User Acceptance and Testing, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
+This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, PreProduction, Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
 
 ## Single GCP organization
 
@@ -30,7 +30,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 
 ![img](img/folders-experimentation.png)
 
-## The Dev, UAT and Prod landing zones contain the following folder structure
+## The Dev, PreProd and Prod landing zones contain the following folder structure
 
 ![img](img/folders-env.png)
 
@@ -38,7 +38,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 
 To deploy this Landing Zone you will need to:
 
-  1. [Complete the bootstrap procedure.](#1-complete-the-boostrap-procedure)
+  1. [Complete the bootstrap procedure.](#1-complete-the-bootstrap-procedure)
   2. [Create your landing zone.](#2-create-your-landing-zone)
   3. [Deploy the infrastructure using either kpt or gitops-git or gitops-oci.](#3-deploy-the-infrastructure-using-either-kpt-or-gitops-git-or-gitops-oci)
   4. [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
@@ -281,12 +281,7 @@ TODO: TBD
 
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${SA_EMAIL}" \
-      --role "roles/editor" \
-      --project "${PROJECT_ID}"
-
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-      --member "serviceAccount:${SA_EMAIL}" \
-      --role "roles/iam.serviceAccountAdmin" \
+      --role "roles/serviceusage.serviceUsageConsumer" \
       --project "${PROJECT_ID}"
     ```
 
@@ -313,10 +308,10 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-experimentation@main ./landing-zone/hierarchy
       ```
 
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
 
       ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main ./landing-zone/hierarchy
+      kpt pkg get <https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main> ./landing-zone/hierarchy
       ```
 
 1. Get the gatekeeper policies package

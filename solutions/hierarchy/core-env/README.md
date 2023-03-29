@@ -1,6 +1,6 @@
 # Introduction
 
-A package to create the core landing zone structure for DEV, UAT and PROD
+A package to create the core landing zone structure for DEV, PREPROD and PROD
 
 ## Usage
 
