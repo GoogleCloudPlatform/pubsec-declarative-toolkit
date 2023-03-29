@@ -3,6 +3,7 @@
 ## Fortigate
 
 1. Address Object for the spoke workload1 and for the common service - Could be available using the GCP SDN connector
+
     ```fortios
     config firewall address
         edit "project1-workload1-addr"
@@ -15,7 +16,9 @@
         next
     end
     ```
+
 2. Firewall policy to allow traffic from port2/spoke resource to port2/common services
+
     ```fortios
     config firewall policy
         edit 0
@@ -41,7 +44,8 @@
 
 ## Common Services VPC
 
-1. firewall rule to allow ingress trafic from clients vpc to the service account or ip adress of the PAZ connected resource
+1. firewall rule to allow ingress traffic from clients vpc to the service account or ip address of the PAZ connected resource
+
     ```yaml
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeFirewall

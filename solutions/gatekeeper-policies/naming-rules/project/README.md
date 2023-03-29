@@ -18,7 +18,7 @@ Run the following command to view the package content:
 
 `kpt pkg tree naming-rules`
 
-```
+```kpt
 Package "project"
 ├── [Kptfile]  Kptfile project-naming-rules
 ├── [constraint.yaml]  NamingPolicyProject namingpolicyproject
@@ -29,7 +29,8 @@ Package "project"
     ├── [project_allowed.yaml]  Project aadmu-pe-test-project
     └── [project_not_allowed.yaml]  Project zzxyq-pe-test-projectA
 ```
-Details: https://kpt.dev/reference/cli/pkg/tree/
+
+Details: <https://kpt.dev/reference/cli/pkg/tree/>
 
 ## Package details
 
@@ -73,19 +74,17 @@ It contains the following parameters:
 
 - `env_code`
 
-```
-Important Notice
+Important Notice:
 
 You must change the client_code value to align with your needs. The env_code must also be changed to reflect your deployment environment.
 
-```
 ### suite.yaml
 
 This file contains the configuration for the project naming policy tests. Two project manifests have been created inside the `/tests` folder, including an `allowed` test case and a `not_allowed` test case.
 
 Details:
 
-https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#writing-test-suites
+<https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#writing-test-suites>
 
 ### project_allowed.yaml
 

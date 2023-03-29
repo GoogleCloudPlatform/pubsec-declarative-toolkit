@@ -1,7 +1,6 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # core-experimentation-logging-package
 
-
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 **`Note:`** The [core-experimentation](../core-experimentation/) package must be deployed before deploying the `client-experimentation` logging package.
 
@@ -49,39 +48,47 @@ This package has no sub-packages.
 
 ## Usage
 
-1.  Clone the package:
+1. Clone the package:
+
     ```shell
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-experimentation@${VERSION}
     ```
+
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
-1.  Move into the local package:
+1. Move into the local package:
+
     ```shell
     cd ".//solutions/logging/core-experimentation/"
     ```
 
-1.  Edit the function config file(s):
+1. Edit the function config file(s):
     - setters.yaml
 
-1.  Execute the function pipeline
+1. Execute the function pipeline
+
     ```shell
     kpt fn render
     ```
 
-1.  Initialize the resource inventory
+1. Initialize the resource inventory
+
     ```shell
     kpt live init --namespace ${NAMESPACE}
     ```
+
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).
 
-1.  Apply the package resources to your cluster
+1. Apply the package resources to your cluster
+
     ```shell
     kpt live apply
     ```
 
-1.  Wait for the resources to be ready
+1. Wait for the resources to be ready
+
     ```shell
     kpt live status --output table --poll-until current
     ```
@@ -89,6 +96,7 @@ This package has no sub-packages.
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 
 # core-experimentation-logging-package - continued
+
 **TODO:** Move documentation to docs repo?
 
 ## Core-Experimentation Logging Solution Overview
@@ -97,60 +105,64 @@ This package deploys the following resources:
 
 - Log bucket for Security Logs (Cloud Audit, Access Transparency logs, and Data Access Logs)
 
-    - Retention in Days configurable via setters.yaml
+  - Retention in Days configurable via setters.yaml
 
-        ```yaml
+    ```yaml
         retention-in-days: 1
-        ```
-    - Retention locking policy configurable via setters.yaml
+    ```
 
-        ```yaml
+  - Retention locking policy configurable via setters.yaml
+
+    ```yaml
         retention-locking-policy: true
-        ```
+    ```
+
 - Log bucket for platform and component logs for resources under the `tests` folder
 
-    - Retention in Days configurable via setters.yaml
+  - Retention in Days configurable via setters.yaml
 
-        ```yaml
+    ```yaml
         retention-in-days: 1
-        ```
-    - Retention locking policy configurable via setters.yaml
-        ```yaml
+    ```
+
+  - Retention locking policy configurable via setters.yaml
+
+    ```yaml
         retention-locking-policy: true
-        ```
+    ```
 
 - Organizational log sink for Security Logs (Cloud Audit, Access Transparency, and Data Access Logs)
 
-    - Include all child resources is enabled:
+  - Include all child resources is enabled:
 
-        ```yaml
+    ```yaml
         includeChildren: true
-        ```
+    ```
 
-    - Destination: Log bucket hosted inside the loging project
+  - Destination: Log bucket hosted inside the logging project
 
-    - Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  - Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
-        ```yaml
+    ```yaml
           filter: |-
             LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
             OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
             OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
             OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
             OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
-        ```
+    ```
 
-    - **`Note:`** The permission required to create the organizational sink is set under the [logging namespace](../../landing-zone-v2/namespaces/logging.yaml#L28)
+  - **`Note:`** The permission required to create the organizational sink is set under the [logging namespace](../../landing-zone-v2/namespaces/logging.yaml#L28)
 
 - Folder log sink for platform and component logs for resources under the `tests` folder
 
-    - Destionation: Log bucket hosted inside the loging project
+  - Destination: Log bucket hosted inside the logging project
 
-    - No inclusion filter. Includes all Platform and Component logs
+  - No inclusion filter. Includes all Platform and Component logs
 
-    - Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  - Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
-        ```yaml
+    ```yaml
           exclusions:
             - description: Exclude Security logs
               disabled: false
@@ -161,7 +173,8 @@ This package deploys the following resources:
                 OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
                 OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
               name: exclude-security-logs
-        ```
+    ```
+
 - Data access log configuration enables data access log collection on the logging project. Logs are routed the the logging project `security-log-bucket` log bucket.
 
     ```yaml
