@@ -19,7 +19,7 @@ MD004: false                  # Unordered list style
 MD007:
   indent: 2                   # Unordered list indentation
 MD013:
-  line_length: 400            # Line length 80 is far to short
+  line_length: 600            # Line length 80 is far too short (longest visible line was 530 at time of writing)
 MD024: false                  # disable no-duplicate-header, fails on CHANGELOG.md
 MD026:
   punctuation: ".,;:!。，；:"  # List of not allowed
