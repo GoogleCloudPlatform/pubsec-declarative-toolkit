@@ -14,7 +14,7 @@
 #
 # [START gke_manifests_helloweb_hpa_horizontalpodautoscaler_cpu]
 # [START container_helloapp_horizontal_pod_autoscaler]
----
+#########
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:

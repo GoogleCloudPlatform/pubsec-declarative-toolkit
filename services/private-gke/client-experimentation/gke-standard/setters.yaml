@@ -37,9 +37,19 @@ data:
   # https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks
   #
   #####
-  network-name: gke-cluster-vpc
-  subnetwork-name: gke-cluster-snet
-  subnet-cidr: 10.2.0.0/16
+  # Client Project VPC global-vpc1-vpc
+  # Select CIDR Ranges based on region
+  # nane1-vpc1-paz-snet (northamerica-northeast1)
+  #   gke-services-cidr-nane1: 10.3.0.0/16
+  #   gke-services-range-name-nane1: servicesrange
+  #   gke-pod-cidr-nane1: 10.4.0.0/16
+  # nane2-vpc1-paz-snet (northamerica-northeast2)
+  #   gke-services-cidr-nane2: 10.5.0.0/16
+  #   gke-services-range-name-nane2: servicesrange
+  #   gke-pod-cidr-nane2: 10.6.0.0/16
+  #   gke-pod-range-name-nane2: podrange
+  subnetwork-name: nane1-vpc1-paz-snet
+  region: northamerica-northeast1
   auth-network: |
     - cidrBlock: 0.0.0.0/0
       displayName: private-net
@@ -53,4 +63,3 @@ data:
   # https://cloud.google.com/compute/docs/machine-types
   #
   machineType: e2-standard-2
-  region: northamerica-northeast1

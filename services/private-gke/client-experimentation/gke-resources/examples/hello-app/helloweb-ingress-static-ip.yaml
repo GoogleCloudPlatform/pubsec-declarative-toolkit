@@ -14,7 +14,7 @@
 #
 # [START container_helloapp_ingress]
 # [START gke_manifests_helloweb_ingress_static_ip_ingress_helloweb]
----
+#########
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

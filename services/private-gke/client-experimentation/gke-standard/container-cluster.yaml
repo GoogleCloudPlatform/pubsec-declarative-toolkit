@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
----
+#########
 # KCC container cluster
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
@@ -24,7 +24,6 @@ metadata:
   annotations:
     cnrm.cloud.google.com/remove-default-node-pool: "true"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/depends-on: compute.cnrm.cloud.google.com/namespaces/config-control/ComputeNetwork/gke-cluster-snet # kpt-set: compute.cnrm.cloud.google.com/namespaces/${project-namespace}/ComputeNetwork/${subnetwork-name}
 spec:
   addonsConfig:
     configConnectorConfig:
@@ -52,7 +51,7 @@ spec:
   networkPolicy:
     enabled: true
   networkRef:
-    external: network-name # kpt-set: ${network-name}
+    external: compute.cnrm.cloud.google.com/projects/scemu-sp-kcc-exp/global/networks/global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/projects/${project-id}/global/networks/global-vpc1-vpc
   networkingMode: VPC_NATIVE
   podSecurityPolicyConfig:
     enabled: false
@@ -65,8 +64,7 @@ spec:
     publicEndpoint: ""
     masterIpv4CidrBlock: 172.16.0.32/28
   subnetworkRef:
-    name: subnetwork-name # kpt-set: ${subnetwork-name}
-    namespace: config-control # kpt-set: ${project-namespace}
+    external: subnetwork-name # kpt-set: compute.cnrm.cloud.google.com/projects/${project-id}/regions/${region}/subnetworks/${subnetwork-name}
   verticalPodAutoscaling:
     enabled: true
   workloadIdentityConfig:
@@ -80,3 +78,5 @@ spec:
     labels:
       env: experimentation
       cluster: cluster-name # kpt-set: ${cluster-name}
+    tags:
+      - internet-egress-route
