@@ -42,9 +42,9 @@ spec:
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
   secondaryIpRange:
-    - ipCidrRange: 10.3.1.0/16 # kpt-set: ${gke-services-cidr-nane1}
+    - ipCidrRange: 10.3.0.0/16 # kpt-set: ${gke-services-cidr-nane1}
       rangeName: servicesrange # kpt-set: ${gke-services-range-name-nane1}
-    - ipCidrRange: 10.3.2.0/16 # kpt-set: ${gke-pod-cidr-nane1}
+    - ipCidrRange: 10.4.0.0/16 # kpt-set: ${gke-pod-cidr-nane1}
       rangeName: podrange # kpt-set: ${gke-pod-range-name-nane1}
 ---
 # Subnet APPRZ northamerica-northeast1
@@ -116,9 +116,9 @@ spec:
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
   secondaryIpRange:
-    - ipCidrRange: 10.3.3.0/16 # kpt-set: ${gke-services-cidr-nane2}
+    - ipCidrRange: 10.5.0.0/16 # kpt-set: ${gke-services-cidr-nane2}
       rangeName: servicesrange # kpt-set: ${gke-services-range-name-nane2}
-    - ipCidrRange: 10.3.4.0/16 # kpt-set: ${gke-pod-cidr-nane2}
+    - ipCidrRange: 10.6.0.0/16 # kpt-set: ${gke-pod-cidr-nane2}
       rangeName: podrange # kpt-set: ${gke-pod-range-name-nane2}
 ---
 # Subnet APPRZ northamerica-northeast2
