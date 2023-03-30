@@ -1,6 +1,6 @@
 # Deploy Config Controller Cluster - Standard
 
-Follow these instructions to deploy a Standard Config Controller Cluster inside a project.
+Follow these instructions to deploy a Standard Config Controller Cluster inside a project. 
 
 ## bootstrap
 
