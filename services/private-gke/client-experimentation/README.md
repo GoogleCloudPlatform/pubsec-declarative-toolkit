@@ -1,6 +1,6 @@
 # GKE Deployment
 
-This folder contains the necessary files to deploy Standard and Autopilot GKE Clusters inside your experimentation landing-zone.
+This folder contains the necessary files to deploy Standard and Autopilot GKE Clusters inside your experimentation project.
 
 ### GKE Autopilot Cluster
 

@@ -1,6 +1,6 @@
 # GKE Deployment
 
-This folder contains scripts to deploy Standard and Autopilot KCC Clusters (Config Controller) inside your experimentation landing-zone.
+This folder contains scripts to deploy Standard and Autopilot KCC Clusters (Config Controller) inside your experimentation project.
 
 ### GKE Autopilot Cluster
 
