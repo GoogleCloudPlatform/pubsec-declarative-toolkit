@@ -11,17 +11,18 @@ This package is NOT required within an experimentation landing zone.
 
 ## Setters
 
-|         Name          |          Value           | Type | Count |
-|-----------------------|--------------------------|------|-------|
-| nane1-apprz-snet      | 10.1.2.0/24              | str  |     1 |
-| nane1-datarz-snet     | 10.1.3.0/24              | str  |     1 |
-| nane1-paz-snet        | 10.1.1.0/24              | str  |     1 |
-| nane2-apprz-snet      | 10.2.2.0/24              | str  |     1 |
-| nane2-datarz-snet     | 10.2.3.0/24              | str  |     1 |
-| nane2-paz-snet        | 10.2.1.0/24              | str  |     1 |
-| project-billing-id    | AAAAAA-BBBBBB-CCCCCC     | str  |     1 |
-| project-id            | xxdmu-admin1-projectname | str  |    89 |
-| project-parent-folder | project-parent-folder    | str  |     2 |
+|               Name               |                                     Value                                      | Type  | Count |
+|----------------------------------|--------------------------------------------------------------------------------|-------|-------|
+| firewall-default-egress-deny-all | [10.1.1.0/24, 10.1.2.0/24, 10.1.3.0/24, 10.2.1.0/24, 10.2.2.0/24, 10.2.3.0/24] | array |     1 |
+| nane1-apprz-snet                 | 10.1.2.0/24                                                                    | str   |     1 |
+| nane1-datarz-snet                | 10.1.3.0/24                                                                    | str   |     1 |
+| nane1-paz-snet                   | 10.1.1.0/24                                                                    | str   |     1 |
+| nane2-apprz-snet                 | 10.2.2.0/24                                                                    | str   |     1 |
+| nane2-datarz-snet                | 10.2.3.0/24                                                                    | str   |     1 |
+| nane2-paz-snet                   | 10.2.1.0/24                                                                    | str   |     1 |
+| project-billing-id               | AAAAAA-BBBBBB-CCCCCC                                                           | str   |     1 |
+| project-id                       | xxdmu-admin1-projectname                                                       | str   |    95 |
+| project-parent-folder            | project-parent-folder                                                          | str   |     2 |
 
 ## Sub-packages
 
@@ -29,32 +30,34 @@ This package has no sub-packages.
 
 ## Resources
 
-|                 File                  |                  APIVersion                   |            Kind             |                Name                 | Namespace  |
-|---------------------------------------|-----------------------------------------------|-----------------------------|-------------------------------------|------------|
-| network/dnspolicy.yaml                | dns.cnrm.cloud.google.com/v1beta1             | DNSPolicy                   | project-id-logging-dnspolicy        | networking |
-| network/peering.yaml                  | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | project-id-to-hub-peer              | networking |
-| network/peering.yaml                  | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | hub-to-project-id-peer              | networking |
-| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-googleapis-dns           | networking |
-| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-rset          | networking |
-| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-wildcard-rset | networking |
-| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-gcrio-dns                | networking |
-| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-rset               | networking |
-| network/psc/google-apis/dns.yaml      | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-wildcard-rset      | networking |
-| network/psc/google-apis/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-default-egress-deny-fwr  | networking |
-| network/psc/google-apis/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-egress-allow-psc-fwr     | networking |
-| network/psc/google-apis/psc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeAddress              | project-id-psc-apis-ip              | networking |
-| network/psc/google-apis/psc.yaml      | compute.cnrm.cloud.google.com/v1beta1         | ComputeForwardingRule       | project-id-psc-apis-fw              | networking |
-| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-paz-snet      | networking |
-| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-apprz-snet    | networking |
-| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-datarz-snet   | networking |
-| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-paz-snet      | networking |
-| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-apprz-snet    | networking |
-| network/subnet.yaml                   | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-datarz-snet   | networking |
-| network/vpc.yaml                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetwork              | project-id-global-vpc1-vpc          | networking |
-| project.yaml                          | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                     | project-id                          | projects   |
-| project.yaml                          | compute.cnrm.cloud.google.com/v1beta1         | ComputeSharedVPCHostProject | project-id-hostvpc                  | networking |
-| services.yaml                         | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-compute                  | projects   |
-| services.yaml                         | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-dns                      | projects   |
+|                                   File                                   |                  APIVersion                   |            Kind             |                       Name                        | Namespace  |
+|--------------------------------------------------------------------------|-----------------------------------------------|-----------------------------|---------------------------------------------------|------------|
+| network/dnspolicy.yaml                                                   | dns.cnrm.cloud.google.com/v1beta1             | DNSPolicy                   | project-id-logging-dnspolicy                      | networking |
+| network/peering.yaml                                                     | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | project-id-to-hub-peer                            | networking |
+| network/peering.yaml                                                     | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetworkPeering       | hub-to-project-id-peer                            | networking |
+| network/psc/google-apis/dns.yaml                                         | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-googleapis-dns                         | networking |
+| network/psc/google-apis/dns.yaml                                         | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-rset                        | networking |
+| network/psc/google-apis/dns.yaml                                         | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-googleapis-wildcard-rset               | networking |
+| network/psc/google-apis/dns.yaml                                         | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone              | project-id-gcrio-dns                              | networking |
+| network/psc/google-apis/dns.yaml                                         | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-rset                             | networking |
+| network/psc/google-apis/dns.yaml                                         | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet                | project-id-gcrio-wildcard-rset                    | networking |
+| network/psc/google-apis/firewall.yaml                                    | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-egress-allow-psc-fwr                   | networking |
+| network/psc/google-apis/firewall.yaml                                    | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewall             | project-id-default-egress-deny-fwr                | networking |
+| network/psc/google-apis/psc.yaml                                         | compute.cnrm.cloud.google.com/v1beta1         | ComputeAddress              | project-id-psc-apis-ip                            | networking |
+| network/psc/google-apis/psc.yaml                                         | compute.cnrm.cloud.google.com/v1beta1         | ComputeForwardingRule       | project-id-psc-apis-fw                            | networking |
+| network/subnet.yaml                                                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-paz-snet                    | networking |
+| network/subnet.yaml                                                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-apprz-snet                  | networking |
+| network/subnet.yaml                                                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane1-vpc1-datarz-snet                 | networking |
+| network/subnet.yaml                                                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-paz-snet                    | networking |
+| network/subnet.yaml                                                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-apprz-snet                  | networking |
+| network/subnet.yaml                                                      | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork           | project-id-nane2-vpc1-datarz-snet                 | networking |
+| network/vpc.yaml                                                         | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetwork              | project-id-global-vpc1-vpc                        | networking |
+| org-policies/exceptions/gcp-resource-locations-except-spoke-project.yaml | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy       | gcp-restrict-resource-locations-except-project-id | policies   |
+| project.yaml                                                             | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                     | project-id                                        | projects   |
+| project.yaml                                                             | compute.cnrm.cloud.google.com/v1beta1         | ComputeSharedVPCHostProject | project-id-hostvpc                                | networking |
+| services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-compute                                | projects   |
+| services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-dns                                    | projects   |
+| services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                     | project-id-servicedirectory                       | projects   |
 
 ## Resource References
 
@@ -69,6 +72,7 @@ This package has no sub-packages.
 - [DNSPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnspolicy)
 - [DNSRecordSet](https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsrecordset)
 - [Project](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/project)
+- [ResourceManagerPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 
 ## Usage

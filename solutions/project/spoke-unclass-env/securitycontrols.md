@@ -31,7 +31,7 @@
 
 ## Technical Controls - Undefined Priority
 
-AC-4(21)
+### AC-4(21)
 
 - Deny all egress to spoke's IP, allow only connectivity to private GCP API endpoints. Hub will control traffic to other networks
 - Separate subnets to segregate traffic
