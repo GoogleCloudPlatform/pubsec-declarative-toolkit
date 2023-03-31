@@ -97,17 +97,10 @@ You can use the kpt cli:
     containercluster.container.cnrm.cloud.google.com/exp-cluster reconcile pending
     containercluster.container.cnrm.cloud.google.com/exp-cluster reconcile successful
     reconcile phase finished
-    apply phase started
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 apply successful
-    apply phase finished
-    reconcile phase started
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 reconcile pending
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 reconcile successful
-    reconcile phase finished
     inventory update started
     inventory update finished
-    apply result: 3 attempted, 3 successful, 0 skipped, 0 failed
-    reconcile result: 3 attempted, 3 successful, 0 skipped, 0 failed, 0 timed out
+    apply result: 2 attempted, 2 successful, 0 skipped, 0 failed
+    reconcile result: 2 attempted, 2 successful, 0 skipped, 0 failed, 0 timed out
     ```
 
 1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
@@ -116,9 +109,32 @@ You can use the kpt cli:
     gcloud container clusters get-credentials cluster-name --region location --project project-id
     ```
 
+> Deletion instructions<br>
 > These instructions does not delete the Config Controller cluster.
 
-1. Run this command inside `services/private-gke/client-experimentation/gke-autopilot`
+1. You will need to switch to the KCC cluster context in order to destroy your GKE cluser.
+
+    Retrieve the list of contexts.
+
+    ```bash
+    kubectl config get-contexts
+    ```
+
+    Copy the value of the KCC cluster under the CLUSTER column and run the following command using the copied value.
+
+    Example:
+
+    ```bash
+    kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
+    ```
+
+    > Example result:
+
+    ```console
+    Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
+    ```
+
+1. Run this command inside `services/private-gke/client-experimentation/gke-autopilot` to destroy your GKE cluster.
 
     ```sh
     kpt live destroy
@@ -129,13 +145,6 @@ You can use the kpt cli:
     > Example status result
 
     ```console
-    delete phase started
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 delete successful
-    delete phase finished
-    reconcile phase started
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 reconcile pending
-    containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 reconcile successful
-    reconcile phase finished
     delete phase started
     containercluster.container.cnrm.cloud.google.com/exp-cluster delete successful
     configmap/setters delete successful
@@ -148,8 +157,8 @@ You can use the kpt cli:
     reconcile phase finished
     inventory update started
     inventory update finished
-    delete result: 3 attempted, 3 successful, 0 skipped, 0 failed
-    reconcile result: 3 attempted, 3 successful, 0 skipped, 0 failed, 0 timed out
+    delete result: 2 attempted, 2 successful, 0 skipped, 0 failed
+    reconcile result: 2 attempted, 2 successful, 0 skipped, 0 failed, 0 timed out
     ```
 
 1.  Your GKE cluster is now deleted!
@@ -182,11 +191,11 @@ cd services/private-gke/client-experimentation/gke-autopilot
 kpt fn render
 ```
 
-1. Run the following command inside the `services/private-gke/client-experimentation/` folder to deploy the GKE Autopilot Cluster.
+1. Run the following command inside the `services/private-gke/client-experimentation/gke-autopilot` folder to deploy the GKE Autopilot Cluster.
 
     ```sh
     cd ..
-    kubectl apply -f gke-autopilot --recursive
+    kubectl apply -f .
     ```
 
     > This step will take 5 minutes or more to complete.
@@ -205,12 +214,43 @@ kpt fn render
     kubectl get gcp -A
     ```
 
-1. Run the following command inside the `services/private-gke/client-experimentation/` folder to delete the GKE Autopilot Cluster.
+1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+
+    ```bash
+    gcloud container clusters get-credentials cluster-name --region location --project project-id
+    ```
+
+> Deletion instructions<br>
+> These instructions does not delete the Config Controller cluster.
+
+1. You will need to switch to the KCC cluster context in order to destroy your GKE cluser.
+
+    Retrieve the list of contexts.
+
+    ```bash
+    kubectl config get-contexts
+    ```
+
+    Copy the value of the KCC cluster under the CLUSTER column and run the following command using the copied value.
+
+    Example:
+
+    ```bash
+    kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
+    ```
+
+    > Example result:
+
+    ```console
+    Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
+    ```
+
+1. Run the following command inside the `services/private-gke/client-experimentation/gke-autopilot` folder to delete the GKE Autopilot Cluster.
 
     > These instructions does not delete the Config Controller cluster.
 
     ```sh
-    kubectl delete -f gke-autopilot --recursive
+    kubectl delete -f .
     ```
 
     > This step will take 5 minutes or more to complete.
@@ -418,7 +458,30 @@ kpt fn render
 
 #### Destroy your GKE Cluster using Config Sync
 
+> Deletion instructions<br>
 > These instructions does not delete the Config Controller cluster.
+
+1. You will need to switch to the KCC cluster context in order to destroy your GKE cluser.
+
+    Retrieve the list of contexts.
+
+    ```bash
+    kubectl config get-contexts
+    ```
+
+    Copy the value of the KCC cluster under the CLUSTER column and run the following command using the copied value.
+
+    Example:
+
+    ```bash
+    kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
+    ```
+
+    > Example result:
+
+    ```console
+    Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
+    ```
 
 1.    To delete entire cluster you can follow these steps.
 

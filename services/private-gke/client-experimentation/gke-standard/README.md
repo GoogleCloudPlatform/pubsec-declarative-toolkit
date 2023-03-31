@@ -116,9 +116,32 @@ You can use the kpt cli:
     gcloud container clusters get-credentials cluster-name --region location --project project-id
     ```
 
+> Deletion instructions<br>
 > These instructions does not delete the Config Controller cluster.
 
-1. Run this command inside `services/private-gke/client-experimentation/gke-standard`
+1. You will need to switch to the KCC cluster context in order to destroy your GKE cluser.
+
+    Retrieve the list of contexts.
+
+    ```bash
+    kubectl config get-contexts
+    ```
+
+    Copy the value of the KCC cluster under the CLUSTER column and run the following command using the copied value.
+
+    Example:
+
+    ```bash
+    kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
+    ```
+
+    > Example result:
+
+    ```console
+    Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
+    ```
+
+1. Run this command inside `services/private-gke/client-experimentation/gke-standard` to destroy your GKE cluster.
 
     ```sh
     kpt live destroy
@@ -182,11 +205,11 @@ cd services/private-gke/client-experimentation/gke-standard
 kpt fn render
 ```
 
-1. Run the following command inside the `services/private-gke/client-experimentation/` folder to deploy the GKE Standard Cluster and Node Pool.
+1. Run the following command inside the `services/private-gke/client-experimentation/gke-standard` folder to deploy the GKE Standard Cluster and Node Pool.
 
     ```sh
     cd ..
-    kubectl apply -f gke-standard --recursive
+    kubectl apply -f .
     ```
 
     > This step will take 5 minutes or more to complete.
@@ -196,6 +219,7 @@ kpt fn render
     ```console
     containercluster.container.cnrm.cloud.google.com/exp-cluster created
     containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 created
+    configmap "setters" created
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
@@ -204,12 +228,12 @@ kpt fn render
     kubectl get gcp -A
     ```
 
-1. Run the following command inside the `services/private-gke/client-experimentation/` folder to delete the GKE Standard Cluster and Node Pool.
+1. Run the following command inside the `services/private-gke/client-experimentation/gke-standard` folder to delete the GKE Standard Cluster and Node Pool.
 
     > These instructions does not delete the Config Controller cluster.
 
     ```sh
-    kubectl delete -f gke-standard --recursive
+    kubectl delete -f .
     ```
 
     > This step will take 5 minutes or more to complete.
@@ -219,6 +243,7 @@ kpt fn render
     ```console
     containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
     containernodepool.container.cnrm.cloud.google.com "exp-cluster-wp-1" deleted
+    configmap "setters" deleted
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
