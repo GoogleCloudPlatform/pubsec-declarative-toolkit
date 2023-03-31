@@ -110,7 +110,11 @@ You can use the kpt cli:
     reconcile result: 3 attempted, 3 successful, 0 skipped, 0 failed, 0 timed out
     ```
 
-1.  Your GKE cluster is now ready!
+1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+
+    ```bash
+    gcloud container clusters get-credentials cluster-name --region location --project project-id
+    ```
 
 > These instructions does not delete the Config Controller cluster.
 
@@ -191,9 +195,6 @@ kpt fn render
 
     ```console
     containercluster.container.cnrm.cloud.google.com/exp-cluster created
-    computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal created
-    computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc created
-    computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet created
     resourcegroup.kpt.dev/inventory-95787803 created
     configmap/setters created
     ```
@@ -218,9 +219,6 @@ kpt fn render
 
     ```console
     containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
-    computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
-    computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
-    computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
     resourcegroup.kpt.dev "inventory-95787803" deleted
     configmap "setters" deleted
     ```
@@ -394,9 +392,6 @@ kpt fn render
       SYNCED @ 2023-03-22 12:09:54 -0400 EDT   b3bc516c9cca782671a306c913e5b7a6890ebae0
       Managed resources:
          NAMESPACE        NAME                                                                      STATUS          SOURCEHASH
-         config-control   computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal   Current      b3bc516
-         config-control   computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc              Current      b3bc516
-         config-control   computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet          Current      b3bc516
          config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster              InProgress   b3bc516
             Update in progress
          default   configmap/setters   Current   b3bc516
@@ -411,14 +406,15 @@ kpt fn render
       SYNCED @ 2023-03-22 12:09:54 -0400 EDT   b3bc516c9cca782671a306c913e5b7a6890ebae0
       Managed resources:
          NAMESPACE        NAME                                                                      STATUS    SOURCEHASH
-         config-control   computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal   Current   b3bc516
-         config-control   computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc              Current   b3bc516
-         config-control   computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet          Current   b3bc516
          config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster              Current   b3bc516
          default          configmap/setters                                                         Current   b3bc516
     ```
 
-1. Your GKE Cluster is ready!
+1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+
+    ```bash
+    gcloud container clusters get-credentials cluster-name --region location --project project-id
+    ```
 
 #### Destroy your GKE Cluster using Config Sync
 
@@ -431,9 +427,6 @@ kpt fn render
       ```sh
       kubectl delete -f root-sync-gke-autopilot.yaml
       kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
-      kubectl delete computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal
-      kubectl delete computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet
-      kubectl delete computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc
       ```
 
       > Expected result
@@ -441,7 +434,4 @@ kpt fn render
       ```console
       rootsync.configsync.gke.io "root-sync-git-gke-autopilot" deleted
       containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
-      computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
-      computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
-      computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
       ```

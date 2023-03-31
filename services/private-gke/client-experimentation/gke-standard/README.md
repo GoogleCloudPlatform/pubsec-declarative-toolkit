@@ -110,7 +110,11 @@ You can use the kpt cli:
     reconcile result: 3 attempted, 3 successful, 0 skipped, 0 failed, 0 timed out
     ```
 
-1.  Your GKE cluster is now ready!
+1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+
+    ```bash
+    gcloud container clusters get-credentials cluster-name --region location --project project-id
+    ```
 
 > These instructions does not delete the Config Controller cluster.
 
@@ -192,9 +196,6 @@ kpt fn render
     ```console
     containercluster.container.cnrm.cloud.google.com/exp-cluster created
     containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1 created
-    computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal created
-    computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc created
-    computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet created
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
@@ -218,9 +219,6 @@ kpt fn render
     ```console
     containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
     containernodepool.container.cnrm.cloud.google.com "exp-cluster-wp-1" deleted
-    computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
-    computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
-    computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
     ```
 
     > Please monitor the progress from the Kubernetes Engine Console or wait until this command completes.
@@ -390,9 +388,6 @@ kpt fn render
       SYNCED @ 2023-03-22 12:47:20 -0400 EDT   092079e986fb0c1dfe67a8ebd2c407aa3f7b7e18
       Managed resources:
          NAMESPACE            NAME                                                                          STATUS    SOURCEHASH
-         config-control   computefirewall.compute.cnrm.cloud.google.com/    allow-gke-egress-internal   Current   092079e
-         config-control   computenetwork.compute.cnrm.cloud.google.com/   gke-cluster-vpc              Current   092079e
-         config-control   computesubnetwork.compute.cnrm.cloud.google.com/    gke-cluster-snet          Current   092079e
          config-control   containercluster.container.cnrm.cloud.google.com/   exp-cluster              Current   092079e
          config-control   containernodepool.container.cnrm.cloud.google.com/    exp-cluster-wp-1        Current   092079e
             Update in progress
@@ -408,15 +403,16 @@ kpt fn render
       SYNCED @ 2023-03-22 12:47:20 -0400 EDT      092079e986fb0c1dfe67a8ebd2c407aa3f7b7e18
       Managed resources:
          NAMESPACE        NAME                                                                      STATUS    SOURCEHASH
-         config-control   computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal   Current   092079e
-         config-control   computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc              Current   092079e
-         config-control   computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet          Current   092079e
          config-control   containercluster.container.cnrm.cloud.google.com/exp-cluster              Current   092079e
          config-control   containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1        Current   092079e
          default          configmap/setters                                                         Current   092079e
     ```
 
-1. Your GKE Cluster is ready!
+1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+
+    ```bash
+    gcloud container clusters get-credentials cluster-name --region location --project project-id
+    ```
 
 #### Destroy your GKE Cluster using Config Sync
 
@@ -432,9 +428,6 @@ kpt fn render
       kubectl delete -f root-sync-gke-standard.yaml
       kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
       kubectl delete containernodepool.container.cnrm.cloud.google.com/exp-cluster-wp-1
-      kubectl delete computefirewall.compute.cnrm.cloud.google.com/allow-gke-egress-internal
-      kubectl delete computesubnetwork.compute.cnrm.cloud.google.com/gke-cluster-snet
-      kubectl delete computenetwork.compute.cnrm.cloud.google.com/gke-cluster-vpc
       ```
       > Expected result
 
@@ -442,7 +435,4 @@ kpt fn render
       rootsync.configsync.gke.io "root-sync-git-gke-standard" deleted
       containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
       containernodepool.container.cnrm.cloud.google.com "exp-cluster-wp-1" deleted
-      computefirewall.compute.cnrm.cloud.google.com "allow-gke-egress-internal" deleted
-      computesubnetwork.compute.cnrm.cloud.google.com "gke-cluster-snet" deleted
-      computenetwork.compute.cnrm.cloud.google.com "gke-cluster-vpc" deleted
       ```
