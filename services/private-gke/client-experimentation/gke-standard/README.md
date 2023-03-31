@@ -293,6 +293,14 @@ The following will guide you during the setup of Config Sync.
 
   > Note: If you previously tried Option 1, make sure that you have deleted the file `resourcegroup.yaml` from the gke-autopilot folder.
 
+1. Install the `nomos` tool.
+
+    ```bash
+    gcloud components install nomos
+    ```
+
+    For information on alternate ways to install the nomos tool, see [Anthos Config Management downloads](https://cloud.google.com/anthos-config-management/downloads#nomos_command).
+
 1. Copy the services/private-gke/client-experimentation/gke-standard folder into an empty repo or an existing one.
 
 1. Create a git-creds secret.
