@@ -11,10 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#########
 # PubSub Log Sink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
-metadata: 
+metadata:
   name: pubsub-logsink
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -55,6 +56,6 @@ spec:
   bindings:
     - role: roles/pubsub.editor
       members:
-        - memberFrom: 
-            logSinkRef: 
+        - memberFrom:
+            logSinkRef:
               name: pubsub-logsink

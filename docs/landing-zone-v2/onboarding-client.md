@@ -12,7 +12,7 @@
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-experimentation@main ./landing-zone/hierarchy/clients/<client name>
       ```
 
-   - DEV, UAT, PROD
+   - DEV, PREPROD, PROD
       ```
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-env@main ./landing-zone/hierarchy/clients/<client name>
       ```
@@ -26,7 +26,5 @@
 1. Render the Configs
     ```bash
     kpt fn render landing-zone
-    ``` 
+    ```
 1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
-
-

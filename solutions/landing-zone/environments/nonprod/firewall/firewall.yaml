@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
@@ -28,14 +28,14 @@ spec:
     - protocol: UDP
   direction: EGRESS
   destinationRanges:
-  - "0.0.0.0/0"
+    - "0.0.0.0/0"
   priority: 1000
   logConfig:
     metadata: EXCLUDE_ALL_METADATA
   networkRef:
     name: nonprod-sharedvpc
   targetTags:
-  - "allow-egress-internet"
+    - "allow-egress-internet"
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
@@ -50,15 +50,15 @@ metadata:
 spec:
   allow:
     - protocol: TCP
-      ports: 
-      - "22"
+      ports:
+        - "22"
   direction: INGRESS
   destinationRanges:
-  - "0.0.0.0/0"
+    - "0.0.0.0/0"
   priority: 1000
   logConfig:
     metadata: INCLUDE_ALL_METADATA
   networkRef:
     name: nonprod-sharedvpc
   targetTags:
-  - "allow-ssh"
+    - "allow-ssh"

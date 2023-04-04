@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: v1
 kind: ConfigMap
 metadata: # kpt-merge: /setters
@@ -30,8 +30,8 @@ data:
   # Management Project
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard
-  management-project-id: kcc-lz-8597 
-  management-project-number: "453474601356"
+  management-project-id: management-project-12345
+  management-project-number: "0123456789012"
   #############
   # Project  IDs
   # These are the IDs for the projects that will be created by the LZ script

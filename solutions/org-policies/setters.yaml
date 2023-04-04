@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -24,7 +24,7 @@ data:
   #############
   org-id: "0000000000"
   lz-folder-id: '0000000000'
-  management-project-id: management-project-12345 
+  management-project-id: management-project-12345
   #############
   # Org Policies
   # The following are Settings for some org policies
@@ -46,12 +46,7 @@ data:
     - "DIRECTORY_CUSTOMER_ID"
   # a list of allowed projects, folders, networks for VPC peering, see YAML file for more info:
   # organization/compute-restrict-vpc-peering.yaml
-  # this setting MUST be changed to include the management project ID
+  # this setting MUST be changed to include the ORG ID
   allowed-vpc-peering: |
-    - "under:projects/MANAGEMENT_PROJECT_ID"
-  # a list of allowed projects, folders, networks where VMs can IP forward, see YAML file for more info:
-  # organization/compute-vm-can-ip-forward.yaml
-  # this setting MUST be changed to include the management project ID
-  allowed-vm-can-ip-forward: |
-    - "under:projects/MANAGEMENT_PROJECT_ID"
+    - "under:organizations/ORGANIZATION_ID"
   #############
