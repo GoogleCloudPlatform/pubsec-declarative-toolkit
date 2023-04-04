@@ -9,7 +9,7 @@
 ## Guardrail 2 - Global Admins should be secured
 
 * AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL :
-    Role policies for accounts are being set in this package. The "Editor" role is granted to a customizable user, group or service account through `setters.yaml`.
+    Role policies for accounts are being set in this package. The "Editor" and "IAM Security Admin" roles are granted at the project scope to a customizable user, group or service account through `setters.yaml`.
 
 ## Guardrail 4 - CBS access to billing should be granted
 
