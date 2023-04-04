@@ -114,3 +114,38 @@ subjects:
   - name: cnrm-controller-manager-policies
     namespace: cnrm-system
     kind: ServiceAccount
+---
+# IAM Permissions to create folder sinks
+# Grant viewer role on the hierarchy namespace to config-control K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allow-hierarchy-resource-reference-from-config-control
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-config-control
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Grant viewer role on the hierarchy namespace to folders K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allow-folders-resource-reference-to-logging
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-logging
+    namespace: cnrm-system
+    kind: ServiceAccount

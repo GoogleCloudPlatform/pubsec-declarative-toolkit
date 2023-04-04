@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/hierarchy/core-env/0.2.0...solutions/hierarchy/core-env/0.3.0) (2023-03-23)
+
+
+### Features
+
+* remove yakima roles from bootstrap ([#310](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/310)) ([dd7b8b3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/dd7b8b3738c6e03d424cde2eb75c8f802caaa14f))
+
+## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/hierarchy/core-env/0.1.0...solutions/hierarchy/core-env/0.2.0) (2023-03-21)
+
+
+### Features
+
+* add yaml linting and solutions validation ([#309](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/309)) ([25fee09](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/25fee09dd6c62931032569fbc2cc8bf090fd9266))
+
 ## [0.1.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/hierarchy/core-env-v0.0.1...solutions/hierarchy/core-env/0.1.0) (2023-03-03)
 
 
