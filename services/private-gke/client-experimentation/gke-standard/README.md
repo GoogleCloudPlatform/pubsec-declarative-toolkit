@@ -8,8 +8,8 @@ These instructions will help you deploy a GKE Standard Cluster inside your proje
 
 > Important: Please make sure to edit the [setters.yaml](setters.yaml) file as it contains important variables.
 
-> The following steps require the kpt cli:
-> <br>https://kpt.dev/installation/kpt-cli
+The following steps require the kpt cli:
+<br><https://kpt.dev/installation/kpt-cli>
 
 To quickly get started, update the following values inside the `setters.yaml` file:
 
@@ -45,18 +45,18 @@ You are now ready to deploy the GKE Standard cluster using any of the following 
 ### Option 1 - Using KPT
 
 You can use the kpt cli:
-<br>https://kpt.dev/installation/kpt-cli
+<br><https://kpt.dev/installation/kpt-cli>
 
 `kpt live init`
-<br>https://kpt.dev/reference/cli/live/init/
+<br><https://kpt.dev/reference/cli/live/init/>
 <br>Initializes the configuration
 
 `kpt live apply`
-<br>https://kpt.dev/reference/cli/live/apply/
+<br><https://kpt.dev/reference/cli/live/apply/>
 <br>Applies the configuration
 
 `kpt live destroy`
-<br>https://kpt.dev/reference/cli/live/destroy/
+<br><https://kpt.dev/reference/cli/live/destroy/>
 <br>Destroys the configuration
 
 **Steps**
@@ -110,7 +110,7 @@ You can use the kpt cli:
     reconcile result: 3 attempted, 3 successful, 0 skipped, 0 failed, 0 timed out
     ```
 
-1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+1. Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
 
     ```bash
     gcloud container clusters get-credentials cluster-name --region location --project project-id
@@ -148,7 +148,6 @@ You can use the kpt cli:
     ```
 
     > This step will take 5 minutes or more to complete. Please monitor the output on the console as this command is live.
-
     > Example status result
 
     ```console
@@ -175,7 +174,7 @@ You can use the kpt cli:
     reconcile result: 3 attempted, 3 successful, 0 skipped, 0 failed, 0 timed out
     ```
 
-1.  Your GKE cluster is now deleted!
+1. Your GKE cluster is now deleted!
 
 1. Manaually delete the file `resourcegroup.yaml` from the `gke-standard` folder.
 
@@ -186,7 +185,7 @@ You can use the kpt cli:
 ### Option 2 - Using kubectl
 
 Using the `kubectl` cli:
-<br>https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl
+<br><https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl>
 
 **Steps**
 
@@ -213,7 +212,6 @@ kpt fn render
     ```
 
     > This step will take 5 minutes or more to complete.
-
     > Example status result
 
     ```console
@@ -237,7 +235,6 @@ kpt fn render
     ```
 
     > This step will take 5 minutes or more to complete.
-
     > Example status result
 
     ```console
@@ -254,16 +251,16 @@ Config sync is a GitOps service offered as part of Anthos and is built on an [op
 
 We can use Config Sync to manage GCP and GKE resources.
 
-https://cloud.google.com/anthos-config-management/docs/config-sync-overview
-<br>https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview
-<br>https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster
-<br>https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containernodepool
+<https://cloud.google.com/anthos-config-management/docs/config-sync-overview>
+<br><https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview>
+<br><https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster>
+<br><https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containernodepool>
 
 The following example will use a single `RootSync` configuration:
-<br>https://cloud.google.com/anthos-config-management/docs/how-to/multiple-repositories#manage-root-repos
+<br><https://cloud.google.com/anthos-config-management/docs/how-to/multiple-repositories#manage-root-repos>
 
 More information can be found here:
-<br>https://cloud.google.com/anthos-config-management/docs/config-sync-overview
+<br><https://cloud.google.com/anthos-config-management/docs/config-sync-overview>
 
 #### RootSync example
 
@@ -330,11 +327,11 @@ The following will guide you during the setup of Config Sync.
 
     You need to create a kubernetes secret that grants "code read" permission.
 
-    > Note: This example will use an Azure Devops Repo. Further info can be found on this site: https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#git-creds-secret.
+    > Note: This example will use an Azure Devops Repo. Further info can be found on this site: <https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#git-creds-secret>.
 
 1. Configure the following environment variables:
 
-    ```
+    ```bash
     export GIT_USERNAME=<git username>
     export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
@@ -433,7 +430,7 @@ kpt fn render
          default          configmap/setters                                                         Current   092079e
     ```
 
-1.  Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
+1. Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
 
     ```bash
     gcloud container clusters get-credentials cluster-name --region location --project project-id
@@ -443,7 +440,7 @@ kpt fn render
 
 > These instructions does not delete the Config Controller cluster.
 
-1.    To delete entire cluster and node pool you can follow these steps.
+1. To delete entire cluster and node pool you can follow these steps.
 
       Starting at the root of this repo run the following:
 

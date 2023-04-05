@@ -103,7 +103,7 @@ Using the `kubectl` cli:
     gs://scemu-sp-kcc-exp/
     ```
 
-1.  Deleting the storage bucket resource.
+1. Deleting the storage bucket resource.
 
     From krm-resources/deploy/gcp-resources/examples
 
@@ -172,7 +172,7 @@ The following will guide you during the setup of Config Sync.
 
 1. Configure the following environment variables:
 
-    ```
+    ```bash
     export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
     export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
@@ -191,7 +191,7 @@ The following will guide you during the setup of Config Sync.
 
 #### Deploy the GCS bucket example using Config Sync
 
-The Config Sync `RootSync` observes a Git repo for resource manifest files `.yaml` and applies them given the specified instructions. When you make a change to your manifest files it's important to push your changes to your repo in order for them to be applied or reconciled. 
+The Config Sync `RootSync` observes a Git repo for resource manifest files `.yaml` and applies them given the specified instructions. When you make a change to your manifest files it's important to push your changes to your repo in order for them to be applied or reconciled.
 
 1. You must place the `storage-bucket.yaml` file inside a repo. This example will use the following path `krm-resources/deploy/gcp-resources/examples/` for the `RootSync`
 
@@ -223,11 +223,12 @@ The Config Sync `RootSync` observes a Git repo for resource manifest files `.yam
 
 1. You can create a `RootSync` for Google Cloud resources using the following instructions.
 
-> This example will use the following path `services/private-kcc/client-experimentation/gcp-resources` for the `RootSync`.
-<br> 
-> Note: The `RootSync` config file is excluded from the [folder](../../gcp-resources/examples/) where Config Sync will monitor for any changes.
+  > This example will use the following path `services/private-kcc/client-experimentation/gcp-resources` for the `RootSync`.
+  The `RootSync` config file is excluded from the [folder](../../gcp-resources/examples/) where Config Sync will monitor for any changes.
 
-    root-sync-gcp-resources.yaml
+  ```text
+  root-sync-gcp-resources.yaml
+  ```
 
 > Change ${GIT_REPO} for the url of your Git repo.
 
