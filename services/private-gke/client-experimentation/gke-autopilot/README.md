@@ -19,14 +19,14 @@ To quickly get started, update the following values inside the `setters.yaml` fi
 
 Render the configuration files once your values have been set. Starting at the root of this repo run the following:
 
-```sh
+```shell
 cd services/private-gke/client-experimentation/gke-autopilot
 kpt fn render
 ```
 
 > Results should look like this:
 
-```console
+```plaintext
 Package "gke":
 [RUNNING] "gcr.io/kpt-fn/apply-setters:v0.2"
 [PASS] "gcr.io/kpt-fn/apply-setters:v0.2" in 700ms
@@ -63,14 +63,14 @@ You can use the kpt cli:
 
 1. Starting at the root of this repo run the following command to initialize the config:
 
-    ```sh
+    ```shell
     cd services/private-gke/client-experimentation/gke-autopilot
     kpt live init
     ```
 
     > Expected output
 
-    ```console
+    ```plaintext
     initializing "resourcegroup.yaml" data (namespace: config-control)...success
     ```
 
@@ -78,13 +78,13 @@ You can use the kpt cli:
 
     > This step will take 5 minutes or more to complete. Please monitor the output on the console as this command is live.
 
-    ```sh
+    ```shell
     kpt live apply
     ```
 
     > Example status result
 
-    ```console
+    ```plaintext
     installing inventory ResourceGroup CRD.
     inventory update started
     inventory update finished
@@ -105,7 +105,7 @@ You can use the kpt cli:
 
 1. Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
 
-    ```bash
+    ```shell
     gcloud container clusters get-credentials cluster-name --region location --project project-id
     ```
 
@@ -116,7 +116,7 @@ You can use the kpt cli:
 
     Retrieve the list of contexts.
 
-    ```bash
+    ```shell
     kubectl config get-contexts
     ```
 
@@ -124,26 +124,26 @@ You can use the kpt cli:
 
     Example:
 
-    ```bash
+    ```shell
     kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
     ```
 
     > Example result:
 
-    ```console
+    ```plaintext
     Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
     ```
 
 1. Run this command inside `services/private-gke/client-experimentation/gke-autopilot` to destroy your GKE cluster.
 
-    ```sh
+    ```shell
     kpt live destroy
     ```
 
     > This step will take 5 minutes or more to complete. Please monitor the output on the console as this command is live.
     > Example status result
 
-    ```console
+    ```plaintext
     delete phase started
     containercluster.container.cnrm.cloud.google.com/exp-cluster delete successful
     configmap/setters delete successful
@@ -164,7 +164,7 @@ You can use the kpt cli:
 
 1. Manaually delete the file `resourcegroup.yaml` from the `gke-autopilot` folder.
 
-    ```sh
+    ```shell
     rm resourcegroup.yaml
     ```
 
@@ -185,14 +185,14 @@ To quickly get started, update the following value inside the `setters.yaml` fil
 
 Render the configuration files once your values have been set. Starting at the root of this repo run the following:
 
-```sh
+```shell
 cd services/private-gke/client-experimentation/gke-autopilot
 kpt fn render
 ```
 
 1. Run the following command inside the `services/private-gke/client-experimentation/gke-autopilot` folder to deploy the GKE Autopilot Cluster.
 
-    ```sh
+    ```shell
     cd ..
     kubectl apply -f .
     ```
@@ -200,7 +200,7 @@ kpt fn render
     > This step will take 5 minutes or more to complete.
     > Example status result
 
-    ```console
+    ```plaintext
     containercluster.container.cnrm.cloud.google.com/exp-cluster created
     resourcegroup.kpt.dev/inventory-95787803 created
     configmap/setters created
@@ -208,13 +208,13 @@ kpt fn render
 
     > Please monitor the progress from the Kubernetes Engine Console or via the following commands.
 
-    ```sh
+    ```shell
     kubectl get gcp -A
     ```
 
 1. Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
 
-    ```bash
+    ```shell
     gcloud container clusters get-credentials cluster-name --region location --project project-id
     ```
 
@@ -225,7 +225,7 @@ kpt fn render
 
     Retrieve the list of contexts.
 
-    ```bash
+    ```shell
     kubectl config get-contexts
     ```
 
@@ -233,13 +233,13 @@ kpt fn render
 
     Example:
 
-    ```bash
+    ```shell
     kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
     ```
 
     > Example result:
 
-    ```console
+    ```plaintext
     Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
     ```
 
@@ -247,14 +247,14 @@ kpt fn render
 
     > These instructions does not delete the Config Controller cluster.
 
-    ```sh
+    ```shell
     kubectl delete -f .
     ```
 
     > This step will take 5 minutes or more to complete.
     > Example result
 
-    ```console
+    ```plaintext
     containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
     resourcegroup.kpt.dev "inventory-95787803" deleted
     configmap "setters" deleted
@@ -311,7 +311,7 @@ Once Config Sync is configured you get retrieve its status using the `nomos stat
 
 > Note: External IP redacted from output
 
-  ```console
+  ```plaintext
   Connecting to clusters...
   I0316 10:10:01.991200   15340 request.go:601] Waited for 1.1372862s due to client-side throttling, not priority and   fairness, request: GET:https://x.x.x.x/apis/sourcerepo.cnrm.cloud.google.com/v1beta1?timeout=3s
 
@@ -332,7 +332,7 @@ The following will guide you during the setup of Config Sync.
 
 1. Install the `nomos` tool.
 
-    ```bash
+    ```shell
     gcloud components install nomos
     ```
 
@@ -348,20 +348,20 @@ The following will guide you during the setup of Config Sync.
 
 1. Configure the following environment variables:
 
-    ```bash
+    ```shell
     export GIT_USERNAME=<git username>
     export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
 
 1. Create `git-creds` secret with the required value to access the git repositories
 
-    ```bash
+    ```shell
     kubectl create secret generic git-creds --namespace="config-management-system" --from-literal=username=${GIT_USERNAME} --from-literal=token=${TOKEN}
     ```
 
     > Example output of command
 
-    ```console
+    ```plaintext
     secret/git-creds created
     ```
 
@@ -373,7 +373,7 @@ The following will guide you during the setup of Config Sync.
 
 Render the configuration files once your values have been set. Starting at the root of this repo run the following:
 
-```sh
+```shell
 cd services/private-gke/client-experimentation/gke-autopilot
 kpt fn render
 ```
@@ -414,7 +414,7 @@ kpt fn render
 
 1. Apply the root-sync-gke-autopilot.yaml. This will setup the config sync for the gke deployment. Run `nomos status` to check on the status of the RootSync. You can also refresh the status by polling the status using the `--poll` flag: `nomos status --poll=10s`
 
-    ```sh
+    ```shell
     kubectl apply -f root-sync-gke-autopilot.yaml
     ```
 
@@ -422,7 +422,7 @@ kpt fn render
 
     > Example output during deployment
 
-    ```console
+    ```plaintext
     *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster-auto
       --------------------
       <root>:root-sync-git-gke-autopilot       https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/gcp-stjeanl1-client-kcc-gke/services/private-gke/_testing/gke-autopilot@main
@@ -436,7 +436,7 @@ kpt fn render
 
     > Example output of successful deployment
 
-    ```console
+    ```plaintext
     *gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster-auto
       --------------------
       <root>:root-sync-git-gke-autopilot       https://gc-cpa@dev.azure.com/gc-cpa/iac-gcp-dev/_git/    gcp-stjeanl1-client-kcc-gke/services/private-gke/_testing/gke-autopilot@main
@@ -449,7 +449,7 @@ kpt fn render
 
 1. Your GKE cluster is now ready! Connect using the following command. Please change the following values: `cluster-name`, `location`, and `project-id`.
 
-    ```bash
+    ```shell
     gcloud container clusters get-credentials cluster-name --region location --project project-id
     ```
 
@@ -462,7 +462,7 @@ kpt fn render
 
     Retrieve the list of contexts.
 
-    ```bash
+    ```shell
     kubectl config get-contexts
     ```
 
@@ -470,13 +470,13 @@ kpt fn render
 
     Example:
 
-    ```bash
+    ```shell
     kubectl config use-context gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster
     ```
 
     > Example result:
 
-    ```console
+    ```plaintext
     Switched to context "gke_scemu-sp-kcc-exp_northamerica-northeast1_krmapihost-kcc-cluster".
     ```
 
@@ -484,14 +484,14 @@ kpt fn render
 
       > WARNING: If you delete the cluster before the root sync, Config Sync will automatically reconcile and start re-deploying the cluster.
 
-      ```sh
+      ```shell
       kubectl delete -f root-sync-gke-autopilot.yaml
       kubectl delete containercluster.container.cnrm.cloud.google.com/exp-cluster
       ```
 
       > Expected result
 
-      ```console
+      ```plaintext
       rootsync.configsync.gke.io "root-sync-git-gke-autopilot" deleted
       containercluster.container.cnrm.cloud.google.com "exp-cluster" deleted
       ```

@@ -8,13 +8,13 @@ Once you have a functional GKE cluster, run the following command from this fold
 
 > Warning: A an external IP will be allocated. Please destroy the deployment when unused.
 
-```sh
+```shell
 kubectl apply -f .
 ```
 
 > Example output result
 
-```console
+```plaintext
 Warning: Autopilot increased resource requests for Deployment default/helloweb to meet requirements. See http://g.co/gke/autopilot-resources
 deployment.apps/helloweb created
 Warning: autoscaling/v2beta2 HorizontalPodAutoscaler is deprecated in v1.23+, unavailable in v1.26+; use autoscaling/v2 HorizontalPodAutoscaler
@@ -26,14 +26,14 @@ service/helloweb created
 
 Retrieve the external IP of the helloweb service.
 
-```sh
+```shell
 kubectl get services
 ```
 
 > Example result.
 > Note: External IP redacted.
 
-```console
+```plaintext
 NAME               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)          AGE
 helloweb           LoadBalancer   10.166.0.162   x.x.x.x          80:30499/TCP     63s
 helloweb-backend   NodePort       10.166.2.62    <none>           8080:31327/TCP   63s
@@ -42,13 +42,13 @@ kubernetes         ClusterIP      10.166.0.1     <none>           443/TCP       
 
 Test the hello-app by connecting to the external IP using a browser or issue this command from your console.
 
-```sh
+```shell
 curl EXTERNAL-IP
 ```
 
 > Example result
 
-```console
+```plaintext
 Hello, world!
 Version: 2.0.0
 Hostname: helloweb-58999c56d8-tnngt
@@ -56,6 +56,6 @@ Hostname: helloweb-58999c56d8-tnngt
 
 When finished delete the hello-app deployment.
 
-```sh
+```shell
 kubectl delete -f .
 ```
