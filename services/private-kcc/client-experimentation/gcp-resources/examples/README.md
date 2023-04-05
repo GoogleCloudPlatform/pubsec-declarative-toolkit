@@ -3,14 +3,14 @@
 The following folder contains a simple example to deploy a GCS bucket.
 
 You can use a Config Controller cluster to provision and orchestrate Anthos and Google Cloud resources.
-<br>https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview
+<br><https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview>
 
 You can deploy and manage Google Cloud resources once you have deployed a Config [Controller Cluster](../../../../private-kcc/client-experimentation/). You can use one of the steps below once your cluster is ready to provision and manage your Google Cloud resources.
 
-### Option 1 - Using kubectl
+## Option 1 - Using kubectl
 
 Using the `kubectl` cli:
-<br>https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl
+<br><https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#install_kubectl>
 
 **Steps**
 
@@ -131,15 +131,15 @@ Using the `kubectl` cli:
     Error from server (NotFound): storagebuckets.storage.cnrm.cloud.google.com "scemu-sp-kcc-exp" not found
     ```
 
-### Option 3 - Using Config Sync
+## Option 2 - Using Config Sync
 
 Config sync can be used to deploy and manage Google Cloud resources hosted inside a Git repo.
 
 More information can be found here:
-<br>https://cloud.google.com/anthos-config-management/docs/config-sync-overview
+<br><https://cloud.google.com/anthos-config-management/docs/config-sync-overview>
 
 The following example will use a single `RootSync` configuration:
-<br>https://cloud.google.com/anthos-config-management/docs/how-to/multiple-repositories#manage-root-repos
+<br><https://cloud.google.com/anthos-config-management/docs/how-to/multiple-repositories#manage-root-repos>
 
 This example will use a single `RootSync` [manifest](../../../root-syncs/root-sync-gcp-resources.yaml) file to setup config sync for gcp resources.
 
@@ -156,7 +156,7 @@ Config sync status can be retrieved using the `nomos status` command.
     UNKNOWN   No RootSync or RepoSync resources found
   ```
 
-#### Implementing Config Sync
+### Implementing Config Sync
 
 The following will guide you during the setup of Config Sync.
 
@@ -168,7 +168,7 @@ The following will guide you during the setup of Config Sync.
 
     You need to create a kubernetes secret that grants "code read" permission.
 
-    > Note: This example will use an Azure Devops Repo. Further info can be found on this site: https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#git-creds-secret.
+    > Note: This example will use an Azure Devops Repo. Further info can be found on this site: <https://cloud.google.com/anthos-config-management/docs/how-to/installing-config-sync#git-creds-secret>.
 
 1. Configure the following environment variables:
 
