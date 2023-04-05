@@ -30,8 +30,7 @@ Retrieve the external IP of the helloweb service.
 kubectl get services
 ```
 
-> Example result. 
-
+> Example result.
 > Note: External IP redacted.
 
 ```console

@@ -2,11 +2,11 @@
 
 This folder contains the necessary files to deploy Standard and Autopilot GKE Clusters inside your experimentation project.
 
-### GKE Autopilot Cluster
+## GKE Autopilot Cluster
 
 You can deploy a GKE Autopilot Cluster using the instructions and krm resource manifest located inside the [gke-autopilot](gke-autopilot/) folder.
 
-### GKE Standard Cluster
+## GKE Standard Cluster
 
 You can deploy a GKE Standard Cluster using the instructions and krm resource manifests located inside the [gke-standard](gke-standard/) folder.
 
