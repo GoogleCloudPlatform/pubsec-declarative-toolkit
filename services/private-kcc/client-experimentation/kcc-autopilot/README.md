@@ -12,7 +12,7 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
 
 1. Configure the [environment file](.env) `.env`. This will be used by the [bash script](deploy-kcc-autopilot.sh).
 
-    ```sh
+    ```shell
     export CLUSTER_NAME=kcc-cluster
     export REGION=northamerica-northeast1
     export PROJECT_ID=projectid
@@ -32,7 +32,7 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
 
     > **Note:** Run this command starting at the root of this repo:
 
-    ```sh
+    ```shell
     cd services/private-kcc/client-experimentation/kcc-autopilot
     bash deploy-kcc-autopilot.sh .env
     ```
@@ -45,7 +45,7 @@ Follow these instructions to deploy an autopilot Config Controller Cluster insid
 
     > **Note:** Run this command starting at the root of this repo:
 
-    ```sh
+    ```shell
     cd services/private-kcc/client-experimentation/kcc-autopilot
     bash destroy-kcc-autopilot.sh .env
     ```

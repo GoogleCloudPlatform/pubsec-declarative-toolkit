@@ -42,7 +42,7 @@ Using the `kubectl` cli:
 
     Starting at the root of this repo run the following:
 
-    ```sh
+    ```shell
     cd services/private-kcc/client-experimentation/gcp-resources/examples
     kubectl apply -f storage-bucket.yaml
     ```
@@ -55,7 +55,7 @@ Using the `kubectl` cli:
 
     > Please monitor the progress via the following command.
 
-    ```sh
+    ```shell
     kubectl describe storagebucket.storage.cnrm.cloud.google.com/scemu-sp-kcc-exp
     ```
 
@@ -71,7 +71,7 @@ Using the `kubectl` cli:
 
     > Replace "${PROJECT_ID}" with your assigned project ID.
 
-    ```sh
+    ```shell
     export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
     -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
@@ -83,7 +83,7 @@ Using the `kubectl` cli:
 
 1. Verify that the permissions worked and that the storage bucket has been created.
 
-    ```sh
+    ```shell
     kubectl describe storagebucket.storage.cnrm.cloud.google.com/scemu-sp-kcc-exp
     ```
 
@@ -107,7 +107,7 @@ Using the `kubectl` cli:
 
     From krm-resources/deploy/gcp-resources/examples
 
-    ```sh
+    ```shell
     kubectl delete -f storage-bucket.yaml
     ```
 
@@ -119,7 +119,7 @@ Using the `kubectl` cli:
 
     > Please monitor the progress from the Kubernetes Engine Console or using these commands.
 
-    ```sh
+    ```shell
     kubectl get storagebucket.storage.cnrm.cloud.google.com/scemu-sp-kcc-exp
     kubectl describe storagebucket.storage.cnrm.cloud.google.com/scemu-sp-kcc-exp
     ```
@@ -255,7 +255,7 @@ The Config Sync `RootSync` observes a Git repo for resource manifest files `.yam
 
     Starting at the root of this repo run the following:
 
-    ```sh
+    ```shell
     cd krm-resources/root-syncs
     kubectl apply -f root-sync-gcp-resources.yaml
     ```
@@ -280,7 +280,7 @@ The Config Sync `RootSync` observes a Git repo for resource manifest files `.yam
 
 1. Run these commands to delete the gcs bucket example and RootSync.
 
-    ```sh
+    ```shell
     cd krm-resources/root-syncs
     kubectl delete -f root-sync-gcp-resources.yaml
     kubectl delete storagebucket.storage.cnrm.cloud.google.com/scemu-sp-kcc-exp

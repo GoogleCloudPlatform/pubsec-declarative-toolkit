@@ -10,7 +10,7 @@ Follow these instructions to deploy a Standard Config Controller Cluster inside 
 
 1. Configure the [environment file](.env) `.env`. This will be used by the [bash script](deploy-kcc-standard.sh).
 
-    ```sh
+    ```shell
     export CLUSTER_NAME=kcc-cluster
     export REGION=northamerica-northeast1
     export PROJECT_ID=projectid
@@ -30,7 +30,7 @@ Follow these instructions to deploy a Standard Config Controller Cluster inside 
 
     > **Note:** Run this command starting at the root of this repo:
 
-    ```sh
+    ```shell
     cd services/private-kcc/client-experimentation/kcc-standard
     bash deploy-kcc-standard.sh .env
     ```
@@ -41,7 +41,7 @@ Follow these instructions to deploy a Standard Config Controller Cluster inside 
 
     > **Note:** Run this command starting at the root of this repo:
 
-    ```sh
+    ```shell
     cd services/private-kcc/client-experimentation/kcc-standard
     bash destroy-kcc-standard.sh .env
     ```
