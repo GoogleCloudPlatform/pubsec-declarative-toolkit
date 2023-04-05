@@ -24,6 +24,7 @@ MD024: false                  # no-duplicate-header, fails on CHANGELOG.md
 MD026:
   punctuation: ".,;:!。，；:"  # List of not allowed
 MD029: false                  # Ordered list item prefix
+MD030: false                  # disable list-marker-space, generate kpt docs would make it fail
 MD033: false                  # Allow inline HTML
 MD036: false                  # Emphasis used instead of a heading
 
