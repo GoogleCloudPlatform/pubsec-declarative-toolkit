@@ -7,7 +7,7 @@ This naming policy evaluates each project's name using a series of regular expre
 | Name | Description |
 | -------- | --------- |
 | client code | Two-character code representing a client. Multiple clients can be supported by using a regex that evaluates multiple codes such as this: '^(aa\|bb\|cc)' |
-| Environment code  | One character code representing the environment for the project: `d = dev, p = production, e = experimentation, u = uat`    |
+| Environment code  | One character code representing the environment for the project: `d = dev, p = production, e = experimentation, u = preprod`    |
 | Region code  | Projects that are not created in specific zones fall into the global/multi-region resource category and are allocated the `m` letter code. Region and zonal resources support the `k` code for northamerica-northeast1 or `l` code for northamerica-northeast2  |
 | Classification code  | The project's data classification code or rating: `u = unclassified, a = protected A, b = protected B`  |
 | User defined string  | User defined string containing a two or three letter team or owner code (not enforced) followed by a descriptive name for the project |
@@ -18,7 +18,7 @@ Run the following command to view the package content:
 
 `kpt pkg tree naming-rules`
 
-```
+```kpt
 Package "project"
 ├── [Kptfile]  Kptfile project-naming-rules
 ├── [constraint.yaml]  NamingPolicyProject namingpolicyproject
@@ -29,7 +29,8 @@ Package "project"
     ├── [project_allowed.yaml]  Project aadmu-pe-test-project
     └── [project_not_allowed.yaml]  Project zzxyq-pe-test-projectA
 ```
-Details: https://kpt.dev/reference/cli/pkg/tree/
+
+Details: <https://kpt.dev/reference/cli/pkg/tree/>
 
 ## Package details
 
@@ -73,19 +74,17 @@ It contains the following parameters:
 
 - `env_code`
 
-```
-Important Notice
+Important Notice:
 
 You must change the client_code value to align with your needs. The env_code must also be changed to reflect your deployment environment.
 
-```
 ### suite.yaml
 
 This file contains the configuration for the project naming policy tests. Two project manifests have been created inside the `/tests` folder, including an `allowed` test case and a `not_allowed` test case.
 
 Details:
 
-https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#writing-test-suites
+<https://open-policy-agent.github.io/gatekeeper/website/docs/gator/#writing-test-suites>
 
 ### project_allowed.yaml
 

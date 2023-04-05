@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/project/project-experimentation/0.1.0...solutions/project/project-experimentation/0.1.1) (2023-04-04)
+
+
+### Bug Fixes
+
+* adding in securityAdmin role for exp prj ([#322](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/322)) ([a071444](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a071444b1c5094d192741a2ce2a3071bdc479ca0))
+
 ## [0.1.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/project/project-experimentation/0.0.2...solutions/project/project-experimentation/0.1.0) (2023-03-21)
 
 

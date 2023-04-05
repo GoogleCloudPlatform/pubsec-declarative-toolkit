@@ -84,7 +84,7 @@ spec:
           asset.kind == "Project"
           env_code = input.parameters.env_code
           not re_match(env_code, asset.metadata.name)
-          message := sprintf("Project '%s' does not match meet naming requirements: The env code is incorrect. It must be (d = dev, p = production, e = experimentation, u = uat).", [asset.metadata.name])
+          message := sprintf("Project '%s' does not match meet naming requirements: The env code is incorrect. It must be (d = dev, p = production, e = experimentation, u = preprod).", [asset.metadata.name])
         }
         # Region code validation (region_code)
         violation[{"msg": message}] {

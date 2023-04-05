@@ -3,6 +3,7 @@
 ## Fortigate
 
 1. Address Object for the spoke resource - Could be available using the GCP SDN connector
+
     ```fortios
     config firewall address
         edit "project1-workload1-addr"
@@ -12,8 +13,10 @@
         next
     end
     ```
+
 1. Web Filter profile allowing the required whitelist
-    - urlfilter: only allow access to packages.cloud.google.com, *.ubuntu.com, *.debian.org
+    - urlfilter: only allow access to packages.cloud.google.com, *.ubuntu.com,*.debian.org
+
       ```fortios
       config webfilter urlfilter
           edit 1
@@ -43,7 +46,9 @@
           next
       end
       ```
+
     - build web filter profile
+
       ```fortios
       config webfilter profile
           edit "whitelist"
@@ -54,8 +59,10 @@
           next
       end
       ```
+
 1. Firewall policy to allow traffic from port2/spoke resource to port1/internet
    - SPOKE PAZ resources - direct connection
+
       ```fortios
       config firewall policy
           edit 0
@@ -78,7 +85,9 @@
           next
       end
       ```
-    - SPOKE APPRZ and DATARZ resources - proxy connection
+
+   - SPOKE APPRZ and DATARZ resources - proxy connection
+
       ```fortios
       config firewall proxy-policy
           edit 0

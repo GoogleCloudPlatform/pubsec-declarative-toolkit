@@ -2,7 +2,7 @@
 
 This file describes the yaml spec for a solution that are deployed with arete.
 
-```
+```yaml
 apiVersion: arete/v1alpha1                                      # version of the configuration
 kind: Config                                                    # always `Config`
 metadata:                                                       # hold additional information about the config
@@ -15,7 +15,7 @@ spec:
 deploy:                                                         # deployment pipeline
   stage:                                                        # deployment pipeline stage
     infra:                                                      # infrastructure pipeline stage is expecting the a KCC endpoint
-      requires:                                                 # describesa list of required components for the solution to function
+      requires:                                                 # describes a list of required components for the solution to function
         useConfigConnectorSA: "true|false"                      # Pull the SA account from the Kubernetes Config Controller, use the kubeContext settings if they have been set.
         iam:                                                    # setup the following IAM roles to apply to the implementor of the solution
           - role:  "roles/gcp.reader"                                 # role to be applied
