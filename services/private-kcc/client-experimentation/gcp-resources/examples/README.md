@@ -172,14 +172,14 @@ The following will guide you during the setup of Config Sync.
 
 1. Configure the following environment variables:
 
-    ```bash
+    ```shell
     export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
     export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     ```
 
 1. Create `git-creds` secret with the required value to access the git repositories
 
-    ```bash
+    ```shell
     kubectl create secret generic git-creds --namespace="config-management-system" --from-literal=username=${GIT_USERNAME} --from-literal=token=${TOKEN}
     ```
 
