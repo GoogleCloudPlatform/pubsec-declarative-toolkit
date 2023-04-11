@@ -24,4 +24,4 @@ metadata:
 spec:
   description: "Example Container Registry"
   format: DOCKER
-  location: us-northamerica-northeast1 # kpt-set: ${region}
+  location: northamerica-northeast1 # kpt-set: ${region}
