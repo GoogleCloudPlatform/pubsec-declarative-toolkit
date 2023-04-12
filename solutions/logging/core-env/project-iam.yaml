@@ -59,7 +59,7 @@ spec:
               name: platform-and-component-services-log-sink
               namespace: logging
 ---
-# Logs Bucket writer IAM permissions for the platform and component services log sinks 
+# Logs Bucket writer IAM permissions for the platform and component services log sinks
 # Binds the generated writer identity from the LoggingLogSink to the logging project
 # AC-3(7) - Write access to the logging buckets is limited by IAM to just the identities of the log sinks configured to send logs to the buckets (set at the logging project level)
 apiVersion: iam.cnrm.cloud.google.com/v1beta1

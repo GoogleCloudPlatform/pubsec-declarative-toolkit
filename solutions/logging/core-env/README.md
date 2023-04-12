@@ -1,7 +1,6 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # core-env-logging-package
 
-
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
@@ -12,7 +11,7 @@ Package to deploy core-env logging solution
 |               Name                |                  Value                  | Type | Count |
 |-----------------------------------|-----------------------------------------|------|-------|
 | billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str  |     1 |
-| logging-prj-id                    | mmdmu-logging-prj-12345                 | str  |    21 |
+| logging-prj-id                    | logging-prj-12345                       | str  |    21 |
 | management-project-id             | management-project-12345                | str  |     2 |
 | org-id                            |                              0000000000 | str  |     1 |
 | platform-and-component-log-bucket | platform-and-component-log-bucket-12345 | str  |     2 |
@@ -52,40 +51,49 @@ This package has no sub-packages.
 
 ## Usage
 
-1. Clone the package:
+1.  Clone the package:
+
     ```shell
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-env/core-env-logging-package@${VERSION}
     ```
+
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
-1.  Move into the local package:
+2.  Move into the local package:
+
     ```shell
     cd "./core-env-logging-package/"
     ```
 
-1.  Edit the function config file(s):
+3.  Edit the function config file(s):
     - setters.yaml
 
-1.  Execute the function pipeline
+4.  Execute the function pipeline
+
     ```shell
     kpt fn render
     ```
 
-1.  Initialize the resource inventory
+5.  Initialize the resource inventory
+
     ```shell
     kpt live init --namespace ${NAMESPACE}
     ```
+
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).
 
-1.  Apply the package resources to your cluster
+6.  Apply the package resources to your cluster
+
     ```shell
     kpt live apply
     ```
 
-1.  Wait for the resources to be ready
+7.  Wait for the resources to be ready
+
     ```shell
+
     kpt live status --output table --poll-until current
     ```
 

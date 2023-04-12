@@ -25,12 +25,12 @@ data:
   # The following are Settings for the environment to bootstrap with
   #
   #############
-  #billing-id: "0000000000"
-  #org-id: "0000000000"
+  # billing-id: "0000000000"
+  # org-id: "0000000000"
   #############
   # Logging Project ID
   management-project-id: management-project-12345
-  logging-prj-id: mmdmu-logging-prj-12345
+  logging-prj-id: logging-prj-12345
   #############
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
@@ -41,14 +41,12 @@ data:
   retention-locking-policy: false
   retention-in-days: 1
   #############
-  # NEW MRM
+  # NEW
   #############
   # Org Sink
   # kpt-set: ${security-log-sink}
   # security-log-sink: security-log-sink-12345
-
   # Security Log Bucket
-  # kpt-set: ${security-log-bucket}
   security-log-bucket: security-log-bucket-12345
   # Platform and Component Log Bucket
   # kpt-set: ${platform-and-component-log-bucket}
