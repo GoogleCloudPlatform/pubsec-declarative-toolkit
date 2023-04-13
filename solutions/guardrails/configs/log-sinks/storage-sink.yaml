@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#########
 # Storage Bucket Org LogSink
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
@@ -50,7 +51,7 @@ spec:
 # PubSub Audit Log Viewer
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: 
+metadata:
   name: storage-sink-writer
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
@@ -63,6 +64,6 @@ spec:
   bindings:
     - role: roles/storage.objectCreator
       members:
-        - memberFrom: 
-            logSinkRef: 
+        - memberFrom:
+            logSinkRef:
               name: storage-logsink

@@ -4,7 +4,6 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 
 ## Current Solutions
 
-
 When getting a package the `@` indicates what tag or branch you will be getting with the `kpt pkg get` command. The current version is set for `v0.0.3-alpha` and should be stable but you can use `main` if you want the latest changes as they come in.
 
 | Name | Description | Command | link |
@@ -25,30 +24,33 @@ In order to deploy the solutions we will need to activate a config-controller in
 
 See arete [README](./cli/README.md) for instructions to build from source.
 
-```
+```shell
 wget https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases/download/v0.0.3-alpha/arete
 chmod +x ./arete
 sudo mv ./arete /usr/local/bin
 ```
 
 #### Create the Config Controller Environment
+
 Once you have `arete` installed we can create the Config Controller environment by running:
 
-```
+```shell
 arete create my-awesome-kcc --region=northamerica-northeast1 --project=target-project
 ```
 
-
 ### Advanced Install
+
 Follow the following [guide](docs/advanced-install.md) to deploy a standalone Config Controller instance or see the examples [directory](examples/) for example installation methods.
 
 ## Additional Documentation
 
-For further documentation on the project, including the setup pre-requirements see the 
+For further documentation on the project, including the setup pre-requirements see the
+
 - [Multi-Tenancy](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint)
 - [Known Issues](docs/issues.md)
 
 ## Resources
+
 - [Awesome KRM](https://github.com/askmeegs/learn-krm)
 - [I do declare! Infrastructure automation with Configuration as Data](https://cloud.google.com/blog/products/containers-kubernetes/understanding-configuration-as-data-in-kubernetes)
 - [Rationale Behind kpt](https://kpt.dev/guides/rationale)

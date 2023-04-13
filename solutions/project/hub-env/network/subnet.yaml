@@ -1,0 +1,109 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# All subnets have :
+# - logging enabled for flow logs https://cloud.google.com/vpc/docs/using-flow-logs
+# - private google access enabled https://cloud.google.com/vpc/docs/private-google-access
+#########
+# VPC External - Subnet PAZ northamerica-northeast1
+# SC-7 BOUNDARY PROTECTION
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  name: hub-nane1-external-paz-snet
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-external-vpc
+spec:
+  resourceID: nane1-external-paz-snet
+  ipCidrRange: 172.31.200.0/24
+  region: northamerica-northeast1
+  description: northamerica-northeast1 PAZ subnet
+  privateIpGoogleAccess: true
+  networkRef:
+    name: hub-global-external-vpc
+  logConfig:
+    aggregationInterval: INTERVAL_5_SEC
+    flowSampling: 0.5
+    metadata: INCLUDE_ALL_METADATA
+---
+# VPC Internal - Subnet PAZ northamerica-northeast1
+# SC-7 BOUNDARY PROTECTION
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  name: hub-nane1-internal-paz-snet
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-internal-vpc
+spec:
+  resourceID: nane1-internal-paz-snet
+  ipCidrRange: 172.31.201.0/24
+  region: northamerica-northeast1
+  description: northamerica-northeast1 PAZ subnet
+  privateIpGoogleAccess: true
+  networkRef:
+    name: hub-global-internal-vpc
+  logConfig:
+    aggregationInterval: INTERVAL_5_SEC
+    flowSampling: 0.5
+    metadata: INCLUDE_ALL_METADATA
+---
+# VPC Management - Subnet RZ northamerica-northeast1
+# SC-7 BOUNDARY PROTECTION
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  name: hub-nane1-mgmt-rz-snet
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-mgmt-vpc
+spec:
+  resourceID: nane1-mgmt-rz-snet
+  ipCidrRange: 172.31.202.0/24
+  region: northamerica-northeast1
+  description: northamerica-northeast1 RZ subnet
+  privateIpGoogleAccess: true
+  networkRef:
+    name: hub-global-mgmt-vpc
+  logConfig:
+    aggregationInterval: INTERVAL_5_SEC
+    flowSampling: 0.5
+    metadata: INCLUDE_ALL_METADATA
+---
+# VPC Transit - Subnet PAZ northamerica-northeast1
+# SC-7 BOUNDARY PROTECTION
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  name: hub-nane1-transit-paz-snet
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-transit-vpc
+spec:
+  resourceID: nane1-transit-paz-snet
+  ipCidrRange: 172.31.203.0/24
+  region: northamerica-northeast1
+  description: northamerica-northeast1 PAZ subnet
+  privateIpGoogleAccess: true
+  networkRef:
+    name: hub-global-transit-vpc
+  logConfig:
+    aggregationInterval: INTERVAL_5_SEC
+    flowSampling: 0.5
+    metadata: INCLUDE_ALL_METADATA

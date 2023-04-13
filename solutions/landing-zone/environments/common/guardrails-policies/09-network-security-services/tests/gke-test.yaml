@@ -11,13 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
   name: sandbox
   annotations:
-    config.kubernetes.io/local-config: 'true'    
+    config.kubernetes.io/local-config: 'true'
 spec:
   description: dev-cluster # kpt-set: ${cluster-description}
   enableBinaryAuthorization: true

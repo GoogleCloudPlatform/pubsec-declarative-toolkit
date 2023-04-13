@@ -67,6 +67,5 @@ spec:
           rule != ""
           asset.metadata.name != ""
           not re_match(rule, asset.metadata.name)
-
           message := sprintf("Project '%s' does not match meet naming requirements '%s'", [asset.metadata.name, rule])
         }

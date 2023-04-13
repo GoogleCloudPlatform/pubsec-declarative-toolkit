@@ -1,0 +1,128 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Firewall
+## External allow all
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: hub-allow-external-fwr
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-external-vpc
+spec:
+  resourceID: allow-external-fwr
+  allow:
+    - protocol: all
+  direction: INGRESS
+  networkRef:
+    name: hub-global-external-vpc
+  sourceRanges:
+    - 0.0.0.0/0
+---
+## External Load Balancers health checks
+## https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
+## AC-3(7) use of SA account with limited permissions
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: hub-elb-allow-health-checks-to-fortigate-fwr
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-external-vpc
+spec:
+  resourceID: elb-allow-health-checks-to-fortigate-fwr
+  allow:
+    - protocol: tcp
+      ports:
+        - "8008"
+  networkRef:
+    name: hub-global-external-vpc
+  sourceRanges:
+    - "35.191.0.0/16"
+    - "130.211.0.0/22"
+  targetServiceAccounts:
+    - name: hub-fortigatesdn-sa
+---
+## Internal allow spokes to fortigates
+## AC-3(7) use of SA account with limited permissions
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: hub-allow-spokes-to-fortigates-fwr
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-internal-vpc
+spec:
+  resourceID: allow-spokes-to-fortigates-fwr
+  allow:
+    - protocol: all
+  direction: INGRESS
+  networkRef:
+    name: hub-global-internal-vpc
+  # TODO: once IP space is finalized, re-adjust this value to maybe allow only PAZ subnets
+  sourceRanges:
+    - 10.0.0.0/8
+  targetServiceAccounts:
+    - name: hub-fortigatesdn-sa
+---
+## Internal Load Balancers health checks
+## https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
+## AC-3(7) use of SA account with limited permissions
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: hub-ilb-allow-health-checks-to-fortigate-fwr
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-internal-vpc
+spec:
+  resourceID: ilb-allow-health-checks-to-fortigate-fwr
+  allow:
+    - protocol: tcp
+      ports:
+        - "8008"
+  networkRef:
+    name: hub-global-internal-vpc
+  sourceRanges:
+    - "35.191.0.0/16"
+    - "130.211.0.0/22"
+  targetServiceAccounts:
+    - name: hub-fortigatesdn-sa
+---
+## Enable traffic on mgmt network for fortigates HA
+## AC-3(7) use of SA account with limited permissions
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: hub-allow-fortigates-ha-fwr
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: hub-project-id # kpt-set: ${hub-project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/hub-global-mgmt-vpc
+spec:
+  resourceID: allow-fortigates-ha-fwr
+  direction: INGRESS
+  allow:
+    - protocol: all
+  networkRef:
+    name: hub-global-mgmt-vpc
+  sourceServiceAccounts:
+    - name: hub-fortigatesdn-sa
+  targetServiceAccounts:
+    - name: hub-fortigatesdn-sa

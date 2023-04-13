@@ -4,16 +4,16 @@
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
-An experimentation project with a secured network. 
-This package should only be deployed within the experimentation landing zone.
+An experimentation project with a secured network.
+This package should only be deployed within a experimentation landing zone.
 
 ## Setters
 
 |         Name          |          Value          | Type | Count |
 |-----------------------|-------------------------|------|-------|
 | project-billing-id    | AAAAAA-BBBBBB-CCCCCC    | str  |     1 |
-| project-editor        | group:team1@example.com | str  |     1 |
-| project-id            | xxdmu-team1-projectname | str  |    40 |
+| project-editor        | group:team1@example.com | str  |     2 |
+| project-id            | xxemu-team1-projectname | str  |    61 |
 | project-parent-folder | project-parent-folder   | str  |     1 |
 
 ## Sub-packages
@@ -22,26 +22,26 @@ This package has no sub-packages.
 
 ## Resources
 
-|          File          |                  APIVersion                   |       Kind        |               Name                | Namespace  |
-|------------------------|-----------------------------------------------|-------------------|-----------------------------------|------------|
-| networking/dns.yaml    | dns.cnrm.cloud.google.com/v1beta1             | DNSPolicy         | project-id-logging-dnspolicy      | networking |
-| networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouterNAT  | project-id-nane1-nat              | networking |
-| networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouter     | project-id-nane1-router           | networking |
-| networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouterNAT  | project-id-nane2-nat              | networking |
-| networking/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouter     | project-id-nane2-router           | networking |
-| networking/route.yaml  | compute.cnrm.cloud.google.com/v1beta1         | ComputeRoute      | project-id-internet-egress-route  | networking |
-| networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-paz-snet    | networking |
-| networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-apprz-snet  | networking |
-| networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-datarz-snet | networking |
-| networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane2-vpc1-paz-snet    | networking |
-| networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane2-vpc1-apprz-snet  | networking |
-| networking/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane2-vpc1-datarz-snet | networking |
-| networking/vpc.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetwork    | project-id-global-vpc1-vpc        | networking |
-| project-iam.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember   | project-id-editor-permissions     | projects   |
-| project.yaml           | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project           | project-id                        | projects   |
-| services.yaml          | serviceusage.cnrm.cloud.google.com/v1beta1    | Service           | project-id-compute                | projects   |
-| services.yaml          | serviceusage.cnrm.cloud.google.com/v1beta1    | Service           | project-id-dns                    | projects   |
-| services.yaml          | serviceusage.cnrm.cloud.google.com/v1beta1    | Service           | project-id-servicedirectory       | projects   |
+|        File         |                  APIVersion                   |       Kind        |                   Name                    | Namespace  |
+|---------------------|-----------------------------------------------|-------------------|-------------------------------------------|------------|
+| network/dns.yaml    | dns.cnrm.cloud.google.com/v1beta1             | DNSPolicy         | project-id-logging-dnspolicy              | networking |
+| network/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouterNAT  | project-id-nane1-nat                      | networking |
+| network/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouter     | project-id-nane1-router                   | networking |
+| network/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouterNAT  | project-id-nane2-nat                      | networking |
+| network/nat.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeRouter     | project-id-nane2-router                   | networking |
+| network/route.yaml  | compute.cnrm.cloud.google.com/v1beta1         | ComputeRoute      | project-id-internet-egress-route          | networking |
+| network/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-paz-snet            | networking |
+| network/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-apprz-snet          | networking |
+| network/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane1-vpc1-datarz-snet         | networking |
+| network/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane2-vpc1-paz-snet            | networking |
+| network/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane2-vpc1-apprz-snet          | networking |
+| network/subnet.yaml | compute.cnrm.cloud.google.com/v1beta1         | ComputeSubnetwork | project-id-nane2-vpc1-datarz-snet         | networking |
+| network/vpc.yaml    | compute.cnrm.cloud.google.com/v1beta1         | ComputeNetwork    | project-id-global-vpc1-vpc                | networking |
+| project-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember   | project-id-editor-permissions             | projects   |
+| project-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember   | project-id-iam-security-admin-permissions | projects   |
+| project.yaml        | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project           | project-id                                | projects   |
+| services.yaml       | serviceusage.cnrm.cloud.google.com/v1beta1    | Service           | project-id-compute                        | projects   |
+| services.yaml       | serviceusage.cnrm.cloud.google.com/v1beta1    | Service           | project-id-dns                            | projects   |
 
 ## Resource References
 
@@ -66,7 +66,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd "./project-experimentation/"
+    cd ".//solutions/project/project-experimentation/"
     ```
 
 1.  Edit the function config file(s):

@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 ##################################
 # AC-4 Information flow enforcement - Subnet creation to segregate and force through ZIP for access
 ##################################
@@ -41,6 +41,11 @@ spec:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
+  secondaryIpRange:
+    - ipCidrRange: 10.3.0.0/16 # kpt-set: ${gke-services-cidr-nane1}
+      rangeName: servicesrange # kpt-set: ${gke-services-range-name-nane1}
+    - ipCidrRange: 10.4.0.0/16 # kpt-set: ${gke-pod-cidr-nane1}
+      rangeName: podrange # kpt-set: ${gke-pod-range-name-nane1}
 ---
 # Subnet APPRZ northamerica-northeast1
 # SC-7 BOUNDARY PROTECTION
@@ -110,6 +115,11 @@ spec:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
+  secondaryIpRange:
+    - ipCidrRange: 10.5.0.0/16 # kpt-set: ${gke-services-cidr-nane2}
+      rangeName: servicesrange # kpt-set: ${gke-services-range-name-nane2}
+    - ipCidrRange: 10.6.0.0/16 # kpt-set: ${gke-pod-cidr-nane2}
+      rangeName: podrange # kpt-set: ${gke-pod-range-name-nane2}
 ---
 # Subnet APPRZ northamerica-northeast2
 # SC-7 BOUNDARY PROTECTION
