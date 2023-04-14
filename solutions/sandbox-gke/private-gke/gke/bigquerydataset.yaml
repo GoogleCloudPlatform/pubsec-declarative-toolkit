@@ -26,4 +26,4 @@ spec:
   defaultTableExpirationMs: 3600000
   description: "BigQuery Dataset Sample" # kpt-set: ${cluster-name}-gkemetering
   friendlyName: gke-metering-dataset
-  location: us-central1 # kpt-set: ${region}
+  location: northamerica-northeast1 # kpt-set: ${region}
