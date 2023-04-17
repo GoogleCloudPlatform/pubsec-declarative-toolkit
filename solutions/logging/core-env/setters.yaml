@@ -40,14 +40,10 @@ data:
   # AU-11 AUDIT RECORD RETENTION
   retention-locking-policy: false
   retention-in-days: 1
-  #############
-  # NEW
-  #############
-  # Org Sink
-  # kpt-set: ${security-log-sink}
-  # security-log-sink: security-log-sink-12345
-  # Security Log Bucket
+  ##############
+  # Log Buckets
+  ##############
+  # Security Logs Bucket
   security-log-bucket: security-log-bucket-12345
   # Platform and Component Log Bucket
-  # kpt-set: ${platform-and-component-log-bucket}
   platform-and-component-log-bucket: platform-and-component-log-bucket-12345
