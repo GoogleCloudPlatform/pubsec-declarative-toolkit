@@ -52,6 +52,11 @@
       "tag-separator": "/",
       "prerelease": true
     },
+    "solutions/logging/client-env": {
+      "package-name": "solutions/logging/client-env",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/org-policies": {
       "package-name": "solutions/org-policies",
       "tag-separator": "/",
