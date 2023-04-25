@@ -6,7 +6,7 @@ Config Controller is a hosted service to provision and orchestrate Anthos, GKE, 
 
 ![img](img/ACM.png)
 
-This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variant that best fit your requirements. It also uses multiple least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity.
+This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variants that best fit your requirements. It also uses multiples least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity.
 
 ## Implementation
 
@@ -167,6 +167,7 @@ To deploy this Landing Zone you will need to:
 
 1. Enable the required services
     90 seconds
+
     ```shell
     gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
     ```
