@@ -1,16 +1,18 @@
-Getting Started
+# Getting Started
+
 ===============
 
 There are some prerequisites in order to deploy the sandbox.
 
-Prerequisites
+## Prerequisites
+
 -------------
 
-*   GCP Organization
-*   GCP Account
-*   [Cloud Shell](https://cloud.google.com/shell)
-*   [kpt](https://github.com/GoogleContainerTools/kpt)
-*   [git](https://git-scm.com/)
+* GCP Organization
+* GCP Account
+* [Cloud Shell](https://cloud.google.com/shell)
+* [kpt](https://github.com/GoogleContainerTools/kpt)
+* [git](https://git-scm.com/)
 
 Cloud Shell comes pre-installed with git and kpt.
 
@@ -33,4 +35,4 @@ OR JUST
 
 | Role | Description | Command |
 | --- | --- | --- |
-| Organization Administrator | Required to apply IAM Policies to a Service Account at the Org Level and adjust org policies | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/resourcemanager.organizationAdmin'` | 
+| Organization Administrator | Required to apply IAM Policies to a Service Account at the Org Level and adjust org policies | `gcloud organizations add-iam-policy-binding $ORG_ID --member="user:${USER_EMAIL}" --role='roles/resourcemanager.organizationAdmin'` |
