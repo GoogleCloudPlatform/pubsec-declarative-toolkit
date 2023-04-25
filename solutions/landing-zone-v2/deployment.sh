@@ -84,7 +84,7 @@ export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
   # switch back to/create kcc project - not in a folder
-  echo "CrEATING KCC project: ${CC_PROJECT_ID}"
+  echo "CREATING KCC project: ${CC_PROJECT_ID}"
   gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
@@ -161,19 +161,19 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   cd ../../../
   # check for existing landing-zone
   # get main branch
-  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone-v2
   # get specific canary branch
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone@canary landing-zone
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@canary landing-zone-v2
   # cp the setters.yaml
-  cp pubsec-declarative-toolkit/solutions/landing-zone/setters.yaml landing-zone/ 
-  cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
+  cp pubsec-declarative-toolkit/solutions/landing-zone-v2/setters.yaml landing-zone/ 
+  cp pubsec-declarative-toolkit/solutions/landing-zone-v2/.krmignore landing-zone/ 
 
   echo "kpt live init"
-  kpt live init landing-zone --namespace config-control --force
+  kpt live init landing-zone-v2 --namespace config-control --force
   echo "kpt fn render"
-  kpt fn render landing-zone
+  kpt fn render landing-zone-v2
   echo "kpt live apply"
-  kpt live apply landing-zone --reconcile-timeout=2m --output=table
+  kpt live apply landing-zone-v2 --reconcile-timeout=2m --output=table
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
@@ -181,7 +181,8 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   echo "UpToDate: $count"
   kubectl get gcp
 
-
+  # go back to the script dir
+  cd pubsec-declarative-toolkit/solutions/landing-zone-v2 
 fi
 
   # delete
@@ -236,8 +237,7 @@ echo "Total Duration: ${runtime} sec"
 
   gcloud config set project "${BOOT_PROJECT_ID}"
   echo "Switched back to boot project ${BOOT_PROJECT_ID}" 
-  # go back to the script dir
-  cd pubsec-declarative-toolkit/solutions/landing-zone 
+
 }
 
 UNIQUE=

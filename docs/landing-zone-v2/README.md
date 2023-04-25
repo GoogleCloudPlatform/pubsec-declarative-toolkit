@@ -2,7 +2,7 @@
 
 This solution uses [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to deploy and manage the GCP infrastructure.
 
-Config Controller is a hosted service to provision and orchestrate Anthos, GKE, Kubernetes and Google Cloud resources. It offers an API endpoint that can provision, actuates, and orchestrates Google Cloud resources as part of Anthos Config Management.
+Config Controller is a hosted service to provision and orchestrate Anthos, GKE, Kubernetes and Google Cloud resources. It offers an API endpoint that can provision, actuate, and orchestrate Google Cloud resources as part of Anthos Config Management.
 
 ![img](img/ACM.png)
 
@@ -10,7 +10,7 @@ This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly bec
 
 ## Implementation
 
-You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **Shared Services Canada**, providing a good level of details on how they have implemented this landing zone solution to host workloads from any of the 43 departments of the Government of Canada.
+You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **Shared Services Canada**, providing a good level of detail on how they have implemented this landing zone solution to host workloads from any of the 43 departments of the Government of Canada.
 
 ## Organization
 
@@ -58,7 +58,7 @@ To deploy this Landing Zone you will need to:
       - Service Directory Editor
       - DNS Administrator
    - Billing account:
-      - Billing admin
+      - Billing Account Admin
 1. Software
     - [Google Cloud SDK version >= 325.0.0](https://cloud.google.com/sdk/docs/downloads-versioned-archives)
     - [kpt](https://kpt.dev/installation/)
@@ -80,17 +80,21 @@ To deploy this Landing Zone you will need to:
 1. Define environment variables
 
     ```shell
-    export CLUSTER=<cluster-name>
+    export CLUSTER=pdt # <cluster-name>
     export REGION=northamerica-northeast1
-    export PROJECT_ID=<project-id>
-    export LZ_FOLDER_NAME=<env>-<landing zone name>
-    export NETWORK=<vpc-name>
-    export SUBNET=<subnet-name>
-    export ORG_ID=<your_org_id>
+    export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1) # random string to append to existing project name for new project
+    export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+    export PROJECT_ID=$BOOT_PROJECT_ID-$CC_PROJECT_RAND # globally distinct
+    export LZ_FOLDER_NAME=dev-lz1 #<env>-<landing zone name>
+    export NETWORK=vpc-pdt
+    export SUBNET=vpc-pdt-sn
+    export ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
     export ROOT_FOLDER_ID=<your_folder_id> # This one is only required if not deploying at the org level. Ex. for testing. See option 2 when executing the Config Controller project and cluster below
-    export BILLING_ID=XXXXX-XXXXX-XXXXX
+    # assume same BID used by current project will be used for new project
+    export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///') # XXXXXX-XXXXXX-XXXXXX
     export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
-    export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    export TOKEN=ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g') # for current super admin not the service account
     ```
 
 1. Set Default Logging Storage Location.
@@ -106,10 +110,13 @@ To deploy this Landing Zone you will need to:
     There can only be one organization level ACM policy per organization
 
     ```shell
-    # Validate if an ACM policy exist
+    # enable accesscontextmanager
+    gcloud services enable accesscontextmanager.googleapis.com --project=${BOOT_PROJECT_ID}
+    # Validate if an ACM policy exists
     gcloud access-context-manager policies list --organization=${ORG_ID}
 
     # To create an ACM policy that applies to the entire organization, run:
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/accesscontextmanager.policyAdmin
     gcloud access-context-manager policies create \
       --organization=organizations/${ORG_ID} --title="My Policy"
     ```
@@ -128,6 +135,7 @@ To deploy this Landing Zone you will need to:
 
 ```shell
     FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
+    # where ROOT_FOLDER_ID is the parent folder
 ```
 
 2. Create config controller project
@@ -151,12 +159,14 @@ To deploy this Landing Zone you will need to:
 ```
 
 2. Set the project ID
+    The project creation above will have already switched projects though.
 
     ```shell
     gcloud config set project $PROJECT_ID
     ```
 
 1. Enable the required services
+    90 seconds
 
     ```shell
     gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
