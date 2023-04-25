@@ -1,7 +1,5 @@
 # Security Controls
 
-## AC-3 ACCESS ENFORCEMENT
-
 ### AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 
 AC-3(7) – Write access to the logs is constrained by IAM permissions to just the log sinks.
@@ -29,7 +27,8 @@ RFC3339 UTC format in log entries (see GCP documentation for LogEntry object, ti
 ## AU-9 PROTECTION OF AUDIT INFORMATION
 
 AU-9 – Retention policies and policy locks are implemented so log contents is immutable. Added to 
-cloud-logging-buckets.yaml prior to locked and retentionDays entries 
+cloud-logging-buckets.yaml prior to locked and retentionDays entrie. Also added to setters.yaml
+as previous entries are set from here.
 
 ### AU-9(2) PROTECTION OF AUDIT INFORMATION | AUDIT BACKUP ON SEPARATE PHYSICAL SYSTEMS / COMPONENTS
 
