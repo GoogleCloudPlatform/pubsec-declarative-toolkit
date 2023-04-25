@@ -1,15 +1,16 @@
 # 30 Day Guardrails
 
 ## Description
-This packge contains the minimal set of infrastructure needed to help provision a 30 Day Guardrail Compliant Environment.
+
+This package contains the minimal set of infrastructure needed to help provision a 30 Day Guardrail Compliant Environment.
 
 ## Usage
 
-0. Create a Config Controller instance with the `arete` cli tool. Installation instructions [here](../../cli/README.md)
-    
+1. Create a Config Controller instance with the `arete` cli tool. Installation instructions [here](../../cli/README.md)
+
     First we will ensure the default logging buckets that are generated with a new project are set to the selected region instead of the default location `global` with the following command.
 
-    ```
+    ```shell
     export REGION=northamerica-northeast1
     export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
     export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
@@ -21,7 +22,7 @@ This packge contains the minimal set of infrastructure needed to help provision 
     Now we can run the `arete` command to create the environment.
 
     `arete create my-awesome-kcc --region=northamerica-northeast1 --project=target-project`
-    
+
     This takes about 20 minutes to provision.
 
     Once you have a config controller instance up and running you can proceed with the next steps.
@@ -30,9 +31,9 @@ This packge contains the minimal set of infrastructure needed to help provision 
 
     The following permissions are required on the service account being used.
 
-    ## Permissions
+## Permissions
 
-    The following permissions Needed For Config Controller SA
+The following permissions Needed For Config Controller SA
     - Project Creator
     - Folder Creator
     - Billing User
@@ -41,12 +42,13 @@ This packge contains the minimal set of infrastructure needed to help provision 
     - Policy Admin
     - Logging
 
-    They can be set by running the following commands:
-    ```
+They can be set by running the following commands:
+
+ ```shell
     export ORG_ID=your-org-id
     export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
-    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member 
+    gcloud organizations add-iam-policy-binding "${ORG_ID}" --member
     "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectCreator"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.projectDeleter"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/resourcemanager.folderAdmin"
@@ -56,35 +58,35 @@ This packge contains the minimal set of infrastructure needed to help provision 
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/orgpolicy.policyAdmin"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer"
     gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role roles/logging.admin
-    ```
-
-1. Fetch the `guardrails` package by running the `kpt pkg get` command.
-
 ```
+
+2. Fetch the `guardrails` package by running the `kpt pkg get` command.
+
+```shell
 kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/guardrails@v0.0.2-alpha guardrails
 ```
 
 This will download the package containing the configuration files for the Guardrails deployment.
 
-2. Set Organization Hierarchy (optional)
+3. Set Organization Hierarchy (optional)
 
     Modifiy `configs/hierarchy/hierarchy.yaml` if required. The default settings will create a single folder called  `guardrails` and the guardrails project will be deployed into that.
 
     When the solution is deployed you should have a folder at the top level with a guardrails project under it.
-    
-    ```
+
+    ```yaml
     Org Root
     - guardrails folder
         - guardrails project
     ```
 
-3. Customize the Guardrails Package.
+4. Customize the Guardrails Package.
 
-    Edit `setters.yaml` with the relevant information. 
+    Edit `setters.yaml` with the relevant information.
 
     Emails used for groups should be exist in iam/groups before running the script.
 
-    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.  
+    Project Number and Project ID for the management project will be for the project that the config controller instance runs in.
 
     The following values are exposed in the `setters.yaml` file. Additional changes can be made by modifying the packages yaml files.
 
@@ -104,23 +106,24 @@ This will download the package containing the configuration files for the Guardr
     | billing-data-group | group@domain.com | Group email to get billing data user permissions for the bq billing exports |
     | billing-console-viewer-group | group@domain.com | Group email to get billing viewer permissions |
 
-4. Apply the Changes
+5. Apply the Changes
 
 The following commands will set the values from `setters.yaml`, generate the hierarchy and service configs.
 
-```
+```shell
 kpt live init guardrails --namespace config-control
 kpt fn render
 ```
 
-5. Deploy the Solution.
+6. Deploy the Solution.
 
-```
+```shell
 kpt live apply
 ```
 
 You should get output that matches the following
-```
+
+```plaintext
 installing inventory ResourceGroup CRD.
 inventory update started
 inventory update finished
@@ -142,13 +145,13 @@ reconcile result: 61 attempted, 60 successful, 1 skipped, 0 failed, 0 timed out
 
 You can view the status of the deployed resources by running the following commands:
 
-```
+```shell
 kubectl get gcp -n config-control
 ```
 
 The output should be similar to the below.
 
-```
+```plaintext
 NAME                                                                    AGE   READY   STATUS     STATUS AGE
 bigquerydataset.bigquery.cnrm.cloud.google.com/bigquerylogginglogsink   25m   True    UpToDate   25m
 
@@ -181,7 +184,7 @@ iampolicymember.iam.cnrm.cloud.google.com/bq-audit-data-user                    
 | Guardrails Policy Admin IAM | Guardrails | Org | |
 | Org Logging Admin | Config Controller | Org | |
 | Guardrails Logging Admin | Guardrails | Org | |
-| Org Logging Config Writer | Config Controler | Org | |
+| Org Logging Config Writer | Config Controller | Org | |
 | BigQuery Service | Guardrails | Project | |
 | Cloud Scheduler | Guardrails | Project | |
 | Cloud Build | Guardrails | Project | |
@@ -228,12 +231,13 @@ iampolicymember.iam.cnrm.cloud.google.com/bq-audit-data-user                    
 | Billing Console Viewer | Guardrails | Org ||
 | Asset Inventory Viewer | Guardrails | Org ||
 | Cloud Build Trigger | Guardrails | Project ||
-| Cloud Scheduler Job | Guadrails | Project ||
+| Cloud Scheduler Job | Guardrails | Project ||
 | Source Repository Service | Guardrails | Project ||
 | Cloud Source Repository | Guardrails | Project ||
 
 ### View package content
-`kpt pkg tree guardrails`
-Details: https://kpt.dev/reference/cli/pkg/tree/
 
-Details: https://kpt.dev/reference/cli/live/
+`kpt pkg tree guardrails`
+Details: <https://kpt.dev/reference/cli/pkg/tree/>
+
+Details: <https://kpt.dev/reference/cli/live/>

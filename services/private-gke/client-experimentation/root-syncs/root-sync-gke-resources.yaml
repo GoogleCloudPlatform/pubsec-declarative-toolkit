@@ -1,0 +1,16 @@
+# Root sync for GKE resources
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: root-sync-git-gke-resources
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  override:
+  git:
+    repo: ${CONFIG_SYNC_REPO}
+    branch: main
+    dir: ${CONFIG_SYNC_DIR}
+    auth: token
+    secretRef:
+      name: git-creds
