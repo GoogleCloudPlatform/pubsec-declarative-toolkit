@@ -6,7 +6,7 @@ Config Controller is a hosted service to provision and orchestrate Anthos, GKE, 
 
 ![img](img/ACM.png)
 
-This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variant that best fit your requirements. It also uses multiple least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity.
+This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variants that best fit your requirements. It also uses multiples least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity.
 
 ## Implementation
 
@@ -59,6 +59,7 @@ To deploy this Landing Zone you will need to:
       - DNS Administrator
    - Billing account:
       - Billing Account Admin
+
 1. Software
     - [Google Cloud SDK version >= 325.0.0](https://cloud.google.com/sdk/docs/downloads-versioned-archives)
     - [kpt](https://kpt.dev/installation/)
@@ -113,6 +114,7 @@ To deploy this Landing Zone you will need to:
     # enable accesscontextmanager
     gcloud services enable accesscontextmanager.googleapis.com --project=${BOOT_PROJECT_ID}
     # Validate if an ACM policy exists
+
     gcloud access-context-manager policies list --organization=${ORG_ID}
 
     # To create an ACM policy that applies to the entire organization, run:
@@ -136,6 +138,7 @@ To deploy this Landing Zone you will need to:
 ```shell
     FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
     # where ROOT_FOLDER_ID is the parent folder
+
 ```
 
 2. Create config controller project

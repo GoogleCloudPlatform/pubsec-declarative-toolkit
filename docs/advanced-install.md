@@ -9,6 +9,7 @@ If you are not the following resources are required.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) ( >= v1.20)
 
 ## 1. Set environment variables that match your environment
+
 ```
 # note: CLUSTER, NETWORK, SUBNET can be renamed to anything, CC_PROJECT_ID must be a unique name (use your org name/date combo) - like controller-lgz-0919, the rest are derived.
 # note: for multiple billing accounts - set the BILLING_ID manually

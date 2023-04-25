@@ -162,6 +162,7 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
 
  Emails used for groups should be exist in iam/groups before running the script.
 
+<<<<<<< HEAD
  Project Number and Project ID for the management project will be for the project that the config controller instance runs in. 
  
  Derive the project number via
@@ -169,6 +170,9 @@ gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$
  export PROJECT_NUMBER=$(gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
 
  ```
+=======
+ Project Number and Project ID for the management project will be for the project that the config controller instance runs in.
+>>>>>>> main
 
   | Name | Default | Description |
   | --- | --- | --- |
