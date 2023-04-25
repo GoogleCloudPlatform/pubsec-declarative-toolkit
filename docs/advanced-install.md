@@ -9,7 +9,7 @@ If you are not the following resources are required.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) ( >= v1.20)
 
 ## 1. Set environment variables that match your environment
-<<<<<<< HEAD
+
 ```
 # note: CLUSTER, NETWORK, SUBNET can be renamed to anything, CC_PROJECT_ID must be a unique name (use your org name/date combo) - like controller-lgz-0919, the rest are derived.
 # note: for multiple billing accounts - set the BILLING_ID manually
@@ -39,35 +39,7 @@ gcloud beta billing projects link $CC_PROJECT_ID --billing-account $BILLING_ID
 The project should already be set during the last step: create project, otherwise run the following
 
 gcloud config set project $CC_PROJECT_ID
-=======
 
-```bash
-CLUSTER=<cluster-name>
-REGION=<supported-region>
-PROJECT_ID=<project-id>
-NETWORK=<vpc-name>
-SUBNET=<subnet-name>
-ORG_ID=<your_org_id>
-BILLING_ID=<your_billing_id>
-```
-
-## 2. Create Project
-
-```bash
-gcloud projects create $PROJECT_ID --name="Config Controller" --labels=type=infrastructure-automation --set-as-default
-```
-
-## 3. Enable Billing
-
-```bash
-gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID
-```
-
-## 4. Set the project ID
-
-```bash
-gcloud config set project $PROJECT_ID
->>>>>>> main
 ```
 
 ## 5. Enable the required services
