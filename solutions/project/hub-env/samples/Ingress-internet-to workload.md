@@ -1,8 +1,10 @@
 # Internet to workload
 
 ## GCP - External Load Balancer
+
 1. TODO: Cloud Armor
 1. External Load Balancer IP Reservation
+
     ```yaml
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeAddress
@@ -18,7 +20,9 @@
       networkTier: PREMIUM # OR STANDARD
     ---
     ```
+
 1. Forwarding Rule
+
     ```yaml
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeForwardingRule
@@ -45,6 +49,7 @@
 ## Fortigate
 
 1. Address object for external load balancer health check
+
     ```fortios
     config firewall vip
         edit "project1-workload1-healthcheck-vip"
@@ -61,6 +66,7 @@
     ```
 
 2. Policy for external load balancer health check
+
     ```fortios
     config firewall policy
         edit 0
@@ -76,7 +82,9 @@
         next
     end
     ```
+
 3. VIP object for workload1
+
     ```fortios
     config firewall vip
         edit "project1-workload1-vip"
@@ -91,7 +99,9 @@
         next
     end
     ```
+
 3. Firewall policy to allow traffic from VIP to Spoke's PAZ address
+
     ```fortios
     config firewall policy
         edit 0
@@ -116,7 +126,9 @@
     ```
 
 ## GCP - Spoke VPC
-1. Firewall rule to allow ingress trafic from internet to the service account or ip adress of the PAZ connected resource
+
+1. Firewall rule to allow ingress traffic from internet to the service account or ip address of the PAZ connected resource
+
     ```yaml
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeFirewall

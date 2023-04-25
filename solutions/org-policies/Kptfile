@@ -5,8 +5,11 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: package to apply organization policies
+  description: |
+    Landing zone v2 subpackage.
+    A package to create GCP Organization Policies.
+    Attention, validate impact with CCCS Cloud Based Sensors before implementing any changes.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
-      configPath: setters.yaml  
+      configPath: setters.yaml

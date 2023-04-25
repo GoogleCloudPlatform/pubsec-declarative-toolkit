@@ -1,0 +1,64 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# IP address for Private Service Connect endpoint for Google API
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: project-id-psc-apis-ip # kpt-set: ${project-id}-psc-apis-ip
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+spec:
+  resourceID: psc-apis-ip
+  addressType: INTERNAL
+  description: IP address for Private Service Connect endpoint for Google API
+  location: global
+  ipVersion: IPV4
+  purpose: PRIVATE_SERVICE_CONNECT
+  address: 10.255.255.254
+  networkRef:
+    name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+    namespace: networking
+---
+# Forwarding rule for Private Service Connect endpoint for Google API
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: project-id-psc-apis-fw # kpt-set: ${project-id}-psc-apis-fw
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/project-id-global-vpc1-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/networking/ComputeNetwork/${project-id}-global-vpc1-vpc
+spec:
+  # TODO: bug: errors when defining description field
+  # description: "Private Service Connect endpoint for Google API"
+  ipAddress:
+    addressRef:
+      name: project-id-psc-apis-ip # kpt-set: ${project-id}-psc-apis-ip
+  # loadBalancingScheme must be disabled using loadBalancingScheme: ""
+  # googleapi: Error 400: Invalid value for field 'resource.loadBalancingScheme': 'EXTERNAL'
+  # Invalid field set in Private Service Connect Forwarding Rule. This field should not be set., invalid
+  loadBalancingScheme: ""
+  location: global
+  # TODO: bug: missing service directory registration with a specific region to avoid default us-central1 region.
+  # https://github.com/GoogleCloudPlatform/magic-modules/pull/7480
+  networkRef:
+    external: https://www.googleapis.com/compute/beta/projects/project-id/global/networks/global-vpc1-vpc # kpt-set: https://www.googleapis.com/compute/beta/projects/${project-id}/global/networks/global-vpc1-vpc
+  # The forwarding rule name for PSC Google APIs must be an 1-20 characters string with lowercase letters and numbers and must start with a letter
+  resourceID: pscapisfw
+  target:
+    targetHTTPProxyRef:
+      external: all-apis

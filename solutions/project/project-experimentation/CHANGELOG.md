@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/project/project-experimentation/0.1.1...solutions/project/project-experimentation/0.2.0) (2023-04-05)
+
+
+### Features
+
+* config controller within an experimentation project ([#313](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/313)) ([a17babc](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a17babcf6c5441b5d871c2a85875004fbedd5ff1))
+
 ## [0.1.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/project/project-experimentation/0.1.0...solutions/project/project-experimentation/0.1.1) (2023-04-04)
 
 
