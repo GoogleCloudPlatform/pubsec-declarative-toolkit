@@ -1,6 +1,6 @@
 # Security Controls
 
-### AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+## AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 
 AC-3(7) – Write access to the logs is constrained by IAM permissions to just the log sinks.
 Added this control to project-iam.yaml in bindings where bucketWriter role is assigned.
@@ -8,7 +8,7 @@ Added this control to project-iam.yaml in bindings where bucketWriter role is as
 ## AU-2 AUDITABLE EVENTS
 
 AU-2 – Event families being audited are set here. Added this control to folder-sink.yaml,
-gke-kcc-sink.yaml, org-sink.yaml immediately preceeding the filter including/exluding
+gke-kcc-sink.yaml, org-sink.yaml immediately preceding the filter including/excluding
 various log types
 
 Ops Note: This is an org control so the AU-2 tagging in the code is there to support the
@@ -18,7 +18,7 @@ narrative Ops will write to demonstrate the org requirements
 
 AU-4(1) – Logs are being sent to a logging project which is separate from the projects
 performing actions which generate log entries. Added to the cloud-logging-buckets.yaml
-where separate logging project is selected as target. 
+where separate logging project is selected as target.
 
 ## AU-8 TIME STAMPS
 
@@ -27,7 +27,7 @@ RFC3339 UTC format in log entries (see GCP documentation for LogEntry object, ti
 
 ## AU-9 PROTECTION OF AUDIT INFORMATION
 
-AU-9 – Retention policies and policy locks are implemented so log contents is immutable. Added to 
+AU-9 – Retention policies and policy locks are implemented so log contents is immutable. Added to
 cloud-logging-buckets.yaml prior to locked and retentionDays entries. Also added to setters.yaml
 as previous entries are set from here.
 
