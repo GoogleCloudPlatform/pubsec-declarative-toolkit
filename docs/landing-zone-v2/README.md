@@ -79,7 +79,7 @@ To deploy this Landing Zone you will need to:
 ## Initial Organization configuration
 
 1. Authenticate into boostrap project
-    
+
     Authenticate into a bootstrap project (only used to derive optional override default IDs like ORG_ID and BILLING_ID).
 
     ```shell
