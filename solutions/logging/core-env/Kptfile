@@ -5,7 +5,8 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: Package to deploy core-env logging solution
+  description: |
+    Package to deploy core-env logging solution
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
