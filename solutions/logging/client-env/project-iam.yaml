@@ -20,12 +20,11 @@ metadata:
   name: platform-and-component-log-client1-bucket-writer-permissions # kpt-set: platform-and-component-log-${client-name}-bucket-writer-permissions
   namespace: projects
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
-    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPartialPolicy|projects|platform-and-component-log-client1-bucket-writer-permissions'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   resourceRef:
     kind: Project
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   # AC-3(7) - Write access to the logging bucket is limited by IAM to just the identity of the log sink configured to send logs to the bucket (set at the logging project level)
   bindings:

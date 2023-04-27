@@ -21,11 +21,10 @@ metadata:
   name: platform-and-component-client1-log-bucket # kpt-set: platform-and-component-${client-name}-log-bucket
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
-    internal.kpt.dev/upstream-identifier: 'logging.cnrm.cloud.google.com|LoggingLogBucket|logging|platform-and-component-client1-log-bucket'
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   projectRef:
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for client Platform and Component logs # kpt-set: Cloud Logging bucket for ${client-displayname} Platform and Component logs

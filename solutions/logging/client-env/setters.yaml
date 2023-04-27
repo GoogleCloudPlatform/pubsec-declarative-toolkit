@@ -18,13 +18,12 @@ metadata:
   name: setters
   annotations:
     config.kubernetes.io/local-config: "true"
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
 data:
   client-name: 'client1' # lowercase only
   client-displayname: 'Client1'
   #############
   # logging Project ID
-  logging-prj-id: logging-prj-id-12345
+  logging-project-id: logging-project-id
   #############
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets

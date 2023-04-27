@@ -21,7 +21,6 @@ metadata:
   namespace: logging
   annotations:
     config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-client1-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-${client-name}-log-bucket
-    internal.kpt.dev/upstream-identifier: 'logging.cnrm.cloud.google.com|LoggingLogSink|logging|platform-and-component-log-client1-log-sink'
 spec:
   folderRef:
     name: clients.client1 # kpt-set: clients.${client-name}
@@ -31,13 +30,13 @@ spec:
     loggingLogBucketRef:
       # destination.loggingLogBucketRef
       # Only `external` field is supported to configure the reference.
-      external: platform-and-component-client1-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-prj-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
+      external: platform-and-component-client1-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
   description: Folder sink for Client Platform and Component logs # kpt-set: Folder sink for ${client-displayname} Platform and Component logs
   # AU-2, AU-12(A), AU-12(C)
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
-  # These logs are not enabled by default. They are enabled inside the client-experimentation package:
-  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-experimentation
+  # These logs are not enabled by default. They are enabled inside the client-env package:
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-env
   filter: |-
     LOG_ID("dns.googleapis.com/dns_queries")
     OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
