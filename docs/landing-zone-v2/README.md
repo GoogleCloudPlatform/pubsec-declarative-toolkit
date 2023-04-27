@@ -6,7 +6,7 @@ Config Controller is a hosted service to provision and orchestrate Anthos, GKE, 
 
 ![img](img/ACM.png)
 
-This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variant that best fit your requirements. It also uses multiple least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity.
+This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly because it provides flexibility by allowing you to select the sub-packages variants that best fit your requirements. It also uses multiples least privilege **Core** GCP service accounts which are linked to distinct kubernetes namespaces using workload identity.
 
 ## Implementation
 
@@ -59,6 +59,7 @@ To deploy this Landing Zone you will need to:
       - DNS Administrator
    - Billing account:
       - Billing Account Admin
+
 1. Software
     - [Google Cloud SDK version >= 325.0.0](https://cloud.google.com/sdk/docs/downloads-versioned-archives)
     - [kpt](https://kpt.dev/installation/)
@@ -77,14 +78,21 @@ To deploy this Landing Zone you will need to:
 
 ## Initial Organization configuration
 
+1. Authenticate into boostrap project
+    
+    Authenticate into a bootstrap project (only used to derive optional override default IDs like ORG_ID and BILLING_ID).
+
+    ```shell
+    gcloud config set project <your-boostrap-starter-project-id>
+    ```
 1. Define environment variables
 
     ```shell
-    export CLUSTER=pdt # <cluster-name>
+    export CLUSTER=<cluster-name>
     export REGION=northamerica-northeast1
     export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1) # random string to append to existing project name for new project
-    export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
-    export PROJECT_ID=$BOOT_PROJECT_ID-$CC_PROJECT_RAND # globally distinct
+    export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)') # get current project (bootsrap only)
+    export PROJECT_ID=$BOOT_PROJECT_ID-$CC_PROJECT_RAND # globally distinct based on the current boot project - or add your own
     export LZ_FOLDER_NAME=dev-lz1 #<env>-<landing zone name>
     export NETWORK=vpc-pdt
     export SUBNET=vpc-pdt-sn
@@ -93,8 +101,8 @@ To deploy this Landing Zone you will need to:
     # assume same BID used by current project will be used for new project
     export BILLING_ID=$(gcloud alpha billing projects describe $BOOT_PROJECT_ID '--format=value(billingAccountName)' | sed 's/.*\///') # XXXXXX-XXXXXX-XXXXXX
     export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
-    export TOKEN=ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g') # for current super admin not the service account
+    export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g') # for current super admin - not the service account
     ```
 
 1. Set Default Logging Storage Location.
@@ -110,9 +118,10 @@ To deploy this Landing Zone you will need to:
     There can only be one organization level ACM policy per organization
 
     ```shell
-    # enable accesscontextmanager
+    # enable accesscontextmanager using the current project
     gcloud services enable accesscontextmanager.googleapis.com --project=${BOOT_PROJECT_ID}
-    # Validate if an ACM policy exists
+    # Validate if an ACM policy exists - use the current project (before we create the PROJECT_ID project later
+
     gcloud access-context-manager policies list --organization=${ORG_ID}
 
     # To create an ACM policy that applies to the entire organization, run:
@@ -136,6 +145,7 @@ To deploy this Landing Zone you will need to:
 ```shell
     FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
     # where ROOT_FOLDER_ID is the parent folder
+
 ```
 
 2. Create config controller project
@@ -166,7 +176,7 @@ To deploy this Landing Zone you will need to:
     ```
 
 1. Enable the required services
-    90 seconds
+
     ```shell
     gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
     ```
