@@ -35,8 +35,7 @@ spec:
   # AU-2, AU-12(A), AU-12(C)
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
-  # These logs are not enabled by default. They are enabled inside the client-env package:
-  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-env
+  # Logs for such resources must be enabled on the respective resource as they are not enabled by default.
   filter: |-
     LOG_ID("dns.googleapis.com/dns_queries")
     OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
