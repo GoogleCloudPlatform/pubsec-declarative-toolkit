@@ -31,5 +31,5 @@ data:
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
   # AU-9 PROTECTION OF AUDIT INFORMATION
   # AU-11 AUDIT RECORD RETENTION
-  retention-locking-policy: false
-  retention-in-days: 1
+  retention-locking-policy: true
+  retention-in-days: 365

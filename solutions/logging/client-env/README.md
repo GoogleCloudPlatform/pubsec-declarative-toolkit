@@ -14,8 +14,8 @@ The core-env logging package must be deployed before this package.
 | client-displayname       | Client1            | str  |     2 |
 | client-name              | client1            | str  |     5 |
 | logging-project-id       | logging-project-id | str  |     4 |
-| retention-in-days        |                  1 | int  |     1 |
-| retention-locking-policy | false              | bool |     1 |
+| retention-in-days        |                365 | int  |     1 |
+| retention-locking-policy | true               | bool |     1 |
 
 ## Sub-packages
 
