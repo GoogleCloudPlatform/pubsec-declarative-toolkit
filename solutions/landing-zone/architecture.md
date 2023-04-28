@@ -641,6 +641,7 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
 - This procedure is for 3rd party vendors that provide value added services for the landing zone such as NGFW IaaS instances.
 - As a platform admin I need to integrate a 3rd party IaaS, PaaS, SaaS service into the landing zone to provide specific functionality.
 - As a security admin I need to validate the security posture of the 3rd party service and validate or facilitate CCCS approval.
+- Participate in [Assured Workloads](https://cloud.google.com/assured-workloads) Compliance work
 
 Detail integration procedures for 3rd party vendors that provide value added services for the landing zone.
 An example was the recent addition of an IaaS NGFW to the perimeter by the SSC team.
