@@ -634,6 +634,19 @@ https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/205
 ## DI-43: KCC Generated ID usage in other resource expressions
 - 20230117
 - We cannot use an expression that requires a value from another kcc resource (Dave) - for example in IAM policy conditions ie: folder id not avail at kcc create time
+
+## DI-44: 3rd Party Vendor Partner Service Integration
+- 20230427
+- Tracking: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/348
+- This procedure is for 3rd party vendors that provide value added services for the landing zone such as NGFW IaaS instances.
+- As a platform admin I need to integrate a 3rd party IaaS, PaaS, SaaS service into the landing zone to provide specific functionality.
+- As a security admin I need to validate the security posture of the 3rd party service and validate or facilitate CCCS approval.
+
+Detail integration procedures for 3rd party vendors that provide value added services for the landing zone.
+An example was the recent addition of an IaaS NGFW to the perimeter by the SSC team.
+- see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/348
+
+
 # Installation/Deployment
 
 ### Deployment Preparations
