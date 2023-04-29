@@ -951,42 +951,6 @@ default     StorageBucket/audit-audit-prj-id-gz1      Successful    InProgress  
 ### Deleting the Landing Zone Deployment
 
 # FinOps
-## KCC Cluster
-- $14 CAD/day for GKE standard 3 node default zonal
-- $4 CAD/day for GKE standard default
-
-
-# Deployments 
-
-```mermaid
-graph LR;
-    style Landing-Zones fill:#44f,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
-    %% mapped and documented
-
-    on-prem-simulate-->prem
-    identity-as-a-service-simulate-->idp-dev
-    identity-as-a-service-simulate-->idp-uat
-    3rd-cloud-->dev-aws
-    
-    manual-->sbx
-    manual-->dev
-    automated-->uat
-    automated-->prd
-    
-    prem-->onprem.gcp.zone
-    idp-dev-->azure.obrienlabs.dev
-    idp-uat-->azure.cloudnuage.dev
-    dev-->approach.gcp.zone-->procedure/verify
-    dev-aws-->aws.cloudnuage.dev
-    sbx-->checklist.gcp.zone-->experiment
-    prd-->landing.gcp.zone-->resilient/stable
-    uat-->alternate.gcp.zone-->cicd/automated
-    sbx-->gcp.zone-->experiment
-    sbx-->arg.corporate-->experiment
-    gcp.zone-->gcp-domain-zone
-        
-```
-# FinOps
 ## GKE Costs
 The base Kubernetes GKE idle cluster will run just under $10/day (8.90 for GKE and 0.68 for networking) but with sustained use and network discounts cost is reduced to (5.64 for GKE and 0 for Networking) for a cust reduction of 42%
 
