@@ -986,6 +986,16 @@ graph LR;
     gcp.zone-->gcp-domain-zone
         
 ```
+# FinOps
+## GKE Costs
+The base Kubernetes GKE idle cluster will run just under $10/day (8.90 for GKE and 0.68 for networking) but with sustained use and network discounts cost is reduced to (5.64 for GKE and 0 for Networking) for a cust reduction of 42%
+
+Before Sustained use discounts
+<img width="1608" alt="Screenshot 2023-04-29 at 08 39 25" src="https://user-images.githubusercontent.com/24765473/235305902-8c833392-d911-4762-acee-5fe03fc506de.png">
+
+With discounts
+<img width="1611" alt="Screenshot 2023-04-29 at 08 41 14" src="https://user-images.githubusercontent.com/24765473/235305972-7a2d5b3f-a9d2-43af-a7c3-69686cbe6951.png">
+
 
 # References
 - Anthos Config Management - "Deploy a Landing Zone Blueprint" - https://cloud.google.com/anthos-config-management/docs/tutorials/landing-zone and 
