@@ -54,7 +54,7 @@ This package has no sub-packages.
 1.  Clone the package:
 
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-env/core-env-logging-packagecore-env-logging-package@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-env/core-env-logging-package@${VERSION}
     ```
 
     Replace `${VERSION}` with the desired repo branch or tag

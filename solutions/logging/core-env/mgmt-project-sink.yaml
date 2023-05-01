@@ -35,10 +35,7 @@ spec:
   # No inclusion filter. Includes all Platform and Component logs
   # Google Cloud platform logs are service-specific logs
   # For a list of all supported Google Cloud Logging API Services visit https://cloud.google.com/logging/docs/api/platform-logs
-  # Also includes the following types of logs:
-  # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
-  # These logs are not enabled by default. They are enabled inside the client-experimentation package:
-  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-experimentation
+  # Logs generated from resources such as Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer must be enabled on the respective resource as they are not enabled by default.
   # Excludes: Cloud Audit, Access Transparency, and Data Access Logs
   exclusions:
     - description: Exclude Security logs
