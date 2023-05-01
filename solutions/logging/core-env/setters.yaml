@@ -39,9 +39,7 @@ data:
   # AU-9 PROTECTION OF AUDIT INFORMATION
   # AU-11 AUDIT RECORD RETENTION
   #
-  # NOTE: THESE SETTINGS SHOULD BE CHANGED TO MEET YOUR SECURITY CONTROL RETENTION REQUIREMENTS
-  # retention-locking-policy: true
-  # retention-in-days: 365
+  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
   retention-locking-policy: false
   retention-in-days: 1
   ##############
