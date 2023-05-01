@@ -30,7 +30,7 @@ data:
   #############
   # Logging Project ID
   management-project-id: management-project-12345
-  logging-prj-id: logging-prj-12345
+  logging-project-id: logging-prj-12345
   #############
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
@@ -38,6 +38,10 @@ data:
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
   # AU-9 PROTECTION OF AUDIT INFORMATION
   # AU-11 AUDIT RECORD RETENTION
+  #
+  # NOTE: THESE SETTINGS SHOULD BE CHANGED TO MEET YOUR SECURITY CONTROL RETENTION REQUIREMENTS
+  # retention-locking-policy: true
+  # retention-in-days: 365
   retention-locking-policy: false
   retention-in-days: 1
   ##############

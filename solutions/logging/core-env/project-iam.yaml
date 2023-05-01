@@ -20,11 +20,11 @@ metadata:
   name: security-log-bucket-writer-permissions
   namespace: projects
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   resourceRef:
     kind: Project
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   # AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
   bindings:
@@ -32,7 +32,7 @@ spec:
       members:
         - memberFrom:
             logSinkRef:
-              name: logging-prj-id-security-sink # kpt-set: ${logging-prj-id}-security-sink
+              name: logging-project-id-security-sink # kpt-set: ${logging-project-id}-security-sink
               namespace: logging
 ---
 # Logs Bucket writer IAM permissions for the platform and component log sinks
@@ -44,11 +44,11 @@ metadata:
   name: platform-and-component-services-log-bucket-writer-permissions
   namespace: projects
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   resourceRef:
     kind: Project
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   # AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
   bindings:
@@ -68,11 +68,11 @@ metadata:
   name: platform-and-component-services-infra-log-bucket-writer-permissions
   namespace: projects
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   resourceRef:
     kind: Project
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   # AC-3(7) ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
   bindings:
@@ -91,11 +91,11 @@ metadata:
   name: gke-kcc-cluster-platform-and-component-log-bucket-writer-permissions
   namespace: projects
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   resourceRef:
     kind: Project
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   # AC-3(7)
   bindings:
@@ -113,7 +113,7 @@ metadata:
   name: logging-project-data-access-log-config
   namespace: projects
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   service: allServices
   auditLogConfigs:
@@ -122,5 +122,5 @@ spec:
     - logType: DATA_WRITE
   resourceRef:
     kind: Project
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects

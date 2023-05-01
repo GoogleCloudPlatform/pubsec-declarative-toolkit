@@ -20,12 +20,12 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: logging-prj-id # kpt-set: ${logging-prj-id}
+  name: logging-project-id # kpt-set: ${logging-project-id}
   namespace: projects
   annotations:
     cnrm.cloud.google.com/auto-create-network: 'false'
 spec:
-  name: logging-prj-id # kpt-set: ${logging-prj-id}
+  name: logging-project-id # kpt-set: ${logging-project-id}
   folderRef:
     name: audits
     namespace: hierarchy

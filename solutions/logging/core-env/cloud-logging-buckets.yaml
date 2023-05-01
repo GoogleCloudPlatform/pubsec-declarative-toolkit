@@ -21,10 +21,10 @@ metadata:
   name: security-log-bucket # kpt-set: ${security-log-bucket}
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   projectRef:
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
@@ -40,10 +40,10 @@ metadata:
   name: platform-and-component-log-bucket # kpt-set: ${platform-and-component-log-bucket}
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-prj-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
   projectRef:
-    name: logging-prj-id # kpt-set: ${logging-prj-id}
+    name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
