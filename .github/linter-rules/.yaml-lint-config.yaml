@@ -44,7 +44,7 @@ rules:
     max-start: 0
     max-end: 1
   empty-values: disable
-  #float-values: disable
+  float-values: disable
   hyphens:
     level: warning
     max-spaces-after: 1
