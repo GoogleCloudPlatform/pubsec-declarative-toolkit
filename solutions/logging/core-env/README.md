@@ -4,6 +4,7 @@
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
+Landing zone v2 subpackage.
 Package to deploy core-env logging solution
 
 ## Setters
@@ -11,7 +12,7 @@ Package to deploy core-env logging solution
 |               Name                |                  Value                  | Type | Count |
 |-----------------------------------|-----------------------------------------|------|-------|
 | billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str  |     1 |
-| logging-project-id                | logging-prj-12345                       | str  |    21 |
+| logging-project-id                | logging-project-12345                   | str  |    21 |
 | management-project-id             | management-project-12345                | str  |     2 |
 | org-id                            |                              0000000000 | str  |     1 |
 | platform-and-component-log-bucket | platform-and-component-log-bucket-12345 | str  |     2 |
@@ -31,8 +32,8 @@ This package has no sub-packages.
 | cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | platform-and-component-log-bucket                                    | logging   |
 | folder-sinks.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-services-log-sink                             | logging   |
 | folder-sinks.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-services-infra-log-sink                       | logging   |
-| gke-kcc-sink.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | gke-kcc-cluster-platform-and-component-log-sink                      | logging   |
-| gke-kcc-sink.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | gke-kcc-cluster-disable-default-bucket                               | logging   |
+| mgmt-project-sink.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | mgmt-project-cluster-platform-and-component-log-sink                 | logging   |
+| mgmt-project-sink.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | mgmt-project-cluster-disable-default-bucket                          | logging   |
 | org-sink.yaml              | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | logging-project-id-security-sink                                     | logging   |
 | project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | security-log-bucket-writer-permissions                               | projects  |
 | project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | platform-and-component-services-log-bucket-writer-permissions        | projects  |
