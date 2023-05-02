@@ -23,7 +23,7 @@ You can find the latest release versions in the `releases` [page](https://github
 
 ## Quickstart
 
-In order to deploy the solutions you will need a Kubernetes cluster with [Config Connector](https://cloud.google.com/config-connector/docs/overview) installed. 
+In order to deploy the solutions you will need a Kubernetes cluster with [Config Connector](https://cloud.google.com/config-connector/docs/overview) installed.
 
 We recommend using the Managed Config Controller service which comes bundles with [Config Connector](https://cloud.google.com/config-connector/docs/overview) and [Anthos Config Management](https://cloud.google.com/anthos/config-management), alternatively you can [install](https://cloud.google.com/config-connector/docs/how-to/advanced-install#manual) Config Connector on any CNCF compliant Kubernetes cluster.
 
