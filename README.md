@@ -17,7 +17,7 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 | Logging Bundle | Logging Packages for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/logging) |
 | LZ Project Bundles | Project Bundles for use with LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project) |
 
-When getting a package you can use the `@` to indicate what tag or branch you will be getting with the `kpt pkg get` command for example `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main`. 
+When getting a package you can use the `@` to indicate what tag or branch you will be getting with the `kpt pkg get` command for example `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main`.
 
 You can find the latest release versions in the `releases` [page](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases).
 
