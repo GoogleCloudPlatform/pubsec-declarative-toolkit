@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/logging/core-experimentation/0.2.0...solutions/logging/core-experimentation/0.2.1) (2023-04-17)
+
+
+### Bug Fixes
+
+* update org-sink bucket reference ([#335](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/335)) ([0e3952a](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0e3952ac32913e197e84676691ed651496e31e21))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/logging/core-experimentation/0.1.0...solutions/logging/core-experimentation/0.2.0) (2023-03-21)
 
 

@@ -23,7 +23,7 @@ spec:
   ipCidrRange: 10.2.0.0/16 # kpt-set: ${subnet-cidr}
   networkRef:
     name: sandbox-net # kpt-set: ${network-name}
-  region: us-central1 # kpt-set: ${region}
+  region: northamerica-northeast1 # kpt-set: ${region}
   privateIpGoogleAccess: true # kpt-set: ${private-google-access}
   logConfig:
     aggregationInterval: INTERVAL_10_MIN # kpt-set: ${log-aggreation-interval}

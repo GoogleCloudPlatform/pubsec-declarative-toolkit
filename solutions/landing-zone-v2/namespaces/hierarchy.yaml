@@ -133,7 +133,7 @@ subjects:
     namespace: cnrm-system
     kind: ServiceAccount
 ---
-# Grant viewer role on the hierarchy namespace to folders K8S SA
+# Grant viewer role on the hierarchy namespace to logging K8S SA
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

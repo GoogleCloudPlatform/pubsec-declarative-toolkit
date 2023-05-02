@@ -21,7 +21,7 @@ metadata:
   namespace: CHANGE-NAMESPACE
 spec:
   databaseVersion: POSTGRES_13
-  region: us-central1 # kpt-set: ${region}
+  region: northamerica-northeast1 # kpt-set: ${region}
   settings:
     activationPolicy: ALWAYS
     availabilityType: ZONAL
