@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # Since we are using GKE Workload Identity we must complete the following steps outlined in
-# [Implementing Policy Controller Metrics](https://cloud.google.com/anthos-config-management/docs/how-to/policy-controller-metrics) 
+# [Implementing Policy Controller Metrics](https://cloud.google.com/anthos-config-management/docs/how-to/policy-controller-metrics)
 # to implement Policy Controller Metrics and avoid numerous IAM errors on the Config Controller instance.
 #########
 # GCP SA
