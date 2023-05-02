@@ -30,7 +30,7 @@ data:
   #############
   # Logging Project ID
   management-project-id: management-project-12345
-  logging-project-id: logging-prj-12345
+  logging-project-id: logging-project-12345
   #############
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
