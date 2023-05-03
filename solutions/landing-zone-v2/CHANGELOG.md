@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/landing-zone-v2/0.5.0...solutions/landing-zone-v2/0.5.1) (2023-05-03)
+
+
+### Bug Fixes
+
+* implement policy controller metrics for gke ([#357](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/357)) ([9015429](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/9015429d6be9cc24b0657b1b77d7ceedacfb1b1e))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/landing-zone-v2/0.4.0...solutions/landing-zone-v2/0.5.0) (2023-03-23)
 
 
