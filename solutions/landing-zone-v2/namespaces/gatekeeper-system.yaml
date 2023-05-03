@@ -29,7 +29,7 @@ metadata:
 spec:
   displayName: gatekeeper-admin-sa
 ---
-# Grant GCP role Metrics Writer to Metrics SA on KCC Project
+# Grant GCP role Metrics Writer to gatekeeper-admin SA on KCC Project
 # AC-3(7) - RBAC role to account with required permissions for Policy Controller metrics
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
