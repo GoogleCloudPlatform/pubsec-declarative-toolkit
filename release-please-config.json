@@ -52,8 +52,13 @@
       "tag-separator": "/",
       "prerelease": true
     },
-    "solutions/logging/core-env": {
-      "package-name": "solutions/logging/core-env",
+    "solutions/logging/client-core": {
+      "package-name": "solutions/logging/client-core",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/logging/client-env": {
+      "package-name": "solutions/logging/client-env",
       "tag-separator": "/",
       "prerelease": true
     },
