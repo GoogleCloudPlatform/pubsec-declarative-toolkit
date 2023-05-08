@@ -23,4 +23,4 @@ spec:
   description: example router description
   networkRef:
     name: sandbox-net # kpt-set: ${network-name}
-  region: us-central1 # kpt-set: ${region}
+  region: northamerica-northeast1 # kpt-set: ${region}

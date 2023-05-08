@@ -1,14 +1,14 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: org-policies
+  name: client-env-logging-package
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: |
+  description:  |
     Landing zone v2 subpackage.
-    A package to create GCP Organization Policies.
-    Attention, validate impact with CCCS Cloud Based Sensors before implementing any changes.
+    Package to deploy client-env logging solution.
+    The core-env logging package must be deployed before this package.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
