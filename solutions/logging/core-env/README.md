@@ -1,6 +1,7 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # core-env-logging-package
 
+
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
@@ -26,21 +27,21 @@ This package has no sub-packages.
 
 ## Resources
 
-|            File            |                  APIVersion                   |       Kind       |                                 Name                                 | Namespace |
-|----------------------------|-----------------------------------------------|------------------|----------------------------------------------------------------------|-----------|
-| cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | security-log-bucket                                                  | logging   |
-| cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | platform-and-component-log-bucket                                    | logging   |
-| folder-sinks.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-services-log-sink                             | logging   |
-| folder-sinks.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-services-infra-log-sink                       | logging   |
-| mgmt-project-sink.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | mgmt-project-cluster-platform-and-component-log-sink                 | logging   |
-| mgmt-project-sink.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | mgmt-project-cluster-disable-default-bucket                          | logging   |
-| org-sink.yaml              | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | logging-project-id-security-sink                                     | logging   |
-| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | security-log-bucket-writer-permissions                               | projects  |
-| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | platform-and-component-services-log-bucket-writer-permissions        | projects  |
-| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | platform-and-component-services-infra-log-bucket-writer-permissions  | projects  |
-| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | gke-kcc-cluster-platform-and-component-log-bucket-writer-permissions | projects  |
-| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMAuditConfig   | logging-project-data-access-log-config                               | projects  |
-| project.yaml               | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project          | logging-project-id                                                   | projects  |
+|            File            |                  APIVersion                   |       Kind       |                                   Name                                    | Namespace |
+|----------------------------|-----------------------------------------------|------------------|---------------------------------------------------------------------------|-----------|
+| cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | security-log-bucket                                                       | logging   |
+| cloud-logging-buckets.yaml | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket | platform-and-component-log-bucket                                         | logging   |
+| folder-sinks.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-services-log-sink                                  | logging   |
+| folder-sinks.yaml          | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | platform-and-component-services-infra-log-sink                            | logging   |
+| mgmt-project-sink.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | mgmt-project-cluster-platform-and-component-log-sink                      | logging   |
+| mgmt-project-sink.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | mgmt-project-cluster-disable-default-bucket                               | logging   |
+| org-sink.yaml              | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink   | logging-project-id-security-sink                                          | logging   |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | security-log-bucket-writer-permissions                                    | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | platform-and-component-services-log-bucket-writer-permissions             | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | platform-and-component-services-infra-log-bucket-writer-permissions       | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy | mgmt-project-cluster-platform-and-component-log-bucket-writer-permissions | projects  |
+| project-iam.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMAuditConfig   | logging-project-data-access-log-config                                    | projects  |
+| project.yaml               | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project          | logging-project-id                                                        | projects  |
 
 ## Resource References
 
@@ -53,16 +54,13 @@ This package has no sub-packages.
 ## Usage
 
 1.  Clone the package:
-
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-env/core-env-logging-package@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-env@${VERSION}
     ```
-
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
-
     ```shell
     cd "./core-env-logging-package/"
     ```
@@ -71,28 +69,23 @@ This package has no sub-packages.
     - setters.yaml
 
 1.  Execute the function pipeline
-
     ```shell
     kpt fn render
     ```
 
 1.  Initialize the resource inventory
-
     ```shell
     kpt live init --namespace ${NAMESPACE}
     ```
-
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).
 
 1.  Apply the package resources to your cluster
-
     ```shell
     kpt live apply
     ```
 
 1.  Wait for the resources to be ready
-
     ```shell
     kpt live status --output table --poll-until current
     ```
