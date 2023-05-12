@@ -62,7 +62,7 @@ gcloud compute networks subnets create $SUBNET --network $NETWORK --range 192.16
 Fully managed cluster
 
 ```bash
-gcloud alpha anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --full-management
+gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --full-management
 ```
 
 ### GKE Standard
@@ -110,5 +110,3 @@ gcloud organizations add-iam-policy-binding "${ORG_ID}" \
 ```
 
 ## 9. Now you are ready to deploy a solution
-
-* see

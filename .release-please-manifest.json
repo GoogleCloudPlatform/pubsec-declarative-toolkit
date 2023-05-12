@@ -5,11 +5,13 @@
     "solutions/hierarchy/client-experimentation": "0.1.0",
     "solutions/hierarchy/core-env": "0.3.0",
     "solutions/hierarchy/core-experimentation": "0.1.0",
-    "solutions/landing-zone-v2": "0.5.0",
+    "solutions/landing-zone-v2": "0.5.1",
     "solutions/org-policies": "0.2.0",
     "solutions/project/project-experimentation": "0.2.0",
     "solutions/project/hub-env": "0.2.0",
     "solutions/project/spoke-unclass-env": "0.1.0",
     "solutions/logging/client-experimentation": "0.2.0",
-    "solutions/logging/core-experimentation": "0.2.1"
+    "solutions/logging/core-experimentation": "0.2.1",
+    "solutions/logging/core-env": "0.1.1",
+    "solutions/logging/client-env": "0.1.0"
 }

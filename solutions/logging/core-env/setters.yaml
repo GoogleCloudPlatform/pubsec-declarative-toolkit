@@ -1,0 +1,51 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+######
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  #############
+  # General Settings Values
+  #
+  # The following are Settings for the environment to bootstrap with
+  #
+  #############
+  # billing-id: "0000000000"
+  # org-id: "0000000000"
+  #############
+  # Logging Project ID
+  management-project-id: management-project-12345
+  logging-project-id: logging-project-12345
+  #############
+  # LoggingLogBucket retention settings
+  # Set the number of days to retain logs in Cloud Logging buckets
+  # Set the lock mechanism on the bucket to: true or false
+  # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
+  # AU-9 PROTECTION OF AUDIT INFORMATION
+  # AU-11 AUDIT RECORD RETENTION
+  #
+  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
+  retention-locking-policy: false
+  retention-in-days: 1
+  ##############
+  # Log Buckets
+  ##############
+  # Security Logs Bucket
+  security-log-bucket: security-log-bucket-12345
+  # Platform and Component Log Bucket
+  platform-and-component-log-bucket: platform-and-component-log-bucket-12345
