@@ -1,0 +1,91 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# GCP SA
+# AC-3(7) - Creates lower priv service account for policy administration
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata: # kpt-merge: config-control/policies-sa
+  name: policies-sa
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMServiceAccount|config-control|policies-sa'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  displayName: policies-sa
+---
+# Grant GCP role Organization Policy Administrator to GCP SA
+# AC-3(7) - RBAC role to account with required permissions for policy administration
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/policies-sa-orgpolicyadmin-permissions
+  name: policies-sa-orgpolicyadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPolicyMember|config-control|policies-sa-orgpolicyadmin-permissions'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/orgpolicy.policyAdmin
+  member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:policies-sa@${management-project-id}.iam.gserviceaccount.com
+---
+# K8S SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata: # kpt-merge: config-control/policies-sa-workload-identity-binding
+  name: policies-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPartialPolicy|config-control|policies-sa-workload-identity-binding'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    name: policies-sa
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-policies]
+---
+# K8S namespace
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /policies
+  name: policies
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|policies'
+---
+# Link GCP SA to K8S namespace
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata: # kpt-merge: policies/configconnectorcontext.core.cnrm.cloud.google.com
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: policies
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'core.cnrm.cloud.google.com|ConfigConnectorContext|policies|configconnectorcontext.core.cnrm.cloud.google.com'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  googleServiceAccount: policies-sa@management-project-id.iam.gserviceaccount.com # kpt-set: policies-sa@${management-project-id}.iam.gserviceaccount.com

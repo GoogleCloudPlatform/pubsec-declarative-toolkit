@@ -1,0 +1,44 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+#
+# GCP Organization Policies
+# Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
+# https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
+#
+# Constraint: constraints/compute.requireOsLogin
+#
+# This boolean constraint, when set to true, enables OS Login on all newly created Projects.
+# All VM instances created in new projects will have OS Login enabled.
+# On new and existing projects, this constraint prevents metadata updates that disable OS
+# Login at the project or instance level.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata: # kpt-merge: policies/compute-require-os-login
+  name: compute-require-os-login
+  namespace: policies
+  labels:
+    guardrail: "true"
+    guardrail-enforced: guardrail-06
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|ResourceManagerPolicy|policies|compute-require-os-login'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  constraint: "constraints/compute.requireOsLogin"
+  booleanPolicy:
+    enforced: true
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}

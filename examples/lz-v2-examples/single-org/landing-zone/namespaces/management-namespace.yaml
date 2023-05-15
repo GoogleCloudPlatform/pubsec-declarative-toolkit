@@ -1,0 +1,70 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Grant GCP role Organization Role Admin to GCP config-control-sa a.k.a yakima
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/config-control-sa-orgroleadmin-permissions
+  name: config-control-sa-orgroleadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPolicyMember|config-control|config-control-sa-orgroleadmin-permissions'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/iam.organizationRoleAdmin
+  member: "serviceAccount:service-management-project-number@gcp-sa-yakima.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+---
+# Grant GCP role Editor on management project to GCP config-control-sa a.k.a yakima
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/config-control-sa-management-project-editor-permissions
+  name: config-control-sa-management-project-editor-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPolicyMember|config-control|config-control-sa-management-project-editor-permissions'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: management-project-id # kpt-set: ${management-project-id}
+  role: roles/editor
+  member: "serviceAccount:service-management-project-number@gcp-sa-yakima.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com
+---
+# Grant GCP role Service Account Admin on management project to GCP config-control-sa a.k.a yakima
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/config-control-sa-management-project-serviceaccountadmin-permissions
+  name: config-control-sa-management-project-serviceaccountadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPolicyMember|config-control|config-control-sa-management-project-serviceaccountadmin-permissions'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: management-project-id # kpt-set: ${management-project-id}
+  role: roles/iam.serviceAccountAdmin
+  member: "serviceAccount:service-management-project-number@gcp-sa-yakima.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${management-project-number}@gcp-sa-yakima.iam.gserviceaccount.com

@@ -1,0 +1,36 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata: # kpt-merge: /namingpolicyproject
+  name: namingpolicyproject
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+    internal.kpt.dev/upstream-identifier: 'test.gatekeeper.sh|Suite|default|namingpolicyproject'
+tests:
+  - name: namingpolicyprojecttests
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      # Allowed
+      - name: allowed
+        object: tests/project_allowed.yaml
+        assertions:
+          - violations: 'no'
+      # Not allowed
+      - name: notallowed
+        object: tests/project_not_allowed.yaml
+        assertions:
+          - violations: 'yes'

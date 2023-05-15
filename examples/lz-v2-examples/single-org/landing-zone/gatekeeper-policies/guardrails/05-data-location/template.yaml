@@ -1,0 +1,57 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata: # kpt-merge: /datalocation
+  name: datalocation
+  annotations:
+    description: Establish policies to restrict GC sensitive workloads to approved geographic locations.
+    reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/05_Data-Location.md
+    internal.kpt.dev/upstream-identifier: 'templates.gatekeeper.sh|ConstraintTemplate|default|datalocation'
+spec:
+  crd:
+    spec:
+      names:
+        kind: DataLocation
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            locations:
+              description: List of allowed GCP Regions
+              type: array
+              items:
+                type: string
+            allowedServices:
+              description: List of allowed GCP Services
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package datalocation
+        violation[{"msg": message}] {
+          asset := input.review.object
+          not location_match(asset.spec.location, input.parameters.locations)
+          not allowedResource(asset.kind, input.parameters.allowedServices)
+          message := sprintf("Guardrail # 5: Resource %v ('%v') is located in '%v' when it is required to be in '%v'", [asset.kind, asset.metadata.name, asset.spec.location, input.parameters.locations])
+        }
+        location_match(str, pattern) {
+          contains(str,pattern[_])
+        }
+        allowedResource(resource, allowed) {
+          resource == allowed[_]
+        }

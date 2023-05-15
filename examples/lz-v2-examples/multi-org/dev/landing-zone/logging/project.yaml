@@ -1,0 +1,35 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+######
+# Project for logging
+# Security logs (Cloud Audit, Data Access, and Access Transparency Logs)
+# Platform and Component logs
+# Data Access Logs
+# AU-4(1), AU-9(2) - Separate project created for logging buckets, isolating them from the source of the log entries in other projects
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata: # kpt-merge: projects/logging-project-id
+  name: logging-project-id # kpt-set: ${logging-project-id}
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: 'false'
+    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|Project|projects|logging-project-id'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  name: logging-project-id # kpt-set: ${logging-project-id}
+  folderRef:
+    name: audits
+    namespace: hierarchy
+  billingAccountRef:
+    external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${billing-id}

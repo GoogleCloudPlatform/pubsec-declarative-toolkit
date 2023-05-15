@@ -1,0 +1,79 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata: # kpt-merge: /limitegresstraffic
+  name: limitegresstraffic
+  annotations:
+    description: Establish external and internal network perimeters and monitor network traffic.
+    reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/09_Network-Security-Services.md
+    related-security-controls: AC-3, AC-4, SC-5, SC-7, SC-7(5), SI-3, SI-3(7), SI-4
+    internal.kpt.dev/upstream-identifier: 'templates.gatekeeper.sh|ConstraintTemplate|default|limitegresstraffic'
+spec:
+  crd:
+    spec:
+      names:
+        kind: LimitEgressTraffic
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package limitegresstraffic
+        has_key(obj, field){
+          obj[field]
+        }
+        # Validate GKE Private Instance
+        violation[{"msg":msg}] {
+          # Make sure privateClusterConfig exists
+          input.review.kind.kind == "ContainerCluster"
+          not has_key(input.review.object.spec, "privateClusterConfig")
+          msg := sprintf("GKE is not Private %s", [input.review.object.metadata.name])
+        }
+        # Ensure Services do not configure External IPs
+        # IE Private GKE Cluster
+        violation[{"msg":msg}] {
+          # Make sure privateClusterConfig exists
+          input.review.kind.kind == "ContainerCluster"
+          has_key(input.review.object.spec, "privateClusterConfig")
+          not input.review.object.spec.privateClusterConfig.enablePrivateNodes == true
+          msg := sprintf("GKE is not Private %s", [input.review.object.metadata.name])
+        }
+        # Validate Cloud SQL Private Instance
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "SQLInstance"
+          not has_key(input.review.object.spec.settings, "ipConfiguration")
+          msg := sprintf("CloudSql is not Private %s", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "SQLInstance"
+          not has_key(input.review.object.spec.settings.ipConfiguration, "privateNetworkRef")
+          msg := sprintf("CloudSql is not Private %s", [input.review.object.metadata.name])
+        }
+        # Check for Public Buckets
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "StorageBucket"
+          not has_key(input.review.object.spec, "publicAccessPrevention")
+          msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "StorageBucket"
+          not input.review.object.spec.publicAccessPrevention == "enforced"
+          msg := sprintf("Bucket is not Private %s", [input.review.object.metadata.name])
+        }
+        # Check for autocreate subnets
+        violation[{"msg":msg}] {
+          input.review.kind.kind == "ComputeNetwork"
+          not input.review.object.spec.autoCreateSubnetworks == false
+          msg := sprintf("Subnets will be created automatically %s", [input.review.object.metadata.name])
+        }

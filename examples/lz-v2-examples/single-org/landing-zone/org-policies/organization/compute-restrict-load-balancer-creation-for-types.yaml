@@ -1,0 +1,49 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+#
+# GCP Organization Policies
+# Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
+# https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
+#
+# Constraint: constraints/compute.restrictLoadBalancerCreationForTypes
+#
+# This list constraint defines
+# the set of load balancer types which can be created for an organization,
+# folder, or project. Every load balancer type to be allowed or denied must be listed explicitly.
+#
+# Options: INTERNAL, EXTERNAL, INTERNAL_TCP_UDP, INTERNAL_HTTP_HTTPS, EXTERNAL_NETWORK_TCP_UDP
+# EXTERNAL_TCP_PROXY, EXTERNAL_SSL_PROXY, EXTERNAL_HTTP_HTTPS, EXTERNAL_MANAGED_HTTP_HTTPS
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata: # kpt-merge: policies/compute-restrict-load-balancer-creation-for-types
+  name: compute-restrict-load-balancer-creation-for-types
+  namespace: policies
+  labels:
+    guardrail: "true"
+    guardrail-enforced: guardrail-06
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|ResourceManagerPolicy|policies|compute-restrict-load-balancer-creation-for-types'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  constraint: "constraints/compute.restrictLoadBalancerCreationForTypes"
+  listPolicy:
+    allow:
+      values: # kpt-set: ${allowed-load-balancer-types}
+        - INTERNAL_TCP_UDP
+        - INTERNAL_HTTP_HTTPS
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}

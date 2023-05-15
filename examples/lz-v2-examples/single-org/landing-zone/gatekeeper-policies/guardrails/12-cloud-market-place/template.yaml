@@ -1,0 +1,43 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata: # kpt-merge: /cloudmarketplaceconfig
+  name: cloudmarketplaceconfig
+  annotations:
+    description: Restrict Third-Party CSP Marketplace software to GC-approved products.
+    reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/12_Cloud-Marketplace-Config.md
+    related-security-controls: CM-2, CM-3, CM-4, CM-5, CM-8, SA-22
+    internal.kpt.dev/upstream-identifier: 'templates.gatekeeper.sh|ConstraintTemplate|default|cloudmarketplaceconfig'
+spec:
+  crd:
+    spec:
+      names:
+        kind: CloudMarketPlaceConfig
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |-
+        package cloudmarketplaceconfig
+        marketplacerole := "roles/cloudprivatecatalogproducer.admin"
+        violation[{"msg":msg}]{
+          input.review.kind.kind == "IAMPolicyMember"
+          input.review.object.spec.role == marketplacerole
+          msg := sprintf("Binding disallowed, has marketplace role %s", [input.review.object.metadata.name])
+        }
+        violation[{"msg":msg}]{
+          input.review.kind.kind == "IAMPartialPolicy"
+          input.review.object.spec.bindings[_].role == marketplacerole
+          msg := sprintf("Binding disallowed, has marketplace role %s", [input.review.object.metadata.name])
+        }

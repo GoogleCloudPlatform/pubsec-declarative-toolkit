@@ -1,0 +1,164 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# GCP SA
+# AC-3(7) - Creates lower priv service account for folder hierarchy administration
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata: # kpt-merge: config-control/hierarchy-sa
+  name: hierarchy-sa
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMServiceAccount|config-control|hierarchy-sa'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  displayName: hierarchy-sa
+---
+# Grant GCP role Folder Admin to GCP SA
+# AC-3(7) - RBAC role to account with required permissions
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata: # kpt-merge: config-control/hierarchy-sa-folderadmin-permissions
+  name: hierarchy-sa-folderadmin-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPolicyMember|config-control|hierarchy-sa-folderadmin-permissions'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    external: "123456789012" # kpt-set: ${lz-folder-id}
+  role: roles/resourcemanager.folderAdmin
+  member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
+---
+# K8S SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata: # kpt-merge: config-control/hierarchy-sa-workload-identity-binding
+  name: hierarchy-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'iam.cnrm.cloud.google.com|IAMPartialPolicy|config-control|hierarchy-sa-workload-identity-binding'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  resourceRef:
+    name: hierarchy-sa
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
+---
+# K8S namespace
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /hierarchy
+  name: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|hierarchy'
+---
+# Link GCP SA to K8S namespace
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata: # kpt-merge: hierarchy/configconnectorcontext.core.cnrm.cloud.google.com
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'core.cnrm.cloud.google.com|ConfigConnectorContext|hierarchy|configconnectorcontext.core.cnrm.cloud.google.com'
+    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
+spec:
+  googleServiceAccount: hierarchy-sa@management-project-id.iam.gserviceaccount.com # kpt-set: hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
+---
+# Grant viewer role on the hierarchy namespace to projects K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: # kpt-merge: hierarchy/allow-hierarchy-resource-reference-from-projects
+  name: allow-hierarchy-resource-reference-from-projects
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|RoleBinding|hierarchy|allow-hierarchy-resource-reference-from-projects'
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-projects
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Grant viewer role on the hierarchy namespace to policies K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: # kpt-merge: hierarchy/allow-hierarchy-resource-reference-from-policies
+  name: allow-hierarchy-resource-reference-from-policies
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|RoleBinding|hierarchy|allow-hierarchy-resource-reference-from-policies'
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-policies
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# IAM Permissions to create folder sinks
+# Grant viewer role on the hierarchy namespace to config-control K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: # kpt-merge: hierarchy/allow-hierarchy-resource-reference-from-config-control
+  name: allow-hierarchy-resource-reference-from-config-control
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|RoleBinding|hierarchy|allow-hierarchy-resource-reference-from-config-control'
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-config-control
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Grant viewer role on the hierarchy namespace to logging K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: # kpt-merge: hierarchy/allow-folders-resource-reference-to-logging
+  name: allow-folders-resource-reference-to-logging
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|RoleBinding|hierarchy|allow-folders-resource-reference-to-logging'
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-logging
+    namespace: cnrm-system
+    kind: ServiceAccount

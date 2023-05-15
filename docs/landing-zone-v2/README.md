@@ -311,7 +311,7 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
     - DEV, PREPROD, PROD
 
       ```shell
-      kpt pkg get <https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main> ./landing-zone/hierarchy
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main ./landing-zone/hierarchy
       ```
 
 1. Get the gatekeeper policies package
@@ -328,7 +328,17 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
 
 1. Get the logging package
 
-    TODO: TBD
+    - Experimentation
+
+      ```shell
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-experimentation@main ./landing-zone/logging
+      ```
+
+    - DEV, PREPROD, PROD
+
+      ```shell
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/logging/core-env@main ./landing-zone/logging
+      ```
 1. etc.
 
 1. Customize Packages
