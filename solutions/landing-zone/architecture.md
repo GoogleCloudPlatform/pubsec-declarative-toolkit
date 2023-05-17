@@ -647,6 +647,11 @@ Detail integration procedures for 3rd party vendors that provide value added ser
 An example was the recent addition of an IaaS NGFW to the perimeter by the SSC team.
 - see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/348
 
+## DI-45: Verify 25 peering limit is not affected by Private Services Access peering connection as part of IDS
+- 20230517
+- I'll verify the 25 peering limit for PSA as part of IDS (As apposed to PSC - slide 38 of https://docs.google.com/presentation/d/13sjT2tJ4yLIYGRREE3wBrylB1OvcEMpKdquVuJB_nX4/edit?resourcekey=0-N3DruQaiutFvZ98HTT7-vQ#slide=id.g1154b3b950f_2_4785)
+- https://cloud.google.com/vpc/docs/private-services-access
+- "Note: Because a private connection is implemented as a VPC Network Peering connection, the behaviors and constraints of peering connections also apply to private connections, such as VPC Network Peering limits."
 
 # Installation/Deployment
 
