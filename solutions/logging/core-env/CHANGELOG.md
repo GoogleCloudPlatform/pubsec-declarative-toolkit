@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/logging/core-env/0.1.1...solutions/logging/core-env/0.1.2) (2023-05-24)
+
+
+### Bug Fixes
+
+* add exclusion filter for excessive gke logs ([#372](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/372)) ([7af9711](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/7af971195bf95f26f532fb3bc5d130030a5f575e))
+
 ## [0.1.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/logging/core-env/0.1.0...solutions/logging/core-env/0.1.1) (2023-05-10)
 
 
