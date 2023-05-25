@@ -1,5 +1,7 @@
 # KRM Landing Zone v2
 
+> **!!! The packages referenced in this documentation are being refactored.  The steps will be updated once completed.**
+
 This solution uses [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to deploy and manage the GCP infrastructure.
 
 Config Controller is a hosted service to provision and orchestrate Anthos, GKE, Kubernetes and Google Cloud resources. It offers an API endpoint that can provision, actuates, and orchestrates Google Cloud resources as part of Anthos Config Management.

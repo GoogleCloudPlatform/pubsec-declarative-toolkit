@@ -13,5 +13,6 @@
     "solutions/logging/client-experimentation": "0.2.0",
     "solutions/logging/core-experimentation": "0.2.2",
     "solutions/logging/core-env": "0.1.2",
-    "solutions/logging/client-env": "0.1.0"
+    "solutions/logging/client-env": "0.1.0",
+    "solutions/core-landing-zone": "0.0.1"
 }
