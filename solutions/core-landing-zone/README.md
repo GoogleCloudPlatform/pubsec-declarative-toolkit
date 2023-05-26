@@ -21,9 +21,9 @@ Depends on the bootstrap procedure.
 | allowed-vpc-peering               | ["under:organizations/ORGANIZATION_ID"] | array |     1 |
 | billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str   |     1 |
 | logging-project-id                | logging-project-12345                   | str   |    21 |
-| lz-folder-id                      |                              0000000000 | str   |    16 |
-| management-namespace              | config-control                          | str   |    43 |
-| management-project-id             | management-project-12345                | str   |    77 |
+| lz-folder-id                      |                              0000000000 | str   |    15 |
+| management-namespace              | config-control                          | str   |    42 |
+| management-project-id             | management-project-12345                | str   |    75 |
 | management-project-number         |                              0000000000 | str   |     3 |
 | org-id                            |                              0000000000 | str   |    33 |
 | platform-and-component-log-bucket | platform-and-component-log-bucket-12345 | str   |     2 |
@@ -87,7 +87,6 @@ This package has no sub-packages.
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-networkadmin-permissions                                    | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-security-permissions                                        | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-dns-permissions                                             | config-control    |
-| namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-service-control-permissions                                 | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-service-control-org-permissions                             | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-xpnadmin-permissions                                        | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-servicedirectoryeditor-permissions                          | config-control    |
