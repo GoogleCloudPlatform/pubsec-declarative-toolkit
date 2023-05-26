@@ -23,7 +23,7 @@ metadata:
 spec:
   name: client-management-project-id # kpt-set: ${client-management-project-id}
   billingAccountRef:
-    external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${client-management-project-billing-id}
+    external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${client-billing-id}
   folderRef:
     name: clients.client-name # kpt-set: clients.${client-name}
     namespace: hierarchy

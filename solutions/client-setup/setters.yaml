@@ -39,6 +39,8 @@ data:
   ##########################
   #
   org-id: "0000000000"
+  # The environment (dev, preprod, prod), used in the client folder display name
+  environment: env
   #
   ##########################
   # Management Project
@@ -54,12 +56,10 @@ data:
   # Client
   ##########################
   #
-  # The environment (dev, preprod, prod), used in the client folder display name
-  environment: env
   # Name for the client, lowercase only
   client-name: 'client1'
   # Billing Account ID to be associated with this project
-  client-management-project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  client-billing-id: "AAAAAA-BBBBBB-CCCCCC"
   # project id for the client management project, following rules and conventions
   client-management-project-id: client-management-project-12345
   #
