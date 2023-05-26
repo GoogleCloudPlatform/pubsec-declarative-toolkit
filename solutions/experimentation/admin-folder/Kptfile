@@ -7,6 +7,7 @@ metadata:
 info:
   description: |
     admin-folder
+    Depends on 'solutions/experimentation/core-landing-zone'
 
     Creates an admin folder underneath tests.admins
 pipeline:
