@@ -1,0 +1,16 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: client-project
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    client-project subpackage
+    Depends on 'solutions/experimentation/client-landing-zone'
+
+    "An experimentation project with a secured network. \nThis package should only be deployed within a experimentation landing zone.\n"
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
