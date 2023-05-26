@@ -6,25 +6,25 @@
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 Landing zone v2 subpackage.
-Depends on core-landing-zone
+Depends on `core-landing-zone`.
 
-Package to setup a client's namespaces, management project and root sync
+Package to setup a client's namespaces, folder, management project and root sync.
 
 ## Setters
 
-|                 Name                 |                                Value                                | Type | Count |
-|--------------------------------------|---------------------------------------------------------------------|------|-------|
-| client-management-project-billing-id | AAAAAA-BBBBBB-CCCCCC                                                | str  |     1 |
-| client-management-project-id         | client-management-project-12345                                     | str  |    98 |
-| client-name                          | client1                                                             | str  |   112 |
-| environment                          | env                                                                 | str  |     1 |
-| management-namespace                 | config-control                                                      | str  |    25 |
-| management-project-id                | management-project-12345                                            | str  |     5 |
-| management-project-number            |                                                          0000000000 | str  |     1 |
-| org-id                               |                                                          0000000000 | str  |     2 |
-| repo-branch                          | main                                                                | str  |     1 |
-| repo-dir                             | csync/deploy/env                                                    | str  |     1 |
-| repo-url                             | https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME | str  |     1 |
+|                 Name                 |              Value              | Type | Count |
+|--------------------------------------|---------------------------------|------|-------|
+| client-management-project-billing-id | AAAAAA-BBBBBB-CCCCCC            | str  |     1 |
+| client-management-project-id         | client-management-project-12345 | str  |    98 |
+| client-name                          | client1                         | str  |   112 |
+| environment                          | env                             | str  |     1 |
+| management-namespace                 | config-control                  | str  |    25 |
+| management-project-id                | management-project-12345        | str  |     5 |
+| management-project-number            |                      0000000000 | str  |     1 |
+| org-id                               |                      0000000000 | str  |     2 |
+| repo-branch                          | main                            | str  |     1 |
+| repo-dir                             | csync/deploy/env                | str  |     1 |
+| repo-url                             | git-repo-to-observe             | str  |     1 |
 
 ## Sub-packages
 

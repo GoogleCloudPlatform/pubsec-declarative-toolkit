@@ -7,9 +7,9 @@ metadata:
 info:
   description: |
     Landing zone v2 subpackage.
-    Depends on core-landing-zone
+    Depends on `core-landing-zone`.
 
-    Package to setup a client's namespaces, management project and root sync
+    Package to setup a client's namespaces, folder, management project and root sync.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

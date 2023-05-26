@@ -70,8 +70,10 @@ data:
   # Used for the client root sync external git repo (GitHub, Azure DevOps, etc.)
   # To disable this option, delete the 'root-sync-git/' directory
   #
-  # the URL for GitHub would be something like https://github.com/GITHUB-ORG/REPO-NAME
-  repo-url: https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
+  # the git repo URL, for example
+  # https://github.com/GITHUB-ORG/REPO-NAME
+  # https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
+  repo-url: git-repo-to-observe
   # the branch to check out (usually main)
   repo-branch: main
   # the directory to observe for YAML manifests

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Root Sync for client resources
+# Root Sync for client landing zone resources
 apiVersion: configsync.gke.io/v1beta1
 kind: RootSync
 metadata:
