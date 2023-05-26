@@ -26,7 +26,7 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/organization-id: "0000000000" # kpt-set: ${org-id}
 spec:
-  description: To allow a GKE cluster in a service project to create and manage the firewall resources in your host project
+  description: To allow a GKE cluster in a service project to create and manage the firewall resources in the host project
   permissions:
     - compute.networks.updatePolicy
     - compute.firewalls.list

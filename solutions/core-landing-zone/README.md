@@ -6,6 +6,8 @@
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 Landing Zone v2 core package.
+Depends on the bootstrap procedure.
+
 [Deploy a landing zone v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2).
 
 ## Setters
@@ -86,6 +88,7 @@ This package has no sub-packages.
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-security-permissions                                        | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-dns-permissions                                             | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-service-control-permissions                                 | config-control    |
+| namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-service-control-org-permissions                             | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-xpnadmin-permissions                                        | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-servicedirectoryeditor-permissions                          | config-control    |
 | namespaces/networking.yaml                                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | networking-sa-workload-identity-binding                                   | config-control    |
@@ -115,7 +118,6 @@ This package has no sub-packages.
 | org/custom-roles/tier3-dnsrecord-admin.yaml                                    | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-dnsrecord-admin                                                     | config-control    |
 | org/custom-roles/tier3-firewallrule-admin.yaml                                 | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-firewallrule-admin                                                  | config-control    |
 | org/custom-roles/tier3-vpcsc-admin.yaml                                        | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-vpcsc-admin                                                         | config-control    |
-| org/org-iam.yaml                                                               | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | networking-sa-service-control-org-permissions                             | config-control    |
 | org/org-policies/compute-disable-guest-attribute-access.yaml                   | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-disable-guest-attribute-access                                    | policies          |
 | org/org-policies/compute-disable-nested-virtualization.yaml                    | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-disable-nested-virtualization                                     | policies          |
 | org/org-policies/compute-disable-serial-port-access.yaml                       | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-disable-serial-port-access                                        | policies          |

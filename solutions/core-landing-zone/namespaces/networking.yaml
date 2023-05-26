@@ -94,6 +94,23 @@ spec:
   role: roles/accesscontextmanager.policyAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
+# Grant GCP role ACM Admin to networking GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: networking-sa-service-control-org-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/accesscontextmanager.policyAdmin
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+---
 # Grant GCP role Shared VPC Admin to GCP SA
 # needs to be set at the org level because of org policy "constraints/compute.restrictXpnProjectLienRemoval"
 # TODO: validate if it could be set at the folder level

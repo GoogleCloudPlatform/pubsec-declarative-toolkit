@@ -81,11 +81,6 @@
       "package-name": "solutions/project/hub-env",
       "tag-separator": "/",
       "prerelease": true
-    },
-    "solutions/core-landing-zone": {
-      "package-name": "solutions/core-landing-zone",
-      "tag-separator": "/",
-      "prerelease": true
     }
   }
 }
