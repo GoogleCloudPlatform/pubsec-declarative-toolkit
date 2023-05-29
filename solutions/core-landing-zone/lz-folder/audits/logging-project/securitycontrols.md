@@ -7,8 +7,8 @@ Added this control to project-iam.yaml in bindings where bucketWriter role is as
 
 ## AU-2 AUDITABLE EVENTS
 
-AU-2 – Event families being audited are set here. Added this control to folder-sink.yaml,
-gke-kcc-sink.yaml, org-sink.yaml immediately preceding the filter including/excluding
+AU-2 – Event families being audited are set here. Added this control to lz-folder/services/folder-sink.yaml, lz-folder/services-infrastructure/folder-sink.yaml,
+mgmt-project/project-sink.yaml, org-sink.yaml immediately preceding the filter including/excluding
 various log types
 
 Ops Note: This is an org control so the AU-2 tagging in the code is there to support the
