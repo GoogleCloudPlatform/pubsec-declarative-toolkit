@@ -19,5 +19,6 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  admin-name: 'admin1' # lowercase only
+  # lowercase only
+  admin-name: 'admin1'
   admin-owner: 'user:admin1@example.com'
