@@ -1,0 +1,39 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# If you want a GKE cluster in a service project to create and manage the firewall resources in your host project,
+# the service project's GKE service account must be granted the appropriate IAM permissions
+# Create a custom IAM role that includes only the following permissions
+# compute.networks.updatePolicy, compute.firewalls.list, compute.firewalls.get, compute.firewalls.create, compute.firewalls.update, and compute.firewalls.delete
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#managing_firewall_resources
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMCustomRole
+metadata:
+  name: gke-firewall-admin
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/organization-id: "0000000000" # kpt-set: ${org-id}
+spec:
+  description: To allow a GKE cluster in a service project to create and manage the firewall resources in the host project
+  permissions:
+    - compute.networks.updatePolicy
+    - compute.firewalls.list
+    - compute.firewalls.get
+    - compute.firewalls.create
+    - compute.firewalls.update
+    - compute.firewalls.delete
+  resourceID: gke.firewall.admin
+  stage: GA
+  title: GKE Firewall Admin
