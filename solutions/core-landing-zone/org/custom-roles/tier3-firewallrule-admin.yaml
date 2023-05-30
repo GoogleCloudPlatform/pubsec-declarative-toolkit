@@ -28,6 +28,7 @@ spec:
     - compute.firewalls.delete
     - compute.firewalls.get
     - compute.firewalls.update
+    - compute.networks.updatePolicy
   resourceID: tier3.firewallrule.admin
   stage: GA
   title: Tier3 Firewall Rule Admin
