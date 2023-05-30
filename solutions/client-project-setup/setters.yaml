@@ -1,0 +1,97 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  ##########################
+  # Instructions
+  ##########################
+  #
+  # Follow instructions specific to each section.
+  # Project IDs must follow the rules below, additionally,
+  # if a gatekeeper policy is used to enforce specific naming conventions, refer to its documentation.
+  #   - All IDs should be universally unique.
+  #   - Must be 6 to 30 characters in length.
+  #   - Can only contain lowercase letters, numbers, and hyphens.
+  #   - Must start with a letter.
+  #   - Cannot end with a hyphen.
+  #   - Cannot be in use or previously used; this includes deleted projects.
+  #   - Cannot contain restricted strings, such as google and ssl.
+  #
+  ##########################
+  # General Settings Values
+  ##########################
+  #
+  org-id: "0000000000"
+  #
+  ##########################
+  # Management Project
+  ##########################
+  #
+  # This is the project where the config controller instance is running
+  # Values can be viewed in the Project Dashboard
+  management-project-id: management-project-12345
+  management-namespace: config-control
+  #
+  ##########################
+  # Client
+  ##########################
+  #
+  # Name for the client, lowercase only
+  client-name: 'client1'
+  # id of the client management project created in client-landing-zone
+  client-management-project-id: client-management-project-12345
+  #
+  ##########################
+  # Network Host Project (standard)
+  ##########################
+  #
+  # ID of existing Shared VPC host project to associate
+  host-project-id: net-host-project-12345
+  #
+  ##########################
+  # Project
+  ##########################
+  #
+  # project id for the client project to be created, following rules and conventions
+  project-id: client-project-12345
+  # Billing Account ID to be associated with this project
+  project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  # GCP folder to use as parent to this project, lowercase K8S resource name
+  project-parent-folder: project-parent-folder
+  #
+  ##########################
+  # Config Sync
+  ##########################
+  #
+  # Used for the client root sync external git repo (GitHub, Azure DevOps, etc.)
+  # To disable this option, delete the 'root-sync-git/' directory
+  #
+  # the git repo URL, for example
+  # https://github.com/GITHUB-ORG/REPO-NAME
+  # https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
+  repo-url: git-repo-to-observe
+  # the branch to check out (usually main)
+  repo-branch: main
+  # the directory to observe for YAML manifests
+  repo-dir: csync/deploy/env
+  #
+  ##########################
+  # End of Configurations
+  ##########################
