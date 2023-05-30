@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: standard.applications.pb
+  name: standard.applications-infrastructure.pbmm
   namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
 spec:
-  displayName: pb
+  displayName: pbmm
   folderRef:
-    name: standard.applications
+    name: standard.applications-infrastructure

@@ -15,9 +15,9 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
-  name: standard.auto.pa
+  name: standard.auto.pbmm
   namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
 spec:
-  displayName: pa
+  displayName: pbmm
   folderRef:
     name: standard.auto
