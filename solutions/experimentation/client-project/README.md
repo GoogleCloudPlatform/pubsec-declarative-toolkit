@@ -1,20 +1,31 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
-# project-experimentation
+# client-project
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
+client-project experimentation core landing-zone subpackage
+Depends on 'solutions/experimentation/client-landing-zone'
+
 An experimentation project with a secured network.
 This package should only be deployed within a experimentation landing zone.
 
 ## Setters
 
-|         Name          |          Value          | Type | Count |
-|-----------------------|-------------------------|------|-------|
-| project-billing-id    | AAAAAA-BBBBBB-CCCCCC    | str  |     1 |
-| project-editor        | group:team1@example.com | str  |     2 |
-| project-id            | xxemu-team1-projectname | str  |    61 |
-| project-parent-folder | project-parent-folder   | str  |     1 |
+|             Name              |          Value          | Type | Count |
+|-------------------------------|-------------------------|------|-------|
+| gke-pod-cidr-nane1            | 10.4.0.0/16             | str  |     1 |
+| gke-pod-cidr-nane2            | 10.6.0.0/16             | str  |     1 |
+| gke-pod-range-name-nane1      | podrange                | str  |     1 |
+| gke-pod-range-name-nane2      | podrange                | str  |     1 |
+| gke-services-cidr-nane1       | 10.3.0.0/16             | str  |     1 |
+| gke-services-cidr-nane2       | 10.5.0.0/16             | str  |     1 |
+| gke-services-range-name-nane1 | servicesrange           | str  |     1 |
+| gke-services-range-name-nane2 | servicesrange           | str  |     1 |
+| project-billing-id            | AAAAAA-BBBBBB-CCCCCC    | str  |     1 |
+| project-editor                | group:team1@example.com | str  |     2 |
+| project-id                    | xxemu-team1-projectname | str  |    61 |
+| project-parent-folder         | project-parent-folder   | str  |     1 |
 
 ## Sub-packages
 
@@ -59,14 +70,14 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-project@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/project/project-experimentation/"
+    cd "./client-project/"
     ```
 
 1.  Edit the function config file(s):
