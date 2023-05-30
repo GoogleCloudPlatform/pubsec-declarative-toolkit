@@ -1,0 +1,187 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: client-name-projects-sa # kpt-set: ${client-name}-projects-sa
+  namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  displayName: client-name-projects-sa # kpt-set: ${client-name}-projects-sa
+---
+# Grant GCP role Project IAM Admin to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-projects-sa-projectiamadmin-permissions # kpt-set: ${client-name}-projects-sa-projectiamadmin-permissions
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+  role: roles/resourcemanager.projectIamAdmin
+  member: "serviceAccount:client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Project Creator to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-projects-sa-projectcreator-permissions # kpt-set: ${client-name}-projects-sa-projectcreator-permissions
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+  role: roles/resourcemanager.projectCreator
+  member: "serviceAccount:client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Project Mover to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-projects-sa-projectmover-permissions # kpt-set: ${client-name}-projects-sa-projectmover-permissions
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+  role: roles/resourcemanager.projectMover
+  member: "serviceAccount:client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Project Deleter to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-projects-sa-projectdeleter-permissions # kpt-set: ${client-name}-projects-sa-projectdeleter-permissions
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+  role: roles/resourcemanager.projectDeleter
+  member: "serviceAccount:client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Service Usage Admin to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-projects-sa-serviceusageadmin-permissions # kpt-set: ${client-name}-projects-sa-serviceusageadmin-permissions
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+  role: roles/serviceusage.serviceUsageAdmin
+  member: "serviceAccount:client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Billing User to GCP SA
+# This role cannot be defined at a folder level. It can only be set at the org level.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-projects-sa-billinguser-permissions # kpt-set: ${client-name}-projects-sa-billinguser-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/billing.user
+  member: "serviceAccount:client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# K8S SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: client-name-projects-sa-workload-identity-binding # kpt-set: ${client-name}-projects-sa-workload-identity-binding
+  namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    name: client-name-projects-sa # kpt-set: ${client-name}-projects-sa
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-client-name-projects] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${client-name}-projects]
+---
+# K8S namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+---
+# Link GCP SA to K8S namespace
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  googleServiceAccount: client-name-projects-sa@client-management-project-id.iam.gserviceaccount.com # kpt-set: ${client-name}-projects-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant viewer role on the config control namespace to projects K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allow-resource-reference-from-projects
+  namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-client-name-projects # kpt-set: cnrm-controller-manager-${client-name}-projects
+    namespace: cnrm-system
+    kind: ServiceAccount
