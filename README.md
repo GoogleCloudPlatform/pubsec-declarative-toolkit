@@ -33,7 +33,7 @@ We have also put together the following [guide](docs/advanced-install.md) to dep
 
 ## Additional Documentation
 
-You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **[https://www.canada.ca/en/shared-services.html](Shared Services Canada)**, providing a good level of details on how they have implemented the Landing Zone v2 solution to host workloads from any of the 43 departments of the Government of Canada.
+You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **[Shared Services Canada](https://www.canada.ca/en/shared-services.html)**, providing a good level of details on how they have implemented the Landing Zone v2 solution to host workloads from any of the 43 departments of the Government of Canada.
 
 For further documentation on the project, including the setup pre-requirements and supporting service such as Config Connector and Config Management.
 
