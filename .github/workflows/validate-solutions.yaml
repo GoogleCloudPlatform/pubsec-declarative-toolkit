@@ -43,10 +43,13 @@ jobs:
               # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
               # to set strict=true, CRD schemas would need to be updated (with schema_location and additional_schema_locations)
               # skip 'ConfigMap' kinds, setters may not always be string and would cause it to fail
+              # skip 'DNSRecordSet' kind, baked in schema flags 'spec.rrdatas' as required, but doc has it as deprecated
+              # https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsrecordset#spec
+
               echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
               rm -rf "${TEMP_DIR}/kubeval/${pkg}"
               ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false \
-                -- ignore_missing_schemas='true' strict='false' skip_kinds='ConfigMap'
+                -- ignore_missing_schemas='true' strict='false' skip_kinds='ConfigMap,DNSRecordSet'
 
               echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
               ${NOMOS} vet --no-api-server-check --source-format unstructured --path "${TEMP_DIR}/${pkg}"
