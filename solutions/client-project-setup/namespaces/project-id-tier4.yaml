@@ -1,0 +1,175 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: project-id-tier4-sa # kpt-set: ${project-id}-tier4-sa
+  namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceID: tier4-sa
+  displayName: tier4-sa
+---
+# Grant GCP role Editor to GCP SA
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier4-sa-editor-project-id-permissions # kpt-set: ${project-id}-tier4-sa-editor-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/editor
+  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Network User to GCP SA on Host Project
+# https://cloud.google.com/iam/docs/job-functions/networking
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier4-sa-networkuser-host-project-id-permissions # kpt-set: ${project-id}-tier4-sa-networkuser-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  # TODO: revisit to potentially grant networkUser on a subnet instead of project
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: roles/compute.networkUser
+  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Compute Instance Admin to GCP SA
+# https://cloud.google.com/iam/docs/job-functions/networking
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier4-sa-instanceadmin-project-id-permissions # kpt-set: ${project-id}-tier4-sa-instanceadmin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/compute.instanceAdmin
+  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
+---
+# K8S SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: project-id-tier4-sa-workload-identity-binding # kpt-set: ${project-id}-tier4-sa-workload-identity-binding
+  namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    name: project-id-tier4-sa # kpt-set: ${project-id}-tier4-sa
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id-tier4] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-id}-tier4]
+---
+# K8S namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: project-id-tier4 # kpt-set: ${project-id}-tier4
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+---
+# Link GCP SA to K8S namespace
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: project-id-tier4 # kpt-set: ${project-id}-tier4
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  googleServiceAccount: tier4-sa@project-id.iam.gserviceaccount.com # kpt-set: tier4-sa@${project-id}.iam.gserviceaccount.com
+---
+# Give KCC, for this namespace, permission to read KCC resources in the client-name-networking namespace.
+# This allows GKE and GCE instances to reference the shared network in the client-name-networking namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cnrm-viewer-project-id-tier4 # kpt-set: cnrm-viewer-${project-id}-tier4
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-project-id-tier4 # kpt-set: cnrm-controller-manager-${project-id}-tier4
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Give KCC, for this namespace, permission to read KCC resources in the tier3 namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cnrm-viewer-project-id-tier4 # kpt-set: cnrm-viewer-${project-id}-tier4
+  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-project-id-tier4 # kpt-set: cnrm-controller-manager-${project-id}-tier4
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Repo sync role binding requirement
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: syncs-repo
+  namespace: project-id-tier4 # kpt-set: ${project-id}-tier4
+subjects:
+  - kind: ServiceAccount
+    name: ns-reconciler-project-id-tier4 # kpt-set: ns-reconciler-${project-id}-tier4
+    namespace: config-management-system
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io

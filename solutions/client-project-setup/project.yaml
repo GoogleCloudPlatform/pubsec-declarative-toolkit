@@ -1,0 +1,44 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Project
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  name: project-id # kpt-set: ${project-id}
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/project-parent-folder # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/${project-parent-folder}
+spec:
+  name: project-id # kpt-set: ${project-id}
+  billingAccountRef:
+    external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${project-billing-id}
+  folderRef:
+    name: project-parent-folder # kpt-set: ${project-parent-folder}
+    namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
+---
+# Activate service project
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSharedVPCServiceProject
+metadata:
+  name: project-id-svpcservice # kpt-set: ${project-id}-svpcservice
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  projectRef:
+    name: project-id # kpt-set: ${project-id}
+    namespace: client-name-projects # kpt-set: ${client-name}-projects
