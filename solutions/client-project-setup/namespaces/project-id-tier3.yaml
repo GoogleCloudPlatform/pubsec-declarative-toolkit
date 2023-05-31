@@ -139,24 +139,6 @@ metadata:
 spec:
   googleServiceAccount: tier3-sa@project-id.iam.gserviceaccount.com # kpt-set: tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
-# Give KCC, for this namespace, permission to read KCC resources in the networking namespace.
-# This allows to reference networking resources in the hub project.
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: cnrm-viewer-project-id-tier3 # kpt-set: cnrm-viewer-${project-id}-tier3
-  namespace: networking
-  annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-roleRef:
-  name: cnrm-viewer
-  kind: ClusterRole
-  apiGroup: rbac.authorization.k8s.io
-subjects:
-  - name: cnrm-controller-manager-project-id-tier3 # kpt-set: cnrm-controller-manager-${project-id}-tier3
-    namespace: cnrm-system
-    kind: ServiceAccount
----
 # Give KCC, for this namespace, permission to read KCC resources in the client-name-networking namespace.
 # This allows to reference the network resources in the client-name-networking namespace from the tier3 namespace.
 apiVersion: rbac.authorization.k8s.io/v1
