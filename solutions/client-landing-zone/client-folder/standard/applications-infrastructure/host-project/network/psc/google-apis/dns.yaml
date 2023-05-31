@@ -17,57 +17,57 @@
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
-  name: host-project-id-internet-googleapis-dns # kpt-set: ${host-project-id}-internet-googleapis-dns
+  name: host-project-id-standard-googleapis-dns # kpt-set: ${host-project-id}-standard-googleapis-dns
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   description: "Private DNS zone for googleapis.com"
-  resourceID: internet-googleapis-dns
+  resourceID: standard-googleapis-dns
   dnsName: "googleapis.com."
   visibility: private
   privateVisibilityConfig:
     networks:
       - networkRef:
-          name: host-project-id-global-internet-vpc # kpt-set: ${host-project-id}-global-internet-vpc
+          name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
 ---
 # Record Set for googleapis.com in googleapis.com DNS zone
 # SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: host-project-id-internet-googleapis-rset # kpt-set: ${host-project-id}-internet-googleapis-rset
+  name: host-project-id-standard-googleapis-rset # kpt-set: ${host-project-id}-standard-googleapis-rset
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   name: "googleapis.com."
   type: "A"
   ttl: 300
   managedZoneRef:
-    name: host-project-id-internet-googleapis-dns # kpt-set: ${host-project-id}-internet-googleapis-dns
+    name: host-project-id-standard-googleapis-dns # kpt-set: ${host-project-id}-standard-googleapis-dns
   rrdatasRefs:
     - kind: ComputeAddress
-      name: host-project-id-internet-psc-apis-ip # kpt-set: ${host-project-id}-internet-psc-apis-ip
+      name: host-project-id-standard-psc-apis-ip # kpt-set: ${host-project-id}-standard-psc-apis-ip
 ---
 # Record Set for wildcard in googleapis.com DNS zone
 # SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: host-project-id-internet-googleapis-wildcard-rset # kpt-set: ${host-project-id}-internet-googleapis-wildcard-rset
+  name: host-project-id-standard-googleapis-wildcard-rset # kpt-set: ${host-project-id}-standard-googleapis-wildcard-rset
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   name: "*.googleapis.com."
   type: "CNAME"
   ttl: 300
   managedZoneRef:
-    name: host-project-id-internet-googleapis-dns # kpt-set: ${host-project-id}-internet-googleapis-dns
+    name: host-project-id-standard-googleapis-dns # kpt-set: ${host-project-id}-standard-googleapis-dns
   rrdatas:
     - "googleapis.com."
 ---
@@ -76,56 +76,56 @@ spec:
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
-  name: host-project-id-internet-gcrio-dns # kpt-set: ${host-project-id}-internet-gcrio-dns
+  name: host-project-id-standard-gcrio-dns # kpt-set: ${host-project-id}-standard-gcrio-dns
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   description: "Private DNS zone for gcr.io"
-  resourceID: internet-gcrio-dns
+  resourceID: standard-gcrio-dns
   dnsName: "gcr.io."
   visibility: private
   privateVisibilityConfig:
     networks:
       - networkRef:
-          name: host-project-id-global-internet-vpc # kpt-set: ${host-project-id}-global-internet-vpc
+          name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
 ---
 # Record Set for gcr.io in gcr.io DNS zone
 # SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: host-project-id-internet-gcrio-rset # kpt-set: ${host-project-id}-internet-gcrio-rset
+  name: host-project-id-standard-gcrio-rset # kpt-set: ${host-project-id}-standard-gcrio-rset
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   name: "gcr.io."
   type: "A"
   ttl: 300
   managedZoneRef:
-    name: host-project-id-internet-gcrio-dns # kpt-set: ${host-project-id}-internet-gcrio-dns
+    name: host-project-id-standard-gcrio-dns # kpt-set: ${host-project-id}-standard-gcrio-dns
   rrdatasRefs:
     - kind: ComputeAddress
-      name: host-project-id-internet-psc-apis-ip # kpt-set: ${host-project-id}-internet-psc-apis-ip
+      name: host-project-id-standard-psc-apis-ip # kpt-set: ${host-project-id}-standard-psc-apis-ip
 ---
 # Record Set for wildcard in gcr.io DNS zone
 # SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: host-project-id-internet-gcrio-wildcard-rset # kpt-set: ${host-project-id}-internet-gcrio-wildcard-record-set
+  name: host-project-id-standard-gcrio-wildcard-rset # kpt-set: ${host-project-id}-standard-gcrio-wildcard-record-set
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   name: "*.gcr.io."
   type: "CNAME"
   ttl: 300
   managedZoneRef:
-    name: host-project-id-internet-gcrio-dns # kpt-set: ${host-project-id}-internet-gcrio-dns
+    name: host-project-id-standard-gcrio-dns # kpt-set: ${host-project-id}-standard-gcrio-dns
   rrdatas:
     - "gcr.io."

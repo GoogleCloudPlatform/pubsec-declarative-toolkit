@@ -17,13 +17,13 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: host-project-id-internet-egress-allow-all-internal-fwr # kpt-set: ${host-project-id}-internet-allow-all-internal-fwr
+  name: host-project-id-standard-egress-allow-all-internal-fwr # kpt-set: ${host-project-id}-standard-allow-all-internal-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: internet-egress-allow-all-internal-fwr
+  resourceID: standard-egress-allow-all-internal-fwr
   description: "egress allow all internal"
   direction: EGRESS
   priority: 5000
@@ -32,20 +32,20 @@ spec:
   destinationRanges: # kpt-set: ${firewall-egress-allow-all-internal}
     - 10.0.0.0/8
   networkRef:
-    name: host-project-id-global-internet-vpc # kpt-set: ${host-project-id}-global-internet-vpc
+    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
 ---
 # Default egress deny all
 # AC-4, AC-4(21), SC-7(C), SC-7(5)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: host-project-id-internet-default-egress-deny-fwr # kpt-set: ${host-project-id}-internet-default-egress-deny-fwr
+  name: host-project-id-standard-default-egress-deny-fwr # kpt-set: ${host-project-id}-standard-default-egress-deny-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: internet-default-egress-deny-fwr
+  resourceID: standard-default-egress-deny-fwr
   description: "Default egress deny all"
   direction: EGRESS
   priority: 65535
@@ -56,6 +56,6 @@ spec:
   destinationRanges:
     - 0.0.0.0/0
   networkRef:
-    name: host-project-id-global-internet-vpc # kpt-set: ${host-project-id}-global-internet-vpc
+    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
   logConfig:
     metadata: "INCLUDE_ALL_METADATA"

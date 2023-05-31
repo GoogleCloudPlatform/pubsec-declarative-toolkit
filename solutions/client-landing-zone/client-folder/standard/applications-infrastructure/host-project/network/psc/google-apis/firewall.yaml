@@ -17,13 +17,13 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: host-project-id-internet-egress-allow-psc-fwr # kpt-set: ${host-project-id}-internet-egress-allow-psc-fwr
+  name: host-project-id-standard-egress-allow-psc-fwr # kpt-set: ${host-project-id}-standard-egress-allow-psc-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-internet-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-internet-vpc
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: internet-egress-allow-psc-fwr
+  resourceID: standard-egress-allow-psc-fwr
   description: "Egress allow traffic to Private Service Connect endpoint for Google API access"
   direction: EGRESS
   priority: 1000
@@ -32,4 +32,4 @@ spec:
   destinationRanges:
     - 10.255.255.254/32
   networkRef:
-    name: host-project-id-global-internet-vpc # kpt-set: ${host-project-id}-global-internet-vpc
+    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
