@@ -28,4 +28,4 @@ spec:
     name: clients.client-name # kpt-set: clients.${client-name}
     namespace: hierarchy
   role: roles/resourcemanager.folderViewer
-  member: client-name-folderviewer # kpt-set: ${client-folderviewer}
+  member: client-folderviewer # kpt-set: ${client-folderviewer}
