@@ -6,10 +6,10 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: |
-    client-project experimentation core landing-zone subpackage
-    Depends on 'solutions/experimentation/client-landing-zone'
+    Landing Zone v2 experimentation subpackage.
+    Depends on 'client-landing-zone'
 
-    An experimentation project with a secured network.
+    Package to create a client's project.
     This package should only be deployed within a experimentation landing zone.
 pipeline:
   mutators:

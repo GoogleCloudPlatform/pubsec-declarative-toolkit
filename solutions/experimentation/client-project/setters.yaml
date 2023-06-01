@@ -44,24 +44,8 @@ data:
   project-parent-folder: project-parent-folder
   # user, group or serviceAccount with editor role at project level
   project-editor: "group:team1@example.com"
-  # Naming Convention for project-id : <client-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
-  # Max 30 characters
+  # project id for the client project to be created, following rules and conventions
   project-id: xxemu-team1-projectname
-  #
-  ##########################
-  # GKE IPv4 Ranges
-  ##########################
-  #
-  # GKE Secondary IPv4 ranges for northamerica-northeast1
-  gke-services-cidr-nane1: 10.3.0.0/16
-  gke-services-range-name-nane1: servicesrange
-  gke-pod-cidr-nane1: 10.4.0.0/16
-  gke-pod-range-name-nane1: podrange
-  # GKE Secondary IPv4 ranges for northamerica-northeast2
-  gke-services-cidr-nane2: 10.5.0.0/16
-  gke-services-range-name-nane2: servicesrange
-  gke-pod-cidr-nane2: 10.6.0.0/16
-  gke-pod-range-name-nane2: podrange
   #
   ##########################
   # End of Configurations
