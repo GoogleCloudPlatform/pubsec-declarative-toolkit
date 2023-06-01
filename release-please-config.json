@@ -7,6 +7,46 @@
   "signoff": "Name <pubsec-declarative-toolkit-bot@google.com>",
   "token": "PUBSECBOTTOKEN",
   "packages": {
+    "solutions/client-landing-zone": {
+      "package-name": "solutions/client-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/client-project-setup": {
+      "package-name": "solutions/client-project-setup",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/client-setup": {
+      "package-name": "solutions/client-setup",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/core-landing-zone": {
+      "package-name": "solutions/core-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/admin-folder": {
+      "package-name": "solutions/experimentation/admin-folder",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/client-landing-zone": {
+      "package-name": "solutions/experimentation/client-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/client-project": {
+      "package-name": "solutions/experimentation/client-project",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/core-landing-zone": {
+      "package-name": "solutions/experimentation/core-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/gatekeeper-policies": {
       "package-name": "solutions/gatekeeper-policies",
       "tag-separator": "/",
