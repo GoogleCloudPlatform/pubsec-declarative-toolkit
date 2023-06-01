@@ -19,6 +19,15 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  # lowercase only
+  ##########################
+  # Admin
+  ##########################
+  #
+  # Name for the Admin, lowercase only
   admin-name: 'admin1'
+  # Group or User to grant permission on admin folder
   admin-owner: 'user:admin1@example.com'
+  #
+  ##########################
+  # End of Configurations
+  ##########################

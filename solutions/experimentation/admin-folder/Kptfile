@@ -6,9 +6,11 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: |
-    admin-folder experimentation core landing-zone subpackage
-    Depends on 'solutions/experimentation/core-landing-zone'
+    Landing Zone v2 experimentation subpackage.
+    Depends on core-landing-zone
+
     Creates an admin folder underneath tests.admins
+    This package should only be deployed within a experimentation landing zone.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
