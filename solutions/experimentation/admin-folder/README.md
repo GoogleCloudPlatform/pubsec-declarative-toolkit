@@ -3,11 +3,12 @@
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
-
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
-admin-folder experimentation core landing-zone subpackage
-Depends on 'solutions/experimentation/core-landing-zone'
+Landing Zone v2 experimentation subpackage.
+Depends on core-landing-zone
+
 Creates an admin folder underneath tests.admins
+This package should only be deployed within a experimentation landing zone.
 
 ## Setters
 
