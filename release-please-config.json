@@ -7,68 +7,48 @@
   "signoff": "Name <pubsec-declarative-toolkit-bot@google.com>",
   "token": "PUBSECBOTTOKEN",
   "packages": {
+    "solutions/client-landing-zone": {
+      "package-name": "solutions/client-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/client-project-setup": {
+      "package-name": "solutions/client-project-setup",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/client-setup": {
+      "package-name": "solutions/client-setup",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/core-landing-zone": {
+      "package-name": "solutions/core-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/admin-folder": {
+      "package-name": "solutions/experimentation/admin-folder",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/client-landing-zone": {
+      "package-name": "solutions/experimentation/client-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/client-project": {
+      "package-name": "solutions/experimentation/client-project",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/experimentation/core-landing-zone": {
+      "package-name": "solutions/experimentation/core-landing-zone",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/gatekeeper-policies": {
       "package-name": "solutions/gatekeeper-policies",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/hierarchy/admin-experimentation": {
-      "package-name": "solutions/hierarchy/admin-experimentation",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/hierarchy/client-env": {
-      "package-name": "solutions/hierarchy/client-env",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/hierarchy/client-experimentation": {
-      "package-name": "solutions/hierarchy/client-experimentation",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/hierarchy/core-env": {
-      "package-name": "solutions/hierarchy/core-env",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/hierarchy/core-experimentation": {
-      "package-name": "solutions/hierarchy/core-experimentation",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/landing-zone-v2": {
-      "package-name": "solutions/landing-zone-v2",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/logging/client-experimentation": {
-      "package-name": "solutions/logging/client-experimentation",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/logging/core-experimentation": {
-      "package-name": "solutions/logging/core-experimentation",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/logging/core-env": {
-      "package-name": "solutions/logging/core-env",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/logging/client-env": {
-      "package-name": "solutions/logging/client-env",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/org-policies": {
-      "package-name": "solutions/org-policies",
-      "tag-separator": "/",
-      "prerelease": true
-    },
-    "solutions/project/project-experimentation": {
-      "package-name": "solutions/project/project-experimentation",
       "tag-separator": "/",
       "prerelease": true
     },
