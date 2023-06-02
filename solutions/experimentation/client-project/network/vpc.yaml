@@ -1,0 +1,29 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# VPC with REGIONAL routingMode
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata:
+  name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/projects/Service/${project-id}-compute
+spec:
+  resourceID: global-vpc1-vpc
+  description: experimentation VPC
+  routingMode: REGIONAL
+  autoCreateSubnetworks: false # SC-7
+  deleteDefaultRoutesOnCreate: true # AC-4, SC-7(5)
