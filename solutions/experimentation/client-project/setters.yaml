@@ -1,0 +1,52 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  ##########################
+  # Instructions
+  ##########################
+  #
+  # Follow instructions specific to each section.
+  # Project IDs must follow the rules below, additionally,
+  # if a gatekeeper policy is used to enforce specific naming conventions, refer to its documentation.
+  #   - All IDs should be universally unique.
+  #   - Must be 6 to 30 characters in length.
+  #   - Can only contain lowercase letters, numbers, and hyphens.
+  #   - Must start with a letter.
+  #   - Cannot end with a hyphen.
+  #   - Cannot be in use or previously used; this includes deleted projects.
+  #   - Cannot contain restricted strings, such as google and ssl.
+  #
+  ##########################
+  # Client
+  ##########################
+  #
+  # Billing Account ID to be associated with this project
+  project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  # GCP folder to use as parent to this project, lowercase K8S resource name
+  project-parent-folder: project-parent-folder
+  # user, group or serviceAccount with editor role at project level
+  project-editor: "group:team1@example.com"
+  # project id for the client project to be created, following rules and conventions
+  project-id: xxemu-team1-projectname
+  #
+  ##########################
+  # End of Configurations
+  ##########################
