@@ -12,10 +12,10 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 | Guardrails Policy Bundle | Policy Bundle to help analyze compliance for Guardrails |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) |
 | KCC Namespaces | This solution is a simple fork of the KCC Project Namespaces blueprint found [here](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint) | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/kcc-namespaces) |
 | Sandbox GKE | Private GKE deployment | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/sandbox-gke) |
-| Landing Zone v2 (LZv2) | PBMM Landing Zone built in collaboration with Shared Services Canada |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2) |
-| Hierarchy | Core Hierarchy Structure for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/hierarchy) |
-| Logging Bundle | Logging Packages for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/logging) |
-| LZ Project Bundles | Project Bundles for use with LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project) |
+| Landing Zone v2 (LZv2) | **Deprecated** PBMM Landing Zone built in collaboration with Shared Services Canada |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2) |
+| Hierarchy | **Deprecated** Core Hierarchy Structure for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/hierarchy) |
+| Logging Bundle | **Deprecated** Logging Packages for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/logging) |
+| LZ Project Bundles | **Deprecated** Project Bundles for use with LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project) |
 
 When getting a package you can use the `@` to indicate what tag or branch you will be getting with the `kpt pkg get` command for example `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main`.
 
@@ -45,8 +45,6 @@ For further documentation on the project, including the setup pre-requirements a
 - [Config Connector OSS on GitHub](https://github.com/GoogleCloudPlatform/k8s-config-connector)
 - [Known Issues](docs/issues.md)
 - [Fleet Management at Spotify (Part 2): The Path to Declarative Infrastructure](https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-2-the-path-to-declarative-infrastructure/)
-
-
 
 ## Additional Resources
 
