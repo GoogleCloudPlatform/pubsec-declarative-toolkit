@@ -25,7 +25,7 @@ You will execute this procedure to provision the service project in GCP for appl
 
 1. Create the following folder structure for projects
 
-    ```
+    ```text
     ├── clients
     │   ├── <client1-name>
     │   ├── <client2-name>

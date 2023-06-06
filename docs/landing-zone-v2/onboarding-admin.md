@@ -27,7 +27,7 @@ This procedure must only be executed on an `Experimentation` Landing zone.
 
 1. Create the following folder structure for admins
 
-    ```
+    ```text
     ├── admins
     │   ├── <admin1-name>
     │   ├── <admin2-name>

@@ -27,7 +27,7 @@ You will execute this procedure to provision the foundational resources in GCP f
 
 1. Create the following folder structure for clients
 
-    ```
+    ```text
     ├── clients
     │   ├── <client1-name>
     │   ├── <client2-name>
