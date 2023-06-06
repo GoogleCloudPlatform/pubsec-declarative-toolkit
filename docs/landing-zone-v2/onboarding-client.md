@@ -15,7 +15,7 @@
 
 ## <a name='Introduction'></a>Introduction
 
-You will execute this procedure to provision the foundationnal resources in GCP for each client. These resrouces are required to create application project.
+You will execute this procedure to provision the foundational resources in GCP for each client. These resources are required before you can create application project.
 
 ## <a name='Setup'></a>Setup
 
@@ -31,7 +31,7 @@ You will execute this procedure to provision the foundationnal resources in GCP 
     ├── clients
     │   ├── <client1-name>
     │   ├── <client2-name>
-    |   ├── ...
+    │   ├── ...
     ├── core-landing-zone
     ├── gatekeeper-policies
     ```
@@ -42,19 +42,19 @@ You will execute this procedure to provision the foundationnal resources in GCP 
 
 > **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
 
-   - Experimentation
+- Experimentation
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-setup@<VERSION> ./clients/<client name>
-      ```
+  you do not require this package.
 
-   - DEV, PREPROD, PROD
+- DEV, PREPROD, PROD
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-setup@<VERSION> ./clients/<client name>
-      ```
+  ```shell
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-setup@<VERSION> ./clients/<client name>
+  ```
 
-1. Customize the clients/`<client name>`/client-setup/setters.yaml file
+1. Customize the `clients/<client name>/client-setup/setters.yaml` file
+
+  > **!!! There is a folder in that package called `root-sync-git`. This folder can be deleted if your are not using a `Gitops - Git` deployment solution. But, if you are, you should now create a new repository for this client and add the client-landing-zone package to that repo**
 
 1. Render the Configs
 
@@ -62,11 +62,7 @@ You will execute this procedure to provision the foundationnal resources in GCP 
     kpt fn render clients/<client name>/client-setup
     ```
 
-1. **!!! There is a folder in that package called `root-sync-git`. This folder can be deleted if your are not using a `Gitops - Git` deployment solution. But, if you are, you should now create a new repository for this client and add the client-landing-zone package to that repo*
-
 1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
-
-
 
 ## <a name='Addtheclient-landing-zonepackage'></a>Add the client-landing-zone package
 
@@ -74,19 +70,19 @@ You will execute this procedure to provision the foundationnal resources in GCP 
 
 > **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
 
-   - Experimentation
+- Experimentation
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-landing-zone@<VERSION> ./clients/<client name>
-      ```
+  ```shell
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-landing-zone@<VERSION> ./clients/<client name>
+  ```
 
-   - DEV, PREPROD, PROD
+- DEV, PREPROD, PROD
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-landing-zone@<VERSION> ./clients/<client name>
-      ```
+  ```shell
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-landing-zone@<VERSION> ./clients/<client name>
+  ```
 
-1. Customize the clients/`<client name>`/client-landing-zone/setters.yaml file
+1. Customize the `clients/<client name>/client-landing-zone/setters.yaml` file
 
 1. Render the Configs
 

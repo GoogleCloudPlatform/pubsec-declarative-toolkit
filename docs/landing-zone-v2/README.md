@@ -12,25 +12,25 @@
     * [Summary](#Summary)
     * [Initial Organization configuration](#InitialOrganizationconfiguration)
     * [Config Controller project and cluster](#ConfigControllerprojectandcluster)
-	  * [Option 1 - Org level folder](#Option1-Orglevelfolder)
-	  * [Option 2 - Folder in a Folder](#Option2-FolderinaFolder)
-	  * [Option 1 - Org level Project](#Option1-OrglevelProject)
-	  * [Option 2 - Project in a Folder](#Option2-ProjectinaFolder)
-	  * [GKE Autopilot - Fully managed cluster](#GKEAutopilot-Fullymanagedcluster)
-	  * [GKE Standard](#GKEStandard)
+    * [Option 1 - Org level folder](#Option1-Orglevelfolder)
+    * [Option 2 - Folder in a Folder](#Option2-FolderinaFolder)
+    * [Option 1 - Org level Project](#Option1-OrglevelProject)
+    * [Option 2 - Project in a Folder](#Option2-ProjectinaFolder)
+    * [GKE Autopilot - Fully managed cluster](#GKEAutopilot-Fullymanagedcluster)
+    * [GKE Standard](#GKEStandard)
   * [2. Create your landing zone](#Createyourlandingzone)
     * [Fetch the packages](#Fetchthepackages)
   * [3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci](#Deploytheinfrastructureusingeitherkptorgitops-gitorgitops-oci)
     * [kpt](#kpt)
-	    * [gatekeeper-policies](#gatekeeper-policies)
-	    * [core-landing-zone](#core-landing-zone)
+      * [gatekeeper-policies](#gatekeeper-policies)
+      * [core-landing-zone](#core-landing-zone)
     * [GitOps - Git](#GitOps-Git)
-	    * [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#CreateanewrepositoryinyourRepoHostingSolutionGithubGitlaborAzureDevops)
-	    * [ConfigSync](#ConfigSync)
+      * [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#CreateanewrepositoryinyourRepoHostingSolutionGithubGitlaborAzureDevops)
+      * [ConfigSync](#ConfigSync)
     * [GitOps - OCI](#GitOps-OCI)
-	    * [Artifact Registry](#ArtifactRegistry)
-	    * [Push Config Image to the repository](#PushConfigImagetotherepository)
-	    * [ConfigSync](#ConfigSync-1)
+      * [Artifact Registry](#ArtifactRegistry)
+      * [Push Config Image to the repository](#PushConfigImagetotherepository)
+      * [ConfigSync](#ConfigSync-1)
   * [4. Validate the landing zone deployment](#Validatethelandingzonedeployment)
   * [5. Perform the post-deployment steps](#Performthepost-deploymentsteps)
     * [Grant billing account user role](#Grantbillingaccountuserrole)
@@ -116,7 +116,7 @@ To deploy this Landing Zone you will need to:
 - IAM permission for the "Yakima" service account.
 
 ## <a name='InitialOrganizationconfiguration'></a>Initial Organization configuration
-TODO: double check with our setup-kcc.sh
+
 1. Define environment variables
 
     ```shell
@@ -138,6 +138,10 @@ TODO: double check with our setup-kcc.sh
     This command will ensure that the default logging buckets that are generated with a new project (organization wide) are set to the selected region instead of the default location `global`.
 
     ```shell
+    # Validate if a storageLocation is defined for the organization
+    gcloud alpha logging settings describe --organization=${ORG_ID}
+
+    # Modify the default logging storage location
     gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
@@ -408,15 +412,15 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
     kpt live apply core-landing-zone --reconcile-timeout=2m --output=table
   ```
 
- The section around billing that looks like the following and can either be commented out or deleted.
+ In the file `core-landing-zone/lz-folder/audits/logging-project/project.yaml` The section around billing that looks like the following and can either be commented out or deleted.
 
   ```shell
     billingAccountRef:
-        # Replace "${BILLING_ACCOUNT_ID?}" with the numeric ID for your billing account
-        external: "${BILLING_ACCOUNT_ID?}" # kpt-set: ${billing-id}
+      external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${billing-id}
   ```
 
- This will cause the project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI. If you do not remove this section the project will fail to create.
+ This will cause the logging project to spin up with no attached billing id and any service that requires billing to be enabled will pause deployment until billing is enabled. Billing can be added by a user with Billing User permission in the Billing UI. If you do not remove this section the project will fail to create.
+ See step [5. Perform the post-deployment steps](#5-perform-the-post-deployment-steps) for the complete solution.
 
  You can view the status of any deployed object by running `kubectl get gcp` when connected to the Config Controller instance. If an object is pending or is displaying an error you can investigate by copying the name of the object and running the describe command.
 

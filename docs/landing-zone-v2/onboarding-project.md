@@ -1,11 +1,9 @@
-# Client Onboarding
+# Project Onboarding
 
 <!-- vscode-markdown-toc -->
 * [Introduction](#Introduction)
 * [Setup](#Setup)
-* [Add client-setup package](#Addclient-setuppackage)
-* [Add the client-landing-zone package](#Addtheclient-landing-zonepackage)
-* [Next Step](#NextStep)
+* [Add client project package](#Addclientprojectpackage)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -15,17 +13,17 @@
 
 ## <a name='Introduction'></a>Introduction
 
-You will execute this procedure to provision the foundationnal resources in GCP for each client. These resrouces are required to create application project.
+You will execute this procedure to provision the service project in GCP for applications.
 
 ## <a name='Setup'></a>Setup
 
-1. Move to the folder where the `gatekeeper-policies` and `core-landing-zone` packages are located
+1. Move to the folder where the `gatekeeper-policies`, `core-landing-zone` and `clients` folders are located
 
     ```shell
     cd <FOLDER>
     ```
 
-1. Create the following folder structure for clients
+1. Create the following folder structure for projects
 
     ```
     ├── clients
@@ -34,68 +32,54 @@ You will execute this procedure to provision the foundationnal resources in GCP 
     |   ├── ...
     ├── core-landing-zone
     ├── gatekeeper-policies
+    ├── projects
+    │   ├── <project1-id>
+    │   ├── <project2-id>
+    |   ├── ...
     ```
 
-## <a name='Addclient-setuppackage'></a>Add client-setup package
+## <a name='Addclientprojectpackage'></a>Add client project package
 
-1. Get the client-setup package
+1. Get the client project package
 
 > **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
 
-   - Experimentation
+- Experimentation
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-setup@<VERSION> ./clients/<client name>
-      ```
+  ```shell
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-project@<VERSION> ./projects/<project-id>
+  ```
 
-   - DEV, PREPROD, PROD
+- DEV, PREPROD, PROD
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-setup@<VERSION> ./clients/<client name>
-      ```
+  ```shell
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-project-setup@<VERSION> ./projects/<project-id>
+  ```
 
-1. Customize the clients/`<client name>`/client-setup/setters.yaml file
+1. Customize the `setters.yaml` file
 
-1. Render the Configs
+- Experimentation
 
-    ```shell
-    kpt fn render clients/<client name>/client-setup
-    ```
+  `projects/<project-id>/client-project/setters.yaml`
 
-1. **!!! There is a folder in that package called `root-sync-git`. This folder can be deleted if your are not using a `Gitops - Git` deployment solution. But, if you are, you should now create a new repository for this client and add the client-landing-zone package to that repo*
+- DEV, PREPROD, PROD
 
-1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
+  `projects/<project-id>/client-project-setup/setters.yaml`
 
-
-
-## <a name='Addtheclient-landing-zonepackage'></a>Add the client-landing-zone package
-
-1. Get the client-landing-zone package
-
-> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
-
-   - Experimentation
-
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-landing-zone@<VERSION> ./clients/<client name>
-      ```
-
-   - DEV, PREPROD, PROD
-
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-landing-zone@<VERSION> ./clients/<client name>
-      ```
-
-1. Customize the clients/`<client name>`/client-landing-zone/setters.yaml file
+  > **!!! There is a folder in the `client-project-setup` package called `root-sync-git`. This folder can be deleted if your are not using a `Gitops - Git` deployment solution. But, if you are, you should now create a new repository for this project and configure the setters.yaml file accordingly.**
 
 1. Render the Configs
 
+- Experimentation
+
     ```shell
-    kpt fn render clients/<client name>/client-landing-zone
+    kpt fn render projects/<project-id>/client-project
+    ```
+
+- DEV, PREPROD, PROD
+
+    ```shell
+    kpt fn render projects/<project-id>/client-project-setup
     ```
 
 1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
-
-## <a name='NextStep'></a>Next Step
-
-Execute the project onboarding [procedure](onboarding-project.md).
