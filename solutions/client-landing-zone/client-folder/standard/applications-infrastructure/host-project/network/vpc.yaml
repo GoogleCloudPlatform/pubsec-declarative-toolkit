@@ -25,6 +25,6 @@ metadata:
 spec:
   resourceID: global-standard-vpc
   description: VPC for internet facing application
-  routingMode: GLOBAL
+  routingMode: REGIONAL
   autoCreateSubnetworks: false # SC-7
-  deleteDefaultRoutesOnCreate: true # AC-4, SC-7(5)
+  deleteDefaultRoutesOnCreate: false # AC-4, SC-7(5)

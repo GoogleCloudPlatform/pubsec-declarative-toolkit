@@ -69,19 +69,20 @@ data:
   # the network host project id that will be created
   host-project-id: net-host-project-12345
   #
-  # assuming following ip space
-  # unclassified: 10.0.0.0/13
-  # protected a: 10.8.0.0/13
-  # protected b: 10.16.0.0/13
-  # standard VPC
+  # unclassified IP space
+  standard-unclassified-cidr: 10.1.0.0/18
   # Subnet IP range for unclassified in northamerica-northeast1
   standard-nane1-unclassified-snet: 10.1.0.0/21
   # Subnet IP range for unclassified in northamerica-northeast2
   standard-nane2-unclassified-snet: 10.1.8.0/21
+  # protected A IP space
+  standard-protected-a-cidr: 10.1.64.0/18
   # Subnet IP range for protected-a in northamerica-northeast1
   standard-nane1-protected-a-snet: 10.1.64.0/21
   # Subnet IP range for protected-a in northamerica-northeast2
   standard-nane2-protected-a-snet: 10.1.72.0/21
+  # protected B IP space
+  standard-protected-b-cidr: 10.1.128.0/18
   # Subnet IP range for protected-b in northamerica-northeast1
   standard-nane1-protected-b-snet: 10.1.128.0/21
   # Subnet IP range for protected-b in northamerica-northeast2
@@ -91,6 +92,32 @@ data:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
+  #
+  ##########################
+  # Firewall Policy (standard/applications-infrastructure)
+  ##########################
+  #
+  # Deny sanctioned countries ingress traffic
+  # https://cloud.google.com/firewall/docs/firewall-policies-rule-details#geo-location-object
+  # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+  # The list below is Google's default, modify as required
+  denied-sanctioned-countries: |
+    - "CU"
+    - "IR"
+    - "KP"
+    - "SY"
+  #
+  # Allowed domain names for os updates
+  # The list below is an example for Debian and Ubuntu, modify as per trusted images
+  allowed-os-update-domains: |
+    - "debian.map.fastlydns.net"
+    - "debian.org"
+    - "deb.debian.org"
+    - "ubuntu.com"
+    - "packages.cloud.google.com"
+    - "security.ubuntu.com"
+    - "northamerica-northeast1.gce.archive.ubuntu.com"
+    - "northamerica-northeast2.gce.archive.ubuntu.com"
   #
   ##########################
   # End of Configurations
