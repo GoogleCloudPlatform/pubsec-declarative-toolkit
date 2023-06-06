@@ -30,6 +30,7 @@ spec:
     - compute.firewalls.update
     - compute.firewallPolicies.get
     - compute.firewallPolicies.update
+    - compute.globalOperations.get
     - compute.networks.updatePolicy
   resourceID: tier3.firewallrule.admin
   stage: GA
