@@ -30,7 +30,9 @@ spec:
   allow:
     - protocol: all
   destinationRanges: # kpt-set: ${firewall-egress-allow-all-internal}
-    - 10.0.0.0/8
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
 ---

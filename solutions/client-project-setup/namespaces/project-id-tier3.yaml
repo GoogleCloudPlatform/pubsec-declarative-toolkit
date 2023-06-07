@@ -67,16 +67,16 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-tier3-sa-tier3-firewallrule-admin-host-project-id-permissions # kpt-set: ${project-id}-tier3-sa-tier3-firewallrule-admin-${host-project-id}-permissions
-  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  name: project-id-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions # kpt-set: ${project-id}-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions
+  namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: host-project-id # kpt-set: ${host-project-id}
+    kind: Folder
+    name: standard.applications-infrastructure
   role: organizations/org-id/roles/tier3.firewallrule.admin # kpt-set: organizations/${org-id}/roles/tier3.firewallrule.admin
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
