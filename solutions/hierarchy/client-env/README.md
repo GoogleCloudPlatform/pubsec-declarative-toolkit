@@ -1,5 +1,7 @@
 # Introduction
 
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the client-landing-zone package**
+
 A package to create an unclassified client folder with PBMM subfolders.
 
 ## Usage

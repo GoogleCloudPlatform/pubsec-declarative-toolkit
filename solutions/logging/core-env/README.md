@@ -2,7 +2,7 @@
 # core-env-logging-package
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
-
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the core-landing-zone package**
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 Landing zone v2 subpackage.
 Package to deploy core-env logging solution

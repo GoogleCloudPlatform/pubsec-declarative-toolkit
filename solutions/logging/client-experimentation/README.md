@@ -3,6 +3,7 @@
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the experimentation/client-landing-zone package**
 **`Note:`** The [core-experimentation](../core-experimentation/) package must be deployed before deploying the `client-experimentation` logging package.
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
@@ -87,7 +88,7 @@ This package deploys the following resources:
 - Log bucket for client platform and component logs for resources under the `clients` folder
 
     - The client bucket name will contain the `client-name` set in setters.yaml:
-    
+
         ```yaml
         # kpt-set: platform-and-component-${client-name}-log-bucket`
         ```

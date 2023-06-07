@@ -1,5 +1,7 @@
 # Introduction
 
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the experimentation/admin-folder package**
+
 A package to create an admin folder in the experimentation landing zone
 
 ## Usage

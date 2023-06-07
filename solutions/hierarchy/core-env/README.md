@@ -1,5 +1,7 @@
 # Introduction
 
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the core-landing-zone package**
+
 A package to create the core landing zone structure for DEV, PREPROD and PROD
 
 ## Usage

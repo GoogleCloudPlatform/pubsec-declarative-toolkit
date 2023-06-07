@@ -3,6 +3,7 @@
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the core-landing-zone and experimentation/core-landing-zone package**
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 public sector declarative toolkit - landing zone v2 solution
 

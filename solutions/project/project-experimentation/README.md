@@ -3,6 +3,7 @@
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the experimentation/client-project package**
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 An experimentation project with a secured network.
 This package should only be deployed within a experimentation landing zone.

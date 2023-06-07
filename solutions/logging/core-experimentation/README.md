@@ -3,6 +3,8 @@
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the experimentation/core-landing-zone package**
+
 **`Note:`** The [core-experimentation](../core-experimentation/) package must be deployed before deploying the `client-experimentation` logging package.
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
