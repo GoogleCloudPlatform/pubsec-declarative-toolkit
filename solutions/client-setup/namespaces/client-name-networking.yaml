@@ -132,8 +132,8 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: client-name-networking-sa-compute-org-resource-admin-permissions # kpt-set: ${client-name}-networking-sa-compute-org-resource-admin-permissions
-  namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
+  name: client-name-networking-sa-client-folder-org-resource-admin-permissions # kpt-set: ${client-name}-networking-sa-client-folder-org-resource-admin-permissions
+  namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
@@ -141,7 +141,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: standard.applications-infrastructure
+    name: clients.client-name # kpt-set: clients.${client-name}
   role: roles/compute.orgSecurityResourceAdmin
   member: serviceAccount:client-name-networking-sa@client-management-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:${client-name}-networking-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
@@ -209,6 +209,42 @@ kind: RoleBinding
 metadata:
   name: allow-resource-reference-from-client-name-networking # kpt-set: allow-resource-reference-from-${client-name}-networking
   namespace: networking
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-client-name-networking # kpt-set: cnrm-controller-manager-${client-name}-networking
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Grant viewer role on the client-name-hierarchy namespace to client-name-networking K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allow-client-name-hierarchy-resource-reference-from-client-name-networking # kpt-set: allow-${client-name}-hierarchy-resource-reference-from-${client-name}-networking
+  namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-client-name-networking # kpt-set: cnrm-controller-manager-${client-name}-networking
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Grant viewer role on the hierarchy namespace to client-name-networking K8S SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allow-hierarchy-resource-reference-from-client-name-networking # kpt-set: allow-hierarchy-resource-reference-from-${client-name}-networking
+  namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}

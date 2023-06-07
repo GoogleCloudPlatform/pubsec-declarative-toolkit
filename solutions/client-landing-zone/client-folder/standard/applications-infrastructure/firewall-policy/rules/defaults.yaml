@@ -12,90 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Rules 2147483541 to 2147483546 in this file are the suggested defaults by Google
-# The following rules are also automatically created when the firewall policy is created:
-# 2147483644 default egress rule ipv6 Egress IPv6 ranges: ::/0 all Goto next
-# 2147483645 default ingress rule ipv6 Ingress IPv6 ranges: ::/0 all Goto next
-# 2147483646 default egress rule Egress IPv4 ranges: 0.0.0.0/0 all Goto next
-# 2147483647 default ingress rule Ingress IPv4 ranges: 0.0.0.0/0 all Goto next
+# Rules 2147483541 to 2147483546 are the suggested defaults by Google
 #########
-# Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (EGRESS)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeFirewallPolicyRule
-metadata:
-  name: client-name-fwpol-exclude-private-ip-ranges-egress-fwr # kpt-set: ${client-name}-fwpol-exclude-private-ip-ranges-egress-fwr
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-spec:
-  action: "goto_next"
-  description: "Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (EGRESS)"
-  direction: "EGRESS"
-  disabled: false
-  enableLogging: false
-  firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
-  match:
-    layer4Configs:
-      - ipProtocol: "all"
-    destIPRanges: # kpt-set: ${firewall-egress-allow-all-internal}
-      - "10.0.0.0/8"
-      - "172.16.0.0/12"
-      - "192.168.0.0/16"
-  priority: 2147483541
----
-# Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (INGRESS)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeFirewallPolicyRule
-metadata:
-  name: client-name-fwpol-exclude-private-ip-ranges-ingress-fwr # kpt-set: ${client-name}-fwpol-exclude-private-ip-ranges-ingress-fwr
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-spec:
-  action: "goto_next"
-  description: "Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (INGRESS)"
-  direction: "INGRESS"
-  disabled: false
-  enableLogging: false
-  firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
-  match:
-    layer4Configs:
-      - ipProtocol: "all"
-    srcIPRanges: # kpt-set: ${firewall-egress-allow-all-internal}
-      - "10.0.0.0/8"
-      - "172.16.0.0/12"
-      - "192.168.0.0/16"
-  priority: 2147483542
----
-# Deny TOR exit nodes ingress traffic
-# https://cloud.google.com/armor/docs/threat-intelligence#configure-nti
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeFirewallPolicyRule
-metadata:
-  name: client-name-fwpol-deny-tor-nodes-ingress-traffic-fwr # kpt-set: ${client-name}-fwpol-deny-tor-nodes-ingress-traffic-fwr
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-spec:
-  action: "deny"
-  description: "Deny TOR exit nodes ingress traffic"
-  direction: "INGRESS"
-  disabled: false
-  enableLogging: true
-  firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
-  match:
-    layer4Configs:
-      - ipProtocol: "all"
-    srcIPRanges:
-      - "0.0.0.0/0"
-    srcThreatIntelligences:
-      - "iplist-tor-exit-nodes"
-  priority: 2147483543
----
 # Deny known malicious IPs ingress traffic
 # https://cloud.google.com/armor/docs/threat-intelligence#configure-nti
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-fwpol-deny-known-malicious-ip-ingress-fwr # kpt-set: ${client-name}-fwpol-deny-known-malicious-ip-ingress-fwr
+  name: client-name-standard-applications-infrastructure-fwpol-deny-known-malicious-ip-ingress-fwr # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol-deny-known-malicious-ip-ingress-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
 spec:
   action: "deny"
   description: "Deny known malicious IPs ingress traffic"
@@ -118,8 +45,10 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-fwpol-deny-known-malicious-ip-egress-fwr # kpt-set: ${client-name}-fwpol-deny-known-malicious-ip-egress-fwr
+  name: client-name-standard-applications-infrastructure-fwpol-deny-known-malicious-ip-egress-fwr # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol-deny-known-malicious-ip-egress-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
 spec:
   action: "deny"
   description: "Deny known malicious IPs egress traffic"
@@ -136,28 +65,3 @@ spec:
     destThreatIntelligences:
       - "iplist-known-malicious-ips"
   priority: 2147483545
----
-# Deny sanctioned countries ingress traffic
-# https://cloud.google.com/firewall/docs/firewall-policies-rule-details#geo-location-object
-# https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeFirewallPolicyRule
-metadata:
-  name: client-name-fwpol-deny-sanctioned-countries-ingress-fwr # kpt-set: ${client-name}-fwpol-deny-sanctioned-countries-ingress-fwr
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-spec:
-  action: "deny"
-  description: "Deny sanctioned countries ingress traffic"
-  direction: "INGRESS"
-  disabled: false
-  enableLogging: true
-  firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
-  match:
-    layer4Configs:
-      - ipProtocol: "all"
-    srcIPRanges:
-      - "0.0.0.0/0"
-    srcRegionCodes: # kpt-set: ${denied-sanctioned-countries}
-      - "XX"
-  priority: 2147483546

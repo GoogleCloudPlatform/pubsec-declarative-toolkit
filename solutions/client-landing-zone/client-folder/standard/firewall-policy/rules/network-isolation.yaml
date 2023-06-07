@@ -16,8 +16,10 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-fwpol-isolate-unclassified-fwr # kpt-set: ${client-name}-fwpol-isolate-unclassified-fwr
+  name: client-name-standard-fwpol-isolate-unclassified-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-unclassified-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
 spec:
   action: "deny"
   description: "isolate unclassified"
@@ -25,7 +27,7 @@ spec:
   disabled: false
   enableLogging: true
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
   match:
     layer4Configs:
       - ipProtocol: "all"
@@ -40,8 +42,10 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-fwpol-isolate-protected-a-fwr # kpt-set: ${client-name}-fwpol-isolate-protected-a-fwr
+  name: client-name-standard-fwpol-isolate-protected-a-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-protected-a-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
 spec:
   action: "deny"
   description: "isolate protected a"
@@ -49,7 +53,7 @@ spec:
   disabled: false
   enableLogging: true
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
   match:
     layer4Configs:
       - ipProtocol: "all"
@@ -64,8 +68,10 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-fwpol-isolate-protected-b-fwr # kpt-set: ${client-name}-fwpol-isolate-protected-b-fwr
+  name: client-name-standard-fwpol-isolate-protected-b-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-protected-b-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
 spec:
   action: "deny"
   description: "isolate protected b"
@@ -73,7 +79,7 @@ spec:
   disabled: false
   enableLogging: true
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
   match:
     layer4Configs:
       - ipProtocol: "all"

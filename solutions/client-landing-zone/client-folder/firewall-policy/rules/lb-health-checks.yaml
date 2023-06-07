@@ -16,10 +16,10 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-standard-applications-infrastructure-fwpol-goto-next-for-lb-health-checks-fwr # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol-goto-next-for-lb-health-checks-fwr
+  name: client-name-client-folder-fwpol-goto-next-for-lb-health-checks-fwr # kpt-set: ${client-name}-client-folder-fwpol-goto-next-for-lb-health-checks-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
 spec:
   action: "goto_next"
   description: "Goto next for LB health checks"
@@ -27,7 +27,7 @@ spec:
   disabled: false
   enableLogging: false
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
   match:
     layer4Configs:
       - ipProtocol: "all"

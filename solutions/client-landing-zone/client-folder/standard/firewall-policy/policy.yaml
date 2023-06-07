@@ -18,17 +18,17 @@
 # 2147483646 default egress rule Egress IPv4 ranges: 0.0.0.0/0 all Goto next
 # 2147483647 default ingress rule Ingress IPv4 ranges: 0.0.0.0/0 all Goto next
 #########
-# Client Compute Firewall Policy on folder standard.applications-infrastructure
+# Client Compute Firewall Policy on folder standard
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicy
 metadata:
-  name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+  name: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
   namespace: client-name-networking # kpt-set: ${client-name}-networking
 spec:
   # shortName required
-  shortName: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+  shortName: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
   folderRef:
-    name: standard.applications-infrastructure
+    name: standard
     namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
   description: "Firewall policy for client-name" # kpt-set: Firewall policy for ${client-name}
 ---
@@ -36,14 +36,14 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyAssociation
 metadata:
-  name: client-name-standard-applications-infrastructure-fwpol-association # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol-association
+  name: client-name-standard-fwpol-association # kpt-set: ${client-name}-standard-fwpol-association
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
 spec:
   attachmentTargetRef:
     kind: Folder
-    name: standard.applications-infrastructure
+    name: standard
     namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
