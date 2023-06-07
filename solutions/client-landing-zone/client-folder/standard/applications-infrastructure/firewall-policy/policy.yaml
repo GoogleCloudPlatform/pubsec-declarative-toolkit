@@ -24,6 +24,8 @@ kind: ComputeFirewallPolicy
 metadata:
   name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/standard.applications-infrastructure # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/standard.applications-infrastructure
 spec:
   # shortName required
   shortName: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
