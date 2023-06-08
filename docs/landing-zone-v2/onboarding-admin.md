@@ -44,7 +44,8 @@ This procedure must only be executed on an `Experimentation` Landing zone.
 
 1. Get the experimentation/admin-folder package
 
-> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
+> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available but
+> we strongly recommend using versions over main. Alternatively, each package CHANGELOG.md contains the history if there is a requirement to use an older version.**
 
 - Experimentation
 

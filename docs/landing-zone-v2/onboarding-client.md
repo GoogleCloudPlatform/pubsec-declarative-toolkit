@@ -40,7 +40,8 @@ You will execute this procedure to provision the foundational resources in GCP f
 
 1. Get the client-setup package
 
-> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
+> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available but
+> we strongly recommend using versions over main. Alternatively, each package CHANGELOG.md contains the history if there is a requirement to use an older version.**
 
 - Experimentation
 
@@ -68,7 +69,8 @@ You will execute this procedure to provision the foundational resources in GCP f
 
 1. Get the client-landing-zone package
 
-> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available**
+> **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available but
+> we strongly recommend using versions over main. Alternatively, each package CHANGELOG.md contains the history if there is a requirement to use an older version.**
 
 - Experimentation
 
