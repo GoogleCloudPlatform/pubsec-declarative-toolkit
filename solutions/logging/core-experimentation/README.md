@@ -3,6 +3,8 @@
 
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+> **!!! This package is being deprecated. The resources it deploys have been consolidated in the experimentation/core-landing-zone package**
+
 **`Note:`** The [core-experimentation](../core-experimentation/) package must be deployed before deploying the `client-experimentation` logging package.
 
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
@@ -97,71 +99,76 @@ This package deploys the following resources:
 
 - Log bucket for Security Logs (Cloud Audit, Access Transparency logs, and Data Access Logs)
 
-    - Retention in Days configurable via setters.yaml
+  - Retention in Days configurable via setters.yaml
 
-        ```yaml
-        retention-in-days: 1
-        ```
-    - Retention locking policy configurable via setters.yaml
+      ```yaml
+      retention-in-days: 1
+      ```
 
-        ```yaml
-        retention-locking-policy: true
-        ```
+  - Retention locking policy configurable via setters.yaml
+
+      ```yaml
+      retention-locking-policy: true
+      ```
+
 - Log bucket for platform and component logs for resources under the `tests` folder
 
-    - Retention in Days configurable via setters.yaml
+  - Retention in Days configurable via setters.yaml
 
-        ```yaml
-        retention-in-days: 1
-        ```
-    - Retention locking policy configurable via setters.yaml
-        ```yaml
-        retention-locking-policy: true
-        ```
+      ```yaml
+      retention-in-days: 1
+      ```
+
+  - Retention locking policy configurable via setters.yaml
+
+      ```yaml
+      retention-locking-policy: true
+      ```
 
 - Organizational log sink for Security Logs (Cloud Audit, Access Transparency, and Data Access Logs)
 
-    - Include all child resources is enabled:
+  - Include all child resources is enabled:
 
-        ```yaml
-        includeChildren: true
-        ```
+      ```yaml
+      includeChildren: true
+      ```
 
-    - Destination: Log bucket hosted inside the loging project
+  - Destination: Log bucket hosted inside the loging project
 
-    - Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  - Includes only Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
-        ```yaml
-          filter: |-
-            LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
-            OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
-            OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
-            OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
-            OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
-        ```
+      ```yaml
+        filter: |-
+          LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
+          OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
+          OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
+          OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
+          OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
+      ```
 
-    - **`Note:`** The permission required to create the organizational sink is set under the [logging namespace](../../landing-zone-v2/namespaces/logging.yaml#L28)
+  - **`Note:`** The permission required to create the organizational sink is set under the [logging namespace](../../landing-zone-v2/namespaces/logging.yaml#L28)
 
 - Folder log sink for platform and component logs for resources under the `tests` folder
 
-    - Destionation: Log bucket hosted inside the loging project
+  - Destionation: Log bucket hosted inside the loging project
 
-    - No inclusion filter. Includes all Platform and Component logs
+  - No inclusion filter. Includes all Platform and Component logs
 
-    - Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  - Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
 
-        ```yaml
-          exclusions:
-            - description: Exclude Security logs
-              disabled: false
-              filter: |-
-                LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
-                OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
-                OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
-                OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
-                OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
-              name: exclude-security-logs
-        ```
+      ```yaml
+        exclusions:
+          - description: Exclude Security logs
+            disabled: false
+            filter: |-
+              LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
+              OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
+              OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
+              OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
+              OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
+            name: exclude-security-logs
+      ```
+
 - Data access log configuration enables data access log collection on the logging project. Logs are routed the the logging project `security-log-bucket` log bucket.
 
     ```yaml

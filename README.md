@@ -7,17 +7,18 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 | Name | Description | Documentation |
 | --- | --- | --- |
 | Guardrails | Base Infrastructure for 30 Day Guardrail Deployment | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails) |
-| Gatekeeper Policy for Landing Zone v2 | Policy Bundle for use with the LZv2 Solution | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gatekeeper-policies) |
 | Organization Policy Bundle | Package of Baseline Organization Policies | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/org-policies) |
 | Guardrails Policy Bundle | Policy Bundle to help analyze compliance for Guardrails |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) |
 | KCC Namespaces | This solution is a simple fork of the KCC Project Namespaces blueprint found [here](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint) | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/kcc-namespaces) |
 | Sandbox GKE | Private GKE deployment | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/sandbox-gke) |
-| Landing Zone v2 (LZv2) | PBMM Landing Zone built in collaboration with Shared Services Canada |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2) |
-| Hierarchy | Core Hierarchy Structure for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/hierarchy) |
-| Logging Bundle | Logging Packages for LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/logging) |
-| LZ Project Bundles | Project Bundles for use with LZv2 | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project) |
+| Landing Zone v2 (LZv2) | **(In development)** PBMM Landing Zone built in collaboration with Shared Services Canada |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2/README.md)
+| Gatekeeper Policy (LZv2) | Policy Bundle | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gatekeeper-policies) |
+| Core Landing Zone (LZv2) | Foundational resources building the landing zone | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/core-landing-zone) |
+| Client Setup (LZv2) | Package to create the initial client folder and namespaces | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-setup) |
+| Client Landing Zone (LZv2)  | Package to create the client folder sub-structure and a standard Shared VPC | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-landing-zone) |
+| Client Project Setup (LZv2) | Package to create a service project and host workloads | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-project-setup) |
 
-When getting a package you can use the `@` to indicate what tag or branch you will be getting with the `kpt pkg get` command for example `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main`.
+When getting a package you can use the `@` to indicate what tag or branch you will be getting with the `kpt pkg get` command for example `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@main`.
 
 You can find the latest release versions in the `releases` [page](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases).
 
@@ -45,8 +46,6 @@ For further documentation on the project, including the setup pre-requirements a
 - [Config Connector OSS on GitHub](https://github.com/GoogleCloudPlatform/k8s-config-connector)
 - [Known Issues](docs/issues.md)
 - [Fleet Management at Spotify (Part 2): The Path to Declarative Infrastructure](https://engineering.atspotify.com/2023/05/fleet-management-at-spotify-part-2-the-path-to-declarative-infrastructure/)
-
-
 
 ## Additional Resources
 

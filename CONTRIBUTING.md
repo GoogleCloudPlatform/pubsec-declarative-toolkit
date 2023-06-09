@@ -72,7 +72,6 @@ In order to maintain consistency accross kpt packages, we strive to maintain the
 1. Package can successfully be removed from a GCP environment
 1. Config Connector, Config Controller, ConfigSync and Policy Controller logs are not showing any errors when deploying or removing the package
 
-
 ## Community Guidelines
 
 This project follows
