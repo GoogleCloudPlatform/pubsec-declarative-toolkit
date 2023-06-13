@@ -184,7 +184,7 @@ metadata:
 spec:
   resourceID: nane2-standard-psc-snet
   ipCidrRange: 10.1.245.0/24 # kpt-set: ${standard-nane2-psc-snet}
-  region: northamerica-northeast1
+  region: northamerica-northeast2
   description: northamerica-northeast1 psc subnet
   purpose: PRIVATE_SERVICE_CONNECT
   networkRef:
