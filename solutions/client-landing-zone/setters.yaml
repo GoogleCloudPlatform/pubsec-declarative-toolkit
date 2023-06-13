@@ -69,24 +69,26 @@ data:
   # the network host project id that will be created
   host-project-id: net-host-project-12345
   #
-  # unclassified IP space
-  standard-unclassified-cidr: 10.1.0.0/18
-  # Subnet IP range for unclassified in northamerica-northeast1
-  standard-nane1-unclassified-snet: 10.1.0.0/21
-  # Subnet IP range for unclassified in northamerica-northeast2
-  standard-nane2-unclassified-snet: 10.1.8.0/21
-  # protected A IP space
-  standard-protected-a-cidr: 10.1.64.0/18
-  # Subnet IP range for protected-a in northamerica-northeast1
-  standard-nane1-protected-a-snet: 10.1.64.0/21
-  # Subnet IP range for protected-a in northamerica-northeast2
-  standard-nane2-protected-a-snet: 10.1.72.0/21
-  # protected B IP space
-  standard-protected-b-cidr: 10.1.128.0/18
-  # Subnet IP range for protected-b in northamerica-northeast1
-  standard-nane1-protected-b-snet: 10.1.128.0/21
-  # Subnet IP range for protected-b in northamerica-northeast2
-  standard-nane2-protected-b-snet: 10.1.136.0/21
+  # nonp IP space
+  standard-nonp-cidr: 10.1.0.0/18
+  # Subnet IP range for nonp-main in northamerica-northeast1
+  standard-nane1-nonp-main-snet: 10.1.0.0/21
+  # Subnet IP range for nonp-main in northamerica-northeast2
+  standard-nane2-nonp-main-snet: 10.1.8.0/21
+  # pbmm IP space
+  standard-pbmm-cidr: 10.1.128.0/18
+  # Subnet IP range for pbmm-main in northamerica-northeast1
+  standard-nane1-pbmm-main-snet: 10.1.128.0/21
+  # Subnet IP range for pbmm-main in northamerica-northeast2
+  standard-nane2-pbmm-main-snet: 10.1.136.0/21
+  # Subnet IP range for regional managed proxy(rmp) in northamerica-northeast1
+  standard-nane1-rmp-snet: 10.1.224.0/23
+  # Subnet IP range for regional managed proxy(rmp) in northamerica-northeast2
+  standard-nane2-rmp-snet: 10.1.226.0/23
+  # Subnet IP range for private service connect(psc) in northamerica-northeast1
+  standard-nane1-psc-snet: 10.1.244.0/24
+  # Subnet IP range for private service connect(psc) in northamerica-northeast2
+  standard-nane2-psc-snet: 10.1.245.0/24
   # Destination ranges for the egress allow all internal firewall rule
   firewall-egress-allow-all-internal: |
     - 10.0.0.0/8
