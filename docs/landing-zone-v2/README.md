@@ -69,7 +69,7 @@ To deploy this Landing Zone you will need to:
 
   1. [Complete the bootstrap procedure.](#1-complete-the-bootstrap-procedure)
   2. [Create your landing zone.](#2-create-your-landing-zone)
-  3. [Deploy the infrastructure using either kpt or gitops-git or gitops-oci.](#3-deploy-the-infrastructure-using-either-kpt-or-gitops-git-or-gitops-oci)
+  3. [Deploy the infrastructure using either gitops](#deploy-the-infrastructure-using-gitops)
   4. [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
   5. [Perform the post deployment steps](#5-perform-the-post-deployment-steps)
 
@@ -358,7 +358,7 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 
     Review and customize all packages `setters.yaml` with the unique configuration of your landing zone.
 
-## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps.
+## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps
 
 
    Deploy via GitOps using Anthos Config Management.
@@ -373,7 +373,7 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 
 ### <a name='ConfigSync'></a>ConfigSync
 
-Now that we have a git repo set up we can configure the Config Controller's Config Sync operator to observe it in order to deploy our infrastructure. 
+Now that we have a git repo set up we can configure the Config Controller's Config Sync operator to observe it in order to deploy our infrastructure.
 
 This adds an extra layer of redundancy and drift protection to your infrastructure configuration. As per the Google Cloud [Documentation](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview#consistency_with_gitops)
 
