@@ -1,0 +1,49 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# The following rules are automatically created when the firewall policy is created:
+# 2147483644 default egress rule ipv6 Egress IPv6 ranges: ::/0 all Goto next
+# 2147483645 default ingress rule ipv6 Ingress IPv6 ranges: ::/0 all Goto next
+# 2147483646 default egress rule Egress IPv4 ranges: 0.0.0.0/0 all Goto next
+# 2147483647 default ingress rule Ingress IPv4 ranges: 0.0.0.0/0 all Goto next
+#########
+# Client Compute Firewall Policy on folder client-folder
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicy
+metadata:
+  name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+spec:
+  # shortName required
+  shortName: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
+  folderRef:
+    name: clients.client-name # kpt-set: clients.${client-name}
+    namespace: hierarchy
+  description: "Firewall policy for client-name" # kpt-set: Firewall policy for ${client-name}
+---
+# firewall policy association to applications-infrastructure folder
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicyAssociation
+metadata:
+  name: client-name-client-folder-fwpol-association # kpt-set: ${client-name}-client-folder-fwpol-association
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+spec:
+  attachmentTargetRef:
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+    namespace: hierarchy
+  firewallPolicyRef:
+    name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol

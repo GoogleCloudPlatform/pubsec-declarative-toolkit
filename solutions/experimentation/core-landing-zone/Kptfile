@@ -1,0 +1,16 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: core-landing-zone
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing Zone v2 experimentation core package.
+    Depends on the bootstrap procedure.
+
+    [Deploy a landing zone v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2).
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

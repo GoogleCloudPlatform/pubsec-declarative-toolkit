@@ -11,10 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+#########
 # Add all the required roles for IAP administration
 # https://cloud.google.com/iap/docs/using-tcp-forwarding#grant-permission
-
 ########################################
 # Create the Service Account for the Bastion Host VM
 ########################################

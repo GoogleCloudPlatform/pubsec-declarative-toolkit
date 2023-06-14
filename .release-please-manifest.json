@@ -1,11 +1,13 @@
 {
-    "solutions/gatekeeper-policies": "0.0.1",
-    "solutions/hierarchy/admin-experimentation": "0.0.1",
-    "solutions/hierarchy/client-env": "0.0.1",
-    "solutions/hierarchy/client-experimentation": "0.0.1",
-    "solutions/hierarchy/core-env": "0.0.1",
-    "solutions/hierarchy/core-experimentation": "0.0.1",
-    "solutions/landing-zone-v2": "0.0.1",
-    "solutions/org-policies": "0.0.1",
-    "solutions/project/project-experimentation": "0.0.1"
+    "solutions/client-landing-zone": "0.2.0",
+    "solutions/client-project-setup": "0.2.0",
+    "solutions/client-setup": "0.2.0",
+    "solutions/core-landing-zone": "0.2.0",
+    "solutions/experimentation/admin-folder": "0.1.0",
+    "solutions/experimentation/client-landing-zone": "0.1.0",
+    "solutions/experimentation/client-project": "0.1.0",
+    "solutions/experimentation/core-landing-zone": "0.1.0",
+    "solutions/gatekeeper-policies": "0.2.0",
+    "solutions/project/hub-env": "0.2.0",
+    "solutions/project/spoke-unclass-env": "0.1.0"
 }

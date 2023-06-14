@@ -1,15 +1,19 @@
 # Private Cloud SQL (PostgreSQL)
 
 ## Description
+
 This service will create a private cloud SQL instance using a private service connection to your VPC. This allows all traffic to your cloud sql instance to remain on the VPC and not cross the internet.
 
 ## Prerequisites
+
 This service assumes that you have a GCP project with a VPC network already setup. The VPC network must have "Google Private Access" enabled on it as well.
 
 ## Usage
-This service requires modifiying 3 files:
+
+This service requires modifying 3 files:
 
 ### **fn-setters.yaml**
+
 Update the following key:value pairs to match your environment
 
 | Name | Description |
@@ -22,6 +26,7 @@ Update the following key:value pairs to match your environment
 | sql-password-secret-name | The name of the secret to create that will store the sql users password |
 
 ### **fn-mutator.yaml**
+
 Update the following key:value pairs to match your environment
 
 | Name | Description |
@@ -30,9 +35,10 @@ Update the following key:value pairs to match your environment
 | sqlInstanceName | The name you want to give the SQL Instance |
 
 ### **secret.yaml**
+
 The SQL password to create as a K8's secret.
 
-** **WARNING** ** - Remember to protect this file and be careful how you store it in your source repo as the password is only base64 encoded. It's not encrypted!
+****WARNING**** - Remember to protect this file and be careful how you store it in your source repo as the password is only base64 encoded. It's not encrypted!
 
 | Name | Description |
 | --- | --- |
@@ -40,7 +46,7 @@ The SQL password to create as a K8's secret.
 
 ### **Defaults**
 
-You can easily change any of the defaults that this sevice uses by modifying the KRM manifest files.
+You can easily change any of the defaults that this service uses by modifying the KRM manifest files.
 
 | Name | Value | File(line number) |
 | --- | --- | --- |
@@ -50,23 +56,28 @@ You can easily change any of the defaults that this sevice uses by modifying the
 | Charset / Collation | UTF8 / en_US.UTF8 | sql.yaml(46/47) |
 
 ### **Fetch the package**
+
 `kpt pkg get https://github.com/GoogleCloudPlatform/gcp-pbmm-sandbox.git/services/private-sql@main private-sql`
-Details: https://kpt.dev/reference/cli/pkg/get/
+Details: <https://kpt.dev/reference/cli/pkg/get/>
 
 ### **View package content**
+
 `kpt pkg tree private-sql`
 
-Details: https://kpt.dev/reference/cli/pkg/tree/
+Details: <https://kpt.dev/reference/cli/pkg/tree/>
 
 ### **Update and render package**
+
 Remember to update the files noted above before running this command
 `kpt fn render private-sql`
 
-Details: https://kpt.dev/book/03-packages/04-rendering-a-package
+Details: <https://kpt.dev/book/03-packages/04-rendering-a-package>
 
 ### **Apply the package**
-```
+
+```shell
 kpt live init private-sql
 kpt live apply private-sql --reconcile-timeout=5m --output=table
 ```
-Details: https://kpt.dev/reference/cli/live/
+
+Details: <https://kpt.dev/reference/cli/live/>

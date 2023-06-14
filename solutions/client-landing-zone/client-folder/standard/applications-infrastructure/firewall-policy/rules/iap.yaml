@@ -1,0 +1,36 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Goto next for IAP
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicyRule
+metadata:
+  name: client-name-standard-applications-infrastructure-fwpol-goto-next-for-iap-fwr # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol-goto-next-for-iap-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+spec:
+  action: "goto_next"
+  description: "Goto next for IAP"
+  direction: "INGRESS"
+  disabled: false
+  enableLogging: false
+  firewallPolicyRef:
+    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+  match:
+    layer4Configs:
+      - ipProtocol: "all"
+    srcIPRanges:
+      - "35.235.240.0/20"
+  priority: 1000000

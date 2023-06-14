@@ -1,0 +1,17 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: hub-env
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    A project that implements the Hub functionality from the Hub and Spoke network design.
+    This package is NOT required within an experimentation landing zone.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/search-replace:v0.2.0
+      configPath: search-replace-config.yaml

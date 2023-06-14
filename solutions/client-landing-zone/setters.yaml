@@ -1,0 +1,124 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  ##########################
+  # Instructions
+  ##########################
+  #
+  # Follow instructions specific to each section.
+  # Project IDs must follow the rules below, additionally,
+  # if a gatekeeper policy is used to enforce specific naming conventions, refer to its documentation.
+  #   - All IDs should be universally unique.
+  #   - Must be 6 to 30 characters in length.
+  #   - Can only contain lowercase letters, numbers, and hyphens.
+  #   - Must start with a letter.
+  #   - Cannot end with a hyphen.
+  #   - Cannot be in use or previously used; this includes deleted projects.
+  #   - Cannot contain restricted strings, such as google and ssl.
+  #
+  ##########################
+  # Client
+  ##########################
+  #
+  # Name for the client, lowercase only
+  client-name: 'client1'
+  # Billing Account ID to be associated with projects
+  client-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  # group to grant viewer permission on client folder
+  client-folderviewer: 'group:client1@example.com'
+  #
+  ##########################
+  # Logging
+  ##########################
+  #
+  # logging project id created in core-landing-zone
+  logging-project-id: logging-project-12345
+  #
+  # LoggingLogBucket retention settings
+  # Set the number of days to retain logs in Cloud Logging buckets
+  # Set the lock mechanism on the bucket to: true or false
+  # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
+  # AU-9 PROTECTION OF AUDIT INFORMATION
+  # AU-11 AUDIT RECORD RETENTION
+  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
+  retention-locking-policy: "false"
+  retention-in-days: "1"
+  #
+  ##########################
+  # Network Host Project (standard)
+  ##########################
+  #
+  # the network host project id that will be created
+  host-project-id: net-host-project-12345
+  #
+  # unclassified IP space
+  standard-unclassified-cidr: 10.1.0.0/18
+  # Subnet IP range for unclassified in northamerica-northeast1
+  standard-nane1-unclassified-snet: 10.1.0.0/21
+  # Subnet IP range for unclassified in northamerica-northeast2
+  standard-nane2-unclassified-snet: 10.1.8.0/21
+  # protected A IP space
+  standard-protected-a-cidr: 10.1.64.0/18
+  # Subnet IP range for protected-a in northamerica-northeast1
+  standard-nane1-protected-a-snet: 10.1.64.0/21
+  # Subnet IP range for protected-a in northamerica-northeast2
+  standard-nane2-protected-a-snet: 10.1.72.0/21
+  # protected B IP space
+  standard-protected-b-cidr: 10.1.128.0/18
+  # Subnet IP range for protected-b in northamerica-northeast1
+  standard-nane1-protected-b-snet: 10.1.128.0/21
+  # Subnet IP range for protected-b in northamerica-northeast2
+  standard-nane2-protected-b-snet: 10.1.136.0/21
+  # Destination ranges for the egress allow all internal firewall rule
+  firewall-egress-allow-all-internal: |
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  #
+  ##########################
+  # Firewall Policy (client-folder)
+  ##########################
+  #
+  # Deny sanctioned countries ingress traffic
+  # https://cloud.google.com/firewall/docs/firewall-policies-rule-details#geo-location-object
+  # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+  # The list below is Google's default, modify as required
+  denied-sanctioned-countries: |
+    - "CU"
+    - "IR"
+    - "KP"
+    - "SY"
+  #
+  # Allowed domain names for os updates
+  # The list below is an example for Debian and Ubuntu, modify as per trusted images
+  allowed-os-update-domains: |
+    - "debian.map.fastlydns.net"
+    - "debian.org"
+    - "deb.debian.org"
+    - "ubuntu.com"
+    - "packages.cloud.google.com"
+    - "security.ubuntu.com"
+    - "northamerica-northeast1.gce.archive.ubuntu.com"
+    - "northamerica-northeast2.gce.archive.ubuntu.com"
+  #
+  ##########################
+  # End of Configurations
+  ##########################

@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -26,4 +26,4 @@ data:
   # Please change the values below
   #
   client_code: ^(aa|bb|cc)
-  env_code: d # (d = dev, p = production, e = experimentation, u = uat)
+  env_code: d # (d = dev, p = production, e = experimentation, u = preprod)

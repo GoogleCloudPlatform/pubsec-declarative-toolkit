@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#########
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -45,11 +45,9 @@ data:
   # Cannot end with a hyphen.
   # Cannot be in use or previously used; this includes deleted projects.
   # Cannot contain restricted strings, such as google and ssl.
-  net-host-prj-nonprod-id: net-host-prj-nonprod-12345
-  net-host-prj-prod-id: net-host-prj-prod-12345
-  net-perimeter-prj-common-id: net-per-prj-common-12345
   audit-prj-id: audit-prj-id-12345
   guardrails-project-id: guardrails-project-12345
+  hub-project-id: hub-project-12345
   #############
   # Groups
   # Permissions will be assigned to the specified group email

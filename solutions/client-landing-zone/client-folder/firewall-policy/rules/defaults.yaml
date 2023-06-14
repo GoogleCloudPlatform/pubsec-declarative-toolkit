@@ -1,0 +1,118 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Rules 2147483541 to 2147483546 in are the suggested defaults by Google
+#########
+# Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (EGRESS)
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicyRule
+metadata:
+  name: client-name-client-folder-fwpol-exclude-private-ip-ranges-egress-fwr # kpt-set: ${client-name}-client-folder-fwpol-exclude-private-ip-ranges-egress-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+spec:
+  action: "goto_next"
+  description: "Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (EGRESS)"
+  direction: "EGRESS"
+  disabled: false
+  enableLogging: false
+  firewallPolicyRef:
+    name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
+  match:
+    layer4Configs:
+      - ipProtocol: "all"
+    destIPRanges: # kpt-set: ${firewall-egress-allow-all-internal}
+      - "10.0.0.0/8"
+      - "172.16.0.0/12"
+      - "192.168.0.0/16"
+  priority: 2147483541
+---
+# Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (INGRESS)
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicyRule
+metadata:
+  name: client-name-client-folder-fwpol-exclude-private-ip-ranges-ingress-fwr # kpt-set: ${client-name}-client-folder-fwpol-exclude-private-ip-ranges-ingress-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+spec:
+  action: "goto_next"
+  description: "Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (INGRESS)"
+  direction: "INGRESS"
+  disabled: false
+  enableLogging: false
+  firewallPolicyRef:
+    name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
+  match:
+    layer4Configs:
+      - ipProtocol: "all"
+    srcIPRanges: # kpt-set: ${firewall-egress-allow-all-internal}
+      - "10.0.0.0/8"
+      - "172.16.0.0/12"
+      - "192.168.0.0/16"
+  priority: 2147483542
+---
+# Deny TOR exit nodes ingress traffic
+# https://cloud.google.com/armor/docs/threat-intelligence#configure-nti
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicyRule
+metadata:
+  name: client-name-client-folder-fwpol-deny-tor-nodes-ingress-traffic-fwr # kpt-set: ${client-name}-client-folder-fwpol-deny-tor-nodes-ingress-traffic-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+spec:
+  action: "deny"
+  description: "Deny TOR exit nodes ingress traffic"
+  direction: "INGRESS"
+  disabled: false
+  enableLogging: true
+  firewallPolicyRef:
+    name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
+  match:
+    layer4Configs:
+      - ipProtocol: "all"
+    srcIPRanges:
+      - "0.0.0.0/0"
+    srcThreatIntelligences:
+      - "iplist-tor-exit-nodes"
+  priority: 2147483543
+---
+# Deny sanctioned countries ingress traffic
+# https://cloud.google.com/firewall/docs/firewall-policies-rule-details#geo-location-object
+# https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewallPolicyRule
+metadata:
+  name: client-name-client-folder-fwpol-deny-sanctioned-countries-ingress-fwr # kpt-set: ${client-name}-client-folder-fwpol-deny-sanctioned-countries-ingress-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+spec:
+  action: "deny"
+  description: "Deny sanctioned countries ingress traffic"
+  direction: "INGRESS"
+  disabled: false
+  enableLogging: true
+  firewallPolicyRef:
+    name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
+  match:
+    layer4Configs:
+      - ipProtocol: "all"
+    srcIPRanges:
+      - "0.0.0.0/0"
+    srcRegionCodes: # kpt-set: ${denied-sanctioned-countries}
+      - "XX"
+  priority: 2147483546

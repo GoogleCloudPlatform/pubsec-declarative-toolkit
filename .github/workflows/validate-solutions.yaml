@@ -1,0 +1,68 @@
+name: validate-solutions
+on:
+  # disable normal push trigger to avoid running duplicates during PRs
+  # push:
+  #   paths:
+  #     - solutions/**
+  pull_request:
+    branches: [main]
+    paths:
+      - 'solutions/**'
+
+jobs:
+  render-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+
+      - name: 'Validate Solutions Packages'
+        run: |
+          # set kpt and nomos to run with docker in /workspace working directory
+          # note: starting with nomos ~v1.14.1, the image as an entrypoint to the 'nomos' command (only need to pass the parameters)
+          KPT="docker run -v $PWD:/workspace -w /workspace --user $(id -u):$(id -g) -v /var/run/docker.sock:/var/run/docker.sock gcr.io/kpt-dev/kpt:v1.0.0-beta.27"
+          NOMOS="docker run -v $PWD:/workspace -w /workspace gcr.io/config-management-release/nomos:v1.14.2"
+          TEMP_DIR='temp-workspace'
+
+          # find all Kptfile in solutions/, extract its directory name and sort
+          for pkg in $(find solutions -name Kptfile -exec dirname {} \; | sort)
+          do
+            echo -e "\n##############################\n## Validating '${pkg}' \n##############################"
+
+            # check if the package was modified (git diff exit code not 0), or if the flag to validate all is set
+            if ! git diff origin/main --quiet --exit-code -- ${pkg} || [[ "${VALIDATE_ALL_SOLUTIONS}" == "true" ]] ; then
+              # create temporary directory to copy the package
+              mkdir -p "${TEMP_DIR}/${pkg}"
+              cp -rf "${pkg}/." "${TEMP_DIR}/${pkg}"
+
+              echo -e "\n## Running 'kpt fn render ${pkg}' ...\n"
+              ${KPT} fn render "${TEMP_DIR}/${pkg}" --truncate-output=false
+
+              # TODO: kubeval is no longer maintained, future improvement to possibly use kubeconform or apply to a kind cluster
+              # !!! the kpt kubeval function can change quotes in annotations and remove duplicate resources (maybe 'kpt fn eval' does this?)
+              # to workaround this, set an '--output' directory to avoid in-place modifications, the directory must not exist
+              # to set strict=true, CRD schemas would need to be updated (with schema_location and additional_schema_locations)
+              # skip 'ConfigMap' kinds, setters may not always be string and would cause it to fail
+              # skip 'DNSRecordSet' kind, baked in schema flags 'spec.rrdatas' as required, but doc has it as deprecated
+              # https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsrecordset#spec
+
+              echo -e "\n## Running 'kpt fn eval -i kubeval:v0.3.0 ${pkg}' ...\n"
+              rm -rf "${TEMP_DIR}/kubeval/${pkg}"
+              ${KPT} fn eval -i kubeval:v0.3.0 "${TEMP_DIR}/${pkg}" --output="${TEMP_DIR}/kubeval/${pkg}" --truncate-output=false \
+                -- ignore_missing_schemas='true' strict='false' skip_kinds='ConfigMap,DNSRecordSet'
+
+              echo -e "\n## Running 'nomos vet ${pkg}' ...\n"
+              ${NOMOS} vet --no-api-server-check --source-format unstructured --path "${TEMP_DIR}/${pkg}"
+
+              rm -rf "${TEMP_DIR}/${pkg}"
+            else
+              echo "No modification detected for the package, skipping."
+            fi
+          done
+
+          # cleanup
+          rm -rf "${TEMP_DIR}"
+
+          echo -e "\n##############################\n## Validation Complete \n##############################"
+        env:
+          VALIDATE_ALL_SOLUTIONS: false
