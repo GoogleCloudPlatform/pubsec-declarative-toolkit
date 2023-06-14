@@ -9,27 +9,27 @@
 - [Multiple GCP organizations](#multiple-gcp-organizations)
 - [Setup](#setup)
 - [Complete the bootstrap procedure](#1-complete-the-bootstrap-procedure)
-    - [Requirements](#requirements)
-    - [Summary](#summary)
-    - [Initial Organization configuration](#initial-organization-configuration)
-    - [Config Controller project and cluster](#config-controller-project-and-cluster)
-        - [Option 1 - Org level folder](#option-1---org-level-folder)
-        - [Option 2 - Folder in a Folder](#option-2---folder-in-a-folder)
-        - [Option 1 - Org level Project](#option-1---org-level-project)
-        - [Option 2 - Project in a Folder](#option-2---project-in-a-folder)
-        - [GKE Autopilot - Fully managed cluster](#gke-autopilot---fully-managed-cluster)
-        - [GKE Standard](#gke-standard)
+  - [Requirements](#requirements)
+  - [Summary](#summary)
+  - [Initial Organization configuration](#initial-organization-configuration)
+  - [Config Controller project and cluster](#config-controller-project-and-cluster)
+    - [Option 1 - Org level folder](#option-1---org-level-folder)
+    - [Option 2 - Folder in a Folder](#option-2---folder-in-a-folder)
+    - [Option 1 - Org level Project](#option-1---org-level-project)
+    - [Option 2 - Project in a Folder](#option-2---project-in-a-folder)
+    - [GKE Autopilot - Fully managed cluster](#gke-autopilot---fully-managed-cluster)
+    - [GKE Standard](#gke-standard)
 - [Create your landing zone](#2-create-your-landing-zone)
-    - [Fetch the packages](#fetch-the-packages)
+  - [Fetch the packages](#fetch-the-packages)
 - [Deploy the infrastructure using GitOps](#deploy-the-infrastructure-using-gitops)
-    - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
-    - [ConfigSync](#configsync)
+  - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
+  - [ConfigSync](#configsync)
 - [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
 - [Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
 - [Grant billing account user role](#grant-billing-account-user-role)
 - [Next Step](#next-step)
 - [Clean Up](#clean-up)
-    - [Gitops](#clean-up-gitops)
+  - [Gitops](#clean-up-gitops)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -58,7 +58,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 ## <a name='SingleGCPorganization'></a>Single GCP organization
 
 ![img](img/single-org.png)
-
+kpt or
 ## <a name='MultipleGCPorganizations'></a>Multiple GCP organizations
 
 ![img](img/multi-org.png)
