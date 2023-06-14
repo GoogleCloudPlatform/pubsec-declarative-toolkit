@@ -131,10 +131,10 @@ To deploy this Landing Zone you will need to:
 
     ```shell
     # Validate if a storageLocation is defined for the organization
-    gcloud alpha logging settings describe --organization=${ORG_ID}
+    gcloud logging settings describe --organization=${ORG_ID}
 
     # Modify the default logging storage location
-    gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+    gcloud logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
 1. Create the Organization level Access Context Manager policy
@@ -152,7 +152,7 @@ To deploy this Landing Zone you will need to:
 
 ## <a name='ConfigControllerprojectandcluster'></a>Config Controller project and cluster
 
-1. Create LZ folder
+1. Create a folder where the Landing Zone will be deployed into:
 
 ### <a name='Option1-Orglevelfolder'></a>Option 1 - Org level folder
 
@@ -166,7 +166,7 @@ To deploy this Landing Zone you will need to:
     FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
 ```
 
-2. Create config controller project
+2. Create a new project at the org level where we will install the Config Controller instance.
 
 ### <a name='Option1-OrglevelProject'></a>Option 1 - Org level Project
 
@@ -192,13 +192,13 @@ To deploy this Landing Zone you will need to:
     gcloud config set project $PROJECT_ID
     ```
 
-1. Enable the required services
+1. Enable the required services to provision the config controller instance.
 
     ```shell
     gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
     ```
 
-1. Create network
+1. Create the required network resources. Config Controller provisions a managed Private GKE instance and still requires some core networking resource to work.
 
     ```shell
     # VPC
@@ -334,7 +334,7 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 > **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available but
 > we strongly recommend using versions over main. Alternatively, each package CHANGELOG.md contains the history if there is a requirement to use an older version.**
 
-1. Get the gatekeeper policies package
+1. Get the gatekeeper policies package. These are the policies which your Config Controller instance will use to [validate](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) compliance of any configuration deployed, this currently checks for guardrails compliance and naming conventions on projects. These policies will also be validated when running the `kpt fn render` command for early feedback.
 
     ```shell
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@<VERSION>
@@ -373,7 +373,13 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 
 ### <a name='ConfigSync'></a>ConfigSync
 
-Now that we have a git repo set up we can configure the Config Controller's ConfigSync operator to observe it in order to deploy our infrastructure.
+Now that we have a git repo set up we can configure the Config Controller's Config Sync operator to observe it in order to deploy our infrastructure. 
+
+This adds an extra layer of redundancy and drift protection to your infrastructure configuration. As per the Google Cloud [Documentation](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview#consistency_with_gitops)
+
+```
+Config Sync continuously reconciles the state of Config Controller with files stored in one or more Git repositories. This GitOps strategy lets you manage and deploy common configurations with a process that is auditable, transactional, reviewable, and version-controlled. It also enables collaboration with your colleagues on potential changes, and lets you preview modifications before they are made.
+```
 
 1. Create `git-creds` secret with the required value to access the git repository
 
