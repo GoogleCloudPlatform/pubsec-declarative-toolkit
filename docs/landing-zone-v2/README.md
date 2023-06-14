@@ -21,7 +21,7 @@
         - [GKE Standard](#gke-standard)
 - [Create your landing zone](#2-create-your-landing-zone)
     - [Fetch the packages](#fetch-the-packages)
-- [Deploy the infrastructure using GitOps](#3-deploy-the-infrastructure-using-either-kpt-or-gitops-git-or-gitops-oci)
+- [Deploy the infrastructure using GitOps](#deploy-the-infrastructure-using-gitops)
     - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
     - [ConfigSync](#configsync)
 - [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
@@ -358,7 +358,7 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 
     Review and customize all packages `setters.yaml` with the unique configuration of your landing zone.
 
-## <a name='Deploytheinfrastructureusingeitherkptorgitops-gitorgitops-oci'></a>3. Deploy the infrastructure using GitOps.
+## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps.
 
 
    Deploy via GitOps using Anthos Config Management.
