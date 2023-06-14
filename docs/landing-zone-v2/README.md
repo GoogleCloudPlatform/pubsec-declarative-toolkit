@@ -377,9 +377,8 @@ Now that we have a git repo set up we can configure the Config Controller's Conf
 
 This adds an extra layer of redundancy and drift protection to your infrastructure configuration. As per the Google Cloud [Documentation](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview#consistency_with_gitops)
 
-```
-Config Sync continuously reconciles the state of Config Controller with files stored in one or more Git repositories. This GitOps strategy lets you manage and deploy common configurations with a process that is auditable, transactional, reviewable, and version-controlled. It also enables collaboration with your colleagues on potential changes, and lets you preview modifications before they are made.
-```
+>Config Sync continuously reconciles the state of Config Controller with files stored in one or more Git repositories. This GitOps strategy lets you manage and deploy common configurations with a process that is auditable, transactional, reviewable, and version-controlled. It also enables collaboration with your colleagues on potential changes, and lets you preview modifications before they are made.
+
 
 1. Create `git-creds` secret with the required value to access the git repository
 
