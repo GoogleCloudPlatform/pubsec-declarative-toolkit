@@ -23,3 +23,7 @@ data:
   client-name: 'client1'
   # The project id of the client
   project-id: client-project-12345
+  # the id of the network host project
+  host-project-id: host-project-12345
+  # the name of the workload, lowercase only
+  workload-name: workload1
