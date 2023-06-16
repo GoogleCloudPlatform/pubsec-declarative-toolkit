@@ -10,6 +10,8 @@ Depends on the bootstrap procedure.
 
 [Deploy a landing zone v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2).
 
+Attention, validate impact with CCCS Cloud Based Sensors before implementing any changes to organization policies.
+
 ## Setters
 
 |               Name                |                  Value                  | Type  | Count |
@@ -167,7 +169,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/core-landing-zone/"
+    cd "./core-landing-zone/"
     ```
 
 1.  Edit the function config file(s):
