@@ -110,7 +110,7 @@ data:
   ##########################
   #
   dns-project-id: dns-project-12345
-  dns-name: dns-name.example.com.
+  dns-name: "dns-name.example.com."
   # Select a primary nameserver for the SOA record
   dns-primary-nameserver: |
     - "ns-cloud-a1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300"
