@@ -14,7 +14,7 @@
 #########
 # Compute Address Example
 #########
-# Create external compute address 
+# Create external compute address
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
