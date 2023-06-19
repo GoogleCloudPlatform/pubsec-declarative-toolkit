@@ -21,7 +21,7 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/ssc-spc-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/ssc-spc-projects/Project/${host-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   description: "client-name standard public dns subzone" # kpt-set: ${client-name} standard public dns subzone
   resourceID: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
