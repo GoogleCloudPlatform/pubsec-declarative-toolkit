@@ -124,7 +124,7 @@ data:
   ##########################
   #
   dns-project-id: dns-project-12345
-  dns-name: "dns-name.example.com."
+  dns-name: "client-name.example.com."
   # Select a primary nameserver for the SOA record
   # The nameservers must be part of the same group of nameservers (a,b,c,d) as the primary nameserver
   dns-primary-nameserver: |
