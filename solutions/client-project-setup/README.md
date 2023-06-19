@@ -17,13 +17,13 @@ Package to create a client's project, 2 project scoped namespaces for its resour
 | allowed-nane1-subnet         | nane1-standard-classification-snet | str  |     2 |
 | allowed-nane2-subnet         | nane2-standard-classification-snet | str  |     2 |
 | client-management-project-id | client-management-project-12345    | str  |     1 |
-| client-name                  | client1                            | str  |    50 |
+| client-name                  | client1                            | str  |    48 |
 | host-project-id              | net-host-project-12345             | str  |     5 |
 | management-namespace         | config-control                     | str  |     8 |
 | management-project-id        | management-project-12345           | str  |     2 |
 | org-id                       |                         0000000000 | str  |     2 |
 | project-billing-id           | AAAAAA-BBBBBB-CCCCCC               | str  |     1 |
-| project-id                   | client-project-12345               | str  |    87 |
+| project-id                   | client-project-12345               | str  |    83 |
 | project-parent-folder        | project-parent-folder              | str  |     2 |
 | repo-branch                  | main                               | str  |     1 |
 | repo-dir                     | csync/deploy/env                   | str  |     1 |
@@ -51,7 +51,6 @@ This package has no sub-packages.
 | namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount              | project-id-tier4-sa                                                         | client-name-config-control |
 | namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-allowed-nane1-subnet-permissions            | client-name-networking     |
 | namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-allowed-nane2-subnet-permissions            | client-name-networking     |
-| namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-instanceadmin-project-id-permissions                    | client-name-projects       |
 | namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy               | project-id-tier4-sa-workload-identity-binding                               | client-name-config-control |
 | namespaces/project-id-tier4.yaml | v1                                            | Namespace                      | project-id-tier4                                                            |                            |
 | namespaces/project-id-tier4.yaml | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext         | configconnectorcontext.core.cnrm.cloud.google.com                           | project-id-tier4           |
