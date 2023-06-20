@@ -140,10 +140,10 @@ To deploy this Landing Zone you will need to:
 
     ```shell
     # Validate if a storageLocation is defined for the organization
-    gcloud alpha logging settings describe --organization=${ORG_ID}
+    gcloud logging settings describe --organization=${ORG_ID}
 
     # Modify the default logging storage location
-    gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+    gcloud logging settings update --organization=$ORG_ID --storage-location=$REGION
     ```
 
 1. Create the Organization level Access Context Manager policy
