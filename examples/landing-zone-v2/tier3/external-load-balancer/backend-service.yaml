@@ -1,0 +1,60 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# create the backend service to attach to an existing mig and cloud armor policy
+# also configure CDN defaults
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeBackendService
+metadata:
+  name: workload-name-backend-service # kpt-set: ${workload-name}-backend-service
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: workload-name-backend-service # kpt-set: ${workload-name}-backend-service
+  # set a mig created from tier4 as backend
+  backend:
+    - balancingMode: RATE
+      capacityScaler: 0.9
+      maxRate: 10000
+      group:
+        instanceGroupRef:
+          # when using a MIG, the external ref must be used and is pointing to its 'instanceGroup' value
+          external: https://www.googleapis.com/compute/beta/projects/project-id/zones/northamerica-northeast1-a/instanceGroups/workload-name-instance-group-manager # kpt-set: https://www.googleapis.com/compute/beta/projects/${project-id}/zones/northamerica-northeast1-a/instanceGroups/${workload-name}-instance-group-manager
+  cdnPolicy:
+    cacheKeyPolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: true
+    cacheMode: CACHE_ALL_STATIC
+    clientTtl: 3600
+    defaultTtl: 3600
+    maxTtl: 86400
+    signedUrlCacheMaxAgeSec: 0
+  connectionDrainingTimeoutSec: 300
+  healthChecks:
+    - healthCheckRef:
+        name: workload-name-health-check-http # kpt-set: ${workload-name}-health-check-http
+  loadBalancingScheme: EXTERNAL_MANAGED
+  localityLbPolicy: ROUND_ROBIN
+  location: global
+  logConfig:
+    enable: true
+    sampleRate: 1
+  portName: http
+  protocol: HTTP
+  # set as target to an existing cloud armor policy
+  securityPolicyRef:
+    name: workload-name-security-policy # kpt-set: ${workload-name}-security-policy
+  sessionAffinity: NONE
+  timeoutSec: 30
