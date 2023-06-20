@@ -19,7 +19,7 @@
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: application1-client-name-standard-core-public-dns-a-rset # kpt-set: application1-${client-name}-standard-core-public-dns-a-rset
+  name: workload-name-client-name-standard-core-public-dns-a-rset # kpt-set: workload-name-${client-name}-standard-core-public-dns-a-rset
   namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}

@@ -6,10 +6,10 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: |
-    Landing zone v2 tier3 resource example.
+    Landing zone v2 tier4 resource example.
     Depends on `client-project-setup`.
 
-    Example to create an IPv4 compute address hosted in a client's project (tier3 namespace).
+    Example to create an IPv4 compute address hosted in a client's project (tier4 namespace).
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

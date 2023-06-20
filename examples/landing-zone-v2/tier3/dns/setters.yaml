@@ -20,21 +20,6 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   ##########################
-  # Instructions
-  ##########################
-  #
-  # Follow instructions specific to each section.
-  # Project IDs must follow the rules below, additionally,
-  # if a gatekeeper policy is used to enforce specific naming conventions, refer to its documentation.
-  #   - All IDs should be universally unique.
-  #   - Must be 6 to 30 characters in length.
-  #   - Can only contain lowercase letters, numbers, and hyphens.
-  #   - Must start with a letter.
-  #   - Cannot end with a hyphen.
-  #   - Cannot be in use or previously used; this includes deleted projects.
-  #   - Cannot contain restricted strings, such as google and ssl.
-  #
-  ##########################
   # Client
   ##########################
   #
@@ -44,7 +29,7 @@ data:
   # Tier34 Project
   ##########################
   #
-  # project id for the client project to be created, following rules and conventions
+  # client project to be referenced
   project-id: client-project-12345
   ##########################
   # Network Host Project (standard)
