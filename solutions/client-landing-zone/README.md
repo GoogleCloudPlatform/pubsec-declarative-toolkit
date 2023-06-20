@@ -17,7 +17,7 @@ Package to create a client's folder hierarchy, logging resources and a network h
 | allowed-os-update-domains          | ["debian.map.fastlydns.net", "debian.org", "deb.debian.org", "ubuntu.com", "packages.cloud.google.com", "security.ubuntu.com", "northamerica-northeast1.gce.archive.ubuntu.com", "northamerica-northeast2.gce.archive.ubuntu.com"] | array |     1 |
 | client-billing-id                  | AAAAAA-BBBBBB-CCCCCC                                                                                                                                                                                                               | str   |     1 |
 | client-folderviewer                | group:client1@example.com                                                                                                                                                                                                          | str   |     1 |
-| client-name                        | client1                                                                                                                                                                                                                            | str   |   168 |
+| client-name                        | client1                                                                                                                                                                                                                            | str   |   172 |
 | denied-sanctioned-countries        | ["CU", "IR", "KP", "SY"]                                                                                                                                                                                                           | array |     1 |
 | firewall-egress-allow-all-internal | [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]                                                                                                                                                                                        | array |     3 |
 | host-project-id                    | net-host-project-12345                                                                                                                                                                                                             | str   |   111 |
@@ -104,6 +104,7 @@ This package has no sub-packages.
 | client-folder/standard/firewall-policy/rules/network-isolation.yaml                                                                     | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewallPolicyRule        | client-name-standard-fwpol-isolate-protected-a-fwr                                         | client-name-networking |
 | client-folder/standard/firewall-policy/rules/network-isolation.yaml                                                                     | compute.cnrm.cloud.google.com/v1beta1         | ComputeFirewallPolicyRule        | client-name-standard-fwpol-isolate-protected-b-fwr                                         | client-name-networking |
 | client-folder/standard/folder.yaml                                                                                                      | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                           | standard                                                                                   | client-name-hierarchy  |
+| client-folder/standard/org-policies/exceptions/compute-restrict-load-balancer-creation-for-types.yaml                                   | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy            | compute-restrict-load-balancer-creation-for-types-except-standard-folder                   | policies               |
 | logging-project/cloud-logging-bucket.yaml                                                                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket                 | platform-and-component-client-name-log-bucket                                              | logging                |
 | logging-project/project-iam.yaml                                                                                                        | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy                 | platform-and-component-log-client-name-bucket-writer-permissions                           | projects               |
 
@@ -143,7 +144,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/client-landing-zone/"
+    cd "./solutions/client-landing-zone/"
     ```
 
 1.  Edit the function config file(s):

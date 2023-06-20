@@ -1,0 +1,36 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# IAP to GCE workload service account
+# IAM permissions are also required
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: project-id-workload-name-iap-ssh # kpt-set: ${project-id}-${workload-name}-iap-ssh
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+spec:
+  resourceID: project-id-workload-name-iap-ssh # kpt-set: ${project-id}-${workload-name}-iap-ssh
+  allow:
+    - protocol: tcp
+      ports:
+        - "22"
+  networkRef:
+    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
+    namespace: client-name-networking # kpt-set: ${client-name}-networking
+  sourceRanges:
+    - "35.235.240.0/20"
+  targetServiceAccounts:
+    - name: workload-name-sa # kpt-set: ${workload-name}-sa
+      namespace: project-id-tier4 # kpt-set: ${project-id}-tier4

@@ -17,8 +17,7 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: project-id-fwpol-edit-name-here # kpt-set: ${project-id}-fwpol-edit-name-here
-  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
+  name: project-id-fwpol-workload-name # kpt-set: ${project-id}-fwpol-${workload-name}
 spec:
   action: "allow"
   description: "allow access to example.com"
@@ -34,9 +33,11 @@ spec:
         ports:
           - "80"
           - "443"
+    # ideally the range should be smaller than this example
     srcIPRanges:
       - "10.0.0.0/8"
+    # add a list of destination fqdns below
     destFqdns:
       - "example.com"
-  # IMPORTANT to set a proper priority
+  # IMPORTANT to set a proper priority, each project should have a reserved range
   priority: 5050
