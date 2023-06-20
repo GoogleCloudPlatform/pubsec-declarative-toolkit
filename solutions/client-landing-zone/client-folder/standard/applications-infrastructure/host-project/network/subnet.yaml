@@ -62,47 +62,6 @@ spec:
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
 ---
-# Subnet regional managed proxy(rmp) northamerica-northeast1
-# no private google access and no logging (Proxy-only subnets do not support VPC Flow Logs)
-# AC-4, AC-4(21)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSubnetwork
-metadata:
-  name: host-project-id-nane1-standard-rmp-snet # kpt-set: ${host-project-id}-nane1-standard-rmp-snet
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
-spec:
-  resourceID: nane1-standard-rmp-snet
-  ipCidrRange: 10.1.224.0/23 # kpt-set: ${standard-nane1-rmp-snet}
-  region: northamerica-northeast1
-  description: northamerica-northeast1 rmp subnet
-  purpose: REGIONAL_MANAGED_PROXY
-  role: ACTIVE
-  networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
----
-# Subnet private service connect(psc) northamerica-northeast1
-# no private google access and no logging
-# AC-4, AC-4(21)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSubnetwork
-metadata:
-  name: host-project-id-nane1-standard-psc-snet # kpt-set: ${host-project-id}-nane1-standard-psc-snet
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
-spec:
-  resourceID: nane1-standard-psc-snet
-  ipCidrRange: 10.1.244.0/24 # kpt-set: ${standard-nane1-psc-snet}
-  region: northamerica-northeast1
-  description: northamerica-northeast1 psc subnet
-  purpose: PRIVATE_SERVICE_CONNECT
-  networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
----
 # Subnet nonp-main northamerica-northeast2
 # AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
@@ -148,44 +107,3 @@ spec:
     aggregationInterval: INTERVAL_5_SEC
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
----
-# Subnet regional managed proxy(rmp) northamerica-northeast2
-# no private google access and no logging (Proxy-only subnets do not support VPC Flow Logs)
-# AC-4, AC-4(21)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSubnetwork
-metadata:
-  name: host-project-id-nane2-standard-rmp-snet # kpt-set: ${host-project-id}-nane2-standard-rmp-snet
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
-spec:
-  resourceID: nane2-standard-rmp-snet
-  ipCidrRange: 10.1.226.0/23 # kpt-set: ${standard-nane2-rmp-snet}
-  region: northamerica-northeast2
-  description: northamerica-northeast2 rmp subnet
-  purpose: REGIONAL_MANAGED_PROXY
-  role: ACTIVE
-  networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
----
-# Subnet private service connect(psc) northamerica-northeast2
-# no private google access and no logging
-# AC-4, AC-4(21)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSubnetwork
-metadata:
-  name: host-project-id-nane2-standard-psc-snet # kpt-set: ${host-project-id}-nane2-standard-psc-snet
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
-spec:
-  resourceID: nane2-standard-psc-snet
-  ipCidrRange: 10.1.245.0/24 # kpt-set: ${standard-nane2-psc-snet}
-  region: northamerica-northeast2
-  description: northamerica-northeast1 psc subnet
-  purpose: PRIVATE_SERVICE_CONNECT
-  networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
