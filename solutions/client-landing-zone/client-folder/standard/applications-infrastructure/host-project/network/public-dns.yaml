@@ -83,9 +83,10 @@ apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
   name: client-name-standard-core-public-dns-ns-rset # kpt-set: ${client-name}-standard-core-public-dns-ns-rset
-  namespace: networking # kpt-set: networking
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
+    config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/client-name-networking/DNSManagedZone/client-name-standard-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/${client-name}-networking/DNSManagedZone/${client-name}-standard-public-dns
 spec:
   name: "dns-name" # kpt-set: ${dns-name}
   type: "NS"
