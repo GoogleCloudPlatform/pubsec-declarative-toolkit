@@ -1,15 +1,13 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: example-firewall-policy-rules
+  name: example-packages
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
   description: |
-    Landing zone v2 tier3 resource example.
+    Landing zone v2 client resources examples.
     Depends on `client-project-setup`.
-
-    Example to create a firewall rule in an existing policy from a client's project (tier3 namespace)
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
