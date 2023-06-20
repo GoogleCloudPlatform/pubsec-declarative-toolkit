@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.2.0...solutions/client-landing-zone/0.3.0) (2023-06-20)
+
+
+### Features
+
+* add cloud armor resources ([#400](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/400)) ([88035a3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/88035a3091e2baebd1fbb358ced61684e1584027))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.1.0...solutions/client-landing-zone/0.2.0) (2023-06-07)
 
 
