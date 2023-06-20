@@ -59,11 +59,11 @@ spec:
   role: roles/compute.securityAdmin
   member: "serviceAccount:client-name-networking-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-networking-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role DNS Admin to GCP SA
+# Grant GCP role Tier2 DNS Record Admin to GCP SA on Core DNS Project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: client-name-networking-sa-dns-permissions # kpt-set: ${client-name}-networking-sa-dns-permissions
+  name: client-name-networking-sa-tier2-dns-record-admin-permission # kpt-set: ${client-name}-networking-sa-tier2-dns-record-admin-permission
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
