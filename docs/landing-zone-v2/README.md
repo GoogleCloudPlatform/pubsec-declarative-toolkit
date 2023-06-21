@@ -2,16 +2,18 @@
 
 ## Table of Contents
 <!-- vscode-markdown-toc -->
-- [Introduction](#introduction)
-- [Implementation](#implementation)
-- [Organization](#organization)
-- [Single GCP organization](#single-gcp-organization)
-- [Multiple GCP organizations](#multiple-gcp-organizations)
-- [Setup](#setup)
-- [Complete the bootstrap procedure](#1-complete-the-bootstrap-procedure)
-  - [Requirements](#requirements)
-  - [Summary](#summary)
-  - [Initial Organization configuration](#initial-organization-configuration)
+- [KRM Landing Zone v2](#krm-landing-zone-v2)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Implementation](#implementation)
+  - [Organization](#organization)
+  - [Single GCP organization](#single-gcp-organization)
+  - [Multiple GCP organizations](#multiple-gcp-organizations)
+  - [Setup](#setup)
+    - [1. Complete the bootstrap procedure](#1-complete-the-bootstrap-procedure)
+      - [Requirements](#requirements)
+    - [Summary](#summary)
+    - [Initial Organization configuration](#initial-organization-configuration)
   - [Config Controller project and cluster](#config-controller-project-and-cluster)
     - [Option 1 - Org level folder](#option-1---org-level-folder)
     - [Option 2 - Folder in a Folder](#option-2---folder-in-a-folder)
@@ -19,17 +21,17 @@
     - [Option 2 - Project in a Folder](#option-2---project-in-a-folder)
     - [GKE Autopilot - Fully managed cluster](#gke-autopilot---fully-managed-cluster)
     - [GKE Standard](#gke-standard)
-- [Create your landing zone](#2-create-your-landing-zone)
-  - [Fetch the packages](#fetch-the-packages)
-- [Deploy the infrastructure using GitOps](#deploy-the-infrastructure-using-gitops)
-  - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
-  - [ConfigSync](#configsync)
-- [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
-- [Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
-- [Grant billing account user role](#grant-billing-account-user-role)
-- [Next Step](#next-step)
-- [Clean Up](#clean-up)
-  - [Gitops](#clean-up-gitops)
+  - [2. Create your landing zone](#2-create-your-landing-zone)
+    - [Fetch the packages](#fetch-the-packages)
+  - [3. Deploy the infrastructure using GitOps](#3-deploy-the-infrastructure-using-gitops)
+    - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
+    - [ConfigSync](#configsync)
+  - [4. Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
+  - [5. Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
+    - [Grant billing account user role](#grant-billing-account-user-role)
+  - [Next Step](#next-step)
+  - [Clean Up](#clean-up)
+  - [GitOps](#gitops)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -54,11 +56,41 @@ You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/
 ## <a name='Organization'></a>Organization
 
 This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, PreProduction and Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
+- [KRM Landing Zone v2](#krm-landing-zone-v2)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Implementation](#implementation)
+  - [Organization](#organization)
+  - [Single GCP organization](#single-gcp-organization)
+  - [Multiple GCP organizations](#multiple-gcp-organizations)
+  - [Setup](#setup)
+    - [1. Complete the bootstrap procedure](#1-complete-the-bootstrap-procedure)
+      - [Requirements](#requirements)
+    - [Summary](#summary)
+    - [Initial Organization configuration](#initial-organization-configuration)
+  - [Config Controller project and cluster](#config-controller-project-and-cluster)
+    - [Option 1 - Org level folder](#option-1---org-level-folder)
+    - [Option 2 - Folder in a Folder](#option-2---folder-in-a-folder)
+    - [Option 1 - Org level Project](#option-1---org-level-project)
+    - [Option 2 - Project in a Folder](#option-2---project-in-a-folder)
+    - [GKE Autopilot - Fully managed cluster](#gke-autopilot---fully-managed-cluster)
+    - [GKE Standard](#gke-standard)
+  - [2. Create your landing zone](#2-create-your-landing-zone)
+    - [Fetch the packages](#fetch-the-packages)
+  - [3. Deploy the infrastructure using GitOps](#3-deploy-the-infrastructure-using-gitops)
+    - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
+    - [ConfigSync](#configsync)
+  - [4. Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
+  - [5. Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
+    - [Grant billing account user role](#grant-billing-account-user-role)
+  - [Next Step](#next-step)
+  - [Clean Up](#clean-up)
+  - [GitOps](#gitops)
 
 ## <a name='SingleGCPorganization'></a>Single GCP organization
 
 ![img](img/single-org.png)
-kpt or
+
 ## <a name='MultipleGCPorganizations'></a>Multiple GCP organizations
 
 ![img](img/multi-org.png)
@@ -69,7 +101,7 @@ To deploy this Landing Zone you will need to:
 
   1. [Complete the bootstrap procedure.](#1-complete-the-bootstrap-procedure)
   2. [Create your landing zone.](#2-create-your-landing-zone)
-  3. [Deploy the infrastructure using either gitops](#deploy-the-infrastructure-using-gitops)
+  3. [Deploy the infrastructure using gitops](#deploy-the-infrastructure-using-gitops)
   4. [Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
   5. [Perform the post deployment steps](#5-perform-the-post-deployment-steps)
 
