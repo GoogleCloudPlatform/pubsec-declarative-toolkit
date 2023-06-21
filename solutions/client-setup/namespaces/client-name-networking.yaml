@@ -81,7 +81,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: client-name-networking-sa-tier2-dns-record-admin-permission # kpt-set: ${client-name}-networking-sa-tier2-dns-record-admin-permission
-  namespace: hierarchy
+  namespace: projects
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
