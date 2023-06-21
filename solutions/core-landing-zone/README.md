@@ -1,7 +1,6 @@
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # core-landing-zone
 
-TODO: Regenerate README
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 
@@ -15,24 +14,28 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 
 ## Setters
 
-|               Name                |                  Value                  | Type  | Count |
-|-----------------------------------|-----------------------------------------|-------|-------|
-| allowed-contact-domains           | ["@example.com"]                        | array |     1 |
-| allowed-load-balancer-types       | [INTERNAL_HTTP_HTTPS, INTERNAL_TCP_UDP] | array |     1 |
-| allowed-policy-domain-members     | ["DIRECTORY_CUSTOMER_ID"]               | array |     1 |
-| allowed-trusted-image-projects    | ["projects/cos-cloud"]                  | array |     1 |
-| allowed-vpc-peering               | ["under:organizations/ORGANIZATION_ID"] | array |     1 |
-| billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str   |     1 |
-| logging-project-id                | logging-project-12345                   | str   |    21 |
-| lz-folder-id                      |                              0000000000 | str   |    15 |
-| management-namespace              | config-control                          | str   |    42 |
-| management-project-id             | management-project-12345                | str   |    75 |
-| management-project-number         |                              0000000000 | str   |     3 |
-| org-id                            |                              0000000000 | str   |    33 |
-| platform-and-component-log-bucket | platform-and-component-log-bucket-12345 | str   |     2 |
-| retention-in-days                 |                                       1 | int   |     2 |
-| retention-locking-policy          | false                                   | bool  |     2 |
-| security-log-bucket               | security-log-bucket-12345               | str   |     1 |
+|               Name                |                                                                  Value                                                                   | Type  | Count |
+|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------|-------|
+| allowed-contact-domains           | ["@example.com"]                                                                                                                         | array |     1 |
+| allowed-load-balancer-types       | [INTERNAL_HTTP_HTTPS, INTERNAL_TCP_UDP]                                                                                                  | array |     1 |
+| allowed-policy-domain-members     | ["DIRECTORY_CUSTOMER_ID"]                                                                                                                | array |     1 |
+| allowed-trusted-image-projects    | ["projects/cos-cloud"]                                                                                                                   | array |     1 |
+| allowed-vpc-peering               | ["under:organizations/ORGANIZATION_ID"]                                                                                                  | array |     1 |
+| billing-id                        | AAAAAA-BBBBBB-CCCCCC                                                                                                                     | str   |     2 |
+| dns-name                          | example.com.                                                                                                                             | str   |     3 |
+| dns-nameservers                   | ["ns-cloud-a1.googledomains.com.", "ns-cloud-a2.googledomains.com.", "ns-cloud-a3.googledomains.com.", "ns-cloud-a4.googledomains.com."] | array |     1 |
+| dns-primary-nameserver            | ["ns-cloud-a1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300"]                                              | array |     1 |
+| dns-project-id                    | dns-project-12345                                                                                                                        | str   |    16 |
+| logging-project-id                | logging-project-12345                                                                                                                    | str   |    21 |
+| lz-folder-id                      |                                                                                                                               0000000000 | str   |    15 |
+| management-namespace              | config-control                                                                                                                           | str   |    42 |
+| management-project-id             | management-project-12345                                                                                                                 | str   |    75 |
+| management-project-number         |                                                                                                                               0000000000 | str   |     3 |
+| org-id                            |                                                                                                                               0000000000 | str   |    33 |
+| platform-and-component-log-bucket | platform-and-component-log-bucket-12345                                                                                                  | str   |     2 |
+| retention-in-days                 |                                                                                                                                        1 | int   |     2 |
+| retention-locking-policy          | false                                                                                                                                    | bool  |     2 |
+| security-log-bucket               | security-log-bucket-12345                                                                                                                | str   |     1 |
 
 ## Sub-packages
 
@@ -54,6 +57,11 @@ This package has no sub-packages.
 | lz-folder/clients/folder.yaml                                                  | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | clients                                                                   | hierarchy         |
 | lz-folder/services/folder-sink.yaml                                            | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | platform-and-component-services-log-sink                                  | logging           |
 | lz-folder/services/folder.yaml                                                 | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | services                                                                  | hierarchy         |
+| lz-folder/services-infrastructure/dns-project/dns.yaml                         | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone         | dns-project-id-standard-core-public-dns                                   | networking        |
+| lz-folder/services-infrastructure/dns-project/dns.yaml                         | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet           | dns-project-id-standard-core-public-dns-ns-rset                           | networking        |
+| lz-folder/services-infrastructure/dns-project/dns.yaml                         | dns.cnrm.cloud.google.com/v1beta1             | DNSRecordSet           | dns-project-id-standard-core-public-dns-soa-rset                          | networking        |
+| lz-folder/services-infrastructure/dns-project/project.yaml                     | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                | dns-project-id                                                            | projects          |
+| lz-folder/services-infrastructure/dns-project/services.yaml                    | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | dns-project-id-dns                                                        | projects          |
 | lz-folder/services-infrastructure/folder-sink.yaml                             | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | platform-and-component-services-infra-log-sink                            | logging           |
 | lz-folder/services-infrastructure/folder.yaml                                  | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | services-infrastructure                                                   | hierarchy         |
 | mgmt-project/org-policies/compute-require-shielded-vm-except-mgmt-project.yaml | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-require-shielded-vm-except-mgt-project                            | policies          |
@@ -145,6 +153,8 @@ This package has no sub-packages.
 ## Resource References
 
 - [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
+- [DNSManagedZone](https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsmanagedzone)
+- [DNSRecordSet](https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsrecordset)
 - [Folder](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/folder)
 - [IAMAuditConfig](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamauditconfig)
 - [IAMCustomRole](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamcustomrole)
@@ -170,7 +180,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd "./core-landing-zone/"
+    cd "./solutions/core-landing-zone/"
     ```
 
 1.  Edit the function config file(s):
