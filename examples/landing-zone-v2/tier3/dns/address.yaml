@@ -17,9 +17,8 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
   name: workload-name-external-ip # kpt-set: ${workload-name}-external-ip
-  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
   annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   addressType: EXTERNAL
   description: external IP for workload-name # kpt-set: external IP for ${workload-name}
