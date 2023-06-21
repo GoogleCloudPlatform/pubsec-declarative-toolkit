@@ -1,9 +1,9 @@
 # Compute Address
 
-This example creates an external compute address reserved for a tier 3 DNS A Record.
+This example creates an external compute address reserved for a tier 3 DNS A Record inside the `client-project-setup` repo.
 
 ## IAM
-This permission is required for the tier4-sa. It can be granted from tier3.
+This permission is required for the tier4-sa. It can be modified to be granted from tier3.
 
 ```yaml
 # Grant GCP role Compute Public IP Admin to tier4-sa GCP SA
