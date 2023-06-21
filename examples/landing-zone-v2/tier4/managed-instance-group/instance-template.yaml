@@ -55,7 +55,7 @@ spec:
       stackType: IPV4_ONLY
       subnetworkProject: host-project-id # kpt-set: ${host-project-id}
       subnetworkRef:
-        name: host-project-id-nane1-standard-unclassified-snet # kpt-set: ${host-project-id}-nane1-standard-unclassified-snet
+        name: host-project-id-nane1-standard-nonp-main-snet # kpt-set: ${host-project-id}-nane1-standard-nonp-main-snet
         namespace: client-name-networking # kpt-set: ${client-name}-networking
   region: northamerica-northeast1
   reservationAffinity:
