@@ -25,5 +25,9 @@ data:
   project-id: client-project-12345
   # the id of the network host project
   host-project-id: host-project-12345
+  # the id of the core dns project
+  dns-project-id: dns-project-12345
+  # the dns name for a client dns
+  dns-name: "workload1.example.domain.com."
   # the name of the workload, lowercase only
   workload-name: workload1
