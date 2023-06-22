@@ -370,6 +370,13 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 > **!!! Update the command below with the proper VERSION, you can locate it in the package's CHANGELOG.md, for example, '0.0.1'. Use 'main' if not available but
 > we strongly recommend using versions over main. Alternatively, each package CHANGELOG.md contains the history if there is a requirement to use an older version.**
 
+Before proceeding create a folder to store the configurations files and move into it.
+
+```
+mkdir pbmm-landingzone
+cd pbmm-landingzone
+```
+
 1. Get the gatekeeper policies package. These are the policies which your Config Controller instance will use to [validate](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) compliance of any configuration deployed, this currently checks for guardrails compliance and naming conventions on projects. These policies will also be validated when running the `kpt fn render` command for early feedback.
 
     ```shell
