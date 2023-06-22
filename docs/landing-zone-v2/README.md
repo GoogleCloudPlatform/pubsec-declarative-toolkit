@@ -372,7 +372,7 @@ We will be using `kpt` to obtain the packages. For more information on the `kpt 
 
 Before proceeding create a folder to store the configurations files and move into it.
 
-```
+```shell
 mkdir pbmm-landingzone
 cd pbmm-landingzone
 ```
