@@ -1,0 +1,86 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Public Core DNS zone
+# SC-22
+apiVersion: dns.cnrm.cloud.google.com/v1beta1
+kind: DNSManagedZone
+metadata:
+  name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/dns-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${dns-project-id}
+spec:
+  description: "standard core public dns zone"
+  resourceID: standard-core-public-dns
+  dnsName: "dns-name" # kpt-set: ${dns-name}
+  visibility: public
+  dnssecConfig:
+    state: "on"
+  cloudLoggingConfig:
+    enableLogging: true
+---
+# NS Record Set for Public Core DNS zone
+# This will update the core DNS zone NS record with a specific set of nameservers, configured in setters.
+# This will help to guarantee that all DNS resources will use the same group of nameservers
+# The Config Controller DNSManagedZone API does not contain the ability to assign nameServerSet or nameServers[]
+# https://cloud.google.com/dns/docs/reference/v1beta2/managedZones
+# https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsmanagedzone
+# SC-22
+apiVersion: dns.cnrm.cloud.google.com/v1beta1
+kind: DNSRecordSet
+metadata:
+  name: dns-project-id-standard-core-public-dns-ns-rset # kpt-set: ${dns-project-id}-standard-core-public-dns-ns-rset
+  namespace: networking # kpt-set: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
+    config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/networking/DNSManagedZone/dns-project-id-standard-core-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/networking/DNSManagedZone/${dns-project-id}-standard-core-public-dns
+spec:
+  name: "dns-name" # kpt-set: ${dns-name}
+  type: "NS"
+  ttl: 21600
+  managedZoneRef:
+    name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
+    namespace: networking
+  rrdatas: # kpt-set: ${dns-nameservers}
+    - "ns-cloud-a1.googledomains.com."
+    - "ns-cloud-a2.googledomains.com."
+    - "ns-cloud-a3.googledomains.com."
+    - "ns-cloud-a4.googledomains.com."
+---
+# SOA Record Set for Public Core DNS zone
+# This will update the core DNS zone SOA's primary name server, configured in setters.
+# This will help to guarantee that all DNS resources will use the same group of nameservers
+# The Config Controller DNSManagedZone API does not contain the ability to assign nameServerSet or nameServers[]
+# https://cloud.google.com/dns/docs/reference/v1beta2/managedZones
+# https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsmanagedzone
+# SC-22
+apiVersion: dns.cnrm.cloud.google.com/v1beta1
+kind: DNSRecordSet
+metadata:
+  name: dns-project-id-standard-core-public-dns-soa-rset # kpt-set: ${dns-project-id}-standard-core-public-dns-soa-rset
+  namespace: networking # kpt-set: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
+    config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/networking/DNSManagedZone/dns-project-id-standard-core-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/networking/DNSManagedZone/${dns-project-id}-standard-core-public-dns
+spec:
+  name: "dns-name" # kpt-set: ${dns-name}
+  type: "SOA"
+  ttl: 21600
+  managedZoneRef:
+    name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
+    namespace: networking
+  rrdatas: # kpt-set: ${dns-primary-nameserver}
+    - "ns-cloud-a1.googledomains.com."
