@@ -49,9 +49,8 @@ spec:
   managedZoneRef:
     name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
     namespace: networking
-  # The nameservers below must be updated to match the same nameservers as the client DNS subzone created by Cloud DNS
-  # upon creation of the DNS Managed Zone.
-  # Cloud DNS creates NS and SOA records for you automatically when you create the zone.
+  # The nameservers below must be updated to match the same nameservers as the client DNS subzone
+  # Cloud DNS creates NS and SOA records automatically when a zone is created and these cannot be changed
   # See https://cloud.google.com/dns/docs/zones#create-pub-zone
   rrdatas: # kpt-set: ${dns-nameservers}
     - "ns-cloud-a1.googledomains.com."
