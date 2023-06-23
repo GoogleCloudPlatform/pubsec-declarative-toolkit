@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.0...solutions/client-landing-zone/0.4.1) (2023-06-23)
+
+
+### Bug Fixes
+
+* adjust dns build design ([#410](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/410)) ([5dceea1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/5dceea17e661938ef5c35ade26d1db8f8e9ff9e9))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.3.0...solutions/client-landing-zone/0.4.0) (2023-06-22)
 
 
