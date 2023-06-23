@@ -80,5 +80,10 @@ data:
   repo-dir: csync/deploy/env
   #
   ##########################
+  # DNS
+  ##########################
+  # dns project id created in core-landing-zone
+  dns-project-id: dns-project-12345
+  ##########################
   # End of Configurations
   ##########################
