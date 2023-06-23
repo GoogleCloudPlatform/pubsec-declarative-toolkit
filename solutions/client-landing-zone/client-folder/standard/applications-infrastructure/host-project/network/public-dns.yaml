@@ -32,51 +32,6 @@ spec:
   cloudLoggingConfig:
     enableLogging: true
 ---
-# NS Record Set for client DNS subzone
-# This will update the client DNS subzone NS record with a specific set of nameservers, configured in setters.
-# SC-22
-apiVersion: dns.cnrm.cloud.google.com/v1beta1
-kind: DNSRecordSet
-metadata:
-  name: client-name-standard-public-dns-ns-rset # kpt-set: ${client-name}-standard-public-dns-ns-rset
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/client-name-networking/DNSManagedZone/client-name-standard-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/${client-name}-networking/DNSManagedZone/${client-name}-standard-public-dns
-spec:
-  name: "dns-name" # kpt-set: ${dns-name}
-  type: "NS"
-  ttl: 21600
-  managedZoneRef:
-    name: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
-    namespace: client-name-networking # kpt-set: ${client-name}-networking
-  rrdatas: # kpt-set: ${dns-nameservers}
-    - "ns-cloud-a1.googledomains.com."
-    - "ns-cloud-a2.googledomains.com."
-    - "ns-cloud-a3.googledomains.com."
-    - "ns-cloud-a4.googledomains.com."
----
-# SOA Record Set for Client DNS subzone
-# This will update the client DNS subzone SOA's primary name server, configured in setters.
-# SC-22
-apiVersion: dns.cnrm.cloud.google.com/v1beta1
-kind: DNSRecordSet
-metadata:
-  name: client-name-standard-public-dns-soa-rset # kpt-set: ${client-name}-standard-public-dns-soa-rset
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/client-name-networking/DNSManagedZone/client-name-standard-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/${client-name}-networking/DNSManagedZone/${client-name}-standard-public-dns
-spec:
-  name: "dns-name" # kpt-set: ${dns-name}
-  type: "SOA"
-  ttl: 21600
-  managedZoneRef:
-    name: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
-    namespace: client-name-networking # kpt-set: ${client-name}-networking
-  rrdatas: # kpt-set: ${dns-primary-nameserver}
-    - "ns-cloud-a1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300"
----
 # Record Set for client DNS subzone in public core DNS zone
 # SC-22
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
@@ -94,6 +49,9 @@ spec:
   managedZoneRef:
     name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
     namespace: networking
+  # The nameservers below must be updated to match the same nameservers as the client DNS subzone
+  # Cloud DNS creates NS and SOA records automatically when a zone is created and these cannot be changed
+  # See https://cloud.google.com/dns/docs/zones#create-pub-zone
   rrdatas: # kpt-set: ${dns-nameservers}
     - "ns-cloud-a1.googledomains.com."
     - "ns-cloud-a2.googledomains.com."
