@@ -125,7 +125,7 @@ data:
   #
   dns-project-id: dns-project-12345
   dns-name: "client-name.example.com."
-  # The nameservers below must be updated to match the same nameservers as the client DNS subzone chosen by Google
+  # The nameservers below must be updated to match the same nameservers as the client DNS subzone created by Cloud DNS
   # upon creation of the DNS Managed Zone.
   # Cloud DNS creates NS and SOA records for you automatically when you create the zone.
   # See https://cloud.google.com/dns/docs/zones#create-pub-zone
