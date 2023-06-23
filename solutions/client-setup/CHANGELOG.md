@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.0...solutions/client-setup/0.4.1) (2023-06-23)
+
+
+### Bug Fixes
+
+* adding missing dns project id setter ([#412](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/412)) ([c640a9a](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c640a9a998e0fdf841594ab850bbde5befa86b71))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.3.0...solutions/client-setup/0.4.0) (2023-06-22)
 
 
