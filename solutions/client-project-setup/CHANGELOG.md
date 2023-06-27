@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.0...solutions/client-project-setup/0.4.1) (2023-06-27)
+
+
+### Bug Fixes
+
+* renamed subnets and removed protected a ([aab9183](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/aab9183db352112cda77526c6b06baf56355f82f))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.3.0...solutions/client-project-setup/0.4.0) (2023-06-22)
 
 
