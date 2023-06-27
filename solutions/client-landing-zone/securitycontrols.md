@@ -39,10 +39,17 @@
 |SC-22|./client-folder/standard/applications-infrastructure/host-project/network/psc/google-apis/dns.yaml|host-project-id-standard-googleapis-wildcard-rset|
 |SC-22|./client-folder/standard/applications-infrastructure/host-project/network/public-dns.yaml|client-name-standard-core-public-dns-ns-rset|
 |SC-22|./client-folder/standard/applications-infrastructure/host-project/network/public-dns.yaml|client-name-standard-public-dns|
-|SC-22|./client-folder/standard/applications-infrastructure/host-project/network/public-dns.yaml|client-name-standard-public-dns-ns-rset|
-|SC-22|./client-folder/standard/applications-infrastructure/host-project/network/public-dns.yaml|client-name-standard-public-dns-soa-rset|
 |SC-7|./client-folder/standard/applications-infrastructure/host-project/network/vpc.yaml|host-project-id-global-standard-vpc|
 |SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/firewall.yaml|host-project-id-standard-default-egress-deny-fwr|
+|SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/firewall.yaml|host-project-id-standard-egress-allow-all-internal-fwr|
+|SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/psc/google-apis/firewall.yaml|host-project-id-standard-egress-allow-psc-fwr|
+|SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/vpc.yaml|host-project-id-global-standard-vpc|
+|SC-7(C)|./client-folder/standard/applications-infrastructure/host-project/network/firewall.yaml|host-project-id-standard-default-egress-deny-fwr|
+|SC-7(C)|./client-folder/standard/applications-infrastructure/host-project/network/firewall.yaml|host-project-id-standard-egress-allow-all-internal-fwr|
+|SC-7(C)|./client-folder/standard/applications-infrastructure/host-project/network/psc/google-apis/firewall.yaml|host-project-id-standard-egress-allow-psc-fwr|
+
+<!-- END OF SECURITY CONTROLS LIST -->
+./client-folder/standard/applications-infrastructure/host-project/network/firewall.yaml|host-project-id-standard-default-egress-deny-fwr|
 |SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/firewall.yaml|host-project-id-standard-egress-allow-all-internal-fwr|
 |SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/psc/google-apis/firewall.yaml|host-project-id-standard-egress-allow-psc-fwr|
 |SC-7(5)|./client-folder/standard/applications-infrastructure/host-project/network/vpc.yaml|host-project-id-global-standard-vpc|

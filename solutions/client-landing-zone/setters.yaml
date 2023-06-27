@@ -119,10 +119,9 @@ data:
   #
   dns-project-id: dns-project-12345
   dns-name: "client-name.example.com."
-  # Select a primary nameserver for the SOA record
-  # The nameservers must be part of the same group of nameservers (a,b,c,d) as the primary nameserver
-  dns-primary-nameserver: |
-    - "ns-cloud-a1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300"
+  # The nameservers below must be updated to match the same nameservers as the client DNS subzone
+  # Cloud DNS creates NS and SOA records automatically when a zone is created and these cannot be changed
+  # See https://cloud.google.com/dns/docs/zones#create-pub-zone
   dns-nameservers: |
     - "ns-cloud-a1.googledomains.com."
     - "ns-cloud-a2.googledomains.com."
