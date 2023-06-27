@@ -42,7 +42,7 @@ Currently, the `spec.serviceAccountRef` throws an error `Invalid value for field
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-cloud-services-sa-networkuser-allowed-nane1-subnet-permissions # kpt-set: ${project-id}-cloud-services-sa-networkuser-${allowed-nane1-subnet}-permissions
+  name: project-id-cloud-services-sa-networkuser-allowed-nane1-main-subnet-permissions # kpt-set: ${project-id}-cloud-services-sa-networkuser-${allowed-nane1-main-subnet}-permissions
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -50,14 +50,14 @@ spec:
   resourceRef:
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeSubnetwork
-    name: host-project-id-allowed-nane1-subnet # kpt-set: ${host-project-id}-${allowed-nane1-subnet}
+    name: allowed-nane1-main-subnet # kpt-set: ${allowed-nane1-main-subnet}
   role: roles/compute.networkUser
   member: "serviceAccount:REPLACE_WITH_PROJECT_NUMBER@cloudservices.gserviceaccount.com"
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-cloud-services-sa-networkuser-allowed-nane2-subnet-permissions # kpt-set: ${project-id}-cloud-services-sa-networkuser-${allowed-nane2-subnet}-permissions
+  name: project-id-cloud-services-sa-networkuser-allowed-nane2-main-subnet-permissions # kpt-set: ${project-id}-cloud-services-sa-networkuser-${allowed-nane2-main-subnet}-permissions
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -65,7 +65,7 @@ spec:
   resourceRef:
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeSubnetwork
-    name: host-project-id-allowed-nane2-subnet # kpt-set: ${host-project-id}-${allowed-nane2-subnet}
+    name: allowed-nane2-main-subnet # kpt-set: ${allowed-nane2-main-subnet}
   role: roles/compute.networkUser
   member: "serviceAccount:REPLACE_WITH_PROJECT_NUMBER@cloudservices.gserviceaccount.com"
 ```
