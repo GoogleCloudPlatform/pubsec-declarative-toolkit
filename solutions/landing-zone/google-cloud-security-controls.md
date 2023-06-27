@@ -1,6 +1,6 @@
 # Security Controls Mappings
 
-
+TODO: integrate client-landing-zone security controls mappings from the following PR - 20230627: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/pull/394/files#diff-8d5bd2efa8295f4f2ca31370ce1287b854e74f84dd0130121955298b57d3e2fb solutions/client-landing-zone/securitycontrols.md
 
 WARNING - use the following up to date security controls document in the PBMM repo
 
