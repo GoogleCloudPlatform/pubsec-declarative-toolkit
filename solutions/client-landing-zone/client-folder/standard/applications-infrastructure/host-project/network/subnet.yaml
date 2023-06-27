@@ -12,25 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# All subnets have :
+# nonp and pbmm subnets have :
 # - logging enabled for flow logs https://cloud.google.com/vpc/docs/using-flow-logs
 # - private google access enabled https://cloud.google.com/vpc/docs/private-google-access
 #########
-# Subnet unclassified northamerica-northeast1
+# Subnet nonp-main northamerica-northeast1
 # AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: host-project-id-nane1-standard-unclassified-snet # kpt-set: ${host-project-id}-nane1-standard-unclassified-snet
+  name: host-project-id-nane1-standard-nonp-main-snet # kpt-set: ${host-project-id}-nane1-standard-nonp-main-snet
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: nane1-standard-unclassified-snet
-  ipCidrRange: 10.1.1.0/24 # kpt-set: ${standard-nane1-unclassified-snet}
+  resourceID: nane1-standard-nonp-main-snet
+  ipCidrRange: 10.1.0.0/21 # kpt-set: ${standard-nane1-nonp-main-snet}
   region: northamerica-northeast1
-  description: northamerica-northeast1 unclassified subnet
+  description: northamerica-northeast1 nonp-main subnet
   privateIpGoogleAccess: true
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
@@ -39,21 +39,21 @@ spec:
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
 ---
-# Subnet protected-a northamerica-northeast1
+# Subnet pbmm-main northamerica-northeast1
 # AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: host-project-id-nane1-standard-protected-a-snet # kpt-set: ${host-project-id}-nane1-standard-protected-a-snet
+  name: host-project-id-nane1-standard-pbmm-main-snet # kpt-set: ${host-project-id}-nane1-standard-pbmm-main-snet
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: nane1-standard-protected-a-snet
-  ipCidrRange: 10.1.2.0/24 # kpt-set: ${standard-nane1-protected-a-snet}
+  resourceID: nane1-standard-pbmm-main-snet
+  ipCidrRange: 10.1.128.0/21 # kpt-set: ${standard-nane1-pbmm-main-snet}
   region: northamerica-northeast1
-  description: northamerica-northeast1 protected-a subnet
+  description: northamerica-northeast1 pbmm-main subnet
   privateIpGoogleAccess: true
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
@@ -62,44 +62,21 @@ spec:
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
 ---
-# Subnet protected-b northamerica-northeast1
+# Subnet nonp-main northamerica-northeast2
 # AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: host-project-id-nane1-standard-protected-b-snet # kpt-set: ${host-project-id}-nane1-standard-protected-b-snet
+  name: host-project-id-nane2-standard-nonp-main-snet # kpt-set: ${host-project-id}-nane2-standard-nonp-main-snet
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: nane1-standard-protected-b-snet
-  ipCidrRange: 10.1.3.0/24 # kpt-set: ${standard-nane1-protected-b-snet}
-  region: northamerica-northeast1
-  description: northamerica-northeast1 protected-b subnet
-  privateIpGoogleAccess: true
-  networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
-  logConfig:
-    aggregationInterval: INTERVAL_5_SEC
-    flowSampling: 0.5
-    metadata: INCLUDE_ALL_METADATA
----
-# Subnet unclassified northamerica-northeast2
-# AC-4, AC-4(21)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSubnetwork
-metadata:
-  name: host-project-id-nane2-standard-unclassified-snet # kpt-set: ${host-project-id}-nane2-standard-unclassified-snet
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
-spec:
-  resourceID: nane2-standard-unclassified-snet
-  ipCidrRange: 10.2.1.0/24 # kpt-set: ${standard-nane2-unclassified-snet}
+  resourceID: nane2-standard-nonp-main-snet
+  ipCidrRange: 10.1.8.0/21 # kpt-set: ${standard-nane2-nonp-main-snet}
   region: northamerica-northeast2
-  description: northamerica-northeast2 unclassified subnet
+  description: northamerica-northeast2 nonp-main subnet
   privateIpGoogleAccess: true
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
@@ -108,44 +85,21 @@ spec:
     flowSampling: 0.5
     metadata: INCLUDE_ALL_METADATA
 ---
-# Subnet protected-a northamerica-northeast2
+# Subnet pbmm-main northamerica-northeast2
 # AC-4, AC-4(21)
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: host-project-id-nane2-standard-protected-a-snet # kpt-set: ${host-project-id}-nane2-standard-protected-a-snet
+  name: host-project-id-nane2-standard-pbmm-main-snet # kpt-set: ${host-project-id}-nane2-standard-pbmm-main-snet
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: nane2-standard-protected-a-snet
-  ipCidrRange: 10.2.2.0/24 # kpt-set: ${standard-nane2-protected-a-snet}
+  resourceID: nane2-standard-pbmm-main-snet
+  ipCidrRange: 10.1.136.0/21 # kpt-set: ${standard-nane2-pbmm-main-snet}
   region: northamerica-northeast2
-  description: northamerica-northeast2 protected-a subnet
-  privateIpGoogleAccess: true
-  networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
-  logConfig:
-    aggregationInterval: INTERVAL_5_SEC
-    flowSampling: 0.5
-    metadata: INCLUDE_ALL_METADATA
----
-# Subnet protected-b northamerica-northeast2
-# AC-4, AC-4(21)
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSubnetwork
-metadata:
-  name: host-project-id-nane2-standard-protected-b-snet # kpt-set: ${host-project-id}-nane2-standard-protected-b-snet
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
-spec:
-  resourceID: nane2-standard-protected-b-snet
-  ipCidrRange: 10.2.3.0/24 # kpt-set: ${standard-nane2-protected-b-snet}
-  region: northamerica-northeast2
-  description: northamerica-northeast2 protected-b subnet
+  description: northamerica-northeast2 pbmm-main subnet
   privateIpGoogleAccess: true
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
