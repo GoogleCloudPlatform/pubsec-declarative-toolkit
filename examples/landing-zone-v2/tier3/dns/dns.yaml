@@ -28,5 +28,5 @@ spec:
     name: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   rrdatasRefs:
-    - name: client-name-compute-address # kpt-set: ${workload-name}-compute-address
+    - name: workload-name-compute-address # kpt-set: ${workload-name}-compute-address
       kind: ComputeAddress
