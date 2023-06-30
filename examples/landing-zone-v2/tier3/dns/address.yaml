@@ -16,7 +16,7 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: workload-name-external-ip # kpt-set: ${workload-name}-external-ip
+  name: workload-name-compute-address # kpt-set: ${workload-name}-compute-address
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
