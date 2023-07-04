@@ -33,12 +33,6 @@
   - [Clean Up](#clean-up)
   - [GitOps](#gitops)
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
-
 ## <a name='Introduction'></a>Introduction
 
 This solution uses [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to deploy and manage the GCP infrastructure.
