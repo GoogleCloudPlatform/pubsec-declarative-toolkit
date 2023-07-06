@@ -1,0 +1,75 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Instance template
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeInstanceTemplate
+metadata:
+  name: workload-name-instance-template # kpt-set: ${workload-name}-instance-template
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: workload-name-instance-template # kpt-set: ${workload-name}-instance-template
+  confidentialInstanceConfig:
+    enableConfidentialCompute: false
+  disk:
+    - autoDelete: true
+      boot: true
+      deviceName: persistent-disk-0
+      diskSizeGb: 10
+      diskType: pd-balanced
+      interface: SCSI
+      mode: READ_WRITE
+      sourceImageRef:
+        external: projects/debian-cloud/global/images/debian-11-bullseye-v20230509
+      type: PERSISTENT
+  machineType: e2-small
+  metadata:
+    - key: enable-oslogin
+      value: "true"
+    # an example to install nginx on startup
+    - key: startup-script
+      value: |
+        #! /bin/bash
+        apt update
+        apt -y install nginx
+        cat <<EOF > /var/www/html/index.html
+        <html><body><p>Linux startup script added directly.</p></body></html>
+        EOF
+  networkInterface:
+    - name: nic0
+      networkRef:
+        name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
+        namespace: client-name-networking # kpt-set: ${client-name}-networking
+      stackType: IPV4_ONLY
+      subnetworkProject: host-project-id # kpt-set: ${host-project-id}
+      subnetworkRef:
+        name: host-project-id-nane1-standard-nonp-main-snet # kpt-set: ${host-project-id}-nane1-standard-nonp-main-snet
+        namespace: client-name-networking # kpt-set: ${client-name}-networking
+  region: northamerica-northeast1
+  reservationAffinity:
+    type: ANY_RESERVATION
+  scheduling:
+    automaticRestart: true
+    onHostMaintenance: MIGRATE
+    provisioningModel: STANDARD
+  serviceAccount:
+    scopes:
+      - https://www.googleapis.com/auth/cloud-platform
+    serviceAccountRef:
+      name: workload-name-sa # kpt-set: ${workload-name}-sa
+  shieldedInstanceConfig:
+    enableIntegrityMonitoring: true
+    enableSecureBoot: true
+    enableVtpm: true

@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# isolate unclassified
+# isolate nonp
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-standard-fwpol-isolate-unclassified-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-unclassified-fwr
+  name: client-name-standard-fwpol-isolate-nonp-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-nonp-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
 spec:
   action: "deny"
-  description: "isolate unclassified"
+  description: "isolate nonp"
   direction: "INGRESS"
   disabled: false
   enableLogging: true
@@ -32,23 +32,22 @@ spec:
     layer4Configs:
       - ipProtocol: "all"
     srcIPRanges:
-      - "standard-protected-a-cidr" # kpt-set: ${standard-protected-a-cidr}
-      - "standard-protected-b-cidr" # kpt-set: ${standard-protected-b-cidr}
+      - "standard-pbmm-cidr" # kpt-set: ${standard-pbmm-cidr}
     destIPRanges:
-      - "standard-unclassified-cidr" # kpt-set: ${standard-unclassified-cidr}
+      - "standard-nonp-cidr" # kpt-set: ${standard-nonp-cidr}
   priority: 1000
 ---
-# isolate protected a
+# isolate pbmm
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
-  name: client-name-standard-fwpol-isolate-protected-a-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-protected-a-fwr
+  name: client-name-standard-fwpol-isolate-pbmm-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-pbmm-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
 spec:
   action: "deny"
-  description: "isolate protected a"
+  description: "isolate pbmm"
   direction: "INGRESS"
   disabled: false
   enableLogging: true
@@ -58,34 +57,7 @@ spec:
     layer4Configs:
       - ipProtocol: "all"
     srcIPRanges:
-      - "standard-unclassified-cidr" # kpt-set: ${standard-unclassified-cidr}
-      - "standard-protected-b-cidr" # kpt-set: ${standard-protected-b-cidr}
+      - "standard-nonp-cidr" # kpt-set: ${standard-nonp-cidr}
     destIPRanges:
-      - "standard-protected-a-cidr" # kpt-set: ${standard-protected-a-cidr}
+      - "standard-pbmm-cidr" # kpt-set: ${standard-pbmm-cidr}
   priority: 1100
----
-# isolate protected b
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeFirewallPolicyRule
-metadata:
-  name: client-name-standard-fwpol-isolate-protected-b-fwr # kpt-set: ${client-name}-standard-fwpol-isolate-protected-b-fwr
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
-spec:
-  action: "deny"
-  description: "isolate protected b"
-  direction: "INGRESS"
-  disabled: false
-  enableLogging: true
-  firewallPolicyRef:
-    name: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
-  match:
-    layer4Configs:
-      - ipProtocol: "all"
-    srcIPRanges:
-      - "standard-unclassified-cidr" # kpt-set: ${standard-unclassified-cidr}
-      - "standard-protected-a-cidr" # kpt-set: ${standard-protected-a-cidr}
-    destIPRanges:
-      - "standard-protected-b-cidr" # kpt-set: ${standard-protected-b-cidr}
-  priority: 1200

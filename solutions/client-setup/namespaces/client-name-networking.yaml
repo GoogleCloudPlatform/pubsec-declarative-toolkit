@@ -76,6 +76,23 @@ spec:
   role: roles/dns.admin
   member: "serviceAccount:client-name-networking-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-networking-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
+# Grant GCP role Tier2 DNS Record Admin to GCP SA on Core DNS Project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-networking-sa-tier2-dns-record-admin-permission # kpt-set: ${client-name}-networking-sa-tier2-dns-record-admin-permission
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: dns-project-id # kpt-set: ${dns-project-id}
+  role: organizations/org-id/roles/tier2.dnsrecord.admin # kpt-set: organizations/${org-id}/roles/tier2.dnsrecord.admin
+  member: "serviceAccount:client-name-networking-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-networking-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
 # Grant GCP role ACM Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember

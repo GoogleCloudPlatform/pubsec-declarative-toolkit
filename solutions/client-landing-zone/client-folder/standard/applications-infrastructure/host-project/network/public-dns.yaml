@@ -1,0 +1,59 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Public Client DNS subzone
+# SC-22
+apiVersion: dns.cnrm.cloud.google.com/v1beta1
+kind: DNSManagedZone
+metadata:
+  name: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+spec:
+  description: "client-name standard public dns subzone" # kpt-set: ${client-name} standard public dns subzone
+  resourceID: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
+  dnsName: "dns-name" # kpt-set: ${dns-name}
+  visibility: public
+  dnssecConfig:
+    state: "on"
+  cloudLoggingConfig:
+    enableLogging: true
+---
+# Record Set for client DNS subzone in public core DNS zone
+# SC-22
+apiVersion: dns.cnrm.cloud.google.com/v1beta1
+kind: DNSRecordSet
+metadata:
+  name: client-name-standard-core-public-dns-ns-rset # kpt-set: ${client-name}-standard-core-public-dns-ns-rset
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
+    config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/client-name-networking/DNSManagedZone/client-name-standard-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/${client-name}-networking/DNSManagedZone/${client-name}-standard-public-dns
+spec:
+  name: "dns-name" # kpt-set: ${dns-name}
+  type: "NS"
+  ttl: 21600
+  managedZoneRef:
+    name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
+    namespace: networking
+  # The nameservers below must be updated to match the same nameservers as the client DNS subzone
+  # Cloud DNS creates NS and SOA records automatically when a zone is created and these cannot be changed
+  # See https://cloud.google.com/dns/docs/zones#create-pub-zone
+  rrdatas: # kpt-set: ${dns-nameservers}
+    - "ns-cloud-a1.googledomains.com."
+    - "ns-cloud-a2.googledomains.com."
+    - "ns-cloud-a3.googledomains.com."
+    - "ns-cloud-a4.googledomains.com."

@@ -10,6 +10,8 @@ info:
     Depends on the bootstrap procedure.
 
     [Deploy a landing zone v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2).
+
+    Attention, validate impact with CCCS Cloud Based Sensors before implementing any changes to organization policies.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2

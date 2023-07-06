@@ -12,20 +12,22 @@ Package to create a client's project, 2 project scoped namespaces for its resour
 
 ## Setters
 
-|             Name             |              Value              | Type | Count |
-|------------------------------|---------------------------------|------|-------|
-| client-management-project-id | client-management-project-12345 | str  |     1 |
-| client-name                  | client1                         | str  |    50 |
-| host-project-id              | net-host-project-12345          | str  |     5 |
-| management-namespace         | config-control                  | str  |     8 |
-| management-project-id        | management-project-12345        | str  |     2 |
-| org-id                       |                      0000000000 | str  |     2 |
-| project-billing-id           | AAAAAA-BBBBBB-CCCCCC            | str  |     1 |
-| project-id                   | client-project-12345            | str  |    88 |
-| project-parent-folder        | project-parent-folder           | str  |     2 |
-| repo-branch                  | main                            | str  |     1 |
-| repo-dir                     | csync/deploy/env                | str  |     1 |
-| repo-url                     | git-repo-to-observe             | str  |     1 |
+|             Name             |                          Value                          | Type | Count |
+|------------------------------|---------------------------------------------------------|------|-------|
+| allowed-nane1-main-subnet    | host-project-id-nane1-standard-classification-main-snet | str  |     2 |
+| allowed-nane2-main-subnet    | host-project-id-nane2-standard-classification-main-snet | str  |     2 |
+| client-management-project-id | client-management-project-12345                         | str  |     1 |
+| client-name                  | client1                                                 | str  |    50 |
+| host-project-id              | net-host-project-12345                                  | str  |     3 |
+| management-namespace         | config-control                                          | str  |     8 |
+| management-project-id        | management-project-12345                                | str  |     2 |
+| org-id                       |                                              0000000000 | str  |     2 |
+| project-billing-id           | AAAAAA-BBBBBB-CCCCCC                                    | str  |     1 |
+| project-id                   | client-project-12345                                    | str  |    87 |
+| project-parent-folder        | project-parent-folder                                   | str  |     2 |
+| repo-branch                  | main                                                    | str  |     1 |
+| repo-dir                     | csync/deploy/env                                        | str  |     1 |
+| repo-url                     | git-repo-to-observe                                     | str  |     1 |
 
 ## Sub-packages
 
@@ -40,6 +42,7 @@ This package has no sub-packages.
 | namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-securityadmin-project-id-permissions                    | client-name-projects       |
 | namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions   | client-name-hierarchy      |
 | namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-dnsrecord-admin-host-project-id-permissions       | client-name-projects       |
+| namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-public-ip-admin-host-project-id-permissions     | client-name-projects       |
 | namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy               | project-id-tier3-sa-workload-identity-binding                               | client-name-config-control |
 | namespaces/project-id-tier3.yaml | v1                                            | Namespace                      | project-id-tier3                                                            |                            |
 | namespaces/project-id-tier3.yaml | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext         | configconnectorcontext.core.cnrm.cloud.google.com                           | project-id-tier3           |
@@ -47,9 +50,8 @@ This package has no sub-packages.
 | namespaces/project-id-tier3.yaml | rbac.authorization.k8s.io/v1                  | RoleBinding                    | cnrm-viewer-project-id-tier3                                                | project-id-tier4           |
 | namespaces/project-id-tier3.yaml | rbac.authorization.k8s.io/v1                  | RoleBinding                    | syncs-repo                                                                  | project-id-tier3           |
 | namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount              | project-id-tier4-sa                                                         | client-name-config-control |
-| namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-editor-project-id-permissions                           | client-name-projects       |
-| namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-host-project-id-permissions                 | client-name-projects       |
-| namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-instanceadmin-project-id-permissions                    | client-name-projects       |
+| namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-allowed-nane1-main-subnet-permissions       | client-name-networking     |
+| namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-allowed-nane2-main-subnet-permissions       | client-name-networking     |
 | namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy               | project-id-tier4-sa-workload-identity-binding                               | client-name-config-control |
 | namespaces/project-id-tier4.yaml | v1                                            | Namespace                      | project-id-tier4                                                            |                            |
 | namespaces/project-id-tier4.yaml | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext         | configconnectorcontext.core.cnrm.cloud.google.com                           | project-id-tier4           |
@@ -89,7 +91,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/client-project-setup/"
+    cd "./client-project-setup/"
     ```
 
 1.  Edit the function config file(s):

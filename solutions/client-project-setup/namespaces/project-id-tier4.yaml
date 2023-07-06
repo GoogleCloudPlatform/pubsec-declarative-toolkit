@@ -26,61 +26,38 @@ spec:
   resourceID: tier4-sa
   displayName: tier4-sa
 ---
-# Grant GCP role Editor to GCP SA
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# Grant GCP role Network User to GCP SA on nane1 subnet
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-tier4-sa-editor-project-id-permissions # kpt-set: ${project-id}-tier4-sa-editor-${project-id}-permissions
-  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  name: project-id-tier4-sa-networkuser-allowed-nane1-main-subnet-permissions # kpt-set: ${project-id}-tier4-sa-networkuser-${allowed-nane1-main-subnet}-permissions
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: project-id # kpt-set: ${project-id}
-  role: roles/editor
-  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
----
-# Grant GCP role Network User to GCP SA on Host Project
-# https://cloud.google.com/iam/docs/job-functions/networking
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: project-id-tier4-sa-networkuser-host-project-id-permissions # kpt-set: ${project-id}-tier4-sa-networkuser-${host-project-id}-permissions
-  namespace: client-name-projects # kpt-set: ${client-name}-projects
-  annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  # TODO: revisit to potentially grant networkUser on a subnet instead of project
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: host-project-id # kpt-set: ${host-project-id}
+    apiVersion: compute.cnrm.cloud.google.com/v1beta1
+    kind: ComputeSubnetwork
+    name: allowed-nane1-subnet # kpt-set: ${allowed-nane1-main-subnet}
   role: roles/compute.networkUser
   member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Compute Instance Admin to GCP SA
-# https://cloud.google.com/iam/docs/job-functions/networking
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# Grant GCP role Network User to GCP SA on nane2 subnet
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-tier4-sa-instanceadmin-project-id-permissions # kpt-set: ${project-id}-tier4-sa-instanceadmin-${project-id}-permissions
-  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  name: project-id-tier4-sa-networkuser-allowed-nane2-main-subnet-permissions # kpt-set: ${project-id}-tier4-sa-networkuser-${allowed-nane2-main-subnet}-permissions
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: project-id # kpt-set: ${project-id}
-  role: roles/compute.instanceAdmin
+    apiVersion: compute.cnrm.cloud.google.com/v1beta1
+    kind: ComputeSubnetwork
+    name: allowed-nane2-main-subnet # kpt-set: ${allowed-nane2-main-subnet}
+  role: roles/compute.networkUser
   member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
 ---
 # K8S SA

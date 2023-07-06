@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.0...solutions/client-project-setup/0.4.1) (2023-06-27)
+
+
+### Bug Fixes
+
+* renamed subnets and removed protected a ([aab9183](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/aab9183db352112cda77526c6b06baf56355f82f))
+
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.3.0...solutions/client-project-setup/0.4.0) (2023-06-22)
+
+
+### Features
+
+* add core dns and client dns subzone ([#401](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/401)) ([4ec915c](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/4ec915c58014ca84fd1e6a7b65248249be65b28c))
+
+## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.2.0...solutions/client-project-setup/0.3.0) (2023-06-20)
+
+
+### Features
+
+* add cloud armor resources ([#400](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/400)) ([88035a3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/88035a3091e2baebd1fbb358ced61684e1584027))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.1.0...solutions/client-project-setup/0.2.0) (2023-06-07)
 
 

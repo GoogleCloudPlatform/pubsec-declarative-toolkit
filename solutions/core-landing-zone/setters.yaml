@@ -106,5 +106,11 @@ data:
   retention-in-days: "1"
   #
   ##########################
+  # DNS
+  ##########################
+  #
+  dns-project-id: dns-project-12345
+  dns-name: "example.com."
+  ##########################
   # End of Configurations
   ##########################

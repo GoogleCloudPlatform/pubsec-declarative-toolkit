@@ -1,0 +1,30 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Project
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  name: dns-project-id # kpt-set: ${dns-project-id}
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/services-infrastructure # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/services-infrastructure
+spec:
+  name: dns-project-id # kpt-set: ${dns-project-id}
+  billingAccountRef:
+    external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${billing-id}
+  folderRef:
+    name: services-infrastructure
+    namespace: hierarchy

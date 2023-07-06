@@ -65,6 +65,10 @@ data:
   # ID of existing Shared VPC host project to associate
   host-project-id: net-host-project-12345
   #
+  # the nane1 and nane2 subnets to grant network user permissions, replace 'classification' with appropriate values
+  allowed-nane1-main-subnet: host-project-id-nane1-standard-classification-main-snet
+  allowed-nane2-main-subnet: host-project-id-nane2-standard-classification-main-snet
+  #
   ##########################
   # Project
   ##########################

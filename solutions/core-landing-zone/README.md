@@ -10,6 +10,8 @@ Depends on the bootstrap procedure.
 
 [Deploy a landing zone v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2).
 
+Attention, validate impact with CCCS Cloud Based Sensors before implementing any changes to organization policies.
+
 ## Setters
 
 |               Name                |                  Value                  | Type  | Count |
@@ -19,7 +21,9 @@ Depends on the bootstrap procedure.
 | allowed-policy-domain-members     | ["DIRECTORY_CUSTOMER_ID"]               | array |     1 |
 | allowed-trusted-image-projects    | ["projects/cos-cloud"]                  | array |     1 |
 | allowed-vpc-peering               | ["under:organizations/ORGANIZATION_ID"] | array |     1 |
-| billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str   |     1 |
+| billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str   |     2 |
+| dns-name                          | example.com.                            | str   |     1 |
+| dns-project-id                    | dns-project-12345                       | str   |     8 |
 | logging-project-id                | logging-project-12345                   | str   |    21 |
 | lz-folder-id                      |                              0000000000 | str   |    15 |
 | management-namespace              | config-control                          | str   |    42 |
@@ -51,6 +55,9 @@ This package has no sub-packages.
 | lz-folder/clients/folder.yaml                                                  | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | clients                                                                   | hierarchy         |
 | lz-folder/services/folder-sink.yaml                                            | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | platform-and-component-services-log-sink                                  | logging           |
 | lz-folder/services/folder.yaml                                                 | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | services                                                                  | hierarchy         |
+| lz-folder/services-infrastructure/dns-project/dns.yaml                         | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone         | dns-project-id-standard-core-public-dns                                   | networking        |
+| lz-folder/services-infrastructure/dns-project/project.yaml                     | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                | dns-project-id                                                            | projects          |
+| lz-folder/services-infrastructure/dns-project/services.yaml                    | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | dns-project-id-dns                                                        | projects          |
 | lz-folder/services-infrastructure/folder-sink.yaml                             | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | platform-and-component-services-infra-log-sink                            | logging           |
 | lz-folder/services-infrastructure/folder.yaml                                  | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | services-infrastructure                                                   | hierarchy         |
 | mgmt-project/org-policies/compute-require-shielded-vm-except-mgmt-project.yaml | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-require-shielded-vm-except-mgt-project                            | policies          |
@@ -142,6 +149,7 @@ This package has no sub-packages.
 ## Resource References
 
 - [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
+- [DNSManagedZone](https://cloud.google.com/config-connector/docs/reference/resource-docs/dns/dnsmanagedzone)
 - [Folder](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/folder)
 - [IAMAuditConfig](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamauditconfig)
 - [IAMCustomRole](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamcustomrole)
@@ -167,7 +175,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/core-landing-zone/"
+    cd "./solutions/core-landing-zone/"
     ```
 
 1.  Edit the function config file(s):

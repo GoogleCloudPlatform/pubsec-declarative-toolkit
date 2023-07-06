@@ -15,13 +15,14 @@ Package to setup a client's namespaces, folder, management project and root sync
 |             Name             |              Value              | Type | Count |
 |------------------------------|---------------------------------|------|-------|
 | client-billing-id            | AAAAAA-BBBBBB-CCCCCC            | str  |     1 |
-| client-management-project-id | client-management-project-12345 | str  |   102 |
-| client-name                  | client1                         | str  |   120 |
+| client-management-project-id | client-management-project-12345 | str  |   105 |
+| client-name                  | client1                         | str  |   124 |
+| dns-project-id               | dns-project-12345               | str  |     1 |
 | environment                  | env                             | str  |     1 |
 | management-namespace         | config-control                  | str  |    25 |
 | management-project-id        | management-project-12345        | str  |     5 |
 | management-project-number    |                      0000000000 | str  |     1 |
-| org-id                       |                      0000000000 | str  |     2 |
+| org-id                       |                      0000000000 | str  |     3 |
 | repo-branch                  | main                            | str  |     1 |
 | repo-dir                     | csync/deploy/env                | str  |     1 |
 | repo-url                     | git-repo-to-observe             | str  |     1 |
@@ -50,6 +51,7 @@ This package has no sub-packages.
 | namespaces/client-name-hierarchy.yaml            | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com                                      | client-name-hierarchy      |
 | namespaces/client-name-hierarchy.yaml            | rbac.authorization.k8s.io/v1                  | RoleBinding            | allow-resource-reference-from-projects                                                 | client-name-hierarchy      |
 | namespaces/client-name-hierarchy.yaml            | rbac.authorization.k8s.io/v1                  | RoleBinding            | allow-resource-reference-from-client-name-hierarchy                                    | hierarchy                  |
+| namespaces/client-name-hierarchy.yaml            | rbac.authorization.k8s.io/v1                  | RoleBinding            | allow-client-name-hierarchy-resource-reference-from-policies                           | client-name-hierarchy      |
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount      | client-name-logging-sa                                                                 | client-name-config-control |
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-logging-sa-logadmin-permissions                                            | hierarchy                  |
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-logging-sa-bigqueryadmin-permissions                                       | hierarchy                  |
@@ -68,6 +70,7 @@ This package has no sub-packages.
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-networkadmin-permissions                                     | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-security-permissions                                         | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-dns-permissions                                              | hierarchy                  |
+| namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-tier2-dns-record-admin-permission                            | projects                   |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-service-control-permissions                                  | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-xpnadmin-permissions                                         | config-control             |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-servicedirectoryeditor-permissions                           | hierarchy                  |
@@ -116,7 +119,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/client-setup/"
+    cd "./solutions/client-setup/"
     ```
 
 1.  Edit the function config file(s):
