@@ -5,4 +5,4 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: sample description
+  description: This package enables the Naming Covention policies. Depends on `gatekeeper-policies` package

@@ -5,4 +5,4 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: sample description
+  description: Constraint Bundle for enabling Guardrails v1 policy. Depends on `gatekeeper-policies` package.
