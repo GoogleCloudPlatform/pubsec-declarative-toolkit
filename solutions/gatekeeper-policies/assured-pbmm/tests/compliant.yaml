@@ -1,0 +1,9 @@
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata: 
+  name: service
+  namespace: config-control
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+spec:
+  resourceID: container.googleapis.com

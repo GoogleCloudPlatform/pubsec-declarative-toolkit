@@ -1,0 +1,20 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata: 
+  name: pbmmservices
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+    internal.kpt.dev/upstream-identifier: 'test.gatekeeper.sh|Suite|default|limitegresstraffic'
+tests:
+  - name: pbmmservices
+    template: template.yaml
+    constraint: constraint.yaml
+    cases:
+      - name: non-compliant
+        object: tests/non-compliant.yaml
+        assertions:
+          - violations: yes
+      - name: compliant
+        object: tests/compliant.yaml
+        assertions:
+          - violations: no
