@@ -17,6 +17,7 @@ kind: LimitEgressTraffic
 metadata:
   name: limitegresstraffic
 spec:
+  enforcementAction: dryrun
   match:
     kinds:
       - apiGroups: ["*"]

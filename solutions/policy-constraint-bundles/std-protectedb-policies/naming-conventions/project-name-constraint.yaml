@@ -17,6 +17,7 @@ kind: NamingPolicyProject
 metadata:
   name: namingpolicyproject
 spec:
+  enforcementAction: dryrun
   match:
     kinds:
       - apiGroups:

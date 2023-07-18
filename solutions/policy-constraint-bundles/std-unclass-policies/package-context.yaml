@@ -5,4 +5,4 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  name: example
+  name: Policies for enforcing Unclass compliance

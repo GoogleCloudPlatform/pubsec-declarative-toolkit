@@ -13,19 +13,20 @@
 # limitations under the License.
 #########
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: DataLocation
+kind: NamingPolicyProject
 metadata:
-  name: datalocation
+  name: namingpolicyproject
 spec:
   enforcementAction: dryrun
   match:
     kinds:
-      - apiGroups: ["*"]
-        kinds: ["*"]
+      - apiGroups:
+          - '*'
+        kinds:
+          - Project
   parameters:
-    locations:
-      - "northamerica-northeast1"
-      - "northamerica-northeast2"
-      - "global"
-    allowedServices:
-      - ""
+    client_code: ^(aa|bb|cc) # kpt-set: ${client_code}
+    env_code: d # kpt-set: ${client_code}${env_code}
+    region_code: m
+    class_code: (u|a|b)-
+    user_defined_string: '^[a-z][a-z0-9-]*[a-z0-9]$'

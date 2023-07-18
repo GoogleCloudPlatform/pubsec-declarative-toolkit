@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: must-have-cost-center
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups:
+        - resourcemanager.cnrm.cloud.google.com
+        kinds:
+        - Project
+  parameters:
+    message: "All namespaces must have an `cost-center` label"
+    labels:
+      - key: cost-center
+        allowedRegex: "^[a-zA-Z]+$"

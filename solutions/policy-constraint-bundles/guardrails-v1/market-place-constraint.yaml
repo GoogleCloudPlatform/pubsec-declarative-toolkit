@@ -17,6 +17,7 @@ kind: CloudMarketPlaceConfig
 metadata:
   name: cloudmarketplaceconfig
 spec:
+  enforcementAction: dryrun
   match:
     kinds:
       - apiGroups: ["*"]
