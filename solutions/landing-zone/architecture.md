@@ -502,10 +502,21 @@ The current 1 is slated for non-modifiable audit logs - but we need to verify th
 
 
 ## DI-25: Continuous Delivery Pipelines
+### References
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/339
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/409
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/432
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/430 
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/418
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/344
+- ref: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/192 
+
 - [Cloud Deploy](https://cloud.google.com/deploy) - GKE Pipelines - (242711314) - https://cloud.google.com/blog/products/devops-sre/google-cloud-deploy-now-ga
 - Github actions
 - Gitlab
 - Jenkins
+
+- 
 
 ### Cloud Deploy Pipelines
 Investigate use of [Cloud Deploy](https://cloud.google.com/deploy) as a pipeline layer in both the infrastructure and workload deployment automation.
