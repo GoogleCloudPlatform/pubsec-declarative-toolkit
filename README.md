@@ -30,6 +30,8 @@ We recommend using the Managed Config Controller service which comes bundles wit
 
 See the Google Cloud [quickstart](https://cloud.google.com/anthos-config-management/docs/tutorials/manage-resources-config-controller) guide for getting up and running with Config Controller
 
+A setup script is provided in the repository [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/blob/main/scripts/bootstrap/setup-kcc.sh) that will configure the Config Controller cluster.  The instructions in the [Advanced Install](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/advanced-install.md) are automated as part of the [setup-kcc.sh](https://github.com/ssc-spc-ccoe-cei/gcp-tools/blob/main/scripts/bootstrap/setup-kcc.sh) script.
+
 We have also put together the following [guide](docs/advanced-install.md) to deploy a standalone Config Controller instance or see the examples [directory](examples/) for example installation methods.
 
 ## Additional Documentation
