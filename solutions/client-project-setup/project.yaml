@@ -20,7 +20,6 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/project-parent-folder # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/${project-parent-folder}
 spec:
   name: project-id # kpt-set: ${project-id}
   billingAccountRef:
