@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.1...solutions/client-project-setup/0.4.2) (2023-07-20)
+
+
+### Bug Fixes
+
+* remove external depends-on annotation ([#435](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/435)) ([3d6dbf0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/3d6dbf0cf11efa9e449b8c3f8e3f594b7897a577))
+
 ## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.0...solutions/client-project-setup/0.4.1) (2023-06-27)
 
 
