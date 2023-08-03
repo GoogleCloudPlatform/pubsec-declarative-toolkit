@@ -43,7 +43,7 @@ source ./vars.sh
 
 getrole()
 {
-    array=( iam.serviceAccountTokenCreator roles/resourcemanager.folderAdmin roles/resourcemanager.organizationAdmin orgpolicy.policyAdmin resourcemanager.projectCreator billing.projectManager )
+    array=( roles/iam.serviceAccountTokenCreator roles/resourcemanager.folderAdmin roles/resourcemanager.organizationAdmin orgpolicy.policyAdmin resourcemanager.projectCreator billing.projectManager )
     for i in "${array[@]}"
     do
 	    echo "$i"
