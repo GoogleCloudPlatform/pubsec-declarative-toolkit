@@ -42,7 +42,7 @@ After the Kubernetes cluster is fully provisioned - proceed to [Deploy a landing
 
 ## Additional Documentation
 
-You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **[Shared Services Canada](https://www.canada.ca/en/shared-services.html)**, providing a good level of details on how they have implemented the [Landing Zone v2 solution]((../../docs/landing-zone-v2/README.md)) to host workloads from any of the 43 departments of the Government of Canada.
+You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **[Shared Services Canada](https://www.canada.ca/en/shared-services.html)**, providing a good level of details on how they have implemented the [Landing Zone v2 solution](docs/landing-zone-v2/README.md) to host workloads from any of the 43 departments of the Government of Canada.
 
 For further documentation on the project, including the setup pre-requirements and supporting service such as Config Connector and Config Management.
 
