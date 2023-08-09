@@ -6,3 +6,8 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: Constraint Bundle for enabling Guardrails v1 policy. Depends on `gatekeeper-policies` package.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/set-enforcement-action:v0.1.0
+      configMap:
+        enforcementAction: dry-run

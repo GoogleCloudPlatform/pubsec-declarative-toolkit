@@ -5,9 +5,9 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: sample description
+  description: Constraint Bundle for enabling Protected B policy compliance. Depends on `gatekeeper-policies` package.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/set-enforcement-action:v0.1.0
       configMap:
-        enforcementAction: deny
+        enforcementAction: dry-run
