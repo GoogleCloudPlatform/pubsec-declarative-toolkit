@@ -43,15 +43,12 @@ All Projects must have be labeled with a cost center code that matches the follo
 
 ### Fetch the package
 `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/policy-constraint-bundles/std-protectedb-policies protectb-policies`
-Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### View package content
 `kpt pkg tree protectb-policies`
-Details: https://kpt.dev/reference/cli/pkg/tree/
 
 ### Apply the package
 ```shell
 kpt live init protectb-policies
 kpt live apply protectb-policies --reconcile-timeout=2m --output=table
 ```
-Details: https://kpt.dev/reference/cli/live/

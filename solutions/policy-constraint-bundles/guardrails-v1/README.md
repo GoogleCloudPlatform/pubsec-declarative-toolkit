@@ -106,9 +106,7 @@ Validates no account has been created with the required permissions to access th
 ### Fetch the package
 
 `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/policy-constraint-bundles/guardrails-v1 guardrails-v1`
-Details: <https://kpt.dev/reference/cli/pkg/get/>
 
 ### View package content
 
 `kpt pkg tree guardrails-v1`
-Details: <https://kpt.dev/reference/cli/pkg/tree/>

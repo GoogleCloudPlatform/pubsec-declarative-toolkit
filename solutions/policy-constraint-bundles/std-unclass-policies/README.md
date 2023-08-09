@@ -47,17 +47,14 @@ All Projects must have be labeled with a cost center code that matches the follo
 ```shell
 kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/policy-constraint-bundles/std-protectedb-policies unclass-policies
 ```
-Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### View package content
-```
+```shell
 kpt pkg tree unclass-policies
 ```
-Details: https://kpt.dev/reference/cli/pkg/tree/
 
 ### Apply the package
 ```shell
 kpt live init unclass-policies
 kpt live apply unclass-policies --reconcile-timeout=2m --output=table
 ```
-Details: https://kpt.dev/reference/cli/live/
