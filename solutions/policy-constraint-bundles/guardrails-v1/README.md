@@ -10,7 +10,7 @@ For production environments it is recommended the policies be set to `deny`. Thi
 
 This example is what the setting should look like when set to `deny`
 
-```
+```yaml
 apiVersion: kpt.dev/v1
 kind: Kptfile
 ...

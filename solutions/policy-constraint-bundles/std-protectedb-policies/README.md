@@ -14,7 +14,7 @@ For production environments it is recommended the policies be set to `deny`. Thi
 
 This example is what the setting should look like when set to `deny`
 
-```
+```yaml
 apiVersion: kpt.dev/v1
 kind: Kptfile
 ...
@@ -28,7 +28,7 @@ pipeline:
 ### Naming Convention
 All Projects must have the following naming convention `aadmu-string`
 
-```shell
+```yaml
 client_code: ^(aa|bb|cc)
 env_code: d # corresponds to environment `d` 
 region_code: m # Region Code `m` for montreal

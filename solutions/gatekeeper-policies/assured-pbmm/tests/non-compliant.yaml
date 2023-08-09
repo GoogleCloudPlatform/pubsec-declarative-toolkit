@@ -1,6 +1,6 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: 
+metadata:
   name: service
   namespace: config-control
   annotations:

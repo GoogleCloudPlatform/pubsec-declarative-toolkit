@@ -1,6 +1,6 @@
 kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
-metadata: 
+metadata:
   name: pbmmservices
   annotations:
     config.kubernetes.io/local-config: 'true'
