@@ -5,4 +5,4 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  name: Policies for enforcing Protected B compliance
+  name: Standard Protected B Policies

@@ -7,9 +7,9 @@ spec:
   match:
     kinds:
       - apiGroups:
-        - resourcemanager.cnrm.cloud.google.com
+          - resourcemanager.cnrm.cloud.google.com
         kinds:
-        - Project
+          - Project
   parameters:
     message: "All namespaces must have an `cost-center` label"
     labels:
