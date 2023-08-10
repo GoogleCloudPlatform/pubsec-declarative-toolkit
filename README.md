@@ -24,9 +24,13 @@ You can find the latest release versions in the `releases` [page](https://github
 
 ## Quickstart
 
-In order to deploy the solutions you will need a Kubernetes cluster with [Config Connector](https://cloud.google.com/config-connector/docs/overview) installed.
+Deploying an example landing zone requires two steps:
+- A [Config Connector](https://cloud.google.com/config-connector/docs/overview) enabled Kubernetes cluster
+- One or more [solutions](#current-solutions) packages like the [core-landing-zone](solutions/core-landing-zone) and [experimentation core-landing-zone](solutions/experimentation/core-landing-zone) documented in section 2 of [landing-zone-v2](docs/landing-zone-v2#2-create-your-landing-zone)
+  
+In order to deploy the [solutions](#current-solutions) you will need a Kubernetes cluster with [Config Connector](https://cloud.google.com/config-connector/docs/overview) installed.
 
-We recommend using the Managed Config Controller service which comes bundles with [Config Connector](https://cloud.google.com/config-connector/docs/overview) and [Anthos Config Management](https://cloud.google.com/anthos/config-management), alternatively you can [install](https://cloud.google.com/config-connector/docs/how-to/advanced-install#manual) Config Connector on any CNCF compliant Kubernetes cluster.
+We recommend using the Managed Config Controller service which comes bundled with [Config Connector](https://cloud.google.com/config-connector/docs/overview) and [Anthos Config Management](https://cloud.google.com/anthos/config-management), alternatively you can [install](https://cloud.google.com/config-connector/docs/how-to/advanced-install#manual) Config Connector on any CNCF compliant Kubernetes cluster.
 
 See the Google Cloud [quickstart](https://cloud.google.com/anthos-config-management/docs/tutorials/manage-resources-config-controller) guide for getting up and running with Config Controller
 
@@ -34,9 +38,11 @@ A setup script is provided in the repository [gcp-tools](https://github.com/ssc-
 
 We have also put together the following [guide](docs/advanced-install.md) to deploy a standalone Config Controller instance or see the examples [directory](examples/) for example installation methods.
 
+After the Kubernetes cluster is fully provisioned - proceed to [Deploy a landing zone v2 package](docs/landing-zone-v2/README.md).
+
 ## Additional Documentation
 
-You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **[Shared Services Canada](https://www.canada.ca/en/shared-services.html)**, providing a good level of details on how they have implemented the Landing Zone v2 solution to host workloads from any of the 43 departments of the Government of Canada.
+You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **[Shared Services Canada](https://www.canada.ca/en/shared-services.html)**, providing a good level of details on how they have implemented the [Landing Zone v2 solution](docs/landing-zone-v2/README.md) to host workloads from any of the 43 departments of the Government of Canada.
 
 For further documentation on the project, including the setup pre-requirements and supporting service such as Config Connector and Config Management.
 
