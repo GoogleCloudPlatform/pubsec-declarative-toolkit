@@ -73,6 +73,7 @@ data:
   # a list of directory customer IDs from which users can be added to IAM policies, see YAML file for more info:
   # org/org-policies/iam-allowed-policy-member-domains.yaml
   # this setting MUST be changed to include the GCP org's directory ID and any other directory containing users that will need IAM roles assigned
+  # run 'gcloud organizations list' as described in https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains#retrieving_customer_id
   allowed-policy-domain-members: |
     - "DIRECTORY_CUSTOMER_ID"
   #
