@@ -378,39 +378,27 @@ Optional
 
   1. initialize the package
 
-    ```shell
     kpt live init core-landing-zone --namespace config-control
-    ```
 
   1. apply / hydrate the templated package with setters.yaml values
 
-    ```shell
     kpt fn render core-landing-zone
-    ```
 
   1. Apply the hydrated kubernetes yaml to the cluster
 
-    ```shell
     kpt live apply core-landing-zone --reconcile-timeout=2m --output=table
-    ```
 
   1. Check the status of the deployed resources
 
-    ```shell
     kpt live status core-landing-zone
-    ```
 
   1. Check the status of the deployed services
 
-    ```shell
     kubectl get gcp --all-namespaces
-    ```
 
-    or
+or
 
-    ```shell
     kubectl get gcp -n projects
-    ```
 
 Repeat the above process with additional solutions packages.
 
