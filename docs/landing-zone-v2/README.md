@@ -414,6 +414,7 @@ Optional
 
 Repeat the above process with additional solutions packages.
 
+
 ## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps
 
 
