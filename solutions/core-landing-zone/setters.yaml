@@ -47,9 +47,11 @@ data:
   ##########################
   #
   # This is the project where the config controller instance is running
-  # Values can be viewed in the Project Dashboard
+  # Values can be viewed in the Project Dashboard via https://console.cloud.google.com/welcome?project=$PROJECT_ID under "Project number" where PROJECT_ID is defined as management-project-id below or in the export block as PROJECT_ID in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration
   management-project-id: management-project-12345
+  # derive project-number (an expected numeric id like 5...57396547) using the project-id above via gcloud command: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
   management-project-number: "0000000000"
+  # leave the kubernetes namespace as a default
   management-namespace: config-control
   #
   ##########################
