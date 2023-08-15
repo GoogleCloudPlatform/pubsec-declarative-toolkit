@@ -105,6 +105,8 @@ To deploy this Landing Zone you will need to:
 
 ### <a name='InitialOrganizationconfiguration'></a>Initial Organization configuration
 
+The following instructions in this section 1 for the boostrap of the Config Controller project and cluster are fully automated in the [setup-kcc.sh](https://github.com/ssc-spc-ccoe-cei/gcp-tools/blob/main/scripts/bootstrap/setup-kcc.sh) script.
+
 1. Define environment variables
 
     ```shell
@@ -366,6 +368,52 @@ cd pbmm-landingzone
     Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.  
     For example "core-landing-zone" will have the same [setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/setters.yaml) as in the repo in the root of the pkg directory.
 
+### <a name='deploy-the-infrastructure-using-kpt'></a>2b. Deploy the infrastructure using KPT
+This section is an alternative to GitOps in the following section 3.
+
+#### <a name='gatekeeper-policies-kpt'></a>gatekeeper-policies
+Optional
+
+#### <a name='core-landing-zone-kpt'></a>core-landing-zone
+
+  1. initialize the package
+
+    ```shell
+    kpt live init core-landing-zone --namespace config-control
+    ```
+
+  1. apply / hydrate the templated package with setters.yaml values
+
+    ```shell
+    kpt fn render core-landing-zone
+    ```
+
+  1. Apply the hydrated kubernetes yaml to the cluster
+
+    ```shell
+    kpt live apply core-landing-zone --reconcile-timeout=2m --output=table
+    ```
+
+  1. Check the status of the deployed resources
+
+    ```shell
+    kpt live status core-landing-zone
+    ```
+
+  1. Check the status of the deployed services
+
+    ```shell
+    kubectl get gcp --all-namespaces
+    ```
+
+    or
+
+    ```shell
+    kubectl get gcp -n projects
+    ```
+
+Repeat the above process with additional solutions packages.
+
 ## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps
 
 
@@ -422,6 +470,9 @@ This adds an extra layer of redundancy and drift protection to your infrastructu
 
     ```shell
     kubectl apply -f root-sync.yaml
+    ```
+
+    ```shell
     kubectl wait --for condition=established --timeout=10s crd/rootsyncs.configsync.gke.io
     ```
 
