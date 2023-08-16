@@ -16,14 +16,15 @@
 apiVersion: configsync.gke.io/v1beta1
 kind: RootSync
 metadata:
-  name: project-id-csync # kpt-set: ${project-id}-csync
+  # namespace + "_" + name cannot exceed 63 characters
+  name: project-id-t3-csync # kpt-set: ${project-id}-t3-csync
   namespace: config-management-system
 spec:
   sourceFormat: unstructured
   git:
     repo: https://repo-url # kpt-set: ${repo-url}
     branch: main # kpt-set: ${repo-branch}
-    dir: csync/deploy/env # kpt-set: ${repo-dir}
+    dir: csync/tier3/configcontroller/deploy/env # kpt-set: ${tier3-repo-dir}
     revision: HEAD
     auth: token
     secretRef:

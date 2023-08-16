@@ -62,7 +62,7 @@ spec:
   role: roles/iam.securityAdmin
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Tier3 Firewall Rule Admin to GCP SA on Client Host Project
+# Grant GCP role Tier3 Firewall Rule Admin to GCP SA on standard.application-infrastructure folder
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -98,6 +98,24 @@ spec:
   role: organizations/org-id/roles/tier3.dnsrecord.admin # kpt-set: organizations/${org-id}/roles/tier3.dnsrecord.admin
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
+# Grant GCP Project IAM Admin to GCP SA on Client Host Project
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-project-iam-admin-host-project-id-permissions # kpt-set: ${project-id}-tier3-sa-project-iam-admin-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: roles/resourcemanager.projectIamAdmin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
 # Grant GCP role Compute Public IP Admin to tier3-sa GCP SA
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -114,6 +132,24 @@ spec:
     kind: Project
     name: project-id # kpt-set: ${project-id}
   role: roles/compute.publicIpAdmin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Compute Security Admin to tier3-sa GCP SA
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-compute-security-admin-host-project-id-permissions # kpt-set: ${project-id}-tier3-sa-compute-security-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/compute.securityAdmin
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
 # K8S SA
@@ -157,6 +193,24 @@ metadata:
 spec:
   googleServiceAccount: tier3-sa@project-id.iam.gserviceaccount.com # kpt-set: tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
+# Give KCC, for this namespace, permission to read KCC resources in the client-name-projects namespace.
+# This allows to reference the project resources in the client-name-projects namespace from the tier3 namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cnrm-viewer-project-id-tier3 # kpt-set: cnrm-viewer-${project-id}-tier3
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-project-id-tier3 # kpt-set: cnrm-controller-manager-${project-id}-tier3
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
 # Give KCC, for this namespace, permission to read KCC resources in the client-name-networking namespace.
 # This allows to reference the network resources in the client-name-networking namespace from the tier3 namespace.
 apiVersion: rbac.authorization.k8s.io/v1
@@ -164,6 +218,24 @@ kind: RoleBinding
 metadata:
   name: cnrm-viewer-project-id-tier3 # kpt-set: cnrm-viewer-${project-id}-tier3
   namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+roleRef:
+  name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - name: cnrm-controller-manager-project-id-tier3 # kpt-set: cnrm-controller-manager-${project-id}-tier3
+    namespace: cnrm-system
+    kind: ServiceAccount
+---
+# Give KCC, for this namespace, permission to read KCC resources in the client-name-logging namespace.
+# This allows to reference the pubsub topic resources in the client-name-logging namespace from the tier3 namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cnrm-viewer-project-id-tier3 # kpt-set: cnrm-viewer-${project-id}-tier3
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 roleRef:
