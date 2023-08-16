@@ -119,7 +119,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd "./solutions/client-setup/"
+    cd "./client-setup/"
     ```
 
 1.  Edit the function config file(s):
