@@ -26,6 +26,34 @@ metadata:
 spec:
   resourceID: compute.googleapis.com
 ---
+# Logging API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-logging # kpt-set: ${host-project-id}-logging
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+spec:
+  resourceID: logging.googleapis.com
+---
+# Monitoring API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-monitoring # kpt-set: ${host-project-id}-monitoring
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+spec:
+  resourceID: monitoring.googleapis.com
+---
 # DNS API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
