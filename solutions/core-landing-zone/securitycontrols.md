@@ -1,6 +1,6 @@
 # Security Controls
 
-# <!-- BEGINNING OF SECURITY CONTROLS LIST -->
+<!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
 |AC-3(7)|./lz-folder/audits/logging-project/project-iam.yaml|mgmt-project-cluster-platform-and-component-log-bucket-writer-permissions|
@@ -45,4 +45,4 @@
 |AU-9(2)|./lz-folder/audits/logging-project/project.yaml|logging-project-id|
 |SC-22|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
 
-# <!-- END OF SECURITY CONTROLS LIST -->
+<!-- END OF SECURITY CONTROLS LIST -->
