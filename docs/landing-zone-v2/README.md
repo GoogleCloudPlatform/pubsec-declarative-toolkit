@@ -76,7 +76,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 | clients | Contains client resources |
 | audits | Contains the landing zone logging project |
 | services | Contains service projects for applications that are offered as a services (AD, Backup, Trusted Images, Artifact registry, Certificate Authority, etc.) to all clients |
-| services-infrastructure | Contains the shared hub networking project, the core dns project as well as the host project for additional services | 
+| services-infrastructure | Contains the shared hub networking project, the core dns project as well as the host project for additional services |
 
 ### Client Landing Zone Folders
 
