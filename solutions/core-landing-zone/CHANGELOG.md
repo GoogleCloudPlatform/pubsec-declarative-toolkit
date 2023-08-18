@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.1...solutions/core-landing-zone/0.3.2) (2023-08-18)
+
+
+### Bug Fixes
+
+* core-landing-zone package ([#469](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/469)) ([66afed1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/66afed16daf1c9b7afb9c221dd6aaab038deadba))
+
 ## [0.3.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.0...solutions/core-landing-zone/0.3.1) (2023-06-23)
 
 
