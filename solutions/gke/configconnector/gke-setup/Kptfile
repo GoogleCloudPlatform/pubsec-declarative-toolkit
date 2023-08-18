@@ -1,0 +1,17 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-setup
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `client-project-setup`.
+    Deploy this package once per service project.
+
+    Package to prepare a service project for GKE clusters. Permissions are granted onto the host project.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
