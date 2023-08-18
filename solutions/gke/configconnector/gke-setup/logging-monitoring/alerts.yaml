@@ -45,7 +45,7 @@ spec:
   documentation:
     content: |-
       A critical severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
-
+      -
       The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
   enabled: true
   notificationChannels:
@@ -82,7 +82,7 @@ spec:
   documentation:
     content: |-
       A high severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
-
+      -
       The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
   enabled: true
   notificationChannels:
@@ -119,7 +119,7 @@ spec:
   documentation:
     content: |-
       A medium severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
-
+      -
       The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
   enabled: true
   notificationChannels:
@@ -156,7 +156,7 @@ spec:
   documentation:
     content: |-
       A low severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
-
+      -
       The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
   enabled: true
   notificationChannels:
@@ -200,7 +200,7 @@ spec:
   documentation:
     content: |-
       A message has been received by the gke-cluster-notification-pubsub-topic Cloud Pub/Sub topic.
-
+      -
       For more details, please visit the Cloud Pub/Sub Console, and pull messages from the gke-cluster-notification-pubsub-sub
       Cloud Pub/Sub Subscription.
   enabled: true
@@ -240,7 +240,7 @@ spec:
   documentation:
     content: |-
       A GKE cluster upgrade notification, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
-
+      -
       The GKE cluster has been upgraded from ${log.extracted_label.previousMasterVersion} to ${log.extracted_label.currentMasterVersion}. Please consult the GKE Kubernetes Console and logs for more details.
   enabled: true
   notificationChannels:
