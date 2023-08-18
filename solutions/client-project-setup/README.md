@@ -17,14 +17,14 @@ Package to create a client's project, 2 project scoped namespaces for its resour
 | allowed-nane1-main-subnet    | host-project-id-nane1-standard-classification-main-snet | str  |     2 |
 | allowed-nane2-main-subnet    | host-project-id-nane2-standard-classification-main-snet | str  |     2 |
 | client-management-project-id | client-management-project-12345                         | str  |     1 |
-| client-name                  | client1                                                 | str  |    62 |
-| host-project-id              | net-host-project-12345                                  | str  |     5 |
+| client-name                  | client1                                                 | str  |    59 |
+| host-project-id              | net-host-project-12345                                  | str  |     3 |
 | management-namespace         | config-control                                          | str  |     8 |
 | management-project-id        | management-project-12345                                | str  |     2 |
 | org-id                       |                                              0000000000 | str  |     2 |
 | project-billing-id           | AAAAAA-BBBBBB-CCCCCC                                    | str  |     1 |
-| project-id                   | client-project-12345                                    | str  |   107 |
-| project-parent-folder        | project-parent-folder                                   | str  |     2 |
+| project-id                   | client-project-12345                                    | str  |   104 |
+| project-parent-folder        | project-parent-folder                                   | str  |     1 |
 | repo-branch                  | main                                                    | str  |     2 |
 | repo-url                     | git-repo-to-observe                                     | str  |     2 |
 | tier3-repo-dir               | csync/tier3/configcontroller/deploy/env                 | str  |     1 |
@@ -43,7 +43,6 @@ This package has no sub-packages.
 | namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-securityadmin-project-id-permissions                    | client-name-projects       |
 | namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions   | client-name-hierarchy      |
 | namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-dnsrecord-admin-host-project-id-permissions       | client-name-projects       |
-| namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-project-iam-admin-host-project-id-permissions           | client-name-projects       |
 | namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-public-ip-admin-host-project-id-permissions     | client-name-projects       |
 | namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-security-admin-host-project-id-permissions      | client-name-projects       |
 | namespaces/project-id-tier3.yaml       | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy               | project-id-tier3-sa-workload-identity-binding                               | client-name-config-control |
