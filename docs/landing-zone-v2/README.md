@@ -9,6 +9,9 @@
   - [Organization](#organization)
   - [Single GCP organization](#single-gcp-organization)
   - [Multiple GCP organizations](#multiple-gcp-organizations)
+  - [Folder Structure Per Environment (Dev, Preprod, Prod)](#folder-structure-per-environment-dev-preprod-prod)
+    - [Core Landing Zone Folders](#core-landing-zone-folders)
+    - [Client Landing Zone Folders](#client-landing-zone-folders)
   - [Setup](#setup)
     - [1. Complete the bootstrap procedure](#1-complete-the-bootstrap-procedure)
       - [Requirements](#requirements)
@@ -23,6 +26,9 @@
     - [GKE Standard](#gke-standard)
   - [2. Create your landing zone](#2-create-your-landing-zone)
     - [Fetch the packages](#fetch-the-packages)
+    - [2b. Deploy the infrastructure using KPT](#2b-deploy-the-infrastructure-using-kpt)
+      - [gatekeeper-policies](#gatekeeper-policies)
+      - [core-landing-zone](#core-landing-zone)
   - [3. Deploy the infrastructure using GitOps](#3-deploy-the-infrastructure-using-gitops)
     - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
     - [ConfigSync](#configsync)
@@ -59,7 +65,30 @@ This Landing Zone v2 assumes that the different required environments known as E
 
 ![img](img/multi-org.png)
 
+## <a name="folderStructure"></a>Folder Structure Per Environment (Dev, Preprod, Prod)
+
+![img](img/folder-structure.png)
+
+### Core Landing Zone Folders
+
+| Folder | Usage |
+| --- | --- |
+| clients | Contains client resources |
+| audits | Contains the landing zone logging project |
+| services | Contains service projects for applications that are offered as a services (AD, Backup, Trusted Images, Artifact registry, Certificate Authority, etc.) to all clients |
+| services-infrastructure | Contains the shared hub networking project, the core dns project as well as the host project for additional services | 
+
+### Client Landing Zone Folders
+
+| Folder | Usage |
+| --- | --- |
+|auto | Contains projects related to automation tools such as CI and CD pipelines |
+| applications (pbmm/nonp) | Contains application’s service projects |
+| applications-infrastructure | Contains the networking project, that are used to host applications |
+
+
 ## <a name='Setup'></a>Setup
+
 
 To deploy this Landing Zone you will need to:
 
