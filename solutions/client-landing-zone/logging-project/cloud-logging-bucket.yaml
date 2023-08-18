@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ######
-# TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project
+# TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project. Will be required if a config-controller is deployed per client OR we need to give permissions to the client service account into the core logging project.
 # Cloud Logging bucket for client Platform and Component logs
 # Logs are routed using a log sink to a central logging project into a dedicated log bucket
 # AU-4(1), AU-9(2) - Log buckets are created in a logging project, isolating them from the source of the log entries in other projects
