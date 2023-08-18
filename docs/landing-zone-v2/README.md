@@ -369,7 +369,7 @@ cd pbmm-landingzone
     For example "core-landing-zone" will have the same [setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/setters.yaml) as in the repo in the root of the pkg directory.
 
 ### <a name='deploy-the-infrastructure-using-kpt'></a>2b. Deploy the infrastructure using KPT
-This section is an alternative to GitOps in the following section 3.
+This section is an optional dev-oriented alternative to the GitOps approach (which is recommended for production deployments) in the following section 3.
 
 #### <a name='gatekeeper-policies-kpt'></a>gatekeeper-policies
 Optional
