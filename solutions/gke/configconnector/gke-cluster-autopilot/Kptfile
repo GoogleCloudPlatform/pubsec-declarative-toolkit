@@ -1,0 +1,19 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-cluster-autopilot
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `gke-setup`.
+    Requires project-id-tier3 namespace.
+
+    Deploy this package once per GKE cluster.
+
+    A GKE Autopilot Cluster running in a service project. This package also deploys a dedicated subnet inside the host project.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
