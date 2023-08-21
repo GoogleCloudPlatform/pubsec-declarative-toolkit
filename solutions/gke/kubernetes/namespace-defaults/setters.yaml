@@ -35,10 +35,8 @@ data:
   # Application
   ##########################
   #
+  # the name of the workload, lowercase only
   workload-name: sample-workload
-  workload-billing-id: sample-id
-  workload-owner: sample-owner
-  workload-contact-info: sample-owner@sample.email
   # user or group to grant view role on workload namespace
   workload-view: 'group:client1@example.com'
   #
