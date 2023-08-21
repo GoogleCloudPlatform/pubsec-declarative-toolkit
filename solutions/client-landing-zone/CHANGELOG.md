@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.2...solutions/client-landing-zone/0.4.3) (2023-08-21)
+
+
+### Bug Fixes
+
+* client-landing-zone ([#471](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/471)) ([5fe3d22](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/5fe3d22a06de74dbe5ecacd6a5b7f6d323b247b1))
+
 ## [0.4.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.1...solutions/client-landing-zone/0.4.2) (2023-06-27)
 
 
