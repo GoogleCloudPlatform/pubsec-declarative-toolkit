@@ -1,0 +1,57 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  ##########################
+  # Instructions
+  ##########################
+  #
+  # Follow instructions specific to each section.
+  #
+  ##########################
+  # Client
+  ##########################
+  #
+  # Project that has the public dns zone. Usually the client host project that was created by the client-landing-zone package
+  dns-project-id: dns-project-12345
+  #
+  ##########################
+  # Gateway
+  ##########################
+  #
+  # The DNSRecordset.metadata.name (a.k.a kubernetes resource name)
+  metadata-name: sample-name-recordset
+  # The DNSRecordset.spec.name
+  spec-name: "sample-name.example.com."
+  # The Gateway name
+  gateway-name: sample-gateway
+  #
+  ##########################
+  # setters.yaml from parent package will override the value below
+  ##########################
+  #
+  # Name for the client, lowercase only
+  client-name: client1
+  # The project id that was created by the client-project-setup
+  project-id: project-12345
+  #
+  ##########################
+  # End of Configurations
+  ##########################
