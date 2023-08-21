@@ -1,0 +1,14 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: cluster-defaults
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `gke-cluster-autopilot`.
+    This package deploys to a GKE cluster.
+    It should be deployed once per cluster.
+
+    This package deploys default resources that have to exist on all clusters.
