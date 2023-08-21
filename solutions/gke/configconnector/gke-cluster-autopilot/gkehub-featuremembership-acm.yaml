@@ -1,0 +1,49 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+######
+# Anthos Config Management
+apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
+kind: GKEHubFeatureMembership
+metadata:
+  name: cluster-name-acm-hubfeaturemembership # kpt-set: ${cluster-name}-acm-hubfeaturemembership
+  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
+spec:
+  projectRef:
+    name: project-id # kpt-set: ${project-id}
+    namespace: client-name-projects # kpt-set: ${client-name}-projects
+  location: global
+  membershipRef:
+    name: cluster-name # kpt-set: ${cluster-name}
+  featureRef:
+    name: project-id-acm-hubfeature # kpt-set: ${project-id}-acm-hubfeature
+  configmanagement:
+    binauthz:
+      enabled: false
+    configSync:
+      sourceFormat: unstructured
+      # TODO: validate with ACM product team: this appears to be deprecated since May 15 2023
+      # https://cloud.google.com/anthos-config-management/docs/configmanagement-fields#configuration_for_git_repositories
+      git:
+        syncRepo: "https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME" # kpt-set: ${repo-url}
+        syncBranch: "main" # kpt-set: ${repo-branch}
+        policyDir: csync/tier3/kubernetes/<fleet-id>/deploy/<env> # kpt-set: ${repo-dir}
+        syncWaitSecs: "20"
+        syncRev: "HEAD"
+        secretType: "token"
+    policyController:
+      enabled: true
+      referentialRulesEnabled: true
+      logDeniesEnabled: true
+      templateLibraryInstalled: true
+      auditIntervalSeconds: "60"
