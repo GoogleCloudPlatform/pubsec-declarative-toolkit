@@ -10,7 +10,6 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 | Organization Policy Bundle | Package of Baseline Organization Policies | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/org-policies) |
 | Guardrails Policy Bundle | Policy Bundle to help analyze compliance for Guardrails |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/guardrails-policies) |
 | KCC Namespaces | This solution is a simple fork of the KCC Project Namespaces blueprint found [here](https://cloud.google.com/anthos-config-management/docs/tutorials/project-namespace-blueprint) | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/kcc-namespaces) |
-| Sandbox GKE | Private GKE deployment | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/sandbox-gke) |
 | Landing Zone v2 (LZv2) | **(In development)** PBMM Landing Zone built in collaboration with Shared Services Canada |  [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2/README.md)
 | Gatekeeper Policy (LZv2) | Policy Bundle | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gatekeeper-policies) |
 | Core Landing Zone (LZv2) | Foundational resources building the landing zone | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/core-landing-zone) |
