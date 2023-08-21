@@ -13,6 +13,11 @@ Deploy this package once per service project.
 
 A package to deploy common GKE resources. It include roles granted to a user or group for vizualizing GKE.
 
+Warning! It requires the alpha CRD [computmanagedsslcertificate](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/compute_v1alpha1_computemanagedsslcertificate.yaml)
+loaded in the config controller.
+
+[Install alpha CRDS](https://cloud.google.com/config-connector/docs/how-to/install-alpha-crds)
+
 ## Setters
 
 |       Name       |           Value           | Type  | Count |
