@@ -32,7 +32,7 @@
 # apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 # kind: ResourceManagerPolicy
 # metadata:
-#   name: compute-restrict-vpc-peering-except-hub-project
+#   name: compute-restrict-vpc-peering-except-host-project-id # kpt-set: compute-restrict-vpc-peering-except-${host-project-id}
 #   namespace: policies
 #   annotations:
 #     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
