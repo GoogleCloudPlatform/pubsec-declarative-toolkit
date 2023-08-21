@@ -11,7 +11,7 @@ This package deploys default resources that have to exist on all clusters.
 Resources list:
 
 - Gateway Controller
-  - gateway namespace
+  - Gateway namespace
   - Gateway using an external global load balancer and a SSL certificate
   - Attaches an SSL Policy
   - Attaches a Cloud Armor and logging policy
