@@ -1,0 +1,247 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# GKE Security Posture Dashboard Alert Policies
+# https://cloud.google.com/kubernetes-engine/docs/concepts/about-security-posture-dashboard
+# GKE Security Posture Critical Severity Alert Policy
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringAlertPolicy
+metadata:
+  name: project-id-gke-security-posture-critical-severity-alert # kpt-set: ${project-id}-gke-security-posture-critical-severity-alert
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/${project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  alertStrategy:
+    # auto close after 7 days
+    autoClose: 604800s
+    notificationRateLimit:
+      # one notification per day
+      period: 86400s
+  combiner: OR
+  conditions:
+    - conditionMatchedLog:
+        filter: |-
+          LOG_ID("containersecurity.googleapis.com/finding")
+          jsonPayload.severity="SEVERITY_CRITICAL"
+        labelExtractors:
+          # This extracts the name of the affected resource
+          namespace: EXTRACT(jsonPayload.resourceName)
+      displayName: Log match condition
+      name: gke-security-posture-critical-severity-alert
+  displayName: GKE Security Posture Critical Severity
+  documentation:
+    content: |-
+      A critical severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
+      -
+      The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
+  enabled: true
+  notificationChannels:
+    - name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify
+---
+# GKE Security Posture High Severity Alert Policy
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringAlertPolicy
+metadata:
+  name: project-id-gke-security-posture-high-severity-alert # kpt-set: ${project-id}-gke-security-posture-high-severity-alert
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/${project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  alertStrategy:
+    # auto close after 7 days
+    autoClose: 604800s
+    notificationRateLimit:
+      # one notification per day
+      period: 86400s
+  combiner: OR
+  conditions:
+    - conditionMatchedLog:
+        filter: |-
+          LOG_ID("containersecurity.googleapis.com/finding")
+          jsonPayload.severity="SEVERITY_HIGH"
+        labelExtractors:
+          # This extracts the name of the affected resource
+          namespace: EXTRACT(jsonPayload.resourceName)
+      displayName: Log match condition
+      name: gke-security-posture-high-severity-alert
+  displayName: GKE Security Posture High Severity
+  documentation:
+    content: |-
+      A high severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
+      -
+      The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
+  enabled: true
+  notificationChannels:
+    - name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify
+---
+# GKE Security Posture Medium Severity Alert Policy
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringAlertPolicy
+metadata:
+  name: project-id-gke-security-posture-medium-severity-alert # kpt-set: ${project-id}-gke-security-posture-medium-severity-alert
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/${project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  alertStrategy:
+    # auto close after 7 days
+    autoClose: 604800s
+    notificationRateLimit:
+      # one notification per day
+      period: 86400s
+  combiner: OR
+  conditions:
+    - conditionMatchedLog:
+        filter: |-
+          LOG_ID("containersecurity.googleapis.com/finding")
+          jsonPayload.severity="SEVERITY_MEDIUM"
+        labelExtractors:
+          # This extracts the name of the affected resource
+          namespace: EXTRACT(jsonPayload.resourceName)
+      displayName: Log match condition
+      name: gke-security-posture-medium-severity-alert
+  displayName: GKE Security Posture Medium Severity
+  documentation:
+    content: |-
+      A medium severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
+      -
+      The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
+  enabled: true
+  notificationChannels:
+    - name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify
+---
+# GKE Security Posture Low Severity Alert Policy
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringAlertPolicy
+metadata:
+  name: project-id-gke-security-posture-low-severity-alert # kpt-set: ${project-id}-gke-security-posture-low-severity-alert
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/${project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  alertStrategy:
+    # auto close after 7 days
+    autoClose: 604800s
+    notificationRateLimit:
+      # one notification per day
+      period: 86400s
+  combiner: OR
+  conditions:
+    - conditionMatchedLog:
+        filter: |-
+          LOG_ID("containersecurity.googleapis.com/finding")
+          jsonPayload.severity="SEVERITY_LOW"
+        labelExtractors:
+          # This extracts the name of the affected resource
+          namespace: EXTRACT(jsonPayload.resourceName)
+      displayName: Log match condition
+      name: gke-security-posture-low-severity-alert
+  displayName: GKE Security Posture Low Severity
+  documentation:
+    content: |-
+      A low severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
+      -
+      The affected workload is ${log.extracted_label.namespace}. Please consult the GKE Security Posture Dashboard and Concerns page for more information.
+  enabled: true
+  notificationChannels:
+    - name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify
+---
+# GKE Cluster Event Notification Alert Policy
+# Cloud Pub/Sub Publish Requests (pubsub.googleapis.com/topic/send_request_count) Metric Alert Policy
+# This metric alert policy checks for published messages to the Pub/Sub Topic ID configured for GKE Cluster Notifications
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringAlertPolicy
+metadata:
+  name: project-id-gke-cluster-event-notification-alert # kpt-set: ${project-id}-gke-cluster-event-notification-alert
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/${project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  alertStrategy:
+    # auto close after 7 days
+    autoClose: 604800s
+  combiner: OR
+  conditions:
+    - conditionThreshold:
+        aggregations:
+          - alignmentPeriod: 60s
+            crossSeriesReducer: REDUCE_COUNT
+            groupByFields:
+              - resource.label.project_id
+              - resource.label.topic_id
+            perSeriesAligner: ALIGN_COUNT
+        comparison: COMPARISON_GT
+        duration: 0s
+        filter: |-
+          resource.type = "pubsub_topic" AND resource.labels.topic_id = "gke-cluster-notification-pubsub-topic"
+          AND metric.type = "pubsub.googleapis.com/topic/send_request_count"
+        trigger:
+          count: 1
+      displayName: Publish Message Count
+      name: gke-cluster-event-notification-alert
+  displayName: GKE Cluster Event Detected
+  documentation:
+    content: |-
+      A message has been received by the gke-cluster-notification-pubsub-topic Cloud Pub/Sub topic.
+      -
+      For more details, please visit the Cloud Pub/Sub Console, and pull messages from the gke-cluster-notification-pubsub-sub
+      Cloud Pub/Sub Subscription.
+  enabled: true
+  notificationChannels:
+    - name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify
+---
+# GKE Cluster Upgrade Notification
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringAlertPolicy
+metadata:
+  name: project-id-gke-cluster-upgrade-alert # kpt-set: ${project-id}-gke-cluster-upgrade-alert
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/${project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  alertStrategy:
+    # auto after 7 days
+    autoClose: 604800s
+    notificationRateLimit:
+      # one notification per day
+      period: 86400s
+  combiner: OR
+  conditions:
+    - conditionMatchedLog:
+        filter: |-
+          resource.type="gke_cluster"
+          proto_payload.method_name="google.container.v1.ClusterManager.UpdateCluster"
+          protoPayload.metadata.operationType="UPGRADE_MASTER"
+        labelExtractors:
+          # This extracts the version numbers of the previous and current Master GKE Versions
+          previousMasterVersion: EXTRACT(protoPayload.metadata.previousMasterVersion)
+          currentMasterVersion: EXTRACT(protoPayload.metadata.currentMasterVersion)
+      displayName: Log match condition
+      name: gke-cluster-upgrade-alert
+  displayName: GKE Cluster Upgrade Notification
+  documentation:
+    content: |-
+      A GKE cluster upgrade notification, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
+      -
+      The GKE cluster has been upgraded from ${log.extracted_label.previousMasterVersion} to ${log.extracted_label.currentMasterVersion}. Please consult the GKE Kubernetes Console and logs for more details.
+  enabled: true
+  notificationChannels:
+    - name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify

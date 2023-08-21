@@ -1,0 +1,107 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Service account names
+# GKE: service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
+# Google APIs: SERVICE_PROJECT_1_NUM@cloudservices.gserviceaccount.com
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#determining_the_names_of_service_accounts_in_your_service_projects
+##################
+# Grant role: roles/compute.networkUser on the host project to SERVICE_PROJECT_1_NUM@cloudservices.gserviceaccount.com
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#enabling_and_granting_roles
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-cloudservices-sa-networkuser-host-project-id-permissions # kpt-set: ${project-id}-cloudservices-sa-networkuser-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: roles/compute.networkUser
+  member: "serviceAccount:project-number@cloudservices.gserviceaccount.com" # kpt-set: serviceAccount:${project-number}@cloudservices.gserviceaccount.com
+---
+# Grant role: roles/compute.networkUser on the host project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#enabling_and_granting_roles
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-container-engine-robot-sa-networkuser-host-project-id-permissions # kpt-set: ${project-id}-container-engine-robot-sa-networkuser-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: roles/compute.networkUser
+  member: "serviceAccount:service-project-number@container-engine-robot.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com
+---
+# Grant custom role: gkefirewall.admin on the host project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
+# If you want a GKE cluster in a service project to create and manage the firewall resources in your host project,
+# the service project's GKE service account must be granted the appropriate IAM permissions
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#managing_firewall_resources
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-container-engine-robot-sa-gkefirewall-admin-host-project-id-permissions # kpt-set: ${project-id}-container-engine-robot-sa-gkefirewall-admin-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: organizations/org-id/roles/gkefirewall.admin # kpt-set: organizations/${org-id}/roles/gkefirewall.admin
+  member: "serviceAccount:service-project-number@container-engine-robot.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com
+---
+# Grant custom role: Tier3 Subnetwork Admin on the host project to tier3 SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-tier3-subnetwork-admin-host-project-id-permissions # kpt-set: ${project-id}-tier3-sa-tier3-subnetwork-admin-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: organizations/org-id/roles/tier3.subnetwork.admin # kpt-set: organizations/${org-id}/roles/tier3.subnetwork.admin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant role: Kubernetes Engine Host Service Agent User on the host project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
+# Each service project's GKE service account must have a binding for the Host Service Agent User role on the host project
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#grant_host_service_agent_role
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-container-engine-robot-sa-host-servce-agent-host-project-id-permissions # kpt-set: ${project-id}-container-engine-robot-sa-host-servce-agent-${host-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # kpt-set: ${host-project-id}
+  role: roles/container.hostServiceAgentUser
+  member: "serviceAccount:service-project-number@container-engine-robot.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com

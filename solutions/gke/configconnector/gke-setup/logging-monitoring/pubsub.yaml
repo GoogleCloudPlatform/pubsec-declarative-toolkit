@@ -1,0 +1,51 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# PubSub Topic for GKE Cluster Notifications
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata:
+  name: project-id-gke-cluster-notification-pubsub-topic # kpt-set: ${project-id}-gke-cluster-notification-pubsub-topic
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client1-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  # Messages are retained for 7 days
+  messageRetentionDuration: 604800s
+  messageStoragePolicy:
+    allowedPersistenceRegions:
+      - northamerica-northeast1
+      - northamerica-northeast2
+  resourceID: gke-cluster-notification-pubsub-topic
+---
+# PubSub Subscription for GKE Cluster Notifications
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubSubscription
+metadata:
+  name: project-id-gke-cluster-notification-pubsub-subscription # kpt-set: ${project-id}-gke-cluster-notification-pubsub-subscription
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client1-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  ackDeadlineSeconds: 300
+  # Messages are retained for 7 days
+  messageRetentionDuration: 604800s
+  resourceID: gke-cluster-notification-pubsub-sub
+  # Retain acknowledged messages
+  retainAckedMessages: true
+  topicRef:
+    name: project-id-gke-cluster-notification-pubsub-topic # kpt-set: ${project-id}-gke-cluster-notification-pubsub-topic
+    namespace: client-name-logging # kpt-set: ${client-name}-logging
