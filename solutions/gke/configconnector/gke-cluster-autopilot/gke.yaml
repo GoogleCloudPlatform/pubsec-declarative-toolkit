@@ -17,7 +17,7 @@
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
-  name: autopilot1-gke # kpt-set: ${cluster-name}
+  name: cluster-name # kpt-set: ${cluster-name}
   namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
