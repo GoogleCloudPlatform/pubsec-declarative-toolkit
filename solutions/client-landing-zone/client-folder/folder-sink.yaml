@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ######
-# TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project
+# TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project. Will be required if a config-controller is deployed per client OR we need to give permissions to the client service account into the core logging project.
 # Folder sink for Platform and Component logs of Client Resources
 # Destination: cloud logging bucket inside logging project
 apiVersion: logging.cnrm.cloud.google.com/v1beta1

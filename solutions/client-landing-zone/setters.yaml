@@ -69,6 +69,15 @@ data:
   # the network host project id that will be created
   host-project-id: net-host-project-12345
   #
+  # Org policy exception to allow vpc peering between a defined list and the host project.
+  # The file is located here client-folder/standard/application-infrastructure/host-project/org-policies/exceptions/compute-restrict-vpc-peering-except-host-project.yaml
+  # Warning ! this file is commented out by default. You will need to customize this setter only if you enable it.
+  # The allowed/denied list of networks must be identified in the form:
+  # under:organizations/ORGANIZATION_ID, under:folders/FOLDER_ID, under:projects/PROJECT_ID,
+  # or projects/PROJECT_ID/global/networks/NETWORK_NAME.
+  project-allowed-restrict-vpc-peering: |
+    - under:projects/PROJECT_ID
+  #
   # nonp IP space
   standard-nonp-cidr: 10.1.0.0/18
   # Subnet IP range for nonp-main in northamerica-northeast1
@@ -86,6 +95,7 @@ data:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
+    - 240.0.0.0/4
   #
   ##########################
   # Firewall Policy (client-folder)
