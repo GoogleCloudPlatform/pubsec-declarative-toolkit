@@ -1,0 +1,104 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Network Policies
+# Allow ingress within namespace
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: workload-name # kpt-set: ${workload-name}
+  name: allow-ingress-within-namespace
+spec:
+  podSelector: {}
+  ingress:
+    # From all pods within the same namespace
+    - from:
+        - podSelector: {}
+---
+# Allow ingress from gateway namespace.
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: workload-name # kpt-set: ${workload-name}
+  name: allow-ingress-from-gateway
+spec:
+  podSelector: {}
+  ingress:
+    # From gateway namespace
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: gateway-infra
+---
+# Allow ingress from lb health check
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: workload-name # kpt-set: ${workload-name}
+  name: allow-ingress-from-lb-health-check
+spec:
+  podSelector: {}
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 35.191.0.0/16
+    - from:
+        - ipBlock:
+            cidr: 130.211.0.0/22
+    - from:
+        - ipBlock:
+            cidr: 209.85.152.0/22
+    - from:
+        - ipBlock:
+            cidr: 209.85.204.0/22
+---
+# Allow egress within namespace
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: workload-name # kpt-set: ${workload-name}
+  name: allow-egress-within-namespace
+spec:
+  podSelector: {}
+  egress:
+    # To all pods within the same namespace
+    - to:
+        - podSelector: {}
+---
+# Allow egress to metadata server
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: workload-name # kpt-set: ${workload-name}
+  name: allow-egress-to-metadata-server
+spec:
+  podSelector: {}
+  egress:
+    # Network policy and Workload Identity
+    # For clusters running GKE version 1.21.0-gke.1000 and later, allow egress to 169.254.169.252/32 on port 988
+    # For clusters running GKE Dataplane V2, allow egress to 169.254.169.254/32 on port 80
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.252/32
+      ports:
+        - port: 988
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.254/32
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+        - port: 80
