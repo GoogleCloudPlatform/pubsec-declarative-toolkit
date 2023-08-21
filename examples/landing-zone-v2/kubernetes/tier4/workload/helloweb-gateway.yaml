@@ -21,12 +21,12 @@ spec:
   hostnames:
     - "sample-workload.example.com"
   parentRefs:
-  - name: sample-gateway
-    namespace: gateway-infra
+    - name: sample-gateway
+      namespace: gateway-infra
   rules:
-  - backendRefs:
-    - name: helloweb
-      port: 8080
+    - backendRefs:
+      - name: helloweb
+        port: 8080
 ---
 # Service is a named abstraction of software service (for example, mysql)
 # consisting of local port (for example 3306) that the proxy listens on, and
@@ -38,9 +38,9 @@ metadata:
   name: helloweb
 spec:
   ports:
-  - port: 8080
-    name: http
-    targetPort: 8080
+    - port: 8080
+      name: http
+      targetPort: 8080
   selector:
     app: hello
     tier: web
