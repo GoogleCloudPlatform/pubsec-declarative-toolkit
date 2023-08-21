@@ -52,6 +52,31 @@
       "tag-separator": "/",
       "prerelease": true
     },
+    "solutions/gke/configconnector/gke-cluster-autopilot": {
+      "package-name": "solutions/gke/configconnector/gke-cluster-autopilot",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/gke/configconnector/gke-defaults": {
+      "package-name": "solutions/gke/configconnector/gke-defaults",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/gke/configconnector/gke-setup": {
+      "package-name": "solutions/gke/configconnector/gke-setup",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/gke/kubernetes/cluster-defaults": {
+      "package-name": "solutions/gke/kubernetes/cluster-defaults",
+      "tag-separator": "/",
+      "prerelease": true
+    },
+    "solutions/gke/kubernetes/namespace-defaults": {
+      "package-name": "solutions/gke/kubernetes/namespace-defaults",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/project/spoke-unclass-env": {
       "package-name": "solutions/project/spoke-unclass-env",
       "tag-separator": "/",
