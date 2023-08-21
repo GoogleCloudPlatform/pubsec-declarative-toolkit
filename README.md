@@ -17,6 +17,11 @@ The GCP PubSec Declarative Toolkit is a collection of declarative solutions to h
 | Client Setup (LZv2) | Package to create the initial client folder and namespaces | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-setup) |
 | Client Landing Zone (LZv2)  | Package to create the client folder sub-structure and a standard Shared VPC | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-landing-zone) |
 | Client Project Setup (LZv2) | Package to create a service project and host workloads | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-project-setup) |
+| GKE Setup (LZv2) | Package to prepare a service project for GKE clusters | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gke/configconnector/gke-setup) |
+| GKE Defaults (LZv2) | A package to deploy common GKE resources | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gke/configconnector/gke-defaults) |
+| GKE Cluster Autopilot (LZv2) | A GKE Autopilot Cluster running in a service project | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gke/configconnector/gke-cluster-autopilot) |
+| Cluster Defaults (LZv2) | This package deploys default resources that have to exist on all GKE clusters | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gke/kubernetes/cluster-defaults) |
+| Namespace Defaults (LZv2) | This package deploys a workload namespace and it's associated configuration | [link](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gke/kubernetes/namespace-defaults) |
 
 When getting a package you can use the `@` to indicate what tag or branch you will be getting with the `kpt pkg get` command for example `kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@main`.
 
@@ -27,7 +32,7 @@ You can find the latest release versions in the `releases` [page](https://github
 Deploying an example landing zone requires two steps:
 - A [Config Connector](https://cloud.google.com/config-connector/docs/overview) enabled Kubernetes cluster
 - One or more [solutions](#current-solutions) packages like the [core-landing-zone](solutions/core-landing-zone) and [experimentation core-landing-zone](solutions/experimentation/core-landing-zone) documented in section 2 of [landing-zone-v2](docs/landing-zone-v2#2-create-your-landing-zone)
-  
+
 In order to deploy the [solutions](#current-solutions) you will need a Kubernetes cluster with [Config Connector](https://cloud.google.com/config-connector/docs/overview) installed.
 
 We recommend using the Managed Config Controller service which comes bundled with [Config Connector](https://cloud.google.com/config-connector/docs/overview) and [Anthos Config Management](https://cloud.google.com/anthos/config-management), alternatively you can [install](https://cloud.google.com/config-connector/docs/how-to/advanced-install#manual) Config Connector on any CNCF compliant Kubernetes cluster.
