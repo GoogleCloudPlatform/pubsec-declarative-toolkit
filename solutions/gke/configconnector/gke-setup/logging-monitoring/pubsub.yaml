@@ -46,6 +46,9 @@ spec:
   resourceID: gke-cluster-notification-pubsub-sub
   # Retain acknowledged messages
   retainAckedMessages: true
+  # This ensures that the subscription never expires - ttl: ""
+  expirationPolicy:
+    ttl: ""
   topicRef:
     name: project-id-gke-cluster-notification-pubsub-topic # kpt-set: ${project-id}-gke-cluster-notification-pubsub-topic
     namespace: client-name-logging # kpt-set: ${client-name}-logging
