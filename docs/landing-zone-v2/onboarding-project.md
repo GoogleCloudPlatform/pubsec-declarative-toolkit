@@ -1,9 +1,10 @@
 # Project Onboarding
 
 <!-- vscode-markdown-toc -->
-* [Introduction](#Introduction)
-* [Setup](#Setup)
-* [Add client project package](#Addclientprojectpackage)
+- [Project Onboarding](#project-onboarding)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Add client project package](#add-client-project-package)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -48,13 +49,13 @@ You will execute this procedure to provision the service project in GCP for appl
 - Experimentation
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-project@<VERSION> ./projects/<project-id>
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-project@0.1.0 ./projects/<project-id>
   ```
 
 - DEV, PREPROD, PROD
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-project-setup@<VERSION> ./projects/<project-id>
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-project-setup@0.4.3 ./projects/<project-id>
   ```
 
 1. Customize the `setters.yaml` file

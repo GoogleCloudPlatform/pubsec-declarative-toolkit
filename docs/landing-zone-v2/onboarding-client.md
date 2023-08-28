@@ -1,11 +1,12 @@
 # Client Onboarding
 
 <!-- vscode-markdown-toc -->
-* [Introduction](#Introduction)
-* [Setup](#Setup)
-* [Add client-setup package](#Addclient-setuppackage)
-* [Add the client-landing-zone package](#Addtheclient-landing-zonepackage)
-* [Next Step](#NextStep)
+- [Client Onboarding](#client-onboarding)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Add client-setup package](#add-client-setup-package)
+  - [Add the client-landing-zone package](#add-the-client-landing-zone-package)
+  - [Next Step](#next-step)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -50,7 +51,7 @@ You will execute this procedure to provision the foundational resources in GCP f
 - DEV, PREPROD, PROD
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-setup@<VERSION> ./clients/<client name>
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-setup@0.4.1 ./clients/<client name>
   ```
 
 1. Customize the `clients/<client name>/client-setup/setters.yaml` file
@@ -75,13 +76,13 @@ You will execute this procedure to provision the foundational resources in GCP f
 - Experimentation
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-landing-zone@<VERSION> ./clients/<client name>
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-landing-zone@0.1.0 ./clients/<client name>
   ```
 
 - DEV, PREPROD, PROD
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-landing-zone@<VERSION> ./clients/<client name>
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-landing-zone@0.4.3 ./clients/<client name>
   ```
 
 1. Customize the `clients/<client name>/client-landing-zone/setters.yaml` file
