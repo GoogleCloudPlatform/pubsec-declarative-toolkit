@@ -21,6 +21,12 @@ metadata:
   namespace: config-management-system
 spec:
   sourceFormat: unstructured
+  override:
+    resources:
+      - containerName: "reconciler"
+        cpuLimit: "800m"
+        memoryLimit: "800Mi"
+        memoryRequest: "500Mi"
   git:
     repo: https://repo-url # kpt-set: ${repo-url}
     branch: main # kpt-set: ${repo-branch}
