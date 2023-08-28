@@ -11,6 +11,7 @@
 |AC-3(7)|./service-account.yaml|cluster-name-sa-stackdriver-metadata-writer-permissions|
 |AC-3(7)|./service-account.yaml|cluster-name-sa-storage-object-viewer-permissions|
 |AC-3(7)|./service-account.yaml|project-id-tier3-sa-serviceaccount-user-cluster-name-sa-permissions|
+|AC-3(7)|./service-account.yaml|project-id-tier3-sa-serviceaccount-user-cluster-name-sa-permissions|
 |AC-4|./host-project/subnet.yaml|project-id-cluster-name-snet|
 |AC-4(21)|./host-project/subnet.yaml|project-id-cluster-name-snet|
 
