@@ -60,7 +60,7 @@ This Landing Zone v2 assumes that the different required environments known as E
 
 ## <a name='SingleGCPorganization'></a>Single GCP organization
 
-This pattern will be ideal for most use-cases and isolation between enviornments is achieved through folder structures.
+This pattern will be ideal for most use-cases and isolation between environments is achieved through folder structures.
 
 In this example a Landing Zone is deployed per environment.
 
@@ -83,7 +83,7 @@ A deployed Landing Zone contains two sections the Core Landing Zone and the Clie
 
 ### Core Landing Zone
 
-This is made up of two pacakges `core-landing-zone` and `gatekeeper-policies`. This section provides the core of the landing zone functionality with Logging, Org Policies, and Shared Infrastructure like DNS and a Shared VPC (coming soon) as well as compliance enforcement in Config Controller.
+This is made up of two packages `core-landing-zone` and `gatekeeper-policies`. This section provides the core of the landing zone functionality with Logging, Org Policies, and Shared Infrastructure like DNS and a Shared VPC (coming soon) as well as compliance enforcement in Config Controller.
 
 This can be deployed once or multiple times per organization as highlighted in the diagrams below.
 
