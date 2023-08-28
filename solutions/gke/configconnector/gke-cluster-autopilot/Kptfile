@@ -22,13 +22,13 @@ info:
 
     2. edit root-sync
 
-        ```
+        ```shell
         kubectl edit rootsync -n config-management-system root-sync
         ```
 
     3. add the `override` section as below
 
-        ```
+        ```yaml
         spec:
           sourceFormat: unstructured
           override:

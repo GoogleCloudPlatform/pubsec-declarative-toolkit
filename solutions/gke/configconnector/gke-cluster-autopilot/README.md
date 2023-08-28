@@ -21,13 +21,13 @@ To fix this, you update the `root-sync` resource to include the override section
 
 2. edit root-sync
 
-    ```
+    ```shell
     kubectl edit rootsync -n config-management-system root-sync
     ```
 
 3. add the `override` section as below
 
-    ```
+    ```yaml
     spec:
       sourceFormat: unstructured
       override:
