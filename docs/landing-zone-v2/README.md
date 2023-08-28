@@ -56,7 +56,7 @@ You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/
 
 ## <a name='Organization'></a>Organization
 
-This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, PreProduction and Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations. 
+This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, PreProduction and Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
 
 ## <a name='SingleGCPorganization'></a>Single GCP organization
 
