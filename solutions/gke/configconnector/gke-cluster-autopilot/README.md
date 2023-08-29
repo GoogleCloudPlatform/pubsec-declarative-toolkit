@@ -13,6 +13,50 @@ Deploy this package once per GKE cluster.
 
 A GKE Autopilot Cluster running in a service project. This package also deploys a dedicated subnet inside the host project.
 
+The Anthos Config Management feature is enabled on the cluster. There is a known issue with the root-sync resource when deployed to an autopilot cluster.
+The reconciler container keeps crashing with an out-of-memory error message because it hits the memory limit.
+To fix this, you update the `root-sync` resource to include the override section.
+
+1. Login to the server authorized to access the control plane.
+
+2. edit root-sync
+
+    ```shell
+    kubectl edit rootsync -n config-management-system root-sync
+    ```
+
+3. add the `override` section as below
+
+    ```yaml
+    spec:
+      sourceFormat: unstructured
+      override:
+        resources:
+          - containerName: "reconciler"
+            cpuLimit: "800m"
+            memoryLimit: "800Mi"
+            memoryRequest: "500Mi"
+      git:
+        repo: https://repo-url
+        branch: main
+        dir: repo-dir
+        revision: HEAD
+        auth: token
+        secretRef:
+          name: git-creds
+    ```
+
+4. create git-creds secret in config-management-system namespace. This secret is the PAT token used by the root-sync to access the git repo
+
+    ```shell
+    export USERNAME='xxxxxxxxxxxxxxx'  # For Azure Devops, this is the name of the Organization
+    export TOKEN='xxxxxxxxxxxxxxx'
+    ```
+
+    ```shell
+    kubectl create secret generic git-creds --namespace="config-management-system" --from-literal=username=${USERNAME} --from-literal=token=${TOKEN}
+    ```
+
 ## Setters
 
 |              Name               |                     Value                      | Type  | Count |
@@ -49,7 +93,7 @@ This package has no sub-packages.
 | application-infrastructure-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-azdo                           | project-id-tier3 |
 | application-infrastructure-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-github                         | project-id-tier3 |
 | application-infrastructure-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-docker                         | project-id-tier3 |
-| gke.yaml                                        | container.cnrm.cloud.google.com/v1beta1 | ContainerCluster          | autopilot1-gke                                                      | project-id-tier3 |
+| gke.yaml                                        | container.cnrm.cloud.google.com/v1beta1 | ContainerCluster          | cluster-name                                                        | project-id-tier3 |
 | gkehub-featuremembership-acm.yaml               | gkehub.cnrm.cloud.google.com/v1beta1    | GKEHubFeatureMembership   | cluster-name-acm-hubfeaturemembership                               | project-id-tier3 |
 | gkehub-membership.yaml                          | gkehub.cnrm.cloud.google.com/v1beta1    | GKEHubMembership          | cluster-name                                                        | project-id-tier3 |
 | host-project/firewall.yaml                      | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewall           | project-id-cluster-name-lb-health-check                             |                  |
