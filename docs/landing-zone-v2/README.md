@@ -83,7 +83,7 @@ A deployed Landing Zone contains two sections the Core Landing Zone and the Clie
 
 ### Core Landing Zone
 
-This is made up of two packages `core-landing-zone` and `gatekeeper-policies`. This section provides the core of the landing zone functionality with Logging, Org Policies, and Shared Infrastructure like DNS and a Shared VPC (coming soon) as well as compliance enforcement in Config Controller.
+This is made up of two packages [core-landing-zone](../../solutions/core-landing-zone/) and [gatekeeper-policies](../../solutions/gatekeeper-policies/). This section provides the core of the landing zone functionality with Logging, Org Policies, and Shared Infrastructure like DNS and a Shared VPC (coming soon) as well as compliance enforcement in Config Controller.
 
 This can be deployed once or multiple times per organization as highlighted in the diagrams below.
 
@@ -96,7 +96,7 @@ This can be deployed once or multiple times per organization as highlighted in t
 
 ### Client Landing Zone
 
-This section is made up of two packages `client-setup` and `client-landing-zone`. The client setup package prepares the Config Controller instances for the new client and creates the required service accounts and namespaces for the client to use.
+This section is made up of two packages [client-setup](../../solutions/client-setup/) and [client-landing-zone](../../solutions/client-landing-zone/). The client setup package prepares the Config Controller instances for the new client and creates the required service accounts and namespaces for the client to use.
 
 The `client-landing-zone` package deploys the clients Google Cloud resources, including folder structure, firewalls, and Shared Infrastructure (VPC). The deployment of these packages are repeated for each onboarded client. A client in these examples would be an a department or working group that needs isolation from other groups.
 
@@ -400,6 +400,8 @@ cd pbmm-landingzone
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@0.2.0
     ```
 
+    All Gatekeeper Policy Package releases can be found [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=gatekeeper&expanded=true)
+
 1. Get the landing zone package
 
     - Experimentation
@@ -408,12 +410,16 @@ cd pbmm-landingzone
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/core-landing-zone@0.1.0
       ```
 
+      [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=experimentation&expanded=true)
+
     - DEV, PREPROD, PROD
 
       ```shell
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@0.3.2
       ```
 
+      [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=core-landing-zone&expanded=true)
+      
 1. Customize Packages
 
     Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.  

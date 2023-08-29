@@ -52,11 +52,15 @@ You will execute this procedure to provision the service project in GCP for appl
   kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-project@0.1.0 ./projects/<project-id>
   ```
 
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=%22experimentation%2Fclient-project%22&expanded=true)
+
 - DEV, PREPROD, PROD
 
   ```shell
   kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-project-setup@0.4.3 ./projects/<project-id>
   ```
+
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=%22solutions%2Fclient-project-setup%22&expanded=true)
 
 1. Customize the `setters.yaml` file
 
