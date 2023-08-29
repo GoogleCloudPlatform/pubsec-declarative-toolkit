@@ -419,7 +419,7 @@ cd pbmm-landingzone
       ```
 
       [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=core-landing-zone&expanded=true)
-      
+
 1. Customize Packages
 
     Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.  
