@@ -105,7 +105,7 @@ Validates no account has been created with the required permissions to access th
 
 ### Fetch the package
 
-`kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/policy-constraint-bundles/guardrails-v1 guardrails-v1`
+`kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policy-constraint-bundles/guardrails-v1 guardrails-v1`
 
 ### View package content
 

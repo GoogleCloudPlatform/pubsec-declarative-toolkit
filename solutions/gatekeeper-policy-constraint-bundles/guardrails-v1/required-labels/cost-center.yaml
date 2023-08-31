@@ -11,7 +11,7 @@ spec:
         kinds:
           - Project
   parameters:
-    message: "All namespaces must have an `cost-center` label"
+    message: "All Projects must have an `ssc_cbrid` label with a 4digit CBR ID"
     labels:
-      - key: cost-center
-        allowedRegex: "^[a-zA-Z]+$"
+      - key: ssc_cbrid
+        allowedRegex: "^\d{4}$"

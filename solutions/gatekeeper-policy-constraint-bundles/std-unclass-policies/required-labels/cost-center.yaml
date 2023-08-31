@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: must-have-cost-center
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups:
+          - resourcemanager.cnrm.cloud.google.com
+        kinds:
+          - Project
+  parameters:
+    message: "All Projects must have an `ssc_cbrid` label with a 4digit CBR ID"
+    labels:
+      - key: ssc_cbrid
+        allowedRegex: "^\d{4}$"

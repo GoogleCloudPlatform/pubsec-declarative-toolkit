@@ -42,7 +42,7 @@ All Projects must have be labeled with a cost center code that matches the follo
 ## Usage
 
 ### Fetch the package
-`kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/policy-constraint-bundles/std-protectedb-policies protectb-policies`
+`kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policy-constraint-bundles/std-protectedb-policies protectb-policies`
 
 ### View package content
 `kpt pkg tree protectb-policies`
