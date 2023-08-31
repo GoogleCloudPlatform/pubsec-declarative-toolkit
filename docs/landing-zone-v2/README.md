@@ -396,6 +396,8 @@ cd pbmm-landingzone
 
 1. Get the gatekeeper policies package. These are the policies which your Config Controller instance will use to [validate](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) compliance of any configuration deployed, this currently checks for guardrails compliance and naming conventions on projects. These policies will also be validated when running the `kpt fn render` command for early feedback.
 
+The latest versions of the releases can be found in [Releases](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases). The provided versions are examples and may not be up to date.
+
     ```shell
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@0.2.0
     ```
