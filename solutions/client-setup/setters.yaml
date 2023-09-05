@@ -58,9 +58,10 @@ data:
   #
   # Name for the client, lowercase only
   client-name: 'client1'
-  # Billing Account ID to be associated with this project
+  # Billing Account ID to associate with the client's managment project, the projects-sa will need billing user permission
+  # alternatively, it can be set to the core landing zone billing id, the client management project contains very limited resources
   client-billing-id: "AAAAAA-BBBBBB-CCCCCC"
-  # project id for the client management project, following rules and conventions
+  # project id for the client management project to be created, following rules and conventions
   client-management-project-id: client-management-project-12345
   #
   ##########################
@@ -82,8 +83,10 @@ data:
   ##########################
   # DNS
   ##########################
+  #
   # dns project id created in core-landing-zone
   dns-project-id: dns-project-12345
+  #
   ##########################
   # End of Configurations
   ##########################
