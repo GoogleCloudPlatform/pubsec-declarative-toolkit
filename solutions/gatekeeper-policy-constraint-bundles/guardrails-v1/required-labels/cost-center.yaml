@@ -11,7 +11,7 @@ spec:
         kinds:
           - Project
   parameters:
-    message: "All Projects must have an `ssc_cbrid` label with a 4digit CBR ID"
+    message: "All Projects must have an `ssc_cbrid` label with a 4 digit CBR ID"
     labels:
       - key: ssc_cbrid
         allowedRegex: ^\d{4}$
