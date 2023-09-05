@@ -52,6 +52,11 @@
       "tag-separator": "/",
       "prerelease": true
     },
+    "solutions/gke/configconnector/gke-admin-proxy": {
+      "package-name": "solutions/gke/configconnector/gke-admin-proxy",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/gke/configconnector/gke-cluster-autopilot": {
       "package-name": "solutions/gke/configconnector/gke-cluster-autopilot",
       "tag-separator": "/",

@@ -8,6 +8,7 @@
     "solutions/experimentation/client-project": "0.1.0",
     "solutions/experimentation/core-landing-zone": "0.1.0",
     "solutions/gatekeeper-policies": "0.2.0",
+    "solutions/gke/configconnector/gke-admin-proxy": "0.0.1",
     "solutions/gke/configconnector/gke-cluster-autopilot": "0.2.1",
     "solutions/gke/configconnector/gke-defaults": "0.2.0",
     "solutions/gke/configconnector/gke-setup": "0.2.0",
