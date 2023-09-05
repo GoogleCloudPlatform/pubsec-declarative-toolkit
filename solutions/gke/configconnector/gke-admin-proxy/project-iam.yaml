@@ -1,0 +1,102 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Grant roles to client-name-admin-sa to manage required resources in this project
+# Grant GCP role Service Account Admin to GCP SA to manage service accounts
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-client-name-admin-sa-service-account-admin-permissions # kpt-set: ${project-id}-${client-name}-admin-sa-service-account-admin-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/iam.serviceAccountAdmin
+  member: "serviceAccount:client-name-admin-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-admin-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Compute Instance Admin to GCP SA to manage compute instances
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-client-name-admin-sa-compute-instance-admin-permissions # kpt-set: ${project-id}-${client-name}-admin-sa-compute-instance-admin-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/compute.instanceAdmin.v1
+  member: "serviceAccount:client-name-admin-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-admin-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Service Account User to GCP SA to run instances with service accounts
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-client-name-admin-sa-service-account-user-permissions # kpt-set: ${project-id}-${client-name}-admin-sa-service-account-user-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/iam.serviceAccountUser
+  member: "serviceAccount:client-name-admin-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-admin-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Add required roles for IAP administration
+# https://cloud.google.com/iap/docs/using-tcp-forwarding#grant-permission
+# grant Tunnel User role to gke-admins on the project
+# moving this on the instance requires IAP service enabled and currently doesn't appear possible to grant with config connector
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-iap-tunnel-user # kpt-set: ${project-id}-iap-tunnel-user
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/iap.tunnelResourceAccessor
+  member: gke-admins # kpt-set: ${gke-admins}
+---
+# grant Viewer role to gke-admins on the project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-gke-admins-viewer # kpt-set: ${project-id}-gke-admins-viewer
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # kpt-set: ${project-id}
+  role: roles/viewer
+  member: gke-admins # kpt-set: ${gke-admins}
