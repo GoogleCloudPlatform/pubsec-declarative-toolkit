@@ -30,7 +30,7 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-restrict-load-balancer-creation-for-types-except-standard-folder
+  name: compute-restrict-load-balancer-creation-for-types-except-client-name-standard-folder # kpt-set: compute-restrict-load-balancer-creation-for-types-except-${client-name}-standard-folder
   namespace: policies
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/standard # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/standard
