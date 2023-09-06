@@ -57,7 +57,7 @@ data:
   # You can obtain this value once the endpoint has been deployed using the command below.
   # gcloud ids endpoints describe <endpoint-name> --zone <zone> --project <host-project-id>
   # customization: required
-  ids-endpoint-forwardingrule: https://www.googleapis.com/compute/v1/projects/<uid>/regions/<region>/forwardingRules/<uid>
+  ids-endpoint-forwardingrule: 'https://www.googleapis.com/compute/v1/projects/<uid>/regions/<region>/forwardingRules/<uid>'
   # mirroredResources specifies a set of mirrored VM instances, subnetworks
   # and/or tags for which traffic from/to all VM instances will be mirrored
   # Warning ! this field is not applied using apply-setters but by starlark-update-endpoint-mirroring
