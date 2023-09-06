@@ -1,0 +1,56 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Packet mirroring policy
+# 1 per vpc and per region minimum
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputePacketMirroring
+metadata:
+  name: host-project-id-endpoint-name-mirror # kpt-set: ${host-project-id}-${endpoint-name}-mirror
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    config.kubernetes.io/depends-on: cloudids.cnrm.cloud.google.com/namespaces/client-name-networking/CloudIDSEndpoint/host-project-id-endpoint-name-ids # kpt-set: cloudids.cnrm.cloud.google.com/namespaces/${client-name}-networking/CloudIDSEndpoint/${host-project-id}-${endpoint-name}-ids
+    # required to avoid a resource fight between configsync and config connector
+    cnrm.cloud.google.com/state-into-spec: absent
+spec:
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
+  location: region # kpt-set: ${region}
+  description: "mirroring policy for IDS endpoint endpoint-name" # kpt-set:  "mirroring policy for IDS endpoint ${endpoint-name}"
+  network:
+    urlRef:
+      # using external just because ids enpoint only accepts a selflink
+      external: host-project-vpc # kpt-set: ${host-project-vpc}
+  priority: 1000
+  collectorIlb:
+    urlRef:
+      # using external because reference can only be made to ComputForwardingRule and not to CloudIDSEndpoint
+      external: ids-endpoint-forwardingrule # kpt-set: ${ids-endpoint-forwardingrule}
+  mirroredResources:
+    subnetworks:
+      - urlRef:
+          name: subnet1
+    instances:
+      - urlRef:
+          name: instance1
+    tags:
+      - "tag-one"
+  filter:
+    cidrRanges:
+      - "192.168.0.0/23"
+    ipProtocols:
+      - "tcp"
+    direction: "BOTH"
+  enable: "TRUE"
+  resourceID: endpoint-name-mirror # kpt-set: ${endpoint-name}-mirror
