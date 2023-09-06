@@ -18,18 +18,18 @@ loaded in the config controller.
 
 ## Setters
 
-|            Name             |                                            Value                                            | Type | Count |
-|-----------------------------|---------------------------------------------------------------------------------------------|------|-------|
-| client-name                 | client1                                                                                     | str  |     4 |
-| endpoint-name               | endpoint1                                                                                   | str  |     5 |
-| filter                      |                                                                                             | str  |     0 |
-| host-project-id             | net-host-project-12345                                                                      | str  |     6 |
-| host-project-vpc            | projects/<host-project-id>/global/networks/global-standard-vpc                              | str  |     2 |
-| ids-endpoint-forwardingrule | https://www.googleapis.com/compute/v1/projects/<uid>/regions/<region>/forwardingRules/<uid> | str  |     1 |
-| mirroredresources           |                                                                                             | str  |     0 |
-| region                      | northamerica-northeast1                                                                     | str  |     1 |
-| severity                    | LOW                                                                                         | str  |     1 |
-| zone                        | northamerica-northeast1-a                                                                   | str  |     2 |
+|            Name             |                                            Value                                              | Type | Count |
+|-----------------------------|-----------------------------------------------------------------------------------------------|------|-------|
+| client-name                 | client1                                                                                       | str  |     4 |
+| endpoint-name               | endpoint1                                                                                     | str  |     5 |
+| filter                      |                                                                                               | str  |     0 |
+| host-project-id             | net-host-project-12345                                                                        | str  |     6 |
+| host-project-vpc            | projects/<host-project-id>/global/networks/global-standard-vpc                                | str  |     2 |
+| ids-endpoint-forwardingrule | `https://www.googleapis.com/compute/v1/projects/<uid>/regions/<region>/forwardingRules/<uid>` | str  |     1 |
+| mirroredresources           |                                                                                               | str  |     0 |
+| region                      | northamerica-northeast1                                                                       | str  |     1 |
+| severity                    | LOW                                                                                           | str  |     1 |
+| zone                        | northamerica-northeast1-a                                                                     | str  |     2 |
 
 ## Sub-packages
 

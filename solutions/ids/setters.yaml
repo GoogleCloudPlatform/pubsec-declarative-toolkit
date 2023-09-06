@@ -30,6 +30,7 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
   #
   ##########################
@@ -37,6 +38,7 @@ data:
   ##########################
   #
   # the network host project id that is created by the client-landing-zone package
+  # customization: required
   host-project-id: net-host-project-12345
   # full URL(selfLink) of the VPC network that is connected to the IDS endpoint. This VPC exist in the host project.
   # customization: required
