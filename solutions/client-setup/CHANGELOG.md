@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.2...solutions/client-setup/0.5.0) (2023-09-06)
+
+
+### Features
+
+* add client admin ns and gke admin proxy ([#514](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/514)) ([d24ce74](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/d24ce7408d65d2c1e34b23c69a4347e132c46c4f))
+
 ## [0.4.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.1...solutions/client-setup/0.4.2) (2023-08-30)
 
 
