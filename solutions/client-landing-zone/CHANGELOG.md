@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.3...solutions/client-landing-zone/0.4.4) (2023-09-06)
+
+
+### Bug Fixes
+
+* client-landing-zone enable dns zone and recordset ([#513](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/513)) ([2cda862](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/2cda8628264e703db92b91c84651aa8a8c312b52))
+* Resolve conflicting Client LZ Loadbalancer Policy ([#504](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/504)) ([81b8712](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/81b8712c880ce4c784f359b3b991745792c4151d))
+
 ## [0.4.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.2...solutions/client-landing-zone/0.4.3) (2023-08-21)
 
 
