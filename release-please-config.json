@@ -82,6 +82,11 @@
       "tag-separator": "/",
       "prerelease": true
     },
+    "solutions/ids": {
+      "package-name": "solutions/ids",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/project/spoke-unclass-env": {
       "package-name": "solutions/project/spoke-unclass-env",
       "tag-separator": "/",

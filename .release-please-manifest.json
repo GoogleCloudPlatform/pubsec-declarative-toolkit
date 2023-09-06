@@ -14,6 +14,7 @@
     "solutions/gke/configconnector/gke-setup": "0.2.1",
     "solutions/gke/kubernetes/cluster-defaults": "0.2.0",
     "solutions/gke/kubernetes/namespace-defaults": "0.2.1",
+    "solutions/ids": "0.1.0",
     "solutions/project/hub-env": "0.2.0",
     "solutions/project/spoke-unclass-env": "0.1.0"
 }
