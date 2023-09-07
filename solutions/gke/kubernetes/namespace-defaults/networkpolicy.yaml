@@ -88,6 +88,7 @@ spec:
     # Network policy and Workload Identity
     # For clusters running GKE version 1.21.0-gke.1000 and later, allow egress to 169.254.169.252/32 on port 988
     # For clusters running GKE Dataplane V2, allow egress to 169.254.169.254/32 on port 80
+    # Allow access to NodeLocal DNSCache on ip 169.254.20.10 and port 53
     - to:
         - ipBlock:
             cidr: 169.254.169.252/32
@@ -102,3 +103,26 @@ spec:
         - port: 53
           protocol: TCP
         - port: 80
+    - to:
+        - ipBlock:
+            cidr: 169.254.20.10/32
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+---
+# Allow egress for GCP API
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: workload-name # kpt-set: ${workload-name}
+  name: allow-egrees-to-gcp-api
+spec:
+  podSelector: {}
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.255.255.254/32
+      ports:
+        - port: 443
