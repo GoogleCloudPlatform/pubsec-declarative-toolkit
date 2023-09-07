@@ -1,0 +1,71 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Configures Google Service Account to be used by applications as a workload identity.
+# Kubernetes Applications can be assigned a Kubernetes Service Account.
+# IAM policy binding between the Kubernetes SA and Google SA can allow the Kubernetes service account to act as the IAM service account.
+# This enables Kubernetes Applications to access Google Services.
+# For more information: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+# Additional roles can be granted to this service account to provide applications access to other Google services.
+#########
+# GCP SA that will access Google services.
+# This GCP SA is bound to a Kubernetes SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: workload-name-sa # kpt-set: ${workload-name}-sa
+  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  displayName: workload-name-sa # kpt-set: ${workload-name}-sa
+---
+# Grant secretmanager.secretAccessor to GCP SA on Service Project for Secret access
+# This enables the GCP SA to access Google Secrets
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: workload-name-sa-secretmanager-secretaccessor-permissions # kpt-set: ${workload-name}-sa-secretmanager-secretaccessor-permissions
+  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+    namespace: client-name-projects # kpt-set: ${client-name}-projects
+  role: roles/secretmanager.secretAccessor
+  member: "serviceAccount:workload-name-sa@bddmu-mvp-demo.iam.gserviceaccount.com" # kpt-set: serviceAccount:${workload-name}-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role iam.workloadIdentityUser to GCP SA to allow the Kubernetes SA to impersonate the GCP SA
+# This binding allows the Kubernetes service account to act as the GCP IAM service account.
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: workload-name-sa-secretaccessor-permissions # kpt-set: ${workload-name}-sa-secretaccessor-permissions
+  namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: workload-name-sa # kpt-set: ${workload-name}-sa
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:project-id.svc.id.goog[workload-name/workload-name-sa] # kpt-set: serviceAccount:${project-id}.svc.id.goog[${workload-name}/${workload-name}-sa]
