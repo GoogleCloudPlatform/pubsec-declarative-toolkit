@@ -24,6 +24,14 @@ data:
   ##########################
   #
   # Follow instructions specific to each section.
+  #
+  ##########################
+  # Project
+  ##########################
+  #
+  # project-id created by the client-project-setup package
+  project-id: project-12345
+  #
   ##########################
   # Client
   ##########################
