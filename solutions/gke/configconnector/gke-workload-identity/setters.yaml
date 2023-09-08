@@ -26,13 +26,6 @@ data:
   # Follow instructions specific to each section.
   #
   ##########################
-  # Project
-  ##########################
-  #
-  # project-id created by the client-project-setup package
-  project-id: project-12345
-  #
-  ##########################
   # Client
   ##########################
   #
@@ -40,25 +33,17 @@ data:
   client-name: 'client1'
   #
   ##########################
-  # Application
+  # Project
   ##########################
   #
-  # the name of the workload, lowercase only
+  # the project id that was created by the client-project-setup
+  project-id: project-12345
+  #
+  ##########################
+  # Workload
+  ##########################
+  #
   workload-name: sample-workload
-  # user or group to grant view role on workload namespace
-  workload-view: 'group:client1@example.com'
-  #
-  ##########################
-  # Config Sync
-  ##########################
-  # the git repo URL, for example
-  # https://github.com/GITHUB-ORG/REPO-NAME
-  # https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
-  repo-url: git-repo-to-observe
-  # the branch to check out (usually main)
-  repo-branch: main
-  # the directory to observe for YAML manifests
-  repo-dir: csync/tier4/kubernetes/<fleet-id>/deploy/env/<namespace>
   #
   ##########################
   # End of Configurations

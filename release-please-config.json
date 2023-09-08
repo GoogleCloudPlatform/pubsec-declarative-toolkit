@@ -72,6 +72,11 @@
       "tag-separator": "/",
       "prerelease": true
     },
+    "solutions/gke/configconnector/gke-workload-identity": {
+      "package-name": "solutions/gke/configconnector/gke-workload-identity",
+      "tag-separator": "/",
+      "prerelease": true
+    },
     "solutions/gke/kubernetes/cluster-defaults": {
       "package-name": "solutions/gke/kubernetes/cluster-defaults",
       "tag-separator": "/",

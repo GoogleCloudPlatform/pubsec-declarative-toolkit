@@ -1,0 +1,19 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-workload-identity
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `gke-defaults`.
+    Requires project-id-tier3 namespace.
+
+    Deploy this package once per application namespace.
+
+    A package to deploy Google Service Account and grant it secretmanager.secretAccessor role within the GKE project. It binds it to Kubernetes Service Account using workload identity.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
