@@ -17,10 +17,11 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputePacketMirroring
 metadata:
-  name: host-project-id-endpoint-name-mirror # kpt-set: ${host-project-id}-${endpoint-name}-mirror
+  # "--" are required to work around a known behavior described https://github.com/GoogleContainerTools/kpt/issues/3330
+  name: host-project-id--endpoint-name-mirror # kpt-set: ${host-project-id}--${endpoint-name}-mirror
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
-    config.kubernetes.io/depends-on: cloudids.cnrm.cloud.google.com/namespaces/client-name-networking/CloudIDSEndpoint/host-project-id-endpoint-name-ids # kpt-set: cloudids.cnrm.cloud.google.com/namespaces/${client-name}-networking/CloudIDSEndpoint/${host-project-id}-${endpoint-name}-ids
+    config.kubernetes.io/depends-on: cloudids.cnrm.cloud.google.com/namespaces/client-name-networking/CloudIDSEndpoint/host-project-id--endpoint-name-ids # kpt-set: cloudids.cnrm.cloud.google.com/namespaces/${client-name}-networking/CloudIDSEndpoint/${host-project-id}--${endpoint-name}-ids
     # required to avoid a resource fight between configsync and config connector
     cnrm.cloud.google.com/state-into-spec: absent
 spec:

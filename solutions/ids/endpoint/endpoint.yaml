@@ -18,7 +18,8 @@
 apiVersion: cloudids.cnrm.cloud.google.com/v1alpha1
 kind: CloudIDSEndpoint
 metadata:
-  name: host-project-id-endpoint-name-ids # kpt-set: ${host-project-id}-${endpoint-name}-ids
+  # "--" are required to work around a known behavior described https://github.com/GoogleContainerTools/kpt/issues/3330
+  name: host-project-id--endpoint-name-ids # kpt-set: ${host-project-id}--${endpoint-name}-ids
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc

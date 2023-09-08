@@ -17,7 +17,7 @@
 apiVersion: servicenetworking.cnrm.cloud.google.com/v1beta1
 kind: ServiceNetworkingConnection
 metadata:
-  name: host-project-id-internet-to-googlemanaged-peer # kpt-set: ${host-project-id}-internet-to-googlemanaged-peer
+  name: host-project-id-standard-to-googlemanaged-peer # kpt-set: ${host-project-id}-standard-to-googlemanaged-peer
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
@@ -26,5 +26,5 @@ spec:
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
   reservedPeeringRanges:
-    - name: host-project-id-standard-google-managed-services-ip # kpt-set: ${host-project-id}-internet-google-managed-services-ip
+    - name: host-project-id-standard-google-managed-services-ip # kpt-set: ${host-project-id}-standard-google-managed-services-ip
   service: servicenetworking.googleapis.com

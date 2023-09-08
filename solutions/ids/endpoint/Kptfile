@@ -4,12 +4,6 @@ metadata:
   name: ids-endpoint
   annotations:
     config.kubernetes.io/local-config: "true"
-upstream:
-  type: git
-  git:
-    repo: https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit
-    directory: /solutions/ids/endpoint
-    ref: gh512-feat-cloud-ids
 info:
   description: |
     `ids` subpackage.

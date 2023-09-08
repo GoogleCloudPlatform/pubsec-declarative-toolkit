@@ -17,13 +17,13 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: host-project-id-standard-google-managed-services-ip # kpt-set: ${host-project-id}-internet-google-managed-services-ip
+  name: host-project-id-standard-google-managed-services-ip # kpt-set: ${host-project-id}-standard-google-managed-services-ip
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: internet-google-managed-services-ip
+  resourceID: standard-google-managed-services-ip
   address: address # kpt-set: ${address}
   prefixLength: 16
   addressType: INTERNAL

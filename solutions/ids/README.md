@@ -37,8 +37,8 @@ This package needs to be deployed in multiple steps because the `ComputePacketMi
 |-----------------------------|----------------------------------------------------------------|------|-------|
 | address                     | 10.254.0.0                                                     | str  |     1 |
 | client-name                 | client1                                                        | str  |    12 |
-| endpoint-name               | name                                                           | str  |     5 |
-| host-project-id             | net-host-project-12345                                         | str  |    19 |
+| endpoint-name               | endpoint-name                                                  | str  |     5 |
+| host-project-id             | net-host-project-12345                                         | str  |    21 |
 | host-project-vpc            | projects/<host-project-id>/global/networks/global-standard-vpc | str  |     2 |
 | ids-endpoint-forwardingrule | ids-endpoint-forwardingrule                                    | str  |     1 |
 | region                      | region                                                         | str  |     1 |
@@ -54,7 +54,7 @@ This package needs to be deployed in multiple steps because the `ComputePacketMi
 |     File      |                   APIVersion                    |            Kind             |                        Name                         |       Namespace        |
 |---------------|-------------------------------------------------|-----------------------------|-----------------------------------------------------|------------------------|
 | address.yaml  | compute.cnrm.cloud.google.com/v1beta1           | ComputeAddress              | host-project-id-standard-google-managed-services-ip | client-name-networking |
-| peering.yaml  | servicenetworking.cnrm.cloud.google.com/v1beta1 | ServiceNetworkingConnection | host-project-id-internet-to-googlemanaged-peer      | client-name-networking |
+| peering.yaml  | servicenetworking.cnrm.cloud.google.com/v1beta1 | ServiceNetworkingConnection | host-project-id-standard-to-googlemanaged-peer      | client-name-networking |
 | services.yaml | serviceusage.cnrm.cloud.google.com/v1beta1      | Service                     | host-project-id-ids                                 | client-name-projects   |
 | services.yaml | serviceusage.cnrm.cloud.google.com/v1beta1      | Service                     | host-project-id-servicenetworking                   | client-name-projects   |
 
