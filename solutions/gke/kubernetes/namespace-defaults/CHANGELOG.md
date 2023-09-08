@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/kubernetes/namespace-defaults/0.2.1...solutions/gke/kubernetes/namespace-defaults/0.2.2) (2023-09-08)
+
+
+### Bug Fixes
+
+* adding sa for wi and update network policy ([#518](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/518)) ([ea3d8b0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/ea3d8b02871c6c48a65e32a73fd92fdab2ecb03f))
+
 ## [0.2.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/kubernetes/namespace-defaults/0.2.0...solutions/gke/kubernetes/namespace-defaults/0.2.1) (2023-08-29)
 
 
