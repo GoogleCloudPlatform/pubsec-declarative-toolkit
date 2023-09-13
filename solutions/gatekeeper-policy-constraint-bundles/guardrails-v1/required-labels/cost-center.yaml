@@ -1,7 +1,7 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredLabels
 metadata:
-  name: must-have-cost-center
+  name: must-have-cbrid
 spec:
   enforcementAction: dryrun
   match:
