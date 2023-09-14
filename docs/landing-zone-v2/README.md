@@ -399,7 +399,9 @@ cd pbmm-landingzone
    The latest versions of the releases can be found in [Releases](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases). The provided versions are examples and may not be up to date.
 
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@0.2.0
+    PACKAGE="solutions/gatekeeper-policies"
+    VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
     ```
 
    All Gatekeeper Policy Package releases can be found [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=gatekeeper&expanded=true)
@@ -409,7 +411,9 @@ cd pbmm-landingzone
     - Experimentation
 
       ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/core-landing-zone@0.1.0
+      PACKAGE="solutions/experimentation/core-landing-zone"
+      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
       [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=experimentation&expanded=true)
@@ -417,7 +421,9 @@ cd pbmm-landingzone
     - DEV, PREPROD, PROD
 
       ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@0.3.2
+      PACKAGE="solutions/core-landing-zone"
+      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
       [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=core-landing-zone&expanded=true)
