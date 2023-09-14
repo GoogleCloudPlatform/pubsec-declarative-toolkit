@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.5.0...solutions/client-setup/0.6.0) (2023-09-14)
+
+
+### Features
+
+* cloud ids ([#517](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/517)) ([7b4db46](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/7b4db460b55ef7c36754e46e32ae622bce502117))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.2...solutions/client-setup/0.5.0) (2023-09-06)
 
 
