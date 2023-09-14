@@ -41,7 +41,7 @@ spec:
     namespace: projects # kpt-set: ${namespace}
     name: project-id # kpt-set: ${project-id}
 ---
-## Document Warehouse Admin
+## Document AI Admin
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
