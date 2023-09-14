@@ -15,8 +15,8 @@ Package to setup a client's namespaces, folder, management project and root sync
 |             Name             |              Value              | Type | Count |
 |------------------------------|---------------------------------|------|-------|
 | client-billing-id            | AAAAAA-BBBBBB-CCCCCC            | str  |     1 |
-| client-management-project-id | client-management-project-12345 | str  |   117 |
-| client-name                  | client1                         | str  |   149 |
+| client-management-project-id | client-management-project-12345 | str  |   119 |
+| client-name                  | client1                         | str  |   152 |
 | dns-project-id               | dns-project-12345               | str  |     1 |
 | environment                  | env                             | str  |     1 |
 | management-namespace         | config-control                  | str  |    27 |
@@ -84,6 +84,7 @@ This package has no sub-packages.
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-xpnadmin-permissions                                         | config-control             |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-servicedirectoryeditor-permissions                           | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-client-folder-org-resource-admin-permissions                 | hierarchy                  |
+| namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-cloudids-admin-permissions                                   | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | client-name-networking-sa-workload-identity-binding                                    | client-name-config-control |
 | namespaces/client-name-networking.yaml           | v1                                            | Namespace              | client-name-networking                                                                 |                            |
 | namespaces/client-name-networking.yaml           | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com                                      | client-name-networking     |
