@@ -1,7 +1,7 @@
 {
   "solutions/client-landing-zone": "0.4.4",
   "solutions/client-project-setup": "0.4.3",
-  "solutions/client-setup": "0.5.0",
+  "solutions/client-setup": "0.6.0",
   "solutions/core-landing-zone": "0.3.2",
   "solutions/experimentation/admin-folder": "0.1.0",
   "solutions/experimentation/client-landing-zone": "0.1.0",
@@ -15,7 +15,7 @@
   "solutions/gke/configconnector/gke-workload-identity": "0.1.1",
   "solutions/gke/kubernetes/cluster-defaults": "0.3.0",
   "solutions/gke/kubernetes/namespace-defaults": "0.2.2",
-  "solutions/ids": "0.1.0",
+  "solutions/ids": "0.2.0",
   "solutions/project/hub-env": "0.2.0",
   "solutions/project/spoke-unclass-env": "0.1.0"
 }
