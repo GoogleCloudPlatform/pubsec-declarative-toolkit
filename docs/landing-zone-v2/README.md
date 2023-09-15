@@ -10,8 +10,8 @@
   - [Single GCP organization](#single-gcp-organization)
   - [Multiple GCP organizations](#multiple-gcp-organizations)
   - [Folder Structure Per Environment (Dev, Preprod, Prod)](#folder-structure-per-environment-dev-preprod-prod)
-    - [Core Landing Zone Folders](#core-landing-zone-folders)
-    - [Client Landing Zone Folders](#client-landing-zone-folders)
+    - [Core Landing Zone](#core-landing-zone)
+    - [Client Landing Zone](#client-landing-zone)
   - [Setup](#setup)
     - [1. Complete the bootstrap procedure](#1-complete-the-bootstrap-procedure)
       - [Requirements](#requirements)
@@ -28,7 +28,7 @@
     - [Fetch the packages](#fetch-the-packages)
     - [2b. Deploy the infrastructure using KPT](#2b-deploy-the-infrastructure-using-kpt)
       - [gatekeeper-policies](#gatekeeper-policies)
-      - [core-landing-zone](#core-landing-zone)
+      - [core-landing-zone](#core-landing-zone-1)
   - [3. Deploy the infrastructure using GitOps](#3-deploy-the-infrastructure-using-gitops)
     - [Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)](#create-a-new-repository-in-your-repo-hosting-solution-github-gitlab-or-azure-devops)
     - [ConfigSync](#configsync)
@@ -51,6 +51,7 @@ This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly bec
 
 ## <a name='Implementation'></a>Implementation
 
+
 You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **Shared Services Canada**, providing a good level of details on how they have implemented this landing zone solution to host workloads from any of the 43 departments of the Government of Canada.
 
 ## <a name='Organization'></a>Organization
@@ -59,17 +60,32 @@ This Landing Zone v2 assumes that the different required environments known as E
 
 ## <a name='SingleGCPorganization'></a>Single GCP organization
 
+This pattern will be ideal for most use-cases and isolation between environments is achieved through folder structures.
+
+In this example a Landing Zone is deployed per environment.
+
 ![img](img/single-org.png)
 
 ## <a name='MultipleGCPorganizations'></a>Multiple GCP organizations
+
+This pattern is ideal for Departments who need a higher degree of isolation between environments by using Google Cloud Organizations as the environment boundary vs using folders.
+
+Additional details about using multiple organizations can be found [here](https://cloud.google.com/resource-manager/docs/managing-multiple-orgs).
 
 ![img](img/multi-org.png)
 
 ## <a name="folderStructure"></a>Folder Structure Per Environment (Dev, Preprod, Prod)
 
+A deployed Landing Zone contains two sections the Core Landing Zone and the Client Landing Zone. Together they will deploy a structure that matches the diagram below.
+
+
 ![img](img/folder-structure.png)
 
-### Core Landing Zone Folders
+### Core Landing Zone
+
+This is made up of two packages [core-landing-zone](../../solutions/core-landing-zone/) and [gatekeeper-policies](../../solutions/gatekeeper-policies/). This section provides the core of the landing zone functionality with Logging, Org Policies, and Shared Infrastructure like DNS and a Shared VPC (coming soon) as well as compliance enforcement in Config Controller.
+
+This can be deployed once or multiple times per organization as highlighted in the diagrams below.
 
 | Folder | Usage |
 | --- | --- |
@@ -78,7 +94,13 @@ This Landing Zone v2 assumes that the different required environments known as E
 | services | Contains service projects for applications that are offered as a services (AD, Backup, Trusted Images, Artifact registry, Certificate Authority, etc.) to all clients |
 | services-infrastructure | Contains the shared hub networking project, the core dns project as well as the host project for additional services |
 
-### Client Landing Zone Folders
+### Client Landing Zone
+
+This section is made up of two packages [client-setup](../../solutions/client-setup/) and [client-landing-zone](../../solutions/client-landing-zone/). The client setup package prepares the Config Controller instances for the new client and creates the required service accounts and namespaces for the client to use.
+
+The `client-landing-zone` package deploys the clients Google Cloud resources, including folder structure, firewalls, and Shared Infrastructure (VPC). The deployment of these packages are repeated for each onboarded client. A client in these examples would be an a department or working group that needs isolation from other groups.
+
+It is possible to only have 1 client and service multiple teams and working groups. In this case teams would have folders or projects created under the `applications`, `auto` and/or `applications-infrastructure` folders that are created in the `client-landing-zone` deployment.
 
 | Folder | Usage |
 | --- | --- |
@@ -374,25 +396,39 @@ cd pbmm-landingzone
 
 1. Get the gatekeeper policies package. These are the policies which your Config Controller instance will use to [validate](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) compliance of any configuration deployed, this currently checks for guardrails compliance and naming conventions on projects. These policies will also be validated when running the `kpt fn render` command for early feedback.
 
+   The latest versions of the releases can be found in [Releases](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases). The provided versions are examples and may not be up to date.
+
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@<VERSION>
+    PACKAGE="solutions/gatekeeper-policies"
+    VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
     ```
 
-1. Get the landing zone package
+   All Gatekeeper Policy Package releases can be found [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=gatekeeper&expanded=true)
+
+2. Get the landing zone package
 
     - Experimentation
 
       ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/core-landing-zone@<VERSION>
+      PACKAGE="solutions/experimentation/core-landing-zone"
+      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
+
+      [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=experimentation&expanded=true)
 
     - DEV, PREPROD, PROD
 
       ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@<VERSION>
+      PACKAGE="solutions/core-landing-zone"
+      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
-1. Customize Packages
+      [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=core-landing-zone&expanded=true)
+
+3. Customize Packages
 
     Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.  
     For example "core-landing-zone" will have the same [setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/setters.yaml) as in the repo in the root of the pkg directory.
