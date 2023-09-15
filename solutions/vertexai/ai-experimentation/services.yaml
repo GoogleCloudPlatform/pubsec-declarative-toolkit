@@ -1,0 +1,166 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# IAM API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-iam # kpt-set: ${project-id}-iam
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: iam.googleapis.com
+---
+# Resource Manager API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-resourcemanager # kpt-set: ${project-id}-resourcemanager
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: cloudresourcemanager.googleapis.com
+---
+# Billing API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-billing # kpt-set: ${project-id}-billing
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: cloudbilling.googleapis.com
+---
+# Service Usage API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-serviceusage # kpt-set: ${project-id}-serviceusage
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: serviceusage.googleapis.com
+---
+# AI Platform API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-vertexai # kpt-set: ${project-id}-vertexai
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: aiplatform.googleapis.com
+---
+# Doc AI API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-documentai # kpt-set: ${project-id}-documentai
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: documentai.googleapis.com
+---
+# Document AI Warehouse API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-contentwarehouse # kpt-set: ${project-id}-contentwarehouse
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: contentwarehouse.googleapis.com
+---
+# Discover Engine API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-discover-engine # kpt-set: ${project-id}-discover-engine
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: discoveryengine.googleapis.com
+---
+# Cloud Storage API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-cloud-storage # kpt-set: ${project-id}-cloud-storage
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: storage.googleapis.com
+---
+# BigQuery API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-bigquery # kpt-set: ${project-id}-bigquery
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: bigquery.googleapis.com
+---
+# Cloud Natural Language API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: project-id-nlp # kpt-set: ${project-id}-nlp
+  namespace: projects # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${namespace}/Project/${project-id}
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: language.googleapis.com
