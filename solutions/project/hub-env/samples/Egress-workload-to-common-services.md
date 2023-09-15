@@ -67,4 +67,6 @@
       - "10.1.1.2/32"
       targetServiceAccounts:
       - name: project-id-service1-sa # kpt-set: ${project-id}-service1-sa
+      logConfig:
+        metadata: "INCLUDE_ALL_METADATA"
     ```

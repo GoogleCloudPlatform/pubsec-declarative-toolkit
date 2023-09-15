@@ -33,3 +33,5 @@ spec:
     - 10.255.255.254/32
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"

@@ -35,3 +35,5 @@ spec:
   targetServiceAccounts:
     - name: project-id--instance-name-sa # kpt-set: ${project-id}--${instance-name}-sa
       namespace: client-name-admin # kpt-set: ${client-name}-admin
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
