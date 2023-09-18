@@ -33,6 +33,8 @@ spec:
     - 10.255.255.254/32
   networkRef:
     name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
 ---
 # Default egress deny all
 # AC-4, AC-4(21), SC-7(C), SC-7(5)
@@ -60,3 +62,5 @@ spec:
     - 10.2.3.0/24
   networkRef:
     name: project-id-global-vpc1-vpc # kpt-set: ${project-id}-global-vpc1-vpc
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"

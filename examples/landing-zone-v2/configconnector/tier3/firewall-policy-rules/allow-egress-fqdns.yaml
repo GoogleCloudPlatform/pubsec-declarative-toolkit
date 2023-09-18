@@ -23,7 +23,7 @@ spec:
   description: "allow access to example.com"
   direction: "EGRESS"
   disabled: false
-  enableLogging: false
+  enableLogging: true
   firewallPolicyRef:
     name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
     namespace: client-name-networking # kpt-set: ${client-name}-networking

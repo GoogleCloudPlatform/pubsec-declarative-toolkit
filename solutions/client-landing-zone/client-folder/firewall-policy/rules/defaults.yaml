@@ -27,6 +27,7 @@ spec:
   description: "Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (EGRESS)"
   direction: "EGRESS"
   disabled: false
+  # logging not supported for goto_next rules
   enableLogging: false
   firewallPolicyRef:
     name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
@@ -53,6 +54,7 @@ spec:
   description: "Exclude communication with private IP ranges, leaving only Internet traffic to be inspected (INGRESS)"
   direction: "INGRESS"
   disabled: false
+  # logging not supported for goto_next rules
   enableLogging: false
   firewallPolicyRef:
     name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol

@@ -25,6 +25,7 @@ spec:
   description: "Goto next for LB health checks"
   direction: "INGRESS"
   disabled: false
+  # logging not supported for goto_next rules
   enableLogging: false
   firewallPolicyRef:
     name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol

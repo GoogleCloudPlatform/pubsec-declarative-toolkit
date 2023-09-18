@@ -31,3 +31,5 @@ spec:
     - "130.211.0.0/22"
   destinationRanges: # kpt-set: ${podIpv4Range}
     - podIpv4Range
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"

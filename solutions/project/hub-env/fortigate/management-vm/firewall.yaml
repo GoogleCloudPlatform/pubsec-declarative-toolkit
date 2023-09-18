@@ -37,6 +37,8 @@ spec:
     - "35.235.240.0/20"
   targetServiceAccounts:
     - name: hub-managementvm-sa
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
 ---
 ## Management VM to Fortigates - ICMP and TCP SSH, HTTPS
 ## AC-17(1) - Users are forced to use IAP Desktop to access (via RDP) the management Google Compute Engine in order to access and manage the Fortigate appliance through SSH or HTTPS.
@@ -65,3 +67,5 @@ spec:
     - name: hub-managementvm-sa
   targetServiceAccounts:
     - name: hub-fortigatesdn-sa
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"

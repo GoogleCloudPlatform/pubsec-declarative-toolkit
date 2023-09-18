@@ -34,3 +34,5 @@ spec:
   targetServiceAccounts:
     - name: workload-name-sa # kpt-set: ${workload-name}-sa
       namespace: project-id-tier4 # kpt-set: ${project-id}-tier4
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"

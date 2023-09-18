@@ -31,6 +31,8 @@ spec:
     name: hub-global-external-vpc
   sourceRanges:
     - 0.0.0.0/0
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
 ---
 ## External Load Balancers health checks
 ## https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
@@ -56,6 +58,8 @@ spec:
     - "130.211.0.0/22"
   targetServiceAccounts:
     - name: hub-fortigatesdn-sa
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
 ---
 ## Internal allow spokes to fortigates
 ## AC-3(7) use of SA account with limited permissions
@@ -79,6 +83,8 @@ spec:
     - 10.0.0.0/8
   targetServiceAccounts:
     - name: hub-fortigatesdn-sa
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
 ---
 ## Internal Load Balancers health checks
 ## https://cloud.google.com/load-balancing/docs/health-checks#fw-rule
@@ -104,6 +110,8 @@ spec:
     - "130.211.0.0/22"
   targetServiceAccounts:
     - name: hub-fortigatesdn-sa
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
 ---
 ## Enable traffic on mgmt network for fortigates HA
 ## AC-3(7) use of SA account with limited permissions
@@ -126,3 +134,5 @@ spec:
     - name: hub-fortigatesdn-sa
   targetServiceAccounts:
     - name: hub-fortigatesdn-sa
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
