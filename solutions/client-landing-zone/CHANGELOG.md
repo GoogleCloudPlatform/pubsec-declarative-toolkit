@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.4...solutions/client-landing-zone/0.4.5) (2023-09-18)
+
+
+### Bug Fixes
+
+* enable missing logging for fw rules ([#524](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/524)) ([9bb78bf](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/9bb78bf67f0bc76ba414435c1ae2483144f2eaac))
+
 ## [0.4.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.3...solutions/client-landing-zone/0.4.4) (2023-09-06)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.1...solutions/gke/configconnector/gke-cluster-autopilot/0.2.2) (2023-09-18)
+
+
+### Bug Fixes
+
+* enable missing logging for fw rules ([#524](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/524)) ([9bb78bf](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/9bb78bf67f0bc76ba414435c1ae2483144f2eaac))
+
 ## [0.2.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.0...solutions/gke/configconnector/gke-cluster-autopilot/0.2.1) (2023-08-29)
 
 
