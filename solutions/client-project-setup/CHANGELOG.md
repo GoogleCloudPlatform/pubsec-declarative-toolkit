@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.2...solutions/client-project-setup/0.4.3) (2023-08-21)
+
+
+### Bug Fixes
+
+* client-project-setup package ([#472](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/472)) ([ff53971](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/ff53971a79ca4120329870924be9bbf948eda879))
+
 ## [0.4.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.1...solutions/client-project-setup/0.4.2) (2023-07-20)
 
 

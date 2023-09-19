@@ -45,7 +45,7 @@ metadata:
 spec:
   name: "dns-name" # kpt-set: ${dns-name}
   type: "NS"
-  ttl: 21600
+  ttl: 300
   managedZoneRef:
     name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
     namespace: networking

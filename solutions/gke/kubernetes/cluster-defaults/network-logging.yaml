@@ -1,0 +1,16 @@
+# Per Cluster resource
+# Enables logging for traffic allowed / blocked by Network Policies
+# More info: https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy-logging
+# In future we may want to enable delegate and only log traffic allowed / blocked by specific rules
+kind: NetworkLogging
+apiVersion: networking.gke.io/v1alpha1
+metadata:
+  name: default
+spec:
+  cluster:
+    allow:
+      log: true
+      delegate: false
+    deny:
+      log: true
+      delegate: false

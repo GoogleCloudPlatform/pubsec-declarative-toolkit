@@ -27,14 +27,18 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/standard.applications-infrastructure # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/standard.applications-infrastructure
 spec:
-  # shortName required
+  # shortName required, immutable, 1-63 characters, unique within organization
   shortName: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+  # to acquire an existing firewall policy:
+  #   - uncomment 'resourceID' below
+  #   - replace 1234567890 with the policy ID number (it can be found in the cloud console)
+  # resourceID: firewallPolicies/1234567890
   folderRef:
     name: standard.applications-infrastructure
     namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
   description: "Firewall policy for client-name" # kpt-set: Firewall policy for ${client-name}
 ---
-# firewall policy association to applications-infrastructure folder
+# firewall policy association to client's standard/applications-infrastructure folder
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyAssociation
 metadata:

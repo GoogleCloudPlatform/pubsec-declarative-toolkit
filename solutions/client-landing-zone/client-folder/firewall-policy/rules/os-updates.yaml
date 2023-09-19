@@ -25,7 +25,7 @@ spec:
   description: "allow os updates"
   direction: "EGRESS"
   disabled: false
-  enableLogging: false
+  enableLogging: true
   firewallPolicyRef:
     name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
   match:

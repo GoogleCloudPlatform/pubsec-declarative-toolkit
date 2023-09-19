@@ -42,6 +42,23 @@ spec:
   role: roles/logging.admin
   member: "serviceAccount:client-name-logging-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-logging-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
+# Grant GCP role Monitoring Admin to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-logging-sa-monitoringadmin-permissions # kpt-set: ${client-name}-logging-sa-monitoringadmin-permissions
+  namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Folder
+    name: clients.client-name # kpt-set: clients.${client-name}
+  role: roles/monitoring.admin
+  member: "serviceAccount:client-name-logging-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-logging-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
 # Grant GCP role BigQuery Admin to GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember

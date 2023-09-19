@@ -1,0 +1,37 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: ids
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on `client-landing-zone` package.
+
+    Package to create Cloud Intrusion Detection System (IDS) resources inside the network host project. This is required for PBMM.
+
+    Warning! It requires the alpha CRD [cloudidsendpoint](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/cloudids_v1alpha1_cloudidsendpoint.yaml)
+    loaded in the config controller.
+
+    [Install alpha CRDS](https://cloud.google.com/config-connector/docs/how-to/install-alpha-crds)
+
+    This package needs to be deployed in multiple steps because the `ComputePacketMirroring` resource in the endpoint subpackage requires the `endpointForwardingRule` value of the `CloudIDSEndpoint` resource.
+
+    1. customize the setters but leave the field `data.ids-endpoint-forwardingrule` in the file `endpoint\setters.yaml` untouched.
+
+    2. deploy the package
+
+    3. wait until the `CloudIDSEndpoint` is `UpToDate`, then run the command below to obtain it's `endpointForwardingRule` value.
+
+        ```bash
+        gcloud ids endpoints describe <endpoint-name> --zone <zone> --project <host-project-id>
+        ```
+
+    4. update the field `data.ids-endpoint-forwardingrule` in the file `endpoint\setters.yaml`
+
+    5. re-deploy the updated package.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

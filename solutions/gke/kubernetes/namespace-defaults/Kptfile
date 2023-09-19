@@ -1,0 +1,18 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: namespace-defaults
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `cluster-defaults`.
+    This package deploys to a GKE cluster.
+    It should be deployed once per workload namespace.
+
+    This package deploys a workload namespace and it's associated configuration.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

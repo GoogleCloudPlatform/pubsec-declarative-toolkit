@@ -1,0 +1,24 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: ids-endpoint
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    `ids` subpackage.
+
+    Deploy this package once per IDS endpoint. You can have multiple copies of this subpackage by cloning the entire folder to a new folder (i.e. subpackage2)
+
+    A package to deploy a Cloud Intrusion Detection System (IDS) endpoint and packet mirroring policy.
+
+    Warning! It requires the alpha CRD [cloudidsendpoint](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/cloudids_v1alpha1_cloudidsendpoint.yaml)
+    loaded in the config controller.
+
+    [Install alpha CRDS](https://cloud.google.com/config-connector/docs/how-to/install-alpha-crds)
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/starlark:v0.4.3
+      configPath: starlark-update-endpoint-mirroring.yaml

@@ -1,0 +1,57 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  ##########################
+  # Instructions
+  ##########################
+  #
+  # Follow instructions specific to each section.
+  # setters from its parent package are also used.
+  #
+  ##########################
+  # Host Configurations
+  ##########################
+  #
+  # The region that the resources will be created in
+  location: northamerica-northeast1
+  #
+  # the name of the instance, limit 27 characters max
+  instance-name: proxy1
+  # the instance's machine type
+  instance-machine-type: e2-small
+  # the OS image to use, depending on the image, other changes may be required to:
+  #   - the startup-script in instance.yaml
+  #   - the `constraints/compute.trustedImageProjects` Organization Policy
+  #   - firewall policy rules to allow OS updates
+  instance-os-image: a-project-with-images/the-image
+  #
+  # ID of existing Shared VPC host project for the client created in the client-landing-zone package
+  host-project-id: net-host-project-12345
+  # the network and subnet to attach the instance's NIC, the values must match the kubernetes resources 'metadata.name'
+  network-name: host-project-id-global-standard-vpc
+  subnet-name: host-project-id-subnet-name
+  #
+  # the internal IP to reserve for the instance, must be unique within the CIDR range of the subnet above
+  instance-ip: 1.2.3.4
+  #
+  ##########################
+  # End of Configurations
+  ##########################
