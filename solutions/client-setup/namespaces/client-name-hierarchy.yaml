@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # GCP SA
+# AC-3, AC-3(7), AC-16(2) - This service account possesses minimal privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the current namespace and is assigned minimal permissions to create resources in this namespace only.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -23,6 +24,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   displayName: client-name-hierarchy-sa # kpt-set: ${client-name}-hierarchy-sa
 ---
 # Grant GCP role Folder Admin to GCP SA
@@ -39,6 +41,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
     name: clients.client-name # kpt-set: clients.${client-name}
+  # AC-3, AC-3(7), AC-16(2)
   role: roles/resourcemanager.folderAdmin
   member: "serviceAccount:client-name-hierarchy-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-hierarchy-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
@@ -56,6 +59,7 @@ spec:
     name: client-name-hierarchy-sa # kpt-set: ${client-name}-hierarchy-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
+  # AC-3, AC-3(7), AC-16(2)
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
@@ -68,7 +72,6 @@ metadata:
   name: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 ---
 # Link GCP SA to K8S namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
@@ -80,6 +83,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   googleServiceAccount: client-name-hierarchy-sa@client-management-project-id.iam.gserviceaccount.com # kpt-set: ${client-name}-hierarchy-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
 # Grant viewer role on the hierarchy namespace to projects K8S SA
@@ -92,6 +96,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
+  # AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -110,6 +115,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
+  # AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -128,6 +134,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
+  # AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
