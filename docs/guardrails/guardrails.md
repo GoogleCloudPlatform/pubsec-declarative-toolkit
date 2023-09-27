@@ -173,17 +173,26 @@ The creation of network infrastructure will be handled through the [accelerator 
 
 ### Establish external and internal network perimeters and monitor network traffic
 
-This is handled by Security Foundations Blueprints 
+A default network pattern is established as part of the core landing zone and client landing zones. Once finalized the architecture will be published [here](../landing-zone-v2/architecture.md)
 
 ## 10 - Cyber Defense Services
 
-## Guardrail # 11 Logging and Monitoring
+For Cyber Defense Services we recommend using Security Command Center.
 
-Security Command Center
+Security Command Center helps you strengthen your security posture by evaluating your security and data attack surface; providing asset inventory and discovery; identifying misconfigurations, vulnerabilities, and threats; and helping you mitigate and remediate risks.
+
+Security Command Center uses services, such as Event Threat Detection and Security Health Analytics, to detect security issues in your environment. These services scan your logs and resources on Google Cloud looking for threat indicators, software vulnerabilities, and misconfigurations. Services are also referred to as sources. For more information, see Security sources.
+
+When these services detect a threat, vulnerability, or misconfiguration, they issue a finding. A finding is a report or record of an individual threat, vulnerability, or misconfiguration that service has found in your Google Cloud environment. Findings show the issue that was detected, the Google Cloud resource that is affected by the issue, and guidance on how you can address the issue.
+
+In the Google Cloud console, Security Command Center provides a consolidated view of all of the findings that are returned by Security Command Center services. In the Google Cloud console, you can query findings, filter findings, mute irrelevant findings, and more.
+
+
+## Guardrail # 11 Logging and Monitoring
 
 ### Enable logging for the cloud environment and for cloud-based workloads.
 
-In order to comply with this guardrail we will validate that a log sink asset and storage bucket is created for capturing platform logs.
+Log sinks are created at the organization [level](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/org/org-sink.yaml) and forward to [storage](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/lz-folder/audits/logging-project/cloud-logging-buckets.yaml) buckets in the central audit [project](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/core-landing-zone/lz-folder/audits/logging-project).
 
 ##  Configuration of Cloud Marketplaces
 
