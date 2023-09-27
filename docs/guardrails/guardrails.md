@@ -1,4 +1,4 @@
-## Protect root / global admins account(s) with Multi-Factor Authentication
+## 01 Protect root / global admins account(s) with Multi-Factor Authentication
 
 ### Enforce uniform MFA to company-owned resources [MFA][]
 
@@ -26,7 +26,7 @@ Reports can be customized to include *password length compliance, password stren
 
 [MFA](https://cloud.google.com/identity/solutions/enforce-mfa)
 
-## Management of Administrative Privileges
+## 02 Management of Administrative Privileges
 
 ### Establish access control policies and procedures for management of administrative privilege
 
@@ -34,36 +34,62 @@ The majority of this guardrail will be managed with existing Government of Canad
 
 Google Cloud security best practices [Security Best Pratices](https://cloud.google.com/security/best-practices)
 
-## Cloud Console Access
+## 03 Cloud Console Access
+
+### Limit Cloud Shell Access
+
+Access to Cloud Shell can be disabled through the Google Admin Console following these [steps](https://cloud.google.com/shell/docs/resetting-cloud-shell#disable_for_managed_user_accounts)
+
+### 
 
 ### Limit access to GC managed devices and authorized users
 
 This will be managed with existing Government of Canada identity provider (IdP).
 
-- Acces Context Manager and Beyond Corp
-- 
+- Acces Context Manager
+- Beyond Corp
+
  ## 04 - Enterprise Monitoring Accounts
 
 ### Create role-based account to enable enterprise monitoring and visibility
 
 Created as part of the core landing zone package.
 
-## Data Location 
+## 05 Data Location 
 
 ### Establish policies to restrict GC sensitive workloads to approved geographic locations
 
+As part of the Core Landing Zone deployment an [Organization Policy](../../solutions/core-landing-zone/org/org-policies/gcp-resource-locations.yaml) is provisioned and set to allow only resources in `northamerica-northeast1` and `northamerica-northeast2`.
 
-The deployment template provides variables to set defaults. One of the variables is default_region which defines the default region to create resources. By setting the default to Montreal which is northamerica-northeast1 then the resource creation will be restricted to only that region. For details on the template please see [Bootstrap Template](https://github.com/terraform-google-modules/terraform-example-foundation/tree/master/0-bootstrap)
+The policy by default looks like:
 
-    
-### Restricting Resource on the entire Organization<BR>
-You can also choose to provide an Organization Policy which would restrict any future resource creation for the entire organization. You can find details on this option here [Restricting  Resource Location]("https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations")
+```
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: gcp-restrict-resource-locations
+  namespace: policies
+  labels:
+    guardrail: "true"
+    guardrails-enforced: guardrail-05
+spec:
+  constraint: "constraints/gcp.resourceLocations"
+  listPolicy:
+    allow:
+      values:
+        - "in:northamerica-northeast1-locations"
+        - "in:northamerica-northeast2-locations"
+  organizationRef:
+    external: "0000000000"
+```
+
+This policy is also enforced via a [policy as code](../../solutions/guardrails-policies/05-data-location/constraint.yaml) rule and is deployed along side the Landing Zone infrastructure to block or audit the provisioning of non-compliant infrastructure when using [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to manage your infrastructure. 
     
 
 ### **Validation**
 The validation template will search the entire Cloud Asset Inventory for any resources that are not located on the default region
 
-# Encryption at rest in Google Cloud
+## 06 Encryption at rest in Google Cloud
 
 ### Comprehensive Encryption at rest Information: [Encryption at Rest Whitepaper][]
 
@@ -101,7 +127,7 @@ Google also manages the key rotation schedule. This schedule varies slightly dep
 
 [Encryption at Rest Whitepaper]: https://cloud.google.com/security/encryption-at-rest/default-encryption
 
-# Encryption in Transit in Google Cloud
+## 07 Encryption in Transit in Google Cloud
 
 ### Comprehensive In-Transit Encryption Method Information: [Encryption In-Transit Whitepaper][]
 
@@ -152,6 +178,8 @@ This is handled by Security Foundations Blueprints
 ## 10 - Cyber Defense Services
 
 ## Guardrail # 11 Logging and Monitoring
+
+Security Command Center
 
 ### Enable logging for the cloud environment and for cloud-based workloads.
 
