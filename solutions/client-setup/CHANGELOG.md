@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.0...solutions/client-setup/0.6.1) (2023-09-25)
+
+
+### Bug Fixes
+
+* client-setup remove depends-on ([#528](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/528)) ([8370e06](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/8370e06efcb88578866484021685d8720c9c81d1))
+
 ## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.5.0...solutions/client-setup/0.6.0) (2023-09-14)
 
 
