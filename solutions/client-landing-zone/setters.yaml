@@ -123,6 +123,19 @@ data:
     - "northamerica-northeast1.gce.archive.ubuntu.com"
     - "northamerica-northeast2.gce.archive.ubuntu.com"
   #
+  # the source IP ranges allowed to access the domains listed above
+  # the ranges should match the values of the '*main-snet' setters configured earlier:
+  #   - standard-nane1-nonp-main-snet
+  #   - standard-nane2-nonp-main-snet
+  #   - standard-nane1-pbmm-main-snet
+  #   - standard-nane2-pbmm-main-snet
+  # OR a list of more restrictive ranges within those subnets (for example, 10.1.1.5/32)
+  allowed-os-update-source-ip-ranges: |
+    - "10.1.0.0/21"
+    - "10.1.8.0/21"
+    - "10.1.128.0/21"
+    - "10.1.136.0/21"
+  #
   ##########################
   # DNS
   ##########################

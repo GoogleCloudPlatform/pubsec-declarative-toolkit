@@ -34,8 +34,8 @@ spec:
         ports:
           - "80"
           - "443"
-    srcIPRanges:
-      - "10.0.0.0/8"
+    srcIPRanges: # kpt-set: ${allowed-os-update-source-ip-ranges}
+      - "n.n.n.n/n"
     destFqdns: # kpt-set: ${allowed-os-update-domains}
       - "example.com"
   priority: 5000
