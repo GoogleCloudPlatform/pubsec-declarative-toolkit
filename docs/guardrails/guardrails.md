@@ -155,12 +155,9 @@ Diagram below further depicts protection by default and options overlaid on Goog
 
 
 ### **Ongoing Innovation in Encryption in Transit**
-Google plans to remain the industry leader in encryption in transit. To this end, we have started work in the area of post-quantum cryptography. This type of cryptography allows us to replace existing crypto primitives, that are vulnerable to efficient quantum attacks, with post-quantum candidates that are believed to be more robust. For more information, please refer to: https://cloud.google.com/security/encryption-in-transit#chrome_security_user_experience 
+Google plans to remain the industry leader in encryption in transit. To this end, we have started work in the area of post-quantum cryptography. This type of cryptography allows us to replace existing crypto primitives, that are vulnerable to efficient quantum attacks, with post-quantum candidates that are believed to be more robust. For more information, please refer to: https://cloud.google.com/security/encryption-in-transit#chrome_security_user_experience
 
-
-
-
-[Encryption In-Transit Whitepaper]: https://cloud.google.com/security/encryption-in-transit
+[Encryption In-Transit Whitepaper](https://cloud.google.com/security/encryption-in-transit)
 
 ## 08 - Segment and Separate
 
