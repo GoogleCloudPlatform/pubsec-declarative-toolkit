@@ -90,7 +90,7 @@ The validation template will search the entire Cloud Asset Inventory for any res
 
 ## 06 Encryption at rest in Google Cloud
 
-### Comprehensive Encryption at rest Information: [Encryption at Rest Whitepaper][]
+### Comprehensive Encryption at rest Information: [Encryption at Rest Whitepaper](https://cloud.google.com/docs/security/encryption/default-encryption)
 
 <a href="https://www.youtube.com/watch?v=Svz2KHE1mdM&autoplay=1"><p align = "center"><img src="../images/video-at-rest.png" width="300"></img></p></a>
 
@@ -155,7 +155,7 @@ Diagram below further depicts protection by default and options overlaid on Goog
 
 
 ### **Ongoing Innovation in Encryption in Transit**
-Google plans to remain the industry leader in encryption in transit. To this end, we have started work in the area of post-quantum cryptography. This type of cryptography allows us to replace existing crypto primitives, that are vulnerable to efficient quantum attacks, with post-quantum candidates that are believed to be more robust. For more information, please refer to: https://cloud.google.com/security/encryption-in-transit#chrome_security_user_experience
+Google plans to remain the industry leader in encryption in transit. To this end, we have started work in the area of post-quantum cryptography. This type of cryptography allows us to replace existing crypto primitives, that are vulnerable to efficient quantum attacks, with post-quantum candidates that are believed to be more robust. For more information, please refer to the documentation located [here](https://cloud.google.com/security/encryption-in-transit#chrome_security_user_experience)
 
 [Encryption In-Transit Whitepaper](https://cloud.google.com/security/encryption-in-transit)
 
