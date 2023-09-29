@@ -124,11 +124,11 @@ Google also manages the key rotation schedule. This schedule varies slightly dep
 - Customer-supplied encryption keys (CSEK)
 
 
-[Encryption at Rest Whitepaper]: https://cloud.google.com/security/encryption-at-rest/default-encryption
+[Encryption at Rest Whitepaper](https://cloud.google.com/security/encryption-at-rest/default-encryption)
 
 ## 07 Encryption in Transit in Google Cloud
 
-### Comprehensive In-Transit Encryption Method Information: [Encryption In-Transit Whitepaper][]
+### Comprehensive In-Transit Encryption Method Information: [Encryption In-Transit Whitepaper](https://cloud.google.com/static/docs/security/encryption-in-transit/resources/encryption-in-transit-whitepaper.pdf)
 
 <a href="https://www.youtube.com/watch?v=Svz2KHE1mdM&autoplay=1"><p align = "center"><img src="../images/video-in-transit.png" width="300"></img></p></a>
 
