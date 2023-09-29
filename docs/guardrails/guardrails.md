@@ -2,7 +2,7 @@
 
 ## 01 Protect root / global admins account(s) with Multi-Factor Authentication
 
-### Enforce uniform MFA to company-owned resources [MFA][]
+### Enforce uniform MFA to company-owned resources MFA
 
 Protect your user accounts and company data with a wide variety of MFA verification methods such as push notifications, Google Authenticator, phishing-resistant [Titan Security Keys](https://cloud.google.com/titan-security-key), and using your Android or iOS device as a security key.  If Cloud Identity is your identity provider (IdP), you can implement 2SV in several ways. If you use a third-party IdP, check with them about their 2SV offering.
 
@@ -12,7 +12,7 @@ You can select different levels of 2SV enforcement:
 - Mandatory security keys—employee must use a security key.
 
 ### **Validation**
-As your organization's administrator, you can monitor your users' exposure to data compromise by opening a security report. The security report gives you a comprehensive view of how people share and access data and whether they take appropriate security precautions. You can also see who installs external apps, shares a lot of files, skips 2-Step Verification, uses security keys, and more. 
+As your organization's administrator, you can monitor your users' exposure to data compromise by opening a security report. The security report gives you a comprehensive view of how people share and access data and whether they take appropriate security precautions. You can also see who installs external apps, shares a lot of files, skips 2-Step Verification, uses security keys, and more.
 
 ### **Open your Security Report**
 - Access [admin.google.com](https://admin.google.com)
@@ -42,8 +42,6 @@ Google Cloud security best practices [Security Best Pratices](https://cloud.goog
 
 Access to Cloud Shell can be disabled through the Google Admin Console following these [steps](https://cloud.google.com/shell/docs/resetting-cloud-shell#disable_for_managed_user_accounts)
 
-### 
-
 ### Limit access to GC managed devices and authorized users
 
 This will be managed with existing Government of Canada identity provider (IdP).
@@ -51,13 +49,13 @@ This will be managed with existing Government of Canada identity provider (IdP).
 - Acces Context Manager
 - Beyond Corp
 
- ## 04 - Enterprise Monitoring Accounts
+## 04 - Enterprise Monitoring Accounts
 
 ### Create role-based account to enable enterprise monitoring and visibility
 
 Created as part of the core landing zone package.
 
-## 05 Data Location 
+## 05 Data Location
 
 ### Establish policies to restrict GC sensitive workloads to approved geographic locations
 
@@ -65,7 +63,7 @@ As part of the Core Landing Zone deployment an [Organization Policy](../../solut
 
 The policy by default looks like:
 
-```
+```yaml
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -85,8 +83,7 @@ spec:
     external: "0000000000"
 ```
 
-This policy is also enforced via a [policy as code](../../solutions/guardrails-policies/05-data-location/constraint.yaml) rule and is deployed along side the Landing Zone infrastructure to block or audit the provisioning of non-compliant infrastructure when using [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to manage your infrastructure. 
-    
+This policy is also enforced via a [policy as code](../../solutions/guardrails-policies/05-data-location/constraint.yaml) rule and is deployed along side the Landing Zone infrastructure to block or audit the provisioning of non-compliant infrastructure when using [Config Controller](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview) to manage your infrastructure.
 
 ### **Validation**
 The validation template will search the entire Cloud Asset Inventory for any resources that are not located on the default region
@@ -113,13 +110,13 @@ All data stored in GCP is encrypted with a unique data encryption key (DEK).  Mo
 
 Encrypted data chunks are then distributed across Google's storage infrastructure.
 This partition of data, each using a different key, means that the blast radius of a potential encryption key compromise is limited to only that data chunk. The data encryption keys are encrypted with or wrapped by key encryption keys or KEKs.
-The wrapped data encryption keys are then stored with this data. The key encryption keys are exclusively stored and used inside Google's central Key Management Service or KMS.  KMS held keys are also backed up for disaster recovery purposes and are indefinitely recoverable. 
+The wrapped data encryption keys are then stored with this data. The key encryption keys are exclusively stored and used inside Google's central Key Management Service or KMS.  KMS held keys are also backed up for disaster recovery purposes and are indefinitely recoverable.
 
 Decrypting data requires the unwrapped data encryption key, DEK, for that data chunk. When a Google Cloud Platform service accesses an encrypted chunk of data: For each chunk the storage system pulls the wrapped DEK stored for that chunk and calls a Google Key Management Service to retrieve the unwrapped data encryption key for that data chunk. The KMS then passes the unwrapped DEK back to the storage system which is then able to decrypt the data chunk.
 
 ***By default this entire process is enabled by default and is fully managed by Google, including the key encryption keys. There is absolutely nothing to enable or configure.***
 
-Google also manages the key rotation schedule. This schedule varies slightly depending on the service, but the standard rotation period for KEKs is every 90 days. 
+Google also manages the key rotation schedule. This schedule varies slightly depending on the service, but the standard rotation period for KEKs is every 90 days.
 
 **Encryption at rest options include:**
 - Encryption by default
@@ -192,11 +189,11 @@ In the Google Cloud console, Security Command Center provides a consolidated vie
 
 ## Guardrail # 11 Logging and Monitoring
 
-### Enable logging for the cloud environment and for cloud-based workloads.
+### Enable logging for the cloud environment and for cloud-based workloads
 
 Log sinks are created at the organization [level](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/org/org-sink.yaml) and forward to [storage](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/lz-folder/audits/logging-project/cloud-logging-buckets.yaml) buckets in the central audit [project](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/core-landing-zone/lz-folder/audits/logging-project).
 
-##  Configuration of Cloud Marketplaces
+## Configuration of Cloud Marketplaces
 
 ### Restrict Third-Party CSP Marketplace software to GC-approved products
 
@@ -211,7 +208,7 @@ These links also provide more details on private catalog:<br>
 
 ### Public Marketplace
 
-Google Cloud also provides Public Marketplace which requires permissions to deploy solutions. Departments do not control what is available in the public marketplace. But by default without the right permissions users cannot deploy solutions from the public marketplace. We suggest that you assign the Billing Administrator (roles/billing.admin) IAM role if you want users to purchase services from Public Cloud Marketplace. For details on access controls for Public Marketplace please see [Access Controls](https://cloud.google.com/marketplace/docs/access-control). 
+Google Cloud also provides Public Marketplace which requires permissions to deploy solutions. Departments do not control what is available in the public marketplace. But by default without the right permissions users cannot deploy solutions from the public marketplace. We suggest that you assign the Billing Administrator (roles/billing.admin) IAM role if you want users to purchase services from Public Cloud Marketplace. For details on access controls for Public Marketplace please see [Access Controls](https://cloud.google.com/marketplace/docs/access-control).
 
 ### Validation
 The validation Guardrail will identify users who should not have the permissions required.
