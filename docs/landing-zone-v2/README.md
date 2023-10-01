@@ -407,7 +407,7 @@ cd pbmm-landingzone
 
    All Gatekeeper Policy Package releases can be found [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=gatekeeper&expanded=true)
 
-2. Get the core landing zone package 
+2. Get the core landing zone package
 
     - Experimentation
 
