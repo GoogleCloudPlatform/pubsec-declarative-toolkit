@@ -400,29 +400,32 @@ cd pbmm-landingzone
 
     ```shell
     PACKAGE="solutions/gatekeeper-policies"
-    VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+    #VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+    VERSION=main
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
     ```
 
    All Gatekeeper Policy Package releases can be found [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=gatekeeper&expanded=true)
 
-2. Get the landing zone package
+2. Get the core landing zone package 
 
     - Experimentation
 
       ```shell
       PACKAGE="solutions/experimentation/core-landing-zone"
-      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      #VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      VERSION=main
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
       [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=experimentation&expanded=true)
 
-    - DEV, PREPROD, PROD
+    - or DEV, PREPROD, PROD
 
       ```shell
       PACKAGE="solutions/core-landing-zone"
-      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      #VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+      VERSION=main
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
