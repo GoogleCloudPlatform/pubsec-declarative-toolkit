@@ -399,9 +399,9 @@ cd pbmm-landingzone
    The latest versions of the releases can be found in [Releases](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases). The provided versions are examples and may not be up to date.
 
     ```shell
+    URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
     PACKAGE="solutions/gatekeeper-policies"
-    #VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
-    VERSION=main
+    VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
     ```
 
@@ -412,9 +412,9 @@ cd pbmm-landingzone
     - Experimentation
 
       ```shell
+      URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
       PACKAGE="solutions/experimentation/core-landing-zone"
-      #VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
-      VERSION=main
+      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
@@ -423,9 +423,9 @@ cd pbmm-landingzone
     - or DEV, PREPROD, PROD
 
       ```shell
+      URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
       PACKAGE="solutions/core-landing-zone"
-      #VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
-      VERSION=main
+      VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION}
       ```
 
