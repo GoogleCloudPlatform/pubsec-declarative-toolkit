@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.5...solutions/client-landing-zone/0.4.6) (2023-09-29)
+
+
+### Bug Fixes
+
+* add os update fw rule source ranges in setters ([#538](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/538)) ([f8c882c](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/f8c882ce1f32abc0a3b13829423886969f8b5e08))
+
 ## [0.4.5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.4...solutions/client-landing-zone/0.4.5) (2023-09-18)
 
 
