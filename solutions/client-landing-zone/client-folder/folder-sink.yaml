@@ -15,6 +15,9 @@
 # TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project. Will be required if a config-controller is deployed per client OR we need to give permissions to the client service account into the core logging project.
 # Folder sink for Platform and Component logs of Client Resources
 # Destination: cloud logging bucket inside logging project
+# AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the folder to send the logs to the logging bucket in the logging project
+# AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
+# AU-12, AU-12(1) - Log Sinks defined in Log Router check each log entry against the inclusion filter and exclusion filter that determine which destinations that the log entry is sent to
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
@@ -23,6 +26,7 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-client-name-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/platform-and-component-${client-name}-log-bucket
 spec:
+  # AU-3, AU-3(1), AU-4(1), AU-6(4), AU-9(2)
   folderRef:
     name: clients.client-name # kpt-set: clients.${client-name}
     namespace: hierarchy
@@ -33,7 +37,7 @@ spec:
       # Only `external` field is supported to configure the reference.
       external: platform-and-component-client-name-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
   description: Folder sink for client-name Platform and Component logs # kpt-set: Folder sink for ${client-name} Platform and Component logs
-  # AU-2, AU-12(A), AU-12(C)
+  # AU-12, AU-12(1)
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
   # Logs for such resources must be enabled on the respective resource as they are not enabled by default.
@@ -43,7 +47,7 @@ spec:
     OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
     OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
     OR (LOG_ID("requests") AND resource.type="http_load_balancer")
-  # Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  # Excludes all Security logs from bucket: Cloud Audit, Access Transparency, and Data Access Logs. This is done to avoid duplication of logs that are captured by another log sink
   exclusions:
     - description: Exclude Security logs
       disabled: false
