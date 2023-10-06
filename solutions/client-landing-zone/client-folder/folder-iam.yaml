@@ -27,6 +27,6 @@ spec:
     kind: Folder
     name: clients.client-name # kpt-set: clients.${client-name}
     namespace: hierarchy
-  # AC-3, AC-3(7), AC-16(2)  
+  # AC-3, AC-3(7), AC-16(2)
   role: roles/resourcemanager.folderViewer
   member: client-folderviewer # kpt-set: ${client-folderviewer}
