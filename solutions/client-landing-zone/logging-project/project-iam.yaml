@@ -15,6 +15,7 @@
 # TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project. Will be required if a config-controller is deployed per client OR we need to give permissions to the client service account into the core logging project.
 # Logs Bucket writer IAM permissions
 # Binds the generated Writer identity from the LoggingLogSink to the logging project
+# AC-3, AC-3(7), AC-16(2), AU-9 - This IAM policy binding grants bucketwriter role to the identity of the log sink configured on the bucket in the logging project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -25,7 +26,7 @@ spec:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
-  # AC-3(7) - Write access to the logging bucket is limited by IAM to just the identity of the log sink configured to send logs to the bucket (set at the logging project level)
+  # AC-3, AC-3(7), AC-16(2), AU-9
   bindings:
     - role: roles/logging.bucketWriter
       members:

@@ -90,8 +90,8 @@ data:
   standard-nane1-pbmm-main-snet: 10.1.128.0/21
   # Subnet IP range for pbmm-main in northamerica-northeast2
   standard-nane2-pbmm-main-snet: 10.1.136.0/21
-  # Destination ranges for the egress allow all internal firewall rule
-  firewall-egress-allow-all-internal: |
+  # A list of internal IP ranges used by firewall rules
+  firewall-internal-ip-ranges: |
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
@@ -104,12 +104,9 @@ data:
   # Deny sanctioned countries ingress traffic
   # https://cloud.google.com/firewall/docs/firewall-policies-rule-details#geo-location-object
   # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
-  # The list below is Google's default, modify as required
+  # The list below MUST BE reconfigured. If the value stays XX it will fail reconciliation with an error for unrecognized country.
   denied-sanctioned-countries: |
-    - "CU"
-    - "IR"
-    - "KP"
-    - "SY"
+    - "XX"
   #
   # Allowed domain names for os updates
   # The list below is an example for Debian and Ubuntu, modify as per trusted images

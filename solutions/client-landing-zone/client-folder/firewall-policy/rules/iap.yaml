@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Goto next for IAP
+# Delegate to host project, ingress IAP traffic (firewall) from IP range 35.235.240.0/20 to VPC resources in shared VPC network
+# AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network within host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
@@ -22,11 +23,12 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
 spec:
   action: "goto_next"
-  description: "Goto next for IAP"
+  description: "Delegate to host project, ingress IAP traffic (firewall) from IP range 35.235.240.0/20 to VPC resources in shared VPC network"
   direction: "INGRESS"
   disabled: false
   # logging not supported for goto_next rules
   enableLogging: false
+  # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
   firewallPolicyRef:
     name: client-name-client-folder-fwpol # kpt-set: ${client-name}-client-folder-fwpol
   match:
