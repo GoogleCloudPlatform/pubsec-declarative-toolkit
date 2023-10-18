@@ -12,24 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-apiVersion: v1
-kind: ConfigMap
+# reserve an external IP address for the load balancer
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
 metadata:
-  name: setters
+  name: workload-name-external-ip # kpt-set: ${workload-name}-external-ip
   annotations:
-    config.kubernetes.io/local-config: "true"
-data:
-  # Name for the client, lowercase only
-  client-name: 'client1'
-  # The project id of the client
-  project-id: client-project-12345
-  # the id of the network host project
-  host-project-id: host-project-12345
-  # the id of the core dns project
-  dns-project-id: dns-project-12345
-  # the dns name for a client dns
-  dns-name: "workload1.example.domain.com."
-  # the name of the workload, lowercase only
-  workload-name: workload1
-  # the name of the SSL certificate
-  cert-name: sample-cert
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: workload-name-external-ip # kpt-set: ${workload-name}-external-ip
+  description: external IP for workload-name # kpt-set: external IP for ${workload-name}
+  addressType: EXTERNAL
+  ipVersion: IPV4
+  location: global

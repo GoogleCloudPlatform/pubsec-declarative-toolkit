@@ -12,24 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-apiVersion: v1
-kind: ConfigMap
+# the backend service health check
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeHealthCheck
 metadata:
-  name: setters
+  name: workload-name-health-check-http # kpt-set: ${workload-name}-health-check-http
   annotations:
-    config.kubernetes.io/local-config: "true"
-data:
-  # Name for the client, lowercase only
-  client-name: 'client1'
-  # The project id of the client
-  project-id: client-project-12345
-  # the id of the network host project
-  host-project-id: host-project-12345
-  # the id of the core dns project
-  dns-project-id: dns-project-12345
-  # the dns name for a client dns
-  dns-name: "workload1.example.domain.com."
-  # the name of the workload, lowercase only
-  workload-name: workload1
-  # the name of the SSL certificate
-  cert-name: sample-cert
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  resourceID: workload-name-health-check-http # kpt-set: ${workload-name}-health-check-http
+  checkIntervalSec: 15
+  healthyThreshold: 1
+  location: global
+  httpHealthCheck:
+    portSpecification: USE_SERVING_PORT
+    proxyHeader: NONE
+    requestPath: "/"
+  timeoutSec: 15
+  unhealthyThreshold: 3
