@@ -86,6 +86,7 @@ data:
   ##########################
   #
   # Used for the client root sync external git repo (GitHub, Azure DevOps, etc.)
+  # The repo stores client packages configs, i.e., one 'client-landing-zone', one/many 'client-project-setup', etc.
   # To disable this option, delete the 'root-sync-git/' directory
   #
   # the git repo URL, for example

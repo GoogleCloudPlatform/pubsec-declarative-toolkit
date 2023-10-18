@@ -155,7 +155,7 @@ spec:
       members:
         - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-projects] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-projects]
 ---
-# K8S namespace
+# Namespace created to segregate resources. Each Namespace will be given a specific Kubernetes Service account and GCP Service Account
 apiVersion: v1
 kind: Namespace
 metadata:
