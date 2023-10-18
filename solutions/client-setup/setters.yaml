@@ -38,30 +38,47 @@ data:
   # General Settings Values
   ##########################
   #
+  # Use the same Google Cloud Organization ID that was used when deploying the core-landing-zone package
+  # customization: required
   org-id: "0000000000"
+  #
   # The environment (dev, preprod, prod), used in the client folder display name
+  # customization: required
   environment: env
   #
   ##########################
   # Management Project
   ##########################
   #
-  # This is the project where the config controller instance is running
-  # Values can be viewed in the Project Dashboard
+  # The management project is where the Landing Zone config controller instance is running.
+  # The $PROJECT_ID (management-project-id) is defined during Initial Organization Configuration (https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration)
+  # customization: required
   management-project-id: management-project-12345
+  #
+  # The management-project-number can be obtained from the Dashboard via https://console.cloud.google.com/home/dashboard?project=$PROJECT_ID
+  # Alternatively, obtain the management-project-number from gcloud: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
+  # customization: required
   management-project-number: "0000000000"
+  #
+  # kubernetes namespace set to the default, config-control. Do not change this value.
+  # customization: Do not change this value.
   management-namespace: config-control
   #
   ##########################
   # Client
   ##########################
   #
-  # Name for the client, lowercase only
+  # Name for the client, lowercase only.
+  # customization: required
   client-name: 'client1'
-  # Billing Account ID to associate with the client's managment project, the projects-sa will need billing user permission
-  # alternatively, it can be set to the core landing zone billing id, the client management project contains very limited resources
+  #
+  # Clients Billing Account ID to associate with the client's management project. The projects-sa will need billing user role permission granted.
+  # alternatively, it can be set to the core landing zone billing id, as the client management project contains very limited resources
+  # customization: required
   client-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  #
   # project id for the client management project to be created, following rules and conventions
+  # customization: required
   client-management-project-id: client-management-project-12345
   #
   ##########################
@@ -74,17 +91,23 @@ data:
   # the git repo URL, for example
   # https://github.com/GITHUB-ORG/REPO-NAME
   # https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
+  # customization: required
   repo-url: git-repo-to-observe
+  #
   # the branch to check out (usually main)
+  # customization: optional
   repo-branch: main
+  #
   # the directory to observe for YAML manifests
+  # customization: optional
   repo-dir: csync/deploy/env
   #
   ##########################
   # DNS
   ##########################
   #
-  # dns project id created in core-landing-zone
+  # dns project id created during core-landing-zone package deployment
+  # customization: required, obtain value from the core-landing-zone setters.yaml
   dns-project-id: dns-project-12345
   #
   ##########################
