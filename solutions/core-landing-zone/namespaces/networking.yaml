@@ -23,7 +23,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2) 
+  # AC-3(7), AC-3, AC-16(2)
   displayName: networking-sa
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1

@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # Tier2 VPC Peering Admin
-# AC-3(7), AC-3, AC-16(2) - Custom role for assigning permissions to the Google IAM Service Account following least priveledge model
+# AC-3(7), AC-3, AC-16(2) - Custom role for assigning permissions to the Google IAM Service Account following least privileged model
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMCustomRole
 metadata:
