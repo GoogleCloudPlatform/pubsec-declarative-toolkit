@@ -14,10 +14,11 @@
 #########
 apiVersion: v1
 kind: ConfigMap
-metadata:
+metadata: # kpt-merge: /setters
   name: setters
   annotations:
     config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
 data:
   ##########################
   # Instructions
@@ -38,9 +39,9 @@ data:
   # General Settings Values
   ##########################
   #
-  org-id: "0000000000"
-  lz-folder-id: '0000000000'
-  billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  org-id: "459065442144"
+  lz-folder-id: '1080361268326'
+  billing-id: "014479-806359-2F5F85"
   #
   ##########################
   # Management Project
@@ -48,9 +49,9 @@ data:
   #
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard via https://console.cloud.google.com/welcome?project=$PROJECT_ID under "Project number" where PROJECT_ID is defined as management-project-id below or in the export block as PROJECT_ID in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration
-  management-project-id: management-project-12345
+  management-project-id: kcc-oi-cluster
   # derive project-number (an expected numeric id like 5...57396547) using the project-id above via gcloud command: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
-  management-project-number: "0000000000"
+  management-project-number: "116236192958"
   # leave the kubernetes namespace as a default
   management-namespace: config-control
   #
@@ -70,32 +71,32 @@ data:
   # org/org-policies/essentialcontacts-allowed-contact-domains.yaml
   # this setting MUST be changed
   allowed-contact-domains: |
-    - "@example.com"
+    - "@obrien.industries"
   #
   # a list of directory customer IDs from which users can be added to IAM policies, see YAML file for more info:
   # org/org-policies/iam-allowed-policy-member-domains.yaml
   # this setting MUST be changed to include the GCP org's directory ID and any other directory containing users that will need IAM roles assigned
   # run 'gcloud organizations list' as described in https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains#retrieving_customer_id
   allowed-policy-domain-members: |
-    - "DIRECTORY_CUSTOMER_ID"
+    - "C03kdhrkc"
   #
   # a list of allowed projects, folders, networks for VPC peering, see YAML file for more info:
   # org/org-policies/compute-restrict-vpc-peering.yaml
   # this setting MUST be changed, replace ORGANIZATION_ID with the GCP organizations's ID
   allowed-vpc-peering: |
-    - "under:organizations/ORGANIZATION_ID"
+    - "under:organizations/459065442144"
   #
   ##########################
   # Logging
   ##########################
   #
-  logging-project-id: logging-project-12345
+  logging-project-id: logging-project-oi
   #
   # Log Buckets
   # Security Logs Bucket
-  security-log-bucket: security-log-bucket-12345
+  security-log-bucket: security-log-bucket-oi
   # Platform and Component Log Bucket
-  platform-and-component-log-bucket: platform-and-component-log-bucket-12345
+  platform-and-component-log-bucket: platform-and-component-log-bucket-oi
   #
   # Retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
@@ -112,7 +113,7 @@ data:
   # DNS
   ##########################
   #
-  dns-project-id: dns-project-12345
+  dns-project-id: dns-project-oi
   dns-name: "example.com."
   ##########################
   # End of Configurations
