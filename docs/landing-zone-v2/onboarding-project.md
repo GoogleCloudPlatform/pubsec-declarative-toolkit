@@ -1,9 +1,10 @@
 # Project Onboarding
 
 <!-- vscode-markdown-toc -->
-* [Introduction](#Introduction)
-* [Setup](#Setup)
-* [Add client project package](#Addclientprojectpackage)
+- [Project Onboarding](#project-onboarding)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Add client project package](#add-client-project-package)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -48,24 +49,34 @@ You will execute this procedure to provision the service project in GCP for appl
 - Experimentation
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-project@<VERSION> ./projects/<project-id>
+  PACKAGE="solutions/experimentation/client-project"
+  VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+  PROJECT_ID=project-id
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION} ./projects/${PROJECT_ID}
   ```
+
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=%22experimentation%2Fclient-project%22&expanded=true)
 
 - DEV, PREPROD, PROD
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-project-setup@<VERSION> ./projects/<project-id>
+  PACKAGE="solutions/client-project-setup"
+  VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+  PROJECT_ID=project-id
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}p@${VERSION} ./projects/${PROJECT_ID}
   ```
+
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=%22solutions%2Fclient-project-setup%22&expanded=true)
 
 1. Customize the `setters.yaml` file
 
 - Experimentation
 
-  `projects/<project-id>/client-project/setters.yaml`
+  `projects/${PROJECT_ID}/client-project/setters.yaml`
 
 - DEV, PREPROD, PROD
 
-  `projects/<project-id>/client-project-setup/setters.yaml`
+  `projects/${PROJECT_ID}/client-project-setup/setters.yaml`
 
   > **!!! There is a folder in the `client-project-setup` package called `root-sync-git`. This folder can be deleted if your are not using a `Gitops - Git` deployment solution. But, if you are, you should now create a new repository for this project and configure the setters.yaml file accordingly.**
 
@@ -74,13 +85,13 @@ You will execute this procedure to provision the service project in GCP for appl
 - Experimentation
 
     ```shell
-    kpt fn render projects/<project-id>/client-project
+    kpt fn render projects/${PROJECT_ID}/client-project
     ```
 
 - DEV, PREPROD, PROD
 
     ```shell
-    kpt fn render projects/<project-id>/client-project-setup
+    kpt fn render projects/${PROJECT_ID}/client-project-setup
     ```
 
 1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci

@@ -1,0 +1,24 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-defaults
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `gke-setup`.
+    Requires project-id-tier3 namespace.
+
+    Deploy this package once per service project.
+
+    A package to deploy common GKE resources. It include roles granted to a user or group for vizualizing GKE.
+
+    Warning! It requires the alpha CRD [computmanagedsslcertificate](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/compute_v1alpha1_computemanagedsslcertificate.yaml)
+    loaded in the config controller.
+
+    [Install alpha CRDS](https://cloud.google.com/config-connector/docs/how-to/install-alpha-crds)
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

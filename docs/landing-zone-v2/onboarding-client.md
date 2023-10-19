@@ -1,11 +1,12 @@
 # Client Onboarding
 
 <!-- vscode-markdown-toc -->
-* [Introduction](#Introduction)
-* [Setup](#Setup)
-* [Add client-setup package](#Addclient-setuppackage)
-* [Add the client-landing-zone package](#Addtheclient-landing-zonepackage)
-* [Next Step](#NextStep)
+- [Client Onboarding](#client-onboarding)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+  - [Add client-setup package](#add-client-setup-package)
+  - [Add the client-landing-zone package](#add-the-client-landing-zone-package)
+  - [Next Step](#next-step)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -50,8 +51,13 @@ You will execute this procedure to provision the foundational resources in GCP f
 - DEV, PREPROD, PROD
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-setup@<VERSION> ./clients/<client name>
+  PACKAGE="solutions/client-setup"
+  VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+  CLIENT_NAME=initial-client
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION} ./clients/${CLIENT_NAME}
   ```
+
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=%22solutions%2Fclient-setup%22&expanded=true)
 
 1. Customize the `clients/<client name>/client-setup/setters.yaml` file
 
@@ -60,7 +66,7 @@ You will execute this procedure to provision the foundational resources in GCP f
 1. Render the Configs
 
     ```shell
-    kpt fn render clients/<client name>/client-setup
+    kpt fn render clients/${CLIENT_NAME}/client-setup
     ```
 
 1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
@@ -75,24 +81,34 @@ You will execute this procedure to provision the foundational resources in GCP f
 - Experimentation
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/experimentation/client-landing-zone@<VERSION> ./clients/<client name>
+  PACKAGE="solutions/experimentation/client-landing-zone"
+  VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+  CLIENT_NAME=initial-client
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION} ./clients/${CLIENT_NAME}
   ```
+
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=experimentation%2Fclient-landing-zone&expanded=true)
 
 - DEV, PREPROD, PROD
 
   ```shell
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/client-landing-zone@<VERSION> ./clients/<client name>
+  PACKAGE="solutions/client-landing-zone"
+  VERSION=$(curl -s $URL | jq -r ".\"$PACKAGE\"")
+  CLIENT_NAME=initial-client
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${PACKAGE}@${VERSION} ./clients/${CLIENT_NAME}
   ```
 
-1. Customize the `clients/<client name>/client-landing-zone/setters.yaml` file
+  [Releases List](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/releases?q=solutions%2Fclient-landing-zone&expanded=true)
 
-1. Render the Configs
+1. Customize the `clients/${CLIENT_NAME}/client-landing-zone/setters.yaml` file
+
+2. Render the Configs
 
     ```shell
-    kpt fn render clients/<client name>/client-landing-zone
+    kpt fn render clients/${CLIENT_NAME}/client-landing-zone
     ```
 
-1. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
+3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
 
 ## <a name='NextStep'></a>Next Step
 

@@ -149,4 +149,6 @@
       - "0.0.0.0/0"
       targetServiceAccounts:
       - name: project-id-workload1-sa # kpt-set: ${project-id}-workload1-sa
+      logConfig:
+        metadata: "INCLUDE_ALL_METADATA"
     ```

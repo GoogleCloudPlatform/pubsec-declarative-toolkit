@@ -1,0 +1,28 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Notification channel for GKE cluster logs
+apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
+kind: MonitoringNotificationChannel
+metadata:
+  name: project-id-gke-monitoring-group-notify # kpt-set: ${project-id}-gke-monitoring-group-notify
+  namespace: client-name-logging # kpt-set: ${client-name}-logging
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  type: email
+  labels:
+    email_address: group@example.com # kpt-set: ${gke-monitoring-group}
+  description: A notification channel to send GKE cluster alerts using email

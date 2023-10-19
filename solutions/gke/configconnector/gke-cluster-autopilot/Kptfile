@@ -1,0 +1,63 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-cluster-autopilot
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: |
+    Landing zone v2 subpackage.
+    Depends on package `gke-setup`.
+    Requires project-id-tier3 namespace.
+
+    Deploy this package once per GKE cluster.
+
+    A GKE Autopilot Cluster running in a service project. This package also deploys a dedicated subnet inside the host project.
+
+    The Anthos Config Management feature is enabled on the cluster. There is a known issue with the root-sync resource when deployed to an autopilot cluster.
+    The reconciler container keeps crashing with an out-of-memory error message because it hits the memory limit.
+    To fix this, you update the `root-sync` resource to include the override section.
+
+    1. Login to the server authorized to access the control plane.
+
+    2. edit root-sync
+
+        ```shell
+        kubectl edit rootsync -n config-management-system root-sync
+        ```
+
+    3. add the `override` section as below
+
+        ```yaml
+        spec:
+          sourceFormat: unstructured
+          override:
+            resources:
+              - containerName: "reconciler"
+                cpuLimit: "800m"
+                memoryLimit: "800Mi"
+                memoryRequest: "500Mi"
+          git:
+            repo: https://repo-url
+            branch: main
+            dir: repo-dir
+            revision: HEAD
+            auth: token
+            secretRef:
+              name: git-creds
+        ```
+
+    4. create git-creds secret in config-management-system namespace. This secret is the PAT token used by the root-sync to access the git repo
+
+        ```shell
+        export USERNAME='xxxxxxxxxxxxxxx'  # For Azure Devops, this is the name of the Organization
+        export TOKEN='xxxxxxxxxxxxxxx'
+        ```
+
+        ```shell
+        kubectl create secret generic git-creds --namespace="config-management-system" --from-literal=username=${USERNAME} --from-literal=token=${TOKEN}
+        ```
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

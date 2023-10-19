@@ -26,10 +26,10 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 | dns-project-id                    | dns-project-12345                       | str   |     8 |
 | logging-project-id                | logging-project-12345                   | str   |    21 |
 | lz-folder-id                      |                              0000000000 | str   |    15 |
-| management-namespace              | config-control                          | str   |    42 |
+| management-namespace              | config-control                          | str   |    44 |
 | management-project-id             | management-project-12345                | str   |    75 |
 | management-project-number         |                              0000000000 | str   |     3 |
-| org-id                            |                              0000000000 | str   |    33 |
+| org-id                            |                              0000000000 | str   |    35 |
 | platform-and-component-log-bucket | platform-and-component-log-bucket-12345 | str   |     2 |
 | retention-in-days                 |                                       1 | int   |     2 |
 | retention-locking-policy          | false                                   | bool  |     2 |
@@ -123,7 +123,9 @@ This package has no sub-packages.
 | org/custom-roles/tier2-vpcpeering-admin.yaml                                   | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier2-vpcpeering-admin                                                    | config-control    |
 | org/custom-roles/tier3-dnsrecord-admin.yaml                                    | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-dnsrecord-admin                                                     | config-control    |
 | org/custom-roles/tier3-firewallrule-admin.yaml                                 | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-firewallrule-admin                                                  | config-control    |
+| org/custom-roles/tier3-subnetwork-admin.yaml                                   | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-subnetwork-admin                                                    | config-control    |
 | org/custom-roles/tier3-vpcsc-admin.yaml                                        | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier3-vpcsc-admin                                                         | config-control    |
+| org/custom-roles/tier4-secretmanager-admin.yaml                                | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole          | tier4-secretmanager-admin                                                 | config-control    |
 | org/org-policies/compute-disable-guest-attribute-access.yaml                   | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-disable-guest-attribute-access                                    | policies          |
 | org/org-policies/compute-disable-nested-virtualization.yaml                    | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-disable-nested-virtualization                                     | policies          |
 | org/org-policies/compute-disable-serial-port-access.yaml                       | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-disable-serial-port-access                                        | policies          |
@@ -175,7 +177,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd "./solutions/core-landing-zone/"
+    cd "./core-landing-zone/"
     ```
 
 1.  Edit the function config file(s):

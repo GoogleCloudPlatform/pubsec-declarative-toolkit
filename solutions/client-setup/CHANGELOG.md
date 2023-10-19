@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.6.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.0...solutions/client-setup/0.6.1) (2023-09-25)
+
+
+### Bug Fixes
+
+* client-setup remove depends-on ([#528](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/528)) ([8370e06](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/8370e06efcb88578866484021685d8720c9c81d1))
+
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.5.0...solutions/client-setup/0.6.0) (2023-09-14)
+
+
+### Features
+
+* cloud ids ([#517](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/517)) ([7b4db46](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/7b4db460b55ef7c36754e46e32ae622bce502117))
+
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.2...solutions/client-setup/0.5.0) (2023-09-06)
+
+
+### Features
+
+* add client admin ns and gke admin proxy ([#514](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/514)) ([d24ce74](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/d24ce7408d65d2c1e34b23c69a4347e132c46c4f))
+
+## [0.4.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.1...solutions/client-setup/0.4.2) (2023-08-30)
+
+
+### Bug Fixes
+
+* error when creating MonitoringNotificationChannel as part of gke-setup ([#507](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/507)) ([95058e8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/95058e8b55847a8b5717291af5731a8cbaaef5f9))
+
 ## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.4.0...solutions/client-setup/0.4.1) (2023-06-23)
 
 

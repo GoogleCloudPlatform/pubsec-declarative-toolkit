@@ -1,0 +1,44 @@
+#
+# This script finds CloudIDSEndpoint resources and update the object fields spec.threatExceptions with the value defined in setters.yaml
+# It also finds ComputePacketMirroring resources and update the object fields spec.mirroredResources and spec.filter with the value defined in setters.yaml
+#
+# This script is required because apply-setters support replacement of strings or lists but it does not support objects
+#
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata:
+  name: update-endpoint-mirroring
+  annotations:
+    config.kubernetes.io/local-config: "true"
+source: |
+  threatexceptions_enabled = False
+  # extract values from setters
+  for resource in ctx.resource_list["items"]:
+    if resource["metadata"]["name"] in ["setters"]:
+      # extract setters for CloudIDSEndpoint
+      if "threatexceptions" in resource["data"]:
+        print("--threatexceptions enabled")
+        threatexceptions_enabled = True
+        threatexceptions = resource["data"]["threatexceptions"]
+      # extract setters for ComputePacketMirroring
+      mirroredresources = resource["data"]["mirroredresources"]
+      filter = resource["data"]["filter"]
+  # search for resources to update
+  for resource in ctx.resource_list["items"]:
+    print(resource["kind"])
+    # if resources kind matches CloudIDSEndpoint
+    if resource["kind"] in ["CloudIDSEndpoint"]:
+      print("--found one CloudIDSEndpoint!")
+      if threatexceptions_enabled:
+        print("--threatexceptions is enabled! updating threatExceptions")
+        resource["spec"]["threatExceptions"] = threatexceptions
+      else:
+        print("--threatexceptions is disabled! removing threatExceptions")
+        resource["spec"].pop("threatExceptions")
+    # if resources kind matches ComputePacketMirroring
+    if resource["kind"] in ["ComputePacketMirroring"]:
+      print("--found one ComputePacketMirroring!")
+      print("--updating mirroredResources")
+      resource["spec"]["mirroredResources"] =  mirroredresources
+      print("--updating filter")
+      resource["spec"]["filter"] = filter

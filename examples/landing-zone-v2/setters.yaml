@@ -31,3 +31,5 @@ data:
   dns-name: "workload1.example.domain.com."
   # the name of the workload, lowercase only
   workload-name: workload1
+  # the name of the SSL certificate
+  cert-name: sample-cert

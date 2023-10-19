@@ -94,7 +94,8 @@ data:
   # the branch to check out (usually main)
   repo-branch: main
   # the directory to observe for YAML manifests
-  repo-dir: csync/deploy/env
+  tier3-repo-dir: csync/tier3/configcontroller/deploy/env
+  tier4-repo-dir: csync/tier4/configcontroller/deploy/env
   #
   ##########################
   # End of Configurations

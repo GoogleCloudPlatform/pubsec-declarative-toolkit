@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.4.7](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.6...solutions/client-landing-zone/0.4.7) (2023-10-11)
+
+
+### Bug Fixes
+
+* cleanup client-landing-zone ([#556](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/556)) ([0bf5cc3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0bf5cc3ecce2b00ec2cf2912e413b53dcc6cbeb7))
+
+## [0.4.6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.5...solutions/client-landing-zone/0.4.6) (2023-09-29)
+
+
+### Bug Fixes
+
+* add os update fw rule source ranges in setters ([#538](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/538)) ([f8c882c](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/f8c882ce1f32abc0a3b13829423886969f8b5e08))
+
+## [0.4.5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.4...solutions/client-landing-zone/0.4.5) (2023-09-18)
+
+
+### Bug Fixes
+
+* enable missing logging for fw rules ([#524](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/524)) ([9bb78bf](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/9bb78bf67f0bc76ba414435c1ae2483144f2eaac))
+
+## [0.4.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.3...solutions/client-landing-zone/0.4.4) (2023-09-06)
+
+
+### Bug Fixes
+
+* client-landing-zone enable dns zone and recordset ([#513](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/513)) ([2cda862](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/2cda8628264e703db92b91c84651aa8a8c312b52))
+* Resolve conflicting Client LZ Loadbalancer Policy ([#504](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/504)) ([81b8712](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/81b8712c880ce4c784f359b3b991745792c4151d))
+
+## [0.4.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.2...solutions/client-landing-zone/0.4.3) (2023-08-21)
+
+
+### Bug Fixes
+
+* client-landing-zone ([#471](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/471)) ([5fe3d22](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/5fe3d22a06de74dbe5ecacd6a5b7f6d323b247b1))
+
 ## [0.4.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.1...solutions/client-landing-zone/0.4.2) (2023-06-27)
 
 

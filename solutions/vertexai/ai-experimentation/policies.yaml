@@ -1,0 +1,14 @@
+### Org Policies required for Project
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: ai-sandbox-allow-resource-locations # kpt-set: ${project-id}-allow-resource-locations
+  namespace: policies
+spec:
+  constraint: "constraints/gcp.resourceLocations"
+  listPolicy:
+    allow:
+      all: true
+  projectRef:
+    name: project-id # kpt-set: ${project-id}
+    namespace: projects # kpt-set: ${namespace}

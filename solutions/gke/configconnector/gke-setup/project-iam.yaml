@@ -1,0 +1,168 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Grant GCP role GKE Hub admin to Tier3 SA on Service Project
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# IAM permissions required to register cluster to anthos fleet and workload identity
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-gke-hub-admin-project-id-permissions # kpt-set: ${project-id}-tier3-sa-gke-hub-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/gkehub.admin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Container admin to Tier3 SA on Service Project
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# IAM permissions required to register cluster to anthos fleet (also gives full access to cluster)
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-container-admin-project-id-permissions # kpt-set: ${project-id}-tier3-sa-container-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/container.admin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Compute Engine Service Agent to Tier3 SA on Service Project
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# IAM permissions required to create k8s cluster
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-service-agent-project-id-permissions # kpt-set: ${project-id}-tier3-sa-service-agent-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/compute.serviceAgent
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role KMS admin to Tier3 SA on Service Project
+# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-kms-admin-project-id-permissions # kpt-set: ${project-id}-tier3-sa-kms-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/cloudkms.admin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant role Cloud KMS CryptoKey Encrypter/Decrypter on the Service Project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-container-engine-robot-sa-kms-encrypt-decrypt-project-id-permissions # kpt-set: ${project-id}-container-engine-robot-sa-kms-encrypt-decrypt-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/cloudkms.cryptoKeyEncrypterDecrypter
+  member: "serviceAccount:service-project-number@container-engine-robot.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com
+---
+# Grant role Artifact Registry Administrator to Tier4 SA on Service Project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier4-sa-artifactregistry-admin-project-id-permissions # kpt-set: ${project-id}-tier4-sa-artifactregistry-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/artifactregistry.admin
+  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant role Tier4 Secret Manager Admin to Tier4 SA on Service Project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier4-sa-tier4-secret-manager-admin-project-id-permissions # kpt-set: ${project-id}-tier4-sa-tier4-secret-manager-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: organizations/org-id/roles/tier4.secretmanager.admin # kpt-set: organizations/${org-id}/roles/tier4.secretmanager.admin
+  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
+---
+# Grant role Pub Sub Admin to client-name-logging SA on Service Project
+# Required for GKE notification that uses pub-sub
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: client-name-logging-sa-pubsub-admin-project-id-permissions # kpt-set: ${client-name}-logging-sa-pubsub-admin-${project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+  role: roles/pubsub.admin
+  member: "serviceAccount:client-name-logging-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-logging-sa@${client-management-project-id}.iam.gserviceaccount.com
+---
+# Enable the Kubernetes Engine API data access log configuration on the GKE service project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMAuditConfig
+metadata:
+  name: project-id-data-access-log-config # kpt-set: ${project-id}-data-access-log-config
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client1-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  service: container.googleapis.com
+  auditLogConfigs:
+    - logType: ADMIN_READ
+    - logType: DATA_READ
+    - logType: DATA_WRITE
+  resourceRef:
+    kind: Project
+    name: project-id # kpt-set: ${project-id}
+    namespace: client-name-projects # kpt-set: ${client-name}-projects
