@@ -52,7 +52,7 @@ data:
   # Management Project
   ##########################
   #
-  # The management project is where the Landing Zone config controller instance is running.
+  # The management project is where the Landing Zone config controller instance is running, created during the bootstrap procedure.
   # The $PROJECT_ID (management-project-id) is defined during Initial Organization Configuration (https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration)
   # customization: required
   management-project-id: management-project-12345
