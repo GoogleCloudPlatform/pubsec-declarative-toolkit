@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# Anthos policy controller generic policy ( OPA policy) defined as ConstraintTempate that limits egress traffic
+# These custom resources are encrypted at rest in the ETCD backend managed by Google
+# AC-3, AC‑4, SC-5, SC‑7(5), SI-3(7) - Policy controller generic policy defined as Constraints that limits egress traffic
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -21,6 +24,7 @@ metadata:
     reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/09_Network-Security-Services.md
     related-security-controls: AC-3, AC-4, SC-5, SC-7, SC-7(5), SI-3, SI-3(7), SI-4
 spec:
+  # AC-3, AC‑4, SC-5, SC‑7(5), SI-3(7)
   crd:
     spec:
       names:
