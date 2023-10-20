@@ -14,9 +14,19 @@
 # limitations under the License.
 
 CIDR_KCC_VPC=192.168.0.0/16
-REGION=northamerica-northeast1
+#REGION=northamerica-northeast1
 # used for vpc, subnet, KCC cluster
-PREFIX=oi2
-CLUSTER=kcc-oi2
+PREFIX=oi3
+#CLUSTER=kcc-oi2
 KCC_PROJECT_NAME=kcc-oi
 public_endpoint_opt=true
+
+# from gcp-tools kcc.env
+CLUSTER=kcc-oi3
+REGION=northamerica-northeast1
+#PROJECT_ID=kcc-oi2-cluster
+LZ_FOLDER_NAME=kcc-lz-20231020c
+NETWORK=kcc-oi3-vpc
+SUBNET=kcc-oi3-sn
+#ROOT_FOLDER_ID=96269513997
+#BILLING_ID=014479-806359-2F5F85
