@@ -5,6 +5,8 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
+  # Organization ID - see usage in the custom-role.yaml
+  org-id: "012345678901"
   # Billing Account ID to be associated with this project
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
   # GCP folder to use as parent to this project, lowercase K8S resource name
