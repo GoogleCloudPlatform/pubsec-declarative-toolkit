@@ -54,9 +54,9 @@ echo "Start: ${start}"
 export MIDFIX=$UNIQUE
 echo "unique string: $MIDFIX"
 echo "REGION: $REGION" # defined in vars.sh
-export NETWORK=$PREFIX-${MIDFIX}-vpc
+#export NETWORK=$PREFIX-${MIDFIX}-vpc
 echo "NETWORK: $NETWORK"
-export SUBNET=$PREFIX-${MIDFIX}-sn
+#export SUBNET=$PREFIX-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
 #export CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
@@ -84,9 +84,10 @@ export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_KCC" != false ]]; then
   # switch back to/create kcc project - not in a folder
- # echo "CrEATING KCC project: ${CC_PROJECT_ID}"
+ # echo "Creating KCC project: ${CC_PROJECT_ID}"
  # gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
- # gcloud config set project "${CC_PROJECT_ID}"
+  echo "Reusing project: $CC_PROJECT_ID"
+  gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
 #  gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
   # enable apis
@@ -148,26 +149,32 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   # Landing zone deployment
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
 
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
-  gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
+#  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
+#  gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
 
   # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
-  export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+  #export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
 
-  echo "SA_EMAIL: ${SA_EMAIL}"
-  ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
-  for i in "${ROLES[@]}" ; do
+  #echo "SA_EMAIL: ${SA_EMAIL}"
+  #ROLES=("roles/bigquery.dataEditor" "roles/serviceusage.serviceUsageAdmin" "roles/logging.configWriter" "roles/resourcemanager.projectIamAdmin" "roles/resourcemanager.organizationAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectCreator" "roles/resourcemanager.projectDeleter" "roles/resourcemanager.projectMover" "roles/iam.securityAdmin" "roles/orgpolicy.policyAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/billing.user" "roles/accesscontextmanager.policyAdmin" "roles/compute.xpnAdmin" "roles/iam.serviceAccountAdmin" "roles/serviceusage.serviceUsageConsumer" "roles/logging.admin") 
+  #for i in "${ROLES[@]}" ; do
     # requires iam.securityAdmin
     #ROLE=`gcloud organizations get-iam-policy $ORG_ID --filter="bindings.members:$SA_EMAIL" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
     #echo $ROLE
     #if [ -z "$ROLE" ]; then
-        echo "Applying role $i to $SA_EMAIL"
-        gcloud organizations add-iam-policy-binding $ORG_ID  --member=serviceAccount:$SA_EMAIL --role=$i --quiet > /dev/null 1>&1
+  #      echo "Applying role $i to $SA_EMAIL"
+  #      gcloud organizations add-iam-policy-binding $ORG_ID  --member=serviceAccount:$SA_EMAIL --role=$i --quiet > /dev/null 1>&1
     #else
     #    echo "Role $i already set on $USER"
     #fi
-  done
- 
+  
+  #done
+  export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None
+
+  gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}"
+
 
   # fetch the LZ
   #cd ../../../
@@ -181,7 +188,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   echo "kpt live init"
   kpt live init core-landing-zone --namespace config-control --force
   echo "kpt fn render"
-  kpt fn render core-landing-zone
+  kpt fn render core-landing-zone --truncate-output=false
   echo "kpt live apply"
   kpt live apply core-landing-zone --reconcile-timeout=2m --output=table
   echo "Wait 2 min"
@@ -195,6 +202,7 @@ fi
 
 if [[ "$REMOVE_LZ" != false ]]; then
   echo "deleting lz on ${CLUSTER} in region ${REGION}"
+  kubectl get gcp
   # stay in current dir
   # will take up to 15-45 min and may hang unless liens are removed
   # 3 problematic projects
@@ -210,7 +218,8 @@ if [[ "$REMOVE_LZ" != false ]]; then
   #NONPROD_LIEN=$(gcloud alpha resource-manager liens list)
   #gcloud alpha resource-manager liens delete $NONPROD_LIEN
 
-  #kpt live destroy core-landing-zone
+  kpt live destroy core-landing-zone
+  kubectl delete gcp --all
 fi
 
   # delete
