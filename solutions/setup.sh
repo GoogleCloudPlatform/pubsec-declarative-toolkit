@@ -183,6 +183,7 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet
   # need service account admin for kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/gatekeeper-admin-sa
   # Warning  UpdateFailed  36s (x9 over 6m44s)  iamserviceaccount-controller  Update call failed: error applying desired state: summary: Error creating service account: googleapi: Error 403: Permission 'iam.serviceAccounts.create' denied on resource (or it may not exist).
+  roles/iam.serviceAccountCreator
 
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
@@ -227,7 +228,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   cd ../../../kpt
   # check for existing landing-zone
 
-  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone core-landing-zone
+  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@main 
   # cp the setters.yaml
   cp ../github/pubsec-declarative-toolkit/solutions/core-landing-zone/setters.yaml core-landing-zone/ 
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
@@ -252,7 +253,8 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   # check projects-sa and verify billing
   echo "check iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa before verifying billing"
   kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa
-  gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
+  # needs to be set on the billing page
+  #gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${KCC_PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
 
   cd ../github/pubsec-declarative-toolkit/solutions
 
@@ -276,8 +278,10 @@ if [[ "$REMOVE_LZ" != false ]]; then
   #NONPROD_LIEN=$(gcloud alpha resource-manager liens list)
   #gcloud alpha resource-manager liens delete $NONPROD_LIEN
 
+  cd ../../../kpt
   kpt live destroy core-landing-zone
-  kubectl delete gcp --all
+  #kubectl delete gcp --all
+  cd ../github/pubsec-declarative-toolkit/solutions
 fi
 
   # delete
