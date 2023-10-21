@@ -28,5 +28,3 @@ LZ_FOLDER_NAME=landing-zone-1
 NETWORK=kcc-ls-vpc
 SUBNET=kcc-ls-sn
 ROOT_FOLDER_ID=871256537757
-
-
