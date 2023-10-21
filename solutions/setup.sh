@@ -22,18 +22,20 @@ example
 verify: run from pubsec-declarative-toolkit/solutions
 verify: cluster already created by setup-kcc.sh in gcp-tools
 
-create cluster
-./setup.sh -b kcc-oi -u oi -c true -l false -r false -d false
+create cluster in new project
+./setup.sh -b kcc-oi -u oi -n true -c true -l false -r false -d false -j false
 
 deploy lz
-./setup.sh -b kcc-oi -u oi -c false -l true -r false -d false -p kcc-oi-629
+./setup.sh -b kcc-oi -u oi -n false -c false -l true -r false -d false -j false -p kcc-oi-629
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
+-n [create] true/false       : create project
 -c [create] true/false       : create cluster
 -l [landingzone] true false  : deploy landing zone
 -l [landingzone] true false  : remove landing zone
 -d [delete] true/false       : delete cluster
+-j [delete] true/false       : delete project
 -p [KCC project] string      : target KCC project: ie controller-lgz-1201
 EOF
 }
@@ -65,11 +67,11 @@ echo "NETWORK: $NETWORK"
 echo "SUBNET: $SUBNET"
 #export CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
-if [[ "$CREATE_KCC" != false ]]; then
+if [[ "$CREATE_PROJ" != false ]]; then
   export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
   export CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
   echo "Creating project: $CC_PROJECT_ID"
-  #export CC_PROJECT_ID=${KCC_PROJECT_ID}
+  ##export CC_PROJECT_ID=${KCC_PROJECT_ID}
 else
   export CC_PROJECT_ID=${KCC_PROJECT_ID}
   echo "Reusing project: $CC_PROJECT_ID"
@@ -87,8 +89,7 @@ export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
 
 # switch back to/create kcc project - not in a folder
-if [[ "$CREATE_KCC" != false ]]; then
-
+if [[ "$CREATE_PROJ" != false ]]; then
 
   echo "applying roles to the super admin SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL}"
   # securityAdmin required
@@ -161,7 +162,14 @@ if [[ "$CREATE_KCC" != false ]]; then
   echo "create default firewalls"
   #gcloud compute firewall-rules create allow-egress-tcp-udp-icmp --network $NETWORK --allow tcp,udp,icmp --source-ranges 0.0.0.0/0 --direction EGRESS --priority 1000
   #gcloud compute firewall-rules create allow-egress-ssh --network $NETWORK --allow tcp:22,tcp:3389,icmp --direction EGRESS --priority 1010
+ 
+else
+  echo "Switching to KCC project ${KCC_PROJECT_ID}"
+  gcloud config set project "${KCC_PROJECT_ID}"
 
+fi
+
+  if [[ "$CREATE_KCC" != false ]]; then
   # create KCC cluster
   # 3 KCC clusters max per region with 25 vCPU default quota
   startb=`date +%s`
@@ -176,30 +184,25 @@ if [[ "$CREATE_KCC" != false ]]; then
   echo "List Clusters:"
   gcloud anthos config controller list
 
-
   export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-  echo "applying 2 roles to the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
+  echo "post GKE cluster create - applying 2 roles to the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
   gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet
   gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet
   # need service account admin for kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/gatekeeper-admin-sa
   # Warning  UpdateFailed  36s (x9 over 6m44s)  iamserviceaccount-controller  Update call failed: error applying desired state: summary: Error creating service account: googleapi: Error 403: Permission 'iam.serviceAccounts.create' denied on resource (or it may not exist).
-  roles/iam.serviceAccountCreator
+  ##roles/iam.serviceAccountCreator
 
-else
-  echo "Switching to KCC project ${KCC_PROJECT_ID}"
-  gcloud config set project "${KCC_PROJECT_ID}"
-
-  gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
-  # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens config-control
-  echo "kubectl get gcp"
-  kubectl get gcp
-  echo "kubectl get pods --all-namespaces"
-  kubectl get pods --all-namespaces
-fi
-
+  fi
 
 if [[ "$DEPLOY_LZ" != false ]]; then
+
+    #gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
+    # set default kubectl namespace to avoid -n or --all-namespaces
+    kubens config-control
+    #echo "kubectl get gcp"
+    #kubectl get gcp
+    #echo "kubectl get pods --all-namespaces"
+    #kubectl get pods --all-namespaces
   # Landing zone deployment
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
 
@@ -228,7 +231,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   cd ../../../kpt
   # check for existing landing-zone
 
-  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@main 
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@main 
   # cp the setters.yaml
   cp ../github/pubsec-declarative-toolkit/solutions/core-landing-zone/setters.yaml core-landing-zone/ 
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
@@ -238,7 +241,8 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   echo "kpt fn render"
   kpt fn render core-landing-zone --truncate-output=false
   echo "kpt live apply"
-  kpt live apply core-landing-zone --reconcile-timeout=5m --output=table
+  kpt live apply core-landing-zone
+  #kpt live apply core-landing-zone --reconcile-timeout=5m --output=table
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
@@ -314,17 +318,19 @@ if [[ "$DELETE_KCC" != false ]]; then
   endd=`date +%s`
   runtimed=$((endd-startd))
   echo "Cluster delete time: ${runtimed} sec"
+fi
 
+if [[ "$DELETE_PROJ" != false ]]; then
   # delete VPC (routes and firewalls will be deleted as well)
-  #echo "deleting subnet ${SUBNET}"
-  #gcloud compute networks subnets delete ${SUBNET} --region=$REGION -q
-  #echo "deleting vpc ${NETWORK}"
-  #gcloud compute networks delete ${NETWORK} -q
+  echo "deleting subnet ${SUBNET}"
+  gcloud compute networks subnets delete ${SUBNET} --region=$REGION -q
+  echo "deleting vpc ${NETWORK}"
+  gcloud compute networks delete ${NETWORK} -q
 
   # disable billing before deletion - to preserve the project/billing quota
-  #gcloud alpha billing projects unlink ${CC_PROJECT_ID} 
+  gcloud alpha billing projects unlink ${CC_PROJECT_ID} 
   # delete cc project
-  #gcloud projects delete $CC_PROJECT_ID --quiet
+  gcloud projects delete $CC_PROJECT_ID --quiet
 fi
 
 end=`date +%s`
@@ -345,14 +351,19 @@ CREATE_KCC=false
 DELETE_KCC=false
 REMOVE_LZ=false
 BOOT_PROJECT_ID=
+DELETE_PROJ=false
+CREATE_PROJ=false
 
-while getopts ":b:u:c:l:d:r:p:" PARAM; do
+while getopts ":b:u:n:c:l:d:r:j:p:" PARAM; do
   case $PARAM in
     b)
       BOOT_PROJECT_ID=${OPTARG}
       ;;
     u)
       UNIQUE=${OPTARG}
+      ;;
+    n)
+      CREATE_PROJ=${OPTARG}
       ;;
     c)
       CREATE_KCC=${OPTARG}
@@ -366,6 +377,9 @@ while getopts ":b:u:c:l:d:r:p:" PARAM; do
     d)
       DELETE_KCC=${OPTARG}
       ;;
+    j)
+      DELETE_PROJ=${OPTARG}
+      ;;
     p)
       KCC_PROJECT_ID=${OPTARG}
       ;;  
@@ -376,13 +390,13 @@ while getopts ":b:u:c:l:d:r:p:" PARAM; do
   esac
 done
 
-#  echo "Options are: -c true/false (create kcc), -l true/false (deploy landing zone) -r (remove lz) -d true/false (delete kcc) -p kcc-project-id"
+#  echo "Options are: -n true/false (create proj) -c true/false (create kcc), -l true/false (deploy landing zone) -r (remove lz) -d true/false (delete kcc) -j true/false (delete proj) -p kcc-project-id"
 
 
 if [[ -z $UNIQUE ]]; then
   usage
   exit 1
 fi
-
-deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_KCC $DEPLOY_LZ $REMOVE_LZ $DELETE_KCC $KCC_PROJECT_ID
+echo "existing project: $KCC_PROJECT_ID"
+deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
 printf "**** Done ****\n"
