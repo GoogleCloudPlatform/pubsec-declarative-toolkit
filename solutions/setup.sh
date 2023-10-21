@@ -65,7 +65,6 @@ if [[ "$CREATE_KCC" != false ]]; then
   export CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
   echo "Creating project: $CC_PROJECT_ID"
   #export CC_PROJECT_ID=${KCC_PROJECT_ID}
-#  echo "Reusing project: $CC_PROJECT_ID"
 else
   export CC_PROJECT_ID=${KCC_PROJECT_ID}
   echo "Reusing project: $CC_PROJECT_ID"
