@@ -21,7 +21,12 @@ Usage: $0 [PARAMs]
 example 
 verify: run from pubsec-declarative-toolkit/solutions
 verify: cluster already created by setup-kcc.sh in gcp-tools
-./setup.sh -b kcc-oi -u oi -c false -l false -r false -d false -p kcc-oi2-cluster
+
+create cluster
+./setup.sh -b kcc-oi -u oi -c true -l false -r false -d false
+
+deploy lz
+./setup.sh -b kcc-oi -u oi -c false -l true -r false -d false -p kcc-oi-629
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
@@ -81,17 +86,20 @@ echo "ORG_ID: ${ORG_ID}"
 export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
 
+# switch back to/create kcc project - not in a folder
+if [[ "$CREATE_KCC" != false ]]; then
+
 
   echo "applying roles to the super admin SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL}"
   # securityAdmin required
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet #> /dev/null 1>&1
-gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet #> /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet #> /dev/null 1>&1
 
 #  ROLES=("roles/servicedirectory.editor" "roles/dns.admin" "roles/logging.admin" "roles/accesscontextmanager.policyAdmin") 
 #  ROLES=( "roles/resourcemanager.organizationAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectIamAdmin" "roles/compute.networkAdmin" ) 
@@ -109,8 +117,7 @@ gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_E
 
  
 
-# switch back to/create kcc project - not in a folder
-if [[ "$CREATE_KCC" != false ]]; then
+
   # switch back to/create kcc project - not in a folder
   echo "Creating KCC project: ${CC_PROJECT_ID}"
   #gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
@@ -119,6 +126,10 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
   gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
+
+  echo "sleep 45 sec before enabling services"
+  sleep 45
+  
   # enable apis
   echo "Enabling APIs"
   gcloud services enable krmapihosting.googleapis.com 
@@ -127,6 +138,11 @@ if [[ "$CREATE_KCC" != false ]]; then
   gcloud services enable cloudresourcemanager.googleapis.com 
   gcloud services enable accesscontextmanager.googleapis.com 
   gcloud services enable cloudbilling.googleapis.com
+  gcloud services enable serviceusage.googleapis.com 
+  gcloud services enable servicedirectory.googleapis.com 
+  gcloud services enable dns.googleapis.com
+
+  gcloud logging settings update --organization=$ORG_ID --storage-location=$REGION
 
   # create VPC
   echo "Create VPC: ${NETWORK}"
@@ -137,34 +153,36 @@ if [[ "$CREATE_KCC" != false ]]; then
   #--enable-private-ip-google-access \
   #--enable-flow-logs --logging-aggregation-interval=interval-5-sec --logging-flow-sampling=1.0 --logging-metadata=include-all
 
-  # Cloud router and Cloud NAT
-  gcloud compute routers create kcc-router --project=$CC_PROJECT_ID  --network=$NETWORK  --asn=64513 --region=$REGION
-  gcloud compute routers nats create kcc-router --router=kcc-router --region=$REGION --auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges 
+  # Cloud router and Cloud NAT - both not required because dev envs are not using PSC and the GKE cluster is using a public endpoint
+  #gcloud compute routers create kcc-router --project=$CC_PROJECT_ID  --network=$NETWORK  --asn=64513 --region=$REGION
+  #gcloud compute routers nats create kcc-router --router=kcc-router --region=$REGION --auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges 
   # --enable-logging
+
+  echo "create default firewalls"
+  #gcloud compute firewall-rules create allow-egress-tcp-udp-icmp --network $NETWORK --allow tcp,udp,icmp --source-ranges 0.0.0.0/0 --direction EGRESS --priority 1000
+  #gcloud compute firewall-rules create allow-egress-ssh --network $NETWORK --allow tcp:22,tcp:3389,icmp --direction EGRESS --priority 1010
 
   # create KCC cluster
   # 3 KCC clusters max per region with 25 vCPU default quota
   startb=`date +%s`
   echo "Creating Anthos KCC autopilot cluster ${CLUSTER} in region ${REGION} in subnet ${SUBNET} off VPC ${NETWORK}"
   # autopilot_opt: Deploy an autopilot cluster instead of a standard cluster
-  ENDPOINT='--man-blocks 192.168.0.0/16 --use-private-endpoint'
-  if [ "$public_endpoint_opt" = true ]; then
-    ENDPOINT=''
-  fi
-  read -ra args < <(echo "$ENDPOINT")
-  #gcloud alpha anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --full-management
-  gcloud       anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management #"${args[@]}"
+  gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management
 
   endb=`date +%s`
   runtimeb=$((endb-startb))
   echo "Cluster create time: ${runtimeb} sec"
-
   gcloud anthos config controller get-credentials $CLUSTER --location $REGION
-  # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens config-control
-
   echo "List Clusters:"
   gcloud anthos config controller list
+
+
+  export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+  echo "applying 2 roles to the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet
+  gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet
+  # need service account admin for kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/gatekeeper-admin-sa
+  # Warning  UpdateFailed  36s (x9 over 6m44s)  iamserviceaccount-controller  Update call failed: error applying desired state: summary: Error creating service account: googleapi: Error 403: Permission 'iam.serviceAccounts.create' denied on resource (or it may not exist).
 
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
@@ -177,20 +195,12 @@ else
   kubectl get gcp
   echo "kubectl get pods --all-namespaces"
   kubectl get pods --all-namespaces
-
-  export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-  echo "applying 2 roles to the yakima gke service account: $SA_EMAIL"
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None
-  gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}"
 fi
 
 
 if [[ "$DEPLOY_LZ" != false ]]; then
   # Landing zone deployment
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
-
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "user:${EMAIL}" --role roles/logging.admin
-  gcloud alpha logging settings update --organization=$ORG_ID --storage-location=$REGION
 
   # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
   #export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
@@ -214,12 +224,12 @@ if [[ "$DEPLOY_LZ" != false ]]; then
 #  done
 
   # fetch the LZ
-  cd ../../../
+  cd ../../../kpt
   # check for existing landing-zone
 
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone landing-zone
+  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone core-landing-zone
   # cp the setters.yaml
-  #cp pubsec-declarative-toolkit/solutions/core-landing-zone/setters.yaml core-landing-zone/ 
+  cp ../github/pubsec-declarative-toolkit/solutions/core-landing-zone/setters.yaml core-landing-zone/ 
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
   echo "kpt live init"
@@ -227,14 +237,15 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   echo "kpt fn render"
   kpt fn render core-landing-zone --truncate-output=false
   echo "kpt live apply"
-  kpt live apply core-landing-zone --reconcile-timeout=2m --output=table
+  kpt live apply core-landing-zone --reconcile-timeout=5m --output=table
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
   count=$(kubectl get gcp | grep UpToDate | wc -l)
   echo "UpToDate: $count"
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens config-control
   kubectl get gcp
-
 
   echo "sleep 60 sec"
   sleep 60
@@ -243,6 +254,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa
   gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
 
+  cd ../github/pubsec-declarative-toolkit/solutions
 
 fi
 

@@ -16,18 +16,17 @@
 CIDR_KCC_VPC=192.168.0.0/16
 #REGION=northamerica-northeast1
 # used for vpc, subnet, KCC cluster
-PREFIX=ls1
-#CLUSTER=kcc-oi2
-KCC_PROJECT_NAME=kcc-ls
+PREFIX=oi3
+KCC_PROJECT_NAME=kcc-oi
 public_endpoint_opt=true
-SUPER_ADMIN_EMAIL=root@landing.systems
+SUPER_ADMIN_EMAIL=michael@obrien.industries
 # from gcp-tools kcc.env
-CLUSTER=kcc-ls1
+CLUSTER=kcc-oi3
 REGION=northamerica-northeast1
-#PROJECT_ID=kcc-oi2-cluster
+#PROJECT_ID=kcc-oi3-cluster
 LZ_FOLDER_NAME=landing-zone-1
 NETWORK=kcc-ls-vpc
 SUBNET=kcc-ls-sn
-ROOT_FOLDER_ID=355816628468
+ROOT_FOLDER_ID=871256537757
 
 
