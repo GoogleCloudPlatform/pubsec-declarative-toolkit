@@ -40,7 +40,9 @@ data:
   ##########################
   #
   org-id: "459065442144"
-  lz-folder-id: '1080361268326'
+  # off root
+  #lz-folder-id: '96269513997'
+  lz-folder-id: '716446322787'
   billing-id: "014479-806359-2F5F85"
   #
   ##########################
@@ -49,9 +51,9 @@ data:
   #
   # This is the project where the config controller instance is running
   # Values can be viewed in the Project Dashboard via https://console.cloud.google.com/welcome?project=$PROJECT_ID under "Project number" where PROJECT_ID is defined as management-project-id below or in the export block as PROJECT_ID in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration
-  management-project-id: kcc-oi-cluster
+  management-project-id: kcc-oi-1258
   # derive project-number (an expected numeric id like 5...57396547) using the project-id above via gcloud command: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
-  management-project-number: "116236192958"
+  management-project-number: "86427388501"
   # leave the kubernetes namespace as a default
   management-namespace: config-control
   #
@@ -90,7 +92,7 @@ data:
   # Logging
   ##########################
   #
-  logging-project-id: logging-project-oi
+  logging-project-id: logging-project2-oi
   #
   # Log Buckets
   # Security Logs Bucket
@@ -113,8 +115,8 @@ data:
   # DNS
   ##########################
   #
-  dns-project-id: dns-project-oi
-  dns-name: "example.com."
+  dns-project-id: dns-project2-oi
+  dns-name: "obrien.industries."
   ##########################
   # End of Configurations
   ##########################

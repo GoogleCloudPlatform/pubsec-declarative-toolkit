@@ -25,8 +25,12 @@ verify: cluster already created by setup-kcc.sh in gcp-tools
 create cluster in new project
 ./setup.sh -b kcc-oi -u oi -n true -c true -l false -r false -d false -j false
 
+
 deploy lz
 ./setup.sh -b kcc-oi -u oi -n false -c false -l true -r false -d false -j false -p kcc-oi-629
+
+delete lz, kcc cluster and project in order
+./setup.sh -b kcc-oi -u oi -n false -c false -l false -r true -d true -j false -p kcc-oi-629
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
@@ -44,6 +48,15 @@ EOF
 
 # for eash of override - key/value pairs for constants - shared by all scripts
 source ./vars.sh
+
+# the following can be overriden by vars.sh above
+REGION=northamerica-northeast1
+CIDR_KCC_VPC=192.168.0.0/16
+LZ_FOLDER_NAME_PREFIX=landing-zone-1
+NETWORK=kcc-ls-vpc
+SUBNET=kcc-ls-sn
+KPT_FOLDER_NAME=kpt
+KCC_PROJECT_NUMBER=
 
 deployment() {
   
@@ -156,7 +169,7 @@ if [[ "$CREATE_PROJ" != false ]]; then
 
   # Cloud router and Cloud NAT - both not required because dev envs are not using PSC and the GKE cluster is using a public endpoint
   #gcloud compute routers create kcc-router --project=$CC_PROJECT_ID  --network=$NETWORK  --asn=64513 --region=$REGION
-  #gcloud compute routers nats create kcc-router --router=kcc-router --region=$REGION --auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges 
+  #gcloud compute routers nats create kcc-nat --router=kcc-router --region=$REGION --auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges 
   # --enable-logging
 
   echo "create default firewalls"
@@ -166,14 +179,17 @@ if [[ "$CREATE_PROJ" != false ]]; then
 else
   echo "Switching to KCC project ${KCC_PROJECT_ID}"
   gcloud config set project "${KCC_PROJECT_ID}"
-
 fi
+
+  # SET management project number
+  KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${KCC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+  echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
 
   if [[ "$CREATE_KCC" != false ]]; then
   # create KCC cluster
   # 3 KCC clusters max per region with 25 vCPU default quota
   startb=`date +%s`
-  echo "Creating Anthos KCC autopilot cluster ${CLUSTER} in region ${REGION} in subnet ${SUBNET} off VPC ${NETWORK}"
+  echo "Creating Anthos KCC autopilot cluster ${CLUSTER} in region ${REGION} in subnet ${SUBNET} off VPC ${NETWORK} on project ${KCC_PROJECT_ID}"
   # autopilot_opt: Deploy an autopilot cluster instead of a standard cluster
   gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management
 
@@ -185,17 +201,19 @@ fi
   gcloud anthos config controller list
 
   export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-  echo "post GKE cluster create - applying 2 roles to the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
+  echo "post GKE cluster create - applying 2 roles to ${ORG_ID} and ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
   gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet
   gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet
   # need service account admin for kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/gatekeeper-admin-sa
   # Warning  UpdateFailed  36s (x9 over 6m44s)  iamserviceaccount-controller  Update call failed: error applying desired state: summary: Error creating service account: googleapi: Error 403: Permission 'iam.serviceAccounts.create' denied on resource (or it may not exist).
   ##roles/iam.serviceAccountCreator
-
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.organizationRoleAdmin --condition=None --quiet
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.serviceAccountCreator --condition=None --quiet
   fi
 
 if [[ "$DEPLOY_LZ" != false ]]; then
-
+    echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
+    sleep 60
     #gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
     # set default kubectl namespace to avoid -n or --all-namespaces
     kubens config-control
@@ -228,21 +246,40 @@ if [[ "$DEPLOY_LZ" != false ]]; then
 #  done
 
   # fetch the LZ
-  cd ../../../kpt
-  # check for existing landing-zone
+  # ./setup.sh -b kcc-oi -u oi -n false -c false -l true -r false -d false -j false -p kcc-oi-629
+  cd ../../../
+  # make the dir anyway
+  #mkdir $KPT_FOLDER_NAME
+  cd $KPT_FOLDER_NAME
 
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/core-landing-zone@main 
+  # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
+  REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
+  REL_ROOT_PACKAGE="solutions"
+  REL_SUB_PACKAGE="core-landing-zone"
+
+  # check for existing landing-zone
+  echo "deploying ${REL_SUB_PACKAGE}"
+  REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
+  REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
+  echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
+  rm -rf $REL_SUB_PACKAGE
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
   # cp the setters.yaml
-  cp ../github/pubsec-declarative-toolkit/solutions/core-landing-zone/setters.yaml core-landing-zone/ 
+  cp ../github/pubsec-declarative-toolkit/$REL_PACKAGE/setters.yaml $REL_SUB_PACKAGE/ 
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
+  # see requireShiededVM and restrictVPCPeering removal to recreate a cluster
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/588
+  echo "removing org/org-policies folder"
+  rm -rf $REL_SUB_PACKAGE/org/org-policies
+
   echo "kpt live init"
-  kpt live init core-landing-zone --namespace config-control --force
+  kpt live init $REL_SUB_PACKAGE --namespace config-control --force
   echo "kpt fn render"
-  kpt fn render core-landing-zone --truncate-output=false
+  kpt fn render $REL_SUB_PACKAGE --truncate-output=false
   echo "kpt live apply"
-  kpt live apply core-landing-zone
-  #kpt live apply core-landing-zone --reconcile-timeout=5m --output=table
+  kpt live apply $REL_SUB_PACKAGE
+  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
@@ -250,10 +287,18 @@ if [[ "$DEPLOY_LZ" != false ]]; then
   echo "UpToDate: $count"
   # set default kubectl namespace to avoid -n or --all-namespaces
   kubens config-control
-  kubectl get gcp
-
-  echo "sleep 60 sec"
+  #
+  echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
   sleep 60
+  kubectl get gcp
+  kubectl get gcp -n projects
+  kubectl get gcp -n networking
+  kubectl get gcp -n hierarchy
+  kubectl get gcp -n policies
+  kubectl get gcp -n logging
+  
+
+
   # check projects-sa and verify billing
   echo "check iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa before verifying billing"
   kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa
@@ -266,7 +311,7 @@ fi
 
 if [[ "$REMOVE_LZ" != false ]]; then
   echo "deleting lz on ${CLUSTER} in region ${REGION}"
-  kubectl get gcp
+  #kubectl get gcp
   # stay in current dir
   # will take up to 15-45 min and may hang unless liens are removed
   # 3 problematic projects
@@ -282,10 +327,18 @@ if [[ "$REMOVE_LZ" != false ]]; then
   #NONPROD_LIEN=$(gcloud alpha resource-manager liens list)
   #gcloud alpha resource-manager liens delete $NONPROD_LIEN
 
+  REL_SUB_PACKAGE="core-landing-zone"
+
+  echo "moving to folder ../../../$KPT_FOLDER_NAME"
   cd ../../../kpt
-  kpt live destroy core-landing-zone
-  #kubectl delete gcp --all
+  #cd $KPT_FOLDER_NAME
+
+  echo "deleting lz: $REL_SUB_PACKAGE"
+  kpt live destroy $REL_SUB_PACKAGE
+  kubectl delete gcp --all
   cd ../github/pubsec-declarative-toolkit/solutions
+  echo "wait 60 sec for gcp services to finish deleting before an optional GKE cluster delete"
+  sleep 60
 fi
 
   # delete
@@ -400,3 +453,35 @@ fi
 echo "existing project: $KCC_PROJECT_ID"
 deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
 printf "**** Done ****\n"
+
+cat << EOF > ./setters-core-landing-zone.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
+data: 
+  org-id: "459065442144"
+  lz-folder-id: '716446322787'
+  billing-id: "014479-806359-2F5F85"
+  management-project-id: kcc-oi-1258
+  management-project-number: "86427388501"
+  management-namespace: config-control
+  allowed-trusted-image-projects: |
+    - "projects/cos-cloud"
+  allowed-contact-domains: |
+    - "@obrien.industries"
+  allowed-policy-domain-members: |
+    - "C03kdhrkc"
+  allowed-vpc-peering: |
+    - "under:organizations/459065442144"
+  logging-project-id: logging-project2-oi
+  security-log-bucket: security-log-bucket-oi
+  platform-and-component-log-bucket: platform-and-component-log-bucket-oi
+  retention-locking-policy: "false"
+  retention-in-days: "1"
+  dns-project-id: dns-project2-oi
+  dns-name: "obrien.industries."
+EOF

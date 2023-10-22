@@ -13,18 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CIDR_KCC_VPC=192.168.0.0/16
-#REGION=northamerica-northeast1
+#CIDR_KCC_VPC=192.168.0.0/16
 # used for vpc, subnet, KCC cluster
-PREFIX=oi3
+PREFIX=oi4
 KCC_PROJECT_NAME=kcc-oi
-public_endpoint_opt=true
+#public_endpoint_opt=true
 SUPER_ADMIN_EMAIL=michael@obrien.industries
 # from gcp-tools kcc.env
-CLUSTER=kcc-oi3
-REGION=northamerica-northeast1
+CLUSTER=kcc-oi4
+#REGION=northamerica-northeast1
 #PROJECT_ID=kcc-oi3-cluster
-LZ_FOLDER_NAME=landing-zone-1
-NETWORK=kcc-ls-vpc
-SUBNET=kcc-ls-sn
-ROOT_FOLDER_ID=871256537757
+#LZ_FOLDER_NAME_PREFIX=landing-zone
+#NETWORK=kcc-ls-vpc
+#SUBNET=kcc-ls-sn
+ROOT_FOLDER_ID=716446322787
+#KPT_FOLDER_NAME=kpt
