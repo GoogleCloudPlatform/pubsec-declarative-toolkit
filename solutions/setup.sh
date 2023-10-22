@@ -323,9 +323,11 @@ EOF
   kpt live init $REL_SUB_PACKAGE --namespace config-control --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
+  #kpt alpha live plan $REL_SUB_PACKAGE
   echo "kpt live apply"
   kpt live apply $REL_SUB_PACKAGE
   #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
+
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
