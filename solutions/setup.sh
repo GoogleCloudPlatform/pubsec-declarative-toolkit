@@ -56,7 +56,9 @@ LZ_FOLDER_NAME_PREFIX=landing-zone-1
 NETWORK=kcc-ls-vpc
 SUBNET=kcc-ls-sn
 KPT_FOLDER_NAME=kpt
-KCC_PROJECT_NUMBER=
+# don't reset - passed in in select runs via vars.sh where cluster is already up
+#KCC_PROJECT_NUMBER=
+CLUSTER=kcc
 
 deployment() {
   
@@ -309,7 +311,7 @@ EOF
   kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
   # cp the setters.yaml
   echo "copy over generated setting.yaml"
-  cp ../github/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+  cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
   # see requireShiededVM and restrictVPCPeering removal to recreate a cluster
@@ -321,9 +323,11 @@ EOF
   kpt live init $REL_SUB_PACKAGE --namespace config-control --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
+  #kpt alpha live plan $REL_SUB_PACKAGE
   echo "kpt live apply"
   kpt live apply $REL_SUB_PACKAGE
   #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
+
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
   echo "UpdateFailed: $count"
@@ -349,7 +353,7 @@ EOF
   # needs to be set on the billing page
   #gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${KCC_PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
 
-  cd ../github/pubsec-declarative-toolkit/solutions
+  cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 
 fi
 
@@ -378,9 +382,9 @@ if [[ "$REMOVE_LZ" != false ]]; then
   #cd $KPT_FOLDER_NAME
 
   echo "deleting lz: $REL_SUB_PACKAGE"
-  kpt live destroy $REL_SUB_PACKAGE
+  #kpt live destroy $REL_SUB_PACKAGE
   kubectl delete gcp --all
-  cd ../github/pubsec-declarative-toolkit/solutions
+  cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
   echo "wait 60 sec for gcp services to finish deleting before an optional GKE cluster delete"
   sleep 60
 fi
