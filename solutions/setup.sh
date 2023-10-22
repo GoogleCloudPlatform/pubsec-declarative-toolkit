@@ -182,10 +182,17 @@ else
 fi
 
   # SET management project number
-  KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${KCC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
-  echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
+  #KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${KCC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+  #echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
 
   if [[ "$CREATE_KCC" != false ]]; then
+#   export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+#  echo "post GKE cluster create - applying 2 roles to ${ORG_ID} and ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
+#  #gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet
+#  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --condition=None --quiet
+ 
+ 
+
   # create KCC cluster
   # 3 KCC clusters max per region with 25 vCPU default quota
   startb=`date +%s`
@@ -208,19 +215,59 @@ fi
   # Warning  UpdateFailed  36s (x9 over 6m44s)  iamserviceaccount-controller  Update call failed: error applying desired state: summary: Error creating service account: googleapi: Error 403: Permission 'iam.serviceAccounts.create' denied on resource (or it may not exist).
   ##roles/iam.serviceAccountCreator
   gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.organizationRoleAdmin --condition=None --quiet
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.serviceAccountCreator --condition=None --quiet
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.serviceAccountAdmin --condition=None --quiet
   fi
 
 if [[ "$DEPLOY_LZ" != false ]]; then
     echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
-    sleep 60
-    #gcloud anthos config controller get-credentials $CLUSTER  --location $REGION
-    # set default kubectl namespace to avoid -n or --all-namespaces
-    kubens config-control
-    #echo "kubectl get gcp"
-    #kubectl get gcp
-    #echo "kubectl get pods --all-namespaces"
-    #kubectl get pods --all-namespaces
+    #sleep 60
+
+    # generate settings.yaml
+    REL_ROOT_PACKAGE="solutions"
+    REL_SUB_PACKAGE="core-landing-zone"
+    REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
+    # SET management project number 
+    KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+    echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
+
+    DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
+    echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
+
+cat << EOF > ./${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
+data: 
+  org-id: "${ORG_ID}"
+  lz-folder-id: "${ROOT_FOLDER_ID}"
+  billing-id: "${BILLING_ID}"
+  management-project-id: "${KCC_PROJECT_ID}"
+  management-project-number: "${KCC_PROJECT_NUMBER}"
+  management-namespace: config-control
+  allowed-trusted-image-projects: |
+    - "projects/cos-cloud"
+  allowed-contact-domains: |
+    - "@${CONTACT_DOMAIN}"
+  allowed-policy-domain-members: |
+    - "${DIRECTORY_CUSTOMER_ID}"
+  allowed-vpc-peering: |
+    - "under:organizations/${ORG_ID}"
+  logging-project-id: logging-project-${PREFIX}
+  security-log-bucket: security-log-bucket-${PREFIX}
+  platform-and-component-log-bucket: platform-and-component-log-bucket-${PREFIX}
+  retention-locking-policy: "false"
+  retention-in-days: "1"
+  dns-project-id: dns-project-${PREFIX}
+  dns-name: "${CONTACT_DOMAIN}."
+EOF
+
+    echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
+
+
   # Landing zone deployment
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
 
@@ -254,18 +301,15 @@ if [[ "$DEPLOY_LZ" != false ]]; then
 
   # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
   REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
-  REL_ROOT_PACKAGE="solutions"
-  REL_SUB_PACKAGE="core-landing-zone"
-
   # check for existing landing-zone
   echo "deploying ${REL_SUB_PACKAGE}"
-  REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
   REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
   echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
   rm -rf $REL_SUB_PACKAGE
   kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
   # cp the setters.yaml
-  cp ../github/pubsec-declarative-toolkit/$REL_PACKAGE/setters.yaml $REL_SUB_PACKAGE/ 
+  echo "copy over generated setting.yaml"
+  cp ../github/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
   # see requireShiededVM and restrictVPCPeering removal to recreate a cluster
@@ -454,34 +498,4 @@ echo "existing project: $KCC_PROJECT_ID"
 deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
 printf "**** Done ****\n"
 
-cat << EOF > ./setters-core-landing-zone.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata: # kpt-merge: /setters
-  name: setters
-  annotations:
-    config.kubernetes.io/local-config: "true"
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
-data: 
-  org-id: "459065442144"
-  lz-folder-id: '716446322787'
-  billing-id: "014479-806359-2F5F85"
-  management-project-id: kcc-oi-1258
-  management-project-number: "86427388501"
-  management-namespace: config-control
-  allowed-trusted-image-projects: |
-    - "projects/cos-cloud"
-  allowed-contact-domains: |
-    - "@obrien.industries"
-  allowed-policy-domain-members: |
-    - "C03kdhrkc"
-  allowed-vpc-peering: |
-    - "under:organizations/459065442144"
-  logging-project-id: logging-project2-oi
-  security-log-bucket: security-log-bucket-oi
-  platform-and-component-log-bucket: platform-and-component-log-bucket-oi
-  retention-locking-policy: "false"
-  retention-in-days: "1"
-  dns-project-id: dns-project2-oi
-  dns-name: "obrien.industries."
-EOF
+

@@ -19,6 +19,7 @@ PREFIX=oi4
 KCC_PROJECT_NAME=kcc-oi
 #public_endpoint_opt=true
 SUPER_ADMIN_EMAIL=michael@obrien.industries
+CONTACT_DOMAIN=obrien.industries
 # from gcp-tools kcc.env
 CLUSTER=kcc-oi4
 #REGION=northamerica-northeast1
