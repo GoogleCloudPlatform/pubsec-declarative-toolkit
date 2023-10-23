@@ -20,7 +20,7 @@ metadata:
   namespace: projects
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/services-infrastructure
+    #config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/services-infrastructure
 spec:
   name: hub-project-id # kpt-set: ${hub-project-id}
   billingAccountRef:
