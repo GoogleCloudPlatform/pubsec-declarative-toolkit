@@ -358,7 +358,7 @@ metadata:
 data:
   org-id: "${ORG_ID}"
   project-billing-id: "${BILLING_ID}"
-  project-parent-folder: project-parent-folder
+  project-parent-folder: ${HUB_PROJECT_PARENT_FOLDER}
   hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
   hub-admin: ${HUB_ADMIN_GROUP_EMAIL}
   project-allowed-restrict-vpc-peering: |
@@ -395,7 +395,7 @@ EOF
 
   cd $KPT_FOLDER_NAME
 
-
+  
   # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
   REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
   # check for existing landing-zone
@@ -407,6 +407,13 @@ EOF
   # cp the setters.yaml
   echo "copy over generated setters.yaml"
   cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+
+  # list of changes to main
+  ###################################3 
+  # add org-id to setters.yaml
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/573
+  # comment out hardcoded dependson and project for now in hub-env/project.yaml
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/596
 
   echo "kpt live init"
   kpt live init $REL_SUB_PACKAGE --namespace config-control --force
