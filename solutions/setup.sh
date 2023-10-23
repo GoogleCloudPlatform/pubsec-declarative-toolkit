@@ -23,24 +23,25 @@ verify: run from pubsec-declarative-toolkit/solutions
 verify: cluster already created by setup-kcc.sh in gcp-tools
 
 create cluster in new project
-./setup.sh -b kcc-oi -u oi -n true -c true -l false -r false -d false -j false
+./setup.sh -b kcc-oi -u oi -n true -c true -l false -h false -r false -d false -j false
 
 
 deploy lz
-./setup.sh -b kcc-oi -u oi -n false -c false -l true -r false -d false -j false -p kcc-oi-629
+./setup.sh -b kcc-oi -u oi -n false -c false -l true -h false -r false -d false -j false -p kcc-oi-629
 
 delete lz, kcc cluster and project in order
-./setup.sh -b kcc-oi -u oi -n false -c false -l false -r true -d true -j false -p kcc-oi-629
+./setup.sh -b kcc-oi -u oi -n false -c false -l false -h false -r true -d true -j false -p kcc-oi-629
 
 -b [boot proj id] string     : boot/source project (separate from project for KCC cluster)
 -u [unique] true/false       : unique identifier for your project - take your org/domain 1st letters forward/reverse - ie: landging.gcp.zone lgz
 -n [create] true/false       : create project
 -c [create] true/false       : create cluster
--l [landingzone] true false  : deploy landing zone
--l [landingzone] true false  : remove landing zone
+-l [landingzone] true/false  : deploy landing zone
+-h [hub] true/false          : deploy hub
+-r [landingzone] true/false  : remove landing zone + hub
 -d [delete] true/false       : delete cluster
 -j [delete] true/false       : delete project
--p [KCC project] string      : target KCC project: ie controller-lgz-1201
+-p [KCC project] string      : target KCC project: ie kcc-ol-1201
 EOF
 }
 
@@ -50,13 +51,11 @@ EOF
 source ./vars.sh
 
 # the following can be overriden by vars.sh above
-REGION=northamerica-northeast1
 CIDR_KCC_VPC=192.168.0.0/16
 LZ_FOLDER_NAME_PREFIX=landing-zone-1
 NETWORK=kcc-ls-vpc
 SUBNET=kcc-ls-sn
-KPT_FOLDER_NAME=kpt
-# don't reset - passed in in select runs via vars.sh where cluster is already up
+# don't reset - passed in select runs via vars.sh where cluster is already up
 #KCC_PROJECT_NUMBER=
 CLUSTER=kcc
 
@@ -64,11 +63,10 @@ deployment() {
   
   echo "Date: $(date)"
   echo "Timestamp: $(date +%s)"
-  echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -r $REMOVE_LZ -d $DELETE_KCC -p $KCC_PROJECT_ID"
+  echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -h $DEPLOY_HUB -r $REMOVE_LZ -d $DELETE_KCC -p $KCC_PROJECT_ID"
   # reset project from KCC project - if rerunning script or after an error
   gcloud config set project "${BOOT_PROJECT_ID}"
   echo "Switched back to boot project ${BOOT_PROJECT_ID}"
-
 
 start=`date +%s`
 echo "Start: ${start}"
@@ -102,20 +100,20 @@ ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tai
 echo "ORG_ID: ${ORG_ID}"
 export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
-
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_PROJ" != false ]]; then
 
   echo "applying roles to the super admin SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL}"
   # securityAdmin required
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet #> /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet #> /dev/null 1>&1
+  # there are issues with a ROLES list over 5 in this case - break out for selective application
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet > /dev/null 1>&1
 
 #  ROLES=("roles/servicedirectory.editor" "roles/dns.admin" "roles/logging.admin" "roles/accesscontextmanager.policyAdmin") 
 #  ROLES=( "roles/resourcemanager.organizationAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectIamAdmin" "roles/compute.networkAdmin" ) 
@@ -131,16 +129,14 @@ if [[ "$CREATE_PROJ" != false ]]; then
 
   # "roles/billing.user" 'roles/bigquery.dataEditor" "roles/iam.serviceAccountAdmin" "roles/orgpolicy.policyAdmin" "roles/iam.securityAdmin" "roles/logging.configWriter" "roles/serviceusage.serviceUsageAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/compute.xpnAdmin" "roles/serviceusage.serviceUsageConsumer"
 
- 
-
 
   # switch back to/create kcc project - not in a folder
-  echo "Creating KCC project: ${CC_PROJECT_ID}"
+  echo "Creating KCC project: ${CC_PROJECT_ID} on folder: ${ROOT_FOLDER_ID}"
   #gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
   gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default --folder="$ROOT_FOLDER_ID"
-#  echo "Reusing project: $CC_PROJECT_ID"
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
+  echo "Enabling billing on account: ${BILLING_ID}"
   gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
 
   echo "sleep 45 sec before enabling services"
@@ -164,7 +160,7 @@ if [[ "$CREATE_PROJ" != false ]]; then
   echo "Create VPC: ${NETWORK}"
   gcloud compute networks create $NETWORK --subnet-mode=custom
   # create subnet
-  echo "Create subnet ${SUBNET} off VPC: ${NETWORK}"
+  echo "Create subnet ${SUBNET} off VPC: ${NETWORK} using ${CIDR_KCC_VPC} on region: ${REGION}"
   gcloud compute networks subnets create $SUBNET --network $NETWORK --range $CIDR_KCC_VPC --region $REGION --stack-type=IPV4_ONLY
   #--enable-private-ip-google-access \
   #--enable-flow-logs --logging-aggregation-interval=interval-5-sec --logging-flow-sampling=1.0 --logging-metadata=include-all
@@ -187,14 +183,7 @@ fi
   #KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${KCC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
   #echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
 
-  if [[ "$CREATE_KCC" != false ]]; then
-#   export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-#  echo "post GKE cluster create - applying 2 roles to ${ORG_ID} and ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
-#  #gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet
-#  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --condition=None --quiet
- 
- 
-
+if [[ "$CREATE_KCC" != false ]]; then
   # create KCC cluster
   # 3 KCC clusters max per region with 25 vCPU default quota
   startb=`date +%s`
@@ -210,21 +199,21 @@ fi
   gcloud anthos config controller list
 
   export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-  echo "post GKE cluster create - applying 2 roles to ${ORG_ID} and ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet
-  gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet
+  echo "post GKE cluster create - applying 2 roles to org: ${ORG_ID} and project: ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet  > /dev/null 1>&1
+  gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet  > /dev/null 1>&1
   # need service account admin for kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/gatekeeper-admin-sa
   # Warning  UpdateFailed  36s (x9 over 6m44s)  iamserviceaccount-controller  Update call failed: error applying desired state: summary: Error creating service account: googleapi: Error 403: Permission 'iam.serviceAccounts.create' denied on resource (or it may not exist).
   ##roles/iam.serviceAccountCreator
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.organizationRoleAdmin --condition=None --quiet
-  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.serviceAccountAdmin --condition=None --quiet
-  fi
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.organizationRoleAdmin --condition=None --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/iam.serviceAccountAdmin --condition=None --quiet > /dev/null 1>&1
+fi
 
 if [[ "$DEPLOY_LZ" != false ]]; then
     echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
     #sleep 60
 
-    # generate settings.yaml
+    # generate setters.yaml
     REL_ROOT_PACKAGE="solutions"
     REL_SUB_PACKAGE="core-landing-zone"
     REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
@@ -235,6 +224,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
     DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
     echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
 
+    # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/core-landing-zone/setters.yaml
 cat << EOF > ./${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -269,36 +259,20 @@ EOF
 
     echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
 
-
   # Landing zone deployment
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
 
-  # Assign Permissions to the KCC Service Account - will need a currently running kcc cluster
-  #export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
-
-#  echo "SA_EMAIL: ${SA_EMAIL}"
-  # "roles/billing.user" 'roles/bigquery.dataEditor" "roles/iam.serviceAccountAdmin" "roles/orgpolicy.policyAdmin" "roles/iam.securityAdmin" "roles/logging.configWriter" "roles/serviceusage.serviceUsageAdmin" "roles/iam.organizationRoleAdmin" "roles/compute.networkAdmin" "roles/compute.xpnAdmin" "roles/serviceusage.serviceUsageConsumer"
-#  ROLES=( "roles/resourcemanager.organizationAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectIamAdmin" "roles/compute.networkAdmin" "roles/accesscontextmanager.policyAdmin" "roles/servicedirectory.editor" "roles/dns.admin" "roles/logging.admin" ) 
-
-  
-#  for i in "${ROLES[@]}" ; do
-    # requires iam.securityAdmin
-    #ROLE=`gcloud organizations get-iam-policy $ORG_ID --filter="bindings.members:$SA_EMAIL" --flatten="bindings[].members" --format="table(bindings.role)" | grep $i`
-    #echo $ROLE
-    #if [ -z "$ROLE" ]; then
-#        echo "Applying role $i to $SA_EMAIL"
-#        gcloud organizations add-iam-policy-binding $ORG_ID  --member=serviceAccount:$SA_EMAIL --role=$i --quiet #> /dev/null 1>&1
-    #else
-    #    echo "Role $i already set on $USER"
-    #fi
-  
-#  done
-
   # fetch the LZ
-  # ./setup.sh -b kcc-oi -u oi -n false -c false -l true -r false -d false -j false -p kcc-oi-629
   cd ../../../
-  # make the dir anyway
-  #mkdir $KPT_FOLDER_NAME
+
+  if [ -d "${KPT_FOLDER_NAME}" ] 
+  then
+    echo "Directory ${KPT_FOLDER_NAME} exists - using it" 
+  else
+    echo "Creating ${KPT_FOLDER_NAME}"
+    mkdir ${KPT_FOLDER_NAME}
+  fi
+  
   cd $KPT_FOLDER_NAME
 
   # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
@@ -310,7 +284,7 @@ EOF
   rm -rf $REL_SUB_PACKAGE
   kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
   # cp the setters.yaml
-  echo "copy over generated setting.yaml"
+  echo "copy over generated setters.yaml"
   cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
@@ -345,8 +319,6 @@ EOF
   kubectl get gcp -n policies
   kubectl get gcp -n logging
   
-
-
   # check projects-sa and verify billing
   echo "check iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa before verifying billing"
   kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa
@@ -354,7 +326,121 @@ EOF
   #gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${KCC_PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
 
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
+fi
 
+if [[ "$DEPLOY_HUB" != false ]]; then
+    echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
+    #sleep 60
+
+    # generate setters.yaml
+    REL_ROOT_PACKAGE="solutions"
+    # betweeen solutions and hub-env in this example = project but could be 2+ dirs
+    REL_MID_PACKAGE="project"
+    REL_SUB_PACKAGE="hub-env"
+    REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_MID_PACKAGE}/${REL_SUB_PACKAGE}"
+    # SET management project number 
+    KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+    echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
+
+    DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
+    echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
+
+    # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/project/hub-env/setters.yaml
+    # original: hub-admin: group:group@domain.com
+    echo "using hub project id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}"
+cat << EOF > ./${REL_MID_PACKAGE}/${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  org-id: "${ORG_ID}"
+  project-billing-id: "${BILLING_ID}"
+  project-parent-folder: project-parent-folder
+  hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
+  hub-admin: ${HUB_ADMIN_GROUP_EMAIL}
+  project-allowed-restrict-vpc-peering: |
+    - under:organizations/${ORG_ID}
+  project-allowed-vm-external-ip-access: |
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-a/instances/fgt-primary-instance"
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-b/instances/fgt-secondary-instance"
+  project-allowed-vm-can-ip-forward: |
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-a/instances/fgt-primary-instance"
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-b/instances/fgt-secondary-instance"
+  fgt-primary-image: ${FORTIGATE_PRIMARY_IMAGE}
+  fgt-primary-license: |
+    LICENSE
+  fgt-secondary-image: ${FORTIGATE_SECONDARY_IMAGE}
+  fgt-secondary-license: |
+    LICENSE
+EOF
+
+    echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
+
+  # Landing zone deployment
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
+
+  # fetch the hub-env
+  cd ../../../
+
+  if [ -d "${KPT_FOLDER_NAME}" ] 
+  then
+    echo "Directory ${KPT_FOLDER_NAME} exists - using it" 
+  else
+    echo "Creating ${KPT_FOLDER_NAME}"
+    mkdir ${KPT_FOLDER_NAME}
+  fi
+
+  cd $KPT_FOLDER_NAME
+
+
+  # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
+  REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
+  # check for existing landing-zone
+  echo "deploying ${REL_SUB_PACKAGE}"
+  REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
+  echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
+  rm -rf $REL_SUB_PACKAGE
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  # cp the setters.yaml
+  echo "copy over generated setters.yaml"
+  cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+
+  echo "kpt live init"
+  kpt live init $REL_SUB_PACKAGE --namespace config-control --force
+  echo "kpt fn render"
+  kpt fn render $REL_SUB_PACKAGE --truncate-output=false
+  #kpt alpha live plan $REL_SUB_PACKAGE
+  echo "kpt live apply"
+  kpt live apply $REL_SUB_PACKAGE
+  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
+
+  echo "Wait 2 min"
+  count=$(kubectl get gcp | grep UpdateFailed | wc -l)
+  echo "UpdateFailed: $count"
+  count=$(kubectl get gcp | grep UpToDate | wc -l)
+  echo "UpToDate: $count"
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens config-control
+  #
+  echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
+  sleep 60
+  kubectl get gcp
+  kubectl get gcp -n projects
+  kubectl get gcp -n networking
+  kubectl get gcp -n hierarchy
+  kubectl get gcp -n policies
+  kubectl get gcp -n logging
+  
+  # check projects-sa and verify billing
+  echo "check iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa before verifying billing"
+  kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa
+  # needs to be set on the billing page
+  #gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${KCC_PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
+
+  cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 fi
 
 if [[ "$REMOVE_LZ" != false ]]; then
@@ -448,6 +534,7 @@ echo "Total Duration: ${runtime} sec"
 
 UNIQUE=
 DEPLOY_LZ=false
+DEPLOY_HUB=false
 CREATE_KCC=false
 DELETE_KCC=false
 REMOVE_LZ=false
@@ -455,7 +542,7 @@ BOOT_PROJECT_ID=
 DELETE_PROJ=false
 CREATE_PROJ=false
 
-while getopts ":b:u:n:c:l:d:r:j:p:" PARAM; do
+while getopts ":b:u:n:c:l:h:d:r:j:p:" PARAM; do
   case $PARAM in
     b)
       BOOT_PROJECT_ID=${OPTARG}
@@ -472,6 +559,9 @@ while getopts ":b:u:n:c:l:d:r:j:p:" PARAM; do
     l)
       DEPLOY_LZ=${OPTARG}
       ;;
+    h)
+      DEPLOY_HUB=${OPTARG}
+      ;;      
     r)
       REMOVE_LZ=${OPTARG}
       ;;      
@@ -491,7 +581,7 @@ while getopts ":b:u:n:c:l:d:r:j:p:" PARAM; do
   esac
 done
 
-#  echo "Options are: -n true/false (create proj) -c true/false (create kcc), -l true/false (deploy landing zone) -r (remove lz) -d true/false (delete kcc) -j true/false (delete proj) -p kcc-project-id"
+#  echo "Options are: -n true/false (create proj) -c true/false (create kcc), -l true/false (deploy landing zone) -h true/false (deploy hub) -r (remove lz) -d true/false (delete kcc) -j true/false (delete proj) -p kcc-project-id"
 
 
 if [[ -z $UNIQUE ]]; then
@@ -499,7 +589,7 @@ if [[ -z $UNIQUE ]]; then
   exit 1
 fi
 echo "existing project: $KCC_PROJECT_ID"
-deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
+deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $DEPLOY_HUB $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
 printf "**** Done ****\n"
 
 

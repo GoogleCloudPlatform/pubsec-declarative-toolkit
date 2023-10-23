@@ -13,19 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Common (core-landing-zone - hub-env)
 #CIDR_KCC_VPC=192.168.0.0/16
-# used for vpc, subnet, KCC cluster
-PREFIX=oi4
+# used for vpc, subnet, KCC cluster 
+# MAKE SURE the prefix is unique in combination with another string - use your domain backwards
+# for example kcc.landing.systems is kls or slk
+# if it is not unique then your project creation will fail right away anyway due to global gcp collision
+PREFIX=oi5
+# pass in for select runs where cluster already up - this is your bootstrap project you run from - not the project that will contain your kcc/gke/kubernetes cluster
 KCC_PROJECT_NAME=kcc-oi
+REGION=northamerica-northeast1
+# parent folder id (not name and not number)
+ROOT_FOLDER_ID=27941298022
+# this is the HD name on your user/dev/client pc/shell - keep the same - this can be generated
+KPT_FOLDER_NAME=kpt
+# match this to the folder just above where you cloned the pdt repo
+REPO_ROOT=github
+
+# core-landing-zone only
+CONTACT_DOMAIN=obrien.industries
 #public_endpoint_opt=true
 SUPER_ADMIN_EMAIL=michael@obrien.industries
-CONTACT_DOMAIN=obrien.industries
-# from gcp-tools kcc.env
-CLUSTER=kcc-oi4
-#REGION=northamerica-northeast1
-#PROJECT_ID=kcc-oi3-cluster
-#LZ_FOLDER_NAME_PREFIX=landing-zone
-#NETWORK=kcc-ls-vpc
-#SUBNET=kcc-ls-sn
-ROOT_FOLDER_ID=716446322787
-#KPT_FOLDER_NAME=kpt
+
+# hub-env only
+HUB_PROJECT_ID_PREFIX=xxdmu-admin1-hub
+HUB_ADMIN_GROUP_EMAIL=user:michael@obrien.industries
+#HUB_ADMIN_GROUP_EMAIL=group:group@domain
+FORTIGATE_PRIMARY_IMAGE=projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
+FORTIGATE_SECONDARY_IMAGE=projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
