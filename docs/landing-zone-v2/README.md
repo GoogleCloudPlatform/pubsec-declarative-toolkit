@@ -129,7 +129,7 @@ To deploy this Landing Zone you will need to:
    - Org level:
       - Organization Admin
       - Folder Admin
-      - Project Admin
+      - Project IAM Admin
       - Compute Network Admin
       - Access Context Manager Admin
       - Service Directory Editor
@@ -137,6 +137,18 @@ To deploy this Landing Zone you will need to:
       - Logging Admin
    - Billing account:
       - Billing admin
+
+    ```shell
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet
+    gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet
+    ```
+
 1. Software
     - [Google Cloud SDK version >= 429.0.0](https://cloud.google.com/sdk/docs/downloads-versioned-archives)
     - [kpt](https://kpt.dev/installation/kpt-cli?id=gcloud)
