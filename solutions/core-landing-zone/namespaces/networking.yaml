@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # GCP SA
-# AC-3(7) - Creates lower priv service account for networking administration
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -23,10 +23,9 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   displayName: networking-sa
 ---
-# Grant GCP role Network Admin to GCP SA
-# AC-3(7) - RBAC role to account with required permissions for networking administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -40,6 +39,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
     external: "123456789012" # kpt-set: ${lz-folder-id}
+  # AC-3(7), AC-3, AC-16(2)
   role: roles/compute.networkAdmin
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -53,6 +53,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -70,6 +71,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -87,6 +89,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
@@ -106,6 +109,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
@@ -123,6 +127,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -140,6 +145,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     name: networking-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -149,7 +155,7 @@ spec:
       members:
         - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-networking] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
 ---
-# K8S namespace
+# Namespace created to segregate resources. Each Namespace will be given a specific Kubernetes Service account and GCP Service Account
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -166,4 +172,5 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   googleServiceAccount: networking-sa@management-project-id.iam.gserviceaccount.com # kpt-set: networking-sa@${management-project-id}.iam.gserviceaccount.com

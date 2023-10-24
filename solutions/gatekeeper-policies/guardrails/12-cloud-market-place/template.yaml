@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# Anthos policy controller generic policy ( OPA policies) defined as ConstraintTemplate that restrict Third-Party CSP Marketplace software to GC-approved products.
+# These resources are encrypted at rest in the ETCD backend managed by Google
+# CM‑5(1) - Policy controller policy defined as ConstraintTemplate that restrict Third-Party CSP Marketplace software to GC-approved products.
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -21,6 +24,7 @@ metadata:
     reference: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/12_Cloud-Marketplace-Config.md
     related-security-controls: CM-2, CM-3, CM-4, CM-5, CM-8, SA-22
 spec:
+  # CM‑5(1)
   crd:
     spec:
       names:

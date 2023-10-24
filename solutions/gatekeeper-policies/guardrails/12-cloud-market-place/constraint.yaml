@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# Anthos policy controller policy ( OPA policies) defined as Constraints that restrict Third-Party CSP Marketplace software to GC-approved products.
+# These resources are encrypted at rest in the ETCD backend managed by Google
+# CM‑5(1) - Policy controller policy defined as Constraints that restrict Third-Party CSP Marketplace software to GC-approved products.
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: CloudMarketPlaceConfig
 metadata:
   name: cloudmarketplaceconfig
 spec:
+  # CM‑5(1)
   match:
     kinds:
       - apiGroups: ["*"]

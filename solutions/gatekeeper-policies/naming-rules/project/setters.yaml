@@ -19,11 +19,22 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: 'true'
 data:
-  #########
+  #########################
   # Project naming constraints values
-  #########
+  ##########################
   #
-  # Please change the values below
-  #
+  # Two-character code representing a client.
+  # Multiple clients can be supported by using a regex that evaluates multiple codes such as this: '^(aa|bb|cc)'
+  # All projects that are created will be required to have a project id starting with one of the 2 letter client codes only
+  # customization: required
   client_code: ^(aa|bb|cc)
-  env_code: d # (d = dev, p = production, e = experimentation, u = preprod)
+  #
+  # One character code representing the environment for the project
+  # (d = dev, p = production, e = experimentation, u = preprod)
+  # All projects that are created will be required to have the 3rd letter of the project id be the same as env_code
+  # customization: required
+  env_code: d
+  #
+  ##########################
+  # End of Configurations
+  ##########################

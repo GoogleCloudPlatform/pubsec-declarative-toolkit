@@ -38,20 +38,30 @@ data:
   # General Settings Values
   ##########################
   #
+  # Use the same Google Cloud Organization ID that was used during the bootstrap procedure
+  # customization: required
   org-id: "0000000000"
+  # root folder to which the Landing Zone will be deployed into. This folder is created during the bootstrap procedure
+  # customization: required
   lz-folder-id: '0000000000'
+  # core-landing-zone billing id
+  # customization: required
   billing-id: "AAAAAA-BBBBBB-CCCCCC"
   #
   ##########################
   # Management Project
   ##########################
   #
-  # This is the project where the config controller instance is running
-  # Values can be viewed in the Project Dashboard via https://console.cloud.google.com/welcome?project=$PROJECT_ID under "Project number" where PROJECT_ID is defined as management-project-id below or in the export block as PROJECT_ID in https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration
+  # The management project is where the Landing Zone config controller instance is running, created during the bootstrap procedure.
+  # The $PROJECT_ID (management-project-id) is defined during Initial Organization Configuration (https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration)
+  # customization: required
   management-project-id: management-project-12345
-  # derive project-number (an expected numeric id like 5...57396547) using the project-id above via gcloud command: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
+  # The management-project-number can be obtained from the Dashboard via https://console.cloud.google.com/home/dashboard?project=$PROJECT_ID
+  # Alternatively, obtain the management-project-number from gcloud: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
+  # customization: required
   management-project-number: "0000000000"
-  # leave the kubernetes namespace as a default
+  # kubernetes namespace set to the default, config-control.
+  # customization: Do not change this value.
   management-namespace: config-control
   #
   ##########################
@@ -62,26 +72,26 @@ data:
   #
   # a list of allowed trusted image projects, see YAML file for more info:
   # org/org-policies/compute-trusted-image-projects.yaml
-  # this setting can be left as default or modified as required
+  # customization: This setting can be left as default or modified as required
   allowed-trusted-image-projects: |
     - "projects/cos-cloud"
   #
   # a list of allowed essential contact domains, see YAML file for more info:
   # org/org-policies/essentialcontacts-allowed-contact-domains.yaml
-  # this setting MUST be changed
+  # customization: this setting MUST be changed to a domain in which you choose to allow to receive notifications from Google.
   allowed-contact-domains: |
     - "@example.com"
   #
   # a list of directory customer IDs from which users can be added to IAM policies, see YAML file for more info:
   # org/org-policies/iam-allowed-policy-member-domains.yaml
-  # this setting MUST be changed to include the GCP org's directory ID and any other directory containing users that will need IAM roles assigned
   # run 'gcloud organizations list' as described in https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains#retrieving_customer_id
+  # customization: # this setting MUST be changed to include the GCP org's directory customer ID and any other directory containing users that will need IAM roles assigned
   allowed-policy-domain-members: |
     - "DIRECTORY_CUSTOMER_ID"
   #
   # a list of allowed projects, folders, networks for VPC peering, see YAML file for more info:
   # org/org-policies/compute-restrict-vpc-peering.yaml
-  # this setting MUST be changed, replace ORGANIZATION_ID with the GCP organizations's ID
+  # customization: this setting MUST be changed, replace ORGANIZATION_ID with the GCP organizations's ID
   allowed-vpc-peering: |
     - "under:organizations/ORGANIZATION_ID"
   #
@@ -89,12 +99,18 @@ data:
   # Logging
   ##########################
   #
+  # Core landing Zone logging project, used by the logging packages
+  # project id for the logging project to be created, following rules and conventions
+  # customization: required
   logging-project-id: logging-project-12345
   #
   # Log Buckets
   # Security Logs Bucket
+  # customization: required
   security-log-bucket: security-log-bucket-12345
+  #
   # Platform and Component Log Bucket
+  # customization: required
   platform-and-component-log-bucket: platform-and-component-log-bucket-12345
   #
   # Retention settings
@@ -103,8 +119,7 @@ data:
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
   # AU-9 PROTECTION OF AUDIT INFORMATION
   # AU-11 AUDIT RECORD RETENTION
-  #
-  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
+  # customization: The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
   retention-locking-policy: "false"
   retention-in-days: "1"
   #
@@ -112,8 +127,17 @@ data:
   # DNS
   ##########################
   #
+  # DNS project
+  #
+  # project id for the dns project to be created, following rules and conventions
+  # customization: required
   dns-project-id: dns-project-12345
+  #
+  # Core Landing Zone fqdn. The "dns-name" must end with a "."
+  # dns-name needs needs to receive delegation from the upper level of the domain example.com.
+  # customization: required
   dns-name: "example.com."
+  #
   ##########################
   # End of Configurations
   ##########################
