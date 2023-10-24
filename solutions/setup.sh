@@ -360,6 +360,9 @@ data:
   project-billing-id: "${BILLING_ID}"
   project-parent-folder: ${HUB_PROJECT_PARENT_FOLDER}
   hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
+  management-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
+  # must be config-control due to hardcoding
+  management-namespace: config-control
   hub-admin: ${HUB_ADMIN_GROUP_EMAIL}
   project-allowed-restrict-vpc-peering: |
     - under:organizations/${ORG_ID}
@@ -402,8 +405,8 @@ EOF
   echo "deploying ${REL_SUB_PACKAGE}"
   REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
   echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
-  rm -rf $REL_SUB_PACKAGE
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  #rm -rf $REL_SUB_PACKAGE
+  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
   # cp the setters.yaml
   echo "copy over generated setters.yaml"
   cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
@@ -416,7 +419,7 @@ EOF
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/596
 
   echo "kpt live init"
-  kpt live init $REL_SUB_PACKAGE --namespace config-control --force
+  #kpt live init $REL_SUB_PACKAGE --namespace config-control --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
   #kpt alpha live plan $REL_SUB_PACKAGE
@@ -599,4 +602,9 @@ echo "existing project: $KCC_PROJECT_ID"
 deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $DEPLOY_HUB $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
 printf "**** Done ****\n"
 
+# changes to kpt
+# management-vm/service-account.yaml
+# service-account
+# project.yaml
+# fortigate-ap-primary/secondary
 

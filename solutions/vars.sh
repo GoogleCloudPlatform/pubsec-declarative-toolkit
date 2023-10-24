@@ -36,8 +36,10 @@ CONTACT_DOMAIN=obrien.industries
 SUPER_ADMIN_EMAIL=michael@obrien.industries
 
 # hub-env only
+HUB_PROJECT_PARENT_FOLDER=services-infrastructure
 HUB_PROJECT_ID_PREFIX=xxdmu-admin1-hub
-HUB_ADMIN_GROUP_EMAIL=user:michael@obrien.industries
-#HUB_ADMIN_GROUP_EMAIL=group:group@domain
+#HUB_ADMIN_GROUP_EMAIL=user:michael@obrien.industries
+HUB_ADMIN_GROUP_EMAIL=group:sas@obrien.industries
+# see https://docs.fortinet.com/document/fortigate-public-cloud/7.4.0/gcp-administration-guide/471595/using-image-family
 FORTIGATE_PRIMARY_IMAGE=projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
 FORTIGATE_SECONDARY_IMAGE=projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
