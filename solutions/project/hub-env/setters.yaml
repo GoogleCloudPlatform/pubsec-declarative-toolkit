@@ -14,6 +14,8 @@ data:
   # Naming Convention for project-id : <tenant-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters
   hub-project-id: xxdmu-admin1-projectname
+  # Project ID of the project hosting the config controller instance
+  management-project-id: management-project-id
   # Identity that should be allowed to access the management VM using IAP TCP forwarding
   # https://cloud.google.com/iap/docs/using-tcp-forwarding
   hub-admin: group:group@domain.com
