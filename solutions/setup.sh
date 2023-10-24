@@ -424,7 +424,8 @@ EOF
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
   #kpt alpha live plan $REL_SUB_PACKAGE
   echo "kpt live apply"
-  kpt live apply $REL_SUB_PACKAGE
+  # without a timeout the command never terminates
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m
   #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
 
   echo "Wait 2 min"
@@ -471,15 +472,18 @@ if [[ "$REMOVE_LZ" != false ]]; then
   #NONPROD_LIEN=$(gcloud alpha resource-manager liens list)
   #gcloud alpha resource-manager liens delete $NONPROD_LIEN
 
-  REL_SUB_PACKAGE="core-landing-zone"
 
   echo "moving to folder ../../../$KPT_FOLDER_NAME"
   cd ../../../kpt
   #cd $KPT_FOLDER_NAME
 
-  echo "deleting lz: $REL_SUB_PACKAGE"
-  #kpt live destroy $REL_SUB_PACKAGE
-  kubectl delete gcp --all
+  REL_SUB_PACKAGE="core-landing-zone"
+  echo "deleting REL_SUB_PACKAGE: $REL_SUB_PACKAGE"
+  kpt live destroy $REL_SUB_PACKAGE
+  # all packages delete
+  #kubectl delete gcp --all
+  # sub packages delete
+
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
   echo "wait 60 sec for gcp services to finish deleting before an optional GKE cluster delete"
   sleep 60
