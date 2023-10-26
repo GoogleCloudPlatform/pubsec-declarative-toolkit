@@ -38,15 +38,21 @@ data:
   # General Settings Values
   ##########################
   #
+  # Use the same Google Cloud Organization ID that was used when deploying the core-landing-zone package
+  # customization: required
   org-id: "0000000000"
   #
   ##########################
   # Management Project
   ##########################
   #
-  # This is the project where the config controller instance is running
-  # Values can be viewed in the Project Dashboard
+  # The management project is where the Landing Zone config controller instance is running.
+  # management-project-id is the same value as defined in the core-landing-zone package
+  # customization: required
   management-project-id: management-project-12345
+  #
+  # kubernetes namespace set to the default, config-control.
+  # customization: Do not change this value.
   management-namespace: config-control
   #
   ##########################
@@ -54,18 +60,25 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
-  # id of the client management project created in client-landing-zone
+  #
+  # project id for the client management project that was created in the client-setup package
+  # customization: required
   client-management-project-id: client-management-project-12345
   #
   ##########################
   # Network Host Project (standard)
   ##########################
   #
-  # ID of existing Shared VPC host project to associate
+  # the network host project id that is created by the client-landing-zone package
+  # customization: required
   host-project-id: net-host-project-12345
   #
   # the nane1 and nane2 subnets to grant network user permissions, replace 'classification' with appropriate values
+  # the values must match the kubernetes resources 'metadata.name'
+  # subnets were created by the client-landing-zone package
+  # customization: required
   allowed-nane1-main-subnet: host-project-id-nane1-standard-classification-main-snet
   allowed-nane2-main-subnet: host-project-id-nane2-standard-classification-main-snet
   #
@@ -74,10 +87,16 @@ data:
   ##########################
   #
   # project id for the client project to be created, following rules and conventions
+  # customization: required
   project-id: client-project-12345
-  # Billing Account ID to be associated with this project
+  #
+  # Clients Billing Account ID to associate with this service project. The client-name-projects-sa will need billing user role permission granted.
+  # customization: required
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
-  # GCP folder to use as parent to this project, lowercase K8S resource name
+  #
+  # GCP folder to use as parent to this project
+  # the values must match the kubernetes resources 'metadata.name', for example "standard.applications.nonp"
+  # customization: required
   project-parent-folder: project-parent-folder
   #
   ##########################
@@ -85,15 +104,21 @@ data:
   ##########################
   #
   # Used for the client root sync external git repo (GitHub, Azure DevOps, etc.)
+  # The repo stores client resources configs that will be created in the service project
   # To disable this option, delete the 'root-sync-git/' directory
   #
   # the git repo URL, for example
   # https://github.com/GITHUB-ORG/REPO-NAME
   # https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
+  # customization: required
   repo-url: git-repo-to-observe
+  #
   # the branch to check out (usually main)
+  # customization: optional
   repo-branch: main
+  #
   # the directory to observe for YAML manifests
+  # customization: optional
   tier3-repo-dir: csync/tier3/configcontroller/deploy/env
   tier4-repo-dir: csync/tier4/configcontroller/deploy/env
   #
