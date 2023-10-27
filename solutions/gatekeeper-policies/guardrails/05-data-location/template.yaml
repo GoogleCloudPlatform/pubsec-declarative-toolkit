@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# Anthos policy controller policy ( OPA policy) defined as ConstraintTemplates that restrict GC sensitive workloads to approved geographic locations
+# These resources are encrypted at rest in the ETCD backend managed by Google
+# By limiting to these two canadian regions we are implementing more robust safeguards for confidentiality & integrity as they relate to data sovereignty.
+# SI-10, SC-28, AC-3(9) - Anthos Policy controller policy defined as data location ConstraintTemplate and stored in Kubernetes as configuration
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
@@ -28,6 +32,7 @@ spec:
         openAPIV3Schema:
           type: object
           properties:
+            # SI-10, SC-28, AC-3(9)
             locations:
               description: List of allowed GCP Regions
               type: array
