@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# First, Grant GCP Role IAM service account admin on project to client-config-control SA so that it can create service accounts.
+# Grant GCP Role IAM service account admin on project to client-config-control SA so that it can create service accounts.
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -26,5 +27,6 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: project-id # kpt-set: ${project-id}
+  # AC-3(7), AC-3, AC-16(2)
   role: roles/iam.serviceAccountAdmin
   member: "serviceAccount:client-name-config-control-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-${management-namespace}-sa@${client-management-project-id}.iam.gserviceaccount.com

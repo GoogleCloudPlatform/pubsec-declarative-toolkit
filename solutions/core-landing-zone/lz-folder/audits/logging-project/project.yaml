@@ -26,6 +26,7 @@ metadata:
     cnrm.cloud.google.com/auto-create-network: 'false'
 spec:
   name: logging-project-id # kpt-set: ${logging-project-id}
+  # AU-4(1), AU-9(2)
   folderRef:
     name: audits
     namespace: hierarchy

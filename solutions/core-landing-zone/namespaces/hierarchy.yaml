@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # GCP SA
-# AC-3(7) - Creates lower priv service account for folder hierarchy administration
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -23,10 +23,10 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   displayName: hierarchy-sa
 ---
 # Grant GCP role Folder Admin to GCP SA
-# AC-3(7) - RBAC role to account with required permissions
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -40,10 +40,10 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
     external: "123456789012" # kpt-set: ${lz-folder-id}
+  # AC-3(7), AC-3, AC-16(2)
   role: roles/resourcemanager.folderAdmin
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -57,12 +57,13 @@ spec:
     name: hierarchy-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
+  # AC-3(7), AC-3, AC-16(2)
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
         - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
 ---
-# K8S namespace
+# Namespace created to segregate resources. Each Namespace will be given a specific Kubernetes Service account and GCP Service Account
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -78,6 +79,7 @@ metadata:
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
+# AC-3(7), AC-3, AC-16(2)
 spec:
   googleServiceAccount: hierarchy-sa@management-project-id.iam.gserviceaccount.com # kpt-set: hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -89,6 +91,7 @@ metadata:
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
+# AC-3(7), AC-3, AC-16(2)
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -106,6 +109,7 @@ metadata:
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
+# AC-3(7), AC-3, AC-16(2)
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -124,6 +128,7 @@ metadata:
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
+# AC-3(7), AC-3, AC-16(2)
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -141,6 +146,7 @@ metadata:
   namespace: hierarchy
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
+# AC-3(7), AC-3, AC-16(2)
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole

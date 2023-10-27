@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# Anthos policy controller policy ( OPA policy) defined as Constraint that limits egress traffic
+# These custom resources are encrypted at rest in the ETCD backend managed by Google
+# AC-3, AC‑4, SC-5, SC‑7(5), SI-3(7) - Policy controller policy defined as Constraints that limits egress traffic
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: LimitEgressTraffic
 metadata:
   name: limitegresstraffic
 spec:
+  # AC-3, AC‑4, SC-5, SC‑7(5), SI-3(7)
   match:
     kinds:
       - apiGroups: ["*"]

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.1...solutions/client-setup/0.6.2) (2023-10-24)
+
+
+### Bug Fixes
+
+* YAML comments cleanup ([#564](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/564)) ([a9dbcf1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a9dbcf1945af3fa00851103994e35a2113978de1))
+
 ## [0.6.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.0...solutions/client-setup/0.6.1) (2023-09-25)
 
 

@@ -18,6 +18,5 @@ metadata:
   name: aadmu-pe-test-project
   annotations:
     config.kubernetes.io/local-config: 'true'
-    cnrm.cloud.google.com/blueprint: kpt-pkg-fn
 spec:
   name: aadmu-pe-test-project
