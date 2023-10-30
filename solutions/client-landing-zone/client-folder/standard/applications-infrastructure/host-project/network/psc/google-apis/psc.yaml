@@ -34,6 +34,17 @@ spec:
     namespace: client-name-networking # kpt-set: ${client-name}-networking
 ---
 # Forwarding rule for Private Service Connect endpoint for Google API
+# WARNING!: WORKAROUND IN PLACE
+#   Because it's currently not possible to specify a location, this resource will default to us-central1 and fail if org policies are enabled.
+#   the resource will have to be manually created in northamerica-northeast1 using gcloud, config connector will then acquire it
+#      HOST_PROJECT_ID='client-host-project-id'
+#      gcloud compute forwarding-rules create standardpscapisfw \
+#        --global \
+#        --network=global-standard-vpc \
+#        --address=standard-psc-apis-ip \
+#        --target-google-apis-bundle=all-apis \
+#        --project=${HOST_PROJECT_ID} \
+#        --service-directory-registration=projects/${HOST_PROJECT_ID}/locations/northamerica-northeast1
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
