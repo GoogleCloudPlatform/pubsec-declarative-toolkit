@@ -30,6 +30,7 @@ data:
   ##########################
   #
   # The project id that was created by the client-project-setup
+  # customization: required
   project-id: project-id-12345
   #
   ##########################
