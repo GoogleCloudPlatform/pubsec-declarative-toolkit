@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Grant view access to user or group
+# AC-3(7) - Grant view access to user or group
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: team-view-rolebinding
   namespace: workload-name # kpt-set: ${workload-name}
+# AC-3(7)
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
