@@ -16,8 +16,9 @@
 # - logging enabled for flow logs https://cloud.google.com/vpc/docs/using-flow-logs
 # - private google access enabled https://cloud.google.com/vpc/docs/private-google-access
 #########
-# GKE Subnet
-# AC-4, AC-4(21)
+# AC-4, AC-4(21) - GKE Subnet that has private google access enabled and flow logs enabled
+# Private Google Access allows to access external IP address of Google apis and services in a secured way
+# Flow logs on subnet captures all traffic for a subnet and publishes to cloud logging
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:

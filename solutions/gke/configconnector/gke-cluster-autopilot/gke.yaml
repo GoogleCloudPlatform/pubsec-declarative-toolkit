@@ -13,6 +13,8 @@
 # limitations under the License.
 ######
 # GKE Autopilot Cluster
+# AC-4, SC-7, SC-7(3) - Authorized IP ranges are defined on Kubernetes services
+# SC-28, SC-28(1) - Protection of ETCD database at rest
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
@@ -32,6 +34,7 @@ spec:
       serviceAccountRef:
         name: cluster-name-sa # kpt-set: ${cluster-name}-sa
   description: GKE Autopilot Cluster
+  # SC-28, SC-28(1)
   databaseEncryption:
     keyName: projects/project-id/locations/northamerica-northeast1/keyRings/cluster-name-kmskeyring/cryptoKeys/cluster-name-etcd-key # kpt-set: projects/${project-id}/locations/${location}/keyRings/${cluster-name}-kmskeyring/cryptoKeys/${cluster-name}-etcd-key
     state: ENCRYPTED
@@ -56,6 +59,7 @@ spec:
     dailyMaintenanceWindow:
       startTime: 05:00
       duration: 04:00
+  # AC-4, SC-7, SC-7(3)
   masterAuthorizedNetworksConfig:
     cidrBlocks: # kpt-set: ${master-authorized-networks-cidr}
       - cidrBlock: 10.1.1.5/32
