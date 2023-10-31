@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.9](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.8...solutions/client-landing-zone/0.4.9) (2023-10-31)
+
+
+### Bug Fixes
+
+* psc location workaround ([#628](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/628)) ([c8bc5e0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c8bc5e0663b64345084df4fd3262bc4ab446cb14))
+
 ## [0.4.8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.7...solutions/client-landing-zone/0.4.8) (2023-10-26)
 
 
