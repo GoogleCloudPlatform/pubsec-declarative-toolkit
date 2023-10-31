@@ -110,6 +110,24 @@ You will execute this procedure to provision the foundational resources in GCP f
 
 3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
 
+4. **TEMPORARY WORKAROUND** because of current location limitations when creating the Private Service Connect resource ([PSC](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/client-landing-zone/client-folder/standard/applications-infrastructure/host-project/network/psc/google-apis/psc.yaml)).  It must be created manually with gcloud, Config Connector will then acquire it.
+    ```bash
+    # these temporary roles will be required to run the gcloud command:
+    #   - Compute Network Admin (roles/compute.networkAdmin),
+    #   - Service Directory Editor (roles/servicedirectory.editor)
+    #   - DNS Administrator (roles/dns.admin)
+    # https://cloud.google.com/vpc/docs/configure-private-service-connect-apis#roles
+
+    HOST_PROJECT_ID='client-host-project-id'
+    gcloud compute forwarding-rules create standardpscapisfw \
+      --global \
+      --network=global-standard-vpc \
+      --address=standard-psc-apis-ip \
+      --target-google-apis-bundle=all-apis \
+      --project=${HOST_PROJECT_ID} \
+      --service-directory-registration=projects/${HOST_PROJECT_ID}/locations/northamerica-northeast1
+    ```
+
 ## <a name='NextStep'></a>Next Step
 
 Execute the project onboarding [procedure](onboarding-project.md).
