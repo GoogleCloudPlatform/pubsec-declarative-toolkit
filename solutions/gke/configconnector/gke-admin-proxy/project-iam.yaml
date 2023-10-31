@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # Grant roles to client-name-admin-sa to manage required resources in this project
-# Grant GCP role Service Account Admin to GCP SA to manage service accounts
+# AC-3, AC-3(7), AC-16(2) - Grant GCP role Service Account Admin to GCP SA to manage service accounts
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -23,6 +23,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -30,7 +31,7 @@ spec:
   role: roles/iam.serviceAccountAdmin
   member: "serviceAccount:client-name-admin-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-admin-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Compute Instance Admin to GCP SA to manage compute instances
+# AC-3, AC-3(7), AC-16(2) - Grant GCP role Compute Instance Admin to GCP SA to manage compute instances
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -40,6 +41,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -47,7 +49,7 @@ spec:
   role: roles/compute.instanceAdmin.v1
   member: "serviceAccount:client-name-admin-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-admin-sa@${client-management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Service Account User to GCP SA to run instances with service accounts
+# AC-3, AC-3(7), AC-16(2) - Grant GCP role Service Account User to GCP SA to run instances with service accounts
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -57,6 +59,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -66,7 +69,7 @@ spec:
 ---
 # Add required roles for IAP administration
 # https://cloud.google.com/iap/docs/using-tcp-forwarding#grant-permission
-# grant Tunnel User role to gke-admins on the project
+# AC-3, AC-3(7), AC-16(2) - Grant Tunnel User role to gke-admins on the project
 # moving this on the instance requires IAP service enabled and currently doesn't appear possible to grant with config connector
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -77,6 +80,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -84,7 +88,7 @@ spec:
   role: roles/iap.tunnelResourceAccessor
   member: gke-admins # kpt-set: ${gke-admins}
 ---
-# grant Viewer role to gke-admins on the project
+# AC-3, AC-3(7), AC-16(2) - Grant Viewer role to gke-admins on the project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -94,6 +98,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
 spec:
+  # AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
