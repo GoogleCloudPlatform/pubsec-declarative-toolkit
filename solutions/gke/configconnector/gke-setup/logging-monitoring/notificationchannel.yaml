@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # Notification channel for GKE cluster logs
+# SI-4(5) - Notification channel used for Monitoring security posture policy
 apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
 kind: MonitoringNotificationChannel
 metadata:
@@ -22,6 +23,7 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  # SI-4(5)
   type: email
   labels:
     email_address: group@example.com # kpt-set: ${gke-monitoring-group}

@@ -29,8 +29,12 @@ data:
   # General Settings Values
   ##########################
   #
+  # Use the same Google Cloud Organization ID that was used when deploying the core-landing-zone package
+  # customization: required
   org-id: "0000000000"
+  #
   # The group email address to use for the GKE cluster alerts
+  # customization: required
   gke-monitoring-group: "group@example.com"
   #
   ##########################
@@ -38,15 +42,19 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
-  # project id for the client management project, following rules and conventions
+  #
+  # project id for the client management project that was created in the client-setup package
+  # customization: required
   client-management-project-id: client-management-project-12345
   #
   ##########################
   # Network Host Project
   ##########################
   #
-  # the network host project id
+  # the network host project id that is created by the client-landing-zone package
+  # customization: required
   host-project-id: net-host-project-12345
   #
   ##########################
@@ -54,8 +62,11 @@ data:
   ##########################
   #
   # the project id that was created by the client-project-setup
+  # customization: required
   project-id: project-12345
+  #
   # the project number that was created by the client-project-setup
+  # customization: required
   project-number: "0000000000"
   #
   ##########################

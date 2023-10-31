@@ -15,6 +15,7 @@
 # GKE Security Posture Dashboard Alert Policies
 # https://cloud.google.com/kubernetes-engine/docs/concepts/about-security-posture-dashboard
 # GKE Security Posture Critical Severity Alert Policy
+# SI-4(5) - Provide real-time alerts when policy violation occurs.
 apiVersion: monitoring.cnrm.cloud.google.com/v1beta1
 kind: MonitoringAlertPolicy
 metadata:
@@ -41,6 +42,7 @@ spec:
           namespace: EXTRACT(jsonPayload.resourceName)
       displayName: Log match condition
       name: gke-security-posture-critical-severity-alert
+  # SI-4(5)
   displayName: GKE Security Posture Critical Severity
   documentation:
     content: |-
@@ -79,6 +81,7 @@ spec:
       displayName: Log match condition
       name: gke-security-posture-high-severity-alert
   displayName: GKE Security Posture High Severity
+  # SI-4(5)
   documentation:
     content: |-
       A high severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
@@ -116,6 +119,7 @@ spec:
       displayName: Log match condition
       name: gke-security-posture-medium-severity-alert
   displayName: GKE Security Posture Medium Severity
+  # SI-4(5)
   documentation:
     content: |-
       A medium severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
@@ -153,6 +157,7 @@ spec:
       displayName: Log match condition
       name: gke-security-posture-low-severity-alert
   displayName: GKE Security Posture Low Severity
+  # SI-4(5)
   documentation:
     content: |-
       A low severity alert, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
@@ -197,6 +202,7 @@ spec:
       displayName: Publish Message Count
       name: gke-cluster-event-notification-alert
   displayName: GKE Cluster Event Detected
+  # SI-4(5)
   documentation:
     content: |-
       A message has been received by the gke-cluster-notification-pubsub-topic Cloud Pub/Sub topic.
@@ -237,6 +243,7 @@ spec:
       displayName: Log match condition
       name: gke-cluster-upgrade-alert
   displayName: GKE Cluster Upgrade Notification
+  # SI-4(5)
   documentation:
     content: |-
       A GKE cluster upgrade notification, ${policy.display_name}, has been triggered for the ${resource.label.cluster_name} GKE cluster hosted inside the ${resource.project} project.
