@@ -29,18 +29,25 @@ data:
   # Client
   ##########################
   #
-  # Project that has the public dns zone. Usually the client host project that was created by the client-landing-zone package
+  # Project that has the public dns zone.
+  # Usually the client host project that was created by the client-landing-zone package
+  # customization: required
   dns-project-id: dns-project-12345
   #
   ##########################
   # Gateway
   ##########################
   #
-  # The DNSRecordset.metadata.name (a.k.a kubernetes resource name)
+  # This value is used to define the kubernetes resource name of that DNSRecordset
+  # customization: required
   metadata-name: sample-name-recordset
-  # The DNSRecordset.spec.name
+  #
+  # The value must match the kubernetes DNSRecordset.spec.name resource
+  # customization: required
   spec-name: "sample-name.example.com."
+  #
   # The Gateway name
+  # customization: required
   gateway-name: sample-gateway
   #
   ##########################
@@ -48,8 +55,11 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: client1
+  #
   # The project id that was created by the client-project-setup
+  # customization: required
   project-id: project-12345
   #
   ##########################

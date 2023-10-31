@@ -14,8 +14,7 @@
 #########
 # Client viewer permissions for GKE, logging, and monitoring
 #########
-# Grant role: roles/container.clusterViewer on the GKE Cluster project to client group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - Grant role: roles/container.clusterViewer on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -23,6 +22,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -31,8 +31,7 @@ spec:
   role: roles/container.clusterViewer
   member: team-gkeviewer # kpt-set: ${team-gkeviewer}
 ---
-# Grant role: roles/logging.viewer on the GKE Cluster project to client group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - Grant role: roles/logging.viewer on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -40,6 +39,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -48,8 +48,7 @@ spec:
   role: roles/logging.viewer
   member: team-gkeviewer # kpt-set: ${team-gkeviewer}
 ---
-# Grant role: roles/monitoring.viewer on the GKE Cluster project to client group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - Grant role: roles/monitoring.viewer on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -57,6 +56,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -65,8 +65,7 @@ spec:
   role: roles/monitoring.viewer
   member: team-gkeviewer # kpt-set: ${team-gkeviewer}
 ---
-# Grant role: roles/monitoring.dashboardEditor on the GKE Cluster project to client group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - Grant role: roles/monitoring.dashboardEditor on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -74,6 +73,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -82,8 +82,7 @@ spec:
   role: roles/monitoring.dashboardEditor
   member: team-gkeviewer # kpt-set: ${team-gkeviewer}
 ---
-# Grant role: roles/pubsub.viewer on the GKE Cluster project to client group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - Grant role: roles/pubsub.viewer on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -91,6 +90,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -99,8 +99,7 @@ spec:
   role: roles/pubsub.viewer
   member: team-gkeviewer # kpt-set: ${team-gkeviewer}
 ---
-# Grant role: roles/pubsub.subscriber on the GKE Cluster project to client group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - Grant role: roles/pubsub.subscriber on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -108,6 +107,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
