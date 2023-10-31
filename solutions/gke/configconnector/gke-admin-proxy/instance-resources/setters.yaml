@@ -31,25 +31,38 @@ data:
   ##########################
   #
   # The region that the resources will be created in
+  # customization: optional
   location: northamerica-northeast1
   #
   # the name of the instance, limit 27 characters max
+  # customization: required
   instance-name: proxy1
+  #
   # the instance's machine type
+  # customization: optional
   instance-machine-type: e2-small
+  #
   # the OS image to use, depending on the image, other changes may be required to:
   #   - the startup-script in instance.yaml
   #   - the `constraints/compute.trustedImageProjects` Organization Policy
   #   - firewall policy rules to allow OS updates
+  # customization: required
   instance-os-image: a-project-with-images/the-image
   #
   # ID of existing Shared VPC host project for the client created in the client-landing-zone package
+  # customization: required
   host-project-id: net-host-project-12345
-  # the network and subnet to attach the instance's NIC, the values must match the kubernetes resources 'metadata.name'
+  #
+  # the network name to attach the instance's NIC, the values must match the kubernetes resources 'metadata.name'
+  # customization: required
   network-name: host-project-id-global-standard-vpc
+  #
+  # the subnet name to attach to the instance's NIC.  Values must match the buernetes resources 'metadata.name'
+  # customization: required
   subnet-name: host-project-id-subnet-name
   #
   # the internal IP to reserve for the instance, must be unique within the CIDR range of the subnet above
+  # customization: required
   instance-ip: 1.2.3.4
   #
   ##########################

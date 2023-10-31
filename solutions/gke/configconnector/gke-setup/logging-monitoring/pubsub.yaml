@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # PubSub Topic for GKE Cluster Notifications
+# SI-4(5) - Pubsub topic used for publishing notifications for improving security posture of cluster
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:
@@ -28,6 +29,7 @@ spec:
     allowedPersistenceRegions:
       - northamerica-northeast1
       - northamerica-northeast2
+  # SI-4(5)
   resourceID: gke-cluster-notification-pubsub-topic
 ---
 # PubSub Subscription for GKE Cluster Notifications
@@ -49,6 +51,7 @@ spec:
   # This ensures that the subscription never expires - ttl: ""
   expirationPolicy:
     ttl: ""
+  # SI-4(5)
   topicRef:
     name: project-id-gke-cluster-notification-pubsub-topic # kpt-set: ${project-id}-gke-cluster-notification-pubsub-topic
     namespace: client-name-logging # kpt-set: ${client-name}-logging

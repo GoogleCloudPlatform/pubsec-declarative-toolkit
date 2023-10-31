@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # Grant GCP role GKE Hub admin to Tier3 SA on Service Project
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 # IAM permissions required to register cluster to anthos fleet and workload identity
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -23,6 +23,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -31,7 +32,7 @@ spec:
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role Container admin to Tier3 SA on Service Project
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 # IAM permissions required to register cluster to anthos fleet (also gives full access to cluster)
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -41,6 +42,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -49,7 +51,7 @@ spec:
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role Compute Engine Service Agent to Tier3 SA on Service Project
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 # IAM permissions required to create k8s cluster
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -59,6 +61,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -67,7 +70,7 @@ spec:
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
 # Grant GCP role KMS admin to Tier3 SA on Service Project
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -76,6 +79,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -84,6 +88,7 @@ spec:
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
 # Grant role Cloud KMS CryptoKey Encrypter/Decrypter on the Service Project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -92,6 +97,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -100,6 +106,7 @@ spec:
   member: "serviceAccount:service-project-number@container-engine-robot.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com
 ---
 # Grant role Artifact Registry Administrator to Tier4 SA on Service Project
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -108,6 +115,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -116,6 +124,7 @@ spec:
   member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
 ---
 # Grant role Tier4 Secret Manager Admin to Tier4 SA on Service Project
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -124,6 +133,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -133,6 +143,7 @@ spec:
 ---
 # Grant role Pub Sub Admin to client-name-logging SA on Service Project
 # Required for GKE notification that uses pub-sub
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -141,6 +152,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
