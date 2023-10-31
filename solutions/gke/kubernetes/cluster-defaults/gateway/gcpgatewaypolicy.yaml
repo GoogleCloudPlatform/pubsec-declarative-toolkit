@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Assign SSL policy to gateway
+# SC-5, SC-5(2), SC-8 - Assigning  SSL policy to the gateway
 apiVersion: networking.gke.io/v1
 kind: GCPGatewayPolicy
 metadata:
   name: external-gateway-name-policy # kpt-set: external-${gateway-name}-policy
   namespace: gateway-infra
 spec:
+  # SC-5, SC-5(2), SC-8
   default:
     sslPolicy: ssl-policy # kpt-set: ${ssl-policy}
   targetRef:

@@ -27,7 +27,14 @@ data:
   ##########################
   # Workload
   ##########################
+  #
+  # the name of the workload that was created in the configcontroller/gke-workload-identity package
+  # lowercase only, max 27 characters
+  # customization: required
   workload-name: sample-workload
+  #
+  # The kubernetes service which is referenced by the GCPBackendPolicy
+  # customization: required
   service-name: sample-service
   #
   ##########################
