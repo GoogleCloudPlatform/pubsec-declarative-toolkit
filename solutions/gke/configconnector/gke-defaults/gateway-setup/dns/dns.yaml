@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# create a DNS A record referencing the gateway address
-# SC-22
+# SC-22 - create a DNS A record referencing the external public loadbalancer gateway ip address
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:

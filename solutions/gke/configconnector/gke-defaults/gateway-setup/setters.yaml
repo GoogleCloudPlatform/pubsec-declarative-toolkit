@@ -29,7 +29,8 @@ data:
   # Gateway
   ##########################
   #
-  # The name of the gateway resource
+  # The name of the gateway resource that is created in the kubernetes/cluster-defaults/gateway package.
+  # customization: required
   gateway-name: sample-gateway
   #
   ##########################
@@ -37,6 +38,7 @@ data:
   ##########################
   #
   # The project id that was created by the client-project-setup
+  # customization: required
   project-id: project-12345
   #
   ##########################
