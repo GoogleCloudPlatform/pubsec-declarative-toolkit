@@ -24,6 +24,8 @@
     - [Option 2 - Project in a Folder](#option-2---project-in-a-folder)
     - [GKE Autopilot - Fully managed cluster](#gke-autopilot---fully-managed-cluster)
     - [GKE Standard](#gke-standard)
+    - [GKE Credentials](#gke-credentials)
+    - [GKE Service Account](#gke-service-account)
   - [2. Create your landing zone](#2-create-your-landing-zone)
     - [Fetch the packages](#fetch-the-packages)
     - [2b. Deploy the infrastructure using KPT](#2b-deploy-the-infrastructure-using-kpt)
@@ -354,8 +356,8 @@ The following instructions in this section 1 for the boostrap of the Config Cont
     gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management
 ```
 
-### <a name='GKEStandard'></a>GKE Standard (optional)
-
+### <a name='GKEStandard'></a>GKE Standard
+Optional
 ```shell
     gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
 ```
