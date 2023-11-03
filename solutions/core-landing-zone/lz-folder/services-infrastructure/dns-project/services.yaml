@@ -24,3 +24,5 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/dns-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${dns-project-id}
 spec:
   resourceID: dns.googleapis.com
+  projectRef:
+    external: dns-project-id # kpt-set: ${dns-project-id}
