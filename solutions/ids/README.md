@@ -33,17 +33,18 @@ This package needs to be deployed in multiple steps because the `ComputePacketMi
 
 ## Setters
 
-|            Name             |                             Value                              | Type | Count |
-|-----------------------------|----------------------------------------------------------------|------|-------|
-| address                     | 10.254.0.0                                                     | str  |     1 |
-| client-name                 | client1                                                        | str  |    12 |
-| endpoint-name               | endpoint-name                                                  | str  |     5 |
-| host-project-id             | net-host-project-12345                                         | str  |    21 |
-| host-project-vpc            | projects/<host-project-id>/global/networks/global-standard-vpc | str  |     2 |
-| ids-endpoint-forwardingrule | ids-endpoint-forwardingrule                                    | str  |     1 |
-| region                      | region                                                         | str  |     1 |
-| severity                    | severity                                                       | str  |     1 |
-| zone                        | zone                                                           | str  |     2 |
+|            Name             |                             Value                              | Type  | Count |
+|-----------------------------|----------------------------------------------------------------|-------|-------|
+| address                     | 10.254.0.0                                                     | str   |     1 |
+| client-name                 | client1                                                        | str   |    14 |
+| endpoint-name               | endpoint-name                                                  | str   |     5 |
+| firewall-address            | [10.254.0.0/16]                                                | array |     1 |
+| host-project-id             | net-host-project-12345                                         | str   |    25 |
+| host-project-vpc            | projects/<host-project-id>/global/networks/global-standard-vpc | str   |     2 |
+| ids-endpoint-forwardingrule | ids-endpoint-forwardingrule                                    | str   |     1 |
+| region                      | region                                                         | str   |     1 |
+| severity                    | severity                                                       | str   |     1 |
+| zone                        | zone                                                           | str   |     2 |
 
 ## Sub-packages
 
@@ -54,6 +55,7 @@ This package needs to be deployed in multiple steps because the `ComputePacketMi
 |     File      |                   APIVersion                    |            Kind             |                        Name                         |       Namespace        |
 |---------------|-------------------------------------------------|-----------------------------|-----------------------------------------------------|------------------------|
 | address.yaml  | compute.cnrm.cloud.google.com/v1beta1           | ComputeAddress              | host-project-id-standard-google-managed-services-ip | client-name-networking |
+| firewall.yaml | compute.cnrm.cloud.google.com/v1beta1           | ComputeFirewall             | host-project-id-standard-egress-allow-psa-fwr       | client-name-networking |
 | peering.yaml  | servicenetworking.cnrm.cloud.google.com/v1beta1 | ServiceNetworkingConnection | host-project-id-standard-to-googlemanaged-peer      | client-name-networking |
 | services.yaml | serviceusage.cnrm.cloud.google.com/v1beta1      | Service                     | host-project-id-ids                                 | client-name-projects   |
 | services.yaml | serviceusage.cnrm.cloud.google.com/v1beta1      | Service                     | host-project-id-servicenetworking                   | client-name-projects   |
@@ -61,6 +63,7 @@ This package needs to be deployed in multiple steps because the `ComputePacketMi
 ## Resource References
 
 - [ComputeAddress](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeaddress)
+- [ComputeFirewall](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computefirewall)
 - [ServiceNetworkingConnection](https://cloud.google.com/config-connector/docs/reference/resource-docs/servicenetworking/servicenetworkingconnection)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 

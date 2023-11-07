@@ -32,13 +32,16 @@ data:
   # a name to identify this endpoint
   # customization: optional for first package
   endpoint-name: endpoint1
+  #
   # the zone for the endpoint (must be within region of mirroring policy below)
   # customization: optional
   zone: northamerica-northeast1-a
+  #
   # the minimum alert severity level that is reported by the
   # endpoint. Possible values: ["INFORMATIONAL", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
   # customization: optional
   severity: LOW
+  #
   # Configuration for threat IDs excluded from generating alerts. Limit: 99 IDs
   # Warning: uncomment this field if required. It is not applied using apply-setters but by starlark-update-endpoint-mirroring
   # customization: required if enabled
@@ -53,11 +56,13 @@ data:
   # the region for the mirroring policy
   # customization: optional
   region: northamerica-northeast1
+  #
   # The endpointForwardingRule value from the IDS endpoint.
   # You can obtain this value once the endpoint has been deployed using the command below.
   # gcloud ids endpoints describe <endpoint-name> --zone <zone> --project <host-project-id>
   # customization: required
   ids-endpoint-forwardingrule: 'https://www.googleapis.com/compute/v1/projects/<uid>/regions/<region>/forwardingRules/<uid>'
+  #
   # mirroredResources specifies a set of mirrored VM instances, subnetworks
   # and/or tags for which traffic from/to all VM instances will be mirrored
   # Warning ! this field is not applied using apply-setters but by starlark-update-endpoint-mirroring
@@ -75,10 +80,11 @@ data:
           namespace: string
     tags:
       - tag-one
+  #
   # Filter for mirrored traffic.
   # Refer to the resources's spec to identify the possible configuration for this object.
   # Warning ! this field is not applied using apply-setters but by starlark-update-endpoint-mirroring
-  # customization: optionnal.
+  # customization: optional.
   filter:
     direction: BOTH
   #
@@ -87,10 +93,15 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: client1
+  #
   # the network host project id that is created by the client-landing-zone package
+  # customization: required
   host-project-id: net-host-project-12345
+  #
   # full URL(selfLink) of the VPC network that is connected to the IDS endpoint. This VPC exist in the host project.
+  # customization: required
   host-project-vpc: projects/<host-project-id>/global/networks/global-standard-vpc
   #
   ##########################

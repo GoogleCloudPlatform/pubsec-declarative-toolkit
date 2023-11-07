@@ -40,6 +40,7 @@ data:
   # the network host project id that is created by the client-landing-zone package
   # customization: required
   host-project-id: net-host-project-12345
+  #
   # full URL(selfLink) of the VPC network that is connected to the IDS endpoint. This VPC exist in the host project.
   # customization: required
   host-project-vpc: projects/<host-project-id>/global/networks/global-standard-vpc
@@ -48,9 +49,14 @@ data:
   # Private service access
   ##########################
   #
-  # IP reservation for Private service access to Google managed services. The prefix lenght is a /16.
+  # IP reservation for Private service access to Google managed services. The prefix length is a /16.
   # customization: optional
   address: 10.254.0.0
+  #
+  # the CIDR range for the firewall rule that allows egress to Private service access. Include the prefix /16
+  # customization: optional
+  firewall-address: |
+    - 10.254.0.0/16
   #
   ##########################
   # End of Configurations
