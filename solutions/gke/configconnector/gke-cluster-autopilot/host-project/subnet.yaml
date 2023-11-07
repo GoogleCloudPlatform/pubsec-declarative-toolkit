@@ -35,7 +35,7 @@ spec:
   secondaryIpRange:
     - ipCidrRange: 10.1.33.0/24 # kpt-set: ${subnet-services-cidr}
       rangeName: servicesrange
-    - ipCidrRange: 240.1.0.0/21 # kpt-set: ${subnet-pod-cidr}
+    - ipCidrRange: 172.16.0.0/23 # kpt-set: ${subnet-pod-cidr}
       rangeName: podrange
   region: northamerica-northeast1 # kpt-set: ${location}
   description: GKE Subnet
