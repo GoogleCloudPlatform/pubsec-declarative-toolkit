@@ -16,7 +16,6 @@ A package to deploy a google managed classic certificate.
 
 |       Name       |           Value           | Type  | Count |
 |------------------|---------------------------|-------|-------|
-| certificate-id   |                  12345678 | int   |     1 |
 | certificate-name | sample-name               | str   |     3 |
 | domains          | [sample-name.example.com] | array |     1 |
 | project-id       | project-12345             | str   |     2 |
