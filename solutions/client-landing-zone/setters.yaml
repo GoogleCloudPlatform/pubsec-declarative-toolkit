@@ -135,6 +135,7 @@ data:
     - "debian.org"
     - "deb.debian.org"
     - "ubuntu.com"
+    - "cloud.google.com"
     - "packages.cloud.google.com"
     - "security.ubuntu.com"
     - "northamerica-northeast1.gce.archive.ubuntu.com"
@@ -147,11 +148,15 @@ data:
   #   - standard-nane1-pbmm-main-snet
   #   - standard-nane2-pbmm-main-snet
   # OR a list of more restrictive ranges within those subnets (for example, 10.1.1.5/32)
+  # it also has to include the primary ranges of the GKE nodes otherwise, nodes won't be able to be provisioned.
+  # customization: optional
   allowed-os-update-source-ip-ranges: |
     - "10.1.0.0/21"
     - "10.1.8.0/21"
+    - "10.1.32.0/19"
     - "10.1.128.0/21"
     - "10.1.136.0/21"
+    - "10.1.160.0/19"
   #
   ##########################
   # DNS
