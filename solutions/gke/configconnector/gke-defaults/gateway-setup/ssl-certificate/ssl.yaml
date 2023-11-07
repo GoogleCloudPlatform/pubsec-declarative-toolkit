@@ -25,7 +25,6 @@ metadata:
     cnrm.cloud.google.com/state-into-spec: absent
 spec:
   # SC-8
-  certificateId: 12345678 # kpt-set: ${certificate-id}
   description: certificate-name Managed SSL Certificate # kpt-set: ${certificate-name} Managed SSL Certificate
   managed:
     domains: # kpt-set: ${domains}
