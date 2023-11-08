@@ -119,10 +119,11 @@ data:
   # The "ids" tag is the recommended approach to ensure that the traffic reaching the GKE clusters is inspected by Cloud IDS.
   # Furthermore, you would need to have that "ids" tag listed under the mirroredresources of the packet mirroring policy.
   # See ids package for more details.
-  # Warning: uncomment this field if required. It is not applied using apply-setters but by starlark-update-containercluster
-  # customization: optional if enabled.
-  # networktags:
-  #   - ids
+  # Warning: It is not applied using apply-setters but by starlark-update-containercluster
+  # customization: optional if networktags-enabled is set to true.
+  networktags-enabled: false
+  networktags:
+    - ids
   #
   ##########################
   # Config Sync

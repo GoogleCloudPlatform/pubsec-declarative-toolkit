@@ -73,6 +73,7 @@ To fix this, you update the `root-sync` resource to include the override section
 | masterIpv4CidrBlock             | 192.168.0.0/28                                       | str   |     1 |
 | masterIpv4Range                 | ["192.168.0.0/28"]                                   | array |     0 |
 | networktags                     |                                                      | str   |     0 |
+| networktags-enabled             | false                                                | str   |     0 |
 | podIpv4Range                    | ["172.16.0.0/23"]                                    | array |     1 |
 | primaryIpv4Range                | ["10.1.32.0/24"]                                     | array |     3 |
 | project-id                      | project-12345                                        | str   |    51 |

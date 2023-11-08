@@ -14,11 +14,13 @@ source: |
   # extract values from setters
   for resource in ctx.resource_list["items"]:
     if resource["metadata"]["name"] in ["setters"]:
-      # extract setters for ContainerCluster
-      if "networktags" in resource["data"]:
-        print("--networktags enabled")
-        networktags_enabled = True
-        networktags = resource["data"]["networktags"]
+      # check if networktags-enabled exist
+      if "networktags-enabled" in resource["data"]:
+        # check if networkstags-enabled is set to true
+        if resource["data"]["networktags-enabled"]:
+          print("--networktags enabled")
+          networktags_enabled = True
+          networktags = resource["data"]["networktags"]
   # search for resources to update
   for resource in ctx.resource_list["items"]:
     print(resource["kind"])
