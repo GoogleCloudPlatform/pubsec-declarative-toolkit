@@ -20,10 +20,11 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: ids.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # Service Networking API
 # required for private service access and cloud IDS
@@ -35,7 +36,8 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: servicenetworking.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
