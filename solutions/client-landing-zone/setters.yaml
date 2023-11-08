@@ -90,8 +90,11 @@ data:
   project-allowed-restrict-vpc-peering: |
     - under:projects/PROJECT_ID
   #
-  # nonp IP space
-  standard-nonp-cidr: 10.1.0.0/18
+  # nonp IP space, used by ComputeFirewallPolicyRule for network isolation
+  # this list must include all non protected cidr range including the ranges for GKE nodes, services and pods
+  standard-nonp-cidr: |
+    - 10.1.0.0/18
+    - 172.16.0.0/13
   #
   # Subnet IP range for nonp-main in northamerica-northeast1
   standard-nane1-nonp-main-snet: 10.1.0.0/21
@@ -99,8 +102,11 @@ data:
   # Subnet IP range for nonp-main in northamerica-northeast2
   standard-nane2-nonp-main-snet: 10.1.8.0/21
   #
-  # pbmm IP space
-  standard-pbmm-cidr: 10.1.128.0/18
+  # pbmm IP space, used by ComputeFirewallPolicyRule for network isolation
+  # this list must include all pbmm cidr range including the ranges for GKE nodes, services and pods
+  standard-pbmm-cidr: |
+    - 10.1.128.0/18
+    - 172.24.0.0/13
   #
   # Subnet IP range for pbmm-main in northamerica-northeast1
   standard-nane1-pbmm-main-snet: 10.1.128.0/21
@@ -113,7 +119,6 @@ data:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
-    - 240.0.0.0/4
   #
   ##########################
   # Firewall Policy (client-folder)
@@ -129,6 +134,7 @@ data:
   #
   # Allowed domain names for os updates
   # The list below is an example for Debian and Ubuntu, modify as per trusted images
+  # note that cloud.google.com is required when GKE nodes are provisioned
   # customization: optional
   allowed-os-update-domains: |
     - "debian.map.fastlydns.net"

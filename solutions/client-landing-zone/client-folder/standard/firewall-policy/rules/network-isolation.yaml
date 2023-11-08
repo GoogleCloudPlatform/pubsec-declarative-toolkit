@@ -33,10 +33,10 @@ spec:
   match:
     layer4Configs:
       - ipProtocol: "all"
-    srcIPRanges:
-      - "standard-pbmm-cidr" # kpt-set: ${standard-pbmm-cidr}
-    destIPRanges:
-      - "standard-nonp-cidr" # kpt-set: ${standard-nonp-cidr}
+    srcIPRanges: # kpt-set: ${standard-pbmm-cidr}
+      - "standard-pbmm-cidr"
+    destIPRanges: # kpt-set: ${standard-nonp-cidr}
+      - "standard-nonp-cidr"
   priority: 1000
 ---
 # Isolate PBMM subnet so it denies ingress traffic from non-protected subnet
@@ -59,8 +59,8 @@ spec:
   match:
     layer4Configs:
       - ipProtocol: "all"
-    srcIPRanges:
-      - "standard-nonp-cidr" # kpt-set: ${standard-nonp-cidr}
-    destIPRanges:
-      - "standard-pbmm-cidr" # kpt-set: ${standard-pbmm-cidr}
+    srcIPRanges: # kpt-set: ${standard-nonp-cidr}
+      - "standard-nonp-cidr"
+    destIPRanges: # kpt-set: ${standard-pbmm-cidr}
+      - "standard-pbmm-cidr"
   priority: 1100
