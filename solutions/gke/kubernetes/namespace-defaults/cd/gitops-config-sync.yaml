@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Root Sync to observe foler csync/tier4/kubernetes/<fleet-id>/deploy/env/<namespace>
+# Root Sync to observe folder csync/tier4/kubernetes/<fleet-id>/deploy/env/<namespace>
+# CM-5(1) - Files are read from the folder and applied to the infrastructure in automated way
 apiVersion: configsync.gke.io/v1beta1
 kind: RootSync
 metadata:

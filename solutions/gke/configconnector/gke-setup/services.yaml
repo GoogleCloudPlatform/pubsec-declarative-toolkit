@@ -30,6 +30,7 @@ spec:
   resourceID: container.googleapis.com
 ---
 # Container Security API
+# RA-5(5) - A service that provides security insights into GKE clusters
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -39,6 +40,7 @@ metadata:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  # RA-5(5)
   resourceID: containersecurity.googleapis.com
 ---
 # Anthos API
@@ -127,6 +129,7 @@ spec:
   resourceID: artifactregistry.googleapis.com
 ---
 # Container Scanning API
+# RA-5(5) - A service to scan containers for vulnerabilities
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -136,6 +139,7 @@ metadata:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  # RA-5(5)
   resourceID: containerscanning.googleapis.com
 ---
 # Certificate Manager API

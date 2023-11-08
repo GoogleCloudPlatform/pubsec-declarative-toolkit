@@ -14,7 +14,8 @@
 ######
 # Cloud Logging bucket for Security logs: Cloud Audit, Access Transparency Logs, and Data Access Logs
 # Logs are routed using a log sink to a central logging project into a dedicated log bucket
-# AU-4(1), AU-9(2) - Log buckets are created in a logging project, isolating them from the source of the log entries in other projects
+# AU-7, AU-9 - The log buckets created within the Logging project are immutable (AU-7(B)). These buckets have a retention policy of 365 days and IAM Policy that defines who has access to the bucket (AU-9)
+# AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
@@ -23,17 +24,19 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
+  # AU-4(1), AU-6(4), AU-9(2)
   projectRef:
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
-  # Implement retention policy and retention locking policy
-  # AU-9, AU-11 - RetentionDays sets the policy where existing log content cannot be changed/deleted for the specified number of days (from setters.yaml), locked setting means policy cannot be changed, ensuring immutability.
+  # Implement retention locking policy and number of retention days
+  # AU-7, AU-9
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}
 ---
 # Cloud Logging bucket for Platform and Component logs
+# Logs are routed using a log sink to a central logging project into a dedicated log bucket
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
@@ -42,12 +45,13 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
 spec:
+  # AU-4(1), AU-6(4), AU-9(2)
   projectRef:
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
-  # Implement retention policy and retention locking policy
-  # AU-9, AU-11
+  # Implement retention locking policy and number of retention days
+  # AU-7, AU-9
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}

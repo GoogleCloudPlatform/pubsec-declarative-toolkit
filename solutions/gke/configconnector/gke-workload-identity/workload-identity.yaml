@@ -20,7 +20,7 @@
 # Additional roles can be granted to this service account to provide applications access to other Google services.
 #########
 # GCP SA that will access Google services.
-# This GCP SA is bound to a Kubernetes SA
+# AC-3(7), AC-3 - This GCP SA is bound to a Kubernetes SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -29,11 +29,11 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  # AC-3(7), AC-3
   displayName: workload-name-sa # kpt-set: ${workload-name}-sa
 ---
-# Grant secretmanager.secretAccessor to GCP SA on Service Project for Secret access
+# AC-3(7), AC-3 - Grant secretmanager.secretAccessor to GCP SA on Service Project for Secret access
 # This enables the GCP SA to access Google Secrets
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -42,6 +42,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -50,9 +51,8 @@ spec:
   role: roles/secretmanager.secretAccessor
   member: "serviceAccount:workload-name-sa@bddmu-mvp-demo.iam.gserviceaccount.com" # kpt-set: serviceAccount:${workload-name}-sa@${project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role iam.workloadIdentityUser to GCP SA to allow the Kubernetes SA to impersonate the GCP SA
+# AC-3(7), AC-3 - Grant GCP role iam.workloadIdentityUser to GCP SA to allow the Kubernetes SA to impersonate the GCP SA
 # This binding allows the Kubernetes service account to act as the GCP IAM service account.
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -61,6 +61,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount

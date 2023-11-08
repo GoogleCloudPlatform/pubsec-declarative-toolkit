@@ -5,6 +5,8 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
+  # Organization ID
+  org-id: "123456789012"
   # Billing Account ID to be associated with this project
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
   # GCP folder to use as parent to this project, lowercase K8S resource name
@@ -12,6 +14,8 @@ data:
   # Naming Convention for project-id : <tenant-code><environment-code>m<data-classification>-<project-owner>-<user defined string>
   # Max 30 characters
   hub-project-id: xxdmu-admin1-projectname
+  # Project ID of the project hosting the config controller instance
+  management-project-id: management-project-id
   # Identity that should be allowed to access the management VM using IAP TCP forwarding
   # https://cloud.google.com/iap/docs/using-tcp-forwarding
   hub-admin: group:group@domain.com

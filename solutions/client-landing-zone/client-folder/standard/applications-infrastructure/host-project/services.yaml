@@ -21,10 +21,11 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: compute.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # Logging API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -35,10 +36,11 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: logging.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # Monitoring API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -49,10 +51,11 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: monitoring.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # DNS API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -62,10 +65,11 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: dns.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # Service Directory API
 # Required for Private Service Connect
@@ -76,10 +80,11 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: servicedirectory.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # Container API
 # Required for Allowing GKE clusters to be deployed in service projects
@@ -92,7 +97,8 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: container.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}

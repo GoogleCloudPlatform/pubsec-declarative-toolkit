@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/kubernetes/cluster-defaults/0.3.0...solutions/gke/kubernetes/cluster-defaults/0.3.1) (2023-11-01)
+
+
+### Bug Fixes
+
+* yaml comments cleanup ([#632](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/632)) ([6c77085](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/6c770850242590692365bbbf98222d94e53e5427))
+
 ## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/kubernetes/cluster-defaults/0.2.0...solutions/gke/kubernetes/cluster-defaults/0.3.0) (2023-09-08)
 
 

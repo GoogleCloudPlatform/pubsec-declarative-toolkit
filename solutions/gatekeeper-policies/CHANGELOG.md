@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gatekeeper-policies/0.2.0...solutions/gatekeeper-policies/0.2.1) (2023-10-24)
+
+
+### Bug Fixes
+
+* YAML comments cleanup ([#564](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/564)) ([a9dbcf1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a9dbcf1945af3fa00851103994e35a2113978de1))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gatekeeper-policies/0.1.0...solutions/gatekeeper-policies/0.2.0) (2023-03-23)
 
 

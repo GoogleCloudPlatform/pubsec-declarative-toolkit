@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Google Managed Classic SSL certificate
+# SC-8 - Google Managed Classic SSL certificate that would be used by Gateway controller that would target external public load balancer
 # Warning! requires the alpha resource loaded in the config controller
 # https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/compute_v1alpha1_computemanagedsslcertificate.yaml
 # TODO: fix error message : Update call failed: error applying desired state: summary: doesn't support update
@@ -24,7 +24,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/state-into-spec: absent
 spec:
-  certificateId: 12345678 # kpt-set: ${certificate-id}
+  # SC-8
   description: certificate-name Managed SSL Certificate # kpt-set: ${certificate-name} Managed SSL Certificate
   managed:
     domains: # kpt-set: ${domains}

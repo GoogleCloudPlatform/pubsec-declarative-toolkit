@@ -30,10 +30,16 @@ data:
   ##########################
   #
   # the unique identifier for the resource
-  certificate-id: 12345678
+  # customization: required
+  # removed in 1.111.0 version
+  # certificate-id: 12345678
+  #
   # a resource name for this certificate
+  # customization: required
   certificate-name: sample-name
+  #
   # domains for which a managed SSL certificate will be valid. There can be up to 100 domains in this list.
+  # customization: required
   domains: |
     - sample-name.example.com
   #
@@ -42,6 +48,7 @@ data:
   ##########################
   #
   # The project id that was created by the client-project-setup
+  # customization: required
   project-id: project-12345
   #
   ##########################

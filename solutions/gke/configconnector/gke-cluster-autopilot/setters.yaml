@@ -30,22 +30,29 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: client1
   #
   ##########################
   # Project
   ##########################
   #
-  # The project id that was created by the client-project-setup. This id will also becomes the Anthos Fleet id
+  # The project id that was created by the client-project-setup.
+  # This id will also becomes the Anthos Fleet id
+  # customization: required
   project-id: project-12345
   #
   ##########################
   # Network Host Project
   ##########################
   #
-  # the client network host project id
+  # the host project for this client created in client-landing-zone package deployment
+  # customization: required
   host-project-id: host-project-12345
-  # VPC to deploy the subnet - K8S resource name
+  #
+  # VPC to deploy the subnet, the value must match the kubernetes resources 'metadata.name'
+  # created in client-landing-zone package deployment
+  # customization: required
   host-project-vpc: host-project-vpc
   #
   ##########################
@@ -53,29 +60,49 @@ data:
   ##########################
   #
   # name of this GKE cluster
+  # customization: required
   cluster-name: autopilot1-gke
+  #
   # the region where to deploy this GKE cluster
+  # customization: optional
   location: northamerica-northeast1
+  #
   # the master control plane cidr for kind ContainerCluster
+  # Must be unique within the VPC. Looking at the VPC's routing table can help determine this values
+  # customization: optional
   masterIpv4CidrBlock: 172.16.0.0/28
+  #
   # the master control plane range for kind ComputeFirewall (same as masterIpv4CidrBlock but using list)
+  # customization: optional
   masterIpv4Range: |
     - "172.16.0.0/28"
-  # the master authorized networks cidr - bastion ip
+  #
+  # the master authorized networks cidr - gke admin proxy ip
+  # customization: required
   master-authorized-networks-cidr: |
     - cidrBlock: 10.1.1.5/32
-      displayName: bastion
+      displayName: gke-admin-proxy
+  #
   # subnet IP ranges
+  # Must be unique within the VPC. Looking at the VPC's routing table can help determine these values
+  # customization: optional
   subnet-primary-cidr: 10.1.32.0/24
   subnet-services-cidr: 10.1.33.0/24
   subnet-pod-cidr: 240.1.0.0/21
+  #
   # the pod range for kind ComputeFirewall (same as subnet-pod-cidr but using list)
+  # customization: optional
   podIpv4Range: |
     - "240.1.0.0/21"
+  #
   # the primary range for kind ComputeFirewall (same as subnet-primary-cidr but using list)
+  # customization: optional
   primaryIpv4Range: |
     - "10.1.32.0/24"
-  # firewall policies priority ( cannot overlap with any existing policy id)
+  #
+  # firewall policies priority, this cannot overlap with any existing policy id
+  # can verify by checking the firewall policies for the host project
+  # customization: required (only optional for the client's first cluster)
   gke-to-azdo-priority: 2000
   gke-to-github-priority: 2001
   gke-to-docker-priority: 2002
@@ -85,14 +112,20 @@ data:
   ##########################
   #
   # Used for the initial root sync of the GKE cluster (GitHub, Azure DevOps, etc.)
+  # The repo stores the manifests for the kubernetes resources to be deployed by this GKE cluster
   #
   # the git repo URL, for example
   # https://github.com/GITHUB-ORG/REPO-NAME
   # https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME
+  # customization: required
   repo-url: tier34-repo-to-observe
+  #
   # the branch to check out (usually main)
+  # customization: optional
   repo-branch: main
+  #
   # the directory to observe for YAML manifests
+  # customization: required
   repo-dir: csync/tier3/kubernetes/<fleet-id>/deploy/<env>
   #
   ##########################

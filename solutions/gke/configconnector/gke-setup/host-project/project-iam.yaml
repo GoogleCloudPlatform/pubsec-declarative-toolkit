@@ -19,7 +19,7 @@
 ##################
 # Grant role: roles/compute.networkUser on the host project to SERVICE_PROJECT_1_NUM@cloudservices.gserviceaccount.com
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#enabling_and_granting_roles
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -28,6 +28,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -37,7 +38,7 @@ spec:
 ---
 # Grant role: roles/compute.networkUser on the host project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#enabling_and_granting_roles
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
+# AC-3(7), AC-3 - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -46,6 +47,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -57,6 +59,7 @@ spec:
 # If you want a GKE cluster in a service project to create and manage the firewall resources in your host project,
 # the service project's GKE service account must be granted the appropriate IAM permissions
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#managing_firewall_resources
+# AC-3(7), AC-3 - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -65,6 +68,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -73,6 +77,7 @@ spec:
   member: "serviceAccount:service-project-number@container-engine-robot.iam.gserviceaccount.com" # kpt-set: serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com
 ---
 # Grant custom role: Tier3 Subnetwork Admin on the host project to tier3 SA
+# AC-3(7), AC-3 - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -81,6 +86,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -91,6 +97,7 @@ spec:
 # Grant role: Kubernetes Engine Host Service Agent User on the host project to service-SERVICE_PROJECT_1_NUM@container-engine-robot.iam.gserviceaccount.com
 # Each service project's GKE service account must have a binding for the Host Service Agent User role on the host project
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#grant_host_service_agent_role
+# AC-3(7), AC-3 - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -99,6 +106,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
+  # AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project

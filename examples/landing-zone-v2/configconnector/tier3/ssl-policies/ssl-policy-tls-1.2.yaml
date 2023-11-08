@@ -14,7 +14,7 @@
 #########
 # https://www.cyber.gc.ca/en/guidance/guidance-securely-configuring-network-protocols-itsp40062
 #########
-# SSL policy with minimum TLS 1.2
+# SC-8, SC-13 - SSL policy with minimum TLS 1.2
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSSLPolicy
 metadata:
@@ -23,6 +23,7 @@ metadata:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: CCCS approved TLS 1.2 policy
+  # SC-8, SC-13
   minTlsVersion: TLS_1_2
   profile: CUSTOM
   customFeatures:

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-setup/0.2.1...solutions/gke/configconnector/gke-setup/0.2.2) (2023-10-31)
+
+
+### Bug Fixes
+
+* yaml comments cleanup ([#630](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/630)) ([0140d29](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0140d29187ed2b774bfb9e99d4c2fe90458554cf))
+
 ## [0.2.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-setup/0.2.0...solutions/gke/configconnector/gke-setup/0.2.1) (2023-09-06)
 
 
