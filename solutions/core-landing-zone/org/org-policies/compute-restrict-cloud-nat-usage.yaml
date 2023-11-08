@@ -24,15 +24,12 @@
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: policies/compute-restrict-cloud-nat-usage
+metadata:
   name: compute-restrict-cloud-nat-usage
   namespace: policies
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-09
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|ResourceManagerPolicy|policies|compute-restrict-cloud-nat-usage'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   constraint: "constraints/compute.restrictCloudNATUsage"
   listPolicy:

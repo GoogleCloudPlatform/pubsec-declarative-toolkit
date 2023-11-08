@@ -33,14 +33,11 @@
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: policies/compute-disable-serial-port-logging-except-mgt-project
+metadata:
   name: compute-disable-serial-port-logging-except-mgt-project
   namespace: policies
   labels:
     guardrail: "false"
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|ResourceManagerPolicy|policies|compute-disable-serial-port-logging-except-mgt-project'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   constraint: "compute.disableSerialPortLogging"
   booleanPolicy:

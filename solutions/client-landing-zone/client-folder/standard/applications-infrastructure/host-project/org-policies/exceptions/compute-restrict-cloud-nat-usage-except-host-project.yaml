@@ -26,14 +26,11 @@
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: policies/compute-restrict-cloud-nat-usage-except-host-project-id
+metadata:
   name: compute-restrict-cloud-nat-usage-except-host-project-id
   namespace: policies
   labels:
     guardrail: "false"
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|ResourceManagerPolicy|policies|compute-restrict-cloud-nat-usage-except-host-project-id'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   constraint: "constraints/compute.restrictCloudNATUsage"
   listPolicy:

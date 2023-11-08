@@ -24,15 +24,12 @@
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
-metadata: # kpt-merge: policies/iam-disable-audit-logging-exemption
+metadata:
   name: iam-disable-audit-logging-exemption
   namespace: policies
   labels:
     guardrail: "true"
     guardrail-enforced: guardrail-11
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'resourcemanager.cnrm.cloud.google.com|ResourceManagerPolicy|policies|iam-disable-audit-logging-exemption'
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   constraint: "constraints/iam.disableAuditLoggingExemption"
   booleanPolicy:
