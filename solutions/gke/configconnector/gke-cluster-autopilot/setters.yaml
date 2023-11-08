@@ -70,12 +70,12 @@ data:
   # the master control plane cidr for kind ContainerCluster
   # Must be unique within the VPC. Looking at the VPC's routing table can help determine this values
   # customization: optional
-  masterIpv4CidrBlock: 172.16.0.0/28
+  masterIpv4CidrBlock: 192.168.0.0/28
   #
   # the master control plane range for kind ComputeFirewall (same as masterIpv4CidrBlock but using list)
   # customization: optional
   masterIpv4Range: |
-    - "172.16.0.0/28"
+    - "192.168.0.0/28"
   #
   # the master authorized networks cidr - gke admin proxy ip
   # customization: required
@@ -83,22 +83,30 @@ data:
     - cidrBlock: 10.1.1.5/32
       displayName: gke-admin-proxy
   #
-  # subnet IP ranges
-  # Must be unique within the VPC. Looking at the VPC's routing table can help determine these values
+  # subnet primary IP range
+  # Must be unique within the VPC. Looking at the VPC's routing table can help determine this value
   # customization: optional
   subnet-primary-cidr: 10.1.32.0/24
-  subnet-services-cidr: 10.1.33.0/24
-  subnet-pod-cidr: 240.1.0.0/21
   #
-  # the pod range for kind ComputeFirewall (same as subnet-pod-cidr but using list)
-  # customization: optional
-  podIpv4Range: |
-    - "240.1.0.0/21"
-  #
-  # the primary range for kind ComputeFirewall (same as subnet-primary-cidr but using list)
+  # the subnet primary range for kind ComputeFirewall (same as subnet-primary-cidr but using list)
   # customization: optional
   primaryIpv4Range: |
     - "10.1.32.0/24"
+  #
+  # subnet secondary IP range for services
+  # Must be unique within the VPC. Looking at the VPC's routing table can help determine this value
+  # customization: optional
+  subnet-services-cidr: 10.1.33.0/24
+  #
+  # subnet secondary IP range for pods
+  # Must be unique within the VPC. Looking at the VPC's routing table can help determine this value
+  # customization: optional
+  subnet-pod-cidr: 172.16.0.0/23
+  #
+  # the subnet secondary IP range for pods for kind ComputeFirewall (same as subnet-pod-cidr but using list)
+  # customization: optional
+  podIpv4Range: |
+    - "172.16.0.0/23"
   #
   # firewall policies priority, this cannot overlap with any existing policy id
   # can verify by checking the firewall policies for the host project
@@ -106,6 +114,16 @@ data:
   gke-to-azdo-priority: 2000
   gke-to-github-priority: 2001
   gke-to-docker-priority: 2002
+  #
+  # network tags to be assigned to GKE nodes
+  # The "ids" tag is the recommended approach to ensure that the traffic reaching the GKE clusters is inspected by Cloud IDS.
+  # Furthermore, you would need to have that "ids" tag listed under the mirroredresources of the packet mirroring policy.
+  # See ids package for more details.
+  # Warning: It is not applied using apply-setters but by starlark-update-containercluster
+  # customization: optional if networktags-enabled is set to true.
+  networktags-enabled: false
+  networktags:
+    - ids
   #
   ##########################
   # Config Sync

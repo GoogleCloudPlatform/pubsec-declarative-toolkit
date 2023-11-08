@@ -70,15 +70,17 @@ To fix this, you update the `root-sync` resource to include the override section
 | host-project-vpc                | host-project-vpc                                     | str   |     2 |
 | location                        | northamerica-northeast1                              | str   |     5 |
 | master-authorized-networks-cidr | [cidrBlock: 10.1.1.5/32displayName: gke-admin-proxy] | array |     1 |
-| masterIpv4CidrBlock             | 172.16.0.0/28                                        | str   |     1 |
-| masterIpv4Range                 | ["172.16.0.0/28"]                                    | array |     0 |
-| podIpv4Range                    | ["240.1.0.0/21"]                                     | array |     1 |
+| masterIpv4CidrBlock             | 192.168.0.0/28                                       | str   |     1 |
+| masterIpv4Range                 | ["192.168.0.0/28"]                                   | array |     0 |
+| networktags                     |                                                      | str   |     0 |
+| networktags-enabled             | false                                                | str   |     0 |
+| podIpv4Range                    | ["172.16.0.0/23"]                                    | array |     1 |
 | primaryIpv4Range                | ["10.1.32.0/24"]                                     | array |     3 |
 | project-id                      | project-12345                                        | str   |    51 |
 | repo-branch                     | main                                                 | str   |     1 |
 | repo-dir                        | csync/tier3/kubernetes/<fleet-id>/deploy/<env>       | str   |     1 |
 | repo-url                        | tier34-repo-to-observe                               | str   |     1 |
-| subnet-pod-cidr                 | 240.1.0.0/21                                         | str   |     1 |
+| subnet-pod-cidr                 | 172.16.0.0/23                                        | str   |     1 |
 | subnet-primary-cidr             | 10.1.32.0/24                                         | str   |     1 |
 | subnet-services-cidr            | 10.1.33.0/24                                         | str   |     1 |
 
