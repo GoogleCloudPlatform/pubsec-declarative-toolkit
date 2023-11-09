@@ -107,7 +107,6 @@ spec:
 ---
 # Grant GCP role Storage Admin to GCP SA
 # TODO: Add Security controls
-# TODO: Discuss if this should go in the logging namespace manifest
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
