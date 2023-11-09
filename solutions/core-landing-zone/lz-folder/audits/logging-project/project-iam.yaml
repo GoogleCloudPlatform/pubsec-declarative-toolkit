@@ -117,9 +117,7 @@ spec:
   service: allServices
   # AU-9, AC-3
   auditLogConfigs:
-    - logType: ADMIN_READ
     - logType: DATA_READ
-    - logType: DATA_WRITE
   resourceRef:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
