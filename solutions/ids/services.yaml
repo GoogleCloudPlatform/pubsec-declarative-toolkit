@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Cloud IDS API
+# AC-17(1), SC-7(9), SC-18(1), SI-3(2), SI-3(4), SI-3(7), SI-4(4), SI-4(5), SI-4(7) - Enable Cloud IDS APIs in host project that contains shared vpc network
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -20,10 +20,11 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: ids.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
 ---
 # Service Networking API
 # required for private service access and cloud IDS
@@ -35,7 +36,8 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
 spec:
   resourceID: servicenetworking.googleapis.com
+  projectRef:
+    external: host-project-id # kpt-set: ${host-project-id}
