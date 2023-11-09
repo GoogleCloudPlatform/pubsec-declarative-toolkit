@@ -31,7 +31,8 @@ data:
   #
   # the unique identifier for the resource
   # customization: required
-  certificate-id: 12345678
+  # removed in 1.111.0 version
+  # certificate-id: 12345678
   #
   # a resource name for this certificate
   # customization: required
