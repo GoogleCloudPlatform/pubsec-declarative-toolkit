@@ -108,6 +108,8 @@ data:
   # Security Logs Bucket
   # customization: required
   security-log-bucket: security-log-bucket-12345
+  # Security incident log bucket
+  security-incident-log-bucket: security-incident-log-bucket-12345
   #
   # Platform and Component Log Bucket
   # customization: required
