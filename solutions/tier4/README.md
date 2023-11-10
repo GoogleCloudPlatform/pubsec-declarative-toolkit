@@ -1,0 +1,2 @@
+Landing zone v2 subpackage.
+Depends on `client-landing-zone`.
