@@ -17,25 +17,23 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.requireShieldedVm
+# Constraint: constraints/compute.restrictVpnPeerIPs
 #
-# This boolean constraint, when set to True, requires that all new Compute Engine VM instances
-# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled.
-# Secure Boot can be disabled after creation, if desired. Existing running instances will continue to work as usual.
-#
-# This exception is for the GKE cluster nodes in the management project.  Config Controller sets up GKE with standard VM.
+# This list constraint defines the set of valid IP addresses that can be configured as VPN peer IPs.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-require-shielded-vm-except-mgt-project # kpt-set: compute-require-shielded-vm-except-${management-project-id}
+  name: compute-restrict-vpn-peer-ips
   namespace: policies
   labels:
-    guardrail: "false"
+    guardrail: "true"
+    guardrail-enforced: guardrail-09
 spec:
-  constraint: "constraints/compute.requireShieldedVm"
-  booleanPolicy:
-    enforced: false
-  projectRef:
-    external: "0000000000" # kpt-set: ${management-project-id}
+  constraint: "constraints/compute.restrictVpnPeerIPs"
+  listPolicy: # kpt-set: ${allowed-vpn-peering-ips}
+    deny:
+      all: True
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}

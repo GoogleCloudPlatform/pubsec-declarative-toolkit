@@ -17,24 +17,29 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.requireShieldedVm
+# Constraint: compute.disableSerialPortLogging
 #
-# This boolean constraint, when set to True, requires that all new Compute Engine VM instances
-# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled.
-# Secure Boot can be disabled after creation, if desired. Existing running instances will continue to work as usual.
+# This boolean constraint disables serial port logging to Stackdriver from Compute Engine VMs belonging to the
+# organization, project, or folder where this constraint is being enforced.
 #
-# This exception is for the GKE cluster nodes in the management project.  Config Controller sets up GKE with standard VM.
+# By default, serial port logging for Compute Engine VMs is disabled, and can be selectively enabled on a per-VM or
+# per-project basis using metadata attributes. When enforced, this constraint disables serial port logging for new
+# Compute Engine VMs whenever a new VM is created, as well as preventing users from changing the metadata attribute
+# of any VMs (old or new) to True. Disabling serial port logging can cause certain services that rely on it, such
+# as GKE Autopilot, to not function correctly.
+#
+# The exception on Management project is needed for GKE Autopilot autoscaling to function properly.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-require-shielded-vm-except-mgt-project # kpt-set: compute-require-shielded-vm-except-${management-project-id}
+  name: compute-disable-serial-port-logging-except-mgt-project # kpt-set: compute-disable-serial-port-logging-except-${management-project-id}
   namespace: policies
   labels:
     guardrail: "false"
 spec:
-  constraint: "constraints/compute.requireShieldedVm"
+  constraint: "compute.disableSerialPortLogging"
   booleanPolicy:
     enforced: false
   projectRef:

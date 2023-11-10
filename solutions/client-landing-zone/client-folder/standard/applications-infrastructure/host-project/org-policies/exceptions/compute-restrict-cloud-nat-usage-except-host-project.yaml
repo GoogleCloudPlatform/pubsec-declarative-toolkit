@@ -17,25 +17,25 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.requireShieldedVm
+# Constraint: constraints/compute.restrictCloudNATUsage
 #
-# This boolean constraint, when set to True, requires that all new Compute Engine VM instances
-# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled.
-# Secure Boot can be disabled after creation, if desired. Existing running instances will continue to work as usual.
+# This list constraint defines the set of subnetworks that are allowed to use Cloud NAT.
 #
-# This exception is for the GKE cluster nodes in the management project.  Config Controller sets up GKE with standard VM.
+# This exception is for the host project as it requires use of Cloud NAT.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-require-shielded-vm-except-mgt-project # kpt-set: compute-require-shielded-vm-except-${management-project-id}
+  name: compute-restrict-cloud-nat-usage-except-host-project-id # kpt-set: compute-restrict-cloud-nat-usage-except-${host-project-id}
   namespace: policies
   labels:
     guardrail: "false"
 spec:
-  constraint: "constraints/compute.requireShieldedVm"
-  booleanPolicy:
-    enforced: false
+  constraint: "constraints/compute.restrictCloudNATUsage"
+  listPolicy:
+    allow:
+      values:
+        - under:projects/PROJECT_ID # kpt-set: under:projects/${host-project-id}
   projectRef:
-    external: "0000000000" # kpt-set: ${management-project-id}
+    external: "0000000000" # kpt-set: ${host-project-id}
