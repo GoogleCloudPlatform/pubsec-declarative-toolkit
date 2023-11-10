@@ -14,7 +14,7 @@
 ######
 # Logs Bucket writer IAM permissions for security log sink
 # Binds the service account dynamically created with the LoggingLogSink to the required role to write to the bucket
-# AU-9, AC-3 - IAM Policy that assigns the dynamically created service account with the LoggingLogSink to the logging bucket writer role
+# AU-9, AC-3 - IAM Policies that assign the dynamically created service account with the LoggingLogSink to the logging bucket writer role and storage admin role on the storage bucket
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -106,7 +106,6 @@ spec:
               namespace: logging
 ---
 # Grant GCP role Storage Admin to GCP SA
-# TODO: Add Security controls
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -120,6 +119,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
+  # AU-9, AC-3
   role: roles/storage.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
