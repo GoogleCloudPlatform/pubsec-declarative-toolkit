@@ -62,24 +62,3 @@ spec:
         "otel-collector" OR
         "krmapihosting-metrics-agent")
       name: exclude-gke-logs
----
-# Disable the _Default log bucket sink in the GKE KCC Cluster's management project
-# This prevents duplication of logs
-apiVersion: logging.cnrm.cloud.google.com/v1beta1
-kind: LoggingLogSink
-metadata:
-  name: mgmt-project-cluster-disable-default-bucket
-  namespace: logging
-  annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
-spec:
-  projectRef:
-    external: management-project-12345 # kpt-set: ${management-project-id}
-  destination:
-    # destination.loggingLogBucketRef
-    # Only `external` field is supported to configure the reference.
-    # AU-3, AU-3(1), AU-4(1), AU-6(4), AU-9(2)
-    loggingLogBucketRef:
-      external: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/_Default # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/_Default
-  resourceID: _Default
-  disabled: true
