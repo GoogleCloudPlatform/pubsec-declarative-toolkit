@@ -33,11 +33,15 @@ spec:
     autoProvisioningDefaults:
       serviceAccountRef:
         name: cluster-name-sa # kpt-set: ${cluster-name}-sa
-  description: GKE Autopilot Cluster
   # SC-28, SC-28(1)
   databaseEncryption:
     keyName: projects/project-id/locations/northamerica-northeast1/keyRings/cluster-name-kmskeyring/cryptoKeys/cluster-name-etcd-key # kpt-set: projects/${project-id}/locations/${location}/keyRings/${cluster-name}-kmskeyring/cryptoKeys/${cluster-name}-etcd-key
     state: ENCRYPTED
+  # defaultMaxPodsPerNode is not working with GKE autopilot.
+  # defaultMaxPodsPerNode: 16
+  defaultSnatStatus:
+    disabled: true
+  description: GKE Autopilot Cluster
   enableAutopilot: true
   # binaryAuthorization:
   #   evaluationMode: PROJECT_SINGLETON_POLICY_ENFORCE
@@ -71,6 +75,11 @@ spec:
     name: host-project-vpc # kpt-set: ${host-project-vpc}
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   networkingMode: VPC_NATIVE
+  nodePoolAutoConfig:
+    # network tags are defined in setters.yaml and updated by the starlark function starlark-update-containercluster.yaml
+    networkTags:
+      tags:
+        - ids
   notificationConfig:
     pubsub:
       enabled: true
@@ -82,7 +91,9 @@ spec:
   privateClusterConfig:
     enablePrivateEndpoint: true
     enablePrivateNodes: true
-    masterIpv4CidrBlock: 172.16.0.0/28 # kpt-set: ${masterIpv4CidrBlock}
+    masterIpv4CidrBlock: 192.168.0.0/28 # kpt-set: ${masterIpv4CidrBlock}
+    masterGlobalAccessConfig:
+      enabled: true
   releaseChannel:
     channel: REGULAR
   subnetworkRef:

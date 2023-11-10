@@ -12,22 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# IP reservation
-# AC-17(1), SC-7(9), SC-18(1), SI-3(2), SI-3(4), SI-3(7), SI-4(4), SI-4(5), SI-4(7) - Private service access for Google managed services to connect virtual machines in VPC to the Google managed peered virtual machines. Cloud IDS endpoints also use the same private service access
+# Egress allow traffic to Private service access for Google managed services. Logging is disabled as this is used mainly for Intrusion Detection System.
+# AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network within host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeAddress
+kind: ComputeFirewall
 metadata:
-  name: host-project-id-standard-google-managed-services-ip # kpt-set: ${host-project-id}-standard-google-managed-services-ip
+  name: host-project-id-standard-egress-allow-psa-fwr # kpt-set: ${host-project-id}-standard-egress-allow-psa-fwr
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
-  resourceID: standard-google-managed-services-ip
-  address: address # kpt-set: ${address}
-  prefixLength: 16
-  addressType: INTERNAL
-  location: global
-  purpose: VPC_PEERING
+  resourceID: standard-egress-allow-psa-fwr
+  description: "Egress allow traffic to Private service access for Google managed services"
+  direction: EGRESS
+  priority: 1000
+  allow:
+    - protocol: all
+  destinationRanges: # kpt-set: ${firewall-address}
+    - firewall-address
+  # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
   networkRef:
     name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc

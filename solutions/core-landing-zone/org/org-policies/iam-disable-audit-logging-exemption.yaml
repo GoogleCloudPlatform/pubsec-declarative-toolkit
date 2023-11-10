@@ -17,25 +17,22 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/compute.requireShieldedVm
+# Constraint: constraints/iam.disableAuditLoggingExemption
 #
-# This boolean constraint, when set to True, requires that all new Compute Engine VM instances
-# use Shielded disk images with Secure Boot, vTPM, and Integrity Monitoring options enabled.
-# Secure Boot can be disabled after creation, if desired. Existing running instances will continue to work as usual.
-#
-# This exception is for the GKE cluster nodes in the management project.  Config Controller sets up GKE with standard VM.
+# This boolean constraint, when enforced, prevents you from exempting additional principals from audit logging.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-require-shielded-vm-except-mgt-project # kpt-set: compute-require-shielded-vm-except-${management-project-id}
+  name: iam-disable-audit-logging-exemption
   namespace: policies
   labels:
-    guardrail: "false"
+    guardrail: "true"
+    guardrail-enforced: guardrail-11
 spec:
-  constraint: "constraints/compute.requireShieldedVm"
+  constraint: "constraints/iam.disableAuditLoggingExemption"
   booleanPolicy:
-    enforced: false
-  projectRef:
-    external: "0000000000" # kpt-set: ${management-project-id}
+    enforced: true
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}

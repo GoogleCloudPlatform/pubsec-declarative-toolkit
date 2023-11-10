@@ -95,6 +95,13 @@ data:
   allowed-vpc-peering: |
     - "under:organizations/ORGANIZATION_ID"
   #
+  # a list of IP addresses that should be allowed to be VPN peers to the VPCs in the organization
+  # by default, all IP's are denied. see YAML file for more info: org/org-policies/compute-restrict-vpn-peer-ips.yaml
+  # If you need to allow/deny specific values, update org/org-policies/compute-restrict-vpn-peer-ips.yaml and set the below variable accordingly
+  # ResourceManagerPolicy schema: https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy#schema
+  # allowed-vpn-peering-ips: |
+  #   - string
+  #
   ##########################
   # Logging
   ##########################
@@ -109,6 +116,12 @@ data:
   # customization: required
   security-log-bucket: security-log-bucket-12345
   #
+  # Storage buckets
+  # Security incident log bucket
+  # Bucket names must be globally unique across all of GCP
+  # customization: required
+  security-incident-log-bucket: security-incident-log-bucket-12345
+  #
   # Platform and Component Log Bucket
   # customization: required
   platform-and-component-log-bucket: platform-and-component-log-bucket-12345
@@ -122,6 +135,16 @@ data:
   # customization: The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
   retention-locking-policy: "false"
   retention-in-days: "1"
+  #
+  # Retention settings for Cloud Storage bucket to store logs related to security incidents
+  # Events and logs associated with a security incident must be kept for at least 2 years
+  # Set the lock mechanism on the bucket to: true or false
+  # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
+  # AU-9 PROTECTION OF AUDIT INFORMATION
+  # AU-11 AUDIT RECORD RETENTION
+  # customization: The values below must be modified to locked: true and retentionSeconds: 63072000 (730 days) in a Production setting to implement above mentioned security controls.
+  security-incident-log-bucket-retention-locking-policy: "false"
+  security-incident-log-bucket-retention-in-seconds: "86400"
   #
   ##########################
   # DNS
