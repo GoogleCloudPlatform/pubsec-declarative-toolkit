@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.3...solutions/core-landing-zone/0.4.0) (2023-11-10)
+
+
+### Features
+
+* Add storage bucket to core-landing-zone package to hold logs related to events and security incidents ([#641](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/641)) ([36a6375](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/36a637557d0b436bf217a086d8ebbd06ba5f2bbd))
+* Update org policies ([#657](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/657)) ([0535ed8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0535ed8fdfcb31d7488917b3f156c7b26b1b1f3c))
+
+
+### Bug Fixes
+
+* modify logging project data access config ([#661](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/661)) ([60a4156](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/60a415623a28a0304a58600cbde1061c55eaaae2))
+
 ## [0.3.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.2...solutions/core-landing-zone/0.3.3) (2023-10-24)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.3...solutions/gke/configconnector/gke-cluster-autopilot/0.2.4) (2023-11-10)
+
+
+### Bug Fixes
+
+* GKE-CLUSTER-AUTOPILOT changing subnet and adding ids network tag ([#653](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/653)) ([a76d229](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a76d22949f4f4b837787b7f94f2ab295fe5867a3))
+
 ## [0.2.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.2...solutions/gke/configconnector/gke-cluster-autopilot/0.2.3) (2023-11-01)
 
 
