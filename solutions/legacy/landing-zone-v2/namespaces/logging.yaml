@@ -43,23 +43,6 @@ spec:
   role: roles/logging.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role BigQuery Admin to GCP SA
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: logging-sa-bigqueryadmin-permissions
-  namespace: config-control # kpt-set: ${management-namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-spec:
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Folder
-    external: "123456789012" # kpt-set: ${lz-folder-id}
-  role: roles/bigquery.admin
-  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
----
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
