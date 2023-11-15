@@ -61,7 +61,7 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: logging-project-id-security-data-access-sink # kpt-set: ${logging-project-id}-security-data-access-sink
+  name: logging-project-id-google-workspace-data-access-sink # kpt-set: ${logging-project-id}-google-workspace-data-access-sink
   namespace: logging
   annotations:
     config.kubernetes.io/depends-on: security-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/${security-log-bucket}
@@ -88,4 +88,3 @@ spec:
     log_id("cloudaudit.googleapis.com/data_access")
     resource.type="audited_resource"
     resource.labels.service="login.googleapis.com"
-
