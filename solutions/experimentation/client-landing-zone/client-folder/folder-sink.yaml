@@ -32,6 +32,7 @@ spec:
       # Only `external` field is supported to configure the reference.
       external: platform-and-component-client-name-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
   description: Folder sink for client-name Platform and Component logs # kpt-set: Folder sink for ${client-name} Platform and Component logs
+  # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
   # AU-2, AU-12(A), AU-12(C)
   # Includes the following types of logs:
