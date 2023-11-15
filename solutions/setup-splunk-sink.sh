@@ -18,6 +18,7 @@ export DEAD_LETTER_TOPIC_NAME=bq-dead-topic
 export DEAD_LETTER_SUBSCRIPTION_NAME=bq-dead-topic-sub
 export LOG_SINK_SERVICE_ACCOUNT=service-${PROJECT_NUMBER}@gcp-sa-logging.iam.gserviceaccount.com
 export ORGANIZATION_SINK_NAME=org-sink-splunk
+export PUBSUB_WRITER_IDENTITY_SERVICE_ACCOUNT=service-org-${ORGANIZATION_ID}@gcp-sa-logging.iam.gserviceaccount.com
 
 echo "BOOT_PROJECT: $BOOT_PROJECT_ID"
 echo "PROJECT_ID: $PROJECT_ID"
@@ -32,9 +33,11 @@ echo "INPUT_SUBSCRIPTION_NAME: $INPUT_SUBSCRIPTION_NAME"
 echo "DEAD_LETTER_TOPIC_NAME: $DEAD_LETTER_TOPIC_NAME"
 echo "DEAD_LETTER_SUBSCRIPTION_NAME: $DEAD_LETTER_SUBSCRIPTION_NAME"
 echo "LOG_SINK_SERVICE_ACCOUNT: $LOG_SINK_SERVICE_ACCOUNT"
+echo "PUBSUB_WRITER_IDENTITY_SERVICE_ACCOUNT: $PUBSUB_WRITER_IDENTITY_SERVICE_ACCOUNT"
 echo "ORGANIZATION_SINK_NAME: $ORGANIZATION_SINK_NAME"
 
 
+#exit 0
 
 # enable services
 gcloud services enable monitoring.googleapis.com
@@ -88,6 +91,7 @@ gcloud pubsub subscriptions create \
 
 echo "PROJECT_ID: $PROJECT_ID"
 echo "INPUT_TOPIC_NAME: $INPUT_TOPIC_NAME"
+echo "creating log sink : $ORGANIZATION_SINK_NAME on topic $INPUT_TOPIC_NAME"
 gcloud logging sinks create $ORGANIZATION_SINK_NAME \
 pubsub.googleapis.com/projects/${PROJECT_ID}/topics/${INPUT_TOPIC_NAME} \
 --organization=$ORGANIZATION_ID \
@@ -96,18 +100,20 @@ pubsub.googleapis.com/projects/${PROJECT_ID}/topics/${INPUT_TOPIC_NAME} \
 
 ## fix project and topic rendering above
 
-
 #gcloud pubsub topics add-iam-policy-binding $INPUT_TOPIC_NAME \
 #--member=serviceAccount:service-951469276805@gcp-sa-logging.iam.gserviceaccount.com \
 #--role=roles/pubsub.publisher
 
+# Please remember to grant `serviceAccount:service-org-583675367868@gcp-sa-logging.iam.gserviceaccount.com` the Pub/Sub Publisher role on the topic.
+echo "Granting roles/pubsub.publisher to SA: $PUBSUB_WRITER_IDENTITY_SERVICE_ACCOUNT} on PubSub topic: ${INPUT_TOPIC_NAME}"
 gcloud pubsub topics add-iam-policy-binding $INPUT_TOPIC_NAME \
---member=serviceAccount:${LOG_SINK_SERVICE_ACCOUNT} \
+--member=serviceAccount:${PUBSUB_WRITER_IDENTITY_SERVICE_ACCOUNT} \
 --role=roles/pubsub.publisher
 
 
 gcloud pubsub topics create $DEAD_LETTER_TOPIC_NAME
 gcloud pubsub subscriptions create --topic $DEAD_LETTER_TOPIC_NAME $DEAD_LETTER_SUBSCRIPTION_NAME
 
+# grant the same role to the 2nd topic
 
 # https://cloud.google.com/architecture/stream-logs-from-google-cloud-to-splunk/deployment
