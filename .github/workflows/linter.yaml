@@ -12,7 +12,8 @@ on:
     branches: [main]
 
   workflow_dispatch:
-
+# Set permissions to be read only
+permissions: read-all
 jobs:
   build:
     name: Lint Code Base

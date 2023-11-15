@@ -2,6 +2,10 @@ on:
   push:
     branches:
       - main
+# Set permissions according to example action https://github.com/google-github-actions/release-please-action
+permissions:
+  contents: write
+  pull-requests: write
 name: release-please
 jobs:
   release-please:

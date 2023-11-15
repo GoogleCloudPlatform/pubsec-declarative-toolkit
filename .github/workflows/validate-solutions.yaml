@@ -8,7 +8,7 @@ on:
     branches: [main]
     paths:
       - 'solutions/**'
-
+permissions: read-all 
 jobs:
   render-and-validate:
     runs-on: ubuntu-latest
