@@ -89,6 +89,6 @@ spec:
   #  Data Access
   #
   filter: |-
-    log_id("cloudaudit.googleapis.com/data_access")
+    log_id("cloudaudit.googleapis.com/data_access")  OR log_id("externalaudit.googleapis.com/data_access")
     resource.type="audited_resource"
     resource.labels.service="login.googleapis.com"
