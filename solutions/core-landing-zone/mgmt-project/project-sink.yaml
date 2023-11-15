@@ -35,6 +35,8 @@ spec:
   # You must set unique_writer_identity to true if you wish to publish logs across projects
   uniqueWriterIdentity: true
   description: Project sink for Platform and Component logs of the Landing Zone Management Cluster
+  # the log sink must be enabled (disabled: false) to meet the listed security controls
+  disabled: false
   # AU-12, AU-12(1)
   # No inclusion filter. Includes all Platform and Component logs
   # Google Cloud platform logs are service-specific logs
