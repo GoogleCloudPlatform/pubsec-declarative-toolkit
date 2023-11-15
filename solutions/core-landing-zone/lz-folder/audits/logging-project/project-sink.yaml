@@ -28,6 +28,7 @@ metadata:
 spec:
   projectRef:
     name: logging-project-id # kpt-set: ${logging-project-id}
+    namespace: projects
   destination:
     # AU-3, AU-3(1), AU-4(1), AU-6(4), AU-9(2)
     loggingLogBucketRef:
