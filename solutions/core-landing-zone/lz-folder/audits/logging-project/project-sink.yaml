@@ -47,4 +47,3 @@ spec:
   #
   filter: |-
     log_id("cloudaudit.googleapis.com/data_access") OR log_id("externalaudit.googleapis.com/data_access")
-
