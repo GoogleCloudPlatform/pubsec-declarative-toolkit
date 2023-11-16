@@ -2,12 +2,15 @@ on:
   push:
     branches:
       - main
-# Set permissions according to example action https://github.com/google-github-actions/release-please-action
-permissions:
-  contents: write
-  pull-requests: write
+# Set permissions to be read only
+permissions: read-all
+
 name: release-please
 jobs:
+  # Set permissions according to example action https://github.com/google-github-actions/release-please-action
+  permissions:
+    contents: write
+    pull-requests: write
   release-please:
     runs-on: ubuntu-latest
     steps:
