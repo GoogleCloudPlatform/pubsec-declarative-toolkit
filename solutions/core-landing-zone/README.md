@@ -14,26 +14,29 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 
 ## Setters
 
-|               Name                |                  Value                  | Type  | Count |
-|-----------------------------------|-----------------------------------------|-------|-------|
-| allowed-contact-domains           | ["@example.com"]                        | array |     1 |
-| allowed-load-balancer-types       | [INTERNAL_HTTP_HTTPS, INTERNAL_TCP_UDP] | array |     1 |
-| allowed-policy-domain-members     | ["DIRECTORY_CUSTOMER_ID"]               | array |     1 |
-| allowed-trusted-image-projects    | ["projects/cos-cloud"]                  | array |     1 |
-| allowed-vpc-peering               | ["under:organizations/ORGANIZATION_ID"] | array |     1 |
-| billing-id                        | AAAAAA-BBBBBB-CCCCCC                    | str   |     2 |
-| dns-name                          | example.com.                            | str   |     1 |
-| dns-project-id                    | dns-project-12345                       | str   |     8 |
-| logging-project-id                | logging-project-12345                   | str   |    21 |
-| lz-folder-id                      |                              0000000000 | str   |    15 |
-| management-namespace              | config-control                          | str   |    44 |
-| management-project-id             | management-project-12345                | str   |    78 |
-| management-project-number         |                              0000000000 | str   |     3 |
-| org-id                            |                              0000000000 | str   |    41 |
-| platform-and-component-log-bucket | platform-and-component-log-bucket-12345 | str   |     2 |
-| retention-in-days                 |                                       1 | int   |     2 |
-| retention-locking-policy          | false                                   | bool  |     2 |
-| security-log-bucket               | security-log-bucket-12345               | str   |     1 |
+|                         Name                          |                  Value                  | Type  | Count |
+|-------------------------------------------------------|-----------------------------------------|-------|-------|
+| allowed-contact-domains                               | ["@example.com"]                        | array |     1 |
+| allowed-load-balancer-types                           | [INTERNAL_HTTP_HTTPS, INTERNAL_TCP_UDP] | array |     1 |
+| allowed-policy-domain-members                         | ["DIRECTORY_CUSTOMER_ID"]               | array |     1 |
+| allowed-trusted-image-projects                        | ["projects/cos-cloud"]                  | array |     1 |
+| allowed-vpc-peering                                   | ["under:organizations/ORGANIZATION_ID"] | array |     1 |
+| billing-id                                            | AAAAAA-BBBBBB-CCCCCC                    | str   |     2 |
+| dns-name                                              | example.com.                            | str   |     1 |
+| dns-project-id                                        | dns-project-12345                       | str   |     8 |
+| logging-project-id                                    | logging-project-12345                   | str   |    27 |
+| lz-folder-id                                          |                              0000000000 | str   |    14 |
+| management-namespace                                  | config-control                          | str   |    43 |
+| management-project-id                                 | management-project-12345                | str   |    79 |
+| management-project-number                             |                              0000000000 | str   |     3 |
+| org-id                                                |                              0000000000 | str   |    42 |
+| platform-and-component-log-bucket                     | platform-and-component-log-bucket-12345 | str   |     2 |
+| retention-in-days                                     |                                       1 | int   |     2 |
+| retention-locking-policy                              | false                                   | bool  |     2 |
+| security-incident-log-bucket                          | security-incident-log-bucket-12345      | str   |     1 |
+| security-incident-log-bucket-retention-in-seconds     |                                   86400 | int   |     1 |
+| security-incident-log-bucket-retention-locking-policy | false                                   | bool  |     1 |
+| security-log-bucket                                   | security-log-bucket-12345               | str   |     1 |
 
 ## Sub-packages
 
@@ -46,11 +49,14 @@ This package has no sub-packages.
 | lz-folder/audits/folder.yaml                                                          | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | audits                                                                    | hierarchy         |
 | lz-folder/audits/logging-project/cloud-logging-buckets.yaml                           | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket       | security-log-bucket                                                       | logging           |
 | lz-folder/audits/logging-project/cloud-logging-buckets.yaml                           | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket       | platform-and-component-log-bucket                                         | logging           |
+| lz-folder/audits/logging-project/cloud-storage-buckets.yaml                           | storage.cnrm.cloud.google.com/v1beta1         | StorageBucket          | security-incident-log-bucket                                              | logging           |
 | lz-folder/audits/logging-project/project-iam.yaml                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | security-log-bucket-writer-permissions                                    | projects          |
 | lz-folder/audits/logging-project/project-iam.yaml                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | platform-and-component-services-log-bucket-writer-permissions             | projects          |
 | lz-folder/audits/logging-project/project-iam.yaml                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | platform-and-component-services-infra-log-bucket-writer-permissions       | projects          |
 | lz-folder/audits/logging-project/project-iam.yaml                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | mgmt-project-cluster-platform-and-component-log-bucket-writer-permissions | projects          |
+| lz-folder/audits/logging-project/project-iam.yaml                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | logging-project-id-logging-sa-storageadmin-permissions                    | projects          |
 | lz-folder/audits/logging-project/project-iam.yaml                                     | iam.cnrm.cloud.google.com/v1beta1             | IAMAuditConfig         | logging-project-data-access-log-config                                    | projects          |
+| lz-folder/audits/logging-project/project-sink.yaml                                    | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-data-access-sink                                       | logging           |
 | lz-folder/audits/logging-project/project.yaml                                         | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                | logging-project-id                                                        | projects          |
 | lz-folder/clients/folder.yaml                                                         | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | clients                                                                   | hierarchy         |
 | lz-folder/services/folder-sink.yaml                                                   | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | platform-and-component-services-log-sink                                  | logging           |
@@ -64,7 +70,6 @@ This package has no sub-packages.
 | mgmt-project/org-policies/compute-require-shielded-vm-except-mgmt-project.yaml        | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-require-shielded-vm-except-mgt-project                            | policies          |
 | mgmt-project/org-policies/compute-restrict-cloud-nat-usage-except-mgt-project.yaml    | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | compute-restrict-cloud-nat-usage-except-mgt-project                       | policies          |
 | mgmt-project/project-sink.yaml                                                        | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | mgmt-project-cluster-platform-and-component-log-sink                      | logging           |
-| mgmt-project/project-sink.yaml                                                        | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | mgmt-project-cluster-disable-default-bucket                               | logging           |
 | mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-cloudbilling                                        | config-control    |
 | mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-cloudresourcemanager                                | config-control    |
 | mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-serviceusage                                        | config-control    |
@@ -84,7 +89,6 @@ This package has no sub-packages.
 | namespaces/hierarchy.yaml                                                             | rbac.authorization.k8s.io/v1                  | RoleBinding            | allow-folders-resource-reference-to-logging                               | hierarchy         |
 | namespaces/logging.yaml                                                               | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount      | logging-sa                                                                | config-control    |
 | namespaces/logging.yaml                                                               | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | logging-sa-logadmin-permissions                                           | config-control    |
-| namespaces/logging.yaml                                                               | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | logging-sa-bigqueryadmin-permissions                                      | config-control    |
 | namespaces/logging.yaml                                                               | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | logging-sa-workload-identity-binding                                      | config-control    |
 | namespaces/logging.yaml                                                               | v1                                            | Namespace              | logging                                                                   |                   |
 | namespaces/logging.yaml                                                               | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com                         | logging           |
@@ -155,6 +159,7 @@ This package has no sub-packages.
 | org/org-policies/storage-public-access-prevention.yaml                                | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | storage-public-access-prevention                                          | policies          |
 | org/org-policies/storage-uniform-bucket-level-access.yaml                             | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | storage-uniform-bucket-level-access                                       | policies          |
 | org/org-sink.yaml                                                                     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-security-sink                                          | logging           |
+| org/org-sink.yaml                                                                     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-google-workspace-data-access-sink                      | logging           |
 
 ## Resource References
 
@@ -173,6 +178,7 @@ This package has no sub-packages.
 - [ResourceManagerPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy)
 - [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#rolebinding-v1-rbac-authorization-k8s-io)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
+- [StorageBucket](https://cloud.google.com/config-connector/docs/reference/resource-docs/storage/storagebucket)
 
 ## Usage
 

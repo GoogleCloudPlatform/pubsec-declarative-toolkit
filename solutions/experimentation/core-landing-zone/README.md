@@ -16,10 +16,10 @@ Depends on the bootstrap procedure.
 | allowed-contact-domains       | ["@example.com"]          | array |     1 |
 | allowed-policy-domain-members | ["DIRECTORY_CUSTOMER_ID"] | array |     1 |
 | billing-id                    | AAAAAA-BBBBBB-CCCCCC      | str   |     1 |
-| logging-project-id            | logging-project-12345     | str   |    19 |
-| lz-folder-id                  |                0000000000 | str   |    14 |
-| management-namespace          | config-control            | str   |    34 |
-| management-project-id         | management-project-12345  | str   |    70 |
+| logging-project-id            | logging-project-12345     | str   |    17 |
+| lz-folder-id                  |                0000000000 | str   |    13 |
+| management-namespace          | config-control            | str   |    33 |
+| management-project-id         | management-project-12345  | str   |    67 |
 | management-project-number     |                0000000000 | str   |     3 |
 | org-id                        |                0000000000 | str   |    15 |
 | retention-in-days             |                         1 | int   |     2 |
@@ -47,7 +47,6 @@ This package has no sub-packages.
 | lz-folder/tests/folder.yaml                                     | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | tests                                                                     | hierarchy         |
 | lz-folder/tests/unittests/folder.yaml                           | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | tests.unittests                                                           | hierarchy         |
 | mgmt-project/project-sink.yaml                                  | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | mgmt-project-cluster-platform-and-component-log-sink                      | logging           |
-| mgmt-project/project-sink.yaml                                  | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | mgmt-project-cluster-disable-default-bucket                               | logging           |
 | mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-cloudbilling                                        | config-control    |
 | mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-cloudresourcemanager                                | config-control    |
 | mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-serviceusage                                        | config-control    |
@@ -66,7 +65,6 @@ This package has no sub-packages.
 | namespaces/hierarchy.yaml                                       | rbac.authorization.k8s.io/v1                  | RoleBinding            | allow-folders-resource-reference-to-logging                               | hierarchy         |
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount      | logging-sa                                                                | config-control    |
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | logging-sa-logadmin-permissions                                           | config-control    |
-| namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | logging-sa-bigqueryadmin-permissions                                      | config-control    |
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | logging-sa-workload-identity-binding                                      | config-control    |
 | namespaces/logging.yaml                                         | v1                                            | Namespace              | logging                                                                   |                   |
 | namespaces/logging.yaml                                         | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com                         | logging           |
@@ -139,7 +137,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/experimentation/core-landing-zone/"
+    cd "./core-landing-zone/"
     ```
 
 1.  Edit the function config file(s):

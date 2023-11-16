@@ -15,8 +15,8 @@ Package to setup a client's namespaces, folder, management project and root sync
 |             Name             |              Value              | Type | Count |
 |------------------------------|---------------------------------|------|-------|
 | client-billing-id            | AAAAAA-BBBBBB-CCCCCC            | str  |     1 |
-| client-management-project-id | client-management-project-12345 | str  |   113 |
-| client-name                  | client1                         | str  |   152 |
+| client-management-project-id | client-management-project-12345 | str  |   111 |
+| client-name                  | client1                         | str  |   149 |
 | dns-project-id               | dns-project-12345               | str  |     1 |
 | environment                  | env                             | str  |     1 |
 | management-namespace         | config-control                  | str  |    27 |
@@ -63,7 +63,6 @@ This package has no sub-packages.
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount      | client-name-logging-sa                                                                 | client-name-config-control |
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-logging-sa-logadmin-permissions                                            | hierarchy                  |
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-logging-sa-monitoringadmin-permissions                                     | hierarchy                  |
-| namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-logging-sa-bigqueryadmin-permissions                                       | hierarchy                  |
 | namespaces/client-name-logging.yaml              | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | client-name-logging-sa-workload-identity-binding                                       | client-name-config-control |
 | namespaces/client-name-logging.yaml              | v1                                            | Namespace              | client-name-logging                                                                    |                            |
 | namespaces/client-name-logging.yaml              | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com                                      | client-name-logging        |
