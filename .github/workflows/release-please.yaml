@@ -7,11 +7,11 @@ permissions: read-all
 
 name: release-please
 jobs:
-  # Set permissions according to example action https://github.com/google-github-actions/release-please-action
-  permissions:
-    contents: write
-    pull-requests: write
   release-please:
+    # Set permissions according to example action https://github.com/google-github-actions/release-please-action
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
