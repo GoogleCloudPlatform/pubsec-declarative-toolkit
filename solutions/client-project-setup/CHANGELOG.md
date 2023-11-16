@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.4...solutions/client-project-setup/0.4.5) (2023-11-16)
+
+
+### Bug Fixes
+
+* updated services objects to use projectRef instead of annotations ([#678](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/678)) ([896d7c6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/896d7c6efeeb217faea15db6f39de825ceb17a6e))
+
 ## [0.4.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.3...solutions/client-project-setup/0.4.4) (2023-10-26)
 
 

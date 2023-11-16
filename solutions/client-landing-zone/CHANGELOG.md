@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.1...solutions/client-landing-zone/0.5.2) (2023-11-16)
+
+
+### Bug Fixes
+
+* specify log sinks spec.disabled field value to false ([#688](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/688)) ([3c4d3a8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/3c4d3a84243db2dfad3d5c9ce8d833798bdf96d2))
+* update log sinks filters ([#681](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/681)) ([c9f63e5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c9f63e5ca2eb7938039243a384f191709ba9ef83))
+
 ## [0.5.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.0...solutions/client-landing-zone/0.5.1) (2023-11-10)
 
 
