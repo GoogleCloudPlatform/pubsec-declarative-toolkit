@@ -34,7 +34,7 @@ jobs:
       ################################
       - name: Lint YAML
         if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
@@ -48,7 +48,7 @@ jobs:
       # https://github.com/koalaman/shellcheck/blob/master/shellcheck.1.md
       - name: Lint Bash
         if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
@@ -59,7 +59,7 @@ jobs:
       # Super-Linter markdown validation
       - name: Lint Markdown
         if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
