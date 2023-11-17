@@ -30,6 +30,7 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
   #
   ##########################
@@ -37,12 +38,16 @@ data:
   ##########################
   #
   # the project id that was created by the client-project-setup
+  # customization: required
   project-id: project-12345
   #
   ##########################
   # Workload
   ##########################
   #
+  # workload name given to service account to be created
+  # lowercase only, max 27 characters
+  # customization: required
   workload-name: sample-workload
   #
   ##########################

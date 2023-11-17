@@ -61,3 +61,5 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml
+    - image: gcr.io/kpt-fn/starlark:v0.4.3
+      configPath: starlark-update-containercluster.yaml

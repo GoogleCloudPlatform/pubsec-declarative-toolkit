@@ -29,8 +29,17 @@ data:
   # Gateway
   ##########################
   #
+  # The name of the gateway resource that is created in the kubernetes/cluster-defaults/gateway package.
+  # customization: required
   gateway-name: sample-gateway
+  #
+  # the ssl-policy that will be applied to the gcpgatewaypolicy
+  # must remain the same as name found in ssl-policies/ssl-policy-tls-1.2.yaml
+  # customization: do not change
   ssl-policy: tls-1-2-computesslpolicy
+  #
+  # the ssl-cert will be the same certificate-name that was created by the configcontroller/gke-defaults/gateway-setup/ssl-certificate
+  # customization: required
   ssl-cert: sample-cert
   #
   ##########################

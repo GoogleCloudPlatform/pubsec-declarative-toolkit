@@ -13,6 +13,8 @@
 # limitations under the License.
 ######
 # GKE Autopilot Cluster
+# AC-4, SC-7, SC-7(3) - Authorized IP ranges are defined on Kubernetes services
+# SC-28, SC-28(1) - Protection of ETCD database at rest
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
@@ -31,10 +33,15 @@ spec:
     autoProvisioningDefaults:
       serviceAccountRef:
         name: cluster-name-sa # kpt-set: ${cluster-name}-sa
-  description: GKE Autopilot Cluster
+  # SC-28, SC-28(1)
   databaseEncryption:
     keyName: projects/project-id/locations/northamerica-northeast1/keyRings/cluster-name-kmskeyring/cryptoKeys/cluster-name-etcd-key # kpt-set: projects/${project-id}/locations/${location}/keyRings/${cluster-name}-kmskeyring/cryptoKeys/${cluster-name}-etcd-key
     state: ENCRYPTED
+  # defaultMaxPodsPerNode is not working with GKE autopilot.
+  # defaultMaxPodsPerNode: 16
+  defaultSnatStatus:
+    disabled: true
+  description: GKE Autopilot Cluster
   enableAutopilot: true
   # binaryAuthorization:
   #   evaluationMode: PROJECT_SINGLETON_POLICY_ENFORCE
@@ -56,6 +63,7 @@ spec:
     dailyMaintenanceWindow:
       startTime: 05:00
       duration: 04:00
+  # AC-4, SC-7, SC-7(3)
   masterAuthorizedNetworksConfig:
     cidrBlocks: # kpt-set: ${master-authorized-networks-cidr}
       - cidrBlock: 10.1.1.5/32
@@ -67,6 +75,11 @@ spec:
     name: host-project-vpc # kpt-set: ${host-project-vpc}
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   networkingMode: VPC_NATIVE
+  nodePoolAutoConfig:
+    # network tags are defined in setters.yaml and updated by the starlark function starlark-update-containercluster.yaml
+    networkTags:
+      tags:
+        - ids
   notificationConfig:
     pubsub:
       enabled: true
@@ -78,7 +91,9 @@ spec:
   privateClusterConfig:
     enablePrivateEndpoint: true
     enablePrivateNodes: true
-    masterIpv4CidrBlock: 172.16.0.0/28 # kpt-set: ${masterIpv4CidrBlock}
+    masterIpv4CidrBlock: 192.168.0.0/28 # kpt-set: ${masterIpv4CidrBlock}
+    masterGlobalAccessConfig:
+      enabled: true
   releaseChannel:
     channel: REGULAR
   subnetworkRef:

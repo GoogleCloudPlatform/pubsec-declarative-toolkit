@@ -90,8 +90,11 @@ data:
   project-allowed-restrict-vpc-peering: |
     - under:projects/PROJECT_ID
   #
-  # nonp IP space
-  standard-nonp-cidr: 10.1.0.0/18
+  # nonp IP space, used by ComputeFirewallPolicyRule for network isolation
+  # this list must include all non protected cidr ranges including the ranges for GKE nodes, services and pods
+  standard-nonp-cidr: |
+    - 10.1.0.0/18
+    - 172.16.0.0/13
   #
   # Subnet IP range for nonp-main in northamerica-northeast1
   standard-nane1-nonp-main-snet: 10.1.0.0/21
@@ -99,8 +102,11 @@ data:
   # Subnet IP range for nonp-main in northamerica-northeast2
   standard-nane2-nonp-main-snet: 10.1.8.0/21
   #
-  # pbmm IP space
-  standard-pbmm-cidr: 10.1.128.0/18
+  # pbmm IP space, used by ComputeFirewallPolicyRule for network isolation
+  # this list must include all pbmm cidr ranges including the ranges for GKE nodes, services and pods
+  standard-pbmm-cidr: |
+    - 10.1.128.0/18
+    - 172.24.0.0/13
   #
   # Subnet IP range for pbmm-main in northamerica-northeast1
   standard-nane1-pbmm-main-snet: 10.1.128.0/21
@@ -113,7 +119,6 @@ data:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
-    - 240.0.0.0/4
   #
   ##########################
   # Firewall Policy (client-folder)
@@ -129,12 +134,14 @@ data:
   #
   # Allowed domain names for os updates
   # The list below is an example for Debian and Ubuntu, modify as per trusted images
+  # note that cloud.google.com is required when GKE nodes are provisioned
   # customization: optional
   allowed-os-update-domains: |
     - "debian.map.fastlydns.net"
     - "debian.org"
     - "deb.debian.org"
     - "ubuntu.com"
+    - "cloud.google.com"
     - "packages.cloud.google.com"
     - "security.ubuntu.com"
     - "northamerica-northeast1.gce.archive.ubuntu.com"
@@ -147,11 +154,15 @@ data:
   #   - standard-nane1-pbmm-main-snet
   #   - standard-nane2-pbmm-main-snet
   # OR a list of more restrictive ranges within those subnets (for example, 10.1.1.5/32)
+  # it also has to include the primary ranges of the GKE nodes otherwise, nodes won't be able to be provisioned.
+  # customization: optional
   allowed-os-update-source-ip-ranges: |
     - "10.1.0.0/21"
     - "10.1.8.0/21"
+    - "10.1.32.0/19"
     - "10.1.128.0/21"
     - "10.1.136.0/21"
+    - "10.1.160.0/19"
   #
   ##########################
   # DNS

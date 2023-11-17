@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Creates Kuberenetes Service Account to be used by applications deployed in the namespace
+# AC-3(7), AC-3 - Creates Kubernetes Service Account to be used by applications deployed in the namespace
 # Kubernetes Service Account is annotated with the Google Service Account to which it is bound using workload identity.
 apiVersion: v1
 kind: ServiceAccount

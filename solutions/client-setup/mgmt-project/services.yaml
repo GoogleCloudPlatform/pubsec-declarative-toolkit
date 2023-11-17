@@ -22,9 +22,10 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: iam.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}
 ---
 # Resource Manager API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -36,9 +37,10 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: cloudresourcemanager.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}
 ---
 # Billing API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -50,9 +52,10 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: cloudbilling.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}
 ---
 # Service Usage API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -64,9 +67,10 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: serviceusage.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}
 ---
 # Container API
 # Required to allow deployment of kubernetes clusters from service account in the client management project
@@ -80,9 +84,10 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: container.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}
 ---
 # Cloud IDS API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -94,9 +99,10 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: ids.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}
 ---
 # Service Networking API
 # required for private service access and cloud IDS
@@ -110,6 +116,7 @@ metadata:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: client-management-project-id # kpt-set: ${client-management-project-id}
 spec:
   resourceID: servicenetworking.googleapis.com
+  projectRef:
+    external: client-management-project-id # kpt-set: ${client-management-project-id}

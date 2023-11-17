@@ -28,6 +28,9 @@ spec:
   routerRef:
     name: project-id-nane1-router # kpt-set: ${project-id}-nane1-router
   sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+  logConfig:
+    enable: true
+    filter: ALL
 ---
 # Cloud Router northamerica-northeast1
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
@@ -61,6 +64,9 @@ spec:
   routerRef:
     name: project-id-nane2-router # kpt-set: ${project-id}-nane2-router
   sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+  logConfig:
+    enable: true
+    filter: ALL
 ---
 # Cloud Router northamerica-northeast2
 apiVersion: compute.cnrm.cloud.google.com/v1beta1

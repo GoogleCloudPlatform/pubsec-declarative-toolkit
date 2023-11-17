@@ -1,0 +1,41 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+#
+# GCP Organization Policies
+# Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
+# https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
+#
+# Constraint: constraints/compute.restrictCloudNATUsage
+#
+# This list constraint defines the set of subnetworks that are allowed to use Cloud NAT.
+#
+# This exception is for the management project as it requires use of Cloud NAT.
+#
+#########
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
+metadata:
+  name: compute-restrict-cloud-nat-usage-except-mgt-project # kpt-set: compute-restrict-cloud-nat-usage-except-${management-project-id}
+  namespace: policies
+  labels:
+    guardrail: "false"
+spec:
+  constraint: "constraints/compute.restrictCloudNATUsage"
+  listPolicy:
+    allow:
+      values:
+        - under:projects/PROJECT_ID # kpt-set: under:projects/${management-project-id}
+  projectRef:
+    external: "0000000000" # kpt-set: ${management-project-id}

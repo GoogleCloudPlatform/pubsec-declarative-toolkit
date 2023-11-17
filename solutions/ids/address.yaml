@@ -13,7 +13,7 @@
 # limitations under the License.
 #########
 # IP reservation
-# Private service access for Google managed services
+# AC-17(1), SC-7(9), SC-18(1), SI-3(2), SI-3(4), SI-3(7), SI-4(4), SI-4(5), SI-4(7) - Private service access for Google managed services to connect virtual machines in VPC to the Google managed peered virtual machines. Cloud IDS endpoints also use the same private service access
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:

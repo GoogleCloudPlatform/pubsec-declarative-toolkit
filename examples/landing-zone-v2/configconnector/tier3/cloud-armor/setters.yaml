@@ -30,12 +30,15 @@ data:
   ##########################
   #
   # the project id that was created by the client-project-setup
+  # customization: required
   project-id: project12345
   #
   ##########################
   # Workload
   ##########################
   #
+  # workload name given to uniquely identify the policy
+  # customization: required
   workload-name: sample-workload
   #
   ##########################

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# SC-5, SC-5(2), SC-8 - Deploy public external load balancer in front of public facing web applications for additional inspection of incoming traffic and enforcing additional security policies such as ssl etc.
 # Gateway using an external global load balancer and a SSL certificate
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
@@ -19,6 +20,7 @@ metadata:
   name: external-gateway-name # kpt-set: external-${gateway-name}
   namespace: gateway-infra
 spec:
+  # SC-5, SC-5(2)
   gatewayClassName: gke-l7-global-external-managed
   addresses:
     - type: NamedAddress
@@ -27,6 +29,7 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
+      # SC-8
       tls:
         mode: Terminate
         options:

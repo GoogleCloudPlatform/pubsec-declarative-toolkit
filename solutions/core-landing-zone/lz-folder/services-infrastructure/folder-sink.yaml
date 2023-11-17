@@ -36,6 +36,8 @@ spec:
       # Only `external` field is supported to configure the reference.
       external: platform-and-component-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/${platform-and-component-log-bucket}
   description: Folder sink for Platform and Component logs of services Resources
+  # the log sink must be enabled (disabled: false) to meet the listed security controls
+  disabled: false
   # AU-12, AU-12(1)
   # No inclusion filter. Includes all Platform and Component logs
   # Google Cloud platform logs are service-specific logs
@@ -46,9 +48,15 @@ spec:
     - description: Exclude Security logs
       disabled: false
       filter: |-
-        LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
-        OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
-        OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
-        OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
-        OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
+        log_id("cloudaudit.googleapis.com/activity") OR log_id("externalaudit.googleapis.com/activity")
+        OR log_id("cloudaudit.googleapis.com/data_access") OR log_id("externalaudit.googleapis.com/data_access")
+        OR log_id("cloudaudit.googleapis.com/system_event") OR log_id("externalaudit.googleapis.com/system_event")
+        OR log_id("cloudaudit.googleapis.com/policy") OR log_id("externalaudit.googleapis.com/policy")
+        OR log_id("cloudaudit.googleapis.com/access_transparency") OR log_id("externalaudit.googleapis.com/access_transparency")
       name: exclude-security-logs
+    # filter to exclude excessive logs
+    - description: Exclude Log Noise
+      disabled: false
+      filter: |-
+        log_id("stderr") AND (severity="INFO" OR severity="NOTICE" OR severity="WARNING")
+      name: exclude-log-noise

@@ -32,25 +32,27 @@ spec:
       # Only `external` field is supported to configure the reference.
       external: platform-and-component-client-name-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/platform-and-component-${client-name}-log-bucket
   description: Folder sink for client-name Platform and Component logs # kpt-set: Folder sink for ${client-name} Platform and Component logs
+  # the log sink must be enabled (disabled: false) to meet the listed security controls
+  disabled: false
   # AU-2, AU-12(A), AU-12(C)
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
   # These logs are not enabled by default. They are enabled inside the client-experimentation package:
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/project/project-experimentation
   filter: |-
-    LOG_ID("dns.googleapis.com/dns_queries")
-    OR (LOG_ID("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
-    OR (LOG_ID("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
-    OR (LOG_ID("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
-    OR (LOG_ID("requests") AND resource.type="http_load_balancer")
+    log_id("dns.googleapis.com/dns_queries")
+    OR (log_id("compute.googleapis.com/nat_flows") AND resource.type="nat_gateway")
+    OR (log_id("compute.googleapis.com/firewall") AND resource.type="gce_subnetwork")
+    OR (log_id("compute.googleapis.com/vpc_flows") AND resource.type="gce_subnetwork")
+    OR (log_id("requests") AND resource.type="http_load_balancer")
   # Excludes all Security logs: Cloud Audit, Access Transparency, and Data Access Logs
   exclusions:
     - description: Exclude Security logs
       disabled: false
       filter: |-
-        LOG_ID("cloudaudit.googleapis.com/activity") OR LOG_ID("externalaudit.googleapis.com/activity")
-        OR LOG_ID("cloudaudit.googleapis.com/data_access") OR LOG_ID("externalaudit.googleapis.com/data_access")
-        OR LOG_ID("cloudaudit.googleapis.com/system_event") OR LOG_ID("externalaudit.googleapis.com/system_event")
-        OR LOG_ID("cloudaudit.googleapis.com/policy") OR LOG_ID("externalaudit.googleapis.com/policy")
-        OR LOG_ID("cloudaudit.googleapis.com/access_transparency") OR LOG_ID("externalaudit.googleapis.com/access_transparency")
+        log_id("cloudaudit.googleapis.com/activity") OR log_id("externalaudit.googleapis.com/activity")
+        OR log_id("cloudaudit.googleapis.com/data_access") OR log_id("externalaudit.googleapis.com/data_access")
+        OR log_id("cloudaudit.googleapis.com/system_event") OR log_id("externalaudit.googleapis.com/system_event")
+        OR log_id("cloudaudit.googleapis.com/policy") OR log_id("externalaudit.googleapis.com/policy")
+        OR log_id("cloudaudit.googleapis.com/access_transparency") OR log_id("externalaudit.googleapis.com/access_transparency")
       name: exclude-security-logs

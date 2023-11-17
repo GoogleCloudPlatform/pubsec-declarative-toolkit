@@ -1,0 +1,35 @@
+#
+# This script finds ContainerCluster resources and update the object fields spec.nodePoolAutoConfig.networkTags.tags with the value defined in setters.yaml
+#
+# This script is required because we want to dynamically add a bloc to the ContainerCluster based on the configuration within the setters.yaml
+#
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata:
+  name: update-container-cluster
+  annotations:
+    config.kubernetes.io/local-config: "true"
+source: |
+  networktags_enabled = False
+  # extract values from setters
+  for resource in ctx.resource_list["items"]:
+    if resource["metadata"]["name"] in ["setters"]:
+      # check if networktags-enabled exist
+      if "networktags-enabled" in resource["data"]:
+        # check if networkstags-enabled is set to true
+        if resource["data"]["networktags-enabled"]:
+          print("--networktags enabled")
+          networktags_enabled = True
+          networktags = resource["data"]["networktags"]
+  # search for resources to update
+  for resource in ctx.resource_list["items"]:
+    print(resource["kind"])
+    # if resources kind matches ContainerCluster
+    if resource["kind"] in ["ContainerCluster"]:
+      print("--found one ContainerCluster!")
+      if networktags_enabled:
+        print("--networktags is enabled! updating networktags")
+        resource["spec"]["nodePoolAutoConfig"]["networkTags"]["tags"] = networktags
+      else:
+        print("--networktags is disabled! removing nodePoolAutoConfig")
+        resource["spec"].pop("nodePoolAutoConfig")

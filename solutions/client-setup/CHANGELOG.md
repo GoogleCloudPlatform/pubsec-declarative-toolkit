@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.7.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.2...solutions/client-setup/0.7.0) (2023-11-16)
+
+
+### Features
+
+* remove unused bigquery iam permissions ([#683](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/683)) ([1187a58](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/1187a58612da6a167500228859ce3eb42e199f0f))
+
+
+### Bug Fixes
+
+* regenerate docs ([#699](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/699)) ([0255661](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/02556613683625119f74be7a4074d84b2de75b1c))
+* updated services objects to use projectRef instead of annotations ([#678](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/678)) ([896d7c6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/896d7c6efeeb217faea15db6f39de825ceb17a6e))
+
 ## [0.6.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.1...solutions/client-setup/0.6.2) (2023-10-24)
 
 

@@ -17,32 +17,25 @@
 # Org policies that correspond with a Guardrail will contain a label indicating what Guardrails it helps in enforcing
 # https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
 #
-# Constraint: constraints/gcp.resourceLocations
+# Constraint: constraints/compute.restrictCloudNATUsage
 #
-# This list constraint defines the set of locations where location-based GCP resources can be created.
+# This list constraint defines the set of subnetworks that are allowed to use Cloud NAT.
 #
-# This exception is to allow the us-central1 location until the issue below is resolved with the config connector forwardingRule resource.
-# This resource is used by the PSC for googleapis.
-# https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/754
+# This exception is for the host project as it requires use of Cloud NAT.
 #
 #########
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: gcp-restrict-resource-locations-except-host-project-id # kpt-set: gcp-restrict-resource-locations-except-${host-project-id}
+  name: compute-restrict-cloud-nat-usage-except-host-project-id # kpt-set: compute-restrict-cloud-nat-usage-except-${host-project-id}
   namespace: policies
   labels:
-    guardrail: "true"
-    guardrails-enforced: guardrail-05
-  annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+    guardrail: "false"
 spec:
-  constraint: "constraints/gcp.resourceLocations"
+  constraint: "constraints/compute.restrictCloudNATUsage"
   listPolicy:
     allow:
       values:
-        - "in:northamerica-northeast1-locations"
-        - "in:northamerica-northeast2-locations"
-        - "in:us-central1-locations"
+        - under:projects/PROJECT_ID # kpt-set: under:projects/${host-project-id}
   projectRef:
     external: "0000000000" # kpt-set: ${host-project-id}

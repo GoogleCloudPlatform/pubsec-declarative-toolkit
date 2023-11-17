@@ -30,10 +30,15 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
+  #
   # group to grant gke, logging, and monitoring viewer permissions
+  # customization: required
   team-gkeviewer: 'group:client1@example.com'
-  # the host project for this client
+  #
+  # the host project for this client created in client-landing-zone package deployment
+  # customization: required
   host-project-id: host-project-12345
   #
   ##########################
@@ -41,6 +46,7 @@ data:
   ##########################
   #
   # the project id that was created by the client-project-setup
+  # customization: required
   project-id: project-12345
   #
   ##########################
