@@ -14,7 +14,10 @@
 ######
 # Organization sink for Security logs: Cloud Audit and Access Transparency
 # Destination: Cloud Logging bucket hosted inside logging project
-# TODO: update security control documentation
+# AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the organization to send the logs to the logging bucket in the logging project
+# AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
+# AC-2(4) - Includes Security logs: Cloud Audit and Access Transparency
+# AU-12, AU-12(1) - Log Sinks defined in Log Router check each log entry against the inclusion filter and exclusion filter that determine which destinations that the log entry is sent to
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
@@ -43,7 +46,6 @@ spec:
   #  System Events
   #  Policy Denied
   #
-  # Access Transparency Logs (TODO - not enabled)
   filter: |-
     log_id("cloudaudit.googleapis.com/activity") OR log_id("externalaudit.googleapis.com/activity")
     OR log_id("cloudaudit.googleapis.com/system_event") OR log_id("externalaudit.googleapis.com/system_event")
