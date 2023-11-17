@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.4.0...solutions/core-landing-zone/0.5.0) (2023-11-16)
+
+
+### Features
+
+* remove data access from org sink ([#686](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/686)) ([f819e7c](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/f819e7ce64b6c2e5b071d9bbcfbc50a86c298adb))
+* remove unused bigquery iam permissions ([#683](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/683)) ([1187a58](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/1187a58612da6a167500228859ce3eb42e199f0f))
+
+
+### Bug Fixes
+
+* regenerate docs ([#699](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/699)) ([0255661](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/02556613683625119f74be7a4074d84b2de75b1c))
+* specify log sinks spec.disabled field value to false ([#688](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/688)) ([3c4d3a8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/3c4d3a84243db2dfad3d5c9ce8d833798bdf96d2))
+* update log sinks filters ([#681](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/681)) ([c9f63e5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c9f63e5ca2eb7938039243a384f191709ba9ef83))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.3...solutions/core-landing-zone/0.4.0) (2023-11-10)
 
 
