@@ -12,7 +12,8 @@ on:
     branches: [main]
 
   workflow_dispatch:
-
+# Set permissions to be read only
+permissions: read-all
 jobs:
   build:
     name: Lint Code Base
@@ -20,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # Full git history is needed to get a proper
           # list of changed files within `super-linter`
@@ -33,7 +34,7 @@ jobs:
       ################################
       - name: Lint YAML
         if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
@@ -47,7 +48,7 @@ jobs:
       # https://github.com/koalaman/shellcheck/blob/master/shellcheck.1.md
       - name: Lint Bash
         if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
@@ -58,7 +59,7 @@ jobs:
       # Super-Linter markdown validation
       - name: Lint Markdown
         if: ${{ success() || failure() }}
-        uses: github/super-linter/slim@v4
+        uses: github/super-linter/slim@v5
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main

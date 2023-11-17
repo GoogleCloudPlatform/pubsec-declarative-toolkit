@@ -30,8 +30,11 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
+  #
   # id of the client management project created in the client-setup package
+  # customization: required
   client-management-project-id: client-management-project-12345
   #
   ##########################
@@ -39,8 +42,11 @@ data:
   ##########################
   #
   # project id where the compute engine instance(s) will be deployed
+  # customization: required
   project-id: project-id-12345
+  #
   # the group of users to grant permissions to log in the instance(s)
+  # customization: required
   gke-admins: 'group:my-admins@example.com'
   #
   ##########################

@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.5.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.1...solutions/client-landing-zone/0.5.2) (2023-11-16)
+
+
+### Bug Fixes
+
+* specify log sinks spec.disabled field value to false ([#688](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/688)) ([3c4d3a8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/3c4d3a84243db2dfad3d5c9ce8d833798bdf96d2))
+* update log sinks filters ([#681](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/681)) ([c9f63e5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c9f63e5ca2eb7938039243a384f191709ba9ef83))
+
+## [0.5.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.0...solutions/client-landing-zone/0.5.1) (2023-11-10)
+
+
+### Bug Fixes
+
+* adding gke node ranges to os-updates firewall policy ([#649](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/649)) ([7e08db2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/7e08db29f59816be614e88fea95c511a0337393a))
+
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.9...solutions/client-landing-zone/0.5.0) (2023-11-10)
+
+
+### Features
+
+* Update org policies ([#657](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/657)) ([0535ed8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0535ed8fdfcb31d7488917b3f156c7b26b1b1f3c))
+
+## [0.4.9](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.8...solutions/client-landing-zone/0.4.9) (2023-10-31)
+
+
+### Bug Fixes
+
+* psc location workaround ([#628](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/628)) ([c8bc5e0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c8bc5e0663b64345084df4fd3262bc4ab446cb14))
+
 ## [0.4.8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.4.7...solutions/client-landing-zone/0.4.8) (2023-10-26)
 
 

@@ -25,11 +25,13 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: container.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Container Security API
+# RA-5(5) - A service that provides security insights into GKE clusters
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -37,9 +39,11 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  # RA-5(5)
   resourceID: containersecurity.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Anthos API
 # https://cloud.google.com/anthos/fleet-management/docs/before-you-begin
@@ -50,9 +54,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: anthos.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Anthos Config Management API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -62,9 +67,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: anthosconfigmanagement.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # GKE Hub API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -74,9 +80,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: gkehub.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # GKE Connect API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -86,9 +93,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: gkeconnect.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Key Management Service API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -98,9 +106,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: cloudkms.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Secret Manager API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -110,9 +119,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: secretmanager.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Artifact Registry API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -122,11 +132,13 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: artifactregistry.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Container Scanning API
+# RA-5(5) - A service to scan containers for vulnerabilities
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -134,9 +146,11 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  # RA-5(5)
   resourceID: containerscanning.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Certificate Manager API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -146,9 +160,10 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: certificatemanager.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}
 ---
 # Pub/Sub API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
@@ -158,6 +173,7 @@ metadata:
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceID: pubsub.googleapis.com
+  projectRef:
+    external: project-id # kpt-set: ${project-id}

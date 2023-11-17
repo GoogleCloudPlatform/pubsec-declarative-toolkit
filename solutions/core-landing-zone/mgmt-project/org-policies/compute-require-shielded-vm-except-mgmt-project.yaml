@@ -29,7 +29,7 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
-  name: compute-require-shielded-vm-except-mgt-project
+  name: compute-require-shielded-vm-except-mgt-project # kpt-set: compute-require-shielded-vm-except-${management-project-id}
   namespace: policies
   labels:
     guardrail: "false"

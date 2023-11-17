@@ -14,7 +14,7 @@
 ######
 # Logs Bucket writer IAM permissions for security log sink
 # Binds the service account dynamically created with the LoggingLogSink to the required role to write to the bucket
-# AU-9, AC-3 - IAM Policy that assigns the dynamically created service account with the LoggingLogSink to the logging bucket writer role
+# AU-9, AC-3 - IAM Policies that assign the dynamically created service account with the LoggingLogSink to the logging bucket writer role and storage admin role on the storage bucket
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -105,6 +105,24 @@ spec:
               name: mgmt-project-cluster-platform-and-component-log-sink
               namespace: logging
 ---
+# Grant GCP role Storage Admin to GCP SA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: logging-project-id-logging-sa-storageadmin-permissions # kpt-set: ${logging-project-id}-logging-sa-storageadmin-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/project-id: logging-project-id # kpt-set: ${logging-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: logging-project-id # kpt-set: ${logging-project-id}
+  # AU-9, AC-3
+  role: roles/storage.admin
+  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
+---
 # Enable data access log configuration on the logging project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMAuditConfig
@@ -117,9 +135,7 @@ spec:
   service: allServices
   # AU-9, AC-3
   auditLogConfigs:
-    - logType: ADMIN_READ
     - logType: DATA_READ
-    - logType: DATA_WRITE
   resourceRef:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}

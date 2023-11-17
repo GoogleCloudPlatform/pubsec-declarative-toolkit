@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# VPC Peering
-# Google Managed Services
+# AC-17(1), SC-7(9), SC-18(1), SI-3(2), SI-3(4), SI-3(7), SI-4(4), SI-4(5), SI-4(7) - Establish VPC Peering between vpc network and Google Managed Services
 apiVersion: servicenetworking.cnrm.cloud.google.com/v1beta1
 kind: ServiceNetworkingConnection
 metadata:

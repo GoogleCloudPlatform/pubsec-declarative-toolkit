@@ -22,7 +22,6 @@
 |AC-16(2)|./namespaces/client-name-logging.yaml|allow-resource-reference-from-logging|
 |AC-16(2)|./namespaces/client-name-logging.yaml|client-name-logging-sa|
 |AC-16(2)|./namespaces/client-name-logging.yaml|client-name-logging-sa|
-|AC-16(2)|./namespaces/client-name-logging.yaml|client-name-logging-sa-bigqueryadmin-permissions|
 |AC-16(2)|./namespaces/client-name-logging.yaml|client-name-logging-sa-logadmin-permissions|
 |AC-16(2)|./namespaces/client-name-logging.yaml|client-name-logging-sa-monitoringadmin-permissions|
 |AC-16(2)|./namespaces/client-name-logging.yaml|client-name-logging-sa-workload-identity-binding|
@@ -81,7 +80,6 @@
 |AC-3|./namespaces/client-name-logging.yaml|allow-resource-reference-from-logging|
 |AC-3|./namespaces/client-name-logging.yaml|client-name-logging-sa|
 |AC-3|./namespaces/client-name-logging.yaml|client-name-logging-sa|
-|AC-3|./namespaces/client-name-logging.yaml|client-name-logging-sa-bigqueryadmin-permissions|
 |AC-3|./namespaces/client-name-logging.yaml|client-name-logging-sa-logadmin-permissions|
 |AC-3|./namespaces/client-name-logging.yaml|client-name-logging-sa-monitoringadmin-permissions|
 |AC-3|./namespaces/client-name-logging.yaml|client-name-logging-sa-workload-identity-binding|
@@ -140,7 +138,6 @@
 |AC-3(7)|./namespaces/client-name-logging.yaml|allow-resource-reference-from-logging|
 |AC-3(7)|./namespaces/client-name-logging.yaml|client-name-logging-sa|
 |AC-3(7)|./namespaces/client-name-logging.yaml|client-name-logging-sa|
-|AC-3(7)|./namespaces/client-name-logging.yaml|client-name-logging-sa-bigqueryadmin-permissions|
 |AC-3(7)|./namespaces/client-name-logging.yaml|client-name-logging-sa-logadmin-permissions|
 |AC-3(7)|./namespaces/client-name-logging.yaml|client-name-logging-sa-monitoringadmin-permissions|
 |AC-3(7)|./namespaces/client-name-logging.yaml|client-name-logging-sa-workload-identity-binding|

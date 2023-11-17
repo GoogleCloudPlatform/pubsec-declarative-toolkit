@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# Cloud IDS endpoint
+# AC-17(1), SC-7(9), SC-18(1), SI-3(2), SI-3(4), SI-3(7), SI-4(4), SI-4(5), SI-4(7) - Defining Cloud IDS endpoint to receive mirrored traffic that performs threat detection and analysis
 # Warning! requires the alpha resource loaded in the config controller
 # https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/cloudids_v1alpha1_cloudidsendpoint.yaml
 apiVersion: cloudids.cnrm.cloud.google.com/v1alpha1

@@ -40,7 +40,6 @@ spec:
       - "10.0.0.0/8"
       - "172.16.0.0/12"
       - "192.168.0.0/16"
-      - "240.0.0.0/4"
   priority: 2147483541
 ---
 # Delegate to the next folder.standard down in the hierarchy that has a network isolation rule that denies ingress from private IP ranges, ingress traffic from private IP ranges to VPC resources in shared VPC network
@@ -68,7 +67,6 @@ spec:
       - "10.0.0.0/8"
       - "172.16.0.0/12"
       - "192.168.0.0/16"
-      - "240.0.0.0/4"
   priority: 2147483542
 ---
 # Deny TOR exit nodes ingress traffic

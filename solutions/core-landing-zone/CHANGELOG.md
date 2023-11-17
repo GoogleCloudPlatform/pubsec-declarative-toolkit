@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.4.0...solutions/core-landing-zone/0.5.0) (2023-11-16)
+
+
+### Features
+
+* remove data access from org sink ([#686](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/686)) ([f819e7c](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/f819e7ce64b6c2e5b071d9bbcfbc50a86c298adb))
+* remove unused bigquery iam permissions ([#683](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/683)) ([1187a58](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/1187a58612da6a167500228859ce3eb42e199f0f))
+
+
+### Bug Fixes
+
+* regenerate docs ([#699](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/699)) ([0255661](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/02556613683625119f74be7a4074d84b2de75b1c))
+* specify log sinks spec.disabled field value to false ([#688](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/688)) ([3c4d3a8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/3c4d3a84243db2dfad3d5c9ce8d833798bdf96d2))
+* update log sinks filters ([#681](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/681)) ([c9f63e5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c9f63e5ca2eb7938039243a384f191709ba9ef83))
+
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.3...solutions/core-landing-zone/0.4.0) (2023-11-10)
+
+
+### Features
+
+* Add storage bucket to core-landing-zone package to hold logs related to events and security incidents ([#641](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/641)) ([36a6375](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/36a637557d0b436bf217a086d8ebbd06ba5f2bbd))
+* Update org policies ([#657](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/657)) ([0535ed8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0535ed8fdfcb31d7488917b3f156c7b26b1b1f3c))
+
+
+### Bug Fixes
+
+* modify logging project data access config ([#661](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/661)) ([60a4156](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/60a415623a28a0304a58600cbde1061c55eaaae2))
+
 ## [0.3.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.3.2...solutions/core-landing-zone/0.3.3) (2023-10-24)
 
 
