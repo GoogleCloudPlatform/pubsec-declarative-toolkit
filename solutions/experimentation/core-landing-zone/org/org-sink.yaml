@@ -12,8 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ######
-# Organization sink for Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+# Organization sink for Security logs: Cloud Audit and Access Transparency
 # Destination: Cloud Logging bucket hosted inside logging project
+# AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the organization to send the logs to the logging bucket in the logging project
+# AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
+# AC-2(4) - Includes Security logs: Cloud Audit and Access Transparency
+# AU-12, AU-12(1) - Log Sinks defined in Log Router check each log entry against the inclusion filter and exclusion filter that determine which destinations that the log entry is sent to
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
@@ -34,19 +38,56 @@ spec:
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
   # AU-2, AU-12(A), AU-12(C)
-  # Includes Security logs: Cloud Audit, Access Transparency, and Data Access Logs
+  # Includes Security logs: Cloud Audit and Access Transparency
   # Security logs help you answer "who did what, where, and when"
   #
   # Cloud Audit Logs:
   #  Admin Activity
-  #  Data Access
   #  System Events
   #  Policy Denied
   #
-  # Access Transparency Logs (TODO - not enabled)
   filter: |-
     log_id("cloudaudit.googleapis.com/activity") OR log_id("externalaudit.googleapis.com/activity")
-    OR log_id("cloudaudit.googleapis.com/data_access") OR log_id("externalaudit.googleapis.com/data_access")
     OR log_id("cloudaudit.googleapis.com/system_event") OR log_id("externalaudit.googleapis.com/system_event")
     OR log_id("cloudaudit.googleapis.com/policy") OR log_id("externalaudit.googleapis.com/policy")
     OR log_id("cloudaudit.googleapis.com/access_transparency") OR log_id("externalaudit.googleapis.com/access_transparency")
+---
+# Organization sink for Data Access logs related to Google Workspace Login Audit
+# https://developers.google.com/admin-sdk/reports/v1/appendix/activity/login
+# Destination: Cloud Logging bucket hosted inside logging project
+# AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the organization to send the logs to the logging bucket in the logging project
+# AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
+# AC-2(4) - Includes Security logs: Data Access
+# AU-12, AU-12(1) - Log Sinks defined in Log Router check each log entry against the inclusion filter and exclusion filter that determine which destinations that the log entry is sent to
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
+metadata:
+  name: logging-project-id-google-workspace-data-access-sink # kpt-set: ${logging-project-id}-google-workspace-data-access-sink
+  namespace: logging
+  annotations:
+    config.kubernetes.io/depends-on: security-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/${security-log-bucket}
+spec:
+  organizationRef:
+    external: "0000000000" # kpt-set: ${org-id}
+  # Set includeChildren to False to prevent routing data access logs from other sources than the organization
+  includeChildren: False
+  destination:
+    # AU-3, AU-3(1), AU-4(1), AU-6(4), AU-9(2)
+    loggingLogBucketRef:
+      # destination.loggingLogBucketRef
+      # Only `external` field is supported to configure the reference.
+      external: security-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/${security-log-bucket}
+  description: Organization sink for Data Access Logs
+  # the log sink must be enabled (disabled: false) to meet the listed security controls
+  disabled: false
+  # AC-2(4), AU-12, AU-12(1)
+  # Includes Security logs: Data Access
+  # Security logs help you answer "who did what, where, and when"
+  #
+  # Cloud Audit Logs:
+  #  Data Access
+  #
+  filter: |-
+    log_id("cloudaudit.googleapis.com/data_access") OR log_id("externalaudit.googleapis.com/data_access")
+    resource.type="audited_resource"
+    resource.labels.service="login.googleapis.com"
