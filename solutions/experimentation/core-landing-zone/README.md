@@ -16,12 +16,12 @@ Depends on the bootstrap procedure.
 | allowed-contact-domains       | ["@example.com"]          | array |     1 |
 | allowed-policy-domain-members | ["DIRECTORY_CUSTOMER_ID"] | array |     1 |
 | billing-id                    | AAAAAA-BBBBBB-CCCCCC      | str   |     1 |
-| logging-project-id            | logging-project-12345     | str   |    17 |
+| logging-project-id            | logging-project-12345     | str   |    20 |
 | lz-folder-id                  |                0000000000 | str   |    13 |
 | management-namespace          | config-control            | str   |    33 |
 | management-project-id         | management-project-12345  | str   |    67 |
 | management-project-number     |                0000000000 | str   |     3 |
-| org-id                        |                0000000000 | str   |    15 |
+| org-id                        |                0000000000 | str   |    16 |
 | retention-in-days             |                         1 | int   |     2 |
 | retention-locking-policy      | false                     | bool  |     2 |
 
@@ -40,6 +40,7 @@ This package has no sub-packages.
 | lz-folder/audits/logging-project/project-iam.yaml               | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | platform-and-component-log-bucket-writer-permissions                      | projects          |
 | lz-folder/audits/logging-project/project-iam.yaml               | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | mgmt-project-cluster-platform-and-component-log-bucket-writer-permissions | projects          |
 | lz-folder/audits/logging-project/project-iam.yaml               | iam.cnrm.cloud.google.com/v1beta1             | IAMAuditConfig         | logging-project-data-access-log-config                                    | projects          |
+| lz-folder/audits/logging-project/project-sink.yaml              | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-data-access-sink                                       | logging           |
 | lz-folder/audits/logging-project/project.yaml                   | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                | logging-project-id                                                        | projects          |
 | lz-folder/clients/folder.yaml                                   | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | clients                                                                   | hierarchy         |
 | lz-folder/tests/admins/folder.yaml                              | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                 | tests.admins                                                              | hierarchy         |
@@ -109,6 +110,7 @@ This package has no sub-packages.
 | org/org-policies/iam-allowed-policy-member-domains.yaml         | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | iam-allowed-policy-member-domains                                         | policies          |
 | org/org-policies/storage-uniform-bucket-level-access.yaml       | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | storage-uniform-bucket-level-access                                       | policies          |
 | org/org-sink.yaml                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-security-sink                                          | logging           |
+| org/org-sink.yaml                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-google-workspace-data-access-sink                      | logging           |
 
 ## Resource References
 
