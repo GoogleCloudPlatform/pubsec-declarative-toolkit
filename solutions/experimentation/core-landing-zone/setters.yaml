@@ -76,6 +76,10 @@ data:
   #
   logging-project-id: logging-project-12345
   #
+  # Log Buckets
+  # Security Logs Bucket
+  # customization: required
+  security-log-bucket: security-log-bucket-12345
   # Retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
   # Set the lock mechanism on the bucket to: true or false
