@@ -36,7 +36,6 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 | security-incident-log-bucket                          | security-incident-log-bucket-12345      | str   |     1 |
 | security-incident-log-bucket-retention-in-seconds     |                                   86400 | int   |     1 |
 | security-incident-log-bucket-retention-locking-policy | false                                   | bool  |     1 |
-| security-log-bucket                                   | security-log-bucket-12345               | str   |     1 |
 
 ## Sub-packages
 
@@ -158,8 +157,8 @@ This package has no sub-packages.
 | org/org-policies/sql-restrict-public-ip.yaml                                          | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | sql-restrict-public-ip                                                    | policies          |
 | org/org-policies/storage-public-access-prevention.yaml                                | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | storage-public-access-prevention                                          | policies          |
 | org/org-policies/storage-uniform-bucket-level-access.yaml                             | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | storage-uniform-bucket-level-access                                       | policies          |
-| org/org-sink.yaml                                                                     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-security-sink                                          | logging           |
-| org/org-sink.yaml                                                                     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-google-workspace-data-access-sink                      | logging           |
+| org/org-sink.yaml                                                                     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | org-log-sink-security-logging-project-id                                  | logging           |
+| org/org-sink.yaml                                                                     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | org-log-sink-data-access-logging-project-id                               | logging           |
 
 ## Resource References
 
