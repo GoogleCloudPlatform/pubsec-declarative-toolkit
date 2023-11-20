@@ -21,7 +21,8 @@
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: logging-project-id-security-sink # kpt-set: ${logging-project-id}-security-sink
+  # Compliance as Code (CaC) requires the following naming convention for the security log org sink
+  name: org-log-sink-security-logging-project-id # kpt-set: org-log-sink-security-${logging-project-id}
   namespace: logging
   annotations:
     config.kubernetes.io/depends-on: security-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/${security-log-bucket}
@@ -63,7 +64,8 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: logging-project-id-google-workspace-data-access-sink # kpt-set: ${logging-project-id}-google-workspace-data-access-sink
+  # Compliance as Code (CaC) requires the following naming convention for the security log org sink
+  name: org-log-sink-data-access-logging-project-id # kpt-set: org-log-sink-data-access-${logging-project-id}
   namespace: logging
   annotations:
     config.kubernetes.io/depends-on: security-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/${security-log-bucket}
