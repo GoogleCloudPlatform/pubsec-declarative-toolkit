@@ -19,7 +19,7 @@
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
-  name: security-log-bucket # kpt-set: ${security-log-bucket}
+  name: security-log-bucket
   namespace: logging
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id} # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${logging-project-id}
