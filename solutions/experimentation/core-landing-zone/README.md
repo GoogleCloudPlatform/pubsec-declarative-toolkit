@@ -109,8 +109,8 @@ This package has no sub-packages.
 | org/org-policies/gcp-resource-locations.yaml                    | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | gcp-restrict-resource-locations                                           | policies          |
 | org/org-policies/iam-allowed-policy-member-domains.yaml         | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | iam-allowed-policy-member-domains                                         | policies          |
 | org/org-policies/storage-uniform-bucket-level-access.yaml       | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy  | storage-uniform-bucket-level-access                                       | policies          |
-| org/org-sink.yaml                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-security-sink                                          | logging           |
-| org/org-sink.yaml                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | logging-project-id-google-workspace-data-access-sink                      | logging           |
+| org/org-sink.yaml                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | org-log-sink-security-logging-project-id                                  | logging           |
+| org/org-sink.yaml                                               | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink         | org-log-sink-data-access-logging-project-id                               | logging           |
 
 ## Resource References
 
