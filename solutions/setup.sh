@@ -153,6 +153,8 @@ if [[ "$CREATE_PROJ" != false ]]; then
   gcloud services enable serviceusage.googleapis.com 
   gcloud services enable servicedirectory.googleapis.com 
   gcloud services enable dns.googleapis.com
+  gcloud services enable anthos.googleapis.com
+
 
   gcloud logging settings update --organization=$ORG_ID --storage-location=$REGION
 
