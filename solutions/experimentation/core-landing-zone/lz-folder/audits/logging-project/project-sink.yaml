@@ -24,7 +24,7 @@ metadata:
   name: logging-project-id-data-access-sink # kpt-set: ${logging-project-id}-data-access-sink
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: security-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/security-log-bucket
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/security-log-bucket
 spec:
   projectRef:
     name: logging-project-id # kpt-set: ${logging-project-id}
