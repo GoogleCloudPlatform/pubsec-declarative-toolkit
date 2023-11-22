@@ -21,7 +21,7 @@
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: logging-project-id-security-sink # kpt-set: ${logging-project-id}-security-sink
+  name: org-log-sink-security-logging-project-id # kpt-set: org-log-sink-security-${logging-project-id}
   namespace: logging
   annotations:
     config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/security-log-bucket
@@ -62,10 +62,10 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: logging-project-id-google-workspace-data-access-sink # kpt-set: ${logging-project-id}-google-workspace-data-access-sink
+  name: org-log-sink-data-access-logging-project-id # kpt-set: org-log-sink-data-access-${logging-project-id}
   namespace: logging
   annotations:
-    config.kubernetes.io/depends-on: security-log-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/${security-log-bucket}
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/logging/LoggingLogBucket/security-log-bucket
 spec:
   organizationRef:
     external: "0000000000" # kpt-set: ${org-id}
@@ -76,7 +76,7 @@ spec:
     loggingLogBucketRef:
       # destination.loggingLogBucketRef
       # Only `external` field is supported to configure the reference.
-      external: security-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/${security-log-bucket}
+      external: security-log-bucket # kpt-set: logging.googleapis.com/projects/${logging-project-id}/locations/northamerica-northeast1/buckets/security-log-bucket
   description: Organization sink for Data Access Logs
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
