@@ -54,7 +54,7 @@ This package has no sub-packages.
 
 1.  Move into the local package:
     ```shell
-    cd ".//solutions/experimentation/client-landing-zone/"
+    cd "./client-landing-zone/"
     ```
 
 1.  Edit the function config file(s):
