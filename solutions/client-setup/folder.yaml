@@ -18,6 +18,6 @@ metadata:
   name: clients.client-name # kpt-set: clients.${client-name}
   namespace: hierarchy
 spec:
-  displayName: client-name # kpt-set: ${client-name}-${environment}
+  displayName: client-name # kpt-set: ${client-name}
   folderRef:
     name: clients
