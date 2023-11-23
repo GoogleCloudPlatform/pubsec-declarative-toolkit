@@ -45,7 +45,6 @@ spec:
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Grant role Monitoring Admin to logging SA on management project
-# Required for monitoring and alerting on config controller
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -80,11 +79,11 @@ spec:
   role: roles/monitoring.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Storage Admin to GCP SA
+# Grant GCP role Storage Admin to GCP SA on logging project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: logging-project-id-logging-sa-storageadmin-permissions # kpt-set: ${logging-project-id}-logging-sa-storageadmin-permissions
+  name: logging-sa-storageadmin-logging-project-id-permissions # kpt-set: logging-sa-storageadmin-${logging-project-id}-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/project-id: logging-project-id # kpt-set: ${logging-project-id}
