@@ -33,7 +33,7 @@ spec:
       members:
         - memberFrom:
             logSinkRef:
-              name: logging-project-id-security-sink # kpt-set: ${logging-project-id}-security-sink
+              name: org-log-sink-security-logging-project-id # kpt-set: org-log-sink-security-${logging-project-id}
               namespace: logging
 ---
 # Logs Bucket writer IAM permissions for the platform and component log sinks
@@ -104,24 +104,6 @@ spec:
             logSinkRef:
               name: mgmt-project-cluster-platform-and-component-log-sink
               namespace: logging
----
-# Grant GCP role Storage Admin to GCP SA
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: logging-project-id-logging-sa-storageadmin-permissions # kpt-set: ${logging-project-id}-logging-sa-storageadmin-permissions
-  namespace: projects
-  annotations:
-    cnrm.cloud.google.com/project-id: logging-project-id # kpt-set: ${logging-project-id}
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-spec:
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    name: logging-project-id # kpt-set: ${logging-project-id}
-  # AU-9, AC-3
-  role: roles/storage.admin
-  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 # Enable data access log configuration on the logging project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1

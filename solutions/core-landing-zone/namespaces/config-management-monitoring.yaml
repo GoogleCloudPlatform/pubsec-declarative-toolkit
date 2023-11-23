@@ -1,0 +1,81 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# permissions and accounts required to enable Config Sync monitoring using Workload Identity
+# the k8s 'config-management-monitoring/default' service account also needs to be annotated manually
+# WARNING: once annotated, billable metrics will be generated
+# https://cloud.google.com/anthos-config-management/docs/how-to/monitor-config-sync-cloud-monitoring
+#########
+# GCP SA
+# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: config-mgmt-mon-default-sa
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  # AC-3(7), AC-3, AC-16(2)
+  displayName: config-mgmt-mon-default-sa
+---
+# Grant GCP role Metrics Writer to config-mgmt-mon-default-sa on Management Project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: config-mgmt-mon-default-sa-metric-writer-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: management-project-id # kpt-set: ${management-project-id}
+  # AC-3(7), AC-3, AC-16(2)
+  role: roles/monitoring.metricWriter
+  member: "serviceAccount:config-mgmt-mon-default-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:config-mgmt-mon-default-sa@${management-project-id}.iam.gserviceaccount.com
+---
+# K8S SA granted workload identity user
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: config-mgmt-mon-default-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    name: config-mgmt-mon-default-sa
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  # AC-3(7), AC-3, AC-16(2)
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[config-management-monitoring/default] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[config-management-monitoring/default]
+---
+# Link GCP SA to K8S namespace
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: config-management-monitoring
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  googleServiceAccount: config-mgmt-mon-default-sa@management-project-id.iam.gserviceaccount.com # kpt-set: config-mgmt-mon-default-sa@${management-project-id}.iam.gserviceaccount.com

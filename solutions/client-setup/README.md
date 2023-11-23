@@ -18,7 +18,6 @@ Package to setup a client's namespaces, folder, management project and root sync
 | client-management-project-id | client-management-project-12345 | str  |   111 |
 | client-name                  | client1                         | str  |   149 |
 | dns-project-id               | dns-project-12345               | str  |     1 |
-| environment                  | env                             | str  |     1 |
 | management-namespace         | config-control                  | str  |    27 |
 | management-project-id        | management-project-12345        | str  |     6 |
 | management-project-number    |                      0000000000 | str  |     1 |
