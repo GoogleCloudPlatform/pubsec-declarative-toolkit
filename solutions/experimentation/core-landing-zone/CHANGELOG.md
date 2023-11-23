@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.3.0...solutions/experimentation/core-landing-zone/0.3.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* added anthos api to config controller creation ([#704](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/704)) ([bc7c62e](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/bc7c62e266648aa9c47880508166990add36a84f))
+* update stale org sink refs ([#718](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/718)) ([94eea50](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/94eea504ba4ba4d4a63b9665ce61837f2d1a59c2))
+
 ## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.2.0...solutions/experimentation/core-landing-zone/0.3.0) (2023-11-23)
 
 
