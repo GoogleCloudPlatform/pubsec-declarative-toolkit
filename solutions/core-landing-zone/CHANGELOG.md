@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.5.0...solutions/core-landing-zone/0.6.0) (2023-11-23)
+
+
+### Features
+
+* add monitoring resources ([#714](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/714)) ([14964df](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/14964df143cfde7b4de1640c8f6ec4113bf9d39f))
+
+
+### Bug Fixes
+
+* rename org sinks add security log bucket ([#707](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/707)) ([e82ae77](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/e82ae774e40a3625e06bb649ee4091a4f547f7f3))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.4.0...solutions/core-landing-zone/0.5.0) (2023-11-16)
 
 

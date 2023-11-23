@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.2.0...solutions/experimentation/core-landing-zone/0.3.0) (2023-11-23)
+
+
+### Features
+
+* modify data access filtering from org sink and add new sinks in experimentation ([#702](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/702)) ([4afb797](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/4afb797f02f6eb5a7616d6fbb430f17417c1a4cf))
+
+
+### Bug Fixes
+
+* rename org sinks and security log bucket ([#709](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/709)) ([e65b450](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/e65b45090f0fd48db4b0066ff6c6d4ac7ebb095e))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.1.0...solutions/experimentation/core-landing-zone/0.2.0) (2023-11-16)
 
 

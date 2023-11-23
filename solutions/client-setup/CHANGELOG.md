@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.7.0...solutions/client-setup/0.7.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* revert client-folder name to original value  ([#712](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/712)) ([5636b01](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/5636b010b50ba7baf0bb540794ac036601cb32ce))
+
 ## [0.7.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.6.2...solutions/client-setup/0.7.0) (2023-11-16)
 
 
