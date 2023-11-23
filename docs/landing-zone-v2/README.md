@@ -444,6 +444,8 @@ cd pbmm-landingzone
 
 1. Customize Packages
 
+    > **!!! Important** !!! PLEASE DON'T SKIP or IGNORE THIS STEP!
+
     Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.
     For example "core-landing-zone" will have the same [setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/setters.yaml) as in the repo in the root of the pkg directory.
 
@@ -501,7 +503,7 @@ Optional
 
    To start you will need a git repo, this guide can be used with repositories residing in Github, Gitlab or Azure Devops. The instructions have been modified from the config controller setup guide located in [Manage Google Cloud resources with Config Controller](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#manage-resources) and [Setup GitOps](https://cloud.google.com/anthos-config-management/docs/how-to/config-controller-setup#set_up_gitops).
 
-   ***Skip this step if not using git repos.**
+   ***Skip this step if not using git repos.***
 
 ### <a name='CreateanewrepositoryinyourRepoHostingSolutionGithubGitlaborAzureDevops'></a>Create a new repository in your Repo Hosting Solution (Github, Gitlab or Azure Devops)
 
