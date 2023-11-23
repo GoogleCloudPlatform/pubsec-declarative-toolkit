@@ -258,7 +258,7 @@ The following instructions in this section 1 for the boostrap of the Config Cont
 1. Enable the required services to provision the config controller instance.
 
     ```shell
-    gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
+    gcloud services enable anthos.googleapis.com krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
     ```
 
 1. Create the required network resources. Config Controller provisions a managed Private GKE instance and still requires some core networking resource to work.
