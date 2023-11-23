@@ -18,8 +18,8 @@ Depends on the bootstrap procedure.
 | billing-id                    | AAAAAA-BBBBBB-CCCCCC      | str   |     1 |
 | logging-project-id            | logging-project-12345     | str   |    20 |
 | lz-folder-id                  |                0000000000 | str   |    13 |
-| management-namespace          | config-control            | str   |    33 |
-| management-project-id         | management-project-12345  | str   |    67 |
+| management-namespace          | config-control            | str   |    34 |
+| management-project-id         | management-project-12345  | str   |    69 |
 | management-project-number     |                0000000000 | str   |     3 |
 | org-id                        |                0000000000 | str   |    16 |
 | retention-in-days             |                         1 | int   |     2 |
@@ -51,6 +51,7 @@ This package has no sub-packages.
 | mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-cloudbilling                                        | config-control    |
 | mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-cloudresourcemanager                                | config-control    |
 | mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-serviceusage                                        | config-control    |
+| mgmt-project/services.yaml                                      | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                | management-project-id-anthos                                              | config-control    |
 | namespaces/gatekeeper-system.yaml                               | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount      | gatekeeper-admin-sa                                                       | config-control    |
 | namespaces/gatekeeper-system.yaml                               | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | gatekeeper-admin-sa-metric-writer-permissions                             | config-control    |
 | namespaces/gatekeeper-system.yaml                               | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy       | gatekeeper-admin-sa-workload-identity-binding                             | config-control    |
