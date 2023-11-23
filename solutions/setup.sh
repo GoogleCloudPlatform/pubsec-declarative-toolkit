@@ -99,7 +99,8 @@ echo "BILLING_ID: ${BILLING_ID}"
 #ORGID=$(gcloud organizations list --format="get(name)" --filter=displayName=$DOMAIN)
 ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
 echo "ORG_ID: ${ORG_ID}"
-EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
+# not required yet
+#EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_PROJ" != false ]]; then
