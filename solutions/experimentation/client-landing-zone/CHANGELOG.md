@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/client-landing-zone/0.1.1...solutions/experimentation/client-landing-zone/0.1.2) (2023-11-23)
+
+
+### Bug Fixes
+
+* revert client-folder name to original value  ([#712](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/712)) ([5636b01](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/5636b010b50ba7baf0bb540794ac036601cb32ce))
+
 ## [0.1.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/client-landing-zone/0.1.0...solutions/experimentation/client-landing-zone/0.1.1) (2023-11-16)
 
 

@@ -111,11 +111,6 @@ data:
   # customization: required
   logging-project-id: logging-project-12345
   #
-  # Log Buckets
-  # Security Logs Bucket
-  # customization: required
-  security-log-bucket: security-log-bucket-12345
-  #
   # Storage buckets
   # Security incident log bucket
   # Bucket names must be globally unique across all of GCP
