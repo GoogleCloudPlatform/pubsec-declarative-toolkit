@@ -52,7 +52,7 @@ source ./vars.sh
 
 # the following can be overriden by vars.sh above
 CIDR_KCC_VPC=192.168.0.0/16
-LZ_FOLDER_NAME_PREFIX=landing-zone-1
+#LZ_FOLDER_NAME_PREFIX=landing-zone-1
 NETWORK=kcc-ls-vpc
 SUBNET=kcc-ls-sn
 # don't reset - passed in select runs via vars.sh where cluster is already up
@@ -71,35 +71,35 @@ deployment() {
 start=`date +%s`
 echo "Start: ${start}"
 # Set Vars for Permissions application
-export MIDFIX=$UNIQUE
+MIDFIX=$UNIQUE
 echo "unique string: $MIDFIX"
 echo "REGION: $REGION" # defined in vars.sh
-#export NETWORK=$PREFIX-${MIDFIX}-vpc
+# NETWORK=$PREFIX-${MIDFIX}-vpc
 echo "NETWORK: $NETWORK"
-#export SUBNET=$PREFIX-${MIDFIX}-sn
+# SUBNET=$PREFIX-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
-#export CLUSTER=$PREFIX-${MIDFIX}
+# CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
 if [[ "$CREATE_PROJ" != false ]]; then
-  export CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
-  export CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
+  CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
+  CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
   echo "Creating project: $CC_PROJECT_ID"
-  ##export CC_PROJECT_ID=${KCC_PROJECT_ID}
+  ##CC_PROJECT_ID=${KCC_PROJECT_ID}
 else
-  export CC_PROJECT_ID=${KCC_PROJECT_ID}
+  CC_PROJECT_ID=${KCC_PROJECT_ID}
   echo "Reusing project: $CC_PROJECT_ID"
 fi
 
 echo "CC_PROJECT_ID: $CC_PROJECT_ID"
-#export BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+#BOOT_PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
-export BILLING_FORMAT="--format=value(billingAccountName)"
-export BILLING_ID=$(gcloud billing projects describe $BOOT_PROJECT_ID $BILLING_FORMAT | sed 's/.*\///')
+BILLING_FORMAT="--format=value(billingAccountName)"
+BILLING_ID=$(gcloud billing projects describe $BOOT_PROJECT_ID $BILLING_FORMAT | sed 's/.*\///')
 echo "BILLING_ID: ${BILLING_ID}"
 #ORGID=$(gcloud organizations list --format="get(name)" --filter=displayName=$DOMAIN)
 ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
 echo "ORG_ID: ${ORG_ID}"
-export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
+EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
 # switch back to/create kcc project - not in a folder
 if [[ "$CREATE_PROJ" != false ]]; then
@@ -201,7 +201,7 @@ if [[ "$CREATE_KCC" != false ]]; then
   echo "List Clusters:"
   gcloud anthos config controller list
 
-  export SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+  SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
   echo "post GKE cluster create - applying 2 roles to org: ${ORG_ID} and project: ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
   gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet  > /dev/null 1>&1
   gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet  > /dev/null 1>&1
