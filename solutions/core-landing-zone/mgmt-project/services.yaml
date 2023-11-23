@@ -68,7 +68,7 @@ spec:
   projectRef:
     external: management-project-id # kpt-set: ${management-project-id}
 ---
-# Access Context Manager API
+# Anthos API
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
