@@ -25,9 +25,39 @@ spec:
     external: projects/project-id # kpt-set: projects/${project-id}
   # AU-9, AC-3
   bindings:
-    # edit / add roles to client users as required
+    # edit / add roles to users as required
     #
-    # "Project Viewer" - required to view the project and its resources
+    # "Viewer" - required to view the project and its resources
     - role: roles/viewer
       members:
-        - member: client-users-group # kpt-set: ${client-users-group}
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Secret Manager Secret Version Adder" - required to add a version to an existing secret
+    - role: roles/secretmanager.secretVersionAdder
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Cloud KMS Admin" - required to manage Key Management Service resources
+    - role: roles/cloudkms.admin
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Monitoring Editor" - required to edit monitoring configurations
+    - role: roles/monitoring.editor
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Error Reporting Admin" - required to create log based alerts. It grants permissions to create error reports and notification rules
+    - role: roles/errorreporting.admin
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Tech Support Editor" - required to create support ticket with Google Support
+    - role: roles/cloudsupport.techSupportEditor
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Essential Contacts Admin" - required to manage essential contacts for the project
+    - role: roles/essentialcontacts.admin
+      members:
+        - member: users-group # kpt-set: ${users-group}

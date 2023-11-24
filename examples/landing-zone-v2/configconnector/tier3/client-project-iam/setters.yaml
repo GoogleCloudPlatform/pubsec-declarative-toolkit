@@ -37,9 +37,9 @@ data:
   # IAM
   ##########################
   #
-  # a group of client users to be granted permissions on the project
+  # a group of users (i.e. app developers, etc.) to be granted permissions on the project
   # customization: required
-  client-users-group: group:client_users@example.com
+  users-group: group:users@example.com
   #
   ##########################
   # End of Configurations

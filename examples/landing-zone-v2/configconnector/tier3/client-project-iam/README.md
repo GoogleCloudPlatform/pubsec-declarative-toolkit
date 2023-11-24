@@ -9,15 +9,16 @@
 Landing zone v2 subpackage.
 Depends on `client-project-setup` package and tier3 namespace.
 
-Example to manage users and tier4 service account roles.
-Edit and deploy once per client project in the tier3 namespace.
+**Example** to manage users and tier4 service account roles.
+
+Edit roles based on the project's requirements and deploy once per service project in the tier3 namespace.
 
 ## Setters
 
-|        Name        |             Value              | Type | Count |
-|--------------------|--------------------------------|------|-------|
-| client-users-group | group:client_users@example.com | str  |     1 |
-| project-id         | client-project-12345           | str  |     5 |
+|    Name     |          Value          | Type | Count |
+|-------------|-------------------------|------|-------|
+| project-id  | client-project-12345    | str  |     5 |
+| users-group | group:users@example.com | str  |     7 |
 
 ## Sub-packages
 
@@ -38,7 +39,7 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.gitexamples/landing-zone-v2/configconnector/tier3/client-project-iam@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/examples/landing-zone-v2/configconnector/tier3/client-project-iam@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
