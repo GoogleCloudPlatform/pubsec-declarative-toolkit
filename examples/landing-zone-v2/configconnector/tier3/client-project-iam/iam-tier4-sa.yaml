@@ -1,0 +1,33 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# AU-9, AC-3 - IAM Partial Policy that binds tier4 namespace service account to the required minimum project scoped roles to deploy allowed resources
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: project-id-tier4-sa-permissions # kpt-set: ${project-id}-tier4-sa-permissions
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    kind: Project
+    external: projects/project-id # kpt-set: projects/${project-id}
+  # AU-9, AC-3
+  bindings:
+    # edit / add roles to tier4-sa as required
+    #
+    # "Instance Admin" - required to deploy compute instances
+    - role: roles/compute.instanceAdmin
+      members:
+        - member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com

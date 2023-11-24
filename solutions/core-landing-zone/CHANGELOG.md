@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.6.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.6.0...solutions/core-landing-zone/0.6.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* added anthos api to config controller creation ([#704](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/704)) ([bc7c62e](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/bc7c62e266648aa9c47880508166990add36a84f))
+* update stale org sink refs ([#718](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/718)) ([94eea50](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/94eea504ba4ba4d4a63b9665ce61837f2d1a59c2))
+
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.5.0...solutions/core-landing-zone/0.6.0) (2023-11-23)
+
+
+### Features
+
+* add monitoring resources ([#714](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/714)) ([14964df](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/14964df143cfde7b4de1640c8f6ec4113bf9d39f))
+
+
+### Bug Fixes
+
+* rename org sinks add security log bucket ([#707](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/707)) ([e82ae77](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/e82ae774e40a3625e06bb649ee4091a4f547f7f3))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.4.0...solutions/core-landing-zone/0.5.0) (2023-11-16)
 
 

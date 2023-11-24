@@ -42,10 +42,6 @@ data:
   # customization: required
   org-id: "0000000000"
   #
-  # The environment (dev, preprod, prod), used in the client folder display name
-  # customization: required
-  environment: env
-  #
   ##########################
   # Management Project
   ##########################

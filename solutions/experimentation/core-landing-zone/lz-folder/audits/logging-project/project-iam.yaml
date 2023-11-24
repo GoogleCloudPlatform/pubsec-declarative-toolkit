@@ -36,7 +36,7 @@ spec:
       members:
         - memberFrom:
             logSinkRef:
-              name: logging-project-id-security-sink # kpt-set: ${logging-project-id}-security-sink
+              name: org-log-sink-security-logging-project-id # kpt-set: org-log-sink-security-${logging-project-id}
               namespace: logging
 ---
 # Logs Bucket writer IAM permissions for the platform and component log sink

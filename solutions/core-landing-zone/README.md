@@ -26,8 +26,8 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 | dns-project-id                                        | dns-project-12345                       | str   |     8 |
 | logging-project-id                                    | logging-project-12345                   | str   |    36 |
 | lz-folder-id                                          |                              0000000000 | str   |    14 |
-| management-namespace                                  | config-control                          | str   |    47 |
-| management-project-id                                 | management-project-12345                | str   |    92 |
+| management-namespace                                  | config-control                          | str   |    48 |
+| management-project-id                                 | management-project-12345                | str   |    94 |
 | management-project-number                             |                              0000000000 | str   |     3 |
 | org-id                                                |                              0000000000 | str   |    42 |
 | platform-and-component-log-bucket                     | platform-and-component-log-bucket-12345 | str   |     2 |
@@ -75,6 +75,7 @@ This package has no sub-packages.
 | mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                    | management-project-id-cloudresourcemanager                                | config-control               |
 | mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                    | management-project-id-serviceusage                                        | config-control               |
 | mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                    | management-project-id-accesscontextmanager                                | config-control               |
+| mgmt-project/services.yaml                                                            | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                    | management-project-id-anthos                                              | config-control               |
 | namespaces/config-management-monitoring.yaml                                          | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount          | config-mgmt-mon-default-sa                                                | config-control               |
 | namespaces/config-management-monitoring.yaml                                          | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember            | config-mgmt-mon-default-sa-metric-writer-permissions                      | config-control               |
 | namespaces/config-management-monitoring.yaml                                          | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy           | config-mgmt-mon-default-sa-workload-identity-binding                      | config-control               |
