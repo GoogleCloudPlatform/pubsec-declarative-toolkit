@@ -37,7 +37,7 @@
   - [4. Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
   - [5. Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
     - [Grant billing account user role](#grant-billing-account-user-role)
-    - [Optional - Config Controller Monitoring](#optional-config-controller-monitoring)
+    - [Optional - Config Controller Monitoring](#optional---config-controller-monitoring)
   - [Next Step](#next-step)
   - [Clean Up](#clean-up)
   - [GitOps](#gitops)
