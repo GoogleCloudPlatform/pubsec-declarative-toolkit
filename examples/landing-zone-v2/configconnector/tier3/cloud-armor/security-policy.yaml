@@ -30,12 +30,21 @@ spec:
       match:
         expr:
           expression: |
-            evaluatePreconfiguredExpr('lfi-stable')
-            || evaluatePreconfiguredExpr('rce-stable')
-            || evaluatePreconfiguredExpr('scannerdetection-stable')
-            || evaluatePreconfiguredExpr('protocolattack-stable')
-            || evaluatePreconfiguredExpr('sessionfixation-stable')
+            evaluatePreconfiguredExpr('lfi-v33-stable')
+            || evaluatePreconfiguredExpr('rfi-v33-stable')
+            || evaluatePreconfiguredExpr('rce-v33-stable')
+            || evaluatePreconfiguredExpr('methodenforcement-v33-stable')
+            || evaluatePreconfiguredExpr('scannerdetection-v33-stable')
       priority: 10000
+    - action: deny(403)
+      description: block preconfiguredWAF list - part2
+      match:
+        expr:
+          expression: |
+            evaluatePreconfiguredExpr('protocolattack-v33-stable')
+            || evaluatePreconfiguredExpr('sessionfixation-v33-stable')
+            || evaluatePreconfiguredExpr('xss-v33-stable')
+      priority: 10001
     - action: allow
       description: allow Canada
       match:
