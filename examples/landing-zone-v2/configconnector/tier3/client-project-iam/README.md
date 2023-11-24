@@ -26,10 +26,10 @@ This package has no sub-packages.
 
 ## Resources
 
-|       File        |            APIVersion             |       Kind       |                Name                 | Namespace |
-|-------------------|-----------------------------------|------------------|-------------------------------------|-----------|
-| iam-tier4-sa.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy | project-id-tier4-sa-permissions     |           |
-| iam-users.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy | project-id-client-users-permissions |           |
+|       File        |            APIVersion             |       Kind       |              Name               | Namespace |
+|-------------------|-----------------------------------|------------------|---------------------------------|-----------|
+| iam-tier4-sa.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy | project-id-tier4-sa-permissions |           |
+| iam-users.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy | project-id-users-permissions    |           |
 
 ## Resource References
 

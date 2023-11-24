@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# AU-9, AC-3 - IAM Partial Policy that binds client users to the required minimum project scoped roles to perform duties
+# AU-9, AC-3 - IAM Partial Policy that binds users to the required minimum project scoped roles to perform duties
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: project-id-client-users-permissions # kpt-set: ${project-id}-client-users-permissions
+  name: project-id-users-permissions # kpt-set: ${project-id}-users-permissions
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
