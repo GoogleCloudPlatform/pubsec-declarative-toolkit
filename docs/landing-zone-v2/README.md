@@ -701,7 +701,11 @@ kubectl delete RootSync root-sync -n config-management-system
 Now we can delete our KCC resources from the Config Controller instance.
 
 ```shell
-kubectl delete gcp --all --all-namespaces
+kubectl delete gcp -n projects --all
+kubectl delete gcp -n networking --all
+kubectl delete gcp -n hierarchy --all
+kubectl delete gcp -n policies --all
+kubectl delete gcp -n logging --all
 ```
 
 Once the resources have been deleted you can delete the config controller instance .
