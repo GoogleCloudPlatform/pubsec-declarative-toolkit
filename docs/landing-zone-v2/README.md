@@ -215,13 +215,13 @@ The following instructions in this section 1 for the boostrap of the Config Cont
 ### <a name='Option1-Orglevelfolder'></a>Option 1 - Org level folder
 
     ```shell
-        FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME --organization=$ORG_ID --format="value(name)" --quiet | cut -d "/" -f 2)
+    FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME --organization=$ORG_ID --format="value(name)" --quiet | cut -d "/" -f 2)
     ```
 
 ### <a name='Option2-FolderinaFolder'></a>Option 2 - Folder in a Folder
 
     ```shell
-        FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
+    FOLDER_ID=$(gcloud resource-manager folders create --display-name=$LZ_FOLDER_NAME  --folder=$ROOT_FOLDER_ID --format="value(name)" --quiet | cut -d "/" -f 2)
     ```
 
 1. Create a new project at the org level where we will install the Config Controller instance.
@@ -229,19 +229,19 @@ The following instructions in this section 1 for the boostrap of the Config Cont
 ### <a name='Option1-OrglevelProject'></a>Option 1 - Org level Project
 
     ```shell
-        gcloud projects create $PROJECT_ID --set-as-default --organization=$ORG_ID
+    gcloud projects create $PROJECT_ID --set-as-default --organization=$ORG_ID
     ```
 
 ### <a name='Option2-ProjectinaFolder'></a>Option 2 - Project in a Folder
 
     ```shell
-        gcloud projects create $PROJECT_ID --set-as-default --folder=$ROOT_FOLDER_ID
+    gcloud projects create $PROJECT_ID --set-as-default --folder=$ROOT_FOLDER_ID
     ```
 
 1. Enable Billing
 
     ```shell
-        gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID
+    gcloud beta billing projects link $PROJECT_ID --billing-account $BILLING_ID
     ```
 
 1. Set the project ID
@@ -348,13 +348,13 @@ The following instructions in this section 1 for the boostrap of the Config Cont
 ### <a name='GKEAutopilot-Fullymanagedcluster'></a>GKE Autopilot - Fully managed cluster
 
     ```shell
-        gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management
+    gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management
     ```
 
 ### <a name='GKEStandard'></a>GKE Standard
     Optional
     ```shell
-        gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
+    gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET
     ```
 
 ### <a name='GKECredentials'></a>GKE Credentials
