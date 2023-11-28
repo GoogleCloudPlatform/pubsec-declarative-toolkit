@@ -46,12 +46,15 @@ spec:
   #  Admin Activity
   #  System Events
   #  Policy Denied
+  #  Access Transparency
+  #  Sensitive Actions
   #
   filter: |-
     log_id("cloudaudit.googleapis.com/activity") OR log_id("externalaudit.googleapis.com/activity")
     OR log_id("cloudaudit.googleapis.com/system_event") OR log_id("externalaudit.googleapis.com/system_event")
     OR log_id("cloudaudit.googleapis.com/policy") OR log_id("externalaudit.googleapis.com/policy")
     OR log_id("cloudaudit.googleapis.com/access_transparency") OR log_id("externalaudit.googleapis.com/access_transparency")
+    OR log_id("sensitiveaction.googleapis.com/action")
 ---
 # Organization sink for Data Access logs related to Google Workspace Login Audit
 # https://developers.google.com/admin-sdk/reports/v1/appendix/activity/login

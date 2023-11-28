@@ -43,6 +43,41 @@ spec:
   role: roles/logging.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
+# Grant role Monitoring Admin to logging SA on management project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: logging-sa-monitoring-admin-management-project-id-permissions # kpt-set: logging-sa-monitoring-admin-${management-project-id}-permissions
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: management-project-id # kpt-set: ${management-project-id}
+  # AC-3(7), AC-3, AC-16(2)
+  role: roles/monitoring.admin
+  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
+---
+# Grant GCP role Monitoring Admin to GCP SA on logging project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: logging-sa-monitoring-admin-logging-project-id-permissions # kpt-set: logging-sa-monitoring-admin-${logging-project-id}-permissions
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: logging-project-id # kpt-set: ${logging-project-id}
+  # AC-3(7), AC-3, AC-16(2)
+  role: roles/monitoring.admin
+  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
+---
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy

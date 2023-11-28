@@ -37,6 +37,7 @@
   - [4. Validate the landing zone deployment](#4-validate-the-landing-zone-deployment)
   - [5. Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
     - [Grant billing account user role](#grant-billing-account-user-role)
+    - [Optional - Config Controller Monitoring](#optional---config-controller-monitoring)
   - [Next Step](#next-step)
   - [Clean Up](#clean-up)
   - [GitOps](#gitops)
@@ -449,7 +450,7 @@ cd pbmm-landingzone
 
 3. Customize Packages
 
-    Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.  
+    Review and customize all packages' `setters.yaml` with the unique configuration of your landing zone.
     For example "core-landing-zone" will have the same [setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/setters.yaml) as in the repo in the root of the pkg directory.
 
 ### <a name='deploy-the-infrastructure-using-kpt'></a>2b. Deploy the infrastructure using KPT
@@ -466,7 +467,7 @@ Optional
 kpt live init core-landing-zone --namespace config-control
 ```
 
-  1. apply / hydrate the templated package with setters.yaml values - where kpt-set values are replaced  
+  1. apply / hydrate the templated package with setters.yaml values - where kpt-set values are replaced
 
 ```shell
 kpt fn render core-landing-zone
@@ -615,6 +616,70 @@ nomos status --contexts gke_${PROJECT_ID}_northamerica-northeast1_krmapihost-${C
       --role "roles/billing.user"
     ```
 
+### <a name='Optional-ConfigControllerMonitoring'></a>Optional - Config Controller Monitoring
+
+Proceed with this section ONLY IF monitoring of Policy Controller and/or Config Sync metrics on the Config Controller cluster is required.  Refer to official documentation for more details.
+
+> **WARNING: once enabled, billable metrics will be generated.**
+
+Follow these steps after the `core-landing-zone` package is applied which deploys most resources required (GCP SA, IAM, etc.).
+
+Alert policies, dashboards, etc. based on these metrics will need to be created manually.
+
+- To enable [Config Sync metrics](https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-config-sync) with Cloud Monitoring, annotate the kubernetes `default` service account in the `config-management-monitoring` namespace with the GCP `config-mgmt-mon-default-sa` service account:
+    ```bash
+    export PROJECT_ID='<management-project-id>'
+
+    # annotate the service account to enable monitoring
+    kubectl annotate serviceaccount \
+      --namespace config-management-monitoring \
+      default \
+      iam.gke.io/gcp-service-account=config-mgmt-mon-default-sa@${PROJECT_ID}.iam.gserviceaccount.com
+
+    # verify output for proper annotation
+    kubectl describe serviceaccount default --namespace config-management-monitoring
+
+    # if metrics are not being generated, the 'otel-collector' pod may need to be restarted:
+    kubectl rollout restart deployment otel-collector -n config-management-monitoring
+    ```
+    Note from [official documentation](https://cloud.google.com/anthos-config-management/docs/how-to/monitoring-config-sync#metric_labels):
+    > **Note:** Since Config Sync version 1.15.0, depending on the frequency of production repository commits and variance in Kubernetes Kinds being deployed, the two new metric labels `commit` and `type` introduced in this release can cause an increase in Cloud Monitoring metric write throughput. This can result in an increase of monthly billing. The affected metrics are `apply_duration_seconds`, `api_duration_seconds`, `declared_resources`, `apply_operations_total`. To avoid an increase in billing or if these metrics are not needed, follow the instructions to [patch the otel collector deployment with ConfigMap](https://github.com/GoogleContainerTools/kpt-config-sync/blob/v1.15/docs/custom-metric-filter.md#patch-the-otel-collector-deployment-with-configmap) and remove the aforementioned metrics from `filter/cloudmonitoring` allowlist.
+
+    If monitoring is no longer required, the annotation can be removed with the command below:
+    ```bash
+    # remove the annotation
+    kubectl annotate serviceaccount \
+      --namespace config-management-monitoring \
+      default \
+      iam.gke.io/gcp-service-account-
+    ```
+
+- To enable [Policy Controller metrics](https://cloud.google.com/anthos-config-management/docs/how-to/policy-controller-metrics) with Cloud Monitoring, annotate the kubernetes `gatekeeper-admin` service account in the `gatekeeper-system` namespace with the GCP `gatekeeper-admin-sa` service account:
+
+    ```bash
+    export PROJECT_ID='<management-project-id>'
+
+    # annotate the service account to enable monitoring
+    kubectl annotate serviceaccount \
+      --namespace gatekeeper-system \
+      gatekeeper-admin \
+      iam.gke.io/gcp-service-account=gatekeeper-admin-sa@${PROJECT_ID}.iam.gserviceaccount.com
+
+    # verify output for proper annotation
+    kubectl describe serviceaccount gatekeeper-admin --namespace gatekeeper-system
+
+    # if metrics are not being generated, the 'gatekeeper-controller-manager' pod may need to be restarted:
+    kubectl rollout restart deployment gatekeeper-controller-manager -n gatekeeper-system
+    ```
+    If monitoring is no longer required, the annotation can be removed with the command below:
+    ```bash
+    # remove the annotation
+    kubectl annotate serviceaccount \
+      --namespace gatekeeper-system \
+      gatekeeper-admin \
+      iam.gke.io/gcp-service-account-
+    ```
+
 ## <a name='NextStep'></a>Next Step
 
 Execute the client onboarding [procedure](onboarding-client.md).
@@ -644,7 +709,7 @@ kubectl delete gcp --all
 
 Once the resources have been deleted you can delete the config controller instance .
 
-If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project.
+If you have forgotten the name of the instance you can run `gcloud anthos config controller list` to reveal the instances in your current project.
 
 ```shell
 gcloud anthos config controller delete instance-name --location instance-region

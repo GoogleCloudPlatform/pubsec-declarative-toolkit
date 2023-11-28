@@ -26,32 +26,69 @@ spec:
   resourceID: workload-name-security-policy # kpt-set: ${workload-name}-security-policy
   rule:
     - action: deny(403)
-      description: block preconfiguredWAF list
+      description: Deny Local File Inclusion
       match:
         expr:
-          expression: |
-            evaluatePreconfiguredExpr('lfi-stable')
-            || evaluatePreconfiguredExpr('rce-stable')
-            || evaluatePreconfiguredExpr('scannerdetection-stable')
-            || evaluatePreconfiguredExpr('protocolattack-stable')
-            || evaluatePreconfiguredExpr('sessionfixation-stable')
+          expression: "evaluatePreconfiguredWaf('lfi-v33-stable', {'sensitivity': 4})"
       priority: 10000
+    - action: deny(403)
+      description: Deny Remote File Inclusion
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('rfi-v33-stable', {'sensitivity': 4})"
+      priority: 10001
+    - action: deny(403)
+      description: Deny Remote Code Execution
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('rce-v33-stable', {'sensitivity': 4})"
+      priority: 10002
+    - action: deny(403)
+      description: Deny Method Enforcement
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('methodenforcement-v33-stable', {'sensitivity': 4})"
+      priority: 10003
+    - action: deny(403)
+      description: Deny Scanner Detection
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('scannerdetection-v33-stable', {'sensitivity': 4})"
+      priority: 10004
+    - action: deny(403)
+      description: Deny Protocol Attack
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('protocolattack-v33-stable', {'sensitivity': 4})"
+      priority: 10005
+    - action: deny(403)
+      description: Deny Session Fixation
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('sessionfixation-v33-stable', {'sensitivity': 4})"
+      priority: 10006
+    - action: deny(403)
+      description: Deny Cross-Site Scripting
+      match:
+        expr:
+          expression: "evaluatePreconfiguredWaf('xss-v33-stable', {'sensitivity': 4})"
+      priority: 10007
     - action: allow
-      description: allow Canada
+      description: Allow Canada
       match:
         expr:
           expression: |
             '[CA]'.contains(origin.region_code)
       priority: 100001
     - action: allow
-      description: allow Google monitoring
+      description: Allow Google Monitoring
       match:
         expr:
           expression: |
             request.headers['user-agent'].contains('GoogleStackdriverMonitoring-UptimeChecks')
       priority: 100000
     - action: allow
-      description: allow web security scanner
+      description: Allow Web Security Scanner
       match:
         config:
           srcIpRanges:

@@ -1,0 +1,63 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# AU-9, AC-3 - IAM Partial Policy that binds users to the required minimum project scoped roles to perform duties
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: project-id-users-permissions # kpt-set: ${project-id}-users-permissions
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+spec:
+  resourceRef:
+    kind: Project
+    external: projects/project-id # kpt-set: projects/${project-id}
+  # AU-9, AC-3
+  bindings:
+    # edit / add roles to users as required
+    #
+    # "Viewer" - required to view the project and its resources
+    - role: roles/viewer
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Secret Manager Secret Version Adder" - required to add a version to an existing secret
+    - role: roles/secretmanager.secretVersionAdder
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Cloud KMS Admin" - required to manage Key Management Service resources
+    - role: roles/cloudkms.admin
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Monitoring Editor" - required to edit monitoring configurations
+    - role: roles/monitoring.editor
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Error Reporting Admin" - required to create log based alerts. It grants permissions to create error reports and notification rules
+    - role: roles/errorreporting.admin
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Tech Support Editor" - required to create support ticket with Google Support
+    - role: roles/cloudsupport.techSupportEditor
+      members:
+        - member: users-group # kpt-set: ${users-group}
+    #
+    # "Essential Contacts Admin" - required to manage essential contacts for the project
+    - role: roles/essentialcontacts.admin
+      members:
+        - member: users-group # kpt-set: ${users-group}
