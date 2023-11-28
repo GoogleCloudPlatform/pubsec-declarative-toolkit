@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.6.1...solutions/core-landing-zone/0.7.0) (2023-11-24)
+
+
+### Features
+
+* logging - adding sensitive actions ([#734](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/734)) ([d71f863](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/d71f8638fb4353466cd20fd3fe33dfaae88fd32c))
+
 ## [0.6.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.6.0...solutions/core-landing-zone/0.6.1) (2023-11-23)
 
 
