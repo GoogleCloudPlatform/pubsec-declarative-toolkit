@@ -84,6 +84,8 @@ if [[ "$CREATE_PROJ" != false ]]; then
   CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
   CC_PROJECT_ID=${KCC_PROJECT_NAME}-${CC_PROJECT_RAND}
   echo "Creating project: $CC_PROJECT_ID"
+  # set KCC project id for case where we initially create the KCC cluster without rerunning with passed in -p project_id
+  KCC_PROJECT_ID=$CC_PROJECT_ID
   ##CC_PROJECT_ID=${KCC_PROJECT_ID}
 else
   CC_PROJECT_ID=${KCC_PROJECT_ID}
