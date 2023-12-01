@@ -713,8 +713,8 @@ kubectl delete gcp -n logging --all
 
 Once the resources have been deleted you can delete the config controller instance .
 
-If you have forgotten the name of the instance you can run `gcloud anthos config controller list` to reveal the instances in your current project.
+If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project and then replace the corresponding environment variables from the below command with your actual values.
 
 ```shell
-gcloud anthos config controller delete instance-name --location instance-region
+gcloud anthos config controller delete $CLUSTER --location $REGION
 ```
