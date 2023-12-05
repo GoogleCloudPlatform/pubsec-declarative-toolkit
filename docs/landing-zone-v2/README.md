@@ -701,20 +701,17 @@ First delete the Rootsync deployment. This will prevent the resources from self-
 kubectl delete RootSync root-sync -n config-management-system
 ```
 
-Now we can delete our KCC resources from the Config Controller instance.
+Now we can delete our KCC resources solution by solution in a reverse order of initial solution deployments from the Config Controller instance (assuming either you still have the local bootstrapping solution folders or you have checked those solution folders out from your git repository, and you run the below commands at the parent folder of those solution folders).
 
 ```shell
-kubectl delete gcp -n networking --all
-kubectl delete gcp -n logging --all
-kubectl delete gcp -n policies --all
-kubectl delete gcp -n projects --all
-kubectl delete gcp -n hierarchy --all
-kubectl delete gcp -n config-control --all
+# kpt live destroy <solution_folder_path>
+kpt live destroy core-landing-zone
+kpt live destroy gatekeeper-policies # Optional
 ```
 
-Once the resources have been deleted you can delete the config controller instance .
+Once all solution's resources have been deleted you can delete the config controller instance.
 
-If you have forgotten the name of the instance you can run `gcloud config controller list` to reveal the instances in your project and then replace the corresponding environment variables from the below command with your actual values.
+If you have forgotten the name of the instance you can run `gcloud anthos config controller list` to reveal the instances in your project and then replace the corresponding environment variables from the below command with your actual values. If you are still in the same deploymemt session with the environment variables available, please directly run the below command.
 
 ```shell
 gcloud anthos config controller delete $CLUSTER --location $REGION
