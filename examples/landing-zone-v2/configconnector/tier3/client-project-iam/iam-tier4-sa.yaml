@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
-# AU-9, AC-3 - IAM Partial Policy that binds tier4 namespace service account to the required minimum project scoped roles to deploy allowed resources
+# AC-3, AC-3(7), AC-16(2) - IAM Partial Policy that binds tier4 namespace service account to the required minimum project scoped roles to deploy allowed resources
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
