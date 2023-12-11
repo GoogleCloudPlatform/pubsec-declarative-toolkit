@@ -23,7 +23,7 @@ spec:
   resourceRef:
     kind: Project
     external: projects/project-id # kpt-set: projects/${project-id}
-  # AU-9, AC-3
+  # AC-3, AC-3(7), AC-16(2)
   bindings:
     # edit / add roles to users as required
     #
