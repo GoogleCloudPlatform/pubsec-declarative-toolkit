@@ -159,22 +159,4 @@ spec:
     name: project-id # kpt-set: ${project-id}
   role: roles/pubsub.admin
   member: "serviceAccount:client-name-logging-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-logging-sa@${client-management-project-id}.iam.gserviceaccount.com
----
-# Enable the Kubernetes Engine API data access log configuration on the GKE service project
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMAuditConfig
-metadata:
-  name: project-id-data-access-log-config # kpt-set: ${project-id}-data-access-log-config
-  namespace: client-name-projects # kpt-set: ${client-name}-projects
-  annotations:
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client1-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  service: container.googleapis.com
-  auditLogConfigs:
-    - logType: ADMIN_READ
-    - logType: DATA_READ
-    - logType: DATA_WRITE
-  resourceRef:
-    kind: Project
-    name: project-id # kpt-set: ${project-id}
-    namespace: client-name-projects # kpt-set: ${client-name}-projects
+
