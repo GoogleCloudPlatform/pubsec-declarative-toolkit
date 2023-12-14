@@ -13,6 +13,7 @@
 # limitations under the License.
 ######
 # Firewall rule for lb health check
+# AU-12 - Enable Logging for firewall
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
@@ -31,5 +32,6 @@ spec:
     - "130.211.0.0/22"
   destinationRanges: # kpt-set: ${podIpv4Range}
     - podIpv4Range
+  # AU-12
   logConfig:
     metadata: "INCLUDE_ALL_METADATA"
