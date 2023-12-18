@@ -14,7 +14,7 @@
 ########
 # GKE egress Allow GKE nodes to AzDO
 # TODO: validate if service account can be used instead of podipv4range
-# AU-12 - Enable Logging for firewall policy
+# AU-12 - Enable Logging for firewall
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:

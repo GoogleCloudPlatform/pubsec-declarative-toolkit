@@ -14,7 +14,7 @@
 #########
 # example for egress with fqdns
 # edit field values as required
-# AU-12 - Enable Logging for firewall policy
+# AU-12 - Enable Logging for firewall
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:

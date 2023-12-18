@@ -15,7 +15,7 @@
 # Public Core DNS zone
 # SC-20 - This is Parent zone and purely related to core landing zone only. Supports DNSSEC from spoofing attacks
 # Client applications will be using sub zones created under parent zone, however, their configuration will be application specific and will require seperate assessment
-# AU-12 - Enable logging for Public Core DNS zone
+# AU-12 - Enable logging for DNS
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
