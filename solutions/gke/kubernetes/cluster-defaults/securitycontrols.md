@@ -3,6 +3,8 @@
 <!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
+|AU-12|./gateway/backendpolicy/backendpolicy.yaml|workload-name-cloud-armor|
+|AU-12|./gateway/backendpolicy/backendpolicy.yaml|workload-name-cloud-armor|
 |AU-12|./network-logging.yaml|default|
 |AU-12|./network-logging.yaml|default|
 |AU-3|./network-logging.yaml|default|

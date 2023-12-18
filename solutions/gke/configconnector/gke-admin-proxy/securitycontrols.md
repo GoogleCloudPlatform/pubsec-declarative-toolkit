@@ -54,6 +54,8 @@
 |AC-4|./instance-resources/firewall-iap.yaml|project-id--instance-name-sa-iap-ssh-fwr|
 |AC-4(21)|./instance-resources/firewall-iap.yaml|project-id--instance-name-sa-iap-ssh-fwr|
 |AC-4(21)|./instance-resources/firewall-iap.yaml|project-id--instance-name-sa-iap-ssh-fwr|
+|AU-12|./instance-resources/firewall-iap.yaml|project-id--instance-name-sa-iap-ssh-fwr|
+|AU-12|./instance-resources/firewall-iap.yaml|project-id--instance-name-sa-iap-ssh-fwr|
 |SC-18(1)|./instance-resources/instance.yaml|project-id--instance-name|
 |SC-18(1)|./instance-resources/instance.yaml|project-id--instance-name|
 |SC-7(11)|./instance-resources/firewall-iap.yaml|project-id--instance-name-sa-iap-ssh-fwr|
