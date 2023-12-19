@@ -246,6 +246,8 @@
 |AU-11).|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |AU-12|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
 |AU-12|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
+|AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
+|AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
 |AU-12|./lz-folder/services-infrastructure/folder-sink.yaml|platform-and-component-services-infra-log-sink|
 |AU-12|./lz-folder/services-infrastructure/folder-sink.yaml|platform-and-component-services-infra-log-sink|
 |AU-12|./lz-folder/services/folder-sink.yaml|platform-and-component-services-log-sink|
