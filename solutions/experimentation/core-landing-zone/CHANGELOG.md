@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.3.1...solutions/experimentation/core-landing-zone/0.4.0) (2023-12-19)
+
+
+### Features
+
+* monitoring resources for experimentation, doc update ([#732](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/732)) ([d01c27d](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/d01c27dbe2f1cf36044ed48f58ec8eb15640936f))
+
 ## [0.3.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.3.0...solutions/experimentation/core-landing-zone/0.3.1) (2023-11-23)
 
 

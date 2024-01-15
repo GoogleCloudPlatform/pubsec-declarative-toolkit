@@ -16,11 +16,11 @@ Package to prepare a service project for GKE clusters. Permissions are granted o
 |             Name             |              Value              | Type | Count |
 |------------------------------|---------------------------------|------|-------|
 | client-management-project-id | client-management-project-12345 | str  |     1 |
-| client-name                  | client1                         | str  |    50 |
+| client-name                  | client1                         | str  |    47 |
 | gke-monitoring-group         | group@example.com               | str  |     1 |
 | host-project-id              | net-host-project-12345          | str  |    10 |
 | org-id                       |                      0000000000 | str  |     3 |
-| project-id                   | project-12345                   | str  |    92 |
+| project-id                   | project-12345                   | str  |    89 |
 | project-number               |                      0000000000 | str  |     5 |
 
 ## Sub-packages
@@ -54,7 +54,6 @@ This package has no sub-packages.
 | project-iam.yaml                            | iam.cnrm.cloud.google.com/v1beta1          | IAMPolicyMember               | project-id-tier4-sa-artifactregistry-admin-project-id-permissions                  | client-name-projects |
 | project-iam.yaml                            | iam.cnrm.cloud.google.com/v1beta1          | IAMPolicyMember               | project-id-tier4-sa-tier4-secret-manager-admin-project-id-permissions              | client-name-projects |
 | project-iam.yaml                            | iam.cnrm.cloud.google.com/v1beta1          | IAMPolicyMember               | client-name-logging-sa-pubsub-admin-project-id-permissions                         | client-name-projects |
-| project-iam.yaml                            | iam.cnrm.cloud.google.com/v1beta1          | IAMAuditConfig                | project-id-data-access-log-config                                                  | client-name-projects |
 | services.yaml                               | serviceusage.cnrm.cloud.google.com/v1beta1 | Service                       | project-id-container                                                               | client-name-projects |
 | services.yaml                               | serviceusage.cnrm.cloud.google.com/v1beta1 | Service                       | project-id-containersecurity                                                       | client-name-projects |
 | services.yaml                               | serviceusage.cnrm.cloud.google.com/v1beta1 | Service                       | project-id-anthos                                                                  | client-name-projects |
@@ -71,7 +70,6 @@ This package has no sub-packages.
 ## Resource References
 
 - [GKEHubFeature](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature)
-- [IAMAuditConfig](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamauditconfig)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 - [MonitoringAlertPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/monitoring/monitoringalertpolicy)
 - [MonitoringNotificationChannel](https://cloud.google.com/config-connector/docs/reference/resource-docs/monitoring/monitoringnotificationchannel)

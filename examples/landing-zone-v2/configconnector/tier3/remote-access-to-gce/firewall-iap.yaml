@@ -14,6 +14,7 @@
 #########
 # IAP to GCE workload service account
 # IAM permissions are also required
+# AU-12 - Enable Logging for firewall
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
@@ -34,5 +35,6 @@ spec:
   targetServiceAccounts:
     - name: workload-name-sa # kpt-set: ${workload-name}-sa
       namespace: project-id-tier4 # kpt-set: ${project-id}-tier4
+  # AU-12
   logConfig:
     metadata: "INCLUDE_ALL_METADATA"

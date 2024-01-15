@@ -14,6 +14,7 @@
 ########
 # GKE egress Allow GKE nodes to AzDO
 # TODO: validate if service account can be used instead of podipv4range
+# AU-12 - Enable Logging for firewall
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
@@ -26,6 +27,7 @@ spec:
   description: "GKE allow access to dev.azure.com"
   direction: "EGRESS"
   disabled: false
+  # AU-12
   enableLogging: true
   firewallPolicyRef:
     name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
@@ -56,6 +58,7 @@ spec:
   description: "GKE allow access to github.com"
   direction: "EGRESS"
   disabled: false
+  # AU-12
   enableLogging: true
   firewallPolicyRef:
     name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
@@ -86,6 +89,7 @@ spec:
   description: "GKE allow access to docker.pkg.dev"
   direction: "EGRESS"
   disabled: false
+  # AU-12
   enableLogging: true
   firewallPolicyRef:
     name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
