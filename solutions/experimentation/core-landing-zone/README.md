@@ -16,10 +16,10 @@ Depends on the bootstrap procedure.
 | allowed-contact-domains       | ["@example.com"]          | array |     1 |
 | allowed-policy-domain-members | ["DIRECTORY_CUSTOMER_ID"] | array |     1 |
 | billing-id                    | AAAAAA-BBBBBB-CCCCCC      | str   |     1 |
-| logging-project-id            | logging-project-12345     | str   |    29 |
+| logging-project-id            | logging-project-12345     | str   |    32 |
 | lz-folder-id                  |                0000000000 | str   |    13 |
 | management-namespace          | config-control            | str   |    38 |
-| management-project-id         | management-project-12345  | str   |    82 |
+| management-project-id         | management-project-12345  | str   |    83 |
 | management-project-number     |                0000000000 | str   |     3 |
 | org-id                        |                0000000000 | str   |    16 |
 | retention-in-days             |                         1 | int   |     2 |
@@ -76,6 +76,7 @@ This package has no sub-packages.
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember            | logging-sa-logadmin-permissions                                           | config-control               |
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember            | logging-sa-monitoring-admin-management-project-id-permissions             | config-control               |
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember            | logging-sa-monitoring-admin-logging-project-id-permissions                | projects                     |
+| namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember            | logging-sa-storageadmin-logging-project-id-permissions                    | projects                     |
 | namespaces/logging.yaml                                         | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy           | logging-sa-workload-identity-binding                                      | config-control               |
 | namespaces/logging.yaml                                         | v1                                            | Namespace                  | logging                                                                   |                              |
 | namespaces/logging.yaml                                         | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext     | configconnectorcontext.core.cnrm.cloud.google.com                         | logging                      |
