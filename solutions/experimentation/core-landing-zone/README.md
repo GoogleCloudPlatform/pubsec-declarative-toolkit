@@ -11,19 +11,22 @@ Depends on the bootstrap procedure.
 
 ## Setters
 
-|             Name              |           Value           | Type  | Count |
-|-------------------------------|---------------------------|-------|-------|
-| allowed-contact-domains       | ["@example.com"]          | array |     1 |
-| allowed-policy-domain-members | ["DIRECTORY_CUSTOMER_ID"] | array |     1 |
-| billing-id                    | AAAAAA-BBBBBB-CCCCCC      | str   |     1 |
-| logging-project-id            | logging-project-12345     | str   |    32 |
-| lz-folder-id                  |                0000000000 | str   |    13 |
-| management-namespace          | config-control            | str   |    38 |
-| management-project-id         | management-project-12345  | str   |    83 |
-| management-project-number     |                0000000000 | str   |     3 |
-| org-id                        |                0000000000 | str   |    16 |
-| retention-in-days             |                         1 | int   |     2 |
-| retention-locking-policy      | false                     | bool  |     2 |
+|                         Name                          |            Value             | Type  | Count |
+|-------------------------------------------------------|------------------------------|-------|-------|
+| allowed-contact-domains                               | ["@example.com"]             | array |     1 |
+| allowed-policy-domain-members                         | ["DIRECTORY_CUSTOMER_ID"]    | array |     1 |
+| billing-id                                            | AAAAAA-BBBBBB-CCCCCC         | str   |     1 |
+| logging-project-id                                    | logging-project-12345        | str   |    34 |
+| lz-folder-id                                          |                   0000000000 | str   |    13 |
+| management-namespace                                  | config-control               | str   |    38 |
+| management-project-id                                 | management-project-12345     | str   |    83 |
+| management-project-number                             |                   0000000000 | str   |     3 |
+| org-id                                                |                   0000000000 | str   |    16 |
+| retention-in-days                                     |                            1 | int   |     2 |
+| retention-locking-policy                              | false                        | bool  |     2 |
+| security-incident-log-bucket                          | security-incident-log-bucket | str   |     1 |
+| security-incident-log-bucket-retention-in-seconds     |                        86400 | int   |     1 |
+| security-incident-log-bucket-retention-locking-policy | false                        | bool  |     1 |
 
 ## Sub-packages
 
@@ -36,6 +39,7 @@ This package has no sub-packages.
 | lz-folder/audits/folder.yaml                                    | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                     | audits                                                                    | hierarchy                    |
 | lz-folder/audits/logging-project/cloud-logging-buckets.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket           | security-log-bucket                                                       | logging                      |
 | lz-folder/audits/logging-project/cloud-logging-buckets.yaml     | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogBucket           | platform-and-component-log-bucket                                         | logging                      |
+| lz-folder/audits/logging-project/cloud-storage-buckets.yaml     | storage.cnrm.cloud.google.com/v1beta1         | StorageBucket              | security-incident-log-bucket                                              | logging                      |
 | lz-folder/audits/logging-project/monitoring/metrics-scope.yaml  | monitoring.cnrm.cloud.google.com/v1beta1      | MonitoringMonitoredProject | management-project-id                                                     | logging                      |
 | lz-folder/audits/logging-project/project-iam.yaml               | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy           | security-log-bucket-writer-permissions                                    | projects                     |
 | lz-folder/audits/logging-project/project-iam.yaml               | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy           | platform-and-component-log-bucket-writer-permissions                      | projects                     |
@@ -139,6 +143,7 @@ This package has no sub-packages.
 - [ResourceManagerPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy)
 - [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#rolebinding-v1-rbac-authorization-k8s-io)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
+- [StorageBucket](https://cloud.google.com/config-connector/docs/reference/resource-docs/storage/storagebucket)
 
 ## Usage
 
