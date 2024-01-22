@@ -76,6 +76,12 @@ data:
   #
   logging-project-id: logging-project-12345
   #
+  # Storage buckets
+  # Security incident log bucket
+  # Bucket names must be globally unique across all of GCP
+  # customization: required
+  security-incident-log-bucket: security-incident-log-bucket-12345
+  #
   # Retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
   # Set the lock mechanism on the bucket to: true or false
