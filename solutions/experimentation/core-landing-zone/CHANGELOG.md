@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.4.0...solutions/experimentation/core-landing-zone/0.4.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* adding storage admin role to logging sa ([#776](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/776)) ([59902aa](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/59902aa7978220ccba004f7dda516d8bdf206fb8))
+
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.3.1...solutions/experimentation/core-landing-zone/0.4.0) (2023-12-19)
+
+
+### Features
+
+* monitoring resources for experimentation, doc update ([#732](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/732)) ([d01c27d](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/d01c27dbe2f1cf36044ed48f58ec8eb15640936f))
+
 ## [0.3.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.3.0...solutions/experimentation/core-landing-zone/0.3.1) (2023-11-23)
 
 

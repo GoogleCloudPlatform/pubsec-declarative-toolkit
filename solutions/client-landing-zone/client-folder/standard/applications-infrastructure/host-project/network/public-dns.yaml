@@ -14,6 +14,7 @@
 #########
 # Public Client DNS subzone
 # SC-22
+# AU-12 - Enable Logging for DNS Managed zone
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
@@ -29,6 +30,7 @@ spec:
   visibility: public
   dnssecConfig:
     state: "on"
+  # AU-12
   cloudLoggingConfig:
     enableLogging: true
 ---

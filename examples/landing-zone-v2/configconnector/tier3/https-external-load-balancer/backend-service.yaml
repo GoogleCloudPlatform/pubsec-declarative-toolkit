@@ -14,6 +14,7 @@
 #########
 # create the backend service to attach to an existing mig and cloud armor policy
 # also configure CDN defaults
+# AU-12 - Enable Logging for https load balancer
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeBackendService
 metadata:
@@ -48,6 +49,7 @@ spec:
   loadBalancingScheme: EXTERNAL_MANAGED
   localityLbPolicy: ROUND_ROBIN
   location: global
+  # AU-12
   logConfig:
     enable: true
     sampleRate: 1

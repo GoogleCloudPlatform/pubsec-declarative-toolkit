@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # Cloud Armor Policy with logging enabled for backend service
+# AU-12 - Enable Logging for Cloud Armor policy with backend service
 apiVersion: networking.gke.io/v1
 kind: GCPBackendPolicy
 metadata:
@@ -21,6 +22,7 @@ metadata:
 spec:
   default:
     securityPolicy: workload-name-security-policy # kpt-set: ${workload-name}-security-policy
+    # AU-12
     logging:
       enabled: true
       sampleRate: 500000 # specifies that 50% of packets are logged. You can use a value between 0 and 1,000,000. GKE converts this value to a floating point value in the range [0, 1] by dividing by 1,000,000.

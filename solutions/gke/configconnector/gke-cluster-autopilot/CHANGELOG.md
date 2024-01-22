@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.4...solutions/gke/configconnector/gke-cluster-autopilot/0.2.5) (2023-12-19)
+
+
+### Bug Fixes
+
+* tagging au-12 controls ([#765](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/765)) ([a3108f6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a3108f696f3b51db5a95e69e76a0a3db49dc7bc6))
+
 ## [0.2.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.3...solutions/gke/configconnector/gke-cluster-autopilot/0.2.4) (2023-11-10)
 
 

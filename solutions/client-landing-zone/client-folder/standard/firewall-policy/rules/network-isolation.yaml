@@ -14,6 +14,7 @@
 #########
 # Isolate non-protected subnet so it denies ingress traffic from pbmm subnet
 # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network within host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
+# AU-12 - Enable Logging for firewall
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
@@ -26,6 +27,7 @@ spec:
   description: "Isolate non-protected subnet so it denies ingress traffic from pbmm subnet"
   direction: "INGRESS"
   disabled: false
+  # AU-12
   enableLogging: true
   # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
   firewallPolicyRef:
@@ -52,6 +54,7 @@ spec:
   description: "Isolate PBMM subnet so it denies ingress traffic from non-protected subnet"
   direction: "INGRESS"
   disabled: false
+  # AU-12
   enableLogging: true
   # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
   firewallPolicyRef:
