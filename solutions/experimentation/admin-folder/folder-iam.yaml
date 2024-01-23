@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # Grant GCP role Folder Admin on Admin's folder to admin
+# TODO: Review Security Controls
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -30,6 +31,7 @@ spec:
   member: admin-owner # kpt-set: ${admin-owner}
 ---
 # Grant GCP role Project Creator on Admin's folder to admin
+# TODO: Review Security Controls
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -47,6 +49,7 @@ spec:
   member: admin-owner # kpt-set: ${admin-owner}
 ---
 # Grant GCP role Owner on Admin's folder to admin
+# TODO: Review Security Controls
 # AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
