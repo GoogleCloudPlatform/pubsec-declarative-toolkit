@@ -45,9 +45,10 @@ data:
   # customization: required
   project-id: project-id-12345
   #
-  # the group of users to grant permissions to log in the instance(s)
+  # one or more groups of users to grant permissions to log in the instance(s)
   # customization: required
-  gke-admins: 'group:my-admins@example.com'
+  gke-admins: |
+    - member: 'group:my-admins@example.com'
   #
   ##########################
   # End of Configurations

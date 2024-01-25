@@ -69,12 +69,12 @@ spec:
 ---
 # Add required roles for IAP administration
 # https://cloud.google.com/iap/docs/using-tcp-forwarding#grant-permission
-# AC-3, AC-3(7), AC-16(2) - Grant Tunnel User role to gke-admins on the project
+# AC-3, AC-3(7), AC-16(2) - Grant Tunnel User and Viewer roles to gke-admins on the project
 # moving this on the instance requires IAP service enabled and currently doesn't appear possible to grant with config connector
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
-  name: project-id-iap-tunnel-user # kpt-set: ${project-id}-iap-tunnel-user
+  name: project-id-gke-admins-permissions # kpt-set: ${project-id}-gke-admins-permissions
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -85,23 +85,14 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: project-id # kpt-set: ${project-id}
-  role: roles/iap.tunnelResourceAccessor
-  member: gke-admins # kpt-set: ${gke-admins}
----
-# AC-3, AC-3(7), AC-16(2) - Grant Viewer role to gke-admins on the project
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: project-id-gke-admins-viewer # kpt-set: ${project-id}-gke-admins-viewer
-  namespace: client-name-projects # kpt-set: ${client-name}-projects
-  annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  # AC-3, AC-3(7), AC-16(2)
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: project-id # kpt-set: ${project-id}
-  role: roles/viewer
-  member: gke-admins # kpt-set: ${gke-admins}
+  bindings:
+    #
+    # "IAP-secured Tunnel User"
+    - role: roles/iap.tunnelResourceAccessor
+      members: # kpt-set: ${gke-admins}
+        - member: gke-admins
+    #
+    # "Viewer"
+    - role: roles/viewer
+      members: # kpt-set: ${gke-admins}
+        - member: gke-admins

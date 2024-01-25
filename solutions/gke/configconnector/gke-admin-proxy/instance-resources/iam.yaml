@@ -30,9 +30,9 @@ spec:
 # https://cloud.google.com/iap/docs/using-tcp-forwarding#grant-permission
 # AC-3, AC-3(7), AC-16(2) - grant Service Account User to gke-admins on the instance's service account
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
-  name: project-id--instance-name-sa-iap-service-account-user # kpt-set: ${project-id}--${instance-name}-sa-iap-service-account-user
+  name: project-id--instance-name-sa-gke-admins-permissions # kpt-set: ${project-id}--${instance-name}-sa-gke-admins-permissions
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/client-name-admin/IAMServiceAccount/project-id--instance-name-sa # kpt-set: iam.cnrm.cloud.google.com/namespaces/${client-name}-admin/IAMServiceAccount/${project-id}--${instance-name}-sa
@@ -43,14 +43,18 @@ spec:
     kind: IAMServiceAccount
     name: project-id--instance-name-sa # kpt-set: ${project-id}--${instance-name}-sa
     namespace: client-name-admin # kpt-set: ${client-name}-admin
-  role: roles/iam.serviceAccountUser
-  member: gke-admins # kpt-set: ${gke-admins}
+  bindings:
+    #
+    # "Service Account User"
+    - role: roles/iam.serviceAccountUser
+      members: # kpt-set: ${gke-admins}
+        - member: gke-admins
 ---
 # AC-3, AC-3(7), AC-16(2) - grant Compute Instance Admin to gke-admins on the instance
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
-  name: project-id--instance-name-iap-compute-admin # kpt-set: ${project-id}--${instance-name}-iap-compute-admin
+  name: project-id--instance-name-gke-admins-permissions # kpt-set: ${project-id}--${instance-name}-gke-admins-permissions
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-admin/ComputeInstance/project-id--instance-name # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-admin/ComputeInstance/${project-id}--${instance-name}
@@ -61,5 +65,9 @@ spec:
     kind: ComputeInstance
     name: project-id--instance-name # kpt-set: ${project-id}--${instance-name}
     namespace: client-name-admin # kpt-set: ${client-name}-admin
-  role: roles/compute.instanceAdmin.v1
-  member: gke-admins # kpt-set: ${gke-admins}
+  bindings:
+    #
+    # "Compute Instance Admin (v1)"
+    - role: roles/compute.instanceAdmin.v1
+      members: # kpt-set: ${gke-admins}
+        - member: gke-admins

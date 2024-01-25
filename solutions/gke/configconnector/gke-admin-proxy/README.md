@@ -15,20 +15,20 @@ Refer to the [documentation](https://cloud.google.com/kubernetes-engine/docs/tut
 
 ## Setters
 
-|             Name             |              Value              | Type | Count |
-|------------------------------|---------------------------------|------|-------|
-| client-management-project-id | client-management-project-12345 | str  |     3 |
-| client-name                  | client1                         | str  |    37 |
-| gke-admins                   | group:my-admins@example.com     | str  |     4 |
-| host-project-id              | host-project-id                 | str  |     2 |
-| instance-ip                  | instance-ip                     | str  |     1 |
-| instance-machine-type        | instance-machine-type           | str  |     1 |
-| instance-name                | instance-name                   | str  |    21 |
-| instance-os-image            | instance-os-image               | str  |     1 |
-| location                     | location                        | str  |     2 |
-| network-name                 | network-name                    | str  |     2 |
-| project-id                   | project-id-12345                | str  |    38 |
-| subnet-name                  | subnet-name                     | str  |     2 |
+|             Name             |                  Value                  | Type  | Count |
+|------------------------------|-----------------------------------------|-------|-------|
+| client-management-project-id | client-management-project-12345         | str   |     3 |
+| client-name                  | client1                                 | str   |    35 |
+| gke-admins                   | [member: 'group:my-admins@example.com'] | array |     4 |
+| host-project-id              | host-project-id                         | str   |     2 |
+| instance-ip                  | instance-ip                             | str   |     1 |
+| instance-machine-type        | instance-machine-type                   | str   |     1 |
+| instance-name                | instance-name                           | str   |    21 |
+| instance-os-image            | instance-os-image                       | str   |     1 |
+| location                     | location                                | str   |     2 |
+| network-name                 | network-name                            | str   |     2 |
+| project-id                   | project-id-12345                        | str   |    35 |
+| subnet-name                  | subnet-name                             | str   |     2 |
 
 ## Sub-packages
 
@@ -36,16 +36,16 @@ Refer to the [documentation](https://cloud.google.com/kubernetes-engine/docs/tut
 
 ## Resources
 
-|       File       |            APIVersion             |      Kind       |                                Name                                |      Namespace       |
-|------------------|-----------------------------------|-----------------|--------------------------------------------------------------------|----------------------|
-| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember | project-id-client-name-admin-sa-service-account-admin-permissions  | client-name-projects |
-| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember | project-id-client-name-admin-sa-compute-instance-admin-permissions | client-name-projects |
-| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember | project-id-client-name-admin-sa-service-account-user-permissions   | client-name-projects |
-| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember | project-id-iap-tunnel-user                                         | client-name-projects |
-| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember | project-id-gke-admins-viewer                                       | client-name-projects |
+|       File       |            APIVersion             |       Kind       |                                Name                                |      Namespace       |
+|------------------|-----------------------------------|------------------|--------------------------------------------------------------------|----------------------|
+| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember  | project-id-client-name-admin-sa-service-account-admin-permissions  | client-name-projects |
+| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember  | project-id-client-name-admin-sa-compute-instance-admin-permissions | client-name-projects |
+| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember  | project-id-client-name-admin-sa-service-account-user-permissions   | client-name-projects |
+| project-iam.yaml | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy | project-id-gke-admins-permissions                                  | client-name-projects |
 
 ## Resource References
 
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 
 ## Usage
