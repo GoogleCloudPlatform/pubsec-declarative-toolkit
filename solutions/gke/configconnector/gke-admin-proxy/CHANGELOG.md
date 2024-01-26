@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-admin-proxy/0.1.3...solutions/gke/configconnector/gke-admin-proxy/0.1.4) (2024-01-26)
+
+
+### Bug Fixes
+
+* update setter and iam resources ([#789](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/789)) ([603f556](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/603f5560033c86b523123505e42620e5d0277c34))
+
 ## [0.1.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-admin-proxy/0.1.2...solutions/gke/configconnector/gke-admin-proxy/0.1.3) (2023-12-19)
 
 
