@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.4.1...solutions/experimentation/core-landing-zone/0.5.0) (2024-01-26)
+
+
+### Features
+
+* add missing storage bucket ([#781](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/781)) ([1035a33](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/1035a33516bcc64d520fe53b8066fa49a5df2306))
+
 ## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.4.0...solutions/experimentation/core-landing-zone/0.4.1) (2024-01-18)
 
 
