@@ -18,19 +18,19 @@ This may be required to manage GKE clusters located in different subnets/regions
 
 ## Setters
 
-|         Name          |                Value                | Type | Count |
-|-----------------------|-------------------------------------|------|-------|
-| client-name           | client-name                         | str  |    21 |
-| gke-admins            | gke-admins                          | str  |     2 |
-| host-project-id       | net-host-project-12345              | str  |     2 |
-| instance-ip           | 1.2.3.4                             | str  |     1 |
-| instance-machine-type | e2-small                            | str  |     1 |
-| instance-name         | proxy1                              | str  |    21 |
-| instance-os-image     | a-project-with-images/the-image     | str  |     1 |
-| location              | northamerica-northeast1             | str  |     2 |
-| network-name          | host-project-id-global-standard-vpc | str  |     2 |
-| project-id            | project-id                          | str  |    23 |
-| subnet-name           | host-project-id-subnet-name         | str  |     2 |
+|         Name          |                Value                | Type  | Count |
+|-----------------------|-------------------------------------|-------|-------|
+| client-name           | client-name                         | str   |    21 |
+| gke-admins            | []                                  | array |     2 |
+| host-project-id       | net-host-project-12345              | str   |     2 |
+| instance-ip           | 1.2.3.4                             | str   |     1 |
+| instance-machine-type | e2-small                            | str   |     1 |
+| instance-name         | proxy1                              | str   |    21 |
+| instance-os-image     | a-project-with-images/the-image     | str   |     1 |
+| location              | northamerica-northeast1             | str   |     2 |
+| network-name          | host-project-id-global-standard-vpc | str   |     2 |
+| project-id            | project-id                          | str   |    23 |
+| subnet-name           | host-project-id-subnet-name         | str   |     2 |
 
 ## Sub-packages
 
@@ -38,21 +38,21 @@ This package has no sub-packages.
 
 ## Resources
 
-|       File        |              APIVersion               |       Kind        |                         Name                          |       Namespace        |
-|-------------------|---------------------------------------|-------------------|-------------------------------------------------------|------------------------|
-| address.yaml      | compute.cnrm.cloud.google.com/v1beta1 | ComputeAddress    | project-id--instance-name-ip                          | client-name-networking |
-| firewall-iap.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall   | project-id--instance-name-sa-iap-ssh-fwr              | client-name-networking |
-| iam.yaml          | iam.cnrm.cloud.google.com/v1beta1     | IAMServiceAccount | project-id--instance-name-sa                          | client-name-admin      |
-| iam.yaml          | iam.cnrm.cloud.google.com/v1beta1     | IAMPolicyMember   | project-id--instance-name-sa-iap-service-account-user | client-name-projects   |
-| iam.yaml          | iam.cnrm.cloud.google.com/v1beta1     | IAMPolicyMember   | project-id--instance-name-iap-compute-admin           | client-name-projects   |
-| instance.yaml     | compute.cnrm.cloud.google.com/v1beta1 | ComputeInstance   | project-id--instance-name                             | client-name-admin      |
+|       File        |              APIVersion               |       Kind        |                        Name                         |       Namespace        |
+|-------------------|---------------------------------------|-------------------|-----------------------------------------------------|------------------------|
+| address.yaml      | compute.cnrm.cloud.google.com/v1beta1 | ComputeAddress    | project-id--instance-name-ip                        | client-name-networking |
+| firewall-iap.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall   | project-id--instance-name-sa-iap-ssh-fwr            | client-name-networking |
+| iam.yaml          | iam.cnrm.cloud.google.com/v1beta1     | IAMServiceAccount | project-id--instance-name-sa                        | client-name-admin      |
+| iam.yaml          | iam.cnrm.cloud.google.com/v1beta1     | IAMPartialPolicy  | project-id--instance-name-sa-gke-admins-permissions | client-name-projects   |
+| iam.yaml          | iam.cnrm.cloud.google.com/v1beta1     | IAMPartialPolicy  | project-id--instance-name-gke-admins-permissions    | client-name-projects   |
+| instance.yaml     | compute.cnrm.cloud.google.com/v1beta1 | ComputeInstance   | project-id--instance-name                           | client-name-admin      |
 
 ## Resource References
 
 - [ComputeAddress](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeaddress)
 - [ComputeFirewall](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computefirewall)
 - [ComputeInstance](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeinstance)
-- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
 
 ## Usage
