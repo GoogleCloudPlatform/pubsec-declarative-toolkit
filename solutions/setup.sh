@@ -118,6 +118,8 @@ if [[ "$CREATE_PROJ" != false ]]; then
   gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet > /dev/null 1>&1
   gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet > /dev/null 1>&1
   gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet > /dev/null 1>&1
+  # for viewing buckets under logging project
+  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
 
 #  ROLES=("roles/servicedirectory.editor" "roles/dns.admin" "roles/logging.admin" "roles/accesscontextmanager.policyAdmin") 
 #  ROLES=( "roles/resourcemanager.organizationAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectIamAdmin" "roles/compute.networkAdmin" ) 
@@ -311,7 +313,7 @@ EOF
   kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
 
   echo "check status"
-  kpt live status --inv-type remote --statuses InProgress,NotFound
+  kpt live status $REL_SUB_PACKAGE --inv-type remote --statuses InProgress,NotFound
 
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
@@ -439,8 +441,8 @@ EOF
   #kpt alpha live plan $REL_SUB_PACKAGE
   echo "kpt live apply"
   # without a timeout the command never terminates
-  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=10m
-  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=10m --output=table
+  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=10m
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
 
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
