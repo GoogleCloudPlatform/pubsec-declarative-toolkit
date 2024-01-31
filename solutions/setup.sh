@@ -296,17 +296,22 @@ EOF
 
   # see requireShiededVM and restrictVPCPeering removal to recreate a cluster
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/588
-  echo "removing org/org-policies folder"
-  rm -rf $REL_SUB_PACKAGE/org/org-policies
+  #echo "removing org/org-policies folder"
+  #rm -rf $REL_SUB_PACKAGE/org/org-policies
 
   echo "kpt live init"
-  kpt live init $REL_SUB_PACKAGE --namespace config-control --force
+  kpt live init $REL_SUB_PACKAGE --namespace config-control
+  # --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
   #kpt alpha live plan $REL_SUB_PACKAGE
-  echo "kpt live apply"
-  kpt live apply $REL_SUB_PACKAGE
-  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
+  echo "kpt live apply after 60s wait"
+  sleep 60  
+  #kpt live apply $REL_SUB_PACKAGE
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
+
+  echo "check status"
+  kpt live status --inv-type remote --statuses InProgress,NotFound
 
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
@@ -434,8 +439,8 @@ EOF
   #kpt alpha live plan $REL_SUB_PACKAGE
   echo "kpt live apply"
   # without a timeout the command never terminates
-  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m
-  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=5m --output=table
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=10m
+  #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=10m --output=table
 
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)
@@ -453,12 +458,17 @@ EOF
   kubectl get gcp -n hierarchy
   kubectl get gcp -n policies
   kubectl get gcp -n logging
+
+  # check services skipped
+  kpt live status core-landing-zone | grep not
   
   # check projects-sa and verify billing
   echo "check iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa before verifying billing"
   kubectl describe iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa
   # needs to be set on the billing page
-  #gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${KCC_PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
+  # https://console.cloud.google.com/billing
+  # not for direct billing accounts though - just shared billing
+  gcloud beta billing accounts add-iam-policy-binding "${BILLING_ID}" --member "serviceAccount:projects-sa@${KCC_PROJECT_ID}.iam.gserviceaccount.com" --role "roles/billing.user"
 
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 fi

@@ -19,7 +19,7 @@
 # MAKE SURE the prefix is unique in combination with another string - use your domain backwards
 # for example kcc.landing.systems is kls or slk
 # if it is not unique then your project creation will fail right away anyway due to global gcp collision
-export PREFIX=cso1
+export PREFIX=cso2
 # pass in for select runs where cluster already up - this is your bootstrap project you run from - not the project that will contain your kcc/gke/kubernetes cluster
 export KCC_PROJECT_NAME=kcc-cso
 export REGION=northamerica-northeast1
