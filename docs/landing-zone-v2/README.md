@@ -500,7 +500,7 @@ Optional
     kubectl get gcp -n projects
     ```
 
-    Repeat the above process with additional solutions packages.  If deploying client-setup or client-landing-zone use the GitOps](#3-deploy-the-infrastructure-using-gitops) approach below.
+    Repeat the above process with additional solutions packages.  If deploying client-setup or client-landing-zone use the [GitOps](#3-deploy-the-infrastructure-using-gitops) approach below.
 
 
 ## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps
