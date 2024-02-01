@@ -33,7 +33,6 @@ spec:
   description: Project sink for Platform and Component logs of the Landing Zone Management Cluster
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
-  # AU-2, AU-12(A), AU-12(C)
   # No inclusion filter. Includes all Platform and Component logs
   # Google Cloud platform logs are service-specific logs
   # For a list of all supported Google Cloud Logging API Services visit https://cloud.google.com/logging/docs/api/platform-logs

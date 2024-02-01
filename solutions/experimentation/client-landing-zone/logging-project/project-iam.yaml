@@ -26,7 +26,7 @@ spec:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
-  # AC-3(7) - Write access to the logging buckets is limited by IAM to just the identities of the log sinks configured to send logs to the buckets (set at the logging project level)
+  # Write access to the logging buckets is limited by IAM to just the identities of the log sinks configured to send logs to the buckets (set at the logging project level)
   bindings:
     - role: roles/logging.bucketWriter
       members:
