@@ -99,7 +99,7 @@ This can be deployed once or multiple times per organization as highlighted in t
 
 ### Client Landing Zone
 
-This section is made up of two packages [client-setup](../../solutions/client-setup/) and [client-landing-zone](../../solutions/client-landing-zone/). The client setup package prepares the Config Controller instances for the new client and creates the required service accounts and namespaces for the client to use.
+This section is made up of two packages [client-setup](../../solutions/client-setup/) and [client-landing-zone](../../solutions/client-landing-zone/). The client setup package prepares the Config Controller instances for the new client and creates the required service accounts and namespaces for the client to use.  Both of these client packages must be installed using the [GitOps](#3-deploy-the-infrastructure-using-gitops) approach
 
 The `client-landing-zone` package deploys the clients Google Cloud resources, including folder structure, firewalls, and Shared Infrastructure (VPC). The deployment of these packages are repeated for each onboarded client. A client in these examples would be an a department or working group that needs isolation from other groups.
 
@@ -457,7 +457,7 @@ cd pbmm-landingzone
     For example "core-landing-zone" will have the same [setters.yaml](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/core-landing-zone/setters.yaml) as in the repo in the root of the pkg directory.
 
 ### <a name='deploy-the-infrastructure-using-kpt'></a>2b. Deploy the infrastructure using KPT
-This section is an optional dev-oriented alternative to the GitOps approach (which is recommended for production deployments) in the following section 3.
+This section is an optional dev-oriented alternative to the GitOps](#3-deploy-the-infrastructure-using-gitops) approach (which is recommended for production deployments) in the following section 3.
 
 #### <a name='gatekeeper-policies-kpt'></a>gatekeeper-policies
 Optional
@@ -500,7 +500,7 @@ Optional
     kubectl get gcp -n projects
     ```
 
-    Repeat the above process with additional solutions packages.
+    Repeat the above process with additional solutions packages.  If deploying client-setup or client-landing-zone use the GitOps](#3-deploy-the-infrastructure-using-gitops) approach below.
 
 
 ## <a name='deploy-the-infrastructure-using-gitops'></a>3. Deploy the infrastructure using GitOps
