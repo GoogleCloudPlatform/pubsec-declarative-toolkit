@@ -240,7 +240,6 @@ metadata: # kpt-merge: /setters
   name: setters
   annotations:
     config.kubernetes.io/local-config: "true"
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
 data: 
   org-id: "${ORG_ID}"
   lz-folder-id: "${ROOT_FOLDER_ID}"
@@ -257,10 +256,12 @@ data:
   allowed-vpc-peering: |
     - "under:organizations/${ORG_ID}"
   logging-project-id: logging-project-${PREFIX}
-  security-log-bucket: security-log-bucket-${PREFIX}
+  security-incident-log-bucket: security-incident-log-bucket-${PREFIX}
   platform-and-component-log-bucket: platform-and-component-log-bucket-${PREFIX}
   retention-locking-policy: "false"
   retention-in-days: "1"
+  security-incident-log-bucket-retention-locking-policy: "false"
+  security-incident-log-bucket-retention-in-seconds: "86400"  
   dns-project-id: dns-project-${PREFIX}
   dns-name: "${CONTACT_DOMAIN}."
 EOF
