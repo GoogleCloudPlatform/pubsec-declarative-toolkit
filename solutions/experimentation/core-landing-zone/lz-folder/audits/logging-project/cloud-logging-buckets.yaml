@@ -14,7 +14,6 @@
 ######
 # Cloud Logging bucket for Security logs: Cloud Audit, Access Transparency Logs, and Data Access Logs
 # Logs are routed using a log sink to a central logging project into a dedicated log bucket
-# AU-4(1), AU-9(2) - Log buckets are created in a logging project, isolating them from the source of the log entries in other projects
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
@@ -29,7 +28,6 @@ spec:
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
   # Implement retention policy and retention locking policy
-  # AU-9, AU-11 - RetentionDays sets the policy where existing log content cannot be changed/deleted for the specificied number of days (from setters.yaml), locked setting means policy cannot be changed, ensuring immutability.
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}
 ---
@@ -48,6 +46,5 @@ spec:
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
   # Implement retention policy and retention locking policy
-  # AU-9, AU-11
   locked: false # kpt-set: ${retention-locking-policy}
   retentionDays: 1 # kpt-set: ${retention-in-days}
