@@ -53,13 +53,22 @@
 |AU-12|./host-project/firewall.yaml|project-id-cluster-name-lb-health-check|
 |AU-12|./host-project/subnet.yaml|project-id-cluster-name-snet|
 |AU-12|./host-project/subnet.yaml|project-id-cluster-name-snet|
+|IA-3(3)|./host-project/subnet.yaml|project-id-cluster-name-snet|
+|IA-3(3)|./host-project/subnet.yaml|project-id-cluster-name-snet|
+|IA-3(3)|./host-project/subnet.yaml|project-id-cluster-name-snet|
+|SC-12(2)|./gke.yaml|cluster-name|
+|SC-12(2)|./gke.yaml|cluster-name|
+|SC-12(2)|./kms.yaml|cluster-name-etcd-key|
+|SC-12(2)|./kms.yaml|cluster-name-kmskeyring|
 |SC-28|./gke.yaml|cluster-name|
 |SC-28|./gke.yaml|cluster-name|
 |SC-28(1)|./gke.yaml|cluster-name|
 |SC-28(1)|./gke.yaml|cluster-name|
 |SC-7|./gke.yaml|cluster-name|
 |SC-7|./gke.yaml|cluster-name|
-|SC-7(3)|./gke.yaml|cluster-name|
-|SC-7(3)|./gke.yaml|cluster-name|
+|SC-7(9)|./application-infrastructure-folder/firewall.yaml|project-id-cluster-name-egress-allow-azdo|
+|SC-7(9)|./application-infrastructure-folder/firewall.yaml|project-id-cluster-name-egress-allow-azdo|
+|SC-7(9)|./application-infrastructure-folder/firewall.yaml|project-id-cluster-name-egress-allow-docker|
+|SC-7(9)|./application-infrastructure-folder/firewall.yaml|project-id-cluster-name-egress-allow-github|
 
 <!-- END OF SECURITY CONTROLS LIST -->

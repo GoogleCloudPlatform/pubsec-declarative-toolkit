@@ -27,6 +27,8 @@
 |AC-3(7)|./project-iam.yaml|pubsubsubscriber-permissions|
 |AC-3(7)|./project-iam.yaml|pubsubviewer-permissions|
 |AC-3(7)|./project-iam.yaml|pubsubviewer-permissions|
+|SC-12(3)|./gateway-setup/ssl-certificate/ssl.yaml|certificate-name-compute-sslcertificate|
+|SC-12(3)|./gateway-setup/ssl-certificate/ssl.yaml|certificate-name-compute-sslcertificate|
 |SC-22|./gateway-setup/dns/dns.yaml|metadata-name|
 |SC-8|./gateway-setup/ssl-certificate/ssl.yaml|certificate-name-compute-sslcertificate|
 |SC-8|./gateway-setup/ssl-certificate/ssl.yaml|certificate-name-compute-sslcertificate|

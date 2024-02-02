@@ -14,6 +14,7 @@
 ######
 # Logging project sink for Data Access logs
 # Destination: Cloud Logging bucket hosted inside logging project
+# AU-2 - Organization-defined auditable events
 # AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the organization to send the logs to the logging bucket in the logging project
 # AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
 # AC-2(4) - Includes Security logs: Data Access
@@ -38,7 +39,7 @@ spec:
   description: Project sink for Data Access Logs
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
-  # AC-2(4), AU-12, AU-12(1)
+  # AC-2(4), AU-2, AU-12, AU-12(1)
   # Includes Security logs: Data Access
   # Security logs help you answer "who did what, where, and when"
   #

@@ -14,6 +14,7 @@
 ######
 # Folder sink for Platform and Component logs of Services Resources
 # Destination: Cloud Logging bucket hosted inside logging project
+# AU-2 - Organization-defined auditable events
 # AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the folder to send the logs to the logging bucket in the logging project
 # AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
 # AU-12, AU-12(1) - Log Sinks defined in Log Router check each log entry against the inclusion filter and exclusion filter that determine which destinations that the log entry is sent to
@@ -38,7 +39,7 @@ spec:
   description: Folder sink for Platform and Component logs of services Resources
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
-  # AU-12, AU-12(1)
+  # AU-2, AU-12, AU-12(1)
   # No inclusion filter. Includes all Platform and Component logs
   # Google Cloud platform logs are service-specific logs
   # For a list of all supported Google Cloud Logging API Services visit https://cloud.google.com/logging/docs/api/platform-logs

@@ -18,6 +18,7 @@
 #########
 # AC-4, AC-4(21) - GKE Subnet that has private google access enabled and flow logs enabled
 # AU-12 - Enable Logging for subnet
+# IA-3(3) - IP space is assigned for dynamic allocation
 # Private Google Access allows to access external IP address of Google apis and services in a secured way
 # Flow logs on subnet captures all traffic for a subnet and publishes to cloud logging
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
@@ -28,11 +29,13 @@ metadata:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
 spec:
   resourceID: project-id-cluster-name-snet # kpt-set: ${project-id}-${cluster-name}-snet
+  # IA-3(3)
   ipCidrRange: 10.1.32.0/24 # kpt-set: ${subnet-primary-cidr}
   # Notes about secondary ranges
   # You can create 30 secondary ranges in a given subnet. For each cluster, you need two secondary ranges: one for Pods and one for Services.
   # Note: The primary range and the Pod secondary range can be shared between clusters, but this is not a recommended configuration
   # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#notes_about_secondary_ranges
+  # IA-3(3)
   secondaryIpRange:
     - ipCidrRange: 10.1.33.0/24 # kpt-set: ${subnet-services-cidr}
       rangeName: servicesrange

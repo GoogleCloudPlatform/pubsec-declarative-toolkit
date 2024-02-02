@@ -16,6 +16,8 @@
 # Logs are routed using a log sink to a central logging project into a dedicated log bucket
 # AU-7, AU-9 - The log buckets created within the Logging project are immutable (AU-7(B)). These buckets have a retention policy of 365 days and IAM Policy that defines who has access to the bucket (AU-9)
 # AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
+# AU-9(4), SI-4 - The centralized logging solution has a configuration in place that defines all logging buckets to be locked
+# AU-11 - Logging bucket retention configuration
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
@@ -31,8 +33,9 @@ spec:
   location: northamerica-northeast1
   description: Cloud Logging bucket for Security logs
   # Implement retention locking policy and number of retention days
-  # AU-7, AU-9
+  # AU-7, AU-9, AU-9(4), SI-4
   locked: false # kpt-set: ${retention-locking-policy}
+  # AU-11
   retentionDays: 1 # kpt-set: ${retention-in-days}
 ---
 # Cloud Logging bucket for Platform and Component logs
@@ -52,6 +55,7 @@ spec:
   location: northamerica-northeast1
   description: Cloud Logging bucket for Platform and Component logs
   # Implement retention locking policy and number of retention days
-  # AU-7, AU-9
+  # AU-7, AU-9, AU-9(4), SI-4
   locked: false # kpt-set: ${retention-locking-policy}
+  # AU-11
   retentionDays: 1 # kpt-set: ${retention-in-days}

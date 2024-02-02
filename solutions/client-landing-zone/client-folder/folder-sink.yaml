@@ -15,6 +15,7 @@
 # TODO: investigate using client ns, move functionality to client-setup and/or create new client logging project. Will be required if a config-controller is deployed per client OR we need to give permissions to the client service account into the core logging project.
 # Folder sink for Platform and Component logs of Client Resources
 # Destination: cloud logging bucket inside logging project
+# AU-2 - Organization-defined auditable events
 # AU-3, AU-3(1) - Sink defined at folder that will allow all the projects underneath the folder to send the logs to the logging bucket in the logging project
 # AU-4(1), AU-6(4), AU-9(2) - Log sinks sending the logs to same project in same region having a logging bucket
 # AU-12, AU-12(1) - Log Sinks defined in Log Router check each log entry against the inclusion filter and exclusion filter that determine which destinations that the log entry is sent to
@@ -39,7 +40,7 @@ spec:
   description: Folder sink for client-name Platform and Component logs # kpt-set: Folder sink for ${client-name} Platform and Component logs
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
-  # AU-12, AU-12(1)
+  # AU-2, AU-12, AU-12(1)
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, HTTP(S) Load Balancer and Intrusion Detection System (IDS)
   # Logs for such resources must be enabled on the respective resource as they are not enabled by default.

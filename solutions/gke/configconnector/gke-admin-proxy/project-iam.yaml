@@ -70,6 +70,7 @@ spec:
 # Add required roles for IAP administration
 # https://cloud.google.com/iap/docs/using-tcp-forwarding#grant-permission
 # AC-3, AC-3(7), AC-16(2) - Grant Tunnel User and Viewer roles to gke-admins on the project
+# AC-17(3) - Connections to GKE admin proxy are controlled by IAM permissions on the Identity Aware Proxy service.
 # moving this on the instance requires IAP service enabled and currently doesn't appear possible to grant with config connector
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
