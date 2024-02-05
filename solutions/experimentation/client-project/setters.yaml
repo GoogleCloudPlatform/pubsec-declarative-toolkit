@@ -39,12 +39,16 @@ data:
   ##########################
   #
   # Billing Account ID to be associated with this project
+  # customization: required
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
   # GCP folder to use as parent to this project, lowercase K8S resource name
+  # customization: required
   project-parent-folder: project-parent-folder
   # user, group or serviceAccount with editor role at project level
+  # customization: required
   project-editor: "group:team1@example.com"
   # project id for the client project to be created, following rules and conventions
+  # customization: required
   project-id: xxemu-team1-projectname
   #
   ##########################
