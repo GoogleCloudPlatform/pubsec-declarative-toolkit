@@ -139,20 +139,5 @@ data:
   security-incident-log-bucket-retention-in-seconds: "86400"
   #
   ##########################
-  # DNS
-  ##########################
-  #
-  # DNS project
-  #
-  # project id for the dns project to be created, following rules and conventions
-  # customization: required
-  dns-project-id: dns-project-12345
-  #
-  # Core Landing Zone fqdn. The "dns-name" must end with a "."
-  # dns-name needs needs to receive delegation from the upper level of the domain example.com.
-  # customization: required
-  dns-name: "example.com."
-  #
-  ##########################
   # End of Configurations
   ##########################
