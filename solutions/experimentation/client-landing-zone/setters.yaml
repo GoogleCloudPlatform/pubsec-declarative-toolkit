@@ -39,8 +39,15 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
+  #
+  # Clients Billing Account ID to associate with the client-landing-zone resources. The client-name-projects-sa will need billing user role permission granted.
+  # customization: required
+  client-billing-id: "AAAAAA-BBBBBB-CCCCCC"
+  #
   # group to grant viewer permission on client folder
+  # customization: required
   client-folderviewer: 'group:client1@example.com'
   #
   ##########################
@@ -48,15 +55,134 @@ data:
   ##########################
   #
   # logging project id created in core-landing-zone
+  # customization: required
   logging-project-id: logging-project-12345
   #
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
   # Set the lock mechanism on the bucket to: true or false
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
-  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
+  # The values below must be modified to retention-locking-policy: true in a Production setting to implement above mentioned security controls.
+  # customization: required
   retention-locking-policy: "false"
+  #
+  # The values below must be modified to retention-in-days: 365 in a Production setting to implement above mentioned security controls.
+  # customization: required
   retention-in-days: "1"
+  #
+  ##########################
+  # Network Host Project (standard)
+  ##########################
+  #
+  # the network host project id that will be created
+  # customization: required
+  host-project-id: net-host-project-12345
+  #
+  # Org policy exception to allow vpc peering between a defined list and the host project.
+  # The file is located here client-folder/standard/application-infrastructure/host-project/org-policies/exceptions/compute-restrict-vpc-peering-except-host-project.yaml
+  # Warning ! this file is commented out by default. You will need to customize this setter only if you enable it.
+  # The allowed/denied list of networks must be identified in the form:
+  # under:organizations/ORGANIZATION_ID, under:folders/FOLDER_ID, under:projects/PROJECT_ID,
+  # or projects/PROJECT_ID/global/networks/NETWORK_NAME.
+  # customization: required
+  project-allowed-restrict-vpc-peering: |
+    - under:projects/PROJECT_ID
+  #
+  # nonp IP space, used by ComputeFirewallPolicyRule for network isolation
+  # this list must include all non protected cidr ranges including the ranges for GKE nodes, services and pods
+  standard-nonp-cidr: |
+    - 10.1.0.0/18
+    - 172.16.0.0/13
+  #
+  # Subnet IP range for nonp-main in northamerica-northeast1
+  standard-nane1-nonp-main-snet: 10.1.0.0/21
+  #
+  # Subnet IP range for nonp-main in northamerica-northeast2
+  standard-nane2-nonp-main-snet: 10.1.8.0/21
+  #
+  # pbmm IP space, used by ComputeFirewallPolicyRule for network isolation
+  # this list must include all pbmm cidr ranges including the ranges for GKE nodes, services and pods
+  standard-pbmm-cidr: |
+    - 10.1.128.0/18
+    - 172.24.0.0/13
+  #
+  # Subnet IP range for pbmm-main in northamerica-northeast1
+  standard-nane1-pbmm-main-snet: 10.1.128.0/21
+  #
+  # Subnet IP range for pbmm-main in northamerica-northeast2
+  standard-nane2-pbmm-main-snet: 10.1.136.0/21
+  #
+  # A list of internal IP ranges used by firewall rules
+  firewall-internal-ip-ranges: |
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  #
+  ##########################
+  # Firewall Policy (client-folder)
+  ##########################
+  #
+  # Deny sanctioned countries ingress traffic
+  # https://cloud.google.com/firewall/docs/firewall-policies-rule-details#geo-location-object
+  # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+  # The list below MUST BE reconfigured. If the value stays XX it will fail reconciliation with an error for unrecognized country.
+  # customization: required
+  denied-sanctioned-countries: |
+    - "XX"
+  #
+  # Allowed domain names for os updates
+  # The list below is an example for Debian and Ubuntu, modify as per trusted images
+  # note that cloud.google.com is required when GKE nodes are provisioned
+  # customization: optional
+  allowed-os-update-domains: |
+    - "debian.map.fastlydns.net"
+    - "debian.org"
+    - "deb.debian.org"
+    - "ubuntu.com"
+    - "cloud.google.com"
+    - "packages.cloud.google.com"
+    - "security.ubuntu.com"
+    - "northamerica-northeast1.gce.archive.ubuntu.com"
+    - "northamerica-northeast2.gce.archive.ubuntu.com"
+  #
+  # the source IP ranges allowed to access the domains listed above
+  # the ranges should match the values of the '*main-snet' setters configured earlier:
+  #   - standard-nane1-nonp-main-snet
+  #   - standard-nane2-nonp-main-snet
+  #   - standard-nane1-pbmm-main-snet
+  #   - standard-nane2-pbmm-main-snet
+  # OR a list of more restrictive ranges within those subnets (for example, 10.1.1.5/32)
+  # it also has to include the primary ranges of the GKE nodes otherwise, nodes won't be able to be provisioned.
+  # customization: optional
+  allowed-os-update-source-ip-ranges: |
+    - "10.1.0.0/21"
+    - "10.1.8.0/21"
+    - "10.1.32.0/19"
+    - "10.1.128.0/21"
+    - "10.1.136.0/21"
+    - "10.1.160.0/19"
+  #
+  ##########################
+  # DNS
+  ##########################
+  #
+  # dns project id created during core-landing-zone package deployment
+  # customization: required, obtain value from the core-landing-zone setters.yaml
+  dns-project-id: dns-project-12345
+  #
+  # Clients Landing Zone fqdn. The "dns-name" must end with a "."
+  # dns-name needs to receive delegation from the upper level of the domain example.com.
+  # customization: required
+  dns-name: "client-name.example.com."
+  #
+  # The nameservers below must be updated to match the same nameservers as the client DNS subzone
+  # Cloud DNS creates NS and SOA records automatically when a zone is created and these cannot be changed
+  # See https://cloud.google.com/dns/docs/zones#create-pub-zone
+  dns-nameservers: |
+    - "ns-cloud-a1.googledomains.com."
+    - "ns-cloud-a2.googledomains.com."
+    - "ns-cloud-a3.googledomains.com."
+    - "ns-cloud-a4.googledomains.com."
   #
   ##########################
   # End of Configurations
