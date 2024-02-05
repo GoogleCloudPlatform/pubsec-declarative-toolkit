@@ -479,7 +479,7 @@ Optional
 1. Apply the hydrated kubernetes yaml to the cluster
 
     ```shell
-    kpt live apply core-landing-zone --reconcile-timeout=2m --output=table
+    kpt live apply core-landing-zone --reconcile-timeout=15m --output=table
     ```
 
 1. Check the status of the deployed resources
