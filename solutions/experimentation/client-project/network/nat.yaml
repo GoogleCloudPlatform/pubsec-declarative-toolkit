@@ -64,7 +64,6 @@ spec:
   routerRef:
     name: project-id-nane2-router # kpt-set: ${project-id}-nane2-router
   sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
-  # AU-12
   logConfig:
     enable: true
     filter: ALL
