@@ -24,8 +24,10 @@ data:
   ##########################
   #
   # Name for the Admin, lowercase only
+  # customization: required
   admin-name: 'admin1'
   # Group or User to grant permission on admin folder
+  # customization: required
   admin-owner: 'user:admin1@example.com'
   #
   ##########################

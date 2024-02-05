@@ -14,7 +14,6 @@
 #########
 # A Route to the internet that requires that the resources attached to the network
 # specify it's tag to access the internet
-# SC-7(5) BOUNDARY PROTECTION | DENY BY DEFAULT / ALLOW BY EXCEPTION
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRoute
 metadata:

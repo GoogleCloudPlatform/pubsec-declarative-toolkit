@@ -13,7 +13,6 @@
 # limitations under the License.
 #########
 # GCP SA
-# AC-3(7) - Creates lower priv service account for logging administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -26,7 +25,6 @@ spec:
   displayName: logging-sa
 ---
 # Grant GCP role Logging Admin to GCP SA
-# AC-3(7) - RBAC role to account with required permissions for logging administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -56,7 +54,6 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: management-project-id # kpt-set: ${management-project-id}
-  # AC-3(7), AC-3, AC-16(2)
   role: roles/monitoring.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -74,7 +71,6 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: logging-project-id # kpt-set: ${logging-project-id}
-  # AC-3(7), AC-3, AC-16(2)
   role: roles/monitoring.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -92,7 +88,6 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
-  # AC-3(7), AC-3, AC-16(2)
   role: roles/storage.admin
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---

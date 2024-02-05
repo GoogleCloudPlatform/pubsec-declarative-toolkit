@@ -13,7 +13,6 @@
 # limitations under the License.
 #########
 # GCP SA
-# AC-3(7) - Creates lower priv service account for networking administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -26,7 +25,6 @@ spec:
   displayName: networking-sa
 ---
 # Grant GCP role Network Admin to GCP SA
-# AC-3(7) - RBAC role to account with required permissions for networking administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:

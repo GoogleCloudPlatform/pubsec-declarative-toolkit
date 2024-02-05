@@ -17,7 +17,6 @@
 # to implement Policy Controller Metrics and avoid numerous IAM errors on the Config Controller instance.
 #########
 # GCP SA
-# AC-3(7) - Creates lower priv service account for Policy Controller metrics
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -30,7 +29,6 @@ spec:
   displayName: gatekeeper-admin-sa
 ---
 # Grant GCP role Metrics Writer to gatekeeper-admin SA on KCC Project
-# AC-3(7) - RBAC role to account with required permissions for Policy Controller metrics
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
