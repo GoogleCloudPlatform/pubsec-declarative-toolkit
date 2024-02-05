@@ -42,7 +42,7 @@ data:
   # customization: required
   org-id: "0000000000"
   # root folder to which the Landing Zone will be deployed into. This folder is created during the bootstrap procedure
-  # customization: required  
+  # customization: required
   lz-folder-id: '0000000000'
   # core-landing-zone billing id
   # customization: required
