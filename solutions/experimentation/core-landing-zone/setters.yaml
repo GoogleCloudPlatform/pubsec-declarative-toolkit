@@ -70,12 +70,6 @@ data:
   #
   # The following are Settings for some org policies
   #
-  # a list of allowed trusted image projects, see YAML file for more info:
-  # org/org-policies/compute-trusted-image-projects.yaml
-  # customization: This setting can be left as default or modified as required
-  allowed-trusted-image-projects: |
-    - "projects/cos-cloud"
-  #
   # a list of allowed essential contact domains, see YAML file for more info:
   # org/org-policies/essentialcontacts-allowed-contact-domains.yaml
   # customization: this setting MUST be changed to a domain in which you choose to allow to receive notifications from Google.
@@ -88,12 +82,6 @@ data:
   # customization: # this setting MUST be changed to include the GCP org's directory customer ID and any other directory containing users that will need IAM roles assigned
   allowed-policy-domain-members: |
     - "DIRECTORY_CUSTOMER_ID"
-  #
-  # a list of allowed projects, folders, networks for VPC peering, see YAML file for more info:
-  # org/org-policies/compute-restrict-vpc-peering.yaml
-  # customization: this setting MUST be changed, replace ORGANIZATION_ID with the GCP organizations's ID
-  allowed-vpc-peering: |
-    - "under:organizations/ORGANIZATION_ID"
   #
   # a list of IP addresses that should be allowed to be VPN peers to the VPCs in the organization
   # by default, all IP's are denied. see YAML file for more info: org/org-policies/compute-restrict-vpn-peer-ips.yaml
