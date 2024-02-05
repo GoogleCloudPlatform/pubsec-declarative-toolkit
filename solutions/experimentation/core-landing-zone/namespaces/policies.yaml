@@ -13,7 +13,6 @@
 # limitations under the License.
 #########
 # GCP SA
-# AC-3(7) - Creates lower priv service account for policy administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -26,7 +25,6 @@ spec:
   displayName: policies-sa
 ---
 # Grant GCP role Organization Policy Administrator to GCP SA
-# AC-3(7) - RBAC role to account with required permissions for policy administration
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:

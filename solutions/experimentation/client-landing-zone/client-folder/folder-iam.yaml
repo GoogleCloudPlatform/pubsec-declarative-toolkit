@@ -13,7 +13,6 @@
 # limitations under the License.
 #########
 # Grant GCP role Folder Viewer on client's folder to client's user group
-# AC-3(7) - ACCESS ENFORCEMENT | ROLE-BASED ACCESS CONTROL
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
