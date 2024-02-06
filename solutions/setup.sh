@@ -37,6 +37,9 @@ delete lz, kcc cluster and project in order
 -n [create] true/false       : create project
 -c [create] true/false       : create cluster
 -l [landingzone] true/false  : deploy landing zone
+-m [client-setup] true/false : deploy client-setup
+-o [client-landing-zone] t/f : deploy client-landing-zone
+-g [gatekeeper] t/f          : deploy gatekeeper
 -h [hub] true/false          : deploy hub
 -r [landingzone] true/false  : remove landing zone + hub
 -d [delete] true/false       : delete cluster
@@ -218,8 +221,7 @@ if [[ "$CREATE_KCC" != false ]]; then
 fi
 
 if [[ "$DEPLOY_LZ" != false ]]; then
-    echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
-    #sleep 60
+    echo "Deploy core-landing-zone"
 
     # generate setters.yaml
     REL_ROOT_PACKAGE="solutions"
@@ -231,7 +233,7 @@ if [[ "$DEPLOY_LZ" != false ]]; then
 
     DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
     echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
-
+    # note: security-log-bucket required
     # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/core-landing-zone/setters.yaml
 cat << EOF > ./${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
 apiVersion: v1
@@ -256,6 +258,7 @@ data:
   allowed-vpc-peering: |
     - "under:organizations/${ORG_ID}"
   logging-project-id: logging-project-${PREFIX}
+  security-log-bucket: security-log-bucket-${PREFIX}
   security-incident-log-bucket: security-incident-log-bucket-${PREFIX}
   platform-and-component-log-bucket: platform-and-component-log-bucket-${PREFIX}
   retention-locking-policy: "false"
@@ -344,6 +347,121 @@ EOF
 
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 fi
+
+# https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/onboarding-client.md
+if [[ "$DEPLOY_CLIENTSETUP" != false ]]; then
+    echo "deploy client-setup"
+    #sleep 60
+
+    # generate setters.yaml
+    REL_ROOT_PACKAGE="solutions"
+    REL_SUB_PACKAGE="client-setup"
+    REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
+    # SET management project number 
+    KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+    echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
+
+    #DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
+    #echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
+    # note: security-log-bucket required
+    # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/core-landing-zone/setters.yaml
+cat << EOF > ./${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data: 
+  org-id: "${ORG_ID}"
+  management-project-id: "${KCC_PROJECT_ID}"
+  management-project-number: "${KCC_PROJECT_NUMBER}"
+  management-namespace: config-control
+  client-name: client-${PREFIX_CLIENT_SETUP}
+  client-billing-id: "${BILLING_ID}"
+  client-management-project-id: client-management-project-${PREFIX_CLIENT_SETUP}
+  repo-url: git-repo-to-observe
+  repo-branch: main
+  repo-dir: csync/deploy/env    
+  dns-project-id: dns-project-${PREFIX}
+EOF
+
+    echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
+
+  # Landing zone deployment
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone#0-set-default-logging-storage-location
+
+  # fetch the LZ
+  cd ../../../
+
+  if [ -d "${KPT_FOLDER_NAME}" ] 
+  then
+    echo "Directory ${KPT_FOLDER_NAME} exists - using it" 
+  else
+    echo "Creating ${KPT_FOLDER_NAME}"
+    mkdir ${KPT_FOLDER_NAME}
+  fi
+  
+  cd $KPT_FOLDER_NAME
+
+  # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
+  REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
+  # check for existing landing-zone
+  echo "deploying ${REL_SUB_PACKAGE}"
+  REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
+  echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
+  rm -rf $REL_SUB_PACKAGE
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  # cp the setters.yaml
+  echo "copy over generated setters.yaml"
+  cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+
+  echo "removing gitops directory"
+  rm -rf $REL_SUB_PACKAGE/root-sync-git
+
+  echo "kpt live init"
+  kpt live init $REL_SUB_PACKAGE --namespace config-control
+  # --force
+  echo "kpt fn render"
+  kpt fn render $REL_SUB_PACKAGE --truncate-output=false
+  #kpt alpha live plan $REL_SUB_PACKAGE
+  echo "kpt live apply after 60s wait"
+  sleep 60  
+  #kpt live apply $REL_SUB_PACKAGE
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
+
+  echo "check status"
+  kpt live status $REL_SUB_PACKAGE --inv-type remote --statuses InProgress,NotFound
+
+  echo "Wait 2 min"
+  count=$(kubectl get gcp | grep UpdateFailed | wc -l)
+  echo "UpdateFailed: $count"
+  count=$(kubectl get gcp | grep UpToDate | wc -l)
+  echo "UpToDate: $count"
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens config-control
+  #
+  echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
+  sleep 60
+  kubectl get gcp
+  kubectl get gcp -n projects
+  kubectl get gcp -n networking
+  kubectl get gcp -n hierarchy
+  kubectl get gcp -n policies
+  kubectl get gcp -n logging
+  kubectl get gcp -n config-management-monitoring
+
+#  michael@cloudshell:~/kcc-cso/github/pubsec-declarative-toolkit/solutions (kcc-cso-4380)$ kubectl get namespaces | grep client
+#client-cso3-admin                 Active   6m23s
+#client-cso3-config-control        Active   6m23s
+#client-cso3-hierarchy             Active   6m23s
+#client-cso3-logging               Active   6m23s
+#client-cso3-networking            Active   6m23s
+#client-cso3-projects              Active   6m23s
+  
+  cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
+fi
+
 
 if [[ "$DEPLOY_HUB" != false ]]; then
     echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
@@ -463,7 +581,7 @@ EOF
   kubectl get gcp -n logging
 
   # check services skipped
-  kpt live status core-landing-zone | grep not
+  kpt live status $REL_SUB_PACKAGE | grep not
   
   # check projects-sa and verify billing
   echo "check iamserviceaccount.iam.cnrm.cloud.google.com/projects-sa before verifying billing"
@@ -577,8 +695,10 @@ REMOVE_LZ=false
 BOOT_PROJECT_ID=
 DELETE_PROJ=false
 CREATE_PROJ=false
-
-while getopts ":b:u:n:c:l:h:d:r:j:p:" PARAM; do
+DEPLOY_CLIENTSETUP=false
+DEPLOY_CLIENTLANDINGZONE=false
+DEPLOY_GATEKEEPER=false
+while getopts ":b:u:n:c:l:m:o:g:h:d:r:j:p:" PARAM; do
   case $PARAM in
     b)
       BOOT_PROJECT_ID=${OPTARG}
@@ -595,6 +715,15 @@ while getopts ":b:u:n:c:l:h:d:r:j:p:" PARAM; do
     l)
       DEPLOY_LZ=${OPTARG}
       ;;
+    m)
+      DEPLOY_CLIENTSETUP=${OPTARG}
+      ;;
+    o)
+      DEPLOY_CLIENTLANDINGZONE=${OPTARG}
+      ;;
+    g)
+      DEPLOY_GATEKEEPER=${OPTARG}
+      ;;                  
     h)
       DEPLOY_HUB=${OPTARG}
       ;;      
@@ -625,7 +754,7 @@ if [[ -z $UNIQUE ]]; then
   exit 1
 fi
 echo "existing project: $KCC_PROJECT_ID"
-deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $DEPLOY_HUB $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
+deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $DEPLOY_CLIENTSETUP $DEPLOY_CLIENTLANDINGZONE $DEPLOY_GATEKEEPER $DEPLOY_HUB $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
 printf "**** Done ****\n"
 
 # changes to kpt
