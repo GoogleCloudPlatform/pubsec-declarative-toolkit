@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.5.1...solutions/experimentation/core-landing-zone/0.5.2) (2024-02-05)
+
+
+### Bug Fixes
+
+* updating setters formatting and comments ([#815](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/815)) ([c105800](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/c1058007aaa72b8ffbce000ef5575cc494db0e33))
+
 ## [0.5.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.5.0...solutions/experimentation/core-landing-zone/0.5.1) (2024-02-05)
 
 
