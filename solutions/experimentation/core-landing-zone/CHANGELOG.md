@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.5.2...solutions/experimentation/core-landing-zone/0.5.3) (2024-02-07)
+
+
+### Bug Fixes
+
+* removed unused setters ([#820](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/820)) ([995e0d2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/995e0d26c212b8cac12f1e2baeb137823780696c))
+
 ## [0.5.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.5.1...solutions/experimentation/core-landing-zone/0.5.2) (2024-02-05)
 
 
