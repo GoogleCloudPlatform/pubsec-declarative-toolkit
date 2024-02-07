@@ -38,18 +38,30 @@ data:
   # General Settings Values
   ##########################
   #
+  # Use the same Google Cloud Organization ID that was used during the bootstrap procedure
+  # customization: required
   org-id: "0000000000"
+  # root folder to which the Landing Zone will be deployed into. This folder is created during the bootstrap procedure
+  # customization: required
   lz-folder-id: '0000000000'
+  # core-landing-zone billing id
+  # customization: required
   billing-id: "AAAAAA-BBBBBB-CCCCCC"
   #
   ##########################
   # Management Project
   ##########################
   #
-  # This is the project where the config controller instance is running
-  # Values can be viewed in the Project Dashboard
+  # The management project is where the Landing Zone config controller instance is running, created during the bootstrap procedure.
+  # The $PROJECT_ID (management-project-id) is defined during Initial Organization Configuration (https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#initial-organization-configuration)
+  # customization: required
   management-project-id: management-project-12345
+  # The management-project-number can be obtained from the Dashboard via https://console.cloud.google.com/home/dashboard?project=$PROJECT_ID
+  # Alternatively, obtain the management-project-number from gcloud: gcloud projects list --filter="${PROJECT_ID}" '--format=value(PROJECT_NUMBER)'
+  # customization: required
   management-project-number: "0000000000"
+  # kubernetes namespace set to the default, config-control.
+  # customization: Do not change this value.
   management-namespace: config-control
   #
   ##########################
@@ -60,13 +72,14 @@ data:
   #
   # a list of allowed essential contact domains, see YAML file for more info:
   # org/org-policies/essentialcontacts-allowed-contact-domains.yaml
-  # this setting MUST be changed
+  # customization: this setting MUST be changed to a domain in which you choose to allow to receive notifications from Google.
   allowed-contact-domains: |
     - "@example.com"
   #
   # a list of directory customer IDs from which users can be added to IAM policies, see YAML file for more info:
   # org/org-policies/iam-allowed-policy-member-domains.yaml
-  # this setting MUST be changed to include the GCP org's directory ID and any other directory containing users that will need IAM roles assigned
+  # run 'gcloud organizations list' as described in https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains#retrieving_customer_id
+  # customization: # this setting MUST be changed to include the GCP org's directory customer ID and any other directory containing users that will need IAM roles assigned
   allowed-policy-domain-members: |
     - "DIRECTORY_CUSTOMER_ID"
   #
@@ -74,6 +87,9 @@ data:
   # Logging
   ##########################
   #
+  # Core landing Zone logging project, used by the logging packages
+  # project id for the logging project to be created, following rules and conventions
+  # customization: required
   logging-project-id: logging-project-12345
   #
   # Storage buckets
@@ -82,14 +98,16 @@ data:
   # customization: required
   security-incident-log-bucket: security-incident-log-bucket-12345
   #
+  # Platform and Component Log Bucket
+  # customization: required
+  platform-and-component-log-bucket: platform-and-component-log-bucket-12345
+  #
+  #
   # Retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
   # Set the lock mechanism on the bucket to: true or false
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
-  # AU-9 PROTECTION OF AUDIT INFORMATION
-  # AU-11 AUDIT RECORD RETENTION
-  #
-  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
+  # customization: The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
   retention-locking-policy: "false"
   retention-in-days: "1"
   #
@@ -97,8 +115,6 @@ data:
   # Events and logs associated with a security incident must be kept for at least 2 years
   # Set the lock mechanism on the bucket to: true or false
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
-  # AU-9 PROTECTION OF AUDIT INFORMATION
-  # AU-11 AUDIT RECORD RETENTION
   # customization: The values below must be modified to locked: true and retentionSeconds: 63072000 (730 days) in a Production setting to implement above mentioned security controls.
   security-incident-log-bucket-retention-locking-policy: "false"
   security-incident-log-bucket-retention-in-seconds: "86400"

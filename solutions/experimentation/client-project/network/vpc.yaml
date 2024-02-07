@@ -25,5 +25,5 @@ spec:
   resourceID: global-vpc1-vpc
   description: experimentation VPC
   routingMode: REGIONAL
-  autoCreateSubnetworks: false # SC-7
-  deleteDefaultRoutesOnCreate: true # AC-4, SC-7(5)
+  autoCreateSubnetworks: false
+  deleteDefaultRoutesOnCreate: true

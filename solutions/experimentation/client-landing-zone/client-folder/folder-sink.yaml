@@ -34,7 +34,6 @@ spec:
   description: Folder sink for client-name Platform and Component logs # kpt-set: Folder sink for ${client-name} Platform and Component logs
   # the log sink must be enabled (disabled: false) to meet the listed security controls
   disabled: false
-  # AU-2, AU-12(A), AU-12(C)
   # Includes the following types of logs:
   # Cloud DNS, Cloud NAT, Firewall Rules, VPC Flow, and HTTP(S) Load Balancer
   # These logs are not enabled by default. They are enabled inside the client-experimentation package:

@@ -39,8 +39,11 @@ data:
   ##########################
   #
   # Name for the client, lowercase only
+  # customization: required
   client-name: 'client1'
+  #
   # group to grant viewer permission on client folder
+  # customization: required
   client-folderviewer: 'group:client1@example.com'
   #
   ##########################
@@ -48,16 +51,19 @@ data:
   ##########################
   #
   # logging project id created in core-landing-zone
+  # customization: required
   logging-project-id: logging-project-12345
   #
   # LoggingLogBucket retention settings
   # Set the number of days to retain logs in Cloud Logging buckets
   # Set the lock mechanism on the bucket to: true or false
   # After a retention policy is locked (true), you can't delete the bucket until every log in the bucket has fulfilled the bucket's retention period
-  # AU-9 PROTECTION OF AUDIT INFORMATION
-  # AU-11 AUDIT RECORD RETENTION
-  # The values below must be modified to locked: true and retentionDays: 365 in a Production setting to implement above mentioned security controls.
+  # The values below must be modified to retention-locking-policy: true in a Production setting to implement above mentioned security controls.
+  # customization: required
   retention-locking-policy: "false"
+  #
+  # The values below must be modified to retention-in-days: 365 in a Production setting to implement above mentioned security controls.
+  # customization: required
   retention-in-days: "1"
   #
   ##########################

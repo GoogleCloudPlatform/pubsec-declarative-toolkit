@@ -18,7 +18,6 @@
 # https://cloud.google.com/anthos-config-management/docs/how-to/monitor-config-sync-cloud-monitoring
 #########
 # GCP SA
-# AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -28,7 +27,6 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
   displayName: config-mgmt-mon-default-sa
 ---
 # Grant GCP role Metrics Writer to config-mgmt-mon-default-sa on Management Project
@@ -45,7 +43,6 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: management-project-id # kpt-set: ${management-project-id}
-  # AC-3(7), AC-3, AC-16(2)
   role: roles/monitoring.metricWriter
   member: "serviceAccount:config-mgmt-mon-default-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:config-mgmt-mon-default-sa@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -63,7 +60,6 @@ spec:
     name: config-mgmt-mon-default-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-  # AC-3(7), AC-3, AC-16(2)
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:

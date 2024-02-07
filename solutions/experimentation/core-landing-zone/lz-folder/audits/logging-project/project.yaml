@@ -16,7 +16,6 @@
 # Security logs (Cloud Audit, Data Access, and Access Transparency Logs)
 # Platform and Component logs
 # Data Access Logs
-# AU-4(1), AU-9(2) - Separate project created for logging buckets, isolating them from the source of the log entries in other projects
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
