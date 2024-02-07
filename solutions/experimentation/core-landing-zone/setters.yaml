@@ -83,13 +83,6 @@ data:
   allowed-policy-domain-members: |
     - "DIRECTORY_CUSTOMER_ID"
   #
-  # a list of IP addresses that should be allowed to be VPN peers to the VPCs in the organization
-  # by default, all IP's are denied. see YAML file for more info: org/org-policies/compute-restrict-vpn-peer-ips.yaml
-  # If you need to allow/deny specific values, update org/org-policies/compute-restrict-vpn-peer-ips.yaml and set the below variable accordingly
-  # ResourceManagerPolicy schema: https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy#schema
-  # allowed-vpn-peering-ips: |
-  #   - string
-  #
   ##########################
   # Logging
   ##########################
