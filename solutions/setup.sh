@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -113,16 +113,16 @@ if [[ "$CREATE_PROJ" != false ]]; then
   echo "applying roles to the super admin SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL}"
   # securityAdmin required
   # there are issues with a ROLES list over 5 in this case - break out for selective application
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet > /dev/null 1>&1
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.organizationAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.folderAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/resourcemanager.projectIamAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/compute.networkAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/accesscontextmanager.policyAdmin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/servicedirectory.editor --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/dns.admin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/logging.admin --quiet > /dev/null 1>&1
   # for viewing buckets under logging project
-  gcloud organizations add-iam-policy-binding $ORG_ID --member=user:$SUPER_ADMIN_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
+  gcloud organizations add-iam-policy-binding "$ORG_ID" --member=user:$SUPER_ADMIN_EMAIL --role=roles/storage.admin --quiet > /dev/null 1>&1
 
 #  ROLES=("roles/servicedirectory.editor" "roles/dns.admin" "roles/logging.admin" "roles/accesscontextmanager.policyAdmin") 
 #  ROLES=( "roles/resourcemanager.organizationAdmin" "roles/resourcemanager.folderAdmin" "roles/resourcemanager.projectIamAdmin" "roles/compute.networkAdmin" ) 
@@ -141,12 +141,11 @@ if [[ "$CREATE_PROJ" != false ]]; then
 
   # switch back to/create kcc project - not in a folder
   echo "Creating KCC project: ${CC_PROJECT_ID} on folder: ${ROOT_FOLDER_ID}"
-  #gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default
-  gcloud projects create $CC_PROJECT_ID --name="${CC_PROJECT_ID}" --set-as-default --folder="$ROOT_FOLDER_ID"
+  gcloud projects create "$CC_PROJECT_ID" --name="${CC_PROJECT_ID}" --set-as-default --folder="$ROOT_FOLDER_ID"
   gcloud config set project "${CC_PROJECT_ID}"
   # enable billing
   echo "Enabling billing on account: ${BILLING_ID}"
-  gcloud beta billing projects link ${CC_PROJECT_ID} --billing-account ${BILLING_ID}
+  gcloud beta billing projects link "${CC_PROJECT_ID}" --billing-account "${BILLING_ID}"
 
   echo "sleep 45 sec before enabling services"
   sleep 45
@@ -169,10 +168,10 @@ if [[ "$CREATE_PROJ" != false ]]; then
 
   # create VPC
   echo "Create VPC: ${NETWORK}"
-  gcloud compute networks create $NETWORK --subnet-mode=custom
+  gcloud compute networks create "$NETWORK" --subnet-mode=custom
   # create subnet
   echo "Create subnet ${SUBNET} off VPC: ${NETWORK} using ${CIDR_KCC_VPC} on region: ${REGION}"
-  gcloud compute networks subnets create $SUBNET --network $NETWORK --range $CIDR_KCC_VPC --region $REGION --stack-type=IPV4_ONLY
+  gcloud compute networks subnets create "$SUBNET" --network "$NETWORK" --range "$CIDR_KCC_VPC" --region "$REGION" --stack-type=IPV4_ONLY
   #--enable-private-ip-google-access \
   #--enable-flow-logs --logging-aggregation-interval=interval-5-sec --logging-flow-sampling=1.0 --logging-metadata=include-all
 
@@ -200,12 +199,12 @@ if [[ "$CREATE_KCC" != false ]]; then
   startb=`date +%s`
   echo "Creating Anthos KCC autopilot cluster ${CLUSTER} in region ${REGION} in subnet ${SUBNET} off VPC ${NETWORK} on project ${KCC_PROJECT_ID}"
   # autopilot_opt: Deploy an autopilot cluster instead of a standard cluster
-  gcloud anthos config controller create $CLUSTER --location $REGION --network $NETWORK --subnet $SUBNET --master-ipv4-cidr-block="172.16.0.128/28" --full-management
+  gcloud anthos config controller create "$CLUSTER" --location "$REGION" --network "$NETWORK" --subnet "$SUBNET" --master-ipv4-cidr-block="172.16.0.128/28" --full-management
 
   endb=`date +%s`
   runtimeb=$((endb-startb))
   echo "Cluster create time: ${runtimeb} sec"
-  gcloud anthos config controller get-credentials $CLUSTER --location $REGION
+  gcloud anthos config controller get-credentials "$CLUSTER" --location "$REGION"
   echo "List Clusters:"
   gcloud anthos config controller list
 
@@ -282,10 +281,10 @@ EOF
     echo "Directory ${KPT_FOLDER_NAME} exists - using it" 
   else
     echo "Creating ${KPT_FOLDER_NAME}"
-    mkdir ${KPT_FOLDER_NAME}
+    mkdir "${KPT_FOLDER_NAME}"
   fi
   
-  cd $KPT_FOLDER_NAME
+  cd "$KPT_FOLDER_NAME"
 
   # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
   REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
@@ -294,10 +293,10 @@ EOF
   REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
   echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
   rm -rf $REL_SUB_PACKAGE
-  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@"${REL_VERSION}"
   # cp the setters.yaml
   echo "copy over generated setters.yaml"
-  cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+  cp ../"$REPO_ROOT"/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml "$REL_SUB_PACKAGE"/setters.yaml
   #cp pubsec-declarative-toolkit/solutions/landing-zone/.krmignore landing-zone/ 
 
   # see requireShiededVM and restrictVPCPeering removal to recreate a cluster
@@ -796,7 +795,7 @@ if [[ "$DELETE_KCC" != false ]]; then
   echo "Delete Cluster ${CLUSTER} in region ${REGION}"
   startd=`date +%s`
   # note: cluster name is krmapihost-$CLUSTER
-  gcloud anthos config controller delete --location $REGION $CLUSTER --quiet
+  gcloud anthos config controller delete --location "$REGION" "$CLUSTER" --quiet
   endd=`date +%s`
   runtimed=$((endd-startd))
   echo "Cluster delete time: ${runtimed} sec"
@@ -805,14 +804,14 @@ fi
 if [[ "$DELETE_PROJ" != false ]]; then
   # delete VPC (routes and firewalls will be deleted as well)
   echo "deleting subnet ${SUBNET}"
-  gcloud compute networks subnets delete ${SUBNET} --region=$REGION -q
+  gcloud compute networks subnets delete "${SUBNET}" --region="$REGION" -q
   echo "deleting vpc ${NETWORK}"
-  gcloud compute networks delete ${NETWORK} -q
+  gcloud compute networks delete "${NETWORK}" -q
 
   # disable billing before deletion - to preserve the project/billing quota
-  gcloud alpha billing projects unlink ${CC_PROJECT_ID} 
+  gcloud alpha billing projects unlink "${CC_PROJECT_ID}"
   # delete cc project
-  gcloud projects delete $CC_PROJECT_ID --quiet
+  gcloud projects delete "$CC_PROJECT_ID" --quiet
 fi
 
 end=`date +%s`
@@ -895,7 +894,7 @@ if [[ -z $UNIQUE ]]; then
   exit 1
 fi
 echo "existing project: $KCC_PROJECT_ID"
-deployment $BOOT_PROJECT_ID $UNIQUE $CREATE_PROJ $CREATE_KCC $DEPLOY_LZ $DEPLOY_CLIENTSETUP $DEPLOY_CLIENTLANDINGZONE $DEPLOY_GATEKEEPER $DEPLOY_HUB $REMOVE_LZ $DELETE_KCC $DELETE_PROJ $KCC_PROJECT_ID
+deployment "$BOOT_PROJECT_ID" "$UNIQUE $CREATE_PROJ" "$CREATE_KCC" "$DEPLOY_LZ" "$DEPLOY_CLIENTSETUP" "$DEPLOY_CLIENTLANDINGZONE" "$DEPLOY_GATEKEEPER" "$DEPLOY_HUB" "$REMOVE_LZ" "$DELETE_KCC" "$DELETE_PROJ" "$KCC_PROJECT_ID"
 printf "**** Done ****\n"
 
 # changes to kpt
