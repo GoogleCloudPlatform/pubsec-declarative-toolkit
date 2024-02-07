@@ -462,6 +462,147 @@ EOF
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 fi
 
+# https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/onboarding-client.md
+if [[ "$DEPLOY_CLIENTLANDINGZONE" != false ]]; then
+    echo "deploy client-landing-zone"
+    #sleep 60
+
+    # generate setters.yaml
+    REL_ROOT_PACKAGE="solutions"
+    REL_SUB_PACKAGE="client-landing-zone"
+    REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
+    # SET management project number 
+    KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+    echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
+
+    #DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
+    #echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
+    # note: security-log-bucket required
+    # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/core-landing-zone/setters.yaml
+cat << EOF > ./${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  client-name: client-${PREFIX_CLIENT_LANDING_ZONE}
+  client-billing-id: "${BILLING_ID}"
+  client-folderviewer: 'user:${SUPER_ADMIN_EMAIL}'
+  logging-project-id: logging-project-${PREFIX}
+  retention-locking-policy: "false"
+  retention-in-days: "1"
+  host-project-id: net-host-project-${PREFIX_CLIENT_LANDING_ZONE}
+  project-allowed-restrict-vpc-peering: |
+    - folders/${ROOT_FOLDER_ID}
+#    - under:projects/PROJECT_ID
+  standard-nonp-cidr: |
+    - 10.1.0.0/18
+    - 172.16.0.0/13
+  standard-nane1-nonp-main-snet: 10.1.0.0/21
+  standard-nane2-nonp-main-snet: 10.1.8.0/21
+  standard-pbmm-cidr: |
+    - 10.1.128.0/18
+    - 172.24.0.0/13
+  standard-nane1-pbmm-main-snet: 10.1.128.0/21
+  standard-nane2-pbmm-main-snet: 10.1.136.0/21
+  firewall-internal-ip-ranges: |
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  denied-sanctioned-countries: |
+    - "XC"
+  allowed-os-update-domains: |
+    - "debian.map.fastlydns.net"
+    - "debian.org"
+    - "deb.debian.org"
+    - "ubuntu.com"
+    - "cloud.google.com"
+    - "packages.cloud.google.com"
+    - "security.ubuntu.com"
+    - "northamerica-northeast1.gce.archive.ubuntu.com"
+    - "northamerica-northeast2.gce.archive.ubuntu.com"
+  allowed-os-update-source-ip-ranges: |
+    - "10.1.0.0/21"
+    - "10.1.8.0/21"
+    - "10.1.32.0/19"
+    - "10.1.128.0/21"
+    - "10.1.136.0/21"
+    - "10.1.160.0/19"
+  dns-project-id: dns-project-${PREFIX}
+  dns-name: "client-${PREFIX_CLIENT_LANDING_ZONE}.${CONTACT_DOMAIN}."
+  dns-nameservers: |
+    - "ns-cloud-a1.googledomains.com."
+    - "ns-cloud-a2.googledomains.com."
+    - "ns-cloud-a3.googledomains.com."
+    - "ns-cloud-a4.googledomains.com."
+EOF
+
+    echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
+  # fetch the LZ
+  cd ../../../
+
+  if [ -d "${KPT_FOLDER_NAME}" ] 
+  then
+    echo "Directory ${KPT_FOLDER_NAME} exists - using it" 
+  else
+    echo "Creating ${KPT_FOLDER_NAME}"
+    mkdir ${KPT_FOLDER_NAME}
+  fi
+  
+  cd $KPT_FOLDER_NAME
+
+  # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
+  REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
+  # check for existing landing-zone
+  echo "deploying ${REL_SUB_PACKAGE}"
+  REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
+  echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
+  rm -rf $REL_SUB_PACKAGE
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  # cp the setters.yaml
+  echo "copy over generated setters.yaml"
+  cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+
+  echo "removing gitops directory"
+  rm -rf $REL_SUB_PACKAGE/root-sync-git
+
+  echo "kpt live init"
+  kpt live init $REL_SUB_PACKAGE --namespace config-control
+  # --force
+  echo "kpt fn render"
+  kpt fn render $REL_SUB_PACKAGE --truncate-output=false
+  #kpt alpha live plan $REL_SUB_PACKAGE
+  echo "kpt live apply after 60s wait"
+  sleep 60  
+  #kpt live apply $REL_SUB_PACKAGE
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
+
+  echo "check status"
+  kpt live status $REL_SUB_PACKAGE --inv-type remote --statuses InProgress,NotFound
+
+  echo "Wait 2 min"
+  count=$(kubectl get gcp | grep UpdateFailed | wc -l)
+  echo "UpdateFailed: $count"
+  count=$(kubectl get gcp | grep UpToDate | wc -l)
+  echo "UpToDate: $count"
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens config-control
+  #
+  echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
+  sleep 60
+  kubectl get gcp
+  kubectl get gcp -n projects
+  kubectl get gcp -n networking
+  kubectl get gcp -n hierarchy
+  kubectl get gcp -n policies
+  kubectl get gcp -n logging
+  kubectl get gcp -n config-management-monitoring
+  
+  cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
+fi
+
 
 if [[ "$DEPLOY_HUB" != false ]]; then
     echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
