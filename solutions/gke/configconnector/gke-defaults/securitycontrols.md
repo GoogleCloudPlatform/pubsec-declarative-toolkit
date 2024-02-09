@@ -3,6 +3,13 @@
 <!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
+|AC-1|./project-iam.yaml|containerclusterviewer-permissions|
+|AC-1|./project-iam.yaml|containerclusterviewer-permissions|
+|AC-1|./project-iam.yaml|loggingviewer-permissions|
+|AC-1|./project-iam.yaml|monitoringdashboardeditor-permissions|
+|AC-1|./project-iam.yaml|monitoringviewer-permissions|
+|AC-1|./project-iam.yaml|pubsubsubscriber-permissions|
+|AC-1|./project-iam.yaml|pubsubviewer-permissions|
 |AC-3|./project-iam.yaml|containerclusterviewer-permissions|
 |AC-3|./project-iam.yaml|containerclusterviewer-permissions|
 |AC-3|./project-iam.yaml|loggingviewer-permissions|

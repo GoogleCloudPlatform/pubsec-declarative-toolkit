@@ -3,6 +3,57 @@
 <!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
+|AC-1|./lz-folder/audits/logging-project/project-iam.yaml|mgmt-project-cluster-platform-and-component-log-bucket-writer-permissions|
+|AC-1|./lz-folder/audits/logging-project/project-iam.yaml|platform-and-component-services-infra-log-bucket-writer-permissions|
+|AC-1|./lz-folder/audits/logging-project/project-iam.yaml|platform-and-component-services-log-bucket-writer-permissions|
+|AC-1|./lz-folder/audits/logging-project/project-iam.yaml|security-log-bucket-writer-permissions|
+|AC-1|./lz-folder/audits/logging-project/project-iam.yaml|security-log-bucket-writer-permissions|
+|AC-1|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa|
+|AC-1|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa-metric-writer-permissions|
+|AC-1|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa-workload-identity-binding|
+|AC-1|./namespaces/gatekeeper-system.yaml|gatekeeper-admin-sa|
+|AC-1|./namespaces/gatekeeper-system.yaml|gatekeeper-admin-sa-metric-writer-permissions|
+|AC-1|./namespaces/gatekeeper-system.yaml|gatekeeper-admin-sa-workload-identity-binding|
+|AC-1|./namespaces/hierarchy.yaml|allow-folders-resource-reference-to-logging|
+|AC-1|./namespaces/hierarchy.yaml|allow-hierarchy-resource-reference-from-config-control|
+|AC-1|./namespaces/hierarchy.yaml|allow-hierarchy-resource-reference-from-policies|
+|AC-1|./namespaces/hierarchy.yaml|allow-hierarchy-resource-reference-from-projects|
+|AC-1|./namespaces/hierarchy.yaml|hierarchy-sa|
+|AC-1|./namespaces/hierarchy.yaml|hierarchy-sa-folderadmin-permissions|
+|AC-1|./namespaces/hierarchy.yaml|hierarchy-sa-workload-identity-binding|
+|AC-1|./namespaces/logging.yaml|allow-logging-resource-reference-from-projects|
+|AC-1|./namespaces/logging.yaml|logging-sa|
+|AC-1|./namespaces/logging.yaml|logging-sa-logadmin-permissions|
+|AC-1|./namespaces/logging.yaml|logging-sa-monitoring-admin-logging-project-id-permissions|
+|AC-1|./namespaces/logging.yaml|logging-sa-monitoring-admin-management-project-id-permissions|
+|AC-1|./namespaces/logging.yaml|logging-sa-storageadmin-logging-project-id-permissions|
+|AC-1|./namespaces/logging.yaml|logging-sa-workload-identity-binding|
+|AC-1|./namespaces/management-namespace.yaml|config-control-sa-management-project-editor-permissions|
+|AC-1|./namespaces/management-namespace.yaml|config-control-sa-management-project-serviceaccountadmin-permissions|
+|AC-1|./namespaces/management-namespace.yaml|config-control-sa-orgroleadmin-permissions|
+|AC-1|./namespaces/management-namespace.yaml|config-control-sa-orgroleadmin-permissions|
+|AC-1|./namespaces/networking.yaml|networking-sa|
+|AC-1|./namespaces/networking.yaml|networking-sa-dns-permissions|
+|AC-1|./namespaces/networking.yaml|networking-sa-networkadmin-permissions|
+|AC-1|./namespaces/networking.yaml|networking-sa-security-permissions|
+|AC-1|./namespaces/networking.yaml|networking-sa-service-control-org-permissions|
+|AC-1|./namespaces/networking.yaml|networking-sa-servicedirectoryeditor-permissions|
+|AC-1|./namespaces/networking.yaml|networking-sa-workload-identity-binding|
+|AC-1|./namespaces/networking.yaml|networking-sa-xpnadmin-permissions|
+|AC-1|./namespaces/policies.yaml|policies-sa|
+|AC-1|./namespaces/policies.yaml|policies-sa-orgpolicyadmin-permissions|
+|AC-1|./namespaces/policies.yaml|policies-sa-workload-identity-binding|
+|AC-1|./namespaces/projects.yaml|allow-projects-resource-reference-from-logging|
+|AC-1|./namespaces/projects.yaml|allow-projects-resource-reference-from-networking|
+|AC-1|./namespaces/projects.yaml|allow-projects-resource-reference-from-policies|
+|AC-1|./namespaces/projects.yaml|projects-sa|
+|AC-1|./namespaces/projects.yaml|projects-sa-billinguser-permissions|
+|AC-1|./namespaces/projects.yaml|projects-sa-projectcreator-permissions|
+|AC-1|./namespaces/projects.yaml|projects-sa-projectdeleter-permissions|
+|AC-1|./namespaces/projects.yaml|projects-sa-projectiamadmin-permissions|
+|AC-1|./namespaces/projects.yaml|projects-sa-projectmover-permissions|
+|AC-1|./namespaces/projects.yaml|projects-sa-serviceusageadmin-permissions|
+|AC-1|./namespaces/projects.yaml|projects-sa-workload-identity-binding|
 |AC-16(2)|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa|
 |AC-16(2)|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa|
 |AC-16(2)|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa-metric-writer-permissions|
@@ -251,7 +302,6 @@
 |AU-11|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |AU-11|./setters.yaml|setters|
 |AU-11|./setters.yaml|setters|
-|AU-11).|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |AU-12|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
 |AU-12|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
 |AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
@@ -349,7 +399,6 @@
 |AU-7|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|platform-and-component-log-bucket|
 |AU-7|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |AU-7|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
-|AU-7(B)).|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |AU-9|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|platform-and-component-log-bucket|
 |AU-9|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |AU-9|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
@@ -385,8 +434,8 @@
 |AU-9(4)|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |AU-9(4)|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |AU-9(4)|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
-|AU-9)|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
-|AU-9)|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
+|IA-1|./org/org-policies/iam-disable-service-account-key-creation.yaml|iam-disable-service-account-key-creation|
+|IA-1|./org/org-policies/iam-disable-service-account-key-upload.yaml|iam-disable-service-account-key-upload|
 |SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
 |SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
 |SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|platform-and-component-log-bucket|
@@ -395,3 +444,4 @@
 |SI-4|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 
+<!-- END OF SECURITY CONTROLS LIST -->

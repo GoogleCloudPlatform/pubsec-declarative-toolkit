@@ -19,6 +19,7 @@
 ##################
 # Grant role: roles/compute.networkUser on the host project to SERVICE_PROJECT_1_NUM@cloudservices.gserviceaccount.com
 # https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc#enabling_and_granting_roles
+# AC-1 - Implementation of access control
 # AC-3(7), AC-3 - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -28,7 +29,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -47,7 +48,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -68,7 +69,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -86,7 +87,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -106,7 +107,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project

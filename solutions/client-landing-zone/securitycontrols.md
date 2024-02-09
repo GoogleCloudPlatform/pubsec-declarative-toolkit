@@ -3,6 +3,10 @@
 <!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
+|AC-1|./client-folder/folder-iam.yaml|clients.client-name-client-folder-viewer-permissions|
+|AC-1|./client-folder/folder-iam.yaml|clients.client-name-client-folder-viewer-permissions|
+|AC-1|./logging-project/project-iam.yaml|platform-and-component-log-client-name-bucket-writer-permissions|
+|AC-1|./logging-project/project-iam.yaml|platform-and-component-log-client-name-bucket-writer-permissions|
 |AC-16(2)|./client-folder/folder-iam.yaml|clients.client-name-client-folder-viewer-permissions|
 |AC-16(2)|./client-folder/folder-iam.yaml|clients.client-name-client-folder-viewer-permissions|
 |AC-16(2)|./logging-project/project-iam.yaml|platform-and-component-log-client-name-bucket-writer-permissions|

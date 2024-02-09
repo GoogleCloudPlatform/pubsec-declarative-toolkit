@@ -3,6 +3,14 @@
 <!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
+|AC-1|./instance-resources/iam.yaml|project-id--instance-name-gke-admins-permissions|
+|AC-1|./instance-resources/iam.yaml|project-id--instance-name-sa|
+|AC-1|./instance-resources/iam.yaml|project-id--instance-name-sa-gke-admins-permissions|
+|AC-1|./project-iam.yaml|project-id-client-name-admin-sa-compute-instance-admin-permissions|
+|AC-1|./project-iam.yaml|project-id-client-name-admin-sa-service-account-admin-permissions|
+|AC-1|./project-iam.yaml|project-id-client-name-admin-sa-service-account-admin-permissions|
+|AC-1|./project-iam.yaml|project-id-client-name-admin-sa-service-account-user-permissions|
+|AC-1|./project-iam.yaml|project-id-gke-admins-permissions|
 |AC-16(2)|./instance-resources/iam.yaml|project-id--instance-name-gke-admins-permissions|
 |AC-16(2)|./instance-resources/iam.yaml|project-id--instance-name-gke-admins-permissions|
 |AC-16(2)|./instance-resources/iam.yaml|project-id--instance-name-sa|

@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # GCP Service Account for tier4
+# AC-1 - Implementation of access control
 # AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -41,7 +42,7 @@ spec:
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeSubnetwork
     name: allowed-nane1-subnet # kpt-set: ${allowed-nane1-main-subnet}
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   role: roles/compute.networkUser
   member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
 ---
@@ -59,7 +60,7 @@ spec:
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeSubnetwork
     name: allowed-nane2-main-subnet # kpt-set: ${allowed-nane2-main-subnet}
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   role: roles/compute.networkUser
   member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
 ---
@@ -78,7 +79,7 @@ spec:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
     namespace: client-name-config-control # kpt-set: ${client-name}-${management-namespace}
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
@@ -115,7 +116,7 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-# AC-3(7), AC-3, AC-16(2)
+# AC-1, AC-3(7), AC-3, AC-16(2)
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -133,7 +134,7 @@ metadata:
   namespace: project-id-tier3 # kpt-set: ${project-id}-tier3
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-# AC-3(7), AC-3, AC-16(2)
+# AC-1, AC-3(7), AC-3, AC-16(2)
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -153,7 +154,7 @@ subjects:
   - kind: ServiceAccount
     name: ns-reconciler-project-id-tier4 # kpt-set: ns-reconciler-${project-id}-tier4
     namespace: config-management-system
-# AC-3(7), AC-3, AC-16(2)
+# AC-1, AC-3(7), AC-3, AC-16(2)
 roleRef:
   kind: ClusterRole
   name: admin
