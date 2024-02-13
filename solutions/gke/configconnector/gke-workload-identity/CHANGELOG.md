@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-workload-identity/0.1.2...solutions/gke/configconnector/gke-workload-identity/0.1.3) (2024-02-13)
+
+
+### Bug Fixes
+
+* adding security control tags ([#810](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/810)) ([cb877a4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/cb877a4f465135677675f5e3b42a73b324e9827b))
+
 ## [0.1.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-workload-identity/0.1.1...solutions/gke/configconnector/gke-workload-identity/0.1.2) (2023-11-01)
 
 

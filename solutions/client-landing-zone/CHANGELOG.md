@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.3...solutions/client-landing-zone/0.5.4) (2024-02-13)
+
+
+### Bug Fixes
+
+* adding security control tags ([#810](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/810)) ([cb877a4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/cb877a4f465135677675f5e3b42a73b324e9827b))
+
 ## [0.5.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.2...solutions/client-landing-zone/0.5.3) (2023-12-19)
 
 
