@@ -13,8 +13,9 @@
 # limitations under the License.
 ########
 # GKE egress Allow GKE nodes to AzDO
-# TODO: validate if service account can be used instead of podipv4range
+# TODO: validate if service account can be used instead of primaryIpv4Range
 # AU-12 - Enable Logging for firewall
+# SC-7(9) - Exception to allow access to repositories in Github and AZDO and to allow access to docker registry
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
@@ -39,6 +40,7 @@ spec:
       - ipProtocol: "tcp"
         ports:
           - "443"
+    # SC-7(9)
     destFqdns:
       - "dev.azure.com"
   priority: 2000 # kpt-set: ${gke-to-azdo-priority}
@@ -70,6 +72,7 @@ spec:
       - ipProtocol: "tcp"
         ports:
           - "443"
+    # SC-7(9)
     destFqdns:
       - "github.com"
   priority: 2001 # kpt-set: ${gke-to-github-priority}
@@ -101,6 +104,7 @@ spec:
       - ipProtocol: "tcp"
         ports:
           - "443"
+    # SC-7(9)
     destFqdns:
       - "northamerica-northeast1-docker.pkg.dev"
       - "northamerica-northeast2-docker.pkg.dev"

@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # GCP SA, has no permissions defined by default, they will be granted on a case by case basis to limit scope
+# AC-1 - Implementation of access control
 # AC-3, AC-3(7), AC-16(2) - This service account possesses minimal privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the current namespace and is assigned minimal permissions to create resources in this namespace only.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -41,7 +42,7 @@ spec:
     name: client-name-admin-sa # kpt-set: ${client-name}-admin-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
@@ -78,7 +79,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -97,7 +98,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -116,7 +117,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -135,7 +136,7 @@ metadata:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/client-management-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${client-management-project-id}
 roleRef:
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io

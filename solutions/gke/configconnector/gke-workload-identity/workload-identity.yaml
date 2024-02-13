@@ -20,6 +20,7 @@
 # Additional roles can be granted to this service account to provide applications access to other Google services.
 #########
 # GCP SA that will access Google services.
+# AC-1 - Implementation of access control
 # AC-3(7), AC-3 - This GCP SA is bound to a Kubernetes SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -42,7 +43,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -61,7 +62,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount

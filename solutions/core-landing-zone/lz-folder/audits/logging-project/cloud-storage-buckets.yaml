@@ -13,7 +13,8 @@
 # limitations under the License.
 # Cloud Storage bucket to store logs related to security incidents
 # https://cloud.google.com/logging/docs/routing/copy-logs
-# AU-9, AU-11 - Storage bucket created to hold logs related to security incidents (AU-11). Log is protected from modification and deletion (AU-9)
+# AU-9, AU-11 - Storage bucket created to hold logs related to security incidents with a retention period. Log is protected from modification and deletion
+# AU-9(4), SI-4 - The centralized logging solution has a configuration in place that defines all logging and storage buckets to be locked
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
 metadata:
@@ -30,7 +31,8 @@ spec:
   location: northamerica-northeast1
   publicAccessPrevention: "enforced"
   uniformBucketLevelAccess: true
-  # AU-9
+  # AU-9, AU-11
   retentionPolicy:
+    # AU-9(4), SI-4
     isLocked: false # kpt-set: ${security-incident-log-bucket-retention-locking-policy}
     retentionPeriod: 86400 # kpt-set: ${security-incident-log-bucket-retention-in-seconds}

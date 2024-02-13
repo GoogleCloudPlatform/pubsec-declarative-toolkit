@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+# AC-1 - Implementation of access control
 # AC-3, AC-3(7), AC-16(2) - Create the Service Account for the compute engine instance
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -37,7 +38,7 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: iam.cnrm.cloud.google.com/namespaces/client-name-admin/IAMServiceAccount/project-id--instance-name-sa # kpt-set: iam.cnrm.cloud.google.com/namespaces/${client-name}-admin/IAMServiceAccount/${project-id}--${instance-name}-sa
 spec:
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
@@ -59,7 +60,7 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-admin/ComputeInstance/project-id--instance-name # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-admin/ComputeInstance/${project-id}--${instance-name}
 spec:
-  # AC-3, AC-3(7), AC-16(2)
+  # AC-1, AC-3, AC-3(7), AC-16(2)
   resourceRef:
     apiVersion: compute.cnrm.cloud.google.com/v1beta1
     kind: ComputeInstance

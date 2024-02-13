@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # Cloud KMS Key Ring and Key for GKE ETCD Encryption
+# SC-12(2) - The GCP key management is used to generate a symmetric key. This symemetric key is used to encrypt the kubernetes managed instance etcd database.
 apiVersion: kms.cnrm.cloud.google.com/v1beta1
 kind: KMSKeyRing
 metadata:
@@ -23,6 +24,7 @@ metadata:
 spec:
   location: northamerica-northeast1 # kpt-set: ${location}
 ---
+# SC-12(2)
 apiVersion: kms.cnrm.cloud.google.com/v1beta1
 kind: KMSCryptoKey
 metadata:

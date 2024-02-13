@@ -19,6 +19,7 @@
 #########
 # Subnet nonp-main northamerica-northeast1
 # AU-12 - Enable Logging for Subnet
+# IA-3(3) - IP space is assigned for dynamic allocation
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
@@ -29,6 +30,7 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   resourceID: nane1-standard-nonp-main-snet
+  # IA-3(3)
   ipCidrRange: 10.1.0.0/21 # kpt-set: ${standard-nane1-nonp-main-snet}
   region: northamerica-northeast1
   description: northamerica-northeast1 nonp-main subnet
@@ -52,6 +54,7 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   resourceID: nane1-standard-pbmm-main-snet
+  # IA-3(3)
   ipCidrRange: 10.1.128.0/21 # kpt-set: ${standard-nane1-pbmm-main-snet}
   region: northamerica-northeast1
   description: northamerica-northeast1 pbmm-main subnet
@@ -75,6 +78,7 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   resourceID: nane2-standard-nonp-main-snet
+  # IA-3(3)
   ipCidrRange: 10.1.8.0/21 # kpt-set: ${standard-nane2-nonp-main-snet}
   region: northamerica-northeast2
   description: northamerica-northeast2 nonp-main subnet
@@ -98,6 +102,7 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
 spec:
   resourceID: nane2-standard-pbmm-main-snet
+  # IA-3(3)
   ipCidrRange: 10.1.136.0/21 # kpt-set: ${standard-nane2-pbmm-main-snet}
   region: northamerica-northeast2
   description: northamerica-northeast2 pbmm-main subnet

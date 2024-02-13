@@ -1,5 +1,6 @@
 # Per Cluster resource
 # AU-12, AU-3, AU-3(1) - Enables logging for traffic allowed / blocked by Network Policies
+# SI-4 - Logging denied traffic
 # More info: https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy-logging
 # In future we may want to enable delegate and only log traffic allowed / blocked by specific rules
 kind: NetworkLogging
@@ -7,7 +8,7 @@ apiVersion: networking.gke.io/v1alpha1
 metadata:
   name: default
 spec:
-  # AU-12, AU-3, AU-3(1)
+  # AU-12, AU-3, AU-3(1), SI-4
   cluster:
     allow:
       log: true

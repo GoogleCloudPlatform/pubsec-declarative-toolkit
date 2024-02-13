@@ -3,6 +3,21 @@
 <!-- BEGINNING OF SECURITY CONTROLS LIST -->
 |Security Control|File Name|Resource Name|
 |---|---|---|
+|AC-1|./host-project/project-iam.yaml|project-id-cloudservices-sa-networkuser-host-project-id-permissions|
+|AC-1|./host-project/project-iam.yaml|project-id-cloudservices-sa-networkuser-host-project-id-permissions|
+|AC-1|./host-project/project-iam.yaml|project-id-container-engine-robot-sa-gkefirewall-admin-host-project-id-permissions|
+|AC-1|./host-project/project-iam.yaml|project-id-container-engine-robot-sa-host-servce-agent-host-project-id-permissions|
+|AC-1|./host-project/project-iam.yaml|project-id-container-engine-robot-sa-networkuser-host-project-id-permissions|
+|AC-1|./host-project/project-iam.yaml|project-id-tier3-sa-tier3-subnetwork-admin-host-project-id-permissions|
+|AC-1|./project-iam.yaml|client-name-logging-sa-pubsub-admin-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-container-engine-robot-sa-kms-encrypt-decrypt-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier3-sa-container-admin-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier3-sa-gke-hub-admin-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier3-sa-gke-hub-admin-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier3-sa-kms-admin-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier3-sa-service-agent-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier4-sa-artifactregistry-admin-project-id-permissions|
+|AC-1|./project-iam.yaml|project-id-tier4-sa-tier4-secret-manager-admin-project-id-permissions|
 |AC-16(2)|./project-iam.yaml|client-name-logging-sa-pubsub-admin-project-id-permissions|
 |AC-16(2)|./project-iam.yaml|client-name-logging-sa-pubsub-admin-project-id-permissions|
 |AC-16(2)|./project-iam.yaml|project-id-container-engine-robot-sa-kms-encrypt-decrypt-project-id-permissions|
@@ -71,5 +86,21 @@
 |AC-3(7)|./project-iam.yaml|project-id-tier4-sa-artifactregistry-admin-project-id-permissions|
 |AC-3(7)|./project-iam.yaml|project-id-tier4-sa-tier4-secret-manager-admin-project-id-permissions|
 |AC-3(7)|./project-iam.yaml|project-id-tier4-sa-tier4-secret-manager-admin-project-id-permissions|
+|RA-5(5)|./services.yaml|project-id-containerscanning|
+|RA-5(5)|./services.yaml|project-id-containerscanning|
+|RA-5(5)|./services.yaml|project-id-containersecurity|
+|RA-5(5)|./services.yaml|project-id-containersecurity|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-cluster-event-notification-alert|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-cluster-upgrade-alert|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-security-posture-critical-severity-alert|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-security-posture-critical-severity-alert|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-security-posture-high-severity-alert|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-security-posture-low-severity-alert|
+|SI-4(5)|./logging-monitoring/alerts.yaml|project-id-gke-security-posture-medium-severity-alert|
+|SI-4(5)|./logging-monitoring/notificationchannel.yaml|project-id-gke-monitoring-group-notify|
+|SI-4(5)|./logging-monitoring/notificationchannel.yaml|project-id-gke-monitoring-group-notify|
+|SI-4(5)|./logging-monitoring/pubsub.yaml|project-id-gke-cluster-notification-pubsub-subscription|
+|SI-4(5)|./logging-monitoring/pubsub.yaml|project-id-gke-cluster-notification-pubsub-topic|
+|SI-4(5)|./logging-monitoring/pubsub.yaml|project-id-gke-cluster-notification-pubsub-topic|
 
 <!-- END OF SECURITY CONTROLS LIST -->
