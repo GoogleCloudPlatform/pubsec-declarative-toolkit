@@ -20,5 +20,12 @@
 # for example kcc.landing.systems is kls or slk
 # if it is not unique then your project creation will fail right away anyway due to global gcp collision
 export PREFIX=cdd1
-
+export UNIQUE=cdd
+export AUDIT_PROJECT_ID=audit-lz-cdd-02
+export REGION=northamerica-northeast1
+export CIDR_VPC=192.168.0.0/16
+#LZ_FOLDER_NAME_PREFIX=landing-zone-1
+export NETWORK=cdd-vpc
+export SUBNET=cdd-sn
+export ROOT_FOLDER_ID=592711306009
 
