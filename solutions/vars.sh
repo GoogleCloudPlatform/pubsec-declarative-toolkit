@@ -19,12 +19,34 @@
 # MAKE SURE the prefix is unique in combination with another string - use your domain backwards
 # for example kcc.landing.systems is kls or slk
 # if it is not unique then your project creation will fail right away anyway due to global gcp collision
-export PREFIX=cso2
+# these postfixes are separate in the case we selectively delete/redeploy one or more packages
+# for example a failed client-setup will require postfix2 where the core-landing-zone still has postfix1
+export PREFIX_CORE_LANDING_ZONE=cso2
+# for client-setup
 export PREFIX_CLIENT_SETUP=cso3
+# for client-landing-zone
 export PREFIX_CLIENT_LANDING_ZONE=cso3
+# if different than core billing id
+#export CLIENT_BILLING_ID=
+# for client-project-setup
 export PREFIX_CLIENT_PROJECT_SETUP=cso3
+# one of 2 enums - match to project-parent-folder
+export CLIENT_PROJECT_PARENT_FOLDER=nonp
+#export CLIENT_CLASSIFICATION=pbmm
+export CLIENT_CLASSIFICATION=nonp
 
+# client-setup and client-project-setup
+export CLIENT_NAME_1=client1
+# if different than core billing id
+#export PROJECT_BILLING_ID=
+# for projects/hub-env
+export PREFIX_HUB_ENV=cso2
 
+# for core-landing-zone
+
+# for all packages
+# must be config-control due to hardcoding
+export MANAGEMENT_NAMESPACE=config-control
 # pass in for select runs where cluster already up - this is your bootstrap project you run from - not the project that will contain your kcc/gke/kubernetes cluster
 export KCC_PROJECT_NAME=kcc-cso
 export REGION=northamerica-northeast1
@@ -40,7 +62,7 @@ export CONTACT_DOMAIN=cloud-setup.org
 #public_endpoint_opt=true
 export SUPER_ADMIN_EMAIL=michael@cloud-setup.org
 
-# hub-env only
+# for projects/hub-env package
 export HUB_PROJECT_PARENT_FOLDER=services-infrastructure
 export HUB_PROJECT_ID_PREFIX=xxdmu-admin1-hub
 export HUB_ADMIN_GROUP_EMAIL=user:michael@cloud-setup.org

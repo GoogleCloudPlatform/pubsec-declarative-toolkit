@@ -39,6 +39,7 @@ delete lz, kcc cluster and project in order
 -l [landingzone] true/false  : deploy landing zone
 -m [client-setup] true/false : deploy client-setup
 -o [client-landing-zone] t/f : deploy client-landing-zone
+-s [client-project-setup] t/f: deploy client-project-setup
 -g [gatekeeper] t/f          : deploy gatekeeper
 -h [hub] true/false          : deploy hub
 -r [landingzone] true/false  : remove landing zone + hub
@@ -47,8 +48,6 @@ delete lz, kcc cluster and project in order
 -p [KCC project] string      : target KCC project: ie kcc-ol-1201
 EOF
 }
-
-# set for michael@cloudshell:~/dev/pdt-oldev/obriensystems/pubsec-declarative-toolkit/solutions/landing-zone (kcc-lz-8597)$ ./deployment.sh -b pdt-oldev -u pdtoldev -c false -l true -d false -p kcc-lz-8597
 
 # for eash of override - key/value pairs for constants - shared by all scripts
 source ./vars.sh
@@ -66,7 +65,7 @@ deployment() {
   
   echo "Date: $(date)"
   echo "Timestamp: $(date +%s)"
-  echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -h $DEPLOY_HUB -r $REMOVE_LZ -d $DELETE_KCC -p $KCC_PROJECT_ID"
+  echo "running with: -b $BOOT_PROJECT_ID -u $UNIQUE -c $CREATE_KCC -l $DEPLOY_LZ -m "$DEPLOY_CLIENTSETUP" -o "$DEPLOY_CLIENTLANDINGZONE" -s "$DEPLOY_CLIENTPROJECTSETUP" -h $DEPLOY_HUB -r $REMOVE_LZ -d $DELETE_KCC -p $KCC_PROJECT_ID"
   # reset project from KCC project - if rerunning script or after an error
   gcloud config set project "${BOOT_PROJECT_ID}"
   echo "Switched back to boot project ${BOOT_PROJECT_ID}"
@@ -77,11 +76,8 @@ echo "Start: ${start}"
 MIDFIX=$UNIQUE
 echo "unique string: $MIDFIX"
 echo "REGION: $REGION" # defined in vars.sh
-# NETWORK=$PREFIX-${MIDFIX}-vpc
 echo "NETWORK: $NETWORK"
-# SUBNET=$PREFIX-${MIDFIX}-sn
 echo "SUBNET: $SUBNET"
-# CLUSTER=$PREFIX-${MIDFIX}
 echo "CLUSTER: $CLUSTER"
 if [[ "$CREATE_PROJ" != false ]]; then
   CC_PROJECT_RAND=$(shuf -i 0-10000 -n 1)
@@ -208,7 +204,7 @@ if [[ "$CREATE_KCC" != false ]]; then
   echo "List Clusters:"
   gcloud anthos config controller list
 
-  SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+  SA_EMAIL="$(kubectl get ConfigConnectorContext -n "${MANAGEMENT_NAMESPACE}" -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
   echo "post GKE cluster create - applying 2 roles to org: ${ORG_ID} and project: ${KCC_PROJECT_ID} on the yakima gke service account to prep for kpt deployment: $SA_EMAIL"
   gcloud organizations add-iam-policy-binding "${ORG_ID}" --member="serviceAccount:${SA_EMAIL}" --role=roles/resourcemanager.organizationAdmin --condition=None --quiet  > /dev/null 1>&1
   gcloud projects add-iam-policy-binding "${KCC_PROJECT_ID}" --member "serviceAccount:${SA_EMAIL}" --role "roles/serviceusage.serviceUsageConsumer" --project "${KCC_PROJECT_ID}" --quiet  > /dev/null 1>&1
@@ -247,7 +243,7 @@ data:
   billing-id: "${BILLING_ID}"
   management-project-id: "${KCC_PROJECT_ID}"
   management-project-number: "${KCC_PROJECT_NUMBER}"
-  management-namespace: config-control
+  management-namespace: "${MANAGEMENT_NAMESPACE}"
   allowed-trusted-image-projects: |
     - "projects/cos-cloud"
   allowed-contact-domains: |
@@ -256,15 +252,15 @@ data:
     - "${DIRECTORY_CUSTOMER_ID}"
   allowed-vpc-peering: |
     - "under:organizations/${ORG_ID}"
-  logging-project-id: logging-project-${PREFIX}
-  security-log-bucket: security-log-bucket-${PREFIX}
-  security-incident-log-bucket: security-incident-log-bucket-${PREFIX}
-  platform-and-component-log-bucket: platform-and-component-log-bucket-${PREFIX}
+  logging-project-id: logging-project-${PREFIX_CORE_LANDING_ZONE}
+  security-log-bucket: security-log-bucket-${PREFIX_CORE_LANDING_ZONE}
+  security-incident-log-bucket: security-incident-log-bucket-${PREFIX_CORE_LANDING_ZONE}
+  platform-and-component-log-bucket: platform-and-component-log-bucket-${PREFIX_CORE_LANDING_ZONE}
   retention-locking-policy: "false"
   retention-in-days: "1"
   security-incident-log-bucket-retention-locking-policy: "false"
   security-incident-log-bucket-retention-in-seconds: "86400"  
-  dns-project-id: dns-project-${PREFIX}
+  dns-project-id: dns-project-${PREFIX_CORE_LANDING_ZONE}
   dns-name: "${CONTACT_DOMAIN}."
 EOF
 
@@ -305,7 +301,7 @@ EOF
   #rm -rf $REL_SUB_PACKAGE/org/org-policies
 
   echo "kpt live init"
-  kpt live init $REL_SUB_PACKAGE --namespace config-control
+  kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}"
   # --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
@@ -324,7 +320,7 @@ EOF
   count=$(kubectl get gcp | grep UpToDate | wc -l)
   echo "UpToDate: $count"
   # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens config-control
+  kubens "${MANAGEMENT_NAMESPACE}"
   #
   echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
   sleep 60
@@ -375,14 +371,15 @@ data:
   org-id: "${ORG_ID}"
   management-project-id: "${KCC_PROJECT_ID}"
   management-project-number: "${KCC_PROJECT_NUMBER}"
-  management-namespace: config-control
+  management-namespace: ${MANAGEMENT_NAMESPACE}"
+  # needs to be non-prefixed 
   client-name: client-${PREFIX_CLIENT_SETUP}
   client-billing-id: "${BILLING_ID}"
   client-management-project-id: client-management-project-${PREFIX_CLIENT_SETUP}
   repo-url: git-repo-to-observe
   repo-branch: main
   repo-dir: csync/deploy/env    
-  dns-project-id: dns-project-${PREFIX}
+  dns-project-id: dns-project-${PREFIX_CORE_LANDING_ZONE}
 EOF
 
     echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
@@ -419,7 +416,7 @@ EOF
   rm -rf $REL_SUB_PACKAGE/root-sync-git
 
   echo "kpt live init"
-  kpt live init $REL_SUB_PACKAGE --namespace config-control
+  kpt live init $REL_SUB_PACKAGE --namespace ${MANAGEMENT_NAMESPACE}"
   # --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
@@ -438,7 +435,7 @@ EOF
   count=$(kubectl get gcp | grep UpToDate | wc -l)
   echo "UpToDate: $count"
   # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens config-control
+  kubens c${MANAGEMENT_NAMESPACE}"
   #
   echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
   sleep 60
@@ -489,7 +486,7 @@ data:
   client-name: client-${PREFIX_CLIENT_LANDING_ZONE}
   client-billing-id: "${BILLING_ID}"
   client-folderviewer: 'user:${SUPER_ADMIN_EMAIL}'
-  logging-project-id: logging-project-${PREFIX}
+  logging-project-id: logging-project-${PREFIX_CORE_LANDING_ZONE}
   retention-locking-policy: "false"
   retention-in-days: "1"
   host-project-id: net-host-project-${PREFIX_CLIENT_LANDING_ZONE}
@@ -529,7 +526,7 @@ data:
     - "10.1.128.0/21"
     - "10.1.136.0/21"
     - "10.1.160.0/19"
-  dns-project-id: dns-project-${PREFIX}
+  dns-project-id: dns-project-${PREFIX_CORE_LANDING_ZONE}
   dns-name: "client-${PREFIX_CLIENT_LANDING_ZONE}.${CONTACT_DOMAIN}."
   dns-nameservers: |
     - "ns-cloud-a1.googledomains.com."
@@ -568,7 +565,7 @@ EOF
   rm -rf $REL_SUB_PACKAGE/root-sync-git
 
   echo "kpt live init"
-  kpt live init $REL_SUB_PACKAGE --namespace config-control
+  kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}"
   # --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
@@ -587,7 +584,129 @@ EOF
   count=$(kubectl get gcp | grep UpToDate | wc -l)
   echo "UpToDate: $count"
   # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens config-control
+  kubens "${MANAGEMENT_NAMESPACE}"
+  #
+  echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
+  sleep 60
+  kubectl get gcp
+  kubectl get gcp -n projects
+  kubectl get gcp -n networking
+  kubectl get gcp -n hierarchy
+  kubectl get gcp -n policies
+  kubectl get gcp -n logging
+  kubectl get gcp -n config-management-monitoring
+  
+  # workaround for PSC forwarding rule
+  # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/823
+  #HOST_PROJECT_ID='net-host-project-cso3'
+
+  cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
+fi
+
+
+
+
+
+
+# https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/onboarding-client.md
+if [[ "$DEPLOY_CLIENTPROJECTSETUP" != false ]]; then
+
+    #sleep 60
+
+    # generate setters.yaml
+    REL_ROOT_PACKAGE="solutions"
+    REL_SUB_PACKAGE="client-project-setup"
+    echo "deploy ${REL_SUB_PACKAGE}"    
+    REL_PACKAGE="${REL_ROOT_PACKAGE}/${REL_SUB_PACKAGE}"
+    # SET management project number 
+    KCC_PROJECT_NUMBER=$(gcloud projects list --filter="${CC_PROJECT_ID}" '--format=value(PROJECT_NUMBER)')
+    echo "KCC_PROJECT_NUMBER: $KCC_PROJECT_NUMBER"
+
+    #DIRECTORY_CUSTOMER_ID=$(gcloud organizations list --filter="${DIRECTORY_CUSTOMER_ID}" '--format=value(DIRECTORY_CUSTOMER_ID)')
+    #echo "DIRECTORY_CUSTOMER_ID: $DIRECTORY_CUSTOMER_ID"
+    # note: security-log-bucket required
+    # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/core-landing-zone/setters.yaml
+
+    # note: client billing-id may differ from the core/client packages
+cat << EOF > ./${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  org-id: "${ORG_ID}"  
+  management-project-id: "${KCC_PROJECT_ID}"
+  management-namespace: "${MANAGEMENT_NAMESPACE}"
+  client-name: client-${PREFIX_CLIENT_SETUP}
+  client-management-project-id: client-management-project-${PREFIX_CLIENT_SETUP}
+  host-project-id: net-host-project-${PREFIX_CLIENT_LANDING_ZONE}
+  # see https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/client-landing-zone/client-folder/standard/applications-infrastructure/host-project/network/subnet.yaml#L26
+  #allowed-nane1-main-subnet: net-host-project-${PREFIX_CLIENT_LANDING_ZONE}-nane1-standard-${CLIENT_CLASSIFICATION}-main-snet
+  #allowed-nane2-main-subnet: net-host-project-${PREFIX_CLIENT_LANDING_ZONE}-nane2-standard-${CLIENT_CLASSIFICATION}-main-snet
+  allowed-nane1-main-subnet: nane1-standard-${CLIENT_CLASSIFICATION}-main-snet
+  allowed-nane2-main-subnet: nane2-standard-${CLIENT_CLASSIFICATION}-main-snet
+  project-id: client-project-${PREFIX_CLIENT_PROJECT_SETUP}
+  project-billing-id: "${BILLING_ID}"
+#  project-parent-folder: clients.client-${PREFIX_CLIENT_SETUP}.standard.applications-infrastructure.${CLIENT_PROJECT_PARENT_FOLDER}
+  project-parent-folder: standard.applications.${CLIENT_PROJECT_PARENT_FOLDER}
+  repo-url: git-repo-to-observe
+  repo-branch: main
+  tier3-repo-dir: csync/tier3/configcontroller/deploy/env
+  tier4-repo-dir: csync/tier4/configcontroller/deploy/env
+EOF
+
+    echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
+  # fetch the LZ
+  cd ../../../
+
+  if [ -d "${KPT_FOLDER_NAME}" ] 
+  then
+    echo "Directory ${KPT_FOLDER_NAME} exists - using it" 
+  else
+    echo "Creating ${KPT_FOLDER_NAME}"
+    mkdir ${KPT_FOLDER_NAME}
+  fi
+  
+  cd $KPT_FOLDER_NAME
+
+  # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
+  REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
+  # check for existing landing-zone
+  echo "deploying ${REL_SUB_PACKAGE}"
+  REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
+  echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
+  rm -rf $REL_SUB_PACKAGE
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  # cp the setters.yaml
+  echo "copy over generated setters.yaml"
+  cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
+
+  echo "removing gitops directory"
+  rm -rf $REL_SUB_PACKAGE/root-sync-git
+
+  echo "kpt live init"
+  kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}"
+  # --force
+  echo "kpt fn render"
+  kpt fn render $REL_SUB_PACKAGE --truncate-output=false
+  #kpt alpha live plan $REL_SUB_PACKAGE
+  echo "kpt live apply after 60s wait"
+  sleep 60  
+  #kpt live apply $REL_SUB_PACKAGE
+  kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
+
+  echo "check status"
+  kpt live status $REL_SUB_PACKAGE --inv-type remote --statuses InProgress,NotFound
+
+  echo "Wait 2 min"
+  count=$(kubectl get gcp | grep UpdateFailed | wc -l)
+  echo "UpdateFailed: $count"
+  count=$(kubectl get gcp | grep UpToDate | wc -l)
+  echo "UpToDate: $count"
+  # set default kubectl namespace to avoid -n or --all-namespaces
+  kubens "${MANAGEMENT_NAMESPACE}"
   #
   echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
   sleep 60
@@ -601,7 +720,6 @@ EOF
   
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 fi
-
 
 if [[ "$DEPLOY_HUB" != false ]]; then
     echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
@@ -622,7 +740,13 @@ if [[ "$DEPLOY_HUB" != false ]]; then
 
     # reference https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/gh446-hub/solutions/project/hub-env/setters.yaml
     # original: hub-admin: group:group@domain.com
-    echo "using hub project id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}"
+    # 20240213 FROM/TO
+    #hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
+    #management-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
+    # TO
+    #hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}
+    #management-project-id: ${KCC_PROJECT_ID}
+    echo "using hub project id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}"
 cat << EOF > ./${REL_MID_PACKAGE}/${REL_SUB_PACKAGE}/setters-${REL_SUB_PACKAGE}.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -634,19 +758,18 @@ data:
   org-id: "${ORG_ID}"
   project-billing-id: "${BILLING_ID}"
   project-parent-folder: ${HUB_PROJECT_PARENT_FOLDER}
-  hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
-  management-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX}
-  # must be config-control due to hardcoding
-  management-namespace: config-control
+  hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}
+  management-project-id: "${KCC_PROJECT_ID}"
+  management-namespace: "${MANAGEMENT_NAMESPACE}"
   hub-admin: ${HUB_ADMIN_GROUP_EMAIL}
   project-allowed-restrict-vpc-peering: |
     - under:organizations/${ORG_ID}
   project-allowed-vm-external-ip-access: |
-    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-a/instances/fgt-primary-instance"
-    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-b/instances/fgt-secondary-instance"
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}/zones/${REGION}-a/instances/fgt-primary-instance"
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}/zones/${REGION}-b/instances/fgt-secondary-instance"
   project-allowed-vm-can-ip-forward: |
-    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-a/instances/fgt-primary-instance"
-    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX}/zones/${REGION}-b/instances/fgt-secondary-instance"
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}/zones/${REGION}-a/instances/fgt-primary-instance"
+    - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}/zones/${REGION}-b/instances/fgt-secondary-instance"
   fgt-primary-image: ${FORTIGATE_PRIMARY_IMAGE}
   fgt-primary-license: |
     LICENSE
@@ -694,7 +817,7 @@ EOF
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/596
 
   echo "kpt live init"
-  #kpt live init $REL_SUB_PACKAGE --namespace config-control --force
+  #kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}" --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
   #kpt alpha live plan $REL_SUB_PACKAGE
@@ -709,7 +832,7 @@ EOF
   count=$(kubectl get gcp | grep UpToDate | wc -l)
   echo "UpToDate: $count"
   # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens config-control
+  kubens "${MANAGEMENT_NAMESPACE}"
   #
   echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
   sleep 60
@@ -837,8 +960,9 @@ DELETE_PROJ=false
 CREATE_PROJ=false
 DEPLOY_CLIENTSETUP=false
 DEPLOY_CLIENTLANDINGZONE=false
+DEPLOY_CLIENTPROJECTSETUP=false
 DEPLOY_GATEKEEPER=false
-while getopts ":b:u:n:c:l:m:o:g:h:d:r:j:p:" PARAM; do
+while getopts ":b:u:n:c:l:m:o:s:g:h:d:r:j:p:" PARAM; do
   case $PARAM in
     b)
       BOOT_PROJECT_ID=${OPTARG}
@@ -861,6 +985,9 @@ while getopts ":b:u:n:c:l:m:o:g:h:d:r:j:p:" PARAM; do
     o)
       DEPLOY_CLIENTLANDINGZONE=${OPTARG}
       ;;
+    s)
+      DEPLOY_CLIENTPROJECTSETUP=${OPTARG}
+      ;;      
     g)
       DEPLOY_GATEKEEPER=${OPTARG}
       ;;                  
@@ -894,7 +1021,7 @@ if [[ -z $UNIQUE ]]; then
   exit 1
 fi
 echo "existing project: $KCC_PROJECT_ID"
-deployment "$BOOT_PROJECT_ID" "$UNIQUE $CREATE_PROJ" "$CREATE_KCC" "$DEPLOY_LZ" "$DEPLOY_CLIENTSETUP" "$DEPLOY_CLIENTLANDINGZONE" "$DEPLOY_GATEKEEPER" "$DEPLOY_HUB" "$REMOVE_LZ" "$DELETE_KCC" "$DELETE_PROJ" "$KCC_PROJECT_ID"
+deployment "$BOOT_PROJECT_ID" "$UNIQUE $CREATE_PROJ" "$CREATE_KCC" "$DEPLOY_LZ" "$DEPLOY_CLIENTSETUP" "$DEPLOY_CLIENTLANDINGZONE" "$DEPLOY_CLIENTPROJECTSETUP" "$DEPLOY_GATEKEEPER" "$DEPLOY_HUB" "$REMOVE_LZ" "$DELETE_KCC" "$DELETE_PROJ" "$KCC_PROJECT_ID"
 printf "**** Done ****\n"
 
 # changes to kpt
