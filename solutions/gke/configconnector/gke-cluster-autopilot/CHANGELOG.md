@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.6...solutions/gke/configconnector/gke-cluster-autopilot/0.3.0) (2024-02-20)
+
+
+### Features
+
+* enable group for rbac gke ([#839](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/839)) ([845016a](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/845016a5997cdfb00008f4d30e0f88102f1cdd61))
+
 ## [0.2.6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.5...solutions/gke/configconnector/gke-cluster-autopilot/0.2.6) (2024-02-13)
 
 
