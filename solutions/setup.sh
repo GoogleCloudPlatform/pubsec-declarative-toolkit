@@ -721,8 +721,9 @@ EOF
   cd ../$REPO_ROOT/pubsec-declarative-toolkit/solutions
 fi
 
+# set license variables before running on the shell
 if [[ "$DEPLOY_HUB" != false ]]; then
-    echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
+    #echo "wait 60 sec to let the GKE cluster stabilize 15 workloads"
     #sleep 60
 
     # generate setters.yaml
@@ -756,7 +757,7 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   org-id: "${ORG_ID}"
-  project-billing-id: "${BILLING_ID}"
+  project-billing-id: "${HUB_PROJECT_BILLING_ID}"
   project-parent-folder: ${HUB_PROJECT_PARENT_FOLDER}
   hub-project-id: ${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}
   management-project-id: "${KCC_PROJECT_ID}"
@@ -772,10 +773,12 @@ data:
     - "projects/${HUB_PROJECT_ID_PREFIX}-${PREFIX_HUB_ENV}/zones/${REGION}-b/instances/fgt-secondary-instance"
   fgt-primary-image: ${FORTIGATE_PRIMARY_IMAGE}
   fgt-primary-license: |
-    LICENSE
+     LICENSE
+#    ${FGT-PRIMARY-LICENSE}
   fgt-secondary-image: ${FORTIGATE_SECONDARY_IMAGE}
   fgt-secondary-license: |
-    LICENSE
+     LICENSE
+#    ${FGT-SECONDARY-LICENSE}
 EOF
 
     echo "generated derived setters-${REL_SUB_PACKAGE}.yaml"
@@ -799,12 +802,13 @@ EOF
   
   # URL from https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#fetch-the-packages
   REL_URL="https://raw.githubusercontent.com/GoogleCloudPlatform/pubsec-declarative-toolkit/main/.release-please-manifest.json"
-  # check for existing landing-zone
+  # check for existing hub-env
   echo "deploying ${REL_SUB_PACKAGE}"
   REL_VERSION=$(curl -s $REL_URL | jq -r ".\"$REL_PACKAGE\"")
   echo "get kpt release package $REL_PACKAGE version $REL_VERSION"
-  #rm -rf $REL_SUB_PACKAGE
-  #kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  rm -rf $REL_SUB_PACKAGE
+  kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/${REL_PACKAGE}@${REL_VERSION}
+  mkdir "${REL_SUB_PACKAGE}/${REL_VERSION}"
   # cp the setters.yaml
   echo "copy over generated setters.yaml"
   cp ../$REPO_ROOT/pubsec-declarative-toolkit/$REL_PACKAGE/setters-${REL_SUB_PACKAGE}.yaml $REL_SUB_PACKAGE/setters.yaml
@@ -817,14 +821,18 @@ EOF
   # https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/596
 
   echo "kpt live init"
-  #kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}" --force
+  kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}" --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
   #kpt alpha live plan $REL_SUB_PACKAGE
-  echo "kpt live apply"
+  echo "kpt live apply after 60s wait"
+  sleep 60
   # without a timeout the command never terminates
   #kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=10m
   kpt live apply $REL_SUB_PACKAGE --reconcile-timeout=15m --output=table
+
+  echo "check status"
+  kpt live status $REL_SUB_PACKAGE --inv-type remote --statuses InProgress,NotFound
 
   echo "Wait 2 min"
   count=$(kubectl get gcp | grep UpdateFailed | wc -l)

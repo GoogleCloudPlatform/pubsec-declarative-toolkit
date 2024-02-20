@@ -40,6 +40,7 @@ export CLIENT_NAME_1=client1
 # if different than core billing id
 #export PROJECT_BILLING_ID=
 # for projects/hub-env
+# rotate during delete/create cycle
 export PREFIX_HUB_ENV=cso2
 
 # for core-landing-zone
@@ -63,6 +64,10 @@ export CONTACT_DOMAIN=cloud-setup.org
 export SUPER_ADMIN_EMAIL=michael@cloud-setup.org
 
 # for projects/hub-env package
+# M.o.s
+# change before deploying
+export HUB_PROJECT_BILLING_ID=01...54
+
 export HUB_PROJECT_PARENT_FOLDER=services-infrastructure
 export HUB_PROJECT_ID_PREFIX=xxdmu-admin1-hub
 export HUB_ADMIN_GROUP_EMAIL=user:michael@cloud-setup.org
@@ -70,3 +75,7 @@ export HUB_ADMIN_GROUP_EMAIL=user:michael@cloud-setup.org
 # see https://docs.fortinet.com/document/fortigate-public-cloud/7.4.0/gcp-administration-guide/471595/using-image-family
 export FORTIGATE_PRIMARY_IMAGE=projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
 export FORTIGATE_SECONDARY_IMAGE=projects/fortigcp-project-001/global/images/fortinet-fgtondemand-724-20230201-001-w-license
+#  not a valid identifier
+#export FGT-PRIMARY-LICENSE=QAAAAL9N4x..
+#export FGT-SECONDARY-LICENSE=QAAAAGSl..
+
