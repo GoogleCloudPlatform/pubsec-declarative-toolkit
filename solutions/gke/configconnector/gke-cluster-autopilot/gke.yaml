@@ -103,3 +103,6 @@ spec:
     name: project-id-cluster-name-snet # kpt-set: ${project-id}-${cluster-name}-snet
   verticalPodAutoscaling:
     enabled: true
+  # Enable google group for rbac authentication in GKE
+  authenticatorGroupsConfig:
+    securityGroup: gke-security-groups@yourdomain.com # kpt-set: ${security-group}
