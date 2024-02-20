@@ -124,7 +124,7 @@ data:
   networktags-enabled: false
   networktags:
     - ids
-  security-group: gke-security-groups@<yourdomain.com> # Just change the domain name to match the organization name. Do not change the prefix gke-security-groups   
+  security-group: gke-security-groups@<yourdomain.com>
   #
   ##########################
   # Config Sync
