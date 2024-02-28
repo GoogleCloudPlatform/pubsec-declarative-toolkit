@@ -416,7 +416,7 @@ EOF
   rm -rf $REL_SUB_PACKAGE/root-sync-git
 
   echo "kpt live init"
-  kpt live init $REL_SUB_PACKAGE --namespace ${MANAGEMENT_NAMESPACE}"
+  kpt live init $REL_SUB_PACKAGE --namespace "${MANAGEMENT_NAMESPACE}"
   # --force
   echo "kpt fn render"
   kpt fn render $REL_SUB_PACKAGE --truncate-output=false
@@ -435,7 +435,7 @@ EOF
   count=$(kubectl get gcp | grep UpToDate | wc -l)
   echo "UpToDate: $count"
   # set default kubectl namespace to avoid -n or --all-namespaces
-  kubens c${MANAGEMENT_NAMESPACE}"
+  kubens "${MANAGEMENT_NAMESPACE}"
   #
   echo "sleep 60 sec - then check 5 namespaces projects/networking/heirarchy/policies/logging"
   sleep 60
