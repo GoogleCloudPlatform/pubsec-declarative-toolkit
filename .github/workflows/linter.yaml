@@ -38,7 +38,7 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: cli/.*
+          FILTER_REGEX_EXCLUDE: solutions/gcloud/.*
           LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_YAML: true
           YAML_CONFIG_FILE: .yaml-lint-config.yaml
@@ -52,7 +52,7 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: cli/.*
+          FILTER_REGEX_EXCLUDE: solutions/gcloud/.*
           VALIDATE_BASH: true
           SHELLCHECK_OPTS: "--severity=info"
 
@@ -63,7 +63,7 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: cli/.*
+          FILTER_REGEX_EXCLUDE: solutions/gcloud/.*
           LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_MARKDOWN: true
           MARKDOWN_CONFIG_FILE: .markdown-lint-config.yaml
