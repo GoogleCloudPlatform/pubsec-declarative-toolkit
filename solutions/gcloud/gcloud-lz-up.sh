@@ -56,7 +56,13 @@ echo "ORG_ID: ${ORG_ID}"
 # not required yet
 #EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
 
-create_core_landing_zone
+if [[ "$CREATE_LZ" != false ]]; then
+  create_core_landing_zone
+fi
+
+if [[ "$DELETE_LZ" != false ]]; then
+  delete_core_landing_zone
+fi
 }
 
 
@@ -102,10 +108,16 @@ UNIQUE=
 BOOT_PROJECT_ID=
 
 
-while getopts ":b:" PARAM; do
+while getopts ":b:c:d:" PARAM; do
   case $PARAM in
     b)
       BOOT_PROJECT_ID=${OPTARG}
+      ;;
+    c)
+      CREATE_LZ=${OPTARG}
+      ;;
+    d)
+      DELETE_LZ=${OPTARG}
       ;;
     ?)
       usage
@@ -114,11 +126,11 @@ while getopts ":b:" PARAM; do
   esac
 done
 
-#  echo "Options are: -b boot_project"
+#  echo "Options are: -b boot_project -c create -d delete"
 if [[ -z $BOOT_PROJECT_ID ]]; then
   usage
   exit 1
 fi
 
-deployment "$BOOT_PROJECT_ID" 
+deployment "$BOOT_PROJECT_ID" "$CREATE_LZ" "$DELETE_LZ"
 printf "**** Done ****\n"
