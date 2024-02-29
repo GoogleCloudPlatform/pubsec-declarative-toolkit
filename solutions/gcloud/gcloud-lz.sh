@@ -84,6 +84,7 @@ create_core_landing_zone() {
   echo "sleep 20 sec before enabling services"
   sleep 20
   gcloud services enable compute.googleapis.com
+  #gcloud services enable container.googleapis.com
 
   echo "Create VPC: ${NETWORK}"
   gcloud compute networks create "$NETWORK" --subnet-mode=custom
@@ -103,6 +104,10 @@ create_client_setup() {
 }
 create_client_landing_zone() {
   # organization policy overrides - folder
+  # nethost project
+  # vpc
+  # subnets
+  
   
 }
 create_client_project_setup() {
@@ -110,6 +115,57 @@ create_client_project_setup() {
   
 }
 
+create_folders() {
+# lz20240127	276061734969
+  gcloud resource-manager folders create --display-name=audits --folder=$ROOT_FOLDER_ID
+  gcloud resource-manager folders list --folder=$ROOT_FOLDER_ID
+#  audits	234910477744
+#   clients	420230697003
+#    client-cso3	209199008990
+#     standard	606916956414
+#      applications	1095956291549
+#       nonp	202541361947
+#        client-project-cso3	client-project-cso3
+#       pbmm	948751996059
+#      applications-infrastructure	396274245120
+#       nonp	641187067002
+#       pbmm	350922617358
+#       net-host-project-cso3	net-host-project-cso3
+#      auto	239063510220
+#       nonp	520744027812
+#       pbmm	1045404076280
+#      client-management-project-cso3	client-management-project-cso3
+#  services	281684781109
+#  services-infrastructure	847732127282
+#   dns-project-cso2	dns-project-cso2
+#   xxdmu-admin1-hub-cso2	xxdmu-admin1-hub-cso2
+#  kcc-cso-4380	kcc-cso-4380
+}
+
+create_projects() {
+# lz20240127	276061734969
+#  audits	234910477744
+#   clients	420230697003
+#    client-cso3	209199008990
+#     standard	606916956414
+#      applications	1095956291549
+#       nonp	202541361947
+#        client-project-cso3	client-project-cso3
+#       pbmm	948751996059
+#      applications-infrastructure	396274245120
+#       nonp	641187067002
+#       pbmm	350922617358
+#       net-host-project-cso3	net-host-project-cso3
+#      auto	239063510220
+#       nonp	520744027812
+#       pbmm	1045404076280
+#      client-management-project-cso3	client-management-project-cso3
+#  services	281684781109
+#  services-infrastructure	847732127282
+#   dns-project-cso2	dns-project-cso2
+#   xxdmu-admin1-hub-cso2	xxdmu-admin1-hub-cso2
+#  kcc-cso-4380	kcc-cso-4380
+}
 
 
 delete_all() {
@@ -124,6 +180,12 @@ delete_all() {
   gcloud alpha billing projects unlink "${AUDIT_PROJECT_ID}"
   # delete cc project
   gcloud projects delete "$AUDIT_PROJECT_ID" --quiet
+
+  # delete folders
+  #https://cloud.google.com/sdk/gcloud/reference/resource-manager/folders/delete
+  # get folder id
+  gcloud resource-manager folders list --folder=$ROOT_FOLDER_ID --format=json
+  gcloud resource-manager folders delete 123456789
 }
 
 
