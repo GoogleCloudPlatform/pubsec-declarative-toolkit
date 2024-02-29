@@ -1,6 +1,6 @@
 # Global Reviewers
 # review when someone opens a pull request.
-*       @cartyc @fmichaelobrien
+*       @tackaberry @fmichaelobrien 
 
 # CLI Reviewers
 cli/*   @shaunmitchellve
