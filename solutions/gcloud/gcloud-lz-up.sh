@@ -25,8 +25,7 @@ EOF
 }
 
 # for ease of override - key/value pairs for constants - shared by all scripts
-PATH="."
-source $PATH/vars.sh
+source ./vars.sh
 
 echo "Landing Zone orchestration start"
 
