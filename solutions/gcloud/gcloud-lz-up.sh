@@ -61,7 +61,7 @@ if [[ "$CREATE_LZ" != false ]]; then
 fi
 
 if [[ "$DELETE_LZ" != false ]]; then
-  delete_core_landing_zone
+  delete_all
 fi
 }
 
@@ -85,12 +85,13 @@ create_core_landing_zone() {
 }
 
 
-delete_project() {
+delete_all() {
+
   # delete VPC (routes and firewalls will be deleted as well)
   echo "deleting subnet ${SUBNET}"
-  gcloud compute networks subnets delete "${SUBNET}" --region="$REGION" -q
+  gcloud compute networks subnets delete "${SUBNET}" --region="$REGION" --project="$AUDIT_PROJECT_ID" -q
   echo "deleting vpc ${NETWORK}"
-  gcloud compute networks delete "${NETWORK}" -q
+  gcloud compute networks delete "${NETWORK}" --project="$AUDIT_PROJECT_ID" -q
 
   # disable billing before deletion - to preserve the project/billing quota
   gcloud alpha billing projects unlink "${AUDIT_PROJECT_ID}"

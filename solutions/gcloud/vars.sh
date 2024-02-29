@@ -21,7 +21,7 @@
 # if it is not unique then your project creation will fail right away anyway due to global gcp collision
 export PREFIX=cdd1
 export UNIQUE=cdd
-export AUDIT_PROJECT_ID=audit-lz-cdd-03
+export AUDIT_PROJECT_ID=audit-lz-cdd-04
 export REGION=northamerica-northeast1
 export CIDR_VPC=192.168.0.0/16
 #LZ_FOLDER_NAME_PREFIX=landing-zone-1
