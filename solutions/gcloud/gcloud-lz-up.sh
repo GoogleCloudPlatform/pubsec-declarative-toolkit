@@ -24,8 +24,9 @@ example
 EOF
 }
 
-# for eash of override - key/value pairs for constants - shared by all scripts
-source vars.sh
+# for ease of override - key/value pairs for constants - shared by all scripts
+PATH="."
+source $PATH/vars.sh
 
 echo "Landing Zone orchestration start"
 
@@ -73,7 +74,7 @@ create_core_landing_zone() {
   gcloud services enable compute.googleapis.com
 
   echo "Create VPC: ${NETWORK}"
-  gcloud compute networks create $NETWORK --subnet-mode=custom
+  gcloud compute networks create "$NETWORK" --subnet-mode=custom
   echo "Create subnet ${SUBNET} off VPC: ${NETWORK}"
   gcloud compute networks subnets create "$SUBNET" --network "$NETWORK" --range "$CIDR_VPC" --region "$REGION"
 }
