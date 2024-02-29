@@ -25,7 +25,7 @@ EOF
 }
 
 # for eash of override - key/value pairs for constants - shared by all scripts
-source ./vars.sh
+source vars.sh
 
 echo "Landing Zone orchestration start"
 
@@ -49,9 +49,9 @@ echo "NETWORK: $NETWORK"
 echo "SUBNET: $SUBNET"
 echo "BOOT_PROJECT_ID: $BOOT_PROJECT_ID"
 BILLING_FORMAT="--format=value(billingAccountName)"
-BILLING_ID=$(gcloud billing projects describe $BOOT_PROJECT_ID $BILLING_FORMAT | sed 's/.*\///')
+BILLING_ID=$(gcloud billing projects describe "$BOOT_PROJECT_ID" $BILLING_FORMAT | sed 's/.*\///')
 echo "BILLING_ID: ${BILLING_ID}"
-ORG_ID=$(gcloud projects get-ancestors $BOOT_PROJECT_ID --format='get(id)' | tail -1)
+ORG_ID=$(gcloud projects get-ancestors "$BOOT_PROJECT_ID" --format='get(id)' | tail -1)
 echo "ORG_ID: ${ORG_ID}"
 # not required yet
 #EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
@@ -75,7 +75,7 @@ create_core_landing_zone() {
   echo "Create VPC: ${NETWORK}"
   gcloud compute networks create $NETWORK --subnet-mode=custom
   echo "Create subnet ${SUBNET} off VPC: ${NETWORK}"
-  gcloud compute networks subnets create $SUBNET --network $NETWORK --range $CIDR_VPC --region $REGION
+  gcloud compute networks subnets create "$SUBNET" --network "$NETWORK" --range "$CIDR_VPC" --region "$REGION"
 }
 
 
@@ -95,7 +95,7 @@ delete_project() {
 
 create_service_accounts() {
   echo "Create service accounts"
-  gcloud iam service-accounts create $SERVICE_ACCOUNT_M4A_INSTALL --project=$PROJECT_ID
+  gcloud iam service-accounts create "$SERVICE_ACCOUNT_M4A_INSTALL" --project="$PROJECT_ID"
 }
 
 UNIQUE=
@@ -120,5 +120,5 @@ if [[ -z $BOOT_PROJECT_ID ]]; then
   exit 1
 fi
 
-deployment $BOOT_PROJECT_ID 
+deployment "$BOOT_PROJECT_ID" 
 printf "**** Done ****\n"
