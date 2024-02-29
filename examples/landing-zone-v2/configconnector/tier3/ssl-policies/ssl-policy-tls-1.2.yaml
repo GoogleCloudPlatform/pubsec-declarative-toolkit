@@ -15,6 +15,8 @@
 # https://www.cyber.gc.ca/en/guidance/guidance-securely-configuring-network-protocols-itsp40062
 #########
 # SC-8, SC-13 - SSL policy with minimum TLS 1.2
+# SC-23 - SSL policy in place enforcing TLS 1.2+ and strong/approved ciphers only.
+# AC-17(2) - An SSL policy is deployed to ensure Google front end (GFE) load balancers use TLS 1.2 or later
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSSLPolicy
 metadata:

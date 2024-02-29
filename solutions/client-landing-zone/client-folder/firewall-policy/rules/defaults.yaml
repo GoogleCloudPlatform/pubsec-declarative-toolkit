@@ -17,6 +17,7 @@
 # Delegate to host project, egress traffic(firewall) from VPC resources to private IP ranges in shared VPC network
 # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network within host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
 # AU-12 - Enable Logging for firewall
+# SI-4 - Logging denied traffic
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
@@ -84,7 +85,7 @@ spec:
   description: "Deny TOR exit nodes ingress traffic"
   direction: "INGRESS"
   disabled: false
-  # AU-12
+  # AU-12, SI-4
   enableLogging: true
   # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
   firewallPolicyRef:
@@ -113,7 +114,7 @@ spec:
   description: "Deny sanctioned countries ingress traffic"
   direction: "INGRESS"
   disabled: false
-  # AU-12
+  # AU-12, SI-4
   enableLogging: true
   # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
   firewallPolicyRef:

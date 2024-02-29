@@ -80,6 +80,7 @@ To fix this, you update the `root-sync` resource to include the override section
 | repo-branch                     | main                                                 | str   |     1 |
 | repo-dir                        | csync/tier3/kubernetes/<fleet-id>/deploy/<env>       | str   |     1 |
 | repo-url                        | tier34-repo-to-observe                               | str   |     1 |
+| security-group                  | gke-security-groups@<yourdomain.com>                 | str   |     1 |
 | subnet-pod-cidr                 | 172.16.0.0/23                                        | str   |     1 |
 | subnet-primary-cidr             | 10.1.32.0/24                                         | str   |     1 |
 | subnet-services-cidr            | 10.1.33.0/24                                         | str   |     1 |

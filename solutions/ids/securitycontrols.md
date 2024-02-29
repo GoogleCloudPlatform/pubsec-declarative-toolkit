@@ -32,5 +32,36 @@
 |SC-7(9)|./firewall.yaml|host-project-id-standard-egress-allow-psa-fwr|
 |SC-7(9)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
 |SC-7(9)|./services.yaml|host-project-id-ids|
+|SI-3(2)|./address.yaml|host-project-id-standard-google-managed-services-ip|
+|SI-3(2)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-3(2)|./endpoint/mirroring.yaml|host-project-id--endpoint-name-mirror|
+|SI-3(2)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
+|SI-3(2)|./services.yaml|host-project-id-ids|
+|SI-3(4)|./address.yaml|host-project-id-standard-google-managed-services-ip|
+|SI-3(4)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-3(4)|./endpoint/mirroring.yaml|host-project-id--endpoint-name-mirror|
+|SI-3(4)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
+|SI-3(4)|./services.yaml|host-project-id-ids|
+|SI-3(7)|./address.yaml|host-project-id-standard-google-managed-services-ip|
+|SI-3(7)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-3(7)|./endpoint/mirroring.yaml|host-project-id--endpoint-name-mirror|
+|SI-3(7)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
+|SI-3(7)|./services.yaml|host-project-id-ids|
+|SI-4(11)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-4(4)|./address.yaml|host-project-id-standard-google-managed-services-ip|
+|SI-4(4)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-4(4)|./endpoint/mirroring.yaml|host-project-id--endpoint-name-mirror|
+|SI-4(4)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
+|SI-4(4)|./services.yaml|host-project-id-ids|
+|SI-4(5)|./address.yaml|host-project-id-standard-google-managed-services-ip|
+|SI-4(5)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-4(5)|./endpoint/mirroring.yaml|host-project-id--endpoint-name-mirror|
+|SI-4(5)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
+|SI-4(5)|./services.yaml|host-project-id-ids|
+|SI-4(7)|./address.yaml|host-project-id-standard-google-managed-services-ip|
+|SI-4(7)|./endpoint/endpoint.yaml|host-project-id--endpoint-name-ids|
+|SI-4(7)|./endpoint/mirroring.yaml|host-project-id--endpoint-name-mirror|
+|SI-4(7)|./peering.yaml|host-project-id-standard-to-googlemanaged-peer|
+|SI-4(7)|./services.yaml|host-project-id-ids|
 
 <!-- END OF SECURITY CONTROLS LIST -->

@@ -13,6 +13,8 @@
 # limitations under the License.
 #########
 # SC-5, SC-5(2), SC-8 - Deploy public external load balancer in front of public facing web applications for additional inspection of incoming traffic and enforcing additional security policies such as ssl etc.
+# SC-12(3) - The GCP Certificate Manager - classic certificates - is used to generate asymmetric keys - SSL certificate-. This certificate is used to encrypt load balancer traffic.
+# SI-4(10) - Client to load balancer traffic is encrypted, at which point it is deccrypted allowing inspection by Cloud IDS and other tools.
 # Gateway using an external global load balancer and a SSL certificate
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
@@ -31,8 +33,10 @@ spec:
       port: 443
       # SC-8
       tls:
+        # SI-4(10)
         mode: Terminate
         options:
+          # SC-12(3)
           networking.gke.io/pre-shared-certs: sample-cert # kpt-set: ${ssl-cert}
       allowedRoutes:
         namespaces:

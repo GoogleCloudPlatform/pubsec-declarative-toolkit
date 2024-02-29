@@ -14,6 +14,7 @@
 #########
 # Client viewer permissions for GKE, logging, and monitoring
 #########
+# AC-1 - Implementation of access control
 # AC-3(7), AC-3 - Grant role: roles/container.clusterViewer on the GKE Cluster project to client group
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -22,7 +23,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -39,7 +40,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -56,7 +57,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -73,7 +74,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -90,7 +91,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -107,7 +108,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3
+  # AC-1, AC-3(7), AC-3
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project

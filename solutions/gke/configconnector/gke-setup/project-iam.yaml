@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # Grant GCP role GKE Hub admin to Tier3 SA on Service Project
+# AC-1 - Implementation of access control
 # AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 # IAM permissions required to register cluster to anthos fleet and workload identity
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -23,7 +24,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -42,7 +43,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -61,7 +62,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -79,7 +80,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -97,7 +98,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -115,7 +116,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -133,7 +134,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -152,11 +153,10 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: project-id # kpt-set: ${project-id}
   role: roles/pubsub.admin
   member: "serviceAccount:client-name-logging-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-logging-sa@${client-management-project-id}.iam.gserviceaccount.com
-
