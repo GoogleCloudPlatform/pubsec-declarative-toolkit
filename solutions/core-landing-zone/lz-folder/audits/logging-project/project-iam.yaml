@@ -14,7 +14,8 @@
 ######
 # Logs Bucket writer IAM permissions for security log sink
 # Binds the service account dynamically created with the LoggingLogSink to the required role to write to the bucket
-# AU-9, AC-3 - IAM Policies that assign the dynamically created service account with the LoggingLogSink to the logging bucket writer role and storage admin role on the storage bucket
+# AC-1 - Implementation of access control
+# AC-3, AU-9 - IAM Policies that assign the dynamically created service account with the LoggingLogSink to the logging bucket writer role and storage admin role on the storage bucket
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
@@ -27,7 +28,7 @@ spec:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
-  # AU-9, AC-3
+  # AC-1, AC-3, AU-9
   bindings:
     - role: roles/logging.bucketWriter
       members:
@@ -50,7 +51,7 @@ spec:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
-  # AU-9, AC-3
+  # AC-1, AC-3, AU-9
   bindings:
     - role: roles/logging.bucketWriter
       members:
@@ -73,7 +74,7 @@ spec:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
-  # AU-9, AC-3
+  # AC-1, AC-3, AU-9
   bindings:
     - role: roles/logging.bucketWriter
       members:
@@ -96,7 +97,7 @@ spec:
     kind: Project
     name: logging-project-id # kpt-set: ${logging-project-id}
     namespace: projects
-  # AU-9, AC-3
+  # AC-1, AC-3, AU-9
   bindings:
     - role: roles/logging.bucketWriter
       members:

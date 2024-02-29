@@ -13,6 +13,7 @@
 # limitations under the License.
 #########
 # GCP SA
+# AC-1 - Implementation of access control
 # AC-3(7), AC-3, AC-16(2) - This service account possesses limited privileges(permissions) and is restricted to performing only the necessary operations for resources within the designated namespace. The service account is associated with the namespace and is assigned roles as required.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -36,7 +37,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -54,7 +55,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -72,7 +73,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -90,7 +91,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -108,7 +109,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
@@ -127,7 +128,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
@@ -145,7 +146,7 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   resourceRef:
     name: projects-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -184,7 +185,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 roleRef:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -202,7 +203,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 roleRef:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -220,7 +221,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
 roleRef:
-  # AC-3(7), AC-3, AC-16(2)
+  # AC-1, AC-3(7), AC-3, AC-16(2)
   name: cnrm-viewer
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io

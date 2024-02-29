@@ -27,6 +27,7 @@
 # list of allowed domains can be added in Essential Contacts.
 #
 #########
+# AC-3(9) - Only accounts with these domain suffixes can be defined as essential contacts.
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: ResourceManagerPolicy
 metadata:
@@ -39,6 +40,7 @@ spec:
   constraint: "constraints/essentialcontacts.allowedContactDomains"
   listPolicy:
     allow:
+      # AC-3(9)
       values: # kpt-set: ${allowed-contact-domains}
         - "@example.com"
   organizationRef:

@@ -15,6 +15,7 @@
 # creates a cloud armor policy with rules
 # the target load balancer is attached from its ComputeBackendService resource
 # SC-5, SC-5(2) - Deploy Web Application Firewall in front of public facing web applications for additional inspection of incoming traffic using Cloud armor policy
+# SI-4(4) - Cloud Armor is configured to monitor for potentially malicious behaviour
 # Cloud armor policy is made up of rules that filter traffic based on conditions such as incoming request ip address before it reaches target load balancer backend services.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSecurityPolicy

@@ -22,7 +22,6 @@ loaded in the config controller.
 
 |       Name       |           Value           | Type  | Count |
 |------------------|---------------------------|-------|-------|
-| certificate-id   |                  12345678 | int   |     1 |
 | certificate-name | certificate-name          | str   |     3 |
 | client-name      | client1                   | str   |     8 |
 | dns-project-id   | dns-project-id            | str   |     1 |

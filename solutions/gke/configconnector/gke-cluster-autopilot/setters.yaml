@@ -124,6 +124,7 @@ data:
   networktags-enabled: false
   networktags:
     - ids
+  security-group: gke-security-groups@<yourdomain.com>
   #
   ##########################
   # Config Sync
