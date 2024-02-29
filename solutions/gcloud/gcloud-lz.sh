@@ -19,8 +19,11 @@ usage() {
   cat <<EOF
 Usage: $0 [PARAMs]
 example 
-./gcloud-lz-up -b boot-lz-cdd 
+./gcloud-lz.sh -b boot-lz-cdd -c true -d false 
 -b [boot proj id] string     : boot/source project
+-c [create] true/false       : lz create
+-d [deletebj true/false      : lz delete
+
 EOF
 }
 
@@ -28,7 +31,6 @@ EOF
 source ./vars.sh
 
 echo "Landing Zone orchestration start"
-
 
 deployment() {
   
@@ -68,6 +70,11 @@ fi
 
 
 create_core_landing_zone() {
+  # organization policies - on folder
+  
+  # organization policy overrides - folder
+  
+
   echo "Creating project: ${AUDIT_PROJECT_ID} on folder: ${ROOT_FOLDER_ID}"
   gcloud projects create "$AUDIT_PROJECT_ID" --name="${AUDIT_PROJECT_ID}" --set-as-default --folder="$ROOT_FOLDER_ID"
   gcloud config set project "${AUDIT_PROJECT_ID}"
@@ -82,7 +89,27 @@ create_core_landing_zone() {
   gcloud compute networks create "$NETWORK" --subnet-mode=custom
   echo "Create subnet ${SUBNET} off VPC: ${NETWORK}"
   gcloud compute networks subnets create "$SUBNET" --network "$NETWORK" --range "$CIDR_VPC" --region "$REGION"
+
+  # org sink: management-platform
+
+  # org sink: access
+
+  # org sink: security
 }
+
+create_client_setup() {
+  # organization policy overrides - folder
+
+}
+create_client_landing_zone() {
+  # organization policy overrides - folder
+  
+}
+create_client_project_setup() {
+  # organization policy overrides - folder
+  
+}
+
 
 
 delete_all() {
