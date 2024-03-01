@@ -136,7 +136,7 @@ spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
   policyTypes:
-  - Egress
+    - Egress
   egress:
     - to:
         - ipBlock:
