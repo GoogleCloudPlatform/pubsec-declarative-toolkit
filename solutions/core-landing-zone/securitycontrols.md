@@ -438,9 +438,7 @@
 |IA-1|./org/org-policies/iam-disable-service-account-key-upload.yaml|iam-disable-service-account-key-upload|
 |SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
 |SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
-
-<!-- END OF SECURITY CONTROLS LIST -->
-/cloud-logging-buckets.yaml|platform-and-component-log-bucket|
+|SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|platform-and-component-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
