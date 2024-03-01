@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.7.2...solutions/core-landing-zone/0.8.0) (2024-03-01)
+
+
+### Features
+
+* tagging cbrid to core landing zone package ([#868](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/868)) ([1761f20](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/1761f20c14ff4d1158fa021dcf8e71b0ef7ae71a))
+
 ## [0.7.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.7.1...solutions/core-landing-zone/0.7.2) (2024-02-13)
 
 
