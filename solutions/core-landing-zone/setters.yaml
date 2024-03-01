@@ -157,5 +157,9 @@ data:
   dns-name: "example.com."
   #
   ##########################
+  # Labels
+  ##########################
+  # Labels can be set on project using set-labels-project.yaml. Please make sure there is one pair of key-value pair otherwise render will fair
+  ##########################
   # End of Configurations
   ##########################
