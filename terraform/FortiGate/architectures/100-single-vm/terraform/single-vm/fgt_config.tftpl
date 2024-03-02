@@ -1,0 +1,30 @@
+config sys interface
+%{ for indx, address in prv_ips ~}
+  edit port${indx+1}
+    set mode static
+    set ip ${address}/32
+  next
+%{ endfor ~}
+end
+
+config route static
+%{ for subnet, info in subnets ~}
+  edit 0
+    set dst ${subnet}
+    set gateway ${info.gw}
+    set device ${info.dev}
+    set comment ${info.name}
+  next
+%{ endfor ~}
+  edit 0
+    set device port1
+    set comment "default"
+    set gateway ${default_gw} 
+  next
+end
+
+config sys global
+  set hostname ${hostname}
+end
+
+${fgt_config}

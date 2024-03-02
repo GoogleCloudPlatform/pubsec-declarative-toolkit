@@ -1,0 +1,31 @@
+echo "Waiting for the connectivity between sites to come up..."
+gcloud compute ssh ${clihost} --zone ${clizone} --command="while ! ping -c1 172.20.1.100 > /dev/null; do sleep 1; done"
+echo " #### DONE (can ping) ####"
+
+echo "\nControl testbed performance - iperf test bypassing FortiGate..."
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="iperf3 -P 4 -c ${iperfs}"
+
+echo "\nTesting 512 HTTP connections downloading 1MB file... (30sec)"
+echo "-----------------------------------------------------"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="wrk -t 16 -c 512 http://172.20.1.100/1M -d 30"
+
+echo "\nTesting 512 HTTP connections downloading 64kB file... (30sec)"
+echo "-----------------------------------------------------"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="wrk -t 16 -c 512 http://172.20.1.100/64k -d 30"
+
+echo "\nTesting iperf3 upload over 4 connections... (1min)"
+echo "-----------------------------------------------------"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="iperf3 -c 172.20.1.100 -P 4 -t 60 -i0"
+
+echo "\nTesting iperf3 upload over 16 connections... (1min)"
+echo "-----------------------------------------------------"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="iperf3 -c 172.20.1.100 -P 16 -t 60 -i0"
+
+echo "\nTesting iperf3 download over 4 connections... (1min)"
+echo "-----------------------------------------------------"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="iperf3 -c 172.20.1.100 -P 4 -R -t 60 -i0"
+
+echo "\nTesting iperf3 download over 16 connections... (1min)"
+echo "-----------------------------------------------------"
+gcloud compute ssh ${clihost} --zone ${clizone} --command="iperf3 -c 172.20.1.100 -P 16 -R -t 60 -i0"
