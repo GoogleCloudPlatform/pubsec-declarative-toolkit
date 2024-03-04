@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.4...solutions/client-landing-zone/0.6.0) (2024-03-04)
+
+
+### Features
+
+* add cbrid to client landing zone ([#876](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/876)) ([42b12a3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/42b12a3e49a6c4d0408f12d3621b77f8965cce2c))
+
 ## [0.5.4](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.3...solutions/client-landing-zone/0.5.4) (2024-02-13)
 
 
