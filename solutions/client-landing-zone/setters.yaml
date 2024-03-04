@@ -187,5 +187,9 @@ data:
     - "ns-cloud-a4.googledomains.com."
   #
   ##########################
+  # Labels
+  ##########################
+  # Labels can be set on project using set-labels-project.yaml. Please make sure there is one pair of key-value pair otherwise render will fail
+  ##########################
   # End of Configurations
   ##########################
