@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.6...solutions/client-project-setup/0.5.0) (2024-03-05)
+
+
+### Features
+
+* adding cbrid to client project setup package ([#879](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/879)) ([2e36983](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/2e36983ef148b185e32912ea60a6d0c8584e2e7a))
+
 ## [0.4.6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.5...solutions/client-project-setup/0.4.6) (2024-02-13)
 
 
