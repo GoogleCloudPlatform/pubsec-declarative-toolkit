@@ -107,5 +107,9 @@ data:
   dns-project-id: dns-project-12345
   #
   ##########################
+  # Labels
+  ##########################
+  # Labels can be set on project using set-labels-project.yaml. Please make sure there is one pair of key-value pair otherwise render will fail
+  ##########################
   # End of Configurations
   ##########################
