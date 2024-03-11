@@ -15,8 +15,9 @@ Package to setup a client's namespaces, folder, management project and root sync
 |             Name             |              Value              | Type | Count |
 |------------------------------|---------------------------------|------|-------|
 | client-billing-id            | AAAAAA-BBBBBB-CCCCCC            | str  |     1 |
+| client-folder-display-name   | client-folder-display-name      | str  |     1 |
 | client-management-project-id | client-management-project-12345 | str  |   111 |
-| client-name                  | client1                         | str  |   149 |
+| client-name                  | client1                         | str  |   148 |
 | dns-project-id               | dns-project-12345               | str  |     1 |
 | management-namespace         | config-control                  | str  |    27 |
 | management-project-id        | management-project-12345        | str  |     6 |

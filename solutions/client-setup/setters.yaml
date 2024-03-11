@@ -66,6 +66,9 @@ data:
   # Name for the client, lowercase only.
   # customization: required
   client-name: 'client1'
+  # Client folder display name
+  # customization: required
+  client-folder-display-name: client-folder-display-name
   #
   # Client's Billing Account ID to associate with the client's management project. The projects-sa will need billing user role permission granted.
   # alternatively, because the client management project contains very limited resources, it could be set to the core-landing-zone billing id (the projects-sa should already have permissions set during initial post deployment configurations)
