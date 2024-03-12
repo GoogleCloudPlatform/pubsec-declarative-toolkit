@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.5.0...solutions/client-project-setup/0.6.0) (2024-03-12)
+
+
+### Features
+
+* distinct VPC host prep client-project-setup ([#891](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/891)) ([ffeaa5e](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/ffeaa5e884ae8da2c71782d4bd2b31336d3e4c98))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.4.6...solutions/client-project-setup/0.5.0) (2024-03-05)
 
 

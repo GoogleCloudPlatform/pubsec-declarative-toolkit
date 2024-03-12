@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.6.0...solutions/client-landing-zone/0.7.0) (2024-03-12)
+
+
+### Features
+
+* distinct VPC host prep client-landing-zone ([#890](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/890)) ([3e35d31](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/3e35d316a0066ed97d31019068c3477fa9053f7b))
+
 ## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.5.4...solutions/client-landing-zone/0.6.0) (2024-03-04)
 
 
