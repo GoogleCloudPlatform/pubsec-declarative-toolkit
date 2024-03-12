@@ -27,6 +27,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/standard # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/standard
+  labels:
+    legacy: to-be-removed
 spec:
   # shortName required, immutable, 1-63 characters, unique within organization
   shortName: client-name-standard-fwpol # kpt-set: ${client-name}-standard-fwpol
@@ -48,6 +50,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   attachmentTargetRef:
     kind: Folder

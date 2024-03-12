@@ -77,8 +77,14 @@ data:
   ##########################
   #
   # the network host project id that will be created
+  # NOTICE: this host project will be removed in a future release
   # customization: required
   host-project-id: net-host-project-12345
+  #
+  # the distinct network host projects that will be created
+  # customization: required
+  host-project-id-nonp: net-host-project-nonp-12345
+  host-project-id-pbmm: net-host-project-pbmm-12345
   #
   # Org policy exception to allow vpc peering between a defined list and the host project.
   # The file is located here client-folder/standard/application-infrastructure/host-project/org-policies/exceptions/compute-restrict-vpc-peering-except-host-project.yaml
@@ -170,6 +176,10 @@ data:
   #
   # dns project id created during core-landing-zone package deployment
   # customization: required, obtain value from the core-landing-zone setters.yaml
+  core-dns-project-id: core-dns-project-12345
+  #
+  # dns project id that will be created for this client
+  # customization: required
   dns-project-id: dns-project-12345
   #
   # Clients Landing Zone fqdn. The "dns-name" must end with a "."

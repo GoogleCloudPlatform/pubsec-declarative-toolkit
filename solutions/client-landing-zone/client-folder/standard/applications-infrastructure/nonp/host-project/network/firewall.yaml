@@ -1,0 +1,99 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Allow all egress traffic(firewall) from VPC resources to private IP ranges in shared VPC network within host project
+# AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network within host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
+# AU-12 - Enable Logging for firewall
+# SI-4 - Logging denied traffic
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: host-project-id-nonp-standard-egress-allow-all-internal-fwr # kpt-set: ${host-project-id-nonp}-standard-allow-all-internal-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id-nonp # kpt-set: ${host-project-id-nonp}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-nonp-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id-nonp}-global-standard-vpc
+spec:
+  resourceID: standard-egress-allow-all-internal-fwr
+  description: "Allow all egress traffic(firewall) from VPC resources to private IP ranges in shared VPC network within host project"
+  direction: EGRESS
+  priority: 5000
+  allow:
+    - protocol: all
+  destinationRanges: # kpt-set: ${firewall-internal-ip-ranges}
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+  # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
+  networkRef:
+    name: host-project-id-nonp-global-standard-vpc # kpt-set: ${host-project-id-nonp}-global-standard-vpc
+  # AU-12
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
+---
+# Deny all egress traffic(firewall) from VPC resources to external ip internet ranges in shared VPC network within host project
+# AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network within host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: host-project-id-nonp-standard-default-egress-deny-fwr # kpt-set: ${host-project-id-nonp}-standard-default-egress-deny-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id-nonp # kpt-set: ${host-project-id-nonp}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-nonp-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id-nonp}-global-standard-vpc
+spec:
+  resourceID: standard-default-egress-deny-fwr
+  description: "Deny all egress traffic(firewall) from VPC resources to external ip internet ranges in shared VPC network within host project"
+  direction: EGRESS
+  priority: 65535
+  deny:
+    - protocol: all
+  sourceRanges:
+    - 0.0.0.0/0
+  destinationRanges:
+    - 0.0.0.0/0
+  # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
+  networkRef:
+    name: host-project-id-nonp-global-standard-vpc # kpt-set: ${host-project-id-nonp}-global-standard-vpc
+  # AU-12, SI-4
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"
+---
+# Deny all ingress traffic(firewall) to vpc resources from any ip internet ranges in shared vpc host project
+# AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11) - All connections to or from virtual machine instances are allowed/denied via firewall rules configured in shared VPC network host project or firewall policies in parent folders based on least-privilege principle. Each firewall rule applies to incoming(ingress) or outgoing(egress) connections, not both.
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: host-project-id-nonp-standard-default-ingress-deny-fwr # kpt-set: ${host-project-id-nonp}-standard-default-ingress-deny-fwr
+  namespace: client-name-networking # kpt-set: ${client-name}-networking
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id-nonp # kpt-set: ${host-project-id-nonp}
+    config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-nonp-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id-nonp}-global-standard-vpc
+spec:
+  resourceID: standard-default-ingress-deny-fwr
+  description: "Default ingress deny all"
+  direction: INGRESS
+  priority: 65535
+  deny:
+    - protocol: all
+  sourceRanges:
+    - 0.0.0.0/0
+  destinationRanges:
+    - 0.0.0.0/0
+  # AC-3(9), AC-4, AC-4(21), SC-7(5), SC-7(8), SC-7(9), SC-7(11)
+  networkRef:
+    name: host-project-id-nonp-global-standard-vpc # kpt-set: ${host-project-id-nonp}-global-standard-vpc
+  # AU-12, SI-4
+  logConfig:
+    metadata: "INCLUDE_ALL_METADATA"

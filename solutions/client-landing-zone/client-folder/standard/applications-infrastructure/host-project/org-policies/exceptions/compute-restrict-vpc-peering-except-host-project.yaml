@@ -39,6 +39,7 @@
 #   labels:
 #     guardrail: "true"
 #     guardrail-enforced: guardrail-09
+#     legacy: to-be-removed
 # spec:
 #   constraint: "constraints/compute.restrictVpcPeering"
 #   listPolicy:

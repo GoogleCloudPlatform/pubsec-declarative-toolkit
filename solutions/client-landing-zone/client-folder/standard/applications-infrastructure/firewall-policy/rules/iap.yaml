@@ -21,6 +21,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   action: "goto_next"
   description: "Delegate to host project, ingress IAP traffic (firewall) from IP range 35.235.240.0/20 to VPC resources in shared VPC network"
