@@ -149,7 +149,7 @@ data:
   #
   # project id for the dns project to be created, following rules and conventions
   # customization: required
-  dns-project-id: dns-project-12345
+  core-dns-project-id: dns-project-12345
   #
   # Core Landing Zone fqdn. The "dns-name" must end with a "."
   # dns-name needs needs to receive delegation from the upper level of the domain example.com.

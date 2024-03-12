@@ -22,8 +22,8 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 | allowed-trusted-image-projects                        | ["projects/cos-cloud"]                  | array |     1 |
 | allowed-vpc-peering                                   | ["under:organizations/ORGANIZATION_ID"] | array |     1 |
 | billing-id                                            | AAAAAA-BBBBBB-CCCCCC                    | str   |     2 |
+| core-dns-project-id                                   | dns-project-12345                       | str   |     8 |
 | dns-name                                              | example.com.                            | str   |     1 |
-| dns-project-id                                        | dns-project-12345                       | str   |     8 |
 | logging-project-id                                    | logging-project-12345                   | str   |    36 |
 | lz-folder-id                                          |                              0000000000 | str   |    14 |
 | management-namespace                                  | config-control                          | str   |    48 |
@@ -62,9 +62,9 @@ This package has no sub-packages.
 | lz-folder/clients/folder.yaml                                                         | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                     | clients                                                                   | hierarchy                    |
 | lz-folder/services/folder-sink.yaml                                                   | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink             | platform-and-component-services-log-sink                                  | logging                      |
 | lz-folder/services/folder.yaml                                                        | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                     | services                                                                  | hierarchy                    |
-| lz-folder/services-infrastructure/dns-project/dns.yaml                                | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone             | dns-project-id-standard-core-public-dns                                   | networking                   |
-| lz-folder/services-infrastructure/dns-project/project.yaml                            | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                    | dns-project-id                                                            | projects                     |
-| lz-folder/services-infrastructure/dns-project/services.yaml                           | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                    | dns-project-id-dns                                                        | projects                     |
+| lz-folder/services-infrastructure/dns-project/dns.yaml                                | dns.cnrm.cloud.google.com/v1beta1             | DNSManagedZone             | core-dns-project-id-standard-core-public-dns                              | networking                   |
+| lz-folder/services-infrastructure/dns-project/project.yaml                            | resourcemanager.cnrm.cloud.google.com/v1beta1 | Project                    | core-dns-project-id                                                       | projects                     |
+| lz-folder/services-infrastructure/dns-project/services.yaml                           | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                    | core-dns-project-id-dns                                                   | projects                     |
 | lz-folder/services-infrastructure/folder-sink.yaml                                    | logging.cnrm.cloud.google.com/v1beta1         | LoggingLogSink             | platform-and-component-services-infra-log-sink                            | logging                      |
 | lz-folder/services-infrastructure/folder.yaml                                         | resourcemanager.cnrm.cloud.google.com/v1beta1 | Folder                     | services-infrastructure                                                   | hierarchy                    |
 | mgmt-project/org-policies/compute-disable-serial-port-logging-except-mgt-project.yaml | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy      | compute-disable-serial-port-logging-except-mgt-project                    | policies                     |

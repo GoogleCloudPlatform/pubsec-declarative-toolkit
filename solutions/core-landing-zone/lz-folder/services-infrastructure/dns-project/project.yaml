@@ -16,13 +16,13 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: dns-project-id # kpt-set: ${dns-project-id}
+  name: core-dns-project-id # kpt-set: ${core-dns-project-id}
   namespace: projects
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/services-infrastructure # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/hierarchy/Folder/services-infrastructure
 spec:
-  name: dns-project-id # kpt-set: ${dns-project-id}
+  name: core-dns-project-id # kpt-set: ${core-dns-project-id}
   billingAccountRef:
     external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${billing-id}
   folderRef:
