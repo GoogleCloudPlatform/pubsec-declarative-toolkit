@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.8.0...solutions/core-landing-zone/0.9.0) (2024-03-12)
+
+
+### Features
+
+* distinct VPC host prep core-landing-zone ([#889](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/889)) ([a35bac6](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/a35bac68d7533ae7a51722959a2e0ee999f3a34c))
+
 ## [0.8.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/core-landing-zone/0.7.2...solutions/core-landing-zone/0.8.0) (2024-03-01)
 
 
