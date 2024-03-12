@@ -22,6 +22,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/client-name-projects/Service/host-project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/${client-name}-projects/Service/${host-project-id}-compute
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: global-standard-vpc
   description: VPC for internet facing application

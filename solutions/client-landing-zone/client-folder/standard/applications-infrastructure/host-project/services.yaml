@@ -22,6 +22,8 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: compute.googleapis.com
   projectRef:
@@ -37,6 +39,8 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: logging.googleapis.com
   projectRef:
@@ -52,6 +56,8 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: monitoring.googleapis.com
   projectRef:
@@ -66,6 +72,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: dns.googleapis.com
   projectRef:
@@ -81,6 +89,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: servicedirectory.googleapis.com
   projectRef:
@@ -98,6 +108,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: container.googleapis.com
   projectRef:

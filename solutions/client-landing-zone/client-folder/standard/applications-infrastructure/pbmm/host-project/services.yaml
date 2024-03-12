@@ -1,0 +1,104 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Compute API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-pbmm-compute # kpt-set: ${host-project-id-pbmm}-compute
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id-pbmm}
+spec:
+  resourceID: compute.googleapis.com
+  projectRef:
+    external: host-project-id-pbmm # kpt-set: ${host-project-id-pbmm}
+---
+# Logging API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-pbmm-logging # kpt-set: ${host-project-id-pbmm}-logging
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id-pbmm}
+spec:
+  resourceID: logging.googleapis.com
+  projectRef:
+    external: host-project-id-pbmm # kpt-set: ${host-project-id-pbmm}
+---
+# Monitoring API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-pbmm-monitoring # kpt-set: ${host-project-id-pbmm}-monitoring
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id-pbmm}
+spec:
+  resourceID: monitoring.googleapis.com
+  projectRef:
+    external: host-project-id-pbmm # kpt-set: ${host-project-id-pbmm}
+---
+# DNS API
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-pbmm-dns # kpt-set: ${host-project-id-pbmm}-dns
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/disable-on-destroy: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id-pbmm}
+spec:
+  resourceID: dns.googleapis.com
+  projectRef:
+    external: host-project-id-pbmm # kpt-set: ${host-project-id-pbmm}
+---
+# Service Directory API
+# Required for Private Service Connect
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-pbmm-servicedirectory # kpt-set: ${host-project-id-pbmm}-servicedirectory
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/disable-on-destroy: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id-pbmm}
+spec:
+  resourceID: servicedirectory.googleapis.com
+  projectRef:
+    external: host-project-id-pbmm # kpt-set: ${host-project-id-pbmm}
+---
+# Container API
+# Required for Allowing GKE clusters to be deployed in service projects
+# Enabling the API in a project creates a GKE service account for the project.
+# https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-shared-vpc
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: host-project-id-pbmm-container # kpt-set: ${host-project-id-pbmm}-container
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/disable-on-destroy: "false"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id-pbmm}
+spec:
+  resourceID: container.googleapis.com
+  projectRef:
+    external: host-project-id-pbmm # kpt-set: ${host-project-id-pbmm}

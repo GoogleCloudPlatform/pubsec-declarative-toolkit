@@ -21,6 +21,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-hierarchy/Folder/standard.applications-infrastructure # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-hierarchy/Folder/standard.applications-infrastructure
+  labels:
+    legacy: to-be-removed
 spec:
   name: host-project-id # kpt-set: ${host-project-id}
   billingAccountRef:
@@ -38,3 +40,5 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: serviceusage.cnrm.cloud.google.com/namespaces/client-name-projects/Service/host-project-id-compute # kpt-set: serviceusage.cnrm.cloud.google.com/namespaces/${client-name}-projects/Service/${host-project-id}-compute
+  labels:
+    legacy: to-be-removed

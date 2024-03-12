@@ -21,6 +21,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   action: "goto_next"
   description: "Delegate to host project, ingress LB health checks traffic (firewall) from IP ranges 35.191.0.0/16, 130.211.0.0/22 to VPC resources in shared VPC network"

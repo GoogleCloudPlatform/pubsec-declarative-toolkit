@@ -31,6 +31,7 @@ metadata:
   namespace: policies
   labels:
     guardrail: "false"
+    legacy: to-be-removed
 spec:
   constraint: "constraints/compute.restrictCloudNATUsage"
   listPolicy:

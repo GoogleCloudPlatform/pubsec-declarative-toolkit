@@ -22,6 +22,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeRouter/host-project-id-nane1-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeRouter/${host-project-id}-nane1-router
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: nane1-nat
   natIpAllocateOption: AUTO_ONLY
@@ -43,6 +45,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: nane1-router
   description: northamerica-northeast1 router
@@ -59,6 +63,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeRouter/host-project-id-nane2-router # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeRouter/${host-project-id}-nane2-router
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: nane2-nat
   natIpAllocateOption: AUTO_ONLY
@@ -80,6 +86,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: nane2-router
   description: northamerica-northeast2 router

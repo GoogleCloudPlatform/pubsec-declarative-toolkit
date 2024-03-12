@@ -24,6 +24,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: standard-egress-allow-all-internal-fwr
   description: "Allow all egress traffic(firewall) from VPC resources to private IP ranges in shared VPC network within host project"
@@ -52,6 +54,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: standard-default-egress-deny-fwr
   description: "Deny all egress traffic(firewall) from VPC resources to external ip internet ranges in shared VPC network within host project"
@@ -80,6 +84,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeNetwork/host-project-id-global-standard-vpc # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeNetwork/${host-project-id}-global-standard-vpc
+  labels:
+    legacy: to-be-removed
 spec:
   resourceID: standard-default-ingress-deny-fwr
   description: "Default ingress deny all"

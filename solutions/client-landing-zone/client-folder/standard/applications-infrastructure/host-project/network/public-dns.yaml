@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #########
+###################### NOTICE ######################
+# disable resources in this file and enable '../dns-project/public-dns.yaml' to transition DNS resources
+# they will be removed in a future update
+#########
 # Public Client DNS subzone
 # SC-22
 # AU-12 - Enable Logging for DNS Managed zone
@@ -23,6 +27,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/host-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${host-project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   description: "client-name standard public dns subzone" # kpt-set: ${client-name} standard public dns subzone
   resourceID: client-name-standard-public-dns # kpt-set: ${client-name}-standard-public-dns
@@ -44,6 +50,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
     config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/client-name-networking/DNSManagedZone/client-name-standard-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/${client-name}-networking/DNSManagedZone/${client-name}-standard-public-dns
+  labels:
+    legacy: to-be-removed
 spec:
   name: "dns-name" # kpt-set: ${dns-name}
   type: "NS"

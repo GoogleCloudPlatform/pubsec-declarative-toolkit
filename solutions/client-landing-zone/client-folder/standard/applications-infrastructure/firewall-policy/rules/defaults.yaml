@@ -25,6 +25,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   action: "goto_next"
   description: "Delegate to host project, egress traffic(firewall) from VPC resources to private IP ranges in shared VPC network"
@@ -52,6 +54,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   action: "goto_next"
   description: "Delegate to host project, ingress traffic(firewall) from private IP ranges to VPC resources in shared VPC network"
@@ -80,6 +84,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   action: "deny"
   description: "Deny known malicious IPs ingress traffic"
@@ -108,6 +114,8 @@ metadata:
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-standard-applications-infrastructure-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-standard-applications-infrastructure-fwpol
+  labels:
+    legacy: to-be-removed
 spec:
   action: "deny"
   description: "Deny known malicious IPs egress traffic"
