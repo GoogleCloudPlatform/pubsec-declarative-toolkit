@@ -25,19 +25,5 @@ spec:
   billingAccountRef:
     external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${project-billing-id}
   folderRef:
-    name: project-parent-folder # kpt-set: ${project-parent-folder}
+    name: network-connectivity-profile.applications.classification # kpt-set: ${network-connectivity-profile}.applications.${classification}
     namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
----
-# Activate service project
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSharedVPCServiceProject
-metadata:
-  name: project-id-svpcservice # kpt-set: ${project-id}-svpcservice
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  projectRef:
-    name: project-id # kpt-set: ${project-id}
-    namespace: client-name-projects # kpt-set: ${client-name}-projects
