@@ -19,7 +19,7 @@ kind: DNSRecordSet
 metadata:
   name: workload-name-client-name-standard-core-public-dns-a-rset # kpt-set: workload-name-${client-name}-standard-core-public-dns-a-rset
   annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
+    cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
 spec:
   name: "dns-name" # kpt-set: ${dns-name}
   type: "A"

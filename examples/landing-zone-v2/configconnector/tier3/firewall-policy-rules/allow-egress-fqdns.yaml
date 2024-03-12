@@ -26,10 +26,12 @@ spec:
   disabled: false
   # AU-12
   enableLogging: true
+  # edit reference to nonp or pbmm folder accordingly
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-standard-app-infra-nonp-fwpol # kpt-set: ${client-name}-standard-app-infra-nonp-fwpol
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   match:
+    # edit protocol and ports accordingly
     layer4Configs:
       - ipProtocol: "tcp"
         ports:
@@ -41,5 +43,5 @@ spec:
     # add a list of destination fqdns below
     destFqdns:
       - "example.com"
-  # IMPORTANT to set a proper priority, each project should have a reserved range
+  # IMPORTANT to set a proper priority, no duplicates allowed on the same policy, each project should have a reserved range
   priority: 5050
