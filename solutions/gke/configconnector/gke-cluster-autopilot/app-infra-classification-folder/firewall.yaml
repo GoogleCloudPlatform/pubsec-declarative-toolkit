@@ -31,7 +31,7 @@ spec:
   # AU-12
   enableLogging: true
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-network-connectivity-profile-app-infra-classification-fwpol # kpt-set: ${client-name}-${network-connectivity-profile}-app-infra-${classification}-fwpol
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   match:
     srcIPRanges: # kpt-set: ${primaryIpv4Range}
@@ -63,7 +63,7 @@ spec:
   # AU-12
   enableLogging: true
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-network-connectivity-profile-app-infra-classification-fwpol # kpt-set: ${client-name}-${network-connectivity-profile}-app-infra-${classification}-fwpol
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   match:
     srcIPRanges: # kpt-set: ${primaryIpv4Range}
@@ -95,7 +95,7 @@ spec:
   # AU-12
   enableLogging: true
   firewallPolicyRef:
-    name: client-name-standard-applications-infrastructure-fwpol # kpt-set: ${client-name}-standard-applications-infrastructure-fwpol
+    name: client-name-network-connectivity-profile-app-infra-classification-fwpol # kpt-set: ${client-name}-${network-connectivity-profile}-app-infra-${classification}-fwpol
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   match:
     srcIPRanges: # kpt-set: ${primaryIpv4Range}

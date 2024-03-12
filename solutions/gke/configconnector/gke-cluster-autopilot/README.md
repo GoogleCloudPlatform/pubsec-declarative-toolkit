@@ -61,17 +61,18 @@ To fix this, you update the `root-sync` resource to include the override section
 
 |              Name               |                        Value                         | Type  | Count |
 |---------------------------------|------------------------------------------------------|-------|-------|
+| classification                  | nonp                                                 | str   |     3 |
 | client-name                     | client1                                              | str   |    18 |
 | cluster-name                    | autopilot1-gke                                       | str   |    36 |
 | gke-to-azdo-priority            |                                                 2000 | int   |     1 |
 | gke-to-docker-priority          |                                                 2002 | int   |     1 |
 | gke-to-github-priority          |                                                 2001 | int   |     1 |
-| host-project-id                 | host-project-12345                                   | str   |     6 |
-| host-project-vpc                | host-project-vpc                                     | str   |     2 |
+| host-project-id                 | host-project-12345                                   | str   |     8 |
 | location                        | northamerica-northeast1                              | str   |     5 |
 | master-authorized-networks-cidr | [cidrBlock: 10.1.1.5/32displayName: gke-admin-proxy] | array |     1 |
 | masterIpv4CidrBlock             | 192.168.0.0/28                                       | str   |     1 |
 | masterIpv4Range                 | ["192.168.0.0/28"]                                   | array |     0 |
+| network-connectivity-profile    | standard                                             | str   |     6 |
 | networktags                     |                                                      | str   |     0 |
 | networktags-enabled             | false                                                | str   |     0 |
 | podIpv4Range                    | ["172.16.0.0/23"]                                    | array |     1 |
@@ -91,27 +92,27 @@ This package has no sub-packages.
 
 ## Resources
 
-|                      File                       |               APIVersion                |           Kind            |                                Name                                 |    Namespace     |
-|-------------------------------------------------|-----------------------------------------|---------------------------|---------------------------------------------------------------------|------------------|
-| application-infrastructure-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-azdo                           | project-id-tier3 |
-| application-infrastructure-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-github                         | project-id-tier3 |
-| application-infrastructure-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-docker                         | project-id-tier3 |
-| gke.yaml                                        | container.cnrm.cloud.google.com/v1beta1 | ContainerCluster          | cluster-name                                                        | project-id-tier3 |
-| gkehub-featuremembership-acm.yaml               | gkehub.cnrm.cloud.google.com/v1beta1    | GKEHubFeatureMembership   | cluster-name-acm-hubfeaturemembership                               | project-id-tier3 |
-| gkehub-membership.yaml                          | gkehub.cnrm.cloud.google.com/v1beta1    | GKEHubMembership          | cluster-name                                                        | project-id-tier3 |
-| host-project/firewall.yaml                      | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewall           | project-id-cluster-name-lb-health-check                             |                  |
-| host-project/subnet.yaml                        | compute.cnrm.cloud.google.com/v1beta1   | ComputeSubnetwork         | project-id-cluster-name-snet                                        |                  |
-| kms.yaml                                        | kms.cnrm.cloud.google.com/v1beta1       | KMSKeyRing                | cluster-name-kmskeyring                                             | project-id-tier3 |
-| kms.yaml                                        | kms.cnrm.cloud.google.com/v1beta1       | KMSCryptoKey              | cluster-name-etcd-key                                               | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMServiceAccount         | cluster-name-sa                                                     | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-logwriter-permissions                               | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-metricwriter-permissions                            | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-monitoring-viewer-permissions                       | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-storage-object-viewer-permissions                   | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-stackdriver-metadata-writer-permissions             | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-artifactregistry-reader-permissions                 | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-secretmanager-secretaccessor-permissions            | project-id-tier3 |
-| service-account.yaml                            | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | project-id-tier3-sa-serviceaccount-user-cluster-name-sa-permissions | project-id-tier3 |
+|                     File                      |               APIVersion                |           Kind            |                                Name                                 |    Namespace     |
+|-----------------------------------------------|-----------------------------------------|---------------------------|---------------------------------------------------------------------|------------------|
+| app-infra-classification-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-azdo                           | project-id-tier3 |
+| app-infra-classification-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-github                         | project-id-tier3 |
+| app-infra-classification-folder/firewall.yaml | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewallPolicyRule | project-id-cluster-name-egress-allow-docker                         | project-id-tier3 |
+| gke.yaml                                      | container.cnrm.cloud.google.com/v1beta1 | ContainerCluster          | cluster-name                                                        | project-id-tier3 |
+| gkehub-featuremembership-acm.yaml             | gkehub.cnrm.cloud.google.com/v1beta1    | GKEHubFeatureMembership   | cluster-name-acm-hubfeaturemembership                               | project-id-tier3 |
+| gkehub-membership.yaml                        | gkehub.cnrm.cloud.google.com/v1beta1    | GKEHubMembership          | cluster-name                                                        | project-id-tier3 |
+| host-project/firewall.yaml                    | compute.cnrm.cloud.google.com/v1beta1   | ComputeFirewall           | project-id-cluster-name-lb-health-check                             |                  |
+| host-project/subnet.yaml                      | compute.cnrm.cloud.google.com/v1beta1   | ComputeSubnetwork         | project-id-cluster-name-snet                                        |                  |
+| kms.yaml                                      | kms.cnrm.cloud.google.com/v1beta1       | KMSKeyRing                | cluster-name-kmskeyring                                             | project-id-tier3 |
+| kms.yaml                                      | kms.cnrm.cloud.google.com/v1beta1       | KMSCryptoKey              | cluster-name-etcd-key                                               | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMServiceAccount         | cluster-name-sa                                                     | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-logwriter-permissions                               | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-metricwriter-permissions                            | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-monitoring-viewer-permissions                       | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-storage-object-viewer-permissions                   | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-stackdriver-metadata-writer-permissions             | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-artifactregistry-reader-permissions                 | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | cluster-name-sa-secretmanager-secretaccessor-permissions            | project-id-tier3 |
+| service-account.yaml                          | iam.cnrm.cloud.google.com/v1beta1       | IAMPolicyMember           | project-id-tier3-sa-serviceaccount-user-cluster-name-sa-permissions | project-id-tier3 |
 
 ## Resource References
 

@@ -38,9 +38,17 @@ data:
   ##########################
   #
   # The project id that was created by the client-project-setup.
-  # This id will also becomes the Anthos Fleet id
+  # The GKE cluster will be deployed in this project and the project id will also become the Anthos Fleet id
   # customization: required
   project-id: project-12345
+  #
+  # the classification of the project, accepted values are: 'pbmm' OR 'nonp' (unclassified)
+  # customization: required
+  classification: nonp
+  #
+  # the network connectivity profile of the project, accepted values are: 'standard' OR 'sc2g' (future releases)
+  # customization: optional
+  network-connectivity-profile: standard
   #
   ##########################
   # Network Host Project
@@ -49,11 +57,6 @@ data:
   # the host project for this client created in client-landing-zone package deployment
   # customization: required
   host-project-id: host-project-12345
-  #
-  # VPC to deploy the subnet, the value must match the kubernetes resources 'metadata.name'
-  # created in client-landing-zone package deployment
-  # customization: required
-  host-project-vpc: host-project-vpc
   #
   ##########################
   # GKE
@@ -124,6 +127,11 @@ data:
   networktags-enabled: false
   networktags:
     - ids
+  #
+  # The group to enable Google groups for GKE RBAC as described in the link below.
+  # The 'gke-security-groups@' must NOT be edited, only the domain.  The group needs to be created manually.
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/google-groups-rbac
+  # customization: required
   security-group: gke-security-groups@<yourdomain.com>
   #
   ##########################
