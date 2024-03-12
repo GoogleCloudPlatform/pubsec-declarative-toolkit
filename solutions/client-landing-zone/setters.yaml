@@ -176,7 +176,7 @@ data:
   #
   # dns project id created during core-landing-zone package deployment
   # customization: required, obtain value from the core-landing-zone setters.yaml
-  core-dns-project-id: dns-project-12345
+  core-dns-project-id: core-dns-project-12345
   #
   # dns project id that will be created for this client
   # customization: required
