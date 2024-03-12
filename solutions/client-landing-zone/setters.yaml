@@ -83,8 +83,8 @@ data:
   #
   # the distinct network host projects that will be created
   # customization: required
-  host-project-id-nonp: net-host-project-12345
-  host-project-id-pbmm: net-host-project-12345
+  host-project-id-nonp: net-host-project-nonp-12345
+  host-project-id-pbmm: net-host-project-pbmm-12345
   #
   # Org policy exception to allow vpc peering between a defined list and the host project.
   # The file is located here client-folder/standard/application-infrastructure/host-project/org-policies/exceptions/compute-restrict-vpc-peering-except-host-project.yaml
