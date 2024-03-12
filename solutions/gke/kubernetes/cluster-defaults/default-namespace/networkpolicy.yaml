@@ -16,11 +16,9 @@
 # Allow ingress within namespace
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
-metadata: # kpt-merge: default-namespace/allow-egress-within-default-namespace
+metadata:
   namespace: default
   name: allow-ingress-within-default-namespace
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|allow-ingress-within-default-namespace'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
@@ -32,11 +30,9 @@ spec:
 # Allow egress within namespace
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
-metadata: # kpt-merge: default-namespace/allow-egress-within-default-namespace
+metadata:
   namespace: default
   name: allow-egress-within-default-namespace
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|gateway-infra|allow-egress-within-default-namespace'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)

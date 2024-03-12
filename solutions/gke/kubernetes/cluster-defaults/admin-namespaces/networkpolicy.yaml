@@ -16,11 +16,9 @@
 # Allow ingress within namespace
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
-metadata: # kpt-merge: gateway-infra/allow-ingress-within-namespace
+metadata:
   namespace: gateway-infra
   name: allow-ingress-within-namespace
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|gateway-infra|allow-ingress-within-namespace'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
@@ -32,11 +30,9 @@ spec:
 # Allow ingress from lb health check
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
-metadata: # kpt-merge: gateway-infra/allow-ingress-from-lb-health-check
+metadata:
   namespace: gateway-infra
   name: allow-ingress-from-lb-health-check
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|gateway-infra|allow-ingress-from-lb-health-check'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
@@ -57,11 +53,9 @@ spec:
 # Allow egress within namespace
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
-metadata: # kpt-merge: gateway-infra/allow-egress-within-namespace
+metadata:
   namespace: gateway-infra
   name: allow-egress-within-namespace
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|gateway-infra|allow-egress-within-namespace'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
@@ -73,11 +67,9 @@ spec:
 # Allow egress to metadata server
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
-metadata: # kpt-merge: gateway-infra/allow-egress-to-metadata-server
+metadata:
   namespace: gateway-infra
   name: allow-egress-to-metadata-server
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|gateway-infra|allow-egress-to-metadata-server'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
@@ -112,11 +104,9 @@ spec:
 # Allow egress for GCP API
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
-metadata: # kpt-merge: gateway-infra/allow-egrees-to-gcp-api
+metadata:
   namespace: gateway-infra
   name: allow-egrees-to-gcp-api
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'networking.k8s.io|NetworkPolicy|gateway-infra|allow-egrees-to-gcp-api'
 spec:
   podSelector: {}
   # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
