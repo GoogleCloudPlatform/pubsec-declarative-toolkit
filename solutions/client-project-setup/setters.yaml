@@ -68,19 +68,13 @@ data:
   client-management-project-id: client-management-project-12345
   #
   ##########################
-  # Network Host Project (standard)
+  # Network Host Project
   ##########################
   #
   # the network host project id that is created by the client-landing-zone package
+  # must align with the classification defined in the "Project" section
   # customization: required
   host-project-id: net-host-project-12345
-  #
-  # the nane1 and nane2 subnets to grant network user permissions, replace 'classification' with appropriate values
-  # the values must match the kubernetes resources 'metadata.name'
-  # subnets were created by the client-landing-zone package
-  # customization: required
-  allowed-nane1-main-subnet: host-project-id-nane1-standard-classification-main-snet
-  allowed-nane2-main-subnet: host-project-id-nane2-standard-classification-main-snet
   #
   ##########################
   # Project
@@ -94,10 +88,21 @@ data:
   # customization: required
   project-billing-id: "AAAAAA-BBBBBB-CCCCCC"
   #
-  # GCP folder to use as parent to this project
-  # the values must match the kubernetes resources 'metadata.name', for example "standard.applications.nonp"
+  # the classification for the project that will be created, accepted values are: 'pbmm' OR 'nonp' (unclassified)
   # customization: required
-  project-parent-folder: project-parent-folder
+  classification: nonp
+  #
+  # the network connectivity profile of this project, accepted values are: 'standard' OR 'sc2g' (future releases)
+  # customization: optional
+  network-connectivity-profile: standard
+  #
+  ##########################
+  # DNS
+  ##########################
+  #
+  # the client DNS project id that was created by the client-landing-zone package
+  # customization: required
+  dns-project-id: dns-project-12345
   #
   ##########################
   # Config Sync

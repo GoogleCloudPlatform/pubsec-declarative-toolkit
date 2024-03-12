@@ -65,24 +65,6 @@ spec:
   role: roles/iam.securityAdmin
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
-# Grant GCP role Tier3 Firewall Rule Admin to GCP SA on standard.application-infrastructure folder
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: project-id-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions # kpt-set: ${project-id}-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions
-  namespace: client-name-hierarchy # kpt-set: ${client-name}-hierarchy
-  annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Folder
-    name: standard.applications-infrastructure
-  # AC-1, AC-3(7), AC-3, AC-16(2)
-  role: organizations/org-id/roles/tier3.firewallrule.admin # kpt-set: organizations/${org-id}/roles/tier3.firewallrule.admin
-  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
----
 # Grant GCP role Tier3 DNS Record Admin to GCP SA on Client Host Project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -92,6 +74,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
     config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+  labels:
+    legacy: to-be-removed
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -101,11 +85,29 @@ spec:
   role: organizations/org-id/roles/tier3.dnsrecord.admin # kpt-set: organizations/${org-id}/roles/tier3.dnsrecord.admin
   member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
 ---
+# Grant GCP role Tier3 DNS Record Admin to GCP SA on Client DNS Project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-tier3-sa-tier3-dnsrecord-admin-dns-project-id-permissions # kpt-set: ${project-id}-tier3-sa-tier3-dnsrecord-admin-${dns-project-id}-permissions
+  namespace: client-name-projects # kpt-set: ${client-name}-projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: dns-project-id # kpt-set: ${dns-project-id}
+  # AC-1, AC-3(7), AC-3, AC-16(2)
+  role: organizations/org-id/roles/tier3.dnsrecord.admin # kpt-set: organizations/${org-id}/roles/tier3.dnsrecord.admin
+  member: "serviceAccount:tier3-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier3-sa@${project-id}.iam.gserviceaccount.com
+---
 # Grant GCP role Compute Public IP Admin to tier3-sa GCP SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-tier3-sa-compute-public-ip-admin-host-project-id-permissions # kpt-set: ${project-id}-tier3-sa-compute-public-ip-admin-${project-id}-permissions
+  name: project-id-tier3-sa-compute-public-ip-admin-project-id-permissions # kpt-set: ${project-id}-tier3-sa-compute-public-ip-admin-${project-id}-permissions
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -123,7 +125,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-tier3-sa-compute-security-admin-host-project-id-permissions # kpt-set: ${project-id}-tier3-sa-compute-security-admin-${project-id}-permissions
+  name: project-id-tier3-sa-compute-security-admin-project-id-permissions # kpt-set: ${project-id}-tier3-sa-compute-security-admin-${project-id}-permissions
   namespace: client-name-projects # kpt-set: ${client-name}-projects
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"

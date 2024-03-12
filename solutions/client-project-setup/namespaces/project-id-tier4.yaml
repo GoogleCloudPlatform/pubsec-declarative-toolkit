@@ -28,42 +28,6 @@ spec:
   resourceID: tier4-sa
   displayName: tier4-sa
 ---
-# Grant GCP role Network User to GCP SA on nane1 subnet
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: project-id-tier4-sa-networkuser-allowed-nane1-main-subnet-permissions # kpt-set: ${project-id}-tier4-sa-networkuser-${allowed-nane1-main-subnet}-permissions
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  resourceRef:
-    apiVersion: compute.cnrm.cloud.google.com/v1beta1
-    kind: ComputeSubnetwork
-    name: allowed-nane1-subnet # kpt-set: ${allowed-nane1-main-subnet}
-  # AC-1, AC-3(7), AC-3, AC-16(2)
-  role: roles/compute.networkUser
-  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
----
-# Grant GCP role Network User to GCP SA on nane2 subnet
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: project-id-tier4-sa-networkuser-allowed-nane2-main-subnet-permissions # kpt-set: ${project-id}-tier4-sa-networkuser-${allowed-nane2-main-subnet}-permissions
-  namespace: client-name-networking # kpt-set: ${client-name}-networking
-  annotations:
-    cnrm.cloud.google.com/ignore-clusterless: "true"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/client-name-projects/Project/project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/${client-name}-projects/Project/${project-id}
-spec:
-  resourceRef:
-    apiVersion: compute.cnrm.cloud.google.com/v1beta1
-    kind: ComputeSubnetwork
-    name: allowed-nane2-main-subnet # kpt-set: ${allowed-nane2-main-subnet}
-  # AC-1, AC-3(7), AC-3, AC-16(2)
-  role: roles/compute.networkUser
-  member: "serviceAccount:tier4-sa@project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:tier4-sa@${project-id}.iam.gserviceaccount.com
----
 # K8S SA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
