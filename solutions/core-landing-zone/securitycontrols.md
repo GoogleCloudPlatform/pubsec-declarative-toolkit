@@ -304,8 +304,8 @@
 |AU-11|./setters.yaml|setters|
 |AU-12|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
 |AU-12|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
-|AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
-|AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
+|AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|core-dns-project-id-standard-core-public-dns|
+|AU-12|./lz-folder/services-infrastructure/dns-project/dns.yaml|core-dns-project-id-standard-core-public-dns|
 |AU-12|./lz-folder/services-infrastructure/folder-sink.yaml|platform-and-component-services-infra-log-sink|
 |AU-12|./lz-folder/services-infrastructure/folder-sink.yaml|platform-and-component-services-infra-log-sink|
 |AU-12|./lz-folder/services/folder-sink.yaml|platform-and-component-services-log-sink|
@@ -436,8 +436,8 @@
 |AU-9(4)|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |IA-1|./org/org-policies/iam-disable-service-account-key-creation.yaml|iam-disable-service-account-key-creation|
 |IA-1|./org/org-policies/iam-disable-service-account-key-upload.yaml|iam-disable-service-account-key-upload|
-|SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
-|SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|dns-project-id-standard-core-public-dns|
+|SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|core-dns-project-id-standard-core-public-dns|
+|SC-20|./lz-folder/services-infrastructure/dns-project/dns.yaml|core-dns-project-id-standard-core-public-dns|
 |SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|platform-and-component-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-logging-buckets.yaml|security-log-bucket|

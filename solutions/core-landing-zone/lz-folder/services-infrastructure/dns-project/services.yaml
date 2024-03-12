@@ -16,12 +16,12 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
-  name: dns-project-id-dns # kpt-set: ${dns-project-id}-dns
+  name: core-dns-project-id-dns # kpt-set: ${core-dns-project-id}-dns
   namespace: projects
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/dns-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${dns-project-id}
+    config.kubernetes.io/depends-on: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/core-dns-project-id # kpt-set: resourcemanager.cnrm.cloud.google.com/namespaces/projects/Project/${core-dns-project-id}
 spec:
   resourceID: dns.googleapis.com
   projectRef:
-    external: dns-project-id # kpt-set: ${dns-project-id}
+    external: core-dns-project-id # kpt-set: ${core-dns-project-id}
