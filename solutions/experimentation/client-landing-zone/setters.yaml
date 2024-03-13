@@ -42,6 +42,10 @@ data:
   # customization: required
   client-name: 'client1'
   #
+  # Client folder display name
+  # customization: required
+  client-folder-display-name: client-folder-display-name
+  #
   # group to grant viewer permission on client folder
   # customization: required
   client-folderviewer: 'group:client1@example.com'
