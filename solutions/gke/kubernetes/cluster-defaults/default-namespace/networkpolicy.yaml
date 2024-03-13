@@ -1,0 +1,42 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11) - Network Policies to allow or deny ingress and egress traffic to/from default namespace
+# Allow ingress within namespace
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: default
+  name: allow-ingress-within-default-namespace
+spec:
+  podSelector: {}
+  # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
+  ingress:
+    # From all pods within the same namespace
+    - from:
+        - podSelector: {}
+---
+# Allow egress within namespace
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: default
+  name: allow-egress-within-default-namespace
+spec:
+  podSelector: {}
+  # AC-4, AC-4(21), SC-7(5), SC-7(9), SC-7(11)
+  egress:
+    # To all pods within the same namespace
+    - to:
+        - podSelector: {}

@@ -12,6 +12,9 @@ Resources list:
 
 - Gateway Controller
   - Gateway namespace
+  - Network policies in the Gateway namespace
   - Gateway using an external global load balancer and a SSL certificate
   - Attaches an SSL Policy
-  - Attaches a Cloud Armor and logging policy
+  - Attaches a Cloud Armor policy
+- Default network policy in the `default` namespace
+- Enables logging for traffic allowed / blocked by Network Policies
