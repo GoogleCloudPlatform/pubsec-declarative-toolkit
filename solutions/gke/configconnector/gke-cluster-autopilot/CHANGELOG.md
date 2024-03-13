@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.3.0...solutions/gke/configconnector/gke-cluster-autopilot/0.4.0) (2024-03-13)
+
+
+### Features
+
+* distinct VPC host prep gke-cluster-autopilot BREAKING CHANGE ([#893](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/893)) ([2b5ff79](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/2b5ff79deaf29af5c7caf544624bfad607991cda))
+
 ## [0.3.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.2.6...solutions/gke/configconnector/gke-cluster-autopilot/0.3.0) (2024-02-20)
 
 
