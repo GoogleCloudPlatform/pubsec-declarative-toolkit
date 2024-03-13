@@ -12,13 +12,14 @@ Package to create a client's folder hierarchy and logging resources.
 
 ## Setters
 
-|           Name           |           Value           | Type | Count |
-|--------------------------|---------------------------|------|-------|
-| client-folderviewer      | group:client1@example.com | str  |     1 |
-| client-name              | client1                   | str  |    13 |
-| logging-project-id       | logging-project-12345     | str  |     4 |
-| retention-in-days        |                         1 | int  |     1 |
-| retention-locking-policy | false                     | bool |     1 |
+|            Name            |           Value            | Type | Count |
+|----------------------------|----------------------------|------|-------|
+| client-folder-display-name | client-folder-display-name | str  |     1 |
+| client-folderviewer        | group:client1@example.com  | str  |     1 |
+| client-name                | client1                    | str  |    12 |
+| logging-project-id         | logging-project-12345      | str  |     4 |
+| retention-in-days          |                          1 | int  |     1 |
+| retention-locking-policy   | false                      | bool |     1 |
 
 ## Sub-packages
 
