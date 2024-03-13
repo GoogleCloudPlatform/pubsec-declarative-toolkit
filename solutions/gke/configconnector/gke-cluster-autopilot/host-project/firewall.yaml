@@ -25,7 +25,7 @@ spec:
   allow:
     - protocol: tcp
   networkRef:
-    name: host-project-id-global-standard-vpc # kpt-set: ${host-project-id}-global-standard-vpc
+    name: host-project-id-global-network-connectivity-profile-vpc # kpt-set: ${host-project-id}-global-${network-connectivity-profile}-vpc
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   sourceRanges:
     - "35.191.0.0/16"

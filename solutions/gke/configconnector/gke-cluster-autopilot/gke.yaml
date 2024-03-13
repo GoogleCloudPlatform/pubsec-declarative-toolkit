@@ -75,7 +75,7 @@ spec:
     enableComponents:
       - "SYSTEM_COMPONENTS"
   networkRef:
-    name: host-project-vpc # kpt-set: ${host-project-vpc}
+    name: host-project-id-global-network-connectivity-profile-vpc # kpt-set: ${host-project-id}-global-${network-connectivity-profile}-vpc
     namespace: client-name-networking # kpt-set: ${client-name}-networking
   networkingMode: VPC_NATIVE
   nodePoolAutoConfig:
