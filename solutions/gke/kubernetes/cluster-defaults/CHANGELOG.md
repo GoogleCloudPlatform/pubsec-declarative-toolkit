@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/kubernetes/cluster-defaults/0.3.3...solutions/gke/kubernetes/cluster-defaults/0.4.0) (2024-03-13)
+
+
+### Features
+
+* Update cluster defaults package with network policies ([#866](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/866)) ([2bfcd83](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/2bfcd83dd1815505e522890c1b636601d16878be))
+
 ## [0.3.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/kubernetes/cluster-defaults/0.3.2...solutions/gke/kubernetes/cluster-defaults/0.3.3) (2024-02-13)
 
 
