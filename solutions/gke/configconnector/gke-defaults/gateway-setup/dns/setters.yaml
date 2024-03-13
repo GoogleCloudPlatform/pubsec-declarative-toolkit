@@ -29,8 +29,7 @@ data:
   # Client
   ##########################
   #
-  # Project that has the public dns zone.
-  # Usually the client host project that was created by the client-landing-zone package
+  # Project that has the client's public dns zone, created by the client-landing-zone package.
   # customization: required
   dns-project-id: dns-project-12345
   #

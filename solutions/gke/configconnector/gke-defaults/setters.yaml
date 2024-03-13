@@ -37,10 +37,6 @@ data:
   # customization: required
   team-gkeviewer: 'group:client1@example.com'
   #
-  # the host project for this client created in client-landing-zone package deployment
-  # customization: required
-  host-project-id: host-project-12345
-  #
   ##########################
   # Project
   ##########################
