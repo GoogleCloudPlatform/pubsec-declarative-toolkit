@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.7.0...solutions/client-landing-zone/0.7.1) (2024-03-14)
+
+
+### Bug Fixes
+
+* update to core-dns-project-id for existing resource ([#899](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/899)) ([b8494bf](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/b8494bfe0558de850e9739e8bfc82f47ca4ded2b))
+
 ## [0.7.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.6.0...solutions/client-landing-zone/0.7.0) (2024-03-12)
 
 
