@@ -48,7 +48,7 @@ metadata:
   name: client-name-standard-core-public-dns-ns-rset # kpt-set: ${client-name}-standard-core-public-dns-ns-rset
   namespace: client-name-networking # kpt-set: ${client-name}-networking
   annotations:
-    cnrm.cloud.google.com/project-id: dns-project-id # kpt-set: ${dns-project-id}
+    cnrm.cloud.google.com/project-id: core-dns-project-id # kpt-set: ${core-dns-project-id}
     config.kubernetes.io/depends-on: dns.cnrm.cloud.google.com/namespaces/client-name-networking/DNSManagedZone/client-name-standard-public-dns # kpt-set: dns.cnrm.cloud.google.com/namespaces/${client-name}-networking/DNSManagedZone/${client-name}-standard-public-dns
   labels:
     legacy: to-be-removed
@@ -57,7 +57,7 @@ spec:
   type: "NS"
   ttl: 300
   managedZoneRef:
-    name: dns-project-id-standard-core-public-dns # kpt-set: ${dns-project-id}-standard-core-public-dns
+    name: core-dns-project-id-standard-core-public-dns # kpt-set: ${core-dns-project-id}-standard-core-public-dns
     namespace: networking
   # The nameservers below must be updated to match the same nameservers as the client DNS subzone
   # Cloud DNS creates NS and SOA records automatically when a zone is created and these cannot be changed
