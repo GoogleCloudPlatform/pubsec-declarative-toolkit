@@ -162,7 +162,6 @@ metadata:
   namespace: projects
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
-    cnrm.cloud.google.com/blueprint: 'kpt-pkg'
 spec:
   googleServiceAccount: projects-sa@management-project-id.iam.gserviceaccount.com # kpt-set: projects-sa@${management-project-id}.iam.gserviceaccount.com
 ---
