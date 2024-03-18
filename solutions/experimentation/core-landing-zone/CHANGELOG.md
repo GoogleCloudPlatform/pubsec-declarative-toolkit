@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.5.3...solutions/experimentation/core-landing-zone/0.6.0) (2024-03-18)
+
+
+### Features
+
+* add cbrid to experimentation core landing zone ([#903](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/903)) ([3724763](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/37247634977bba140cdf7873d0645d1bb087bd37))
+
 ## [0.5.3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/experimentation/core-landing-zone/0.5.2...solutions/experimentation/core-landing-zone/0.5.3) (2024-02-07)
 
 

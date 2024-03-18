@@ -6,7 +6,7 @@
   "solutions/experimentation/admin-folder": "0.1.2",
   "solutions/experimentation/client-landing-zone": "0.1.5",
   "solutions/experimentation/client-project": "0.1.4",
-  "solutions/experimentation/core-landing-zone": "0.5.3",
+  "solutions/experimentation/core-landing-zone": "0.6.0",
   "solutions/gatekeeper-policies": "0.2.1",
   "solutions/gke/configconnector/gke-admin-proxy": "0.1.5",
   "solutions/gke/configconnector/gke-cluster-autopilot": "0.4.0",
