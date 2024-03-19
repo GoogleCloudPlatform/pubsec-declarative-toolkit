@@ -120,7 +120,7 @@ data:
   #
   # network tags to be assigned to GKE nodes
   # The "ids" tag is the recommended approach to ensure that the traffic reaching the GKE clusters is inspected by Cloud IDS.
-  # Furthermore, you would need to have that "ids" tag listed under the mirroredresources of the packet mirroring policy.
+  # Furthermore, you would need to have that "ids" tag listed under the mirrored resources of the packet mirroring policy.
   # See ids package for more details.
   # Warning: It is not applied using apply-setters but by starlark-update-containercluster
   # customization: optional if networktags-enabled is set to true.
@@ -153,7 +153,7 @@ data:
   #
   # the directory to observe for YAML manifests
   # customization: required
-  repo-dir: csync/tier3/kubernetes/<fleet-id>/deploy/<env>
+  repo-dir: csync/tier3/kubernetes/_X-FLEET-ID/deploy/<env>
   #
   ##########################
   # End of Configurations

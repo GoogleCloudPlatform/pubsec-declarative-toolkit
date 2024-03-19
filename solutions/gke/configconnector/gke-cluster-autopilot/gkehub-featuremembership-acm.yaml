@@ -37,7 +37,7 @@ spec:
       git:
         syncRepo: "https://AZDO-ORG@dev.azure.com/AZDO-ORG/AZDO-PROJECT/_git/REPO-NAME" # kpt-set: ${repo-url}
         syncBranch: "main" # kpt-set: ${repo-branch}
-        policyDir: csync/tier3/kubernetes/<fleet-id>/deploy/<env> # kpt-set: ${repo-dir}
+        policyDir: csync/tier3/kubernetes/_X-FLEET-ID/deploy/<env> # kpt-set: ${repo-dir}
         syncWaitSecs: "20"
         syncRev: "HEAD"
         secretType: "token"
