@@ -15,3 +15,7 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml
+    - image: gcr.io/kpt-fn/set-labels:v0.2.0
+      configPath: set-labels-project.yaml
+      selectors:
+        - kind: Project
