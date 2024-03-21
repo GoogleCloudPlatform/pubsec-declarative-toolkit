@@ -66,6 +66,7 @@ data:
   # Name for the client, lowercase only.
   # customization: required
   client-name: 'client1'
+  #
   # Client folder display name
   # customization: required
   client-folder-display-name: client-folder-display-name
