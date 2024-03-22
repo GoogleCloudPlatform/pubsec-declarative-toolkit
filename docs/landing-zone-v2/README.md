@@ -691,7 +691,7 @@ Execute the client onboarding [procedure](onboarding-client.md).
 
 Follow the below steps to delete the provisioned infrastructure and Config Controller instances.
 
-If you want the deployed resources to live on and just destroy the Config Controller instance you can do so by running `gcloud anthos config controller instance-name --location instance-region`. This will remove the config controller instances but leave the resources it deployed untouched.
+If you want the deployed resources to live on and just destroy the Config Controller instance you can do so by running `gcloud anthos config controller delete --location instance-region instance-name`. This will remove the config controller instances but leave the resources it deployed untouched.
 
 To reacquire the resources you will need to redeploy a new instance and deploy the same configs to it. Config Controller should reattach to the previously deployed instances and start managing them again.
 
