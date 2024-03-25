@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.4.0...solutions/gke/configconnector/gke-cluster-autopilot/0.4.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* changed &lt;x-fleet-id&gt; and <namespace> to as they were causing render issues in git gui ([#909](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/909)) ([8a719d3](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/8a719d3f0ada597a4a52ce1081bdbf342139c2d5))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/gke/configconnector/gke-cluster-autopilot/0.3.0...solutions/gke/configconnector/gke-cluster-autopilot/0.4.0) (2024-03-13)
 
 
