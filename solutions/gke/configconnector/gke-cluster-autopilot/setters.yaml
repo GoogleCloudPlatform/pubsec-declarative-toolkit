@@ -153,7 +153,7 @@ data:
   #
   # the directory to observe for YAML manifests
   # customization: required
-  repo-dir: csync/tier3/kubernetes/<fleet-id>/deploy/<env>
+  repo-dir: csync/tier3/kubernetes/_X-FLEET-ID/deploy/<env>
   #
   ##########################
   # End of Configurations

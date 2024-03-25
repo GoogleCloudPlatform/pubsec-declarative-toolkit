@@ -74,7 +74,7 @@ data:
   #
   # the directory to observe for YAML manifests
   # customization: required
-  repo-dir: csync/tier4/kubernetes/<fleet-id>/deploy/env/<namespace>
+  repo-dir: csync/tier4/kubernetes/_X-FLEET-ID/deploy/env/_NAMESPACE
   #
   ##########################
   # End of Configurations
