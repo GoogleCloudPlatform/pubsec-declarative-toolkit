@@ -86,7 +86,7 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: client-name-networking-sa-tier2-dns-record-admin-permission # kpt-set: ${client-name}-networking-sa-tier2-dns-record-admin-permission
+  name: client-name-networking-sa-tier2-dns-record-admin-core-dns-project-id-permissions # kpt-set: ${client-name}-networking-sa-tier2-dns-record-admin-${core-dns-project-id}-permissions
   namespace: projects
   annotations:
     cnrm.cloud.google.com/ignore-clusterless: "true"
@@ -95,7 +95,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: dns-project-id # kpt-set: ${dns-project-id}
+    name: core-dns-project-id # kpt-set: ${core-dns-project-id}
   # AC-1, AC-3, AC-3(7), AC-16(2)
   role: organizations/org-id/roles/tier2.dnsrecord.admin # kpt-set: organizations/${org-id}/roles/tier2.dnsrecord.admin
   member: "serviceAccount:client-name-networking-sa@client-management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:${client-name}-networking-sa@${client-management-project-id}.iam.gserviceaccount.com
