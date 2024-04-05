@@ -7,6 +7,7 @@
 |AC-1|./namespaces/client-name-admin.yaml|allow-resource-reference-from-client-name-admin|
 |AC-1|./namespaces/client-name-admin.yaml|allow-resource-reference-from-client-name-networking|
 |AC-1|./namespaces/client-name-admin.yaml|allow-resource-reference-from-client-name-projects|
+|AC-1|./namespaces/client-name-admin.yaml|client-name-admin-sa|
 |AC-1|./namespaces/client-name-admin.yaml|client-name-admin-sa-workload-identity-binding|
 |AC-1|./namespaces/client-name-hierarchy.yaml|allow-client-name-hierarchy-resource-reference-from-policies|
 |AC-1|./namespaces/client-name-hierarchy.yaml|allow-resource-reference-from-client-name-hierarchy|
@@ -36,7 +37,7 @@
 |AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-security-permissions|
 |AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-service-control-permissions|
 |AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-servicedirectoryeditor-permissions|
-|AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-permission|
+|AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-core-dns-project-id-permissions|
 |AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-workload-identity-binding|
 |AC-1|./namespaces/client-name-networking.yaml|client-name-networking-sa-xpnadmin-permissions|
 |AC-1|./namespaces/client-name-projects.yaml|allow-resource-reference-from-projects|
@@ -91,7 +92,7 @@
 |AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-security-permissions|
 |AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-service-control-permissions|
 |AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-servicedirectoryeditor-permissions|
-|AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-permission|
+|AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-core-dns-project-id-permissions|
 |AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-workload-identity-binding|
 |AC-16(2)|./namespaces/client-name-networking.yaml|client-name-networking-sa-xpnadmin-permissions|
 |AC-16(2)|./namespaces/client-name-networking.yaml|configconnectorcontext.core.cnrm.cloud.google.com|
@@ -149,7 +150,7 @@
 |AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-security-permissions|
 |AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-service-control-permissions|
 |AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-servicedirectoryeditor-permissions|
-|AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-permission|
+|AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-core-dns-project-id-permissions|
 |AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-workload-identity-binding|
 |AC-3|./namespaces/client-name-networking.yaml|client-name-networking-sa-xpnadmin-permissions|
 |AC-3|./namespaces/client-name-networking.yaml|configconnectorcontext.core.cnrm.cloud.google.com|
@@ -207,7 +208,7 @@
 |AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-security-permissions|
 |AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-service-control-permissions|
 |AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-servicedirectoryeditor-permissions|
-|AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-permission|
+|AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-tier2-dns-record-admin-core-dns-project-id-permissions|
 |AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-workload-identity-binding|
 |AC-3(7)|./namespaces/client-name-networking.yaml|client-name-networking-sa-xpnadmin-permissions|
 |AC-3(7)|./namespaces/client-name-networking.yaml|configconnectorcontext.core.cnrm.cloud.google.com|

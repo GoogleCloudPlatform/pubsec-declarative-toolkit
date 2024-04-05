@@ -18,7 +18,7 @@ Package to setup a client's namespaces, folder, management project and root sync
 | client-folder-display-name   | client-folder-display-name      | str  |     1 |
 | client-management-project-id | client-management-project-12345 | str  |   111 |
 | client-name                  | client1                         | str  |   148 |
-| dns-project-id               | dns-project-12345               | str  |     1 |
+| core-dns-project-id          | core-dns-project-12345          | str  |     2 |
 | management-namespace         | config-control                  | str  |    27 |
 | management-project-id        | management-project-12345        | str  |     6 |
 | management-project-number    |                      0000000000 | str  |     1 |
@@ -78,7 +78,7 @@ This package has no sub-packages.
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-networkadmin-permissions                                     | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-security-permissions                                         | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-dns-permissions                                              | hierarchy                  |
-| namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-tier2-dns-record-admin-permission                            | projects                   |
+| namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-tier2-dns-record-admin-core-dns-project-id-permissions       | projects                   |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-service-control-permissions                                  | hierarchy                  |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-xpnadmin-permissions                                         | config-control             |
 | namespaces/client-name-networking.yaml           | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember        | client-name-networking-sa-servicedirectoryeditor-permissions                           | hierarchy                  |
