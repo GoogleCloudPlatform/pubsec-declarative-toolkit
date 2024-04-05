@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.8.1...solutions/client-setup/0.8.2) (2024-04-05)
+
+
+### Bug Fixes
+
+* update core dns project setter name ([#919](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/919)) ([0430aa8](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/0430aa8a220a80fdd01ba328646159cca8a6823a))
+
 ## [0.8.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-setup/0.8.0...solutions/client-setup/0.8.1) (2024-03-21)
 
 
