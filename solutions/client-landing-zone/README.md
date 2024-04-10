@@ -35,8 +35,6 @@ Package to create a client's folder hierarchy, logging resources and a network h
 | standard-nane1-pbmm-main-snet        | 10.1.128.0/21                                                                                                                                                                                                                                          | str   |     1 |
 | standard-nane2-nonp-main-snet        | 10.1.8.0/21                                                                                                                                                                                                                                            | str   |     1 |
 | standard-nane2-pbmm-main-snet        | 10.1.136.0/21                                                                                                                                                                                                                                          | str   |     1 |
-| standard-nonp-cidr                   | [10.1.0.0/18, 172.16.0.0/13]                                                                                                                                                                                                                           | array |     0 |
-| standard-pbmm-cidr                   | [10.1.128.0/18, 172.24.0.0/13]                                                                                                                                                                                                                         | array |     0 |
 
 ## Sub-packages
 

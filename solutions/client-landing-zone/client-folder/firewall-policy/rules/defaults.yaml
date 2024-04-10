@@ -44,7 +44,7 @@ spec:
       - "192.168.0.0/16"
   priority: 2147483541
 ---
-# Delegate to the next folder.standard down in the hierarchy that has a network isolation rule that denies ingress from private IP ranges, ingress traffic from private IP ranges to VPC resources in shared VPC network
+# Delegate to the next folder down in the hierarchy
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewallPolicyRule
 metadata:
@@ -54,7 +54,7 @@ metadata:
     config.kubernetes.io/depends-on: compute.cnrm.cloud.google.com/namespaces/client-name-networking/ComputeFirewallPolicy/client-name-client-folder-fwpol # kpt-set: compute.cnrm.cloud.google.com/namespaces/${client-name}-networking/ComputeFirewallPolicy/${client-name}-client-folder-fwpol
 spec:
   action: "goto_next"
-  description: "Delegate to the next folder.standard down in the hierarchy that has a network isolation rule that denies ingress from private IP ranges, ingress traffic from private IP ranges to VPC resources in shared VPC network"
+  description: "Delegate to the next folder down in the hierarchy."
   direction: "INGRESS"
   disabled: false
   # logging not supported for goto_next rules
