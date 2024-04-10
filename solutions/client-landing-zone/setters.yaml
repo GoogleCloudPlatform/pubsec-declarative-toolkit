@@ -76,11 +76,6 @@ data:
   # Network Host Project (standard)
   ##########################
   #
-  # the network host project id that will be created
-  # NOTICE: this host project will be removed in a future release
-  # customization: required
-  host-project-id: net-host-project-12345
-  #
   # the distinct network host projects that will be created
   # customization: required
   host-project-id-nonp: net-host-project-nonp-12345
