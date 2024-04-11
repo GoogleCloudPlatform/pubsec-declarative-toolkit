@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.7.1...solutions/client-landing-zone/0.8.0) (2024-04-11)
+
+
+### Features
+
+* distinct vpc remove legacy resources BREAKING CHANGE ([#922](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/922)) ([824f7c2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/824f7c2bc0143c42b7bbe2fd9605e744915ed5c7))
+
 ## [0.7.1](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-landing-zone/0.7.0...solutions/client-landing-zone/0.7.1) (2024-03-14)
 
 
