@@ -16,15 +16,15 @@ Package to create a client's project, 2 project scoped namespaces for its resour
 |------------------------------|-----------------------------------------|------|-------|
 | classification               | nonp                                    | str  |     4 |
 | client-management-project-id | client-management-project-12345         | str  |     1 |
-| client-name                  | client1                                 | str  |    63 |
+| client-name                  | client1                                 | str  |    59 |
 | dns-project-id               | dns-project-12345                       | str  |     2 |
-| host-project-id              | net-host-project-12345                  | str  |     5 |
+| host-project-id              | net-host-project-12345                  | str  |     3 |
 | management-namespace         | config-control                          | str  |     8 |
 | management-project-id        | management-project-12345                | str  |     2 |
 | network-connectivity-profile | standard                                | str  |     4 |
-| org-id                       |                              0000000000 | str  |     4 |
+| org-id                       |                              0000000000 | str  |     2 |
 | project-billing-id           | AAAAAA-BBBBBB-CCCCCC                    | str  |     1 |
-| project-id                   | client-project-12345                    | str  |   108 |
+| project-id                   | client-project-12345                    | str  |   104 |
 | repo-branch                  | main                                    | str  |     2 |
 | repo-url                     | git-repo-to-observe                     | str  |     2 |
 | tier3-repo-dir               | csync/tier3/configcontroller/deploy/env | str  |     1 |
@@ -41,10 +41,9 @@ This package has no sub-packages.
 | namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMServiceAccount              | project-id-tier3-sa                                                             | client-name-config-control |
 | namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-serviceaccountadmin-project-id-permissions                  | client-name-projects       |
 | namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-securityadmin-project-id-permissions                        | client-name-projects       |
-| namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-dnsrecord-admin-host-project-id-permissions           | client-name-projects       |
 | namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-dnsrecord-admin-dns-project-id-permissions            | client-name-projects       |
-| namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-public-ip-admin-permissions                         | client-name-projects       |
-| namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-security-admin-permissions                          | client-name-projects       |
+| namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-public-ip-admin-project-id-permissions              | client-name-projects       |
+| namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-compute-security-admin-project-id-permissions               | client-name-projects       |
 | namespaces/project-id-tier3.yaml            | iam.cnrm.cloud.google.com/v1beta1             | IAMPartialPolicy               | project-id-tier3-sa-workload-identity-binding                                   | client-name-config-control |
 | namespaces/project-id-tier3.yaml            | v1                                            | Namespace                      | project-id-tier3                                                                |                            |
 | namespaces/project-id-tier3.yaml            | core.cnrm.cloud.google.com/v1beta1            | ConfigConnectorContext         | configconnectorcontext.core.cnrm.cloud.google.com                               | project-id-tier3           |
@@ -70,7 +69,6 @@ This package has no sub-packages.
 | services.yaml                               | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                        | project-id-serviceusage                                                         | client-name-projects       |
 | services.yaml                               | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                        | project-id-logging                                                              | client-name-projects       |
 | services.yaml                               | serviceusage.cnrm.cloud.google.com/v1beta1    | Service                        | project-id-monitoring                                                           | client-name-projects       |
-| shared-vpc/namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-firewallrule-admin-app-infra-folder-permissions       | client-name-hierarchy      |
 | shared-vpc/namespaces/project-id-tier3.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier3-sa-tier3-firewallrule-admin-app-infra-class-folder-permissions | client-name-hierarchy      |
 | shared-vpc/namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-allowed-nane1-main-subnet-permissions           | client-name-networking     |
 | shared-vpc/namespaces/project-id-tier4.yaml | iam.cnrm.cloud.google.com/v1beta1             | IAMPolicyMember                | project-id-tier4-sa-networkuser-allowed-nane2-main-subnet-permissions           | client-name-networking     |
