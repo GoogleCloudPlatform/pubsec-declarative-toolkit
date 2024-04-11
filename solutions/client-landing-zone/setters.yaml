@@ -76,12 +76,7 @@ data:
   # Network Host Project (standard)
   ##########################
   #
-  # the network host project id that will be created
-  # NOTICE: this host project will be removed in a future release
-  # customization: required
-  host-project-id: net-host-project-12345
-  #
-  # the distinct network host projects that will be created
+  # the distinct network host projects that will be created for each classification
   # customization: required
   host-project-id-nonp: net-host-project-nonp-12345
   host-project-id-pbmm: net-host-project-pbmm-12345
@@ -96,23 +91,11 @@ data:
   project-allowed-restrict-vpc-peering: |
     - under:projects/PROJECT_ID
   #
-  # nonp IP space, used by ComputeFirewallPolicyRule for network isolation
-  # this list must include all non protected cidr ranges including the ranges for GKE nodes, services and pods
-  standard-nonp-cidr: |
-    - 10.1.0.0/18
-    - 172.16.0.0/13
-  #
   # Subnet IP range for nonp-main in northamerica-northeast1
   standard-nane1-nonp-main-snet: 10.1.0.0/21
   #
   # Subnet IP range for nonp-main in northamerica-northeast2
   standard-nane2-nonp-main-snet: 10.1.8.0/21
-  #
-  # pbmm IP space, used by ComputeFirewallPolicyRule for network isolation
-  # this list must include all pbmm cidr ranges including the ranges for GKE nodes, services and pods
-  standard-pbmm-cidr: |
-    - 10.1.128.0/18
-    - 172.24.0.0/13
   #
   # Subnet IP range for pbmm-main in northamerica-northeast1
   standard-nane1-pbmm-main-snet: 10.1.128.0/21
