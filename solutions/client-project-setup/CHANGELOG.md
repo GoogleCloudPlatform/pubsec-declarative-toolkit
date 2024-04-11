@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.6.0...solutions/client-project-setup/0.7.0) (2024-04-11)
+
+
+### Features
+
+* distinct vpc remove legacy resources BREAKING CHANGE ([#921](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/issues/921)) ([3939041](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/commit/39390414dd567bb631edc50d83bf45eec6b0ea0c))
+
 ## [0.6.0](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/compare/solutions/client-project-setup/0.5.0...solutions/client-project-setup/0.6.0) (2024-03-12)
 
 
