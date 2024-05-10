@@ -1,0 +1,96 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#########
+# Custom Monitoring Editor
+# AC-3(7), AC-3, AC-16(2) - Custom role for assigning permissions to the Google IAM Service Account following least privileged model
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMCustomRole
+metadata:
+  name: custom-monitoring-editor
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/organization-id: "633669294164" # kpt-set: ${org-id}
+spec:
+  description: Monitoring Editor role without the serviceusage.services.enable permission
+  # AC-3(7), AC-3, AC-16(2)
+  permissions:
+    - cloudnotifications.activities.list
+    - monitoring.alertPolicies.create
+    - monitoring.alertPolicies.delete
+    - monitoring.alertPolicies.get
+    - monitoring.alertPolicies.list
+    - monitoring.alertPolicies.update
+    - monitoring.dashboards.create
+    - monitoring.dashboards.delete
+    - monitoring.dashboards.get
+    - monitoring.dashboards.list
+    - monitoring.dashboards.update
+    - monitoring.groups.create
+    - monitoring.groups.delete
+    - monitoring.groups.get
+    - monitoring.groups.list
+    - monitoring.groups.update
+    - monitoring.metricDescriptors.create
+    - monitoring.metricDescriptors.delete
+    - monitoring.metricDescriptors.get
+    - monitoring.metricDescriptors.list
+    - monitoring.monitoredResourceDescriptors.get
+    - monitoring.monitoredResourceDescriptors.list
+    - monitoring.notificationChannelDescriptors.get
+    - monitoring.notificationChannelDescriptors.list
+    - monitoring.notificationChannels.create
+    - monitoring.notificationChannels.delete
+    - monitoring.notificationChannels.get
+    - monitoring.notificationChannels.list
+    - monitoring.notificationChannels.sendVerificationCode
+    - monitoring.notificationChannels.update
+    - monitoring.notificationChannels.verify
+    - monitoring.publicWidgets.create
+    - monitoring.publicWidgets.delete
+    - monitoring.publicWidgets.get
+    - monitoring.publicWidgets.list
+    - monitoring.publicWidgets.update
+    - monitoring.services.create
+    - monitoring.services.delete
+    - monitoring.services.get
+    - monitoring.services.list
+    - monitoring.services.update
+    - monitoring.slos.create
+    - monitoring.slos.delete
+    - monitoring.slos.get
+    - monitoring.slos.list
+    - monitoring.slos.update
+    - monitoring.snoozes.create
+    - monitoring.snoozes.get
+    - monitoring.snoozes.list
+    - monitoring.snoozes.update
+    - monitoring.timeSeries.create
+    - monitoring.timeSeries.list
+    - monitoring.uptimeCheckConfigs.create
+    - monitoring.uptimeCheckConfigs.delete
+    - monitoring.uptimeCheckConfigs.get
+    - monitoring.uptimeCheckConfigs.list
+    - monitoring.uptimeCheckConfigs.update
+    - opsconfigmonitoring.resourceMetadata.list
+    - opsconfigmonitoring.resourceMetadata.write
+    - resourcemanager.projects.get
+    - resourcemanager.projects.list
+    - serviceusage.services.get
+    - stackdriver.projects.get
+    - stackdriver.resourceMetadata.list
+    - stackdriver.resourceMetadata.write
+  resourceID: custom.monitoring.editor
+  stage: GA
+  title: Custom Monitoring Editor

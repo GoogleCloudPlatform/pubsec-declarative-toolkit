@@ -113,6 +113,8 @@
 |AC-16(2)|./namespaces/projects.yaml|projects-sa-projectmover-permissions|
 |AC-16(2)|./namespaces/projects.yaml|projects-sa-serviceusageadmin-permissions|
 |AC-16(2)|./namespaces/projects.yaml|projects-sa-workload-identity-binding|
+|AC-16(2)|./org/custom-roles/custom-monitoring-editor.yaml|custom-monitoring-editor|
+|AC-16(2)|./org/custom-roles/custom-monitoring-editor.yaml|custom-monitoring-editor|
 |AC-16(2)|./org/custom-roles/gke-firewall-admin.yaml|gke-firewall-admin|
 |AC-16(2)|./org/custom-roles/gke-firewall-admin.yaml|gke-firewall-admin|
 |AC-16(2)|./org/custom-roles/tier2-dnsrecord-admin.yaml|tier2-dnsrecord-admin|
@@ -125,10 +127,14 @@
 |AC-16(2)|./org/custom-roles/tier3-firewallrule-admin.yaml|tier3-firewallrule-admin|
 |AC-16(2)|./org/custom-roles/tier3-subnetwork-admin.yaml|tier3-subnetwork-admin|
 |AC-16(2)|./org/custom-roles/tier3-subnetwork-admin.yaml|tier3-subnetwork-admin|
+|AC-16(2)|./org/custom-roles/tier3-subnetworkiam-admin.yaml|tier3-subnetworkiam-admin|
+|AC-16(2)|./org/custom-roles/tier3-subnetworkiam-admin.yaml|tier3-subnetworkiam-admin|
 |AC-16(2)|./org/custom-roles/tier3-vpcsc-admin.yaml|tier3-vpcsc-admin|
 |AC-16(2)|./org/custom-roles/tier3-vpcsc-admin.yaml|tier3-vpcsc-admin|
 |AC-16(2)|./org/custom-roles/tier4-secretmanager-admin.yaml|tier4-secretmanager-admin|
 |AC-16(2)|./org/custom-roles/tier4-secretmanager-admin.yaml|tier4-secretmanager-admin|
+|AC-16(2)|./org/custom-roles/tier4-serviceaccount-admin.yaml|tier4-serviceaccounts-admin|
+|AC-16(2)|./org/custom-roles/tier4-serviceaccount-admin.yaml|tier4-serviceaccounts-admin|
 |AC-2(4)|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
 |AC-2(4)|./lz-folder/audits/logging-project/project-sink.yaml|logging-project-id-data-access-sink|
 |AC-2(4)|./org/org-sink.yaml|org-log-sink-data-access-logging-project-id|
@@ -200,6 +206,8 @@
 |AC-3|./namespaces/projects.yaml|projects-sa-projectmover-permissions|
 |AC-3|./namespaces/projects.yaml|projects-sa-serviceusageadmin-permissions|
 |AC-3|./namespaces/projects.yaml|projects-sa-workload-identity-binding|
+|AC-3|./org/custom-roles/custom-monitoring-editor.yaml|custom-monitoring-editor|
+|AC-3|./org/custom-roles/custom-monitoring-editor.yaml|custom-monitoring-editor|
 |AC-3|./org/custom-roles/gke-firewall-admin.yaml|gke-firewall-admin|
 |AC-3|./org/custom-roles/gke-firewall-admin.yaml|gke-firewall-admin|
 |AC-3|./org/custom-roles/tier2-dnsrecord-admin.yaml|tier2-dnsrecord-admin|
@@ -212,10 +220,14 @@
 |AC-3|./org/custom-roles/tier3-firewallrule-admin.yaml|tier3-firewallrule-admin|
 |AC-3|./org/custom-roles/tier3-subnetwork-admin.yaml|tier3-subnetwork-admin|
 |AC-3|./org/custom-roles/tier3-subnetwork-admin.yaml|tier3-subnetwork-admin|
+|AC-3|./org/custom-roles/tier3-subnetworkiam-admin.yaml|tier3-subnetworkiam-admin|
+|AC-3|./org/custom-roles/tier3-subnetworkiam-admin.yaml|tier3-subnetworkiam-admin|
 |AC-3|./org/custom-roles/tier3-vpcsc-admin.yaml|tier3-vpcsc-admin|
 |AC-3|./org/custom-roles/tier3-vpcsc-admin.yaml|tier3-vpcsc-admin|
 |AC-3|./org/custom-roles/tier4-secretmanager-admin.yaml|tier4-secretmanager-admin|
 |AC-3|./org/custom-roles/tier4-secretmanager-admin.yaml|tier4-secretmanager-admin|
+|AC-3|./org/custom-roles/tier4-serviceaccount-admin.yaml|tier4-serviceaccounts-admin|
+|AC-3|./org/custom-roles/tier4-serviceaccount-admin.yaml|tier4-serviceaccounts-admin|
 |AC-3(7)|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa|
 |AC-3(7)|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa|
 |AC-3(7)|./namespaces/config-management-monitoring.yaml|config-mgmt-mon-default-sa-metric-writer-permissions|
@@ -275,6 +287,8 @@
 |AC-3(7)|./namespaces/projects.yaml|projects-sa-projectmover-permissions|
 |AC-3(7)|./namespaces/projects.yaml|projects-sa-serviceusageadmin-permissions|
 |AC-3(7)|./namespaces/projects.yaml|projects-sa-workload-identity-binding|
+|AC-3(7)|./org/custom-roles/custom-monitoring-editor.yaml|custom-monitoring-editor|
+|AC-3(7)|./org/custom-roles/custom-monitoring-editor.yaml|custom-monitoring-editor|
 |AC-3(7)|./org/custom-roles/gke-firewall-admin.yaml|gke-firewall-admin|
 |AC-3(7)|./org/custom-roles/gke-firewall-admin.yaml|gke-firewall-admin|
 |AC-3(7)|./org/custom-roles/tier2-dnsrecord-admin.yaml|tier2-dnsrecord-admin|
@@ -287,10 +301,14 @@
 |AC-3(7)|./org/custom-roles/tier3-firewallrule-admin.yaml|tier3-firewallrule-admin|
 |AC-3(7)|./org/custom-roles/tier3-subnetwork-admin.yaml|tier3-subnetwork-admin|
 |AC-3(7)|./org/custom-roles/tier3-subnetwork-admin.yaml|tier3-subnetwork-admin|
+|AC-3(7)|./org/custom-roles/tier3-subnetworkiam-admin.yaml|tier3-subnetworkiam-admin|
+|AC-3(7)|./org/custom-roles/tier3-subnetworkiam-admin.yaml|tier3-subnetworkiam-admin|
 |AC-3(7)|./org/custom-roles/tier3-vpcsc-admin.yaml|tier3-vpcsc-admin|
 |AC-3(7)|./org/custom-roles/tier3-vpcsc-admin.yaml|tier3-vpcsc-admin|
 |AC-3(7)|./org/custom-roles/tier4-secretmanager-admin.yaml|tier4-secretmanager-admin|
 |AC-3(7)|./org/custom-roles/tier4-secretmanager-admin.yaml|tier4-secretmanager-admin|
+|AC-3(7)|./org/custom-roles/tier4-serviceaccount-admin.yaml|tier4-serviceaccounts-admin|
+|AC-3(7)|./org/custom-roles/tier4-serviceaccount-admin.yaml|tier4-serviceaccounts-admin|
 |AC-3(9)|./org/org-policies/essentialcontacts-allowed-contact-domains.yaml|essentialcontacts-allowed-contact-domains|
 |AC-3(9)|./org/org-policies/essentialcontacts-allowed-contact-domains.yaml|essentialcontacts-allowed-contact-domains|
 |AC-3(9)|./org/org-policies/iam-allowed-policy-member-domains.yaml|iam-allowed-policy-member-domains|
@@ -444,4 +462,3 @@
 |SI-4|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 |SI-4|./lz-folder/audits/logging-project/cloud-storage-buckets.yaml|security-incident-log-bucket|
 
-<!-- END OF SECURITY CONTROLS LIST -->

@@ -8,8 +8,6 @@
 Landing Zone v2 core package.
 Depends on the bootstrap procedure.
 
-[Deploy a landing zone v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2).
-
 Attention, validate impact with CCCS Cloud Based Sensors before implementing any changes to organization policies.
 
 ## Setters
@@ -26,10 +24,10 @@ Attention, validate impact with CCCS Cloud Based Sensors before implementing any
 | dns-name                                              | example.com.                            | str   |     1 |
 | logging-project-id                                    | logging-project-12345                   | str   |    36 |
 | lz-folder-id                                          |                              0000000000 | str   |    14 |
-| management-namespace                                  | config-control                          | str   |    48 |
+| management-namespace                                  | config-control                          | str   |    51 |
 | management-project-id                                 | management-project-12345                | str   |    94 |
 | management-project-number                             |                              0000000000 | str   |     3 |
-| org-id                                                |                              0000000000 | str   |    42 |
+| org-id                                                |                              0000000000 | str   |    45 |
 | platform-and-component-log-bucket                     | platform-and-component-log-bucket-12345 | str   |     2 |
 | retention-in-days                                     |                                       1 | int   |     2 |
 | retention-locking-policy                              | false                                   | bool  |     2 |
@@ -133,14 +131,17 @@ This package has no sub-packages.
 | namespaces/projects.yaml                                                              | rbac.authorization.k8s.io/v1                  | RoleBinding                | allow-projects-resource-reference-from-logging                            | projects                     |
 | namespaces/projects.yaml                                                              | rbac.authorization.k8s.io/v1                  | RoleBinding                | allow-projects-resource-reference-from-networking                         | projects                     |
 | namespaces/projects.yaml                                                              | rbac.authorization.k8s.io/v1                  | RoleBinding                | allow-projects-resource-reference-from-policies                           | projects                     |
+| org/custom-roles/custom-monitoring-editor.yaml                                        | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | custom-monitoring-editor                                                  | config-control               |
 | org/custom-roles/gke-firewall-admin.yaml                                              | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | gke-firewall-admin                                                        | config-control               |
 | org/custom-roles/tier2-dnsrecord-admin.yaml                                           | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier2-dnsrecord-admin                                                     | config-control               |
 | org/custom-roles/tier2-vpcpeering-admin.yaml                                          | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier2-vpcpeering-admin                                                    | config-control               |
 | org/custom-roles/tier3-dnsrecord-admin.yaml                                           | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier3-dnsrecord-admin                                                     | config-control               |
 | org/custom-roles/tier3-firewallrule-admin.yaml                                        | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier3-firewallrule-admin                                                  | config-control               |
 | org/custom-roles/tier3-subnetwork-admin.yaml                                          | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier3-subnetwork-admin                                                    | config-control               |
+| org/custom-roles/tier3-subnetworkiam-admin.yaml                                       | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier3-subnetworkiam-admin                                                 | config-control               |
 | org/custom-roles/tier3-vpcsc-admin.yaml                                               | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier3-vpcsc-admin                                                         | config-control               |
 | org/custom-roles/tier4-secretmanager-admin.yaml                                       | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier4-secretmanager-admin                                                 | config-control               |
+| org/custom-roles/tier4-serviceaccount-admin.yaml                                      | iam.cnrm.cloud.google.com/v1beta1             | IAMCustomRole              | tier4-serviceaccounts-admin                                               | config-control               |
 | org/org-policies/compute-disable-guest-attribute-access.yaml                          | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy      | compute-disable-guest-attribute-access                                    | policies                     |
 | org/org-policies/compute-disable-nested-virtualization.yaml                           | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy      | compute-disable-nested-virtualization                                     | policies                     |
 | org/org-policies/compute-disable-serial-port-access.yaml                              | resourcemanager.cnrm.cloud.google.com/v1beta1 | ResourceManagerPolicy      | compute-disable-serial-port-access                                        | policies                     |
