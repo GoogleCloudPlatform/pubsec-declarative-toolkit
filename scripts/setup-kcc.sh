@@ -10,7 +10,7 @@ set -o pipefail
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # source print-colors.sh for better readability of the script's outputs
-# shellcheck source-path=scripts/bootstrap # tell shellcheck where to look
+# shellcheck source-path=scripts # tell shellcheck where to look
 source "${SCRIPT_ROOT}/print-colors.sh"
 
 # Set a default value for the options
