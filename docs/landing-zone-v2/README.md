@@ -54,9 +54,6 @@ This Landing Zone v2 differentiates from the `solutions/landing-zone` mostly bec
 
 ## <a name='Implementation'></a>Implementation
 
-
-You may want to look at the [documentation](https://github.com/ssc-spc-ccoe-cei/gcp-documentation) published by **Shared Services Canada**, providing a good level of details on how they have implemented this landing zone solution to host workloads from any of the 43 departments of the Government of Canada.
-
 ## <a name='Organization'></a>Organization
 
 This Landing Zone v2 assumes that the different required environments known as Experimentation, Development, PreProduction and Production are all instantiated with their own landing zone. This can be achieved with a single GCP organization and multiple landing zone folders representing the environments OR by using multiple GCP organizations.
@@ -171,7 +168,7 @@ To deploy this Landing Zone you will need to:
 
 ### <a name='InitialOrganizationconfiguration'></a>Initial Organization configuration
 
-The following instructions in this section 1 for the boostrap of the Config Controller project and cluster are fully automated in the [setup-kcc.sh](https://github.com/ssc-spc-ccoe-cei/gcp-tools/blob/main/scripts/bootstrap/setup-kcc.sh) script.
+The following instructions in this section 1 for the boostrap of the Config Controller project and cluster are fully automated in the [setup-kcc.sh](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/scripts/setup-kcc.sh) script.
 
 1. Define environment variables
 
