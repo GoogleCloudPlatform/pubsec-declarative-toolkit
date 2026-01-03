@@ -96,10 +96,10 @@ Using the `kubectl` cli:
 
     The storage bucket has been created.
 
-    > Example result of `gsutil ls` command
+    > Example result of `gcloud storage ls` command
 
     ```console
-    gsutil ls
+    gcloud storage ls
     gs://scemu-sp-kcc-exp/
     ```
 
