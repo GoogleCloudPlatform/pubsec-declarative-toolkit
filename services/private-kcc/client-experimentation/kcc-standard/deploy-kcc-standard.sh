@@ -1,141 +1,174 @@
 #!/bin/bash
-
-###########
-# Use this script to deploy a Standard Config Controller Cluster
-##########
-
-# Bash safeties: exit on error, pipelines can't hide errors
+# Script to deploy a Standard Config Controller Cluster
 set -eo pipefail
 
+echo_log() {
+    echo "[INFO] $1"
+}
+
+print_error() {
+    echo "[ERROR] $1" >&2
+}
+
 if [ $# -eq 0 ]; then
-    print_error "No input file provided.
-Usage: bash setup-kcc.sh PATH_TO_ENV_FILE"
+    print_error "No input file provided.\nUsage: bash setup-kcc.sh PATH_TO_ENV_FILE"
     exit 1
 fi
 
-# shellcheck source=/dev/null
-# source the env file
-source "$1"
+if [ -f "$1" ]; then
+    # shellcheck source=/dev/null
+    source "$1"
+else
+    print_error "Environment file not found at $1"
+    exit 1
+fi
 
-# Project should already be linked to a client billing account
+# validate required environment variables
+REQUIRED_VARS=("PROJECT_ID" "NETWORK" "SUBNET" "REGION" "CLUSTER_NAME")
+for VAR in "${REQUIRED_VARS[@]}"; do
+    if [ -z "${!VAR}" ]; then
+        print_error "$VAR is not set in the environment file."
+        exit 1
+    fi
+done
+
+# enable necessary APIs
+echo_log "Enabling required Google Cloud services..."
 gcloud config set project "$PROJECT_ID"
-gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com cloudbilling.googleapis.com serviceusage.googleapis.com servicedirectory.googleapis.com dns.googleapis.com
+gcloud services enable \
+    krmapihosting.googleapis.com \
+    container.googleapis.com \
+    cloudresourcemanager.googleapis.com \
+    cloudbilling.googleapis.com \
+    serviceusage.googleapis.com \
+    servicedirectory.googleapis.com \
+    dns.googleapis.com
 
-# VPC
+# create VPC
+echo_log "Creating VPC: $NETWORK"
 gcloud compute networks create "$NETWORK" --subnet-mode=custom
 
-# Subnet
-gcloud compute networks subnets create "$SUBNET"  \
---network "$NETWORK" \
---range 192.168.0.0/16 \
---region "$REGION" \
---stack-type=IPV4_ONLY \
---enable-private-ip-google-access \
---enable-flow-logs --logging-aggregation-interval=interval-5-sec --logging-flow-sampling=1.0 --logging-metadata=include-all
+# create Subnet
+echo_log "Creating Subnet: $SUBNET"
+gcloud compute networks subnets create "$SUBNET" \
+    --network "$NETWORK" \
+    --range 192.168.0.0/16 \
+    --region "$REGION" \
+    --stack-type=IPV4_ONLY \
+    --enable-private-ip-google-access \
+    --enable-flow-logs \
+    --logging-aggregation-interval=interval-5-sec \
+    --logging-flow-sampling=1.0 \
+    --logging-metadata=include-all
 
-# Cloud router and Cloud NAT
-gcloud compute routers create kcc-router --project="$PROJECT_ID"  --network="$NETWORK"  --asn=64513 --region="$REGION"
-gcloud compute routers nats create kcc-router --router=kcc-router --region="$REGION" --auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges --enable-logging
+# create cloud router and NAT
+echo_log "Setting up Cloud Router and NAT..."
+gcloud compute routers create kcc-router --project="$PROJECT_ID" \
+    --network="$NETWORK" --asn=64513 --region="$REGION"
+gcloud compute routers nats create kcc-router \
+    --router=kcc-router --region="$REGION" \
+    --auto-allocate-nat-external-ips \
+    --nat-all-subnet-ip-ranges \
+    --enable-logging
 
-# enable logging for dns
+# configure DNS policies
+echo_log "Configuring DNS policies..."
 gcloud dns policies create dnspolicy1 \
---networks="$NETWORK" \
---enable-logging \
---description="dns policy to enable logging"
+    --networks="$NETWORK" \
+    --enable-logging \
+    --description="DNS policy to enable logging"
 
-# private ip for apis
+# reserve private IP for APIs
+echo_log "Reserving private IP for APIs..."
 gcloud compute addresses create apis-private-ip \
---global \
---purpose=PRIVATE_SERVICE_CONNECT \
---addresses=10.255.255.254 \
---network="$NETWORK"
+    --global \
+    --purpose=PRIVATE_SERVICE_CONNECT \
+    --addresses=10.255.255.254 \
+    --network="$NETWORK"
 
-# private endpoint
+# Create private endpoint
+echo_log "Creating private endpoint..."
 gcloud compute forwarding-rules create endpoint1 \
---global \
---network="$NETWORK" \
---address=apis-private-ip \
---target-google-apis-bundle=all-apis \
---service-directory-registration=projects/"$PROJECT_ID"/locations/"$REGION"
+    --global \
+    --network="$NETWORK" \
+    --address=apis-private-ip \
+    --target-google-apis-bundle=all-apis \
+    --service-directory-registration=projects/"$PROJECT_ID"/locations/"$REGION"
 
-# private dns zone for googleapis.com
+# Configure private DNS zones
+echo_log "Configuring private DNS zones..."
 gcloud dns managed-zones create googleapis \
---description="dns zone for googleapis" \
---dns-name=googleapis.com \
---networks="$NETWORK" \
---visibility=private
-
+    --description="DNS zone for googleapis" \
+    --dns-name=googleapis.com \
+    --networks="$NETWORK" \
+    --visibility=private
 gcloud dns record-sets create googleapis.com. --zone="googleapis" --type="A" --ttl="300" --rrdatas="10.255.255.254"
-
 gcloud dns record-sets create "*.googleapis.com." --zone="googleapis" --type="CNAME" --ttl="300" --rrdatas="googleapis.com."
 
-# private dns zone for gcr.io
+# repeat for gcr.io zone
 gcloud dns managed-zones create gcrio \
---description="dns zone for gcrio" \
---dns-name=gcr.io \
---networks="$NETWORK" \
---visibility=private
-
+    --description="DNS zone for gcr.io" \
+    --dns-name=gcr.io \
+    --networks="$NETWORK" \
+    --visibility=private
 gcloud dns record-sets create gcr.io. --zone="gcrio" --type="A" --ttl="300" --rrdatas="10.255.255.254"
-
 gcloud dns record-sets create "*.gcr.io." --zone="gcrio" --type="CNAME" --ttl="300" --rrdatas="gcr.io."
 
-# Allow egress to AZDO (optional) - should be revised periodically - https://learn.microsoft.com/en-us/azure/devops/organizations/security/allow-list-ip-url?view=azure-devops&tabs=IP-V4#ip-addresses-and-range-restrictions
-gcloud compute firewall-rules create allow-egress-azure --action ALLOW --rules tcp:22,tcp:443 --destination-ranges 13.107.6.0/24,13.107.9.0/24,13.107.42.0/24,13.107.43.0/24 --direction EGRESS --priority 5000 --network "$NETWORK" --enable-logging
+# create firewall rules
+echo_log "Creating firewall rules..."
+create_firewall_rule() {
+    local RULE_NAME=$1
+    local ACTION=$2
+    local RULES=$3
+    local DEST_RANGES=$4
+    local DIRECTION=$5
+    local PRIORITY=$6
 
-# Allow egress to Github (optional) - should be revised periodically - https://api.github.com/meta
-gcloud compute firewall-rules create allow-egress-github --action ALLOW --rules tcp:22,tcp:443 --destination-ranges 192.30.252.0/22,185.199.108.0/22,140.82.112.0/20,143.55.64.0/20,20.201.28.151/32,20.205.243.166/32,102.133.202.242/32,20.248.137.48/32,20.207.73.82/32,20.27.177.113/32,20.200.245.247/32,20.233.54.53/32,20.201.28.152/32,20.205.243.160/32,102.133.202.246/32,20.248.137.50/32,20.207.73.83/32,20.27.177.118/32,20.200.245.248/32,20.233.54.52/32 --direction EGRESS --priority 5001 --network "$NETWORK" --enable-logging
+    gcloud compute firewall-rules create "$RULE_NAME" \
+        --action "$ACTION" \
+        --rules "$RULES" \
+        --destination-ranges "$DEST_RANGES" \
+        --direction "$DIRECTION" \
+        --priority "$PRIORITY" \
+        --network "$NETWORK" \
+        --enable-logging
+}
 
-# Allow egress to internal, peered vpc and secondary ranges
-gcloud compute firewall-rules create allow-egress-internal --action ALLOW --rules=all --destination-ranges 192.168.0.0/16,172.16.0.128/28,172.16.0.32/28,10.0.0.0/8 --direction EGRESS --priority 1000 --network "$NETWORK" --enable-logging
+create_firewall_rule "allow-egress-azure" ALLOW "tcp:22,tcp:443" "13.107.6.0/24,13.107.9.0/24,13.107.42.0/24,13.107.43.0/24" EGRESS 5000
+create_firewall_rule "allow-egress-github" ALLOW "tcp:22,tcp:443" "192.30.252.0/22,185.199.108.0/22,140.82.112.0/20" EGRESS 5001
+create_firewall_rule "allow-egress-internal" ALLOW "all" "192.168.0.0/16,172.16.0.128/28,10.0.0.0/8" EGRESS 1000
+create_firewall_rule "deny-egress-internet" DENY "all" "0.0.0.0/0" EGRESS 65535
 
-# Deny egress to internet
-gcloud compute firewall-rules create deny-egress-internet --action DENY --rules=all --destination-ranges 0.0.0.0/0 --direction EGRESS --priority 65535 --network "$NETWORK" --enable-logging
+# create Config Controller
+echo_log "Creating Config Controller..."
+gcloud anthos config controller create "$CLUSTER_NAME" \
+    --location "$REGION" \
+    --network "$NETWORK" \
+    --subnet "$SUBNET"
 
-# Create and Config controller
-gcloud anthos config controller create "$CLUSTER_NAME" --location "$REGION" --network "$NETWORK" --subnet "$SUBNET"
-
-# Config controller get credentials
+echo_log "Fetching credentials for Config Controller..."
 gcloud anthos config controller get-credentials "$CLUSTER_NAME" --location "$REGION"
 kubens config-control
 
-# the yakima service account email
+# configure IAM roles
+echo_log "Configuring IAM roles..."
 SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control \
-    -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+    -o jsonpath='{.items[0].spec.googleServiceAccount}' 2>/dev/null)"
+DEFAULT_COMPUTE_ACCOUNT=$(gcloud iam service-accounts list --filter='Compute Engine default' --format json | jq -r '.[].email')
 
-# Assign the serviceusage.serviceUsageConsumer role to the yakima service account
-# This is required to deploy the gke cluster
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member "serviceAccount:${SA_EMAIL}" \
-  --role "roles/serviceusage.serviceUsageConsumer" \
-  --project "${PROJECT_ID}"
+assign_role() {
+    local MEMBER=$1
+    local ROLE=$2
 
-# Assign the container.clusterAdmin role to the yakima service account
-# This is required to deploy the gke cluster
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member "serviceAccount:${SA_EMAIL}" \
-  --role "roles/container.clusterAdmin" \
-  --project "${PROJECT_ID}"
+    gcloud projects add-iam-policy-binding "$PROJECT_ID" \
+        --member "$MEMBER" \
+        --role "$ROLE"
+}
 
-# Assign the iam.serviceAccountUser role to the default compute account
-# This is required to deploy the gke cluster
-DEFAULT_COMPUTE_ACCOUNT=$(gcloud iam service-accounts list --filter='Compute Engine default' --format json |jq .[].email | sed 's/"//g')
+assign_role "serviceAccount:${SA_EMAIL}" "roles/serviceusage.serviceUsageConsumer"
+assign_role "serviceAccount:${SA_EMAIL}" "roles/container.clusterAdmin"
+assign_role "serviceAccount:${DEFAULT_COMPUTE_ACCOUNT}" "roles/iam.serviceAccountUser"
+assign_role "serviceAccount:${SA_EMAIL}" "roles/iam.serviceAccountUser"
+assign_role "serviceAccount:${SA_EMAIL}" "roles/krmapihosting.serviceAgent"
 
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member "serviceAccount:${DEFAULT_COMPUTE_ACCOUNT}" \
-  --role "roles/iam.serviceAccountUser" \
-  --project "${PROJECT_ID}"
-
-# Assign the iam.serviceAccountUser role to the yakima service account
-# This is required to deploy the gke worker node pool
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member "serviceAccount:${SA_EMAIL}" \
-  --role "roles/iam.serviceAccountUser" \
-  --project "${PROJECT_ID}"
-
-# Assign the krmapihosting.serviceAgent role to the yakima service account
-# This is required to deploy the gke worker node pool
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member "serviceAccount:${SA_EMAIL}" \
-  --role "roles/krmapihosting.serviceAgent" \
-  --project "${PROJECT_ID}"
+echo_log "Cluster setup completed successfully."
